@@ -14,50 +14,50 @@ function RoleForm({ data = {}, onCreate }) {
   };
   return (
     <ConfigProvider
-    theme={{
-      components: {
-        Form: {
-          marginLG: 12,
+      theme={{
+        components: {
+          Form: {
+            marginLG: 12,
+          },
         },
-      },
-    }}
-  >
-    <Form
-      form={form}
-      layout="vertical"
-      name="update-space-role"
-      onFinish={(values) => {
-        onCreate(values);
       }}
-      initialValues={data}
     >
-      <Row>
-        <Col md={10} xs={24}>
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[
-              {
-                required: true,
-                message: 'Please input role name!',
-              },
-            ]}
-          >
-            <Input onChange={(e) => onTitleChange(e.target.value)} placeholder="enter the name" />
-          </Form.Item>
-          <SlugInput />
-          <Form.Item name="description" label="Description">
-            <TextArea rows={4} />
-          </Form.Item>
-          <Form.Item>
-          <Button type="primary" htmlType="submit"  form="update-space-role">
-            {data && data.id ? 'Update' : 'Submit'}
-          </Button>
-        </Form.Item>
-        </Col>
-      </Row>
-    </Form>
-  </ConfigProvider>
+      <Form
+        form={form}
+        layout="vertical"
+        name="update-space-role"
+        onFinish={(values) => {
+          onCreate(values);
+        }}
+        initialValues={data}
+      >
+        <Row>
+          <Col md={10} xs={24}>
+            <Form.Item
+              name="name"
+              label="Name"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input role name!',
+                },
+              ]}
+            >
+              <Input onChange={(e) => onTitleChange(e.target.value)} placeholder="enter the name" />
+            </Form.Item>
+            <SlugInput />
+            <Form.Item name="description" label="Description">
+              <TextArea rows={4} />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" form="update-space-role">
+                {data && data.id ? 'Update' : 'Submit'}
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+    </ConfigProvider>
   );
 }
 

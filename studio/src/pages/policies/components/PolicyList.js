@@ -93,7 +93,9 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
               to={{
                 pathname: `/settings/members/policies/${record.id}/view`,
               }}
-              onClick={(e) => { e.stopPropagation(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
               <Button
                 icon={<EyeOutlined style={{ color: '#858585' }} />}

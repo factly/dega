@@ -45,8 +45,10 @@ export default function ViewPolicy() {
       }}
     >
       <Link key="1" to={`/settings/members/policies`}>
-        <Button  icon={<LeftOutlined />}
-        type="secondary"> Back to Policies</Button>
+        <Button icon={<LeftOutlined />} type="secondary">
+          {' '}
+          Back to Policies
+        </Button>
       </Link>
       <h2> Policy Details </h2>
       {loading ? (

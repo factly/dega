@@ -64,7 +64,7 @@ function RoleList({ roles, total, loading }) {
         <Typography.Paragraph style={{ fontSize: '1rem' }} strong ellipsis={{ rows: 2 }}>
           {record.description}
         </Typography.Paragraph>
-      )
+      ),
     },
     {
       title: 'Action',
@@ -97,7 +97,9 @@ function RoleList({ roles, total, loading }) {
               to={{
                 pathname: `/settings/members/roles/${record.id}/users`,
               }}
-              onClick={(e) => { e.stopPropagation(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
               <Button
                 size="large"
@@ -124,7 +126,7 @@ function RoleList({ roles, total, loading }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                onDelete(record.id)
+                onDelete(record.id);
                 setModalOpen(false);
               }}
               cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
@@ -133,11 +135,9 @@ function RoleList({ roles, total, loading }) {
                 setModalOpen(false);
               }}
             >
-              <Typography.Text strong>
-                Are you sure you want to delete this ?
-              </Typography.Text>
+              <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
             </Modal>
-          </ConfigProvider >
+          </ConfigProvider>
         );
       },
     },
@@ -171,7 +171,10 @@ function RoleList({ roles, total, loading }) {
           scroll={{
             x: '1000',
           }}
-          columns={columns} dataSource={roles} rowKey={'id'} loading={loading}
+          columns={columns}
+          dataSource={roles}
+          rowKey={'id'}
+          loading={loading}
         />
       </ConfigProvider>
     </div>
