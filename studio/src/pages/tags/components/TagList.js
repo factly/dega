@@ -72,6 +72,13 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
       fixed: 'right',
       align: 'center',
       width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <ConfigProvider

@@ -489,7 +489,7 @@ const routes = {
     },
   },
   editFormat: {
-    path: '/settings/advanced/formats/:id/edit',
+    path: '/advanced/formats/:id/edit',
     menuKey: '/advanced',
     Component: EditFormat,
     title: 'Edit',

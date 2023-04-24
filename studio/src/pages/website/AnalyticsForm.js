@@ -64,7 +64,7 @@ function AnalyticsForm() {
         }}
       >
         <Row>
-          <Col span={8}>
+          <Col md={8} xs={24}>
             <Form.Item name={['analytics', 'plausible', 'server_url']} label="Server URL">
               <Input style={{ width: '100%' }} />
             </Form.Item>

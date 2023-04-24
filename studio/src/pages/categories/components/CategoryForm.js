@@ -113,7 +113,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                 style={{ width: '100%', background: '#f0f2f5', border: 0 }}
               >
                 <Collapse.Panel header="General">
-                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
+                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '3rem' }}>
                     <Col xs={24} md={10}>
                       <TitleInput
                         name="name"
@@ -226,7 +226,6 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                         initialValue={formData.description_html}
                       />
                     </Col>
-
                     <Col xs={24} md={6}>
                       <Form.Item label="Featured Image" name="medium_id">
                         <MediaSelector

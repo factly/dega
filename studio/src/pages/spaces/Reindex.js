@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Form, Select, Typography, Space } from 'antd';
+import { Row, Col, Button, Form, Select, Typography, Space, ConfigProvider } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { reindex, reindexSpace } from '../../actions/meiliReindex';
 
@@ -61,80 +61,79 @@ const Reindex = () => {
     }
   };
   return (
-    <Space direction="vertical">
-      <Form form={form} name="reindex" layout="vertical">
-        <Row justify="center" style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
-          <Col span={24}>
-            <Row
-              gutter={40}
-              justify="end"
-              style={{ background: '#f0f2f5', padding: '1.25rem', marginBottom: '1rem' }}
-            >
-              {superOrg.is_admin ? (
-                <Button type="primary" onClick={() => handleReindex()}>
-                  Reindex Instance
+    <ConfigProvider
+      theme={{
+        components: {
+          Form: {
+            marginLG: 8,
+          },
+        },
+      }}
+    >
+      <Space direction="vertical">
+        <Form form={form} name="reindex" layout="vertical">
+          <Row justify="start" style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
+            <Col span={24}>
+              <Row justify="end">
+                <Button
+                  type="primary"
+                  onClick={() => handleSpaceReindex(form.getFieldValue('space_id'))}
+                  disabled={!spaceSelected}
+                >
+                  Reindex
                 </Button>
-              ) : null}
-            </Row>
-            <Row
-              gutter={40}
-              justify="space-around"
-              style={{ background: '#f0f2f5', padding: '1.25rem', marginBottom: '1rem' }}
-            >
-              <Col span={24}>
-                {orgs && orgs.length > 0 ? (
-                  <Form.Item name="organisation_id" label="Organisation">
-                    <Select
-                      allowClear
-                      bordered
-                      listHeight={128}
-                      defaultValue={[orgId]}
-                      onChange={(value) => handleorgChange(value)}
-                    >
-                      {orgs.map((item) => (
-                        <Select.Option value={item.id} key={item.id}>
-                          {item.title}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                ) : null}
+              </Row>
+              <Row
+                gutter={40}
+                justify="start"
+                style={{ marginBottom: '1rem' }}
+              >
+                <Col md={8} xs={24}>
+                  {orgs && orgs.length > 0 ? (
+                    <Form.Item name="organisation_id" label="Organisation">
+                      <Select
+                        allowClear
+                        bordered
+                        listHeight={128}
+                        defaultValue={[orgId]}
+                        onChange={(value) => handleorgChange(value)}
+                      >
+                        {orgs.map((item) => (
+                          <Select.Option value={item.id} key={item.id}>
+                            {item.title}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  ) : null}
 
-                {spaceOption && spaceOption.length > 0 ? (
-                  <Form.Item name="space_id" label="Space" validateStatus={status}>
-                    <Select
-                      allowClear
-                      bordered
-                      listHeight={128}
-                      defaultValue={[]}
-                      placeholder="Select Space"
-                      onChange={() => setStatus()}
-                      onSelect={() => setSpaceSelected(true)}
-                      onClear={() => setSpaceSelected(false)}
-                    >
-                      {spaceOption.map((item) => (
-                        <Select.Option value={item.id} key={item.id}>
-                          {item.name}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                ) : null}
-                <Row justify="end">
-                  <Button
-                    type="primary"
-                    onClick={() => handleSpaceReindex(form.getFieldValue('space_id'))}
-                    disabled={!spaceSelected}
-                  >
-                    Reindex
-                  </Button>
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Form>
-    </Space>
+                  {spaceOption && spaceOption.length > 0 ? (
+                    <Form.Item name="space_id" label="Space" validateStatus={status}>
+                      <Select
+                        allowClear
+                        bordered
+                        listHeight={128}
+                        defaultValue={[]}
+                        placeholder="Select Space"
+                        onChange={() => setStatus()}
+                        onSelect={() => setSpaceSelected(true)}
+                        onClear={() => setSpaceSelected(false)}
+                      >
+                        {spaceOption.map((item) => (
+                          <Select.Option value={item.id} key={item.id}>
+                            {item.name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  ) : null}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Form>
+      </Space>
+    </ConfigProvider>
   );
 };
 

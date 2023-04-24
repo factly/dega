@@ -91,7 +91,20 @@ const entities = [
 function PolicyForm({ data = {}, onCreate }) {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
 
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   return (
     <ConfigProvider
       theme={{
@@ -140,7 +153,7 @@ function PolicyForm({ data = {}, onCreate }) {
               <Input.TextArea rows={4} />
             </Form.Item>
           </Col>
-          <Col md={12} xs={24}>
+          <Col md={12} xs={24} style={{ background: isMobileScreen || '#F9FAFB', padding:  isMobileScreen ||'20px 35px', borderRadius: isMobileScreen || '6px' }}>
             <Typography.Title level={5} strong>
               Authorization
             </Typography.Title>
