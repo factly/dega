@@ -17,7 +17,7 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      width: "60%",
+      width: '60%',
       onCell: () => {
         return {
           style: {
@@ -84,7 +84,9 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
                 },
               },
             }}
-          >  <Button
+          >
+            {' '}
+            <Button
               size="large"
               onClick={(e) => {
                 e.stopPropagation();
@@ -104,7 +106,7 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                dispatch(deleteWebhook(record.id)).then(() => fetchWebhooks())
+                dispatch(deleteWebhook(record.id)).then(() => fetchWebhooks());
                 setModalOpen(false);
               }}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
@@ -124,45 +126,45 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
 
   return (
     <ConfigProvider
-    theme={{
-      components: {
-        Typography: {
-          colorText: '#101828',
+      theme={{
+        components: {
+          Typography: {
+            colorText: '#101828',
+          },
         },
-      },
-    }}
-  >
-    <Table
-      columns={columns}
-      dataSource={data.webhooks}
-      loading={data.loading}
-      rowKey={'id'}
-      onRow={(record, rowIndex) => {
-        return {
-          onClick: (event) => {
-            history.push(`/advanced/formats/${record.id}/edit`);
-          },
-          onMouseEnter: (event) => {
-            document.body.style.cursor = 'pointer';
-          },
-          onMouseLeave: (event) => {
-            document.body.style.cursor = 'default';
-          },
-        };
       }}
-      scroll={{
-        x: '1000',
-      }}
-      pagination={{
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
-        total: data.total,
-        current: filters.page,
-        pageSize: filters.limit,
-        onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
-        pageSizeOptions: ['10', '15', '20'],
-      }}
-    />
-  </ConfigProvider>
+    >
+      <Table
+        columns={columns}
+        dataSource={data.webhooks}
+        loading={data.loading}
+        rowKey={'id'}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              history.push(`/advanced/formats/${record.id}/edit`);
+            },
+            onMouseEnter: (event) => {
+              document.body.style.cursor = 'pointer';
+            },
+            onMouseLeave: (event) => {
+              document.body.style.cursor = 'default';
+            },
+          };
+        }}
+        scroll={{
+          x: '1000',
+        }}
+        pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
+          total: data.total,
+          current: filters.page,
+          pageSize: filters.limit,
+          onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
+          pageSizeOptions: ['10', '15', '20'],
+        }}
+      />
+    </ConfigProvider>
   );
 }
 

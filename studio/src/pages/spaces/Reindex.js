@@ -83,11 +83,7 @@ const Reindex = () => {
                   Reindex
                 </Button>
               </Row>
-              <Row
-                gutter={40}
-                justify="start"
-                style={{ marginBottom: '1rem' }}
-              >
+              <Row gutter={40} justify="start" style={{ marginBottom: '1rem' }}>
                 <Col md={8} xs={24}>
                   {orgs && orgs.length > 0 ? (
                     <Form.Item name="organisation_id" label="Organisation">

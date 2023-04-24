@@ -72,12 +72,11 @@ const WebhookForm = ({ onCreate, data = {} }) => {
               marginLG: 12,
             },
           },
-
         }}
       >
         <Form
           form={form}
-          layout='vertical'
+          layout="vertical"
           initialValues={{ ...data }}
           name="create-webhook"
           onFinish={(values) => {
@@ -107,13 +106,13 @@ const WebhookForm = ({ onCreate, data = {} }) => {
                 <Row justify={'space-between'}>
                   <span>Enabled</span>
                   <Switch />
-                </ Row>
+                </Row>
               </Form.Item>
               <Form.Item name="podcast" valuePropName="checked">
                 <Row justify={'space-between'}>
                   <span>Podcast</span>
                   <Switch />
-                </ Row>
+                </Row>
               </Form.Item>
               <Form.Item name="events" label="Events">
                 <Checkbox.Group>
@@ -146,7 +145,7 @@ const WebhookForm = ({ onCreate, data = {} }) => {
             </Col>
           </Row>
         </Form>
-      </ConfigProvider >
+      </ConfigProvider>
     );
   }
 };

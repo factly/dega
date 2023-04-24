@@ -153,7 +153,15 @@ function PolicyForm({ data = {}, onCreate }) {
               <Input.TextArea rows={4} />
             </Form.Item>
           </Col>
-          <Col md={12} xs={24} style={{ background: isMobileScreen || '#F9FAFB', padding:  isMobileScreen ||'20px 35px', borderRadius: isMobileScreen || '6px' }}>
+          <Col
+            md={12}
+            xs={24}
+            style={{
+              background: isMobileScreen || '#F9FAFB',
+              padding: isMobileScreen || '20px 35px',
+              borderRadius: isMobileScreen || '6px',
+            }}
+          >
             <Typography.Title level={5} strong>
               Authorization
             </Typography.Title>

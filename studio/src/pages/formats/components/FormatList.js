@@ -54,7 +54,9 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
       },
       render: (_, record) => {
         return (
-          <Typography.Paragraph strong style={{ fontSize: '1rem' }} ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
+          <Typography.Paragraph strong style={{ fontSize: '1rem' }} ellipsis={{ rows: 2 }}>
+            {record.description}
+          </Typography.Paragraph>
         );
       },
     },
@@ -82,7 +84,9 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
                 },
               },
             }}
-          >  <Button
+          >
+            {' '}
+            <Button
               size="large"
               onClick={(e) => {
                 e.stopPropagation();
@@ -102,7 +106,7 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                dispatch(deleteFormat(record.id)).then(() => fetchFormats())
+                dispatch(deleteFormat(record.id)).then(() => fetchFormats());
                 setModalOpen(false);
               }}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
@@ -130,7 +134,6 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
         },
       }}
     >
-
       <Table
         columns={columns}
         dataSource={data.formats}

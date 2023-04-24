@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Button, Col, Form, Input, Row, Space, Switch, Collapse, ConfigProvider
-} from 'antd';
+import { Button, Col, Form, Input, Row, Space, Switch, Collapse, ConfigProvider } from 'antd';
 import { maker } from '../../../utils/sluger';
 import getJsonValue from '../../../utils/getJsonValue';
 import MediaSelector from '../../../components/MediaSelector/index';
@@ -57,7 +55,9 @@ const FormatForm = ({ onCreate, data = {} }) => {
       >
         <Row
           gutter={[0, 16]}
-          justify="center" style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
+          justify="center"
+          style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}
+        >
           <Col span={24}>
             <Row justify="end" gutter={40}>
               <Form.Item>
@@ -70,9 +70,7 @@ const FormatForm = ({ onCreate, data = {} }) => {
             </Row>
           </Col>
           <Col span={24}>
-            <Row
-              gutter={40}
-            >
+            <Row gutter={40}>
               <Collapse
                 expandIconPosition="right"
                 expandIcon={({ isActive }) => <Button>{isActive ? 'Collapse' : 'Expand'}</Button>}
@@ -112,8 +110,9 @@ const FormatForm = ({ onCreate, data = {} }) => {
                           maxWidth={'250px'}
                           containerStyles={{
                             maxWidth: '250px',
-                            justifyContent: 'start'
-                          }} />
+                            justifyContent: 'start',
+                          }}
+                        />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -123,8 +122,7 @@ const FormatForm = ({ onCreate, data = {} }) => {
           </Col>
           <Col span={24}>
             <Row gutter={40}>
-              <MetaForm style={{ marginBottom: 16, background: '#f0f2f5', border: 0 }}
-              />
+              <MetaForm style={{ marginBottom: 16, background: '#f0f2f5', border: 0 }} />
             </Row>
           </Col>
         </Row>
