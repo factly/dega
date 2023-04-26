@@ -2,6 +2,7 @@ import React from 'react';
 import SpaceRequestList from './components/RequestList';
 import { Space, Button, Row } from 'antd';
 import { Link } from 'react-router-dom';
+import { PlusOutlined } from '@ant-design/icons';
 import { Helmet } from 'react-helmet';
 
 function SpaceRequests() {
@@ -10,7 +11,9 @@ function SpaceRequests() {
       <Helmet title={'Space Requests'} />
       <Row gutter={16} justify="end">
         <Link key="1" to="/admin/requests/spaces/create">
-          <Button type="primary">New Space Request</Button>
+          <Button
+            icon={<PlusOutlined />}
+            type="primary">Create</Button>
         </Link>
       </Row>
 
