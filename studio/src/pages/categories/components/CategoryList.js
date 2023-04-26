@@ -9,6 +9,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [deleteItemID, setDeleteItemID] = React.useState(null);
   const history = useHistory();
 
   const columns = [
@@ -115,28 +116,11 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
               onClick={(e) => {
                 e.stopPropagation();
                 setModalOpen(true);
+                setDeleteItemID(record.id);
               }}
               icon={<DeleteOutlined style={{ color: '#858585' }} />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
             />
-            <Modal
-              open={modalOpen}
-              closable={false}
-              centered
-              width={311}
-              className="delete-modal-container"
-              style={{
-                borderRadius: '18px',
-              }}
-              onOk={() => dispatch(deleteCategory(record.id)).then(() => fetchCategories())}
-              cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-              onCancel={(e) => {
-                e.stopPropagation();
-                setModalOpen(false);
-              }}
-            >
-              <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
-            </Modal>
           </ConfigProvider>
         );
       },
@@ -185,6 +169,31 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
             pageSizeOptions: ['10', '15', '20'],
           }}
         />
+        <Modal
+          open={modalOpen}
+          closable={false}
+          centered
+          width={311}
+          className="delete-modal-container"
+          style={{
+            borderRadius: '18px',
+          }}
+          onOk={(e) => {
+            e.stopPropagation()
+            dispatch(deleteCategory(deleteItemID)).then(() => fetchCategories())
+            setDeleteItemID(null);
+            setModalOpen(false);
+          }
+          }
+          cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+          onCancel={(e) => {
+            e.stopPropagation();
+            setDeleteItemID(null);
+            setModalOpen(false);
+          }}
+        >
+          <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
+        </Modal>
       </ConfigProvider>
     </Space>
   );

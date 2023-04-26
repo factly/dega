@@ -21,6 +21,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
   const [id, setID] = useState(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteItemID, setDeleteItemID] = useState(null);
 
   const history = useHistory();
 
@@ -135,6 +136,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 onClick={(e) => {
                   e.stopPropagation();
                   setModalOpen(true);
+                  setDeleteItemID(item.id);
                 }}
                 icon={<DeleteOutlined style={{ color: '#858585' }} />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
@@ -146,28 +148,6 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   alert('this do nothing');
                 }}
               />
-              <Modal
-                open={modalOpen}
-                closable={false}
-                centered
-                width={311}
-                className="delete-modal-container"
-                style={{
-                  borderRadius: '18px',
-                }}
-                onOk={() => {
-                  dispatch(deletePage(item.id)).then(() => fetchPages())
-                }}
-                cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-                onCancel={(e) => {
-                  e.stopPropagation();
-                  setModalOpen(false);
-                }}
-              >
-                <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-                  Are you sure you want to delete this page?
-                </Typography.Text>
-              </Modal>
               {/* <Button
                   icon={<EditOutlined />}
                   disabled={!(actions.includes('admin') || actions.includes('update'))}
@@ -187,66 +167,98 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
   ];
 
   return (
-    <Space direction="vertical">
-      <Table
-        dataSource={data.pages.length !== 0 ? data.pages : []}
-        loading={data.loading}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              history.push(`/pages/${record.id}/edit`);
-            },
-            onMouseEnter: (event) => {
-              document.body.style.cursor = 'pointer';
-            },
-            onMouseLeave: (event) => {
-              document.body.style.cursor = 'default';
-            },
-          };
-        }}
-        // style={{ maxWidth: '100vw', overflowX: 'auto' }}
-        scroll={{
-          x: "1000",
-        }}
-        columns={columns}
-        rowKey={(record) => record.id}
-        expandable={{
-          expandIconColumnIndex: -1,
-          expandedRowKeys,
-          onExpand: (expanded, record) => {
-            let keys = [];
-            if (expanded) {
-              keys.push(record.id);
-            }
-            setExpandedRowKeys(keys);
+    <ConfigProvider
+      theme={{
+        components: {
+          Typography: {
+            colorText: '#101828',
           },
-          expandedRowRender: (item) => (
-            <QuickEdit
-              data={item}
-              page={true}
-              setID={setID}
-              slug={format.slug}
-              onQuickEditUpdate={() => setExpandedRowKeys([])}
-            />
-          ),
-          expandIcon: () => { },
-        }}
-        pagination={{
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
-          total: data.total,
-          current: filters.page,
-          pageSize: filters.limit ? filters.limit : 10,
-          onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
-          pageSizeOptions: ['10', '15', '20'],
-        }}
-      />
-    </Space>
+        },
+      }}
+    >
+      <Space direction="vertical">
+        <Table
+          dataSource={data.pages.length !== 0 ? data.pages : []}
+          loading={data.loading}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                history.push(`/pages/${record.id}/edit`);
+              },
+              onMouseEnter: (event) => {
+                document.body.style.cursor = 'pointer';
+              },
+              onMouseLeave: (event) => {
+                document.body.style.cursor = 'default';
+              },
+            };
+          }}
+          // style={{ maxWidth: '100vw', overflowX: 'auto' }}
+          scroll={{
+            x: "1000",
+          }}
+          columns={columns}
+          rowKey={(record) => record.id}
+          expandable={{
+            expandIconColumnIndex: -1,
+            expandedRowKeys,
+            onExpand: (expanded, record) => {
+              let keys = [];
+              if (expanded) {
+                keys.push(record.id);
+              }
+              setExpandedRowKeys(keys);
+            },
+            expandedRowRender: (item) => (
+              <QuickEdit
+                data={item}
+                page={true}
+                setID={setID}
+                slug={format.slug}
+                onQuickEditUpdate={() => setExpandedRowKeys([])}
+              />
+            ),
+            expandIcon: () => { },
+          }}
+          pagination={{
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
+            total: data.total,
+            current: filters.page,
+            pageSize: filters.limit ? filters.limit : 10,
+            onChange: (pageNumber, pageSize) =>
+              setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+            pageSizeOptions: ['10', '15', '20'],
+          }}
+        />
+        <Modal
+          open={modalOpen}
+          closable={false}
+          centered
+          width={311}
+          className="delete-modal-container"
+          style={{
+            borderRadius: '18px',
+          }}
+          onOk={(e) => {
+            e.stopPropagation();
+            dispatch(deletePage(deleteItemID)).then(() => fetchPages())
+            setModalOpen(false);
+            setDeleteItemID(null);
+          }}
+          cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+          onCancel={(e) => {
+            e.stopPropagation();
+            setModalOpen(false);
+            setDeleteItemID(null);
+          }}
+        >
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            Are you sure you want to delete this page?
+          </Typography.Text>
+        </Modal>
+      </Space>
+    </ConfigProvider>
   );
 }
 
 export default PageList;
-
-// color changing according to Figma
-// status icons when all posts/pages rendered
-// index page and table responsiveness for all entities

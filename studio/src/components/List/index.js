@@ -14,6 +14,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
   const [id, setID] = useState(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteItemID, setDeleteItemID] = useState(null);
   const history = useHistory();
 
   const getTagList = (tagids) => {
@@ -96,7 +97,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
         return (
           item && (
             <>
-              <Typography.Text strong>
+              <Typography.Text style={{ color: '#101828' }} strong>
                 {item.published_date ? formatDate(item.published_date) : '---'}
                 <br />
               </Typography.Text>
@@ -116,7 +117,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
       render: (items) => {
         return items?.map((author) => (
           <>
-            <Typography.Text strong>
+            <Typography.Text style={{ color: '#101828' }} strong>
               {authors[author]?.display_name
                 ? authors[author]?.display_name
                 : authors[author]?.['email']
@@ -170,29 +171,10 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 onClick={(e) => {
                   e.stopPropagation();
                   setModalOpen(true);
+                  setDeleteItemID(item.id);
                 }}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               />
-              <Modal
-                open={modalOpen}
-                closable={false}
-                centered
-                width={311}
-                className="delete-modal-container"
-                cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-                style={{
-                  borderRadius: '18px',
-                }}
-                onOk={() => {
-                  dispatch(deletePost(item.id)).then(() => fetchPosts());
-                }}
-                onCancel={(e) => {
-                  e.stopPropagation();
-                  setModalOpen(false);
-                }}
-              >
-                <Typography.Text strong>Are you sure you want to delete this post?</Typography.Text>
-              </Modal>
               <Button
                 size="large"
                 icon={<ThreeDotIcon style={{ color: '#858585' }} />}
@@ -209,61 +191,100 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
   ];
 
   return (
-    <Space direction="vertical">
-      <Table
-        dataSource={data.posts}
-        columns={columns}
-        rowKey={(record) => record.id}
-        loading={data.loading}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              history.push(`/posts/${record.id}/edit`);
-            },
-            onMouseEnter: (event) => {
-              document.body.style.cursor = 'pointer';
-            },
-            onMouseLeave: (event) => {
-              document.body.style.cursor = 'default';
-            },
-          };
-        }}
-        // style={{ maxWidth: '100vw', overflowX: 'auto' }}
-        scroll={{
-          x: "1000",
-        }}
-        expandable={{
-          expandIconColumnIndex: -1,
-          expandedRowKeys,
-          onExpand: (expanded, record) => {
-            let keys = [];
-            if (expanded) {
-              keys.push(record.id);
-            }
-
-            setExpandedRowKeys(keys);
+    <ConfigProvider
+      theme={{
+        components: {
+          Typography: {
+            colorText: '#101828',
           },
-          expandedRowRender: (item) => (
-            <QuickEdit
-              data={item}
-              setID={setID}
-              slug={format.slug}
-              onQuickEditUpdate={() => setExpandedRowKeys([])}
-            />
-          ),
-          expandIcon: () => { },
-        }}
-        pagination={{
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
-          total: data.total,
-          current: filters.page,
-          pageSize: filters.limit ? filters.limit : 10,
-          onChange: (pageNumber, pageSize) => onPagination(pageNumber, pageSize),
-          pageSizeOptions: ['10', '15', '20'],
-        }}
-      />
-    </Space>
+        },
+      }}
+    >
+      <Space direction="vertical">
+        <Table
+          dataSource={data.posts}
+          columns={columns}
+          rowKey={(record) => record.id}
+          loading={data.loading}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                history.push(
+                  format.slug === 'article'
+                    ? `/posts/${record.id}/edit`
+                    : `/fact-checks/${record.id}/edit`,
+                );
+              },
+              onMouseEnter: (event) => {
+                document.body.style.cursor = 'pointer';
+              },
+              onMouseLeave: (event) => {
+                document.body.style.cursor = 'default';
+              },
+            };
+          }}
+          // style={{ maxWidth: '100vw', overflowX: 'auto' }}
+          scroll={{
+            x: '1000',
+          }}
+          expandable={{
+            expandIconColumnIndex: -1,
+            expandedRowKeys,
+            onExpand: (expanded, record) => {
+              let keys = [];
+              if (expanded) {
+                keys.push(record.id);
+              }
+
+              setExpandedRowKeys(keys);
+            },
+            expandedRowRender: (item) => (
+              <QuickEdit
+                data={item}
+                setID={setID}
+                slug={format.slug}
+                onQuickEditUpdate={() => setExpandedRowKeys([])}
+              />
+            ),
+            expandIcon: () => { },
+          }}
+          pagination={{
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
+            total: data.total,
+            current: filters.page,
+            pageSize: filters.limit ? filters.limit : 10,
+            onChange: (pageNumber, pageSize) => onPagination(pageNumber, pageSize),
+            pageSizeOptions: ['10', '15', '20'],
+          }}
+        />
+        <Modal
+          open={modalOpen}
+          closable={false}
+          centered
+          width={311}
+          className="delete-modal-container"
+          cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+          style={{
+            borderRadius: '18px',
+          }}
+          onOk={(e) => {
+            e.stopPropagation();
+            dispatch(deletePost(deleteItemID)).then(() => fetchPosts());
+            setModalOpen(false);
+            setDeleteItemID(null);
+          }}
+          onCancel={(e) => {
+            e.stopPropagation();
+            setModalOpen(false);
+            setDeleteItemID(null);
+          }}
+        >
+          <Typography.Text strong>Are you sure you want to delete this post?</Typography.Text>
+        </Modal>
+      </Space>
+    </ConfigProvider>
   );
 }
 
 export default PostList;
+
