@@ -7,7 +7,7 @@ import { deleteRole, getRoles } from '../../../actions/roles';
 
 function RoleList({ roles, total, loading }) {
   const [modalOpen, setModalOpen] = React.useState(false);
-
+  const [deleteItemId, setDeleteItemId] = React.useState(null);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -112,31 +112,10 @@ function RoleList({ roles, total, loading }) {
               onClick={(e) => {
                 e.stopPropagation();
                 setModalOpen(true);
+                setDeleteItemId(record.id);
               }}
               icon={<DeleteOutlined style={{ color: '#858585' }} />}
             />
-            <Modal
-              open={modalOpen}
-              closable={false}
-              centered
-              width={311}
-              className="delete-modal-container"
-              style={{
-                borderRadius: '18px',
-              }}
-              onOk={(e) => {
-                e.stopPropagation();
-                onDelete(record.id);
-                setModalOpen(false);
-              }}
-              cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-              onCancel={(e) => {
-                e.stopPropagation();
-                setModalOpen(false);
-              }}
-            >
-              <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
-            </Modal>
           </ConfigProvider>
         );
       },
@@ -176,6 +155,30 @@ function RoleList({ roles, total, loading }) {
           rowKey={'id'}
           loading={loading}
         />
+        <Modal
+          open={modalOpen}
+          closable={false}
+          centered
+          width={311}
+          className="delete-modal-container"
+          style={{
+            borderRadius: '18px',
+          }}
+          onOk={(e) => {
+            e.stopPropagation();
+            onDelete(deleteItemId);
+            setModalOpen(false);
+            setDeleteItemId(null);
+          }}
+          cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+          onCancel={(e) => {
+            e.stopPropagation();
+            setModalOpen(false);
+            setDeleteItemId(null);
+          }}
+        >
+          <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
+        </Modal>
       </ConfigProvider>
     </div>
   );
