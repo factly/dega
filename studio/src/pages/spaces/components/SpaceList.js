@@ -11,6 +11,7 @@ function SpaceList() {
   const { spaces, loading } = useSelector(spaceSelector);
 
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [deleteItemId, setDeleteItemId] = React.useState(null);
 
   const history = useHistory();
 
@@ -140,33 +141,10 @@ function SpaceList() {
                 onClick={(e) => {
                   e.stopPropagation();
                   setModalOpen(true);
+                  setDeleteItemId(record.id);
                 }}
                 icon={<DeleteOutlined style={{ color: '#858585' }} />}
               />
-              <Modal
-                open={modalOpen}
-                closable={false}
-                centered
-                width={311}
-                className="delete-modal-container"
-                style={{
-                  borderRadius: '18px',
-                }}
-                onOk={(e) => {
-                  e.stopPropagation();
-                  dispatch(deleteSpace(record.id)).then(() => fetchSpaces())
-                  setModalOpen(false);
-                }}
-                cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-                onCancel={(e) => {
-                  e.stopPropagation();
-                  setModalOpen(false);
-                }}
-              >
-                <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-                  Are you sure you want to delete this space?
-                </Typography.Text>
-              </Modal>
             </div>
           </ConfigProvider>
         );
@@ -201,6 +179,32 @@ function SpaceList() {
         x: '1000',
       }}
       rowKey={'id'} dataSource={spaces} columns={columns} loading={loading} />
+    <Modal
+      open={modalOpen}
+      closable={false}
+      centered
+      width={311}
+      className="delete-modal-container"
+      style={{
+        borderRadius: '18px',
+      }}
+      onOk={(e) => {
+        e.stopPropagation();
+        dispatch(deleteSpace(deleteItemId)).then(() => fetchSpaces())
+        setModalOpen(false);
+        setDeleteItemId(null);
+      }}
+      cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+      onCancel={(e) => {
+        e.stopPropagation();
+        setModalOpen(false);
+        setDeleteItemId(null);
+      }}
+    >
+      <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+        Are you sure you want to delete this space?
+      </Typography.Text>
+    </Modal>
   </ConfigProvider>;
 }
 
