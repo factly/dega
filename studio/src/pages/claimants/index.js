@@ -51,7 +51,6 @@ function Claimants({ permission }) {
   }, []);
 
   const pathName = useLocation().pathname;
-
   useEffect(() => {
     history.push({
       pathname: pathName,
@@ -184,19 +183,16 @@ function Claimants({ permission }) {
                     </Link>
                   </Row>
                   <Row gutter={16} justify={'end'}>
-                    <Col span={isMobileScreen ? 12 : 6}>
-                      <Form.Item
-                        name="sort"
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'end',
-                          width: '100%',
-                        }}
-                      >
-                        <label style={{ display: 'inline', marginRight: 8, color: '#00000080' }}>
-                          Sort By
-                        </label>
+                    <Col span={isMobileScreen ? 12 : 6} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'end',
+                      width: '100%',
+                    }}>
+                      <label style={{ display: 'inline', marginRight: 8, color: '#00000080' }}>
+                        Sort By
+                      </label>
+                      <Form.Item name="sort">
                         <Select
                           placeholder="Sort By"
                           defaultValue="desc"
