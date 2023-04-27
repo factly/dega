@@ -159,7 +159,7 @@ function Media({ permission }) {
                       <Button
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
-                        style={{ marginBottom: '1.5rem' }}
+                        style={{ marginBottom: '1rem' }}
                       >
                         Upload
                       </Button>
