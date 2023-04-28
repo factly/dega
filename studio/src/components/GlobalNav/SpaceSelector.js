@@ -19,6 +19,22 @@ const ListsStyle = {
 };
 
 function SpaceSelector({ onClose }) {
+
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const { orgs, details } = useSelector((state) => {
     // orgs with spaces
     const orgsSpaces = state.spaces.orgs.filter((org) => org.spaces.length > 0);
@@ -121,14 +137,14 @@ function SpaceSelector({ onClose }) {
                   <Avatar
                     src={
                       details[item]?.logo?.url?.[
-                        window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                       ] || degaImg
                     }
                   />
                 }
                 description={
                   searchquery &&
-                  details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
+                    details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
                     <Typography.Text strong>
                       {details[item].name
                         .split(new RegExp(`(${searchquery})`, 'gi'))
@@ -164,87 +180,98 @@ function SpaceSelector({ onClose }) {
     );
   };
 
+
+  const renderSpaceSelector = () => {
+    return (
+      <Col
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          alignSelf: isMobileScreen || 'start',
+          width: isMobileScreen ? '90vw' : '45.27vw',
+        }}
+      >
+        <Input
+          value={searchquery}
+          onChange={onSearch}
+          placeholder="Search"
+          style={{ padding: '0.8rem', borderRadius: '8px', marginBottom: '1rem' }}
+          suffix={<SearchOutlined />}
+        />
+        <Row style={{ width: '100%', color: '1E1E1E' }}>
+          {modalOpen && itemToDelete ? (
+            <Modal
+              open={modalOpen}
+              closable={false}
+              centered
+              width="311px"
+              className="delete-modal-container"
+              style={{
+                borderRadius: '18px',
+              }}
+              onOk={() => {
+                dispatch(deleteSpace(itemToDelete));
+                setModalOpen(false);
+                setItemToDelete(null);
+                setSearchQuery('');
+                setSearchResults([]);
+              }}
+              onCancel={() => {
+                setModalOpen(false);
+              }}
+            >
+              <Typography.Text strong>
+                Are you sure you want to delete this space?
+              </Typography.Text>
+            </Modal>
+          ) : null}
+          {searchquery.length < 1 ? (
+            orgs.map((org) => {
+              return (
+                <Col span={24}>
+                  <OrgSpaceList org={org} />
+                </Col>
+              );
+            })
+          ) : searchResults.length !== 0 ? (
+            searchResults.map((item) => {
+              return (
+                <Col span={24}>
+                  <OrgSpaceList org={item} />
+                </Col>
+              );
+            })
+          ) : (
+            <Col span={24}>
+              <Empty />
+            </Col>
+          )}
+        </Row>
+      </Col>
+    )
+  }
+
+
+
   return (
     <Layout style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }}>
       <Content>
         <Row
-          style={{ width: '100%', alignItems: 'baseline', marginTop: '2.6rem' }}
+          style={{ width: '100%', alignItems: 'baseline',padding: '0 5vw' , marginTop: '2.6rem' }}
           justify="space-between"
         >
-          <Col span={2} style={{ textAlign: 'right' }}>
-            <Link to="/" onClick={onClose} style={{ color: '#1E1E1E' }}>
+          <Col style={{ textAlign: 'right' }}>
+            <Button type='text' to="/" onClick={onClose} style={{ color: '#1E1E1E' }}>
               <LeftOutlined style={{ fontSize: '12px', paddingRight: '6px' }} />{' '}
-              <Typography.Text strong>Home</Typography.Text>
-            </Link>
+              <Typography.Text strong>Back</Typography.Text>
+            </Button>
           </Col>
-          <Col
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              alignSelf: 'start',
-              width: '45.27vw',
-            }}
-          >
-            <Input
-              value={searchquery}
-              onChange={onSearch}
-              placeholder="Search"
-              style={{ padding: '0.8rem', borderRadius: '8px', marginBottom: '1rem' }}
-              suffix={<SearchOutlined />}
-            />
-            <Row style={{ width: '100%', color: '1E1E1E' }}>
-              {modalOpen && itemToDelete ? (
-                <Modal
-                  open={modalOpen}
-                  closable={false}
-                  centered
-                  width="311px"
-                  className="delete-modal-container"
-                  style={{
-                    borderRadius: '18px',
-                  }}
-                  onOk={() => {
-                    dispatch(deleteSpace(itemToDelete));
-                    setModalOpen(false);
-                    setItemToDelete(null);
-                    setSearchQuery('');
-                    setSearchResults([]);
-                  }}
-                  onCancel={() => {
-                    setModalOpen(false);
-                  }}
-                >
-                  <Typography.Text strong>
-                    Are you sure you want to delete this space?
-                  </Typography.Text>
-                </Modal>
-              ) : null}
-              {searchquery.length < 1 ? (
-                orgs.map((org) => {
-                  return (
-                    <Col span={24}>
-                      <OrgSpaceList org={org} />
-                    </Col>
-                  );
-                })
-              ) : searchResults.length !== 0 ? (
-                searchResults.map((item) => {
-                  return (
-                    <Col span={24}>
-                      <OrgSpaceList org={item} />
-                    </Col>
-                  );
-                })
-              ) : (
-                <Col span={24}>
-                  <Empty />
-                </Col>
-              )}
-            </Row>
-          </Col>
-          <Col span={3}>
+          {
+            isMobileScreen || renderSpaceSelector()
+          }
+          <Col>
             <Link Link key="1" onClick={onClose} to="/admin/spaces/create">
               <Button
                 icon={<PlusOutlined />}
@@ -259,6 +286,9 @@ function SpaceSelector({ onClose }) {
               </Button>
             </Link>
           </Col>
+        </Row>
+        <Row align="middle" style={{ marginTop: '2rem', width: '100%', justifyContent: 'center' }}>
+          {isMobileScreen && renderSpaceSelector()}
         </Row>
       </Content>
     </Layout>

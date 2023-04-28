@@ -31,6 +31,22 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     collapsed ? dispatch(setCollapse(true)) : dispatch(setCollapse(false));
   };
 
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 460) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
   if (loading) {
     return null;
   }
@@ -94,7 +110,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
-        route.isAdmin !== superOrg.is_admin ? null : (
+          route.isAdmin !== superOrg.is_admin ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
               <span>{route.title}</span>
@@ -130,205 +146,205 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
   );
 
   return (
-    <Sider
-      breakpoint="xl"
-      className="main-sidebar"
-      width="264px"
-      theme={navTheme}
-      collapsible
-      collapsed={collapsed}
-      onCollapse={onCollapse}
-      collapsedWidth={48}
-      trigger={null}
-      style={{
-        position: 'sticky',
-        background: '#f0f2f5',
-        left: 0,
-        top: 0,
-        overflow: 'auto',
-        height: '100vh',
-      }}
-    >
-      <div
+    <>
+      <Sider
+        breakpoint="xl"
+        className="main-sidebar"
+        width="264px"
+        collapsible
+        collapsed={collapsed}
+        onCollapse={onCollapse}
+        theme={navTheme}
+        collapsedWidth={isMobileScreen ? 0 : 80}
+        trigger={null}
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: collapsed ? '0 0.5rem' : '0 24px',
           position: 'sticky',
+          background: '#f0f2f5',
+          left: 0,
           top: 0,
-          gap: '8px',
-          height: collapsed && '100px',
-          zIndex: 100,
-          background: '#F1F1F1',
+          overflow: 'auto',
+          height: '100vh',
         }}
       >
-        <div className="menu-header" style={{ width: '100%' }}>
-          {collapsed ? (
-            <img
-              alt="logo"
-              className="menu-logo"
-              src={
-                details[selected]?.fav_icon?.url?.[
-                  window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
-                ] || degaImg
-              }
-            />
-          ) : (
-            <Button
-              style={{
-                background: '#DCE4E7',
-                width: '100%',
-                color: '#1E1E1E',
-                border: 'none',
-                fontWeight: '600',
-                fontSize: '1rem',
-                display: 'flex',
-                marginTop: '0.8rem',
-                height: '43px',
-                padding: '9px, 6px, 9px, 6px',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-              type="primary"
-              onClick={() => dispatch(setSpaceSelectorPage(true))}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <Avatar
-                  src={
-                    details[selected]?.fav_icon?.url?.[
-                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
-                    ] || degaImg
-                  }
-                />
-                {details[selected]?.name}
-              </div>
-              <DownOutlined />
-            </Button>
-          )}
-        </div>
-        <Search collapsed={collapsed} />
-      </div>
-      <Menu
-        theme={navTheme}
-        mode="inline"
-        className="slider-menu"
-        defaultOpenKeys={['0', '1']}
-        style={{ background: '#F1F1F1', padding: '8px' }}
-        selectedKeys={menuKey}
-      >
-        {sidebarMenu.map((menu, index) => {
-          const { Icon } = menu;
-          return menu.title === 'CORE' && !showCoreMenu
-            ? null
-            : !menu.isService
-            ? !menu.isAdmin
-              ? getSubMenuItems(menu, index, Icon)
-              : permission.filter((each) => each.resource === 'admin').length > 0
-              ? getSubMenuItems(menu, index, Icon)
-              : null
-            : services?.includes(maker(menu.title))
-            ? getSubMenuItems(menu, index, Icon)
-            : null;
-        })}
-      </Menu>
-      {!collapsed ? (
         <div
           style={{
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'space-between',
-            padding: '12px 24px',
-            lineHeight: '40px',
             alignItems: 'center',
-            width: '100%',
-            position: 'absolute',
-            bottom: '0',
-            background: '#f0f2f5',
+            padding: collapsed ? '0 0.5rem' : '0 24px',
+            position: 'sticky',
+            top: 0,
+            gap: '8px',
+            height: collapsed && '100px',
+            zIndex: 100,
+            background: '#F1F1F1',
           }}
         >
-          <AccountMenu />
-          <div>
-            <Link to="/settings">
-              <Button style={{ ...buttonStyle }}>
+          <div className="menu-header" style={{ width: '100%' }}>
+            {collapsed ? (
+              <img
+                alt="logo"
+                className="menu-logo"
+                src={
+                  details[selected]?.fav_icon?.url?.[
+                  window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                  ] || degaImg
+                }
+              />
+            ) : (
+              <Button
+                style={{
+                  background: '#DCE4E7',
+                  width: '100%',
+                  color: '#1E1E1E',
+                  border: 'none',
+                  fontWeight: '600',
+                  fontSize: '1rem',
+                  display: 'flex',
+                  marginTop: '0.8rem',
+                  height: '43px',
+                  padding: '9px, 6px, 9px, 6px',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+                type="primary"
+                onClick={() => dispatch(setSpaceSelectorPage(true))}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <Avatar
+                    src={
+                      details[selected]?.fav_icon?.url?.[
+                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                      ] || degaImg
+                    }
+                  />
+                  {details[selected]?.name}
+                </div>
+                <DownOutlined />
+              </Button>
+            )}
+          </div>
+          <Search collapsed={collapsed} />
+        </div>
+        <Menu
+          theme={navTheme}
+          mode="inline"
+          className="slider-menu"
+          defaultOpenKeys={['0', '1']}
+          style={{ background: '#F1F1F1', padding: '8px' }}
+          selectedKeys={menuKey}
+        >
+          {sidebarMenu.map((menu, index) => {
+            const { Icon } = menu;
+            return menu.title === 'CORE' && !showCoreMenu
+              ? null
+              : !menu.isService
+                ? !menu.isAdmin
+                  ? getSubMenuItems(menu, index, Icon)
+                  : permission.filter((each) => each.resource === 'admin').length > 0
+                    ? getSubMenuItems(menu, index, Icon)
+                    : null
+                : services?.includes(maker(menu.title))
+                  ? getSubMenuItems(menu, index, Icon)
+                  : null;
+          })}
+        </Menu>
+        {!collapsed ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: '12px 24px',
+              lineHeight: '40px',
+              alignItems: 'center',
+              width: '100%',
+              position: 'absolute',
+              bottom: '0',
+              background: '#f0f2f5',
+            }}
+          >
+            <AccountMenu />
+            <div>
+              <Button style={{ ...buttonStyle }} onClick={() => alert('Setting page')}>
                 <SettingOutlined />
               </Button>
-            </Link>
-            {applications.length > 0 ? (
-              <>
-                <Popover
-                  placement="top"
-                  overlayInnerStyle={{ paddingBottom: 0 }}
-                  content={
-                    <List
-                      grid={{
-                        gutter: 16,
-                        column: 3,
-                      }}
-                      dataSource={applications}
-                      renderItem={(item) => (
-                        <List.Item>
-                          <a
-                            href={item.url}
-                            style={{
-                              margin: '8px',
-                              textDecoration: 'none',
-                              color: 'inherit',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                            }}
-                          >
-                            {item.medium && item.medium.url ? (
-                              <img alt="logo" className="menu-logo" src={item.medium.url.raw} />
-                            ) : (
-                              <Avatar shape="square" size={35}>
-                                {item.name.charAt(0)}
-                              </Avatar>
-                            )}
-                            <span>{item.name}</span>
-                          </a>
-                        </List.Item>
-                      )}
-                    />
-                  }
-                  trigger="click"
-                >
-                  <Button style={{ ...buttonStyle, marginLeft: '0.25rem' }}>
-                    <AppstoreOutlined />
-                  </Button>
-                </Popover>
-              </>
-            ) : null}
-            <Button
-              style={{ ...buttonStyle, marginLeft: '0.25rem' }}
-              onClick={() => onCollapse(true)}
-            >
-              <MenuFoldOutlined />
+              {applications.length > 0 ? (
+                <>
+                  <Popover
+                    placement="top"
+                    overlayInnerStyle={{ paddingBottom: 0 }}
+                    content={
+                      <List
+                        grid={{
+                          gutter: 16,
+                          column: 3,
+                        }}
+                        dataSource={applications}
+                        renderItem={(item) => (
+                          <List.Item>
+                            <a
+                              href={item.url}
+                              style={{
+                                margin: '8px',
+                                textDecoration: 'none',
+                                color: 'inherit',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              }}
+                            >
+                              {item.medium && item.medium.url ? (
+                                <img alt="logo" className="menu-logo" src={item.medium.url.raw} />
+                              ) : (
+                                <Avatar shape="square" size={35}>
+                                  {item.name.charAt(0)}
+                                </Avatar>
+                              )}
+                              <span>{item.name}</span>
+                            </a>
+                          </List.Item>
+                        )}
+                      />
+                    }
+                    trigger="click"
+                  >
+                    <Button style={{ ...buttonStyle, marginLeft: '0.25rem' }}>
+                      <AppstoreOutlined />
+                    </Button>
+                  </Popover>
+                </>
+              ) : null}
+              <Button
+                style={{ ...buttonStyle, marginLeft: '0.25rem' }}
+                onClick={() => onCollapse(true)}
+              >
+                <MenuFoldOutlined />
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: '12px 8px',
+              lineHeight: '40px',
+              alignItems: 'center',
+              width: '100%',
+              position: 'absolute',
+              bottom: '0',
+              background: '#f0f2f5',
+            }}
+          >
+            <Button style={buttonStyle} onClick={() => onCollapse(false)}>
+              <MenuUnfoldOutlined />
             </Button>
           </div>
-        </div>
-      ) : (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '12px 8px',
-            lineHeight: '40px',
-            alignItems: 'center',
-            width: '100%',
-            position: 'absolute',
-            bottom: '0',
-            background: '#f0f2f5',
-          }}
-        >
-          <Button style={buttonStyle} onClick={() => onCollapse(false)}>
-            <MenuUnfoldOutlined />
-          </Button>
-        </div>
-      )}
-    </Sider>
+        )}
+      </Sider>
+    </>
   );
 }
 export default Sidebar;

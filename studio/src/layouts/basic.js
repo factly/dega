@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider } from 'antd';
+import { Layout, Card, notification, BackTop, ConfigProvider, Drawer } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -13,10 +13,26 @@ import Pageheader from '../components/PageHeader';
 import routes from '../config/routesConfig';
 import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
+import MobileSidebar from '../components/GlobalNav/MobileSidebar';
+
 
 function BasicLayout(props) {
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 460) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const { location } = props;
-  const { Content } = Layout;
+  const { Content, Header } = Layout;
   const { children } = props;
   const [enteredRoute, setRoute] = React.useState({ menuKey: '/' });
   React.useEffect(() => {
@@ -158,9 +174,25 @@ function BasicLayout(props) {
         },
       }}
     >
+      {isMobileScreen && !hideSidebar && (
+        <>
+          <Layout style={{ padding: '48px 28px 17px 28px', background: '#F2F5F9' }}>
+            <MobileSidebar
+              permission={permission}
+              menuKey={enteredRoute?.menuKey}
+              orgs={orgs}
+              loading={loading}
+              superOrg={superOrg}
+              applications={applications}
+              services={services}
+            />
+          </Layout>
+        </>
+      )
+      }
       <Layout hasSider={true}>
         <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
-        {!hideSidebar && (
+        {!isMobileScreen && !hideSidebar && (
           <Sidebar
             permission={permission}
             menuKey={enteredRoute?.menuKey}
@@ -195,7 +227,7 @@ function BasicLayout(props) {
           <BackTop style={{ right: 50 }} />
         </Layout>
       </Layout>
-    </ConfigProvider>
+    </ConfigProvider >
   );
 }
 
