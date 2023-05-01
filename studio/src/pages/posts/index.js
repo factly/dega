@@ -40,6 +40,7 @@ function Posts({ formats }) {
   const [expand, setExpand] = React.useState(false);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+  const [status, setStatus] = React.useState('all');
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -155,6 +156,7 @@ function Posts({ formats }) {
 
   const onSave = (values) => {
     let searchFilter = new URLSearchParams();
+    status !== 'all' && searchFilter.set('status', status);
     Object.keys(values).forEach(function (key) {
       if (values[key]) {
         if (key === 'format' || key === 'tag' || key === 'author' || key === 'category') {
@@ -317,10 +319,11 @@ function Posts({ formats }) {
         defaultActiveKey={query.get('status') || 'all'}
         items={postStatusItems}
         onChange={(key) => {
-          const formValues = form.getFieldsValue();
-          onSave({
-            ...formValues,
-            status: key,
+          key === 'all' ? query.delete('status') : query.set('status', key);
+          setStatus(key);
+          history.push({
+            pathName: pathname,
+            search: '?' + query.toString(),
           });
         }}
       />
@@ -340,7 +343,7 @@ function Posts({ formats }) {
         onPagination={onPagination}
         query={query.get('status')}
       />
-    </Space>
+    </Space >
   ) : (
     <FormatNotFound
       status="info"
@@ -351,3 +354,4 @@ function Posts({ formats }) {
 }
 
 export default Posts;
+

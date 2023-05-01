@@ -7,6 +7,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 
 function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [deleteItemId, setDeleteItemId] = React.useState(null);
 
   const dispatch = useDispatch();
 
@@ -91,33 +92,11 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
               onClick={(e) => {
                 e.stopPropagation();
                 setModalOpen(true);
+                setDeleteItemId(record.id);
               }}
               icon={<DeleteOutlined style={{ color: '#858585' }} />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
             />
-            <Modal
-              open={modalOpen}
-              closable={false}
-              centered
-              width={311}
-              className="delete-modal-container"
-              style={{
-                borderRadius: '18px',
-              }}
-              onOk={(e) => {
-                e.stopPropagation();
-                dispatch(deleteFormat(record.id)).then(() => fetchFormats());
-                setModalOpen(false);
-              }}
-              disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-              onCancel={(e) => {
-                e.stopPropagation();
-                setModalOpen(false);
-              }}
-            >
-              <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
-            </Modal>
           </ConfigProvider>
         );
       },
@@ -164,6 +143,31 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
           pageSizeOptions: ['10', '15', '20'],
         }}
       />
+      <Modal
+        open={modalOpen}
+        closable={false}
+        centered
+        width={311}
+        className="delete-modal-container"
+        style={{
+          borderRadius: '18px',
+        }}
+        onOk={(e) => {
+          e.stopPropagation();
+          dispatch(deleteFormat(deleteItemId)).then(() => fetchFormats());
+          setModalOpen(false);
+          setDeleteItemId(null);
+        }}
+        disabled={!(actions.includes('admin') || actions.includes('delete'))}
+        cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+        onCancel={(e) => {
+          e.stopPropagation();
+          setModalOpen(false);
+          setDeleteItemId(null);
+        }}
+      >
+        <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
+      </Modal>
     </ConfigProvider>
   );
 }

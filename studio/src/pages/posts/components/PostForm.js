@@ -57,6 +57,21 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const [metaFieldsDrawer, setMetaFieldsDrawerVisible] = useState(false);
   const [seoDrawer, setSeoDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   const showSchemaModal = () => {
     setIsModalVisible(true);
@@ -256,7 +271,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                       form.submit();
                     }}
                     menu={{ items: postActions }}
-                    htmlType="submit"
                     icon={<DownOutlined style={{ fontSize: '14px' }} />}
                   >
                     <span style={{ width: '100px' }}>
@@ -316,7 +330,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                             form.submit();
                           }}
                           menu={{ items: postActions }}
-                          htmlType="submit"
                           icon={<DownOutlined style={{ fontSize: '12px' }} />}
                         >
                           <span style={{ width: '60px' }}>
@@ -332,13 +345,14 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={onClose}
                 visible={drawerVisible}
                 //  //getContainer={false}
-                width={440}
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
                 <Form
                   form={form}
                   ref={formRef}
+                  className="edit-form"
                   initialValues={{ ...data }}
                   style={{ maxWidth: '100%', width: '100%' }}
                   onFinish={(values) => onSave(values)}
@@ -538,6 +552,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     visible={isModalVisible}
                     onOk={handleSchemaModalOk}
                     onCancel={handleSchemaModalCancel}
+                    // width='40vw'
                     footer={[
                       <Button
                         onClick={() => {
@@ -579,7 +594,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={onClose}
                 visible={codeDrawer}
                 //getContainer={false}
-                width={710}
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -605,7 +620,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={onClose}
                 visible={metaFieldsDrawer}
                 //getContainer={false}
-                width={480}
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -633,7 +648,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={() => setSeoDrawerVisible(false)}
                 visible={seoDrawer}
                 //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
-                width={440}
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
