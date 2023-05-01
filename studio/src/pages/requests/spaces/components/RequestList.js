@@ -73,9 +73,9 @@ function RequestList() {
       },
       render: (_, record) => {
         return (
-        <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-          {record.posts >= 0 ? record.posts : 'Unlimited'}
-        </Typography.Text>
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.posts >= 0 ? record.posts : 'Unlimited'}
+          </Typography.Text>
         )
       },
     },
@@ -92,7 +92,7 @@ function RequestList() {
       },
       render: (_, record) => {
         return <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-          { record.posts >= 0 ? record.episodes: 'Unlimited'}
+          {record.posts >= 0 ? record.episodes : 'Unlimited'}
         </Typography.Text>
       },
     },
@@ -197,7 +197,10 @@ function RequestList() {
 
   return (
     <Table
-      bordered
+      // style={{ maxWidth: '100vw', overflowX: 'auto' }}
+      scroll={{
+        x: '1000',
+      }}
       columns={columns}
       dataSource={spaceRequests}
       loading={loading}
