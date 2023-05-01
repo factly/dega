@@ -57,6 +57,21 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const [metaFieldsDrawer, setMetaFieldsDrawerVisible] = useState(false);
   const [seoDrawer, setSeoDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   const showSchemaModal = () => {
     setIsModalVisible(true);
@@ -133,8 +148,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     finalData.status = status;
     finalData.status === 'publish'
       ? (finalData.published_date = finalData.published_date
-          ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
-          : getCurrentDate())
+        ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+        : getCurrentDate())
       : (finalData.published_date = null);
     onCreate(finalData);
   };
@@ -330,7 +345,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={onClose}
                 visible={drawerVisible}
                 //  //getContainer={false}
-                width='80vw'
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -579,7 +594,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={onClose}
                 visible={codeDrawer}
                 //getContainer={false}
-                width='80vw'
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -605,7 +620,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={onClose}
                 visible={metaFieldsDrawer}
                 //getContainer={false}
-                width='80vw'
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -633,7 +648,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={() => setSeoDrawerVisible(false)}
                 visible={seoDrawer}
                 //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
-                width='80vw'
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
