@@ -53,7 +53,7 @@ const SpaceCreateForm = ({ onCreate }) => {
         }}
       >
         <Row justify="space-between">
-          <Col span={8}>
+          <Col md={8} xs={24}>
             <Form.Item label="Name">
               <Input.Group compact>
                 <Form.Item

@@ -46,7 +46,7 @@ const RequestForm = ({ onCreate, data = {} }) => {
         }}
       >
         <Row justify="space-between">
-          <Col span={8}>
+          <Col md={8} xs={24}>
             <TitleInput />
             <Form.Item
               name="space_id"
