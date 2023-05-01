@@ -92,7 +92,7 @@ function MobileSidebar({ superOrg, permission, orgs, loading, applications, serv
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
-        route.isAdmin !== superOrg.is_admin ? null : (
+          route.isAdmin !== superOrg.is_admin ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path} onClick={onClose}>
               <span>{route.title}</span>
@@ -165,7 +165,7 @@ function MobileSidebar({ superOrg, permission, orgs, loading, applications, serv
                 <Avatar
                   src={
                     details[selected]?.fav_icon?.url?.[
-                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                    window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                     ] || degaImg
                   }
                 />
@@ -209,9 +209,9 @@ function MobileSidebar({ superOrg, permission, orgs, loading, applications, serv
             }}
           >
             <div>
-              <Button style={{ ...buttonStyle }} onClick={() => alert('Setting page')}>
+              <Link style={{ ...buttonStyle, color: '#1E1E1E' }} to='/settings' onClick={onClose}>
                 <SettingOutlined />
-              </Button>
+              </Link>
               {applications.length > 0 ? (
                 <>
                   <Popover
@@ -279,14 +279,14 @@ function MobileSidebar({ superOrg, permission, orgs, loading, applications, serv
             return menu.title === 'CORE' && !showCoreMenu
               ? null
               : !menu.isService
-              ? !menu.isAdmin
-                ? getSubMenuItems(menu, index, Icon)
-                : permission.filter((each) => each.resource === 'admin').length > 0
-                ? getSubMenuItems(menu, index, Icon)
-                : null
-              : services?.includes(maker(menu.title))
-              ? getSubMenuItems(menu, index, Icon)
-              : null;
+                ? !menu.isAdmin
+                  ? getSubMenuItems(menu, index, Icon)
+                  : permission.filter((each) => each.resource === 'admin').length > 0
+                    ? getSubMenuItems(menu, index, Icon)
+                    : null
+                : services?.includes(maker(menu.title))
+                  ? getSubMenuItems(menu, index, Icon)
+                  : null;
           })}
         </Menu>
       </Drawer>
