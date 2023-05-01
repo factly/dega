@@ -55,9 +55,11 @@ function RequestList() {
         };
       },
       render: (_, record) => {
-        return <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-          {record.media >= 0 ? record.media : 'Unlimited'}
-        </Typography.Text>
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.media >= 0 ? record.media : 'Unlimited'}
+          </Typography.Text>
+        );
       },
     },
     {
@@ -76,7 +78,7 @@ function RequestList() {
           <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
             {record.posts >= 0 ? record.posts : 'Unlimited'}
           </Typography.Text>
-        )
+        );
       },
     },
     {
@@ -91,9 +93,11 @@ function RequestList() {
         };
       },
       render: (_, record) => {
-        return <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-          {record.posts >= 0 ? record.episodes : 'Unlimited'}
-        </Typography.Text>
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.posts >= 0 ? record.episodes : 'Unlimited'}
+          </Typography.Text>
+        );
       },
     },
     {
@@ -108,9 +112,11 @@ function RequestList() {
         };
       },
       render: (_, record) => {
-        return <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-          {record.fact_check ? 'Enabled' : 'Disabled'}
-        </Typography.Text>;
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.fact_check ? 'Enabled' : 'Disabled'}
+          </Typography.Text>
+        );
       },
     },
     {
@@ -125,13 +131,17 @@ function RequestList() {
         };
       },
       render: (_, record) => {
-        return <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-          {record.podcast ? 'Enabled' : 'Disabled'}
-        </Typography.Text>;
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.podcast ? 'Enabled' : 'Disabled'}
+          </Typography.Text>
+        );
       },
     },
     {
-      title: 'Status', dataIndex: 'status', key: 'status',
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
       width: 150,
       onCell: () => {
         return {
@@ -153,7 +163,7 @@ function RequestList() {
           default:
             return <Tag color="orange">Pending</Tag>;
         }
-      }
+      },
     },
   ];
 

@@ -61,7 +61,6 @@ function SpaceList() {
       },
       render: (_, record) => {
         return (
-
           <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
             {record.site_address}
           </Typography.Text>
@@ -82,7 +81,6 @@ function SpaceList() {
       },
       render: (_, record) => {
         return (
-
           <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
             {record.site_title}
           </Typography.Text>
@@ -103,7 +101,6 @@ function SpaceList() {
       },
       render: (_, record) => {
         return (
-
           <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
             {record.tag_line}
           </Typography.Text>
@@ -152,60 +149,67 @@ function SpaceList() {
     },
   ];
 
-  return <ConfigProvider
-    theme={{
-      components: {
-        Typography: {
-          colorText: '#101828',
+  return (
+    <ConfigProvider
+      theme={{
+        components: {
+          Typography: {
+            colorText: '#101828',
+          },
         },
-      },
-    }}
-  ><Table
-      onRow={(record, rowIndex) => {
-        return {
-          onClick: (event) => {
-            history.push(`/admin/spaces/${record.id}/edit`);
-          },
-          onMouseEnter: (event) => {
-            document.body.style.cursor = 'pointer';
-          },
-          onMouseLeave: (event) => {
-            document.body.style.cursor = 'default';
-          },
-        };
-      }}
-      // style={{ maxWidth: '100vw', overflowX: 'auto' }}
-      scroll={{
-        x: '1000',
-      }}
-      rowKey={'id'} dataSource={spaces} columns={columns} loading={loading} />
-    <Modal
-      open={modalOpen}
-      closable={false}
-      centered
-      width={311}
-      className="delete-modal-container"
-      style={{
-        borderRadius: '18px',
-      }}
-      onOk={(e) => {
-        e.stopPropagation();
-        dispatch(deleteSpace(deleteItemId)).then(() => fetchSpaces())
-        setModalOpen(false);
-        setDeleteItemId(null);
-      }}
-      cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-      onCancel={(e) => {
-        e.stopPropagation();
-        setModalOpen(false);
-        setDeleteItemId(null);
       }}
     >
-      <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-        Are you sure you want to delete this space?
-      </Typography.Text>
-    </Modal>
-  </ConfigProvider>;
+      <Table
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              history.push(`/admin/spaces/${record.id}/edit`);
+            },
+            onMouseEnter: (event) => {
+              document.body.style.cursor = 'pointer';
+            },
+            onMouseLeave: (event) => {
+              document.body.style.cursor = 'default';
+            },
+          };
+        }}
+        // style={{ maxWidth: '100vw', overflowX: 'auto' }}
+        scroll={{
+          x: '1000',
+        }}
+        rowKey={'id'}
+        dataSource={spaces}
+        columns={columns}
+        loading={loading}
+      />
+      <Modal
+        open={modalOpen}
+        closable={false}
+        centered
+        width={311}
+        className="delete-modal-container"
+        style={{
+          borderRadius: '18px',
+        }}
+        onOk={(e) => {
+          e.stopPropagation();
+          dispatch(deleteSpace(deleteItemId)).then(() => fetchSpaces());
+          setModalOpen(false);
+          setDeleteItemId(null);
+        }}
+        cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+        onCancel={(e) => {
+          e.stopPropagation();
+          setModalOpen(false);
+          setDeleteItemId(null);
+        }}
+      >
+        <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+          Are you sure you want to delete this space?
+        </Typography.Text>
+      </Modal>
+    </ConfigProvider>
+  );
 }
 
 export default SpaceList;

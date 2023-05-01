@@ -12,23 +12,21 @@ const Members = (children) => {
     <div>
       <Row gutter={[16, 24]}>
         <Helmet title={'Members'} />
-        {
-          children.map((child) => {
-            return (
-              <Col md={12} xs={24}>
-                <Link to={`/settings${child.url}`}>
-                  <Card hoverable>
-                    <Meta
-                      avatar={child.avatar()}
-                      title={child.name}
-                      description={child.description}
-                    />
-                  </Card>
-                </Link>
-              </Col>
-            )
-          })
-        }
+        {children.map((child) => {
+          return (
+            <Col md={12} xs={24}>
+              <Link to={`/settings${child.url}`}>
+                <Card hoverable>
+                  <Meta
+                    avatar={child.avatar()}
+                    title={child.name}
+                    description={child.description}
+                  />
+                </Card>
+              </Link>
+            </Col>
+          );
+        })}
       </Row>
     </div>
   );

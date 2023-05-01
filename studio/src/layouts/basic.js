@@ -15,7 +15,6 @@ import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 
-
 function BasicLayout(props) {
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
 
@@ -188,8 +187,7 @@ function BasicLayout(props) {
             />
           </Layout>
         </>
-      )
-      }
+      )}
       <Layout hasSider={true}>
         <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
         {!isMobileScreen && !hideSidebar && (
@@ -227,7 +225,7 @@ function BasicLayout(props) {
           <BackTop style={{ right: 50 }} />
         </Layout>
       </Layout>
-    </ConfigProvider >
+    </ConfigProvider>
   );
 }
 

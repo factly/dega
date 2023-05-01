@@ -1,5 +1,16 @@
 import React from 'react';
-import { Button, Form, InputNumber, Space, Switch, Input, Select, ConfigProvider, Row, Col } from 'antd';
+import {
+  Button,
+  Form,
+  InputNumber,
+  Space,
+  Switch,
+  Input,
+  Select,
+  ConfigProvider,
+  Row,
+  Col,
+} from 'antd';
 
 import { spaceSelector } from '../../../../selectors/spaces';
 import { useSelector } from 'react-redux';
@@ -113,7 +124,7 @@ const RequestForm = ({ onCreate, data = {} }) => {
               </Row>
             </Form.Item>
             <Form.Item name="description" label="Description">
-              <Input.TextArea rows={4}/>
+              <Input.TextArea rows={4} />
             </Form.Item>
           </Col>
           <Col>

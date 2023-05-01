@@ -10,23 +10,21 @@ const Website = (children) => {
     <div>
       <Helmet title={'Website'} />
       <Row gutter={[16, 24]}>
-        {
-          children.map((child) => {
-            return (
-              <Col md={12} xs={24}>
-                <Link to={`/settings${child.url}`}>
-                  <Card hoverable>
-                    <Meta
-                      avatar={child.avatar()}
-                      title={child.name}
-                      description={child.description}
-                    />
-                  </Card>
-                </Link>
-              </Col>
-            )
-          })
-        }
+        {children.map((child) => {
+          return (
+            <Col md={12} xs={24}>
+              <Link to={`/settings${child.url}`}>
+                <Card hoverable>
+                  <Meta
+                    avatar={child.avatar()}
+                    title={child.name}
+                    description={child.description}
+                  />
+                </Card>
+              </Link>
+            </Col>
+          );
+        })}
       </Row>
     </div>
   );

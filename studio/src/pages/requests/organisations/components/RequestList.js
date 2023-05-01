@@ -49,7 +49,9 @@ function RequestList() {
 
   const columns = [
     {
-      title: 'Description', dataIndex: 'description', key: 'description',
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
       onCell: () => {
         return {
           style: {
@@ -77,12 +79,14 @@ function RequestList() {
       },
       render: (_, item) => (
         <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-          {item.spaces >= 0 ? item.spaces : "Unlimited"}
+          {item.spaces >= 0 ? item.spaces : 'Unlimited'}
         </Typography.Text>
       ),
     },
     {
-      title: 'Status', dataIndex: 'status', key: 'status',
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
       width: 150,
       onCell: () => {
         return {
@@ -104,7 +108,7 @@ function RequestList() {
           default:
             return <Tag color="orange">Pending</Tag>;
         }
-      }
+      },
     },
   ];
 
@@ -149,7 +153,6 @@ function RequestList() {
       },
     });
   }
-
 
   return (
     <Table

@@ -1,12 +1,17 @@
 import React from 'react';
-import { Typography, Row, Col, ConfigProvider, Avatar, Input, Empty } from 'antd'; import {
+import { Typography, Row, Col, ConfigProvider, Avatar, Input, Empty } from 'antd';
+import {
   CompassTwoTone,
   FundTwoTone,
   TagsTwoTone,
   ApiTwoTone,
   DeploymentUnitOutlined,
-  UserOutlined, EyeTwoTone, UsergroupAddOutlined,
-  InteractionTwoTone, FileTextTwoTone, SearchOutlined
+  UserOutlined,
+  EyeTwoTone,
+  UsergroupAddOutlined,
+  InteractionTwoTone,
+  FileTextTwoTone,
+  SearchOutlined,
 } from '@ant-design/icons';
 
 import Website from '../website/index.js';
@@ -27,7 +32,8 @@ const settings = [
           <Avatar
             icon={<DeploymentUnitOutlined />} //<SettingTwoTone twoToneColor="#ffb41f" />}
             style={{ backgroundColor: '#E8EFF2', color: '#ffb41f' }}
-          />)
+          />
+        ),
       },
       {
         name: 'Branding',
@@ -38,7 +44,8 @@ const settings = [
           <Avatar
             icon={<TagsTwoTone twoToneColor="#51bbf6" />}
             style={{ backgroundColor: '#E8EFF2' }}
-          />)
+          />
+        ),
       },
       {
         name: 'Navigation',
@@ -50,7 +57,7 @@ const settings = [
             icon={<CompassTwoTone twoToneColor="#7b2feb" />}
             style={{ backgroundColor: '#E8EFF2' }}
           />
-        )
+        ),
       },
       {
         name: 'Analytics',
@@ -62,7 +69,7 @@ const settings = [
             icon={<ApiTwoTone twoToneColor="#30cf43" />}
             style={{ backgroundColor: '#E8EFF2' }}
           />
-        )
+        ),
       },
       {
         name: 'Code Injection',
@@ -73,9 +80,10 @@ const settings = [
           <Avatar
             icon={<FundTwoTone twoToneColor="#fb2d8d" />}
             style={{ backgroundColor: '#E8EFF2' }}
-          />)
+          />
+        ),
       },
-    ]
+    ],
   },
   {
     name: 'Members',
@@ -93,7 +101,7 @@ const settings = [
             icon={<UserOutlined twoToneColor="#ffb41f" />}
             style={{ backgroundColor: '#E8EFF2', color: '#ffb41f' }}
           />
-        )
+        ),
       },
       {
         name: 'Policies',
@@ -106,7 +114,7 @@ const settings = [
             icon={<EyeTwoTone twoToneColor="#51bbf6" />}
             style={{ backgroundColor: '#E8EFF2' }}
           />
-        )
+        ),
       },
       {
         name: 'Roles',
@@ -119,7 +127,7 @@ const settings = [
             icon={<UsergroupAddOutlined twoToneColor="#ffb41f" />}
             style={{ backgroundColor: '#E8EFF2', color: '#ffb41f' }}
           />
-        )
+        ),
       },
     ],
   },
@@ -138,7 +146,8 @@ const settings = [
             gap={4}
             icon={<ApiTwoTone twoToneColor="#51bbf6" />}
             style={{ backgroundColor: '#E8EFF2' }}
-          />)
+          />
+        ),
       },
       {
         name: 'Re-Indexing Meili',
@@ -150,7 +159,8 @@ const settings = [
             gap={4}
             icon={<InteractionTwoTone twoToneColor="#7b2feb" />}
             style={{ backgroundColor: '#E8EFF2' }}
-          />)
+          />
+        ),
       },
       {
         name: 'Formats',
@@ -162,17 +172,16 @@ const settings = [
             gap={4}
             icon={<FileTextTwoTone twoToneColor="#30cf43" />}
             style={{ backgroundColor: '#E8EFF2' }}
-          />)
+          />
+        ),
       },
     ],
   },
 ];
 
 function Settings() {
-
   const [searchquery, setSearchQuery] = React.useState('');
   const [searchResults, setSearchResults] = React.useState([]);
-
 
   const filterMenu = (query, menu) => {
     const matchingResults = [];
@@ -192,7 +201,6 @@ function Settings() {
               matchingChildren.push(child);
             }
           })
-
         ) {
           // If it does, add the child item to the `matchingChildren` array
           matchingChildren.push(child);
@@ -211,7 +219,6 @@ function Settings() {
 
     return matchingResults;
   };
-
 
   const onSearch = (e) => {
     const query = e.target.value;
@@ -240,29 +247,45 @@ function Settings() {
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
-        {
-          searchquery.length < 1 ? (settings.map((setting) => (
+        {searchquery.length < 1 ? (
+          settings.map((setting) => (
             <Col span={24}>
-              <Typography.Title style={{ color: '#1E1E1E', fontSize: '18px', fontWeight: '600', marginBottom: '12px' }} level={2}>
+              <Typography.Title
+                style={{
+                  color: '#1E1E1E',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  marginBottom: '12px',
+                }}
+                level={2}
+              >
                 {setting.name}
               </Typography.Title>
               {setting.component(setting.children)}
             </Col>
           ))
-          ) : searchResults.length !== 0 ? (searchResults.map((setting) => (
+        ) : searchResults.length !== 0 ? (
+          searchResults.map((setting) => (
             <Col span={24}>
-              <Typography.Title style={{ color: '#1E1E1E', fontSize: '18px', fontWeight: '600', marginBottom: '12px' }} level={2}>
+              <Typography.Title
+                style={{
+                  color: '#1E1E1E',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  marginBottom: '12px',
+                }}
+                level={2}
+              >
                 {setting.name}
               </Typography.Title>
               {setting.component(setting.children)}
             </Col>
           ))
-          ) : (
-            <Col span={24}>
-              <Empty />
-            </Col>
-          )
-        }
+        ) : (
+          <Col span={24}>
+            <Empty />
+          </Col>
+        )}
       </Row>
     </ConfigProvider>
   );

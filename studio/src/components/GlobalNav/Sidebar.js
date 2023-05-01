@@ -46,7 +46,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   if (loading) {
     return null;
   }
@@ -110,7 +109,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
-          route.isAdmin !== superOrg.is_admin ? null : (
+        route.isAdmin !== superOrg.is_admin ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
               <span>{route.title}</span>
@@ -188,7 +187,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
                 className="menu-logo"
                 src={
                   details[selected]?.fav_icon?.url?.[
-                  window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                    window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                   ] || degaImg
                 }
               />
@@ -215,7 +214,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
                   <Avatar
                     src={
                       details[selected]?.fav_icon?.url?.[
-                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                        window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                       ] || degaImg
                     }
                   />
@@ -240,14 +239,14 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
             return menu.title === 'CORE' && !showCoreMenu
               ? null
               : !menu.isService
-                ? !menu.isAdmin
-                  ? getSubMenuItems(menu, index, Icon)
-                  : permission.filter((each) => each.resource === 'admin').length > 0
-                    ? getSubMenuItems(menu, index, Icon)
-                    : null
-                : services?.includes(maker(menu.title))
-                  ? getSubMenuItems(menu, index, Icon)
-                  : null;
+              ? !menu.isAdmin
+                ? getSubMenuItems(menu, index, Icon)
+                : permission.filter((each) => each.resource === 'admin').length > 0
+                ? getSubMenuItems(menu, index, Icon)
+                : null
+              : services?.includes(maker(menu.title))
+              ? getSubMenuItems(menu, index, Icon)
+              : null;
           })}
         </Menu>
         {!collapsed ? (

@@ -3,7 +3,6 @@ import { Button, Form, InputNumber, Space, Select, Input, ConfigProvider, Row, C
 import { useSelector } from 'react-redux';
 import { TitleInput } from '../../../../components/FormItems';
 
-
 const tailLayout = {
   wrapperCol: {
     offset: 10,

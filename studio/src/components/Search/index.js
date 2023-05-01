@@ -72,20 +72,24 @@ function Search({ collapsed, Icon }) {
           }}
           placeholder={'Search..'}
         />
+      ) : Icon ? (
+        <Button
+          type="text"
+          style={{ padding: '0px' }}
+          icon={<Icon />}
+          onClick={(e) => {
+            setOpen(true);
+            setTimeout(() => inputRef.current.focus(), 0);
+          }}
+        />
       ) : (
-        Icon ? (
-          <Button type="text" style={{ padding: '0px' }}
-            icon={<Icon />}
-            onClick={(e) => { setOpen(true); setTimeout(() => inputRef.current.focus(), 0); }}
-          />
-        )
-          : <SearchOutlined
-            onClick={(e) => {
-              setOpen(true);
-              setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
-            }}
-            style={{ fontSize: collapsed ? '16px' : '20px', margin: '4px 0' }}
-          />
+        <SearchOutlined
+          onClick={(e) => {
+            setOpen(true);
+            setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
+          }}
+          style={{ fontSize: collapsed ? '16px' : '20px', margin: '4px 0' }}
+        />
       )}
       <Modal visible={open} footer={null} onOk={handleOk} onCancel={handleCancel} closable={false}>
         <div>
@@ -117,7 +121,7 @@ function Search({ collapsed, Icon }) {
                           <List.Item
                             style={
                               indexItem === selected.indexItem &&
-                                entityIndex === selected.entityIndex
+                              entityIndex === selected.entityIndex
                                 ? { backgroundColor: '#5468ff', padding: 5 }
                                 : {}
                             }
@@ -125,7 +129,7 @@ function Search({ collapsed, Icon }) {
                             <Typography.Text
                               style={
                                 indexItem === selected.indexItem &&
-                                  entityIndex === selected.entityIndex
+                                entityIndex === selected.entityIndex
                                   ? { color: '#fff' }
                                   : {}
                               }

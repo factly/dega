@@ -11,9 +11,9 @@ function OrganisationRequests() {
       <Helmet title={'Organisation Requests'} />
       <Row gutter={16} justify="end">
         <Link key="1" to="/admin/requests/organisations/create">
-          <Button
-           icon={<PlusOutlined />}
-          type="primary">Create</Button>
+          <Button icon={<PlusOutlined />} type="primary">
+            Create
+          </Button>
         </Link>
       </Row>
 

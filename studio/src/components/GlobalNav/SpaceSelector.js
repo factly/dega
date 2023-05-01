@@ -19,7 +19,6 @@ const ListsStyle = {
 };
 
 function SpaceSelector({ onClose }) {
-
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
 
   React.useEffect(() => {
@@ -137,14 +136,14 @@ function SpaceSelector({ onClose }) {
                   <Avatar
                     src={
                       details[item]?.logo?.url?.[
-                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                        window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                       ] || degaImg
                     }
                   />
                 }
                 description={
                   searchquery &&
-                    details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
+                  details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
                     <Typography.Text strong>
                       {details[item].name
                         .split(new RegExp(`(${searchquery})`, 'gi'))
@@ -179,7 +178,6 @@ function SpaceSelector({ onClose }) {
       </div>
     );
   };
-
 
   const renderSpaceSelector = () => {
     return (
@@ -222,9 +220,7 @@ function SpaceSelector({ onClose }) {
                 setModalOpen(false);
               }}
             >
-              <Typography.Text strong>
-                Are you sure you want to delete this space?
-              </Typography.Text>
+              <Typography.Text strong>Are you sure you want to delete this space?</Typography.Text>
             </Modal>
           ) : null}
           {searchquery.length < 1 ? (
@@ -250,27 +246,23 @@ function SpaceSelector({ onClose }) {
           )}
         </Row>
       </Col>
-    )
-  }
-
-
+    );
+  };
 
   return (
     <Layout style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }}>
       <Content>
         <Row
-          style={{ width: '100%', alignItems: 'baseline',padding: '0 5vw' , marginTop: '2.6rem' }}
+          style={{ width: '100%', alignItems: 'baseline', padding: '0 5vw', marginTop: '2.6rem' }}
           justify="space-between"
         >
           <Col style={{ textAlign: 'right' }}>
-            <Button type='text' to="/" onClick={onClose} style={{ color: '#1E1E1E' }}>
+            <Button type="text" to="/" onClick={onClose} style={{ color: '#1E1E1E' }}>
               <LeftOutlined style={{ fontSize: '12px', paddingRight: '6px' }} />{' '}
               <Typography.Text strong>Back</Typography.Text>
             </Button>
           </Col>
-          {
-            isMobileScreen || renderSpaceSelector()
-          }
+          {isMobileScreen || renderSpaceSelector()}
           <Col>
             <Link Link key="1" onClick={onClose} to="/admin/spaces/create">
               <Button

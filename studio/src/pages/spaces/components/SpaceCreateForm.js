@@ -9,7 +9,6 @@ import { SlugInput } from '../../../components/FormItems';
 const { Option } = Select;
 const { TextArea } = Input;
 
-
 const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
