@@ -10,7 +10,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [modalOpen, setModalOpen] = React.useState(false);
-  const [deleteItemId, setDeleteItemId] = React.useState(null);555
+  const [deleteItemId, setDeleteItemId] = React.useState(null);
 
   const columns = [
     {
@@ -129,7 +129,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
               onClick={(e) => {
                 e.stopPropagation();
                 setModalOpen(true);
-                  setDeleteItemId(record.id);
+                setDeleteItemId(record.id);
               }}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
             />
@@ -193,7 +193,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
           }}
           onOk={(e) => {
             e.stopPropagation();
-            dispatch(deletePodcast(deleteItemIdF)).then(() => fetchPodcasts());
+            dispatch(deletePodcast(deleteItemId)).then(() => fetchPodcasts());
             setModalOpen(false);
             setDeleteItemId(null);
           }}

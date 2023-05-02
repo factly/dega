@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Form, Input, Button, DatePicker, Radio, Row, Col } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import MediaSelector from '../../components/MediaSelector';
 import { maker } from '../../utils/sluger';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,7 +40,7 @@ function Profile() {
 
   const update = (values) => {
     values.birth_date = values.birth_date
-      ? moment(values.birth_date).format('YYYY-MM-DDTHH:mm:ssZ')
+      ? dayjs(values.birth_date).format('YYYY-MM-DDTHH:mm:ssZ')
       : null;
     dispatch(updateProfile(values));
   };
@@ -62,19 +62,14 @@ function Profile() {
           onFinish={update}
           initialValues={{
             ...profile,
-            birth_date: profile && profile.birth_date ? moment(profile.birth_date) : null,
+            birth_date: profile && profile.birth_date ? dayjs(profile.birth_date) : null,
           }}
           onValuesChange={(changedValues, allValues) => {
             setValueChange(true);
           }}
         >
           <Row justify={'end'}>
-            <Button
-              disabled={!valueChange}
-              form="update_profile"
-              type="primary"
-              htmlType="submit"
-            >
+            <Button disabled={!valueChange} form="update_profile" type="primary" htmlType="submit">
               Update
             </Button>
           </Row>
@@ -132,7 +127,8 @@ function Profile() {
               <Form.Item label="Description" name="description">
                 <Input.TextArea placeholder="Description" autoSize={{ minRows: 2, maxRows: 6 }} />
               </Form.Item>
-            </Col>~
+            </Col>
+            ~
           </Row>
         </Form>
       </Card>
