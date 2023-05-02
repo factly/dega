@@ -190,7 +190,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
           }}
           onOk={(e) => {
             e.stopPropagation();
-            dispatch(deletePodcast(deleteItemIdF)).then(() => fetchPodcasts());
+            dispatch(deletePodcast(deleteItemId)).then(() => fetchPodcasts());
             setModalOpen(false);
             setDeleteItemId(null);
           }}
