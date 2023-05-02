@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Form, Input, Button, DatePicker, Radio, Row, Col } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import MediaSelector from '../../components/MediaSelector';
 import { maker } from '../../utils/sluger';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,20 +8,6 @@ import { getUserProfile, updateProfile } from '../../actions/profile';
 import { SlugInput } from '../../components/FormItems';
 import { Helmet } from 'react-helmet';
 
-const layout = {
-  labelCol: {
-    span: 7,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 3,
-    span: 17,
-  },
-};
 function Profile() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -40,7 +26,7 @@ function Profile() {
 
   const update = (values) => {
     values.birth_date = values.birth_date
-      ? moment(values.birth_date).format('YYYY-MM-DDTHH:mm:ssZ')
+      ? dayjs(values.birth_date).format('YYYY-MM-DDTHH:mm:ssZ')
       : null;
     dispatch(updateProfile(values));
   };
@@ -62,7 +48,7 @@ function Profile() {
           onFinish={update}
           initialValues={{
             ...profile,
-            birth_date: profile && profile.birth_date ? moment(profile.birth_date) : null,
+            birth_date: profile && profile.birth_date ? dayjs(profile.birth_date) : null,
           }}
           onValuesChange={(changedValues, allValues) => {
             setValueChange(true);
