@@ -1,25 +1,19 @@
 package claim
 
 import (
-	"context"
 	"encoding/json"
-	"errors"
 	"net/http"
 
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
-	"github.com/jinzhu/gorm/dialects/postgres"
-	"gorm.io/gorm"
 )
 
 // create - Create claim
@@ -51,7 +45,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	claim := &claim{}
+	claim := &service.Claim{}
 
 	err = json.NewDecoder(r.Body).Decode(&claim)
 
@@ -60,96 +54,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-
-	validationError := validationx.Check(claim)
-
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
+	claimService := service.GetClaimService()
+	result, serviceErr := claimService.Create(r.Context(), sID, uID, claim)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
-
-	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
-	_ = stmt.Parse(&model.Claim{})
-	tableName := stmt.Schema.Table
-
-	var claimSlug string
-	slug := claim.Slug
-	if len(slug) > 150 {
-		slug = claim.Slug[:150]
-	}
-	if claim.Slug != "" && slugx.Check(slug) {
-		claimSlug = slug
-	} else {
-		if len(claim.Claim) > 150 {
-			claimSlug = slugx.Make(claim.Claim[:150])
-		} else {
-			claimSlug = slugx.Make(claim.Claim)
-		}
-	}
-
-	var descriptionHTML string
-	var jsonDescription postgres.Jsonb
-	if len(claim.Description.RawMessage) > 0 {
-		descriptionHTML, err = util.GetDescriptionHTML(claim.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-
-		jsonDescription, err = util.GetJSONDescription(claim.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-	}
-
-	mediumID := &claim.MediumID
-	if claim.MediumID == 0 {
-		mediumID = nil
-	}
-
-	result := &model.Claim{
-		Base: config.Base{
-			CreatedAt: claim.CreatedAt,
-			UpdatedAt: claim.UpdatedAt,
-		},
-		Claim:           claim.Claim,
-		Slug:            slugx.Approve(&config.DB, claimSlug, sID, tableName),
-		ClaimDate:       claim.ClaimDate,
-		CheckedDate:     claim.CheckedDate,
-		ClaimSources:    claim.ClaimSources,
-		Description:     jsonDescription,
-		DescriptionHTML: descriptionHTML,
-		ClaimantID:      claim.ClaimantID,
-		RatingID:        claim.RatingID,
-		Fact:            claim.Fact,
-		ReviewSources:   claim.ReviewSources,
-		MetaFields:      claim.MetaFields,
-		Meta:            claim.Meta,
-		HeaderCode:      claim.HeaderCode,
-		FooterCode:      claim.FooterCode,
-		SpaceID:         uint(sID),
-		MediumID:        mediumID,
-		DescriptionAMP:  claim.DescriptionAMP,
-		MigrationID:     claim.MigrationID,
-		MigratedHTML:    claim.MigratedHTML,
-	}
-
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-	err = tx.Model(&model.Claim{}).Create(&result).Error
-
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
-
-	tx.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Preload("Medium").Find(&result)
 
 	var claimMeiliDate int64 = 0
 	if result.ClaimDate != nil {
@@ -179,8 +89,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if config.SearchEnabled() {
 		_ = meilisearchx.AddDocument("dega", meiliObj)
 	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("claim.created", strconv.Itoa(sID), r) {

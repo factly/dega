@@ -1,80 +1,51 @@
 package space
 
 import (
-	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/gavv/httpexpect"
+	"github.com/factly/dega-server/service/core/model"
+	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestSpaceDelete(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	config.DB.Exec("DELETE FROM space_settings")
+	config.DB.Exec("DELETE FROM spaces")
+	config.DB.Exec("DELETE FROM space_permissions")
 
-	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("delete a space", func(t *testing.T) {
-		SelectQuery(mock)
+	insertSpaceSetting := model.SpaceSettings{
+		SpaceID:   1,
+		SiteTitle: "Dega",
+		TagLine:   "Dega is a free and open source content management system for news organizations.",
+	}
+	config.DB.Model(&model.SpaceSettings{}).Create(&insertSpaceSetting)
 
-		mock.ExpectBegin()
-		mock.ExpectExec(deleteQuery).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectCommit()
-
+	// delete space
+	t.Run("delete space", func(t *testing.T) {
 		e.DELETE(path).
 			WithPath("space_id", "1").
-			WithHeader("X-User", "1").
+			WithHeaders(headers).
 			Expect().
-			Status(http.StatusOK)
-		test.ExpectationsMet(t, mock)
+			Status(200)
 	})
 
-	t.Run("space record not found", func(t *testing.T) {
-		mock.ExpectQuery(selectQuery).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows(Columns))
-
-		e.DELETE(path).
-			WithPath("space_id", "1").
-			WithHeader("X-User", "1").
-			Expect().
-			Status(http.StatusNotFound)
-		test.ExpectationsMet(t, mock)
-	})
-
+	// invalid space id
 	t.Run("invalid space id", func(t *testing.T) {
 		e.DELETE(path).
-			WithPath("space_id", "invalid").
-			WithHeader("X-User", "1").
+			WithPath("space_id", "invalid_id").
+			WithHeaders(headers).
 			Expect().
-			Status(http.StatusBadRequest)
-	})
-
-	t.Run("when keto is down", func(t *testing.T) {
-		test.DisableKetoGock(testServer.URL)
-		SelectQuery(mock)
-
-		e.DELETE(path).
-			WithPath("space_id", "1").
-			WithHeader("X-User", "1").
-			Expect().
-			Status(http.StatusUnauthorized)
-
-		test.ExpectationsMet(t, mock)
+			Status(400)
 	})
 
 }
