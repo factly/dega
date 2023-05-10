@@ -1,6 +1,7 @@
 package claimant
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -41,7 +42,10 @@ func TestClaimainList(t *testing.T) {
 	var insertData model.Claimant
 
 	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
-	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
+	err := config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData).Error
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	e := httpexpect.New(t, testServer.URL)
 
@@ -61,13 +65,14 @@ func TestClaimainList(t *testing.T) {
 			DescriptionHTML: TestDescriptionHtml,
 			FooterCode:      TestFooterCode,
 			HeaderCode:      TestHeaderCode,
-			MediumID:        &TestMediumID,
+			MediumID:        &insertMediumData.ID,
 			TagLine:         TestTagline,
 		}
 		config.DB.Model(&model.Claimant{}).Create(&insertData)
 		insertData.ID = 10000
 		insertData.Name = "Test Name 2"
 		insertData.Slug = "test-name-2"
+
 		config.DB.Model(&model.Claimant{}).Create(&insertData)
 		resData["name"] = TestName
 		resData["slug"] = TestSlug
@@ -102,5 +107,4 @@ func TestClaimainList(t *testing.T) {
 			Object().
 			ContainsMap(resData)
 	})
-
 }

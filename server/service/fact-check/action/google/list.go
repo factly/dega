@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/factly/dega-server/service/fact-check/service"
 	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -16,13 +17,6 @@ import (
 
 // googleapis for factchecks
 var GoogleURL = "https://factchecktools.googleapis.com/v1alpha1/claims:search"
-
-// list response
-type paging struct {
-	Total    int           `json:"total"`
-	Nodes    []interface{} `json:"nodes"`
-	NextPage string        `json:"nextPage"`
-}
 
 // list - Get all google fact checks
 // @Summary Show all google fact checks
@@ -91,17 +85,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := paging{}
-	result.Nodes = make([]interface{}, 0)
-
-	if claims, found := factChecks["claims"]; found {
-		result.Nodes = (claims).([]interface{})
-		result.Total = len(result.Nodes)
-	}
-
-	if nextPageToken, found := factChecks["nextPageToken"]; found {
-		result.NextPage = nextPageToken.(string)
-	}
+	result := service.GetGoogleService().List(factChecks)
 
 	renderx.JSON(w, http.StatusOK, result)
 }

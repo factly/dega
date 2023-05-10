@@ -2,22 +2,18 @@ package menu
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
-	"gorm.io/gorm"
 )
 
 // update - Update menu by id
@@ -59,7 +55,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	menu := &menu{}
+	menu := &service.Menu{}
 	err = json.NewDecoder(r.Body).Decode(&menu)
 
 	if err != nil {
@@ -68,66 +64,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validationError := validationx.Check(menu)
-
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
-		return
-	}
-
-	result := model.Menu{}
-	result.ID = uint(id)
-
-	// check record exists or not
-	err = config.DB.Where(&model.Menu{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
+	menuService := service.GetMenuService()
+	_, err = menuService.GetById(sID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	var menuSlug string
-
-	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
-	_ = stmt.Parse(&model.Menu{})
-	tableName := stmt.Schema.Table
-
-	if result.Slug == menu.Slug {
-		menuSlug = result.Slug
-	} else if menu.Slug != "" && slugx.Check(menu.Slug) {
-		menuSlug = slugx.Approve(&config.DB, menu.Slug, sID, tableName)
-	} else {
-		menuSlug = slugx.Approve(&config.DB, slugx.Make(menu.Name), sID, tableName)
-	}
-
-	// Check if menu with same name exist
-	if menu.Name != result.Name && util.CheckName(uint(sID), menu.Name, tableName) {
-		loggerx.Error(errors.New(`menu with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
+	result, serviceErr := menuService.Update(sID, uID, id, menu)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
 
-	tx := config.DB.Begin()
-
-	updateMap := map[string]interface{}{
-		"created_at":    menu.CreatedAt,
-		"updated_at":    menu.UpdatedAt,
-		"updated_by_id": uint(uID),
-		"name":          menu.Name,
-		"slug":          menuSlug,
-		"menu":          menu.Menu,
-		"meta_fields":   menu.MetaFields,
-	}
-
-	err = tx.Model(&result).Updates(&updateMap).First(&result).Error
-
 	if err != nil {
-		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
@@ -146,8 +97,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if config.SearchEnabled() {
 		_ = meilisearchx.UpdateDocument("dega", meiliObj)
 	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("menu.updated", strconv.Itoa(sID), r) {

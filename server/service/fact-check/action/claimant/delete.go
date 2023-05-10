@@ -1,12 +1,11 @@
 package claimant
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -44,41 +43,24 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Claimant{}
-
-	result.ID = uint(id)
+	claimantService := service.GetClaimantService()
 
 	// check record exists or not
-	err = config.DB.Model(&model.Claimant{}).Where(&model.Claimant{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
+	result, err := claimantService.GetById(sID, id)
 	if err != nil {
-		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	// check if claimant is associated with claims
-	var totAssociated int64
-	config.DB.Model(&model.Claim{}).Where(&model.Claim{
-		ClaimantID: uint(id),
-	}).Count(&totAssociated)
-
-	if totAssociated != 0 {
-		loggerx.Error(errors.New("claimant is associated with claim"))
-		errorx.Render(w, errorx.Parser(errorx.CannotDelete("claimant", "claim")))
+	serviceErr := claimantService.Delete(sID, id)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
-
-	tx := config.DB.Begin()
-	tx.Model(&model.Claimant{}).Delete(&result)
 
 	if config.SearchEnabled() {
 		_ = meilisearchx.DeleteDocument("dega", result.ID, "claimant")
 	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("claimant.deleted", strconv.Itoa(sID), r) {
