@@ -71,8 +71,8 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for i := range result.Nodes {
-		if config.SearchEnabled() {
+	if config.SearchEnabled() {
+		for i := range result.Nodes {
 			_ = insertIntoMeili(ratings[i])
 		}
 	}
