@@ -34,22 +34,22 @@ type Rating struct {
 	FooterCode       string         `json:"footer_code"`
 }
 
-// paging
-type paging struct {
+// ratingPaging
+type ratingPaging struct {
 	Total int64          `json:"total"`
 	Nodes []model.Rating `json:"nodes"`
 }
 
 type IRatingService interface {
 	GetById(sID, id int) (model.Rating, error)
-	List(sID int64, offset, limit int, all string, sort string) (paging, []errorx.Message)
+	List(sID int64, offset, limit int, all string, sort string) (ratingPaging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, rating *Rating) (model.Rating, []errorx.Message)
 	Update(sID, uID, id int, rating *Rating) (model.Rating, []errorx.Message)
 	Delete(sID, id int64) []errorx.Message
-	Default(ctx context.Context, sID, uID int, ratings []model.Rating) (paging, []errorx.Message)
+	Default(ctx context.Context, sID, uID int, ratings []model.Rating) (ratingPaging, []errorx.Message)
 }
 
-var userContext config.ContextKey = "rating_user"
+var ratingContext config.ContextKey = "rating_user"
 
 type RatingService struct {
 	model *gorm.DB
@@ -135,7 +135,7 @@ func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Ra
 		FooterCode:       rating.FooterCode,
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, ratingContext, uID)).Begin()
 	err = tx.Model(&model.Rating{}).Create(&result).Error
 
 	if err != nil {
@@ -181,9 +181,9 @@ func (rs RatingService) GetById(sID int, id int) (model.Rating, error) {
 }
 
 // List implements IRatingService
-func (rs RatingService) List(sID int64, offset int, limit int, all string, sort string) (paging, []errorx.Message) {
+func (rs RatingService) List(sID int64, offset int, limit int, all string, sort string) (ratingPaging, []errorx.Message) {
 
-	result := paging{}
+	result := ratingPaging{}
 	result.Nodes = make([]model.Rating, 0)
 
 	stmt := rs.model.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
@@ -323,8 +323,8 @@ func GetRatingService() IRatingService {
 	}
 }
 
-func (rs RatingService) Default(ctx context.Context, sID, uID int, ratings []model.Rating) (paging, []errorx.Message) {
-	tx := rs.model.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
+func (rs RatingService) Default(ctx context.Context, sID, uID int, ratings []model.Rating) (ratingPaging, []errorx.Message) {
+	tx := rs.model.WithContext(context.WithValue(ctx, ratingContext, uID)).Begin()
 
 	var err error
 	for i := range ratings {
@@ -332,20 +332,20 @@ func (rs RatingService) Default(ctx context.Context, sID, uID int, ratings []mod
 		ratings[i].DescriptionHTML, err = util.GetDescriptionHTML(ratings[i].Description)
 		if err != nil {
 			loggerx.Error(err)
-			return paging{}, errorx.Parser(errorx.DecodeError())
+			return ratingPaging{}, errorx.Parser(errorx.DecodeError())
 		}
 
 		ratings[i].BackgroundColour, err = util.GetJSONDescription(ratings[i].Description)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
-			return paging{}, errorx.Parser(errorx.DecodeError())
+			return ratingPaging{}, errorx.Parser(errorx.DecodeError())
 		}
 
 		tx.Model(&model.Rating{}).FirstOrCreate(&ratings[i], &ratings[i])
 
 	}
-	result := paging{}
+	result := ratingPaging{}
 	result.Nodes = ratings
 	result.Total = int64(len(ratings))
 	tx.Commit()
