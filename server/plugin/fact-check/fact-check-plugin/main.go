@@ -10,11 +10,11 @@ import (
 	"github.com/hashicorp/go-plugin"
 )
 
-type FactcheckPlugin struct {
+type FactcheckPluginImpl struct {
 	requestHandlers map[string]shared.Handler
 }
 
-func (f *FactcheckPlugin) RegisterRoutes() error {
+func (f *FactcheckPluginImpl) RegisterRoutes() error {
 	log.Println("Registering routes")
 
 	f.requestHandlers = make(map[string]shared.Handler)
@@ -23,7 +23,7 @@ func (f *FactcheckPlugin) RegisterRoutes() error {
 	return nil
 }
 
-func (f *FactcheckPlugin) HandleRequest(request shared.Request) (interface{}, error) {
+func (f *FactcheckPluginImpl) HandleRequest(request shared.Request) (interface{}, error) {
 	urlString := request.URL
 	urlStruct, err := url.Parse(urlString)
 	if err != nil {
@@ -43,7 +43,7 @@ func main() {
 	plugin.Serve(&plugin.ServeConfig{
 		HandshakeConfig: shared.Handshake,
 		Plugins: map[string]plugin.Plugin{
-			"factcheck": &shared.FactcheckPlugin{Impl: &FactcheckPlugin{}},
+			"factcheck": &shared.FactcheckPlugin{Impl: &FactcheckPluginImpl{}},
 		},
 	})
 }
