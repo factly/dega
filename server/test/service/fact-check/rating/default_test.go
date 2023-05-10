@@ -84,6 +84,18 @@ func TestRatingDefault(t *testing.T) {
 			Value("nodes").
 			Array()
 	})
+
+	t.Run("invalid space header", func(t *testing.T) {
+		e.POST(basePath).
+			WithHeaders(map[string]string{
+				"X-Space": "invalid",
+				"X-User":  "1",
+			}).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnauthorized)
+	})
+
 	t.Run("when cannot open data file", func(t *testing.T) {
 		rating.DataFile = "nofile.json"
 		e.POST(defaultsPath).
