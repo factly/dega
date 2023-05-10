@@ -1,15 +1,12 @@
 package category
 
 import (
-	"fmt"
 	"net/http"
-	"strings"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
@@ -46,71 +43,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
-
-	result := paging{}
-	result.Nodes = make([]model.Category, 0)
-
-	if sort != "asc" {
-		sort = "desc"
-	}
-
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	tx := config.DB.Model(&model.Category{}).Preload("Medium").Preload("ParentCategory").Where(&model.Category{
-		SpaceID: uint(sID),
-	}).Order("created_at " + sort)
-
-	if searchQuery != "" {
-
-		if config.SearchEnabled() {
-			filters := fmt.Sprint("space_id=", sID)
-			var hits []interface{}
-
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "category")
-
-			if err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-				return
-			}
-
-			filteredCategoryIDs := meilisearchx.GetIDArray(hits)
-			if len(filteredCategoryIDs) == 0 {
-				renderx.JSON(w, http.StatusOK, result)
-				return
-			} else {
-				err = tx.Where(filteredCategoryIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-				if err != nil {
-					loggerx.Error(err)
-					errorx.Render(w, errorx.Parser(errorx.DBError()))
-					return
-				}
-			}
-		} else {
-			if config.Sqlite() {
-				err = tx.Where("name LIKE ?", "%"+strings.ToLower(searchQuery)+"%").Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-				if err != nil {
-					loggerx.Error(err)
-					errorx.Render(w, errorx.Parser(errorx.DBError()))
-					return
-				}
-			} else {
-				err = tx.Where("name ILIKE ?", "%"+strings.ToLower(searchQuery)+"%").Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-				if err != nil {
-					loggerx.Error(err)
-					errorx.Render(w, errorx.Parser(errorx.DBError()))
-					return
-				}
-			}
-
-		}
-	} else {
-		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+	categoryService := service.GetCategoryService()
+	result, errMessages := categoryService.List(uint(sID), offset, limit, searchQuery, sort)
+	if errMessages != nil {
+		errorx.Render(w, errMessages)
+		return
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
