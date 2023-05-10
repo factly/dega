@@ -40,10 +40,11 @@ function Profile() {
   return (
     <div className="content">
       <Helmet title={'Profile'} />
-      <Card title="Update Profile" loading={loading}>
+      <div>
         <Form
           form={form}
           name="update_profile"
+          layout='vertical'
           style={{ paddng: '34px 25px', background: '#F9FAFB' }}
           onFinish={update}
           initialValues={{
@@ -65,11 +66,6 @@ function Profile() {
             </Button>
           </Row>
           <Row gutter={56}>
-            <Col md={6} xs={24}>
-              <Form.Item name="featured_medium_id">
-                <MediaSelector profile={true} />
-              </Form.Item>
-            </Col>
             <Col md={10} xs={24}>
               <Form.Item
                 label="First Name"
@@ -103,6 +99,9 @@ function Profile() {
                   <Radio.Button value="other">Other</Radio.Button>
                 </Radio.Group>
               </Form.Item>
+              <Form.Item label="Description" name="description">
+                <Input.TextArea placeholder="Description" autoSize={{ minRows: 2, maxRows: 6 }} />
+              </Form.Item>
               <Form.Item label="Facebook Url" name={['social_media_urls', 'facebook']}>
                 <Input placeholder="Facebook url" />
               </Form.Item>
@@ -115,13 +114,15 @@ function Profile() {
               <Form.Item label="Instagram Url" name={['social_media_urls', 'instagram']}>
                 <Input placeholder="Instagram url" />
               </Form.Item>
-              <Form.Item label="Description" name="description">
-                <Input.TextArea placeholder="Description" autoSize={{ minRows: 2, maxRows: 6 }} />
+            </Col>
+            <Col md={6} xs={24}>
+              <Form.Item name="featured_medium_id">
+                <MediaSelector profile={true} />
               </Form.Item>
-            </Col>~
+            </Col>
           </Row>
         </Form>
-      </Card>
+      </div>
     </div>
   );
 }
