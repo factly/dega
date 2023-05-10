@@ -3,14 +3,12 @@ package medium
 import (
 	"net/http"
 
-	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
-	"github.com/spf13/viper"
 )
 
 // list - Get all media
