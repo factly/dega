@@ -4,14 +4,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
-	"gorm.io/gorm"
 )
 
 // details - Get rating by id
@@ -27,13 +25,6 @@ import (
 // @Router /fact-check/ratings/{rating_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
 	ratingID := chi.URLParam(r, "rating_id")
 	id, err := strconv.Atoi(ratingID)
 
@@ -43,23 +34,20 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Rating{}
-
-	result.ID = uint(id)
-
-	err = config.DB.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		if err == gorm.ErrRecordNotFound {
-			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
-			return
-		} else {
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	ratingService := service.GetRatingService()
+
+	result, err := ratingService.GetById(sID, id)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+		return
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

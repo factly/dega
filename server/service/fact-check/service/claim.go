@@ -20,12 +20,12 @@ import (
 	"gorm.io/gorm"
 )
 
-type paging struct {
+type claimPaging struct {
 	Total int64         `json:"total"`
 	Nodes []model.Claim `json:"nodes"`
 }
 
-var userContext config.ContextKey = "claim_user"
+var claimContext config.ContextKey = "claim_user"
 
 type Claim struct {
 	CreatedAt      time.Time      `json:"created_at"`
@@ -52,7 +52,7 @@ type Claim struct {
 
 type IClaimService interface {
 	GetById(sID, id int) (model.Claim, []errorx.Message)
-	List(sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (paging, []errorx.Message)
+	List(sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (claimPaging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, claim *Claim) (model.Claim, []errorx.Message)
 	Update(sID, uID, id int, claim *Claim) (model.Claim, []errorx.Message)
 	Delete(sID, id int) []errorx.Message
@@ -140,7 +140,7 @@ func (cs *claimService) Create(ctx context.Context, sID int, uID int, claim *Cla
 		MigratedHTML:    claim.MigratedHTML,
 	}
 
-	tx := cs.model.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
+	tx := cs.model.WithContext(context.WithValue(ctx, claimContext, uID)).Begin()
 	err = tx.Model(&model.Claim{}).Create(&result).Error
 
 	if err != nil {
@@ -204,8 +204,8 @@ func (cs *claimService) GetById(sID int, id int) (model.Claim, []errorx.Message)
 }
 
 // List implements IClaimService
-func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (paging, []errorx.Message) {
-	var result paging
+func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (claimPaging, []errorx.Message) {
+	var result claimPaging
 	result.Nodes = make([]model.Claim, 0)
 	tx := cs.model.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
 		SpaceID: uint(sID),
@@ -222,7 +222,7 @@ func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string
 			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claim")
 			if err != nil {
 				loggerx.Error(err)
-				return paging{}, errorx.Parser(errorx.NetworkError())
+				return claimPaging{}, errorx.Parser(errorx.NetworkError())
 			}
 
 			filteredClaimIDs := meilisearchx.GetIDArray(hits)
@@ -232,7 +232,7 @@ func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string
 				err = tx.Where(filteredClaimIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 				if err != nil {
 					loggerx.Error(err)
-					return paging{}, errorx.Parser(errorx.DBError())
+					return claimPaging{}, errorx.Parser(errorx.DBError())
 				}
 			}
 		} else {
@@ -241,7 +241,7 @@ func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string
 			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 			if err != nil {
 				loggerx.Error(err)
-				return paging{}, errorx.Parser(errorx.DBError())
+				return claimPaging{}, errorx.Parser(errorx.DBError())
 			}
 		}
 	} else {
@@ -249,7 +249,7 @@ func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string
 		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 		if err != nil {
 			loggerx.Error(err)
-			return paging{}, errorx.Parser(errorx.DBError())
+			return claimPaging{}, errorx.Parser(errorx.DBError())
 		}
 	}
 

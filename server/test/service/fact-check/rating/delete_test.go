@@ -91,4 +91,15 @@ func TestRatingDelete(t *testing.T) {
 			Status(http.StatusOK)
 	})
 
+	t.Run("invalid space header", func(t *testing.T) {
+		e.POST(basePath).
+			WithHeaders(map[string]string{
+				"X-Space": "invalid",
+				"X-User":  "1",
+			}).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnauthorized)
+	})
+
 }

@@ -48,14 +48,14 @@ type Episode struct {
 
 var episodeUser config.ContextKey = "episode_user"
 
-type paging struct {
+type episodePaging struct {
 	Total int64         `json:"total"`
 	Nodes []EpisodeData `json:"nodes"`
 }
 
 type IEpisodeService interface {
 	GetById(ctx context.Context, sID, id int) (model.Episode, []errorx.Message)
-	List(ctx context.Context, sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (paging, []errorx.Message)
+	List(ctx context.Context, sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (episodePaging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, episode *Episode) (EpisodeData, []errorx.Message)
 	Update(ctx context.Context, sID, uID, id int, episode *Episode) (EpisodeData, []errorx.Message)
 	Delete(sID, id int) []errorx.Message
@@ -232,16 +232,16 @@ func (es *episodeService) GetById(ctx context.Context, sID int, id int) (model.E
 }
 
 // List implements IEpisodeService
-func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (paging, []errorx.Message) {
+func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (episodePaging, []errorx.Message) {
 
 	tx := es.model.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").Preload("Podcast.Medium").Preload("Podcast.PrimaryCategory").Preload("Podcast.Categories").Where(&model.Episode{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
 	episodes := make([]model.Episode, 0)
-	filters := generateFilters(queryMap["podcast"])
+	filters := generateEpisodeFilters(queryMap["podcast"])
 
-	result := paging{}
+	result := episodePaging{}
 	result.Nodes = make([]EpisodeData, 0)
 	var err error
 	if filters != "" || searchQuery != "" {
@@ -254,7 +254,7 @@ func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit 
 			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "episode")
 			if err != nil {
 				loggerx.Error(err)
-				return paging{}, errorx.Parser(errorx.NetworkError())
+				return episodePaging{}, errorx.Parser(errorx.NetworkError())
 			}
 
 			filteredEpisodeIDs := meilisearchx.GetIDArray(hits)
@@ -264,22 +264,22 @@ func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit 
 				err = tx.Where(filteredEpisodeIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&episodes).Error
 				if err != nil {
 					loggerx.Error(err)
-					return paging{}, errorx.Parser(errorx.DBError())
+					return episodePaging{}, errorx.Parser(errorx.DBError())
 				}
 			}
 		} else {
-			filters = generateSQLFilters(searchQuery, queryMap["podcast"])
+			filters = generateEpisodeSQLFilters(searchQuery, queryMap["podcast"])
 			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Find(&episodes).Error
 			if err != nil {
 				loggerx.Error(err)
-				return paging{}, errorx.Parser(errorx.DBError())
+				return episodePaging{}, errorx.Parser(errorx.DBError())
 			}
 		}
 	} else {
 		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&episodes).Error
 		if err != nil {
 			loggerx.Error(err)
-			return paging{}, errorx.Parser(errorx.DBError())
+			return episodePaging{}, errorx.Parser(errorx.DBError())
 		}
 	}
 
@@ -296,7 +296,7 @@ func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit 
 	authorMap, err := author.All(ctx)
 	if err != nil {
 		loggerx.Error(err)
-		return paging{}, errorx.Parser(errorx.DBError())
+		return episodePaging{}, errorx.Parser(errorx.DBError())
 	}
 
 	authorEpisodes := make([]model.EpisodeAuthor, 0)
@@ -463,7 +463,7 @@ func (es *episodeService) Update(ctx context.Context, sID int, uID int, id int, 
 func GetEpisodeService() IEpisodeService {
 	return &episodeService{model: config.DB}
 }
-func generateFilters(podcast []string) string {
+func generateEpisodeFilters(podcast []string) string {
 	filters := ""
 	if len(podcast) > 0 {
 		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(podcast, "podcast_id"), " AND ")
@@ -476,7 +476,7 @@ func generateFilters(podcast []string) string {
 	return filters
 }
 
-func generateSQLFilters(searchQuery string, podcasts []string) string {
+func generateEpisodeSQLFilters(searchQuery string, podcasts []string) string {
 	filters := ""
 	if config.Sqlite() {
 		if searchQuery != "" {

@@ -23,7 +23,7 @@ import (
 )
 
 // list response
-type paging struct {
+type podcastPaging struct {
 	Total int64           `json:"total"`
 	Nodes []model.Podcast `json:"nodes"`
 }
@@ -47,7 +47,7 @@ type Podcast struct {
 
 type IPodcastService interface {
 	GetById(sID, id int) (model.Podcast, []errorx.Message)
-	List(sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (paging, []errorx.Message)
+	List(sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (podcastPaging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, podcast *Podcast) (model.Podcast, []errorx.Message)
 	Update(sID, uID, id int, podcast *Podcast) (model.Podcast, []errorx.Message)
 	Delete(sID, id int, result model.Podcast) []errorx.Message
@@ -188,15 +188,15 @@ func (ps *PodcastService) GetById(sID int, id int) (model.Podcast, []errorx.Mess
 }
 
 // List implements IPodcastService
-func (ps *PodcastService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (paging, []errorx.Message) {
+func (ps *PodcastService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (podcastPaging, []errorx.Message) {
 
-	var result paging
+	var result podcastPaging
 	var err error
 	tx := ps.model.Model(&model.Podcast{}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").Where(&model.Podcast{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
-	filters := generateFilters(queryMap["category"], queryMap["primary_category"], queryMap["language"])
+	filters := generatePodcastFilters(queryMap["category"], queryMap["primary_category"], queryMap["language"])
 	if filters != "" || searchQuery != "" {
 
 		if config.SearchEnabled() {
@@ -207,7 +207,7 @@ func (ps *PodcastService) List(sID uint, offset int, limit int, searchQuery stri
 			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "podcast")
 			if err != nil {
 				loggerx.Error(err)
-				return paging{}, errorx.Parser(errorx.NetworkError())
+				return podcastPaging{}, errorx.Parser(errorx.NetworkError())
 			}
 
 			filteredPodcastIDs := meilisearchx.GetIDArray(hits)
@@ -217,23 +217,23 @@ func (ps *PodcastService) List(sID uint, offset int, limit int, searchQuery stri
 				err = tx.Where(filteredPodcastIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 				if err != nil {
 					loggerx.Error(err)
-					return paging{}, errorx.Parser(errorx.DBError())
+					return podcastPaging{}, errorx.Parser(errorx.DBError())
 				}
 			}
 		} else {
 			// filter by sql filters
-			filters = generateSQLFilters(tx, searchQuery, queryMap["category"], queryMap["primary_category"], queryMap["language"])
+			filters = generatePodcastSQLFilters(tx, searchQuery, queryMap["category"], queryMap["primary_category"], queryMap["language"])
 			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 			if err != nil {
 				loggerx.Error(err)
-				return paging{}, errorx.Parser(errorx.DBError())
+				return podcastPaging{}, errorx.Parser(errorx.DBError())
 			}
 		}
 	} else {
 		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 		if err != nil {
 			loggerx.Error(err)
-			return paging{}, errorx.Parser(errorx.DBError())
+			return podcastPaging{}, errorx.Parser(errorx.DBError())
 		}
 	}
 
@@ -367,7 +367,7 @@ func GetPodcastService() IPodcastService {
 	return &PodcastService{model: config.DB}
 }
 
-func generateFilters(categoryIDs, primaryCatID, language []string) string {
+func generatePodcastFilters(categoryIDs, primaryCatID, language []string) string {
 	filters := ""
 	if len(categoryIDs) > 0 {
 		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
@@ -388,7 +388,7 @@ func generateFilters(categoryIDs, primaryCatID, language []string) string {
 	return filters
 }
 
-func generateSQLFilters(tx *gorm.DB, searchQuery string, categoryIDs, primaryCatID, language []string) string {
+func generatePodcastSQLFilters(tx *gorm.DB, searchQuery string, categoryIDs, primaryCatID, language []string) string {
 	filters := ""
 	if config.Sqlite() {
 		if searchQuery != "" {
