@@ -1,24 +1,20 @@
 package medium
 
 import (
-	"context"
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
 	"github.com/spf13/viper"
-	"gorm.io/gorm"
 )
 
 // create - Create medium
@@ -50,7 +46,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var mediumList []medium
+	var mediumList []service.Medium
 
 	err = json.NewDecoder(r.Body).Decode(&mediumList)
 
@@ -92,60 +88,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
-
-	result := paging{}
-	result.Nodes = make([]model.Medium, 0)
-
-	for _, medium := range mediumList {
-		validationError := validationx.Check(medium)
-
-		if validationError != nil {
-			loggerx.Error(errors.New("validation error"))
-			errorx.Render(w, validationError)
-			return
-		}
-
-		var mediumSlug string
-		if medium.Slug != "" && slugx.Check(medium.Slug) {
-			mediumSlug = medium.Slug
-		} else {
-			mediumSlug = slugx.Make(medium.Name)
-		}
-
-		// Get table name
-		stmt := &gorm.Statement{DB: config.DB}
-		_ = stmt.Parse(&model.Medium{})
-		tableName := stmt.Schema.Table
-
-		med := model.Medium{
-			Base: config.Base{
-				CreatedAt: medium.CreatedAt,
-				UpdatedAt: medium.UpdatedAt,
-			},
-			Name:        medium.Name,
-			Slug:        slugx.Approve(&config.DB, mediumSlug, sID, tableName),
-			Title:       medium.Title,
-			Type:        medium.Type,
-			Description: medium.Description,
-			Caption:     medium.Caption,
-			AltText:     medium.AltText,
-			FileSize:    medium.FileSize,
-			URL:         medium.URL,
-			Dimensions:  medium.Dimensions,
-			MetaFields:  medium.MetaFields,
-			SpaceID:     uint(sID),
-		}
-
-		result.Nodes = append(result.Nodes, med)
-	}
-
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-	err = tx.Model(&model.Medium{}).Create(&result.Nodes).Error
+	mediumService := service.GetMediumService()
+	result, serviceErr := mediumService.Create(r.Context(), sID, uID, mediumList)
 
 	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, serviceErr)
 		return
 	}
 
@@ -169,8 +116,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result.Total = int64(len(result.Nodes))
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("media.created", strconv.Itoa(sID), r) {
