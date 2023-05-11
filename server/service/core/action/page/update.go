@@ -312,8 +312,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"author_ids":     page.AuthorIDs,
 		"meta":           result.Meta,
 		"meta_fields":    result.MetaFields,
-		"header_code":    result.HeaderCode,
-		"footer_code":    result.FooterCode,
 	}
 
 	if config.SearchEnabled() {
