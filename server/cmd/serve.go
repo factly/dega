@@ -30,7 +30,7 @@ var serveCmd = &cobra.Command{
 
 		if config.SearchEnabled() {
 			meiliIndex := viper.GetString("MEILISEARCH_INDEX")
-			err := meilisearchx.SetupMeiliSearch(meiliIndex, []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
+			err := meilisearchx.SetupMeiliSearch(meiliIndex, []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
 			if err != nil {
 				fmt.Println(err)
 			}
