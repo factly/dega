@@ -15,6 +15,41 @@ function Features() {
   const superOrg = useSelector(({ admin }) => {
     return admin.organisation;
   });
+  const isFactCheckEnabled = useSelector(({ admin, spaces }) => {
+    return admin.organisation.space_permissions?.filter(
+      (space) => space.id === spaces.selected,
+    )?.[0]?.fact_check;
+  });
+  const createFormatDescription = isFactCheckEnabled
+    ? 'Two formats will be created Fact Check and Article. Click below Button to create'
+    : 'Format Article will be created. Click below Button to create ';
+  const createFormatButtonText = isFactCheckEnabled ? 'CREATE FORMATS' : 'CREATE FORMAT';
+  React.useEffect(() => {
+    fetchEntities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  React.useEffect(() => {
+    fetchRatings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFactCheckEnabled]);
+
+  const fetchEntities = () => {
+    dispatch(getFormats());
+    dispatch(getPolicies());
+  };
+  const fetchRatings = () => {
+    if (isFactCheckEnabled) dispatch(getRatings());
+  };
+
+  React.useEffect(() => {
+    if (superOrg.is_admin) {
+      fetchEvents();
+    }
+  }, [superOrg.is_admin]);
+
+  const fetchEvents = () => {
+    dispatch(getEvents());
+  };
 
   const {
     ratings,
@@ -104,12 +139,12 @@ function Features() {
                   dispatch(addDefaultFormats()).then(() => history.push('/advanced/formats'));
                 }}
               >
-                <PlusOutlined /> CREATE FORMATS
+                <PlusOutlined /> {createFormatButtonText}
               </Button>,
             ]}
             style={{ width: 300 }}
           >
-            Two formats will be created Fact Check and Article. Click below Button to create
+            {createFormatDescription}
           </Card>
         )}
         {policiesLoading ? null : policies > 0 ? null : (
