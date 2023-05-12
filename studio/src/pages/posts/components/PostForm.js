@@ -72,7 +72,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   const showSchemaModal = () => {
     setIsModalVisible(true);
   };
@@ -210,30 +209,20 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
 
   const postActions = [
     {
-      key: 'save',
-      label: (
-        <Button type="link" disabled={!valueChange}>
-          Save Draft
-        </Button>
-      ),
-      onClick: () => {
-        setStatus('draft');
-        form.submit();
-      },
+      key: 'draft',
+      disabled: !valueChange,
+      label: <span style={{ padding: '4px 15px' }}>Save Draft</span>,
     },
     {
-      key: 'publish',
-      label: (
-        <Button type="ready" disabled={!valueChange}>
-          Ready to Publish
-        </Button>
-      ),
-      onClick: () => {
-        setStatus('ready');
-        form.submit();
-      },
+      disabled: status === 'ready' ? !valueChange : false,
+      key: 'ready',
+      label: <span style={{ padding: '4px 15px' }}>Ready to Publish </span>,
     },
   ];
+  const handleMenuItemClick = ({ item, key, keyPath, domEvent }) => {
+    setStatus(key);
+    form.submit();
+  };
 
   return (
     <>
@@ -270,7 +259,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                       setStatus('publish');
                       form.submit();
                     }}
-                    menu={{ items: postActions }}
+                    menu={{ onClick: handleMenuItemClick, items: postActions }}
                     icon={<DownOutlined style={{ fontSize: '14px' }} />}
                   >
                     <span style={{ width: '100px' }}>
@@ -329,7 +318,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                             setStatus('publish');
                             form.submit();
                           }}
-                          menu={{ items: postActions }}
+                          menu={{ onClick: handleMenuItemClick, items: postActions }}
                           icon={<DownOutlined style={{ fontSize: '12px' }} />}
                         >
                           <span style={{ width: '60px' }}>
