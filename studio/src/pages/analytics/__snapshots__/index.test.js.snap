@@ -228,13 +228,13 @@ exports[`Analytics Component should render the recordNotFound component when no 
       <Analytics>
         <RecordNotFound
           entity="Space"
-          link="/spaces"
+          link="admin/spaces"
           title="No space found."
         >
           <Result
             extra={
               <ForwardRef
-                to="/spaces"
+                to="admin/spaces"
               >
                 <ForwardRef(InternalButton)>
                   Create 
@@ -561,14 +561,14 @@ exports[`Analytics Component should render the recordNotFound component when no 
                 className="ant-result-extra"
               >
                 <Link
-                  to="/spaces"
+                  to="admin/spaces"
                 >
                   <LinkAnchor
-                    href="/spaces"
+                    href="/admin/spaces"
                     navigate={[Function]}
                   >
                     <a
-                      href="/spaces"
+                      href="/admin/spaces"
                       onClick={[Function]}
                     >
                       <Button>

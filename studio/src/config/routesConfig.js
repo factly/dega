@@ -563,6 +563,10 @@ const routes = {
     menuKey: '/posts',
     Component: Posts,
     title: 'Posts',
+    permission: {
+      resource: 'categories',
+      action: 'get',
+    },
   },
   createPost: {
     path: '/posts/create',
@@ -759,6 +763,10 @@ const routes = {
     menuKey: '/pages',
     Component: Pages,
     title: 'Pages',
+    permission: {
+      resource: 'categories',
+      action: 'get',
+    },
   },
   createPage: {
     path: '/pages/create',
