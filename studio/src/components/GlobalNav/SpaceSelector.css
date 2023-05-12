@@ -1,0 +1,101 @@
+.list-item-action {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.list-item-action:hover {
+  background: #f5f5f5 !important;
+  border: 0 !important;
+}
+
+.list-item {
+  transition: background 0.2s ease-in-out;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #fff;
+  padding: 14px 18px !important;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
+.list-item:hover {
+  border-bottom: 3px solid #1890ff !important;
+  border-radius: 8px !important;
+}
+
+.list-item:hover .list-item-action {
+  opacity: 1;
+}
+
+.list-item-action {
+  background-color: transparent;
+  color: #858585;
+  opacity: 0;
+  border-radius: 4px;
+  border: 2px solid #e0e0e0;
+}
+
+.list-item-meta {
+  display: flex;
+  align-items: center !important;
+}
+
+.list-item-avatar {
+  margin-right: 16px;
+}
+
+.list-item-name {
+  color: #101828;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.highlighted-text {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+.delete-modal-container .ant-modal-content {
+  width: 311px;
+}
+
+.org-space-list .ant-list-header {
+  padding: 0 0 8px;
+}
+
+.space-list-header {
+  padding: 0 0 8px;
+  color: #6c6c6c;
+  font-size: 12px;
+  line-height: 20px;
+  text-transform: uppercase;
+}
+
+.org-space-list .ant-empty {
+  margin: 0;
+}
+
+.org-space-list-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.org-space-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 14px 27px 21px 27px;
+  border-radius: 8px;
+  background-color: #f1f4f8;
+}
+
+.org-space-list > div {
+  width: 100%;
+}

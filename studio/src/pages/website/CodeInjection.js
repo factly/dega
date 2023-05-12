@@ -56,9 +56,6 @@ function CodeInjection() {
         onValuesChange={() => {
           setValueChange(true);
         }}
-        style={{
-          paddingTop: '24px',
-        }}
       >
         <Row justify="end">
           <Form.Item>

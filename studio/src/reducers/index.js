@@ -23,6 +23,7 @@ import users from './usersReducer';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
 import menus from './menuReducer';
 import sidebar from './sidebarReducer';
+import spaceSelectorPage from './spaceSelectorPage';
 import episodes from './episodesReducer';
 import podcasts from './podcastReducer';
 import redirect from './redirectReducer';
@@ -65,6 +66,7 @@ const appReducer = combineReducers({
   users,
   menus,
   sidebar,
+  spaceSelectorPage,
   events,
   webhooks,
   webhooklogs,

@@ -47,7 +47,7 @@ function Formats({ permission }) {
     <Space direction="vertical">
       <Helmet title={'Formats'} />
       <Row justify="end">
-        <Link key="1" to="/advanced/formats/create">
+        <Link key="1" to="/settings/advanced/formats/create">
           <Button
             disabled={!(actions.includes('admin') || actions.includes('create'))}
             type="primary"

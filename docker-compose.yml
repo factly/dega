@@ -165,7 +165,7 @@ services:
     image: oryd/keto:v0.9.0-alpha.0
     ports:
       - "4466:4466" # read
-      - "4467:4467" # write 
+      - "4467:4467" # write
       - "4468:4468" # metric
     environment:
       - LOG_LEVEL=debug
@@ -253,7 +253,7 @@ services:
       - KAVACH_KETO_READ_API_URL=http://keto:4466
       - KAVACH_KETO_WRITE_API_URL=http://keto:4467
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
-      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
+      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433
       - KAVACH_MODE=development
       - KAVACH_USE_SQLITE=false
       - KAVACH_SQLITE_DB_PATH=kavach.db
@@ -263,7 +263,7 @@ services:
       - KAVACH_MANDE_HOST=http://mande.factly.in
       - KAVACH_DYNAMIC_MANDE_TEMPLATE_ID=1
       - KAVACH_DYNAMIC_SENDGRID_API_KEY=SENDGRID_API_KEY
-      - KAVACH_ENABLE_MULTITENANCY=false
+      - KAVACH_ENABLE_MULTITENANCY=true
       - KAVACH_DISABLE_REGISTRATION=false
       - KAVACH_APPLICATION_NAME=Kavach
       - KAVACH_DEFAULT_USER_EMAIL=dega@newchecker.in
@@ -297,7 +297,7 @@ services:
       - KAVACH_KETO_READ_API_URL=http://keto:4466
       - KAVACH_KETO_WRITE_API_URL=http://keto:4467
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
-      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
+      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433
       - KAVACH_MODE=development
       - KAVACH_USE_SQLITE=false
       - KAVACH_SQLITE_DB_PATH=kavach.db
@@ -328,17 +328,17 @@ services:
         target: /app/public/config.js
 
     environment:
-      - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web 
+      - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
       - REACT_APP_PUBLIC_URL='http://127.0.0.1:4455/.factly/kavach/web';
       - REACT_APP_KAVACH_TITLE='FACTLY';
       - REACT_APP_COMPANION_URL='http://127.0.0.1:3020';
       - REACT_APP_API_URL='http://127.0.0.1:4455/.factly/kavach/server';
       - REACT_APP_KRATOS_PUBLIC_URL='http://127.0.0.1:4455/.ory/kratos/public';
-      - REACT_APP_ENABLE_MULTITENANCY='false';
+      - REACT_APP_ENABLE_MULTITENANCY='true';
       - REACT_APP_DISABLE_REGISTRATION=false;
       - REACT_APP_REDIRECT_SINGLE_APPLICATION_USERS=true;
       - REACT_APP_LOGO_URL='https://images.factly.in/login/applications/logos/factly.png?rs:fill/h:60';
-      - REACT_APP_ENABLE_IMGPROXY=false; 
+      - REACT_APP_ENABLE_IMGPROXY=false;
     restart: unless-stopped
     networks:
       - dega

@@ -1,19 +1,30 @@
 import React from 'react';
-import { Popconfirm, Button, Table, Tooltip, Switch } from 'antd';
+import { ConfigProvider, Modal, Button, Table, Typography, Switch } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteWebhook, updateWebhook } from '../../../actions/webhooks';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
+  const [modalOpen, setModalOpen] = React.useState(false);
+
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      width: '20%',
+      width: '60%',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <Link
@@ -28,22 +39,16 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
       },
     },
     {
-      title: 'Url',
-      dataIndex: 'url',
-      key: 'url',
-      ellipsis: {
-        showTitle: false,
-      },
-      render: (url) => (
-        <Tooltip placement="topLeft" title={url}>
-          {url}
-        </Tooltip>
-      ),
-    },
-    {
       title: 'Enabled',
       dataIndex: 'enabled',
-      width: '10%',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, webhook) => {
         return (
           <Switch
@@ -58,43 +63,108 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
     {
       title: 'Action',
       dataIndex: 'operation',
-      fixed: 'right',
       align: 'center',
       width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
-          <Popconfirm
-            title="Are you sure you want to delete this?"
-            onConfirm={() => dispatch(deleteWebhook(record.id)).then(() => fetchWebhooks())}
-            disabled={!(actions.includes('admin') || actions.includes('delete'))}
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  controlHeight: 35,
+                  colorBorder: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
+                },
+              },
+            }}
           >
+            {' '}
             <Button
-              icon={<DeleteOutlined />}
+              size="large"
+              onClick={(e) => {
+                e.stopPropagation();
+                setModalOpen(true);
+              }}
+              icon={<DeleteOutlined style={{ color: '#858585' }} />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              danger
             />
-          </Popconfirm>
+            <Modal
+              open={modalOpen}
+              closable={false}
+              centered
+              width={311}
+              className="delete-modal-container"
+              style={{
+                borderRadius: '18px',
+              }}
+              onOk={(e) => {
+                e.stopPropagation();
+                dispatch(deleteWebhook(record.id)).then(() => fetchWebhooks());
+                setModalOpen(false);
+              }}
+              disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+              onCancel={(e) => {
+                e.stopPropagation();
+                setModalOpen(false);
+              }}
+            >
+              <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
+            </Modal>
+          </ConfigProvider>
         );
       },
     },
   ];
 
   return (
-    <Table
-      bordered
-      columns={columns}
-      dataSource={data.webhooks}
-      loading={data.loading}
-      rowKey={'id'}
-      pagination={{
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
-        total: data.total,
-        current: filters.page,
-        pageSize: filters.limit,
-        onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
-        pageSizeOptions: ['10', '15', '20'],
+    <ConfigProvider
+      theme={{
+        components: {
+          Typography: {
+            colorText: '#101828',
+          },
+        },
       }}
-    />
+    >
+      <Table
+        columns={columns}
+        dataSource={data.webhooks}
+        loading={data.loading}
+        rowKey={'id'}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              history.push(`/advanced/formats/${record.id}/edit`);
+            },
+            onMouseEnter: (event) => {
+              document.body.style.cursor = 'pointer';
+            },
+            onMouseLeave: (event) => {
+              document.body.style.cursor = 'default';
+            },
+          };
+        }}
+        scroll={{
+          x: '1000',
+        }}
+        pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
+          total: data.total,
+          current: filters.page,
+          pageSize: filters.limit,
+          onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
+          pageSizeOptions: ['10', '15', '20'],
+        }}
+      />
+    </ConfigProvider>
   );
 }
 

@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, InputNumber, Space, Radio } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Space,
+  Radio,
+  Row,
+  Col,
+  ConfigProvider,
+  Collapse,
+} from 'antd';
 import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Audio from './Audio';
@@ -50,82 +61,136 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
     });
   };
 
+  const { Panel } = Collapse;
+
   return (
-    <Form
-      {...layout}
-      layout="vertical"
-      form={form}
-      initialValues={{ ...data }}
-      name="create-category"
-      onFinish={(values) => {
-        if (values.meta_fields) {
-          values.meta_fields = getJsonValue(values.meta_fields);
-        }
-        onSave(values);
-        onReset();
-      }}
-      onValuesChange={() => {
-        setValueChange(true);
+    <ConfigProvider
+      theme={{
+        components: {
+          Collapse: {
+            colorBgContainer: '#F9FAFB',
+            colorText: '#000000E0',
+          },
+        },
       }}
     >
-      <div style={{ display: 'flex' }}>
-        <div style={{ flex: 1, marginRight: 10 }}>
-          <TitleInput onChange={(e) => onTitleChange(e.target.value)} />
-          <SlugInput />
-          <Form.Item name="podcast" label="Podcasts">
-            <Selector action="Podcasts" display="title" />
-          </Form.Item>
-          <Form.Item>
-            <Input.Group compact>
-              <Form.Item label="Season" name={'season'}>
-                <InputNumber style={{ width: '100%' }} placeholder="Input season" />
+      <Form
+        {...layout}
+        layout="vertical"
+        form={form}
+        style={{ padding: '0 1rem' }}
+        initialValues={{ ...data }}
+        name="create-category"
+        className="edit-form"
+        onFinish={(values) => {
+          if (values.meta_fields) {
+            values.meta_fields = getJsonValue(values.meta_fields);
+          }
+          onSave(values);
+          onReset();
+        }}
+        onValuesChange={() => {
+          setValueChange(true);
+        }}
+      >
+        <Row justify="center" style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
+          <Col span={24}>
+            <Row justify="end" gutter={40}>
+              <Form.Item>
+                <Space>
+                  <Button disabled={!valueChange} type="primary" htmlType="submit">
+                    {data && data.id ? 'Update' : 'Save'}
+                  </Button>
+                </Space>
               </Form.Item>
-              <Form.Item label="Episode" name={'episode'}>
-                <InputNumber style={{ width: '100%' }} placeholder="Input episode" />
-              </Form.Item>
-            </Input.Group>
-          </Form.Item>
-          <Form.Item name="type" label="Type of Episode">
-            <Radio.Group defaultValue={'full'}>
-              <Radio.Button value="full">Full</Radio.Button>
-              <Radio.Button value="trailer">Trailer</Radio.Button>
-              <Radio.Button value="bonus">Bonus</Radio.Button>
-            </Radio.Group>
-          </Form.Item>
-          <DescriptionInput
-            inputProps={{ style: { width: '600px' }, placeholder: 'Enter Description...' }}
-            initialValue={data.description_html}
-          />
-          <MetaForm />
-          <Form.Item {...tailLayout}>
-            <Space>
-              <Button disabled={!valueChange} type="primary" htmlType="submit">
-                {data && data.id ? 'Update' : 'Submit'}
-              </Button>
-              <Button htmlType="button" onClick={onReset}>
-                Reset
-              </Button>
-            </Space>
-          </Form.Item>
-        </div>
-        <div style={{ flex: 1, alignItems: 'center' }}>
-          <Form.Item label="Featured Image" name="medium_id">
-            <MediaSelector />
-          </Form.Item>
-          <Form.Item name="audio_url" label="Audio">
-            <Audio
-              onUpload={(value) => {
-                setURL(value);
-                form.setFieldsValue({
-                  audio_url: value,
-                });
-              }}
-              url={url}
-            />
-          </Form.Item>
-        </div>
-      </div>
-    </Form>
+            </Row>
+          </Col>
+          <Col span={24}>
+            <Row gutter={40}>
+              <Collapse
+                style={{ width: '100%', marginBottom: 16, background: '#f0f2f5', border: 0 }}
+                defaultActiveKey={['1']}
+                expandIconPosition="right"
+                expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+              >
+                <Panel header="Basic" key="1">
+                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
+                    <Col xs={24} md={10}>
+                      <TitleInput onChange={(e) => onTitleChange(e.target.value)} />
+                      <SlugInput />
+                      <Form.Item name="podcast" label="Podcasts">
+                        <Selector action="Podcasts" display="title" />
+                      </Form.Item>
+                      <DescriptionInput
+                        inputProps={{
+                          style: {
+                            minHeight: '92px',
+                            background: '#F9FAFB',
+                            padding: '0.25rem 0.5rem',
+                            borderRadius: '0.25rem',
+                            border: '1px solid rgba(0, 0, 0, 0.15)',
+                          },
+                        }}
+                        rows={5}
+                        initialValue={data.description_html}
+                      />
+                      <Form.Item>
+                        <Row gutter={16}>
+                          <Col span={12}>
+                            <Form.Item label="Season" name={'season'}>
+                              <InputNumber
+                                style={{ width: '100%', marginRight: 16 }}
+                                placeholder="Input season"
+                              />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item label="Episode" name={'episode'}>
+                              <InputNumber style={{ width: '100%' }} placeholder="Input episode" />
+                            </Form.Item>
+                          </Col>
+                        </Row>
+                      </Form.Item>
+                      <Form.Item name="audio_url" label="Audio">
+                        <Audio
+                          onUpload={(value) => {
+                            setURL(value);
+                            form.setFieldsValue({
+                              audio_url: value,
+                            });
+                          }}
+                          url={url}
+                        />
+                      </Form.Item>
+                      <Form.Item name="type" label="Type of Episode">
+                        <Radio.Group defaultValue={'full'}>
+                          <Radio.Button value="full">Full</Radio.Button>
+                          <Radio.Button value="trailer">Trailer</Radio.Button>
+                          <Radio.Button value="bonus">Bonus</Radio.Button>
+                        </Radio.Group>
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} md={6}>
+                      <Form.Item label="Featured Image" name="medium_id">
+                        <MediaSelector
+                          maxWidth={'350px'}
+                          containerStyles={{ justifyContent: 'start' }}
+                        />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Panel>
+              </Collapse>
+            </Row>
+          </Col>
+          <Col span={24}>
+            <Row gutter={40}>
+              <MetaForm style={{ marginBottom: 16, background: '#f0f2f5', border: 0 }} />
+            </Row>
+          </Col>
+        </Row>
+      </Form>
+    </ConfigProvider>
   );
 };
 

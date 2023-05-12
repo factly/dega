@@ -1,5 +1,5 @@
 .slider-menu {
-  height: calc(100vh - 128px);
+  height: calc(100vh - 165px);
 }
 
 .menu-header {
@@ -19,6 +19,7 @@
   font-size: 24px;
   padding-left: 16px;
 }
+
 .user-menu > div {
   display: flex;
   justify-content: space-around;
@@ -26,16 +27,24 @@
   border-radius: 50px;
   padding: 0.25rem;
 }
+
 .user-menu > div:hover {
   background-color: #fff;
 }
+
 .user-menu > div > span {
   display: flex;
 }
+
 .stats-wrapper {
   background: #f0f2f5;
   margin: 1rem auto;
 }
+
+.ant-menu-item-selected {
+  font-weight: 600;
+}
+
 /* .ant-btn.button-secondary {
   color: #fff;
   background: #15171a;
@@ -64,6 +73,7 @@
   background-color: #ffffff;
   padding-left: 16px;
 }
+
 .main-sidebar .slider-menu {
   overflow-y: auto;
   overflow-x: hidden;

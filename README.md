@@ -37,3 +37,4 @@ Once the application is up and running you should be able to access it using the
 
 - Create config file with name config (and extension .env, .yml, .json) in `server/`, `api/` and `templates/` add config variables (for eg see config.env.example in each folder)
 - Create a `.env` file inside companion folder in root for companion config variables (for eg see .env.example file in companion folder)
+git fetch upstream

@@ -19,11 +19,46 @@ code {
   max-width: 1000px;
 }
 
-.ant-modal-content {
+/* .ant-modal-content {
   width: 800px;
-}
+} */
 
 .menu-logo {
   height: 36px;
   width: 36px;
+}
+
+.edit-drawer .ant-collapse-item-active {
+  border: 0 !important;
+}
+
+.edit-drawer .ant-collapse-header {
+  padding: 1rem 0 !important;
+  color: #000000e0;
+  font-weight: 600 !important;
+}
+
+.edit-drawer .ant-collapse-item-active .ant-collapse-header {
+  color: #3473ed !important;
+  font-weight: 600 !important;
+}
+
+.edit-drawer .ant-collapse-content-box {
+  color: #000000e0;
+  padding-left: 0 !important;
+}
+
+.edit-drawer .collapse-icon-background {
+  border-radius: 21px;
+  background: #e8eff2;
+  width: 28px;
+  height: 28px;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-form .ant-collapse-header {
+  font-weight: 600 !important;
 }

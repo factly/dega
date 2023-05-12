@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Button, Table } from 'antd';
+import { Popconfirm, Button, Table, Typography, Tag } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces, approveSpaceRequest } from '../../../../actions/spaceRequests';
@@ -46,48 +46,140 @@ function RequestList() {
     {
       title: 'Media',
       dataIndex: 'media',
+      width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
-        return record.media >= 0 ? <p>{record.media}</p> : <p>Unlimited</p>;
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.media >= 0 ? record.media : 'Unlimited'}
+          </Typography.Text>
+        );
       },
     },
     {
       title: 'Posts',
       dataIndex: 'posts',
+      width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
-        return record.posts >= 0 ? <p>{record.posts}</p> : <p>Unlimited</p>;
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.posts >= 0 ? record.posts : 'Unlimited'}
+          </Typography.Text>
+        );
       },
     },
     {
       title: 'Episodes',
       dataIndex: 'episodes',
+      width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
-        return record.episodes >= 0 ? <p>{record.episodes}</p> : <p>Unlimited</p>;
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.posts >= 0 ? record.episodes : 'Unlimited'}
+          </Typography.Text>
+        );
       },
     },
     {
       title: 'Fact Check',
       dataIndex: 'fact_check',
+      width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
-        return <p>{record.fact_check ? 'Enabled' : 'Disabled'}</p>;
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.fact_check ? 'Enabled' : 'Disabled'}
+          </Typography.Text>
+        );
       },
     },
     {
       title: 'Podcast',
       dataIndex: 'podcast',
+      width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
-        return <p>{record.podcast ? 'Enabled' : 'Disabled'}</p>;
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.podcast ? 'Enabled' : 'Disabled'}
+          </Typography.Text>
+        );
       },
     },
-    { title: 'Status', dataIndex: 'status', key: 'status' },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
+      render: (_, item) => {
+        switch (item.status) {
+          case 'pending':
+            return <Tag color="orange">Pending</Tag>;
+          case 'approved':
+            return <Tag color="green">Approved</Tag>;
+          case 'rejected':
+            return <Tag color="red">Rejected</Tag>;
+          case 'closed':
+            return <Tag color="red">Closed</Tag>;
+          default:
+            return <Tag color="orange">Pending</Tag>;
+        }
+      },
+    },
   ];
 
   if (is_admin) {
     columns.push({
       title: 'Action',
       dataIndex: 'operation',
-      fixed: 'right',
       align: 'center',
       width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <span>
@@ -115,7 +207,10 @@ function RequestList() {
 
   return (
     <Table
-      bordered
+      // style={{ maxWidth: '100vw', overflowX: 'auto' }}
+      scroll={{
+        x: '1000',
+      }}
       columns={columns}
       dataSource={spaceRequests}
       loading={loading}

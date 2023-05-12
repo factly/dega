@@ -31,7 +31,7 @@ function EditMenu() {
   }
   const onUpdate = (values) => {
     dispatch(updateMenu({ ...menu, ...values })).then(() =>
-      history.push(`/website/menus/${id}/edit`),
+      history.push(`/settings/website/menus/${id}/edit`),
     );
   };
   return (

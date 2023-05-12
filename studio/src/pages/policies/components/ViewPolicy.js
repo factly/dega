@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions, Tag, Table, Skeleton, Button, Divider } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -43,8 +44,11 @@ export default function ViewPolicy() {
         gap: '20px',
       }}
     >
-      <Link key="1" to={`/members/policies`}>
-        <Button type="primary">Back to Policies</Button>
+      <Link key="1" to={`/settings/members/policies`}>
+        <Button icon={<LeftOutlined />} type="secondary">
+          {' '}
+          Back to Policies
+        </Button>
       </Link>
       <h2> Policy Details </h2>
       {loading ? (

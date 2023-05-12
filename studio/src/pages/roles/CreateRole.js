@@ -10,7 +10,7 @@ function CreateRole() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(createRole(values)).then(() => history.push('/members/roles'));
+    dispatch(createRole(values)).then(() => history.push('/settings/members/roles'));
   };
 
   return (

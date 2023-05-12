@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider } from 'antd';
+import { Layout, Card, notification, BackTop, ConfigProvider, Drawer } from 'antd';
+import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Sidebar from '../components/GlobalNav/Sidebar';
@@ -11,10 +12,26 @@ import { getSuperOrganisation } from '../actions/admin';
 import Pageheader from '../components/PageHeader';
 import routes from '../config/routesConfig';
 import _ from 'lodash';
+import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
+import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 
 function BasicLayout(props) {
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 460) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const { location } = props;
-  const { Content } = Layout;
+  const { Content, Header } = Layout;
   const { children } = props;
   const [enteredRoute, setRoute] = React.useState({ menuKey: '/' });
   React.useEffect(() => {
@@ -40,6 +57,7 @@ function BasicLayout(props) {
       }
     }
   }, [location]);
+
   const dispatch = useDispatch();
 
   const { permission, orgs, loading, selected, applications, services } = useSelector((state) => {
@@ -106,6 +124,16 @@ function BasicLayout(props) {
   //   if (orgs.length > 0 && selected === 0) history.push('/spaces/create');
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [orgs, location.pathname]);
+  const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
+
+  if (spaceSelectorVisible.visible) {
+    return (
+      <SpaceSelector
+        open={spaceSelectorVisible.visible}
+        onClose={() => dispatch(setSpaceSelectorPage(false))}
+      />
+    );
+  }
 
   const hideSidebar =
     (location.pathname.includes('posts') ||
@@ -114,24 +142,55 @@ function BasicLayout(props) {
     (location.pathname.includes('edit') || location.pathname.includes('create'));
   return (
     <ConfigProvider
-    // theme={
-    // {
-    // we can customize the theme here , commenting it for now.
-    // token: {
-    //   colorPrimary: '#4F46E5',
-    //   colorLink: '#4F46E5',
-    // },
-    // components: {
-    //   Menu: {
-    //     colorItemBgSelected: '#D1D5DB',
-    //   },
-    // },
-    // }
-    // }
+      theme={{
+        // // we can customize the theme here
+        // token: {
+        //   colorPrimary: '#2f54eb',
+        //   colorLink: '#2f54eb',
+        // },
+        components: {
+          Menu: {
+            colorItemBgSelected: '#0000000F',
+            colorItemTextSelected: '#000',
+            colorLink: '#000',
+          },
+          Table: {
+            paddingContentVerticalLG: 12,
+            colorTextHeading: '#475467',
+            fontWeightStrong: 500,
+            fontSize: 12,
+          },
+          Tabs: {
+            margin: 10,
+            colorText: '#6C6C6C',
+          },
+          Pagination: {
+            colorPrimary: '#1E1E1E',
+          },
+          Modal: {
+            colorBgMask: '#00000051',
+          },
+        },
+      }}
     >
+      {isMobileScreen && !hideSidebar && (
+        <>
+          <Layout style={{ padding: '48px 28px 17px 28px', background: '#F2F5F9' }}>
+            <MobileSidebar
+              permission={permission}
+              menuKey={enteredRoute?.menuKey}
+              orgs={orgs}
+              loading={loading}
+              superOrg={superOrg}
+              applications={applications}
+              services={services}
+            />
+          </Layout>
+        </>
+      )}
       <Layout hasSider={true}>
         <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
-        {!hideSidebar && (
+        {!isMobileScreen && !hideSidebar && (
           <Sidebar
             permission={permission}
             menuKey={enteredRoute?.menuKey}
@@ -145,7 +204,20 @@ function BasicLayout(props) {
         <Layout style={{ background: '#fff' }}>
           {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
           <Content className="layout-content">
-            <Pageheader location={location} />
+            {[
+              '/posts',
+              '/pages',
+              '/categories',
+              '/tags',
+              '/media',
+              '/fact-checks',
+              '/claims',
+              '/claimants',
+              '/ratings',
+              '/podcasts',
+              '/episodes',
+              '/settings',
+            ].includes(location.pathname) || <Pageheader location={location} />}
             <Card key={selected.toString()} className="wrap-children-content">
               {children}
             </Card>

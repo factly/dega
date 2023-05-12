@@ -81,10 +81,10 @@ export default function spacesReducer(state = initialState, action = {}) {
         selected: action.payload.id,
       };
     case SET_SELECTED_SPACE:
-      localStorage.setItem('space', action.payload);
+      localStorage.setItem('space', action.payload.id);
       return {
         ...state,
-        selected: action.payload,
+        selected: action.payload.id,
       };
     case UPDATE_SPACE_SUCCESS:
       return {
