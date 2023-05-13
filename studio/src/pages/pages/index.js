@@ -211,27 +211,28 @@ function Pages({ formats }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row>
-                      <Form.Item name="q">
-                        <Input placeholder="Search pages" />
-                        {/**/}
-                      </Form.Item>
-                      <Form.Item>
-                        <Button htmlType="submit" icon={<SearchOutlined />}>
-                          Search
-                        </Button>
-                      </Form.Item>
+                    <Row gutter={8}>
+                      <Col>
+                        <Form.Item name="q">
+                          <Input placeholder="Search pages" />
+                          {/**/}
+                        </Form.Item>
+                      </Col>
+                      <Col>
+                        <Form.Item>
+                          <Button htmlType="submit" icon={<SearchOutlined />}>
+                            Search
+                          </Button>
+                        </Form.Item>
+                      </Col>
                     </Row>
                   ) : (
                     <Tooltip title="search">
                       <Button
                         shape="circle"
                         type="text"
-                        onFocus={() => {
+                        onClick={() => {
                           setSearchFieldExpand(true);
-                          setTimeout(() => {
-                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
-                          }, 10000);
                         }}
                         icon={<SearchOutlined />}
                       />

@@ -220,26 +220,28 @@ function FactCheck({ formats }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row>
+                    <Row gutter={8}>
+                    <Col>
                       <Form.Item name="q">
-                        <Input placeholder="Search pages" />
+                        <Input placeholder="Search fact-checks" />
+                        {/**/}
                       </Form.Item>
+                    </Col>
+                    <Col>
                       <Form.Item>
                         <Button htmlType="submit" icon={<SearchOutlined />}>
                           Search
                         </Button>
                       </Form.Item>
-                    </Row>
+                    </Col>
+                  </Row>
                   ) : (
                     <Tooltip title="search">
                       <Button
                         shape="circle"
                         type="text"
-                        onFocus={() => {
+                        onClick={() => {
                           setSearchFieldExpand(true);
-                          setTimeout(() => {
-                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
-                          }, 10000);
                         }}
                         icon={<SearchOutlined />}
                       />

@@ -126,27 +126,29 @@ function Tags({ permission }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row>
+                    <Row gutter={8}>
+                    <Col>
                       <Form.Item name="q">
                         <Input placeholder="Search tags" />
+                        {/**/}
                       </Form.Item>
+                    </Col>
+                    <Col>
                       <Form.Item>
                         <Button htmlType="submit" icon={<SearchOutlined />}>
                           Search
                         </Button>
                       </Form.Item>
-                    </Row>
+                    </Col>
+                  </Row>
                   ) : (
                     <Tooltip title="search">
                       <Button
                         shape="circle"
                         type="text"
-                        onFocus={() => {
-                          setSearchFieldExpand(true);
-                          setTimeout(() => {
-                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
-                          }, 10000);
-                        }}
+                        onClick={() => {
+                         setSearchFieldExpand(true);
+                       }}
                         icon={<SearchOutlined />}
                       />
                     </Tooltip>

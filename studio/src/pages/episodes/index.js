@@ -158,27 +158,29 @@ function Episodes({ permission }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row>
+                    <Row gutter={8}>
+                    <Col>
                       <Form.Item name="q">
-                        <Input placeholder="Search podcasts" />
+                        <Input placeholder="Search episodes" />
+                        {/**/}
                       </Form.Item>
+                    </Col>
+                    <Col>
                       <Form.Item>
                         <Button htmlType="submit" icon={<SearchOutlined />}>
                           Search
                         </Button>
                       </Form.Item>
-                    </Row>
+                    </Col>
+                  </Row>
                   ) : (
                     <Tooltip title="search">
                       <Button
                         shape="circle"
                         // style={{ border: 'none' }}
                         type="text"
-                        onFocus={() => {
+                        onClick={() => {
                           setSearchFieldExpand(true);
-                          setTimeout(() => {
-                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
-                          }, 10000);
                         }}
                         icon={<SearchOutlined />}
                       />
