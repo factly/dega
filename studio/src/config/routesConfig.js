@@ -1,10 +1,11 @@
+import React from 'react';
 import {
-  PieChartTwoTone,
-  ControlTwoTone,
-  AudioTwoTone,
-  ToolTwoTone,
-  SettingTwoTone,
-  SecurityScanTwoTone,
+  HomeOutlined,
+  InfoCircleOutlined,
+  AudioOutlined,
+  GlobalOutlined,
+  SettingOutlined,
+  SecurityScanOutlined,
 } from '@ant-design/icons';
 
 //Pages
@@ -127,16 +128,16 @@ import EditWebhook from '../pages/webhooks/EditWebhook';
 //profile
 import Profile from '../pages/profile';
 
+// Settings
+import Settings from '../pages/settings';
 // Website
 import Website from '../pages/website';
 import EditWebsite from '../pages/website/EditWebsite';
 import CodeInjection from '../pages/website/CodeInjection';
 import Branding from '../pages/website/Branding';
 import AnalyticsForm from '../pages/website/AnalyticsForm';
-
 // Advanced
 import Advanced from '../pages/advanced';
-
 // Members
 import Members from '../pages/members';
 import Requests from '../pages/requests';
@@ -196,7 +197,7 @@ const routes = {
     },
   },
   editWebsite: {
-    path: '/website/general',
+    path: '/settings/website/general',
     menuKey: '/website',
     Component: EditWebsite,
     title: 'General',
@@ -206,7 +207,7 @@ const routes = {
     },
   },
   codeInjection: {
-    path: '/website/code-injection',
+    path: '/settings/website/code-injection',
     menuKey: '/website',
     Component: CodeInjection,
     title: 'Code Injection',
@@ -216,7 +217,7 @@ const routes = {
     },
   },
   branding: {
-    path: '/website/branding',
+    path: '/settings/website/branding',
     menuKey: '/website',
     Component: Branding,
     title: 'Branding',
@@ -226,7 +227,7 @@ const routes = {
     },
   },
   analyticsForm: {
-    path: '/website/analytics',
+    path: '/settings/website/analytics',
     menuKey: '/website',
     Component: AnalyticsForm,
     title: 'Analytics',
@@ -236,7 +237,7 @@ const routes = {
     },
   },
   reindex: {
-    path: '/advanced/reindex',
+    path: '/settings/advanced/reindex',
     menuKey: '/advanced',
     Component: Reindex,
     title: 'Reindex',
@@ -408,31 +409,31 @@ const routes = {
     },
   },
   policies: {
-    path: '/members/policies',
+    path: '/settings/members/policies',
     menuKey: '/members',
     Component: Policies,
     title: 'Policies',
   },
   roles: {
-    path: '/members/roles',
+    path: '/settings/members/roles',
     menuKey: '/members',
     Component: Roles,
     title: 'Roles',
   },
   roleEdit: {
-    path: '/members/roles/:id/edit',
+    path: '/settings/members/roles/:id/edit',
     Component: EditRole,
     menuKey: '/members/roles/edit',
     title: 'Edit Role',
   },
   roleUsers: {
-    path: '/members/roles/:roleID/users',
+    path: '/settings/members/roles/:roleID/users',
     menuKey: '/members',
     Component: RoleUsers,
     title: 'Role Users',
   },
   createPolicy: {
-    path: '/members/policies/create',
+    path: '/settings/members/policies/create',
     menuKey: '/members',
     Component: CreatePolicy,
     title: 'New Policy',
@@ -442,13 +443,13 @@ const routes = {
     },
   },
   ViewPolicy: {
-    path: '/members/policies/:policyID/view',
+    path: '/settings/members/policies/:policyID/view',
     menuKey: '/members',
     Component: ViewPolicy,
     title: 'Policy',
   },
   createRole: {
-    path: '/members/roles/create',
+    path: '/settings/members/roles/create',
     menuKey: '/members',
     Component: CreateRole,
     title: 'New Role',
@@ -458,7 +459,7 @@ const routes = {
     // },
   },
   editPolicy: {
-    path: '/members/policies/:id/edit',
+    path: '/settings/members/policies/:id/edit',
     menuKey: '/members',
     Component: EditPolicy,
     title: 'Edit',
@@ -468,7 +469,7 @@ const routes = {
     },
   },
   formats: {
-    path: '/advanced/formats',
+    path: '/settings/advanced/formats',
     menuKey: '/advanced',
     Component: Formats,
     title: 'Formats',
@@ -478,7 +479,7 @@ const routes = {
     },
   },
   createFormat: {
-    path: '/advanced/formats/create',
+    path: '/settings/advanced/formats/create',
     menuKey: '/advanced',
     Component: CreateFormat,
     title: 'New Format',
@@ -488,7 +489,7 @@ const routes = {
     },
   },
   editFormat: {
-    path: '/advanced/formats/:id/edit',
+    path: '/settings/advanced/formats/:id/edit',
     menuKey: '/advanced',
     Component: EditFormat,
     title: 'Edit',
@@ -712,13 +713,13 @@ const routes = {
     title: 'Sach',
   },
   users: {
-    path: '/members/users',
+    path: '/settings/members/users',
     menuKey: '/members',
     Component: Users,
     title: 'Users',
   },
   usersPermission: {
-    path: '/members/users/:id/permissions',
+    path: '/settings/members/users/:id/permissions',
     menuKey: '/members',
     Component: PermissionList,
     title: 'Users Permission ',
@@ -728,13 +729,13 @@ const routes = {
     },
   },
   menu: {
-    path: '/website/menus',
+    path: '/settings/website/menus',
     menuKey: '/website',
     Component: Menu,
     title: 'Menus',
   },
   createMenu: {
-    path: '/website/menus/create',
+    path: '/settings/website/menus/create',
     menuKey: '/website',
     Component: CreateMenu,
     title: 'New Menu',
@@ -744,7 +745,7 @@ const routes = {
     },
   },
   editMenu: {
-    path: '/website/menus/:id/edit',
+    path: '/settings/website/menus/:id/edit',
     menuKey: '/website',
     Component: EditMenu,
     title: 'Edit',
@@ -801,7 +802,7 @@ const routes = {
     isAdmin: true,
   },
   webhooks: {
-    path: '/advanced/webhooks',
+    path: '/settings/advanced/webhooks',
     menuKey: '/advanced',
     Component: Webhooks,
     title: 'Webhooks',
@@ -811,7 +812,7 @@ const routes = {
     },
   },
   createWebhook: {
-    path: '/advanced/webhooks/create',
+    path: '/settings/advanced/webhooks/create',
     menuKey: '/advanced',
     Component: CreateWebhook,
     title: 'New Webhook',
@@ -821,7 +822,7 @@ const routes = {
     },
   },
   editWebhook: {
-    path: '/advanced/webhooks/:id/edit',
+    path: '/settings/advanced/webhooks/:id/edit',
     menuKey: '/advanced',
     Component: EditWebhook,
     title: 'Edit',
@@ -835,6 +836,12 @@ const routes = {
     menuKey: '/profile',
     Component: Profile,
     title: 'Edit Profile',
+  },
+  settings: {
+    path: '/settings',
+    menuKey: '/settings',
+    title: 'Settings',
+    Component: Settings,
   },
   website: {
     path: '/website',
@@ -858,19 +865,19 @@ const routes = {
 export const sidebarMenu = [
   {
     title: 'Dashboard',
-    Icon: PieChartTwoTone,
+    Icon: (props) => <HomeOutlined {...props} />,
     children: [routes.home, routes.analytics],
     isService: false,
   },
   {
     title: 'Core',
-    Icon: ControlTwoTone,
+    Icon: (props) => <InfoCircleOutlined {...props} />,
     children: [routes.posts, routes.pages, routes.categories, routes.tags, routes.media],
     isService: true,
   },
   {
     title: 'Fact Checking',
-    Icon: SecurityScanTwoTone,
+    Icon: (props) => <SecurityScanOutlined {...props} />,
     children: [
       routes.factCheck,
       routes.claims,
@@ -883,20 +890,13 @@ export const sidebarMenu = [
   },
   {
     title: 'Podcast',
-    Icon: AudioTwoTone,
+    Icon: (props) => <AudioOutlined {...props} />,
     children: [routes.episodes, routes.podcasts],
     isService: true,
   },
   {
-    title: 'Settings',
-    Icon: SettingTwoTone,
-    children: [routes.website, routes.members, routes.advanced],
-    isService: false,
-    isAdmin: true,
-  },
-  {
     title: 'Administration',
-    Icon: ToolTwoTone,
+    Icon: (props) => <GlobalOutlined {...props} />,
     children: [routes.spaces, routes.requests, routes.permissions, routes.events],
     isService: false,
   },

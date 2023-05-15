@@ -89,7 +89,7 @@ func AddPosts(spaceID uint) error {
 	meiliPostObjects := make([]map[string]interface{}, 0)
 	for _, p := range posts {
 		var meiliPublishDate int64
-		if p.Status == "publish" {
+		if p.Status == "publish" || p.PublishedDate != nil {
 			meiliPublishDate = p.PublishedDate.Unix()
 		}
 

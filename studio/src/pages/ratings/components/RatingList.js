@@ -1,18 +1,30 @@
 import React from 'react';
-import { Popconfirm, Button, Table } from 'antd';
+import { ConfigProvider, Button, Table, Modal, Typography } from 'antd';
 
 import { useDispatch } from 'react-redux';
 import { deleteRating } from '../../../actions/ratings';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [deleteItemId, setDeleteItemId] = React.useState(null);
+
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <Link
@@ -21,16 +33,44 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
             }}
             to={`/ratings/${record.id}/edit`}
           >
-            {record.name}
+            <Typography.Text style={{ color: '#101828' }} strong>
+              {record.name}
+            </Typography.Text>
           </Link>
         );
       },
     },
-    { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    { title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value' },
+    {
+      title: 'Rating Value',
+      dataIndex: 'numeric_value',
+      key: 'numeric_value',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
+      width: 200,
+      render: (_, record) => {
+        return (
+          <Typography.Text style={{ color: '#101828' }} strong>
+            {record.numeric_value}
+          </Typography.Text>
+        );
+      },
+    },
     {
       title: 'Preview',
       dataIndex: 'preview',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
+      width: 200,
       render: (_, record) => (
         <div
           style={{
@@ -49,43 +89,110 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
     {
       title: 'Action',
       dataIndex: 'operation',
-      fixed: 'right',
       align: 'center',
       width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
-          <Popconfirm
-            title="Are you sure you want to delete this?"
-            onConfirm={() => dispatch(deleteRating(record.id)).then(() => fetchRatings())}
-            disabled={!(actions.includes('admin') || actions.includes('delete'))}
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  controlHeight: 35,
+                  colorBorder: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
+                },
+              },
+            }}
           >
+            {' '}
             <Button
-              icon={<DeleteOutlined />}
+              size="large"
+              icon={<DeleteOutlined style={{ color: '#858585' }} />}
+              onClick={(e) => {
+                e.stopPropagation();
+                setModalOpen(true);
+                setDeleteItemId(record.id);
+              }}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              danger
             />
-          </Popconfirm>
+          </ConfigProvider>
         );
       },
     },
   ];
 
   return (
-    <Table
-      bordered
-      columns={columns}
-      dataSource={data.ratings}
-      loading={data.loading}
-      rowKey={'id'}
-      pagination={{
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
-        total: data.total,
-        current: filters.page,
-        pageSize: filters.limit,
-        onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
-        pageSizeOptions: ['10', '15', '20'],
+    <ConfigProvider
+      theme={{
+        components: {
+          Typography: {
+            colorText: '#101828',
+          },
+        },
       }}
-    />
+    >
+      <Table
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              history.push(`/ratings/${record.id}/edit`);
+            },
+            onMouseEnter: (event) => {
+              document.body.style.cursor = 'pointer';
+            },
+            onMouseLeave: (event) => {
+              document.body.style.cursor = 'default';
+            },
+          };
+        }}
+        columns={columns}
+        dataSource={data.ratings}
+        loading={data.loading}
+        rowKey={'id'}
+        scroll={{
+          x: '1000',
+        }}
+        pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
+          total: data.total,
+          current: filters.page,
+          pageSize: filters.limit,
+          onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
+          pageSizeOptions: ['10', '15', '20'],
+        }}
+      />
+      <Modal
+        open={modalOpen}
+        closable={false}
+        centered
+        width={311}
+        className="delete-modal-container"
+        cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+        style={{
+          borderRadius: '18px',
+        }}
+        onOk={(e) => {
+          e.stopPropagation();
+          dispatch(deleteRating(deleteItemId)).then(() => fetchRatings());
+          setModalOpen(false);
+          setDeleteItemId(null);
+        }}
+        onCancel={(e) => {
+          e.stopPropagation();
+          setModalOpen(false);
+          setDeleteItemId(null);
+        }}
+      >
+        <Typography.Text strong>Are you sure you want to delete this rating?</Typography.Text>
+      </Modal>
+    </ConfigProvider>
   );
 }
 

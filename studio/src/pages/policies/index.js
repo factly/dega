@@ -49,7 +49,7 @@ function Policies() {
     <Space direction="vertical">
       <Helmet title={'Policies'} />
       <Row gutter={16} justify="end">
-        <Link to="/members/policies/create">
+        <Link to="/settings/members/policies/create">
           <Button
             disabled={!(actions.includes('admin') || actions.includes('create'))}
             type="primary"

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
+import { LeftOutlined } from '@ant-design/icons';
 import { PageHeader as AntPageHeader } from '@ant-design/pro-layout';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
@@ -136,6 +137,7 @@ function Pageheader() {
   )
     return (
       <AntPageHeader
+        backIcon={isBreadCrumbsHidden ? <LeftOutlined /> : null}
         ghost={false}
         title={isBreadCrumbsHidden ? getTitle(pathSnippets[0]) : null}
         onBack={handleOnBack}

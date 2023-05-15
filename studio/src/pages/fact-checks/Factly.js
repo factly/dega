@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Space, Input, Form, Select, Button, Skeleton, Row } from 'antd';
+import { Typography, Space, Input, Form, Select, Button, Skeleton, Row, Col } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSachFactChecks, getSachFilters } from '../../actions/sachFactChecks';
@@ -21,6 +22,20 @@ function Factly() {
   const [totalMatches, setTotalMatches] = useState(0);
   const [resultStats, setResultStats] = useState({});
   const [isResultTextVisible, setIsResultTextVisible] = useState(false);
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   let languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
 
   const pageLimit = 20;
@@ -113,42 +128,80 @@ function Factly() {
 
   return (
     <Space direction="vertical" size="medium">
-      <Typography.Title> Sach </Typography.Title>
-      <Form name="sach-form" form={form} onFinish={handleFinish} layout={'inline'}>
-        <Form.Item name="query" style={{ width: '40%' }}>
-          <Input
-            placeholder={'Search for Fact-Checks about a person or topic or a specific claim'}
-            allowClear
-          />
-        </Form.Item>
-        <Button type="primary" htmlType="submit">
-          {' '}
-          Search{' '}
-        </Button>
-      </Form>
-      <div
-        style={{
-          display: 'flex',
-          marginTop: '20px',
-        }}
-      >
-        <div
+      <Row justify="space-between" style={{ marginBottom: '16px' }}>
+        <Col span={isMobileScreen ? 24 : 8}>
+          <Form
+            name="sach-form"
+            form={form}
+            onFinish={handleFinish}
+            layout={'inline'}
+            style={{ width: '100%' }}
+          >
+            <Row justify="space-between" style={{ width: '97%' }}>
+              <Col span={isMobileScreen ? 16 : 18}>
+                <Form.Item name="query" style={{ width: '100%' }}>
+                  <Input
+                    prefix={
+                      <SearchOutlined
+                        style={{ color: '#000000E0', fontSize: '16px', paddingRight: 8 }}
+                      />
+                    }
+                    placeholder={
+                      'Search for Fact-Checks about a person or topic or a specific claim'
+                    }
+                    allowClear
+                  />
+                </Form.Item>
+              </Col>
+              <Col>
+                <Button type="primary" htmlType="submit">
+                  {' '}
+                  Search{' '}
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Col>
+        <Col>
+          <div
+            style={{
+              marginTop: isMobileScreen ? '16px' : '0px',
+              width: 'fit-content',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <Typography.Text style={{ width: '100%' }}>Sort by: </Typography.Text>
+            <Select
+              name="selectedDateOrder"
+              placeholder={'Sort by date'}
+              style={{ width: '80%' }}
+              onChange={handleDateChange}
+              value={dateOrder === '' ? null : dateOrder}
+              allowClear
+            >
+              <Select.Option value={'desc'}> latest </Select.Option>
+              <Select.Option value={'asc'}> oldest</Select.Option>
+            </Select>
+          </div>
+        </Col>
+      </Row>
+      <Row justify="space-between" gutter={[16, 16]}>
+        <Col
+          span={isMobileScreen ? 24 : 8}
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            width: '30%',
+            alignItems: 'center',
             gap: '8px',
           }}
         >
           Languages:
           <Select
             name="selectedLanguage"
+            style={{ width: '100%' }}
             placeholder={'Select Language'}
             mode="multiple"
-            style={{
-              maxWidth: '260px',
-              maxHeight: '40px',
-            }}
             onChange={handleLanguageChange}
           >
             {languages.map((lang) => (
@@ -157,21 +210,22 @@ function Factly() {
               </Select.Option>
             ))}
           </Select>
-        </div>
-        <div
+        </Col>
+        <Col
+          span={isMobileScreen ? 24 : 8}
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            width: '30%',
+            alignItems: 'center',
+            flexDirection: 'row',
             gap: '8px',
           }}
         >
           Countries:
           <Select
+            style={{ width: '100%' }}
             name="selectedCountry"
             placeholder={'Select Country'}
             mode="multiple"
-            style={{ width: '80%' }}
             onChange={handleCountryChange}
           >
             {publisherCountries.map((country) => (
@@ -180,21 +234,22 @@ function Factly() {
               </Select.Option>
             ))}
           </Select>
-        </div>
-        <div
+        </Col>
+        <Col
+          span={isMobileScreen ? 24 : 8}
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            width: '30%',
+            alignItems: 'center',
+            flexDirection: 'row',
             gap: '8px',
           }}
         >
           Publishers:
           <Select
+            style={{ width: '100%' }}
             name="selectedPublisher"
             placeholder={'Select Publisher'}
             mode="multiple"
-            style={{ width: '80%' }}
             onChange={handlePublisherChange}
           >
             {publisherList.map((publisher) => (
@@ -203,29 +258,8 @@ function Factly() {
               </Select.Option>
             ))}
           </Select>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '30%',
-            gap: '8px',
-          }}
-        >
-          Sort by date:
-          <Select
-            name="selectedDateOrder"
-            placeholder={'Sort by date'}
-            onChange={handleDateChange}
-            style={{ width: '80%' }}
-            value={dateOrder === '' ? null : dateOrder}
-            allowClear
-          >
-            <Select.Option value={'desc'}> latest </Select.Option>
-            <Select.Option value={'asc'}> oldest</Select.Option>
-          </Select>
-        </div>
-      </div>
+        </Col>
+      </Row>
       {loading ? (
         <Skeleton />
       ) : (
@@ -258,6 +292,7 @@ function Factly() {
             <div
               style={{
                 display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'space-between',
                 marginTop: '20px',
                 gap: '10px',

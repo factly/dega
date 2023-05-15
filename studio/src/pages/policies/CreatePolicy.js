@@ -13,7 +13,7 @@ function CreatePolicy() {
     values.permissions = values.permissions?.filter(
       (item) => item && item.resource && item.actions.length > 0,
     );
-    dispatch(createPolicy(values)).then(() => history.push('/members/policies'));
+    dispatch(createPolicy(values)).then(() => history.push('/settings/members/policies'));
   };
 
   return (

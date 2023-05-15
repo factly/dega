@@ -9,7 +9,7 @@ function CreateMenu() {
   const history = useHistory();
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(createMenu(values)).then(() => history.push('/website/menus'));
+    dispatch(createMenu(values)).then(() => history.push('/settings/website/menus'));
   };
   return (
     <div>

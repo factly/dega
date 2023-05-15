@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { SearchOutlined } from '@ant-design/icons';
 import { getGoogleFactChecks } from '../../actions/googleFactChecks';
 import { Form, Input, Select, Button, List, Typography, Space } from 'antd';
 import deepEqual from 'deep-equal';
@@ -17,6 +18,20 @@ function GoogleFactCheck() {
   const [currPageToken, setCurrPageToken] = React.useState('');
   const [paginationStack, setPaginationStack] = React.useState([]);
   const [indexPointer, setIndexPointer] = React.useState(null);
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const { factChecks, loading, nextPage } = useSelector(({ googleFactChecks }) => {
     const node = googleFactChecks.req.find((item) => {
@@ -94,7 +109,7 @@ function GoogleFactCheck() {
       <Form
         form={form}
         name="google-fact-check"
-        layout="inline"
+        layout={isMobileScreen ? 'vertical' : 'inline'}
         onFinish={(values) => {
           onSubmit(values);
         }}
@@ -102,18 +117,22 @@ function GoogleFactCheck() {
       >
         <Form.Item
           name="query"
-          label="Search"
           rules={[
             {
               required: true,
               message: 'Please enter your search query!',
             },
           ]}
-          style={{ width: '25%' }}
+          style={{ width: isMobileScreen || '20%' }}
         >
-          <Input placeholder="search fact checks" />
+          <Input
+            prefix={
+              <SearchOutlined style={{ color: '#000000E0', fontSize: '16px', paddingRight: 8 }} />
+            }
+            placeholder="Search fact checks"
+          />
         </Form.Item>
-        <Form.Item name="language" label="language" style={{ width: '25%' }}>
+        <Form.Item name="language" label="Language" style={{ width: isMobileScreen || '15%' }}>
           <Select defaultValue={'all'}>
             {langCode.map((e, key) => {
               return (

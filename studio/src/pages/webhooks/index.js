@@ -46,7 +46,7 @@ function Webhooks() {
     <Space direction="vertical">
       <Helmet title={'Webhooks'} />
       <Row gutter={16} justify="end">
-        <Link key="1" to="/advanced/webhooks/create">
+        <Link key="1" to="/settings/advanced/webhooks/create">
           <Button type="primary">New Webhook</Button>
         </Link>
       </Row>

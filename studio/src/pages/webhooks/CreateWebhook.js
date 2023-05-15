@@ -9,7 +9,7 @@ function CreateWebhook() {
   const history = useHistory();
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addWebhook(values)).then(() => history.push('/advanced/webhooks'));
+    dispatch(addWebhook(values)).then(() => history.push('/settings/advanced/webhooks'));
   };
   return (
     <>

@@ -60,6 +60,7 @@ const AccountMenu = () => {
         <Button
           style={{
             borderRadius: '50px',
+            background: '#DCE4E7',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

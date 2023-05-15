@@ -1,11 +1,11 @@
-import { Input, Modal, List, Typography, Empty } from 'antd';
+import { Input, Modal, List, Typography, Empty, Button } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import { getSearchDetails } from '../../actions/search';
 
-function Search({ collapsed }) {
+function Search({ collapsed, Icon }) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = useState({
@@ -55,15 +55,43 @@ function Search({ collapsed }) {
         });
         setSelected({ entityIndex, indexItem });
       }}
+      style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
     >
-      <SearchOutlined
-        style={{ fontSize: collapsed ? '16px' : '20px' }}
-        onClick={(e) => {
-          setOpen(true);
-          setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
-        }}
-      />
-      <Modal open={open} footer={null} onOk={handleOk} onCancel={handleCancel} closable={false}>
+      {!collapsed ? (
+        <Input
+          suffix={<SearchOutlined style={{ fontSize: collapsed ? '16px' : '20px' }} />}
+          onClick={(e) => {
+            setOpen(true);
+            setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
+          }}
+          style={{
+            borderRadius: '8px',
+            padding: '12px, 14px, 12px, 6px',
+            width: '100%',
+            height: '36px',
+          }}
+          placeholder={'Search..'}
+        />
+      ) : Icon ? (
+        <Button
+          type="text"
+          style={{ padding: '0px' }}
+          icon={<Icon />}
+          onClick={(e) => {
+            setOpen(true);
+            setTimeout(() => inputRef.current.focus(), 0);
+          }}
+        />
+      ) : (
+        <SearchOutlined
+          onClick={(e) => {
+            setOpen(true);
+            setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
+          }}
+          style={{ fontSize: collapsed ? '16px' : '20px', margin: '4px 0' }}
+        />
+      )}
+      <Modal visible={open} footer={null} onOk={handleOk} onCancel={handleCancel} closable={false}>
         <div>
           <Input
             onChange={(e) => {

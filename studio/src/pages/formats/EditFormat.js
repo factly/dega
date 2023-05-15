@@ -32,7 +32,7 @@ function EditFormat() {
 
   const onUpdate = (values) => {
     dispatch(updateFormat({ ...format, ...values }));
-    history.push(`/advanced/formats/${id}/edit`);
+    history.push(`/settings/advanced/formats/${id}/edit`);
   };
   return (
     <>

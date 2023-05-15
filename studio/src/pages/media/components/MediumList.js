@@ -3,11 +3,12 @@ import { Space, List, Card } from 'antd';
 import { Link } from 'react-router-dom';
 
 function MediumList({ data, filters, setFilters }) {
+  console.log('data', data);
   return (
     <Space direction={'vertical'}>
       <List
         grid={{
-          gutter: 16,
+          gutter: [32, 22],
           xs: 1,
           sm: 2,
           md: 3,
@@ -27,13 +28,8 @@ function MediumList({ data, filters, setFilters }) {
         }}
         dataSource={data.media}
         renderItem={(item) => (
-          <List.Item>
-            <Link
-              style={{
-                marginRight: 8,
-              }}
-              to={{ pathname: `/media/${item.id}/edit` }}
-            >
+          <List.Item style={{ borderRadius: '8px', margin: 0 }}>
+            <Link to={{ pathname: `/media/${item.id}/edit` }}>
               <Card
                 size="default"
                 key={item.url}
@@ -44,18 +40,16 @@ function MediumList({ data, filters, setFilters }) {
                   <img
                     alt="ALT"
                     src={
-                      item.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
-                        ? `${
-                            item.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
-                          }?gravity:sm/resize:fill:220:220`
-                        : ''
+                      `${item.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}?gravity:sm/resize:fill:220:220` || ''
+                      // 'https://source.unsplash.com/random/?city,night'
                     }
                     style={{
                       maxWidth: '100%',
                       width: '100%',
                       objectFit: 'cover',
-                      height: '220px',
+                      height: '250px',
                       objectPosition: 'center center',
+                      borderRadius: '8px',
                     }}
                     title={item.name}
                   />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Button, Table } from 'antd';
+import { Popconfirm, Button, Table, Tag, Typography } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -48,24 +48,83 @@ function RequestList() {
   };
 
   const columns = [
-    { title: 'Description', dataIndex: 'description', key: 'description' },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '400px',
+          },
+        };
+      },
+      width: 400,
+      render: (_, item) => (
+        <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+          {item.description}
+        </Typography.Text>
+      ),
+    },
     {
       title: 'Spaces',
       dataIndex: ['spaces'],
-      render: (_, record) => {
-        return record.spaces >= 0 ? <p>{record.spaces}</p> : <p>Unlimited</p>;
+      width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
+      render: (_, item) => (
+        <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+          {item.spaces >= 0 ? item.spaces : 'Unlimited'}
+        </Typography.Text>
+      ),
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
+      render: (_, item) => {
+        switch (item.status) {
+          case 'pending':
+            return <Tag color="orange">Pending</Tag>;
+          case 'approved':
+            return <Tag color="green">Approved</Tag>;
+          case 'rejected':
+            return <Tag color="red">Rejected</Tag>;
+          case 'closed':
+            return <Tag color="red">Closed</Tag>;
+          default:
+            return <Tag color="orange">Pending</Tag>;
+        }
       },
     },
-    { title: 'Status', dataIndex: 'status', key: 'status' },
   ];
 
   if (is_admin) {
     columns.push({
       title: 'Action',
       dataIndex: 'operation',
-      fixed: 'right',
       align: 'center',
       width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <span>
@@ -97,9 +156,11 @@ function RequestList() {
 
   return (
     <Table
-      bordered
       columns={columns}
       dataSource={organisationRequests}
+      scroll={{
+        x: '1000',
+      }}
       loading={loading}
       rowKey={'id'}
       pagination={{

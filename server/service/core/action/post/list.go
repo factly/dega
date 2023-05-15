@@ -117,7 +117,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 				if !statusTemplate {
 					tx.Where("status != ?", "template")
 				}
-				err = tx.Where(10000).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+				err = tx.Where(filteredPostIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
 				if err != nil {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.DBError()))
