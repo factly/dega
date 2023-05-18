@@ -123,7 +123,7 @@ function Categories({ permission }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row gutter={8}>
+                    <Row gutter={[8,16]}>
                       <Col>
                         <Form.Item name="q">
                           <Input placeholder="Search categories" />

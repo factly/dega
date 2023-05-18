@@ -211,7 +211,7 @@ function Pages({ formats }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row gutter={8}>
+                    <Row gutter={[8,16]}>
                       <Col>
                         <Form.Item name="q">
                           <Input placeholder="Search pages" />
