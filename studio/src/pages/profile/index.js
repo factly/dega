@@ -44,7 +44,7 @@ function Profile() {
         <Form
           form={form}
           name="update_profile"
-          layout='vertical'
+          layout="vertical"
           style={{ paddng: '34px 25px', background: '#F9FAFB' }}
           onFinish={update}
           initialValues={{
@@ -56,12 +56,7 @@ function Profile() {
           }}
         >
           <Row justify={'end'}>
-            <Button
-              disabled={!valueChange}
-              form="update_profile"
-              type="primary"
-              htmlType="submit"
-            >
+            <Button disabled={!valueChange} form="update_profile" type="primary" htmlType="submit">
               Update
             </Button>
           </Row>

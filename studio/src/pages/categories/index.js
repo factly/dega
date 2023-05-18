@@ -123,7 +123,7 @@ function Categories({ permission }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row gutter={[8,16]}>
+                    <Row gutter={8}>
                       <Col>
                         <Form.Item name="q">
                           <Input placeholder="Search categories" />
@@ -162,7 +162,7 @@ function Categories({ permission }) {
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
                         icon={<PlusOutlined />}
-                        style={{ marginBottom: '1.5rem' }}
+                        style={{ margin: isMobileScreen ? '16px 0' : '0 0 16px 0' }}
                       >
                         Create
                       </Button>

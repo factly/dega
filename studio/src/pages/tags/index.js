@@ -127,28 +127,28 @@ function Tags({ permission }) {
                 <Col>
                   {searchFieldExpand ? (
                     <Row gutter={8}>
-                    <Col>
-                      <Form.Item name="q">
-                        <Input placeholder="Search tags" />
-                        {/**/}
-                      </Form.Item>
-                    </Col>
-                    <Col>
-                      <Form.Item>
-                        <Button htmlType="submit" icon={<SearchOutlined />}>
-                          Search
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                  </Row>
+                      <Col>
+                        <Form.Item name="q">
+                          <Input placeholder="Search tags" />
+                          {/**/}
+                        </Form.Item>
+                      </Col>
+                      <Col>
+                        <Form.Item>
+                          <Button htmlType="submit" icon={<SearchOutlined />}>
+                            Search
+                          </Button>
+                        </Form.Item>
+                      </Col>
+                    </Row>
                   ) : (
                     <Tooltip title="search">
                       <Button
                         shape="circle"
                         type="text"
                         onClick={() => {
-                         setSearchFieldExpand(true);
-                       }}
+                          setSearchFieldExpand(true);
+                        }}
                         icon={<SearchOutlined />}
                       />
                     </Tooltip>

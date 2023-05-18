@@ -211,7 +211,7 @@ function Pages({ formats }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row gutter={[8,16]}>
+                    <Row gutter={8}>
                       <Col>
                         <Form.Item name="q">
                           <Input placeholder="Search pages" />
@@ -251,7 +251,7 @@ function Pages({ formats }) {
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
                         icon={<PlusOutlined />}
-                        style={{ marginBottom: 16 }}
+                        style={{ margin: isMobileScreen ? '16px 0' : '0 0 16px 0' }}
                       >
                         Create
                       </Button>

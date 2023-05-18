@@ -141,20 +141,20 @@ function Claimants({ permission }) {
                 <Col>
                   {searchFieldExpand ? (
                     <Row gutter={8}>
-                    <Col>
-                      <Form.Item name="q">
-                        <Input placeholder="Search claimants" />
-                        {/**/}
-                      </Form.Item>
-                    </Col>
-                    <Col>
-                      <Form.Item>
-                        <Button htmlType="submit" icon={<SearchOutlined />}>
-                          Search
-                        </Button>
-                      </Form.Item>
-                    </Col>
-                  </Row>
+                      <Col>
+                        <Form.Item name="q">
+                          <Input placeholder="Search claimants" />
+                          {/**/}
+                        </Form.Item>
+                      </Col>
+                      <Col>
+                        <Form.Item>
+                          <Button htmlType="submit" icon={<SearchOutlined />}>
+                            Search
+                          </Button>
+                        </Form.Item>
+                      </Col>
+                    </Row>
                   ) : (
                     <Tooltip title="search">
                       <Button
@@ -179,7 +179,7 @@ function Claimants({ permission }) {
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
                         icon={<PlusOutlined />}
-                        style={{ marginBottom: 16 }}
+                        style={{ margin: isMobileScreen ? '16px 0' : '0 0 16px 0' }}
                       >
                         Create
                       </Button>
