@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -43,35 +43,20 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Podcast{}
+	podcastService := service.GetPodcastService()
 
-	result.ID = uint(id)
-
-	// check record exists or not
-	err = config.DB.Where(&model.Podcast{
-		SpaceID: uint(sID),
-	}).Preload("Categories").First(&result).Error
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+	result, serviceErr := podcastService.GetById(sID, id)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
 
-	tx := config.DB.Begin()
-
-	// delete all associations
-	if len(result.Categories) > 0 {
-		_ = tx.Model(&result).Association("Categories").Delete(result.Categories)
-	}
-
-	tx.Model(&model.Podcast{}).Delete(&result)
+	_ = podcastService.Delete(sID, id, result)
 
 	if config.SearchEnabled() {
 		_ = meilisearchx.DeleteDocument("dega", result.ID, "podcast")
 	}
 
-	tx.Commit()
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("podcast.deleted", strconv.Itoa(sID), r) {
 			if err = util.NC.Publish("podcast.deleted", result); err != nil {

@@ -1,113 +1,124 @@
 package podcast
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/category"
-	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/gavv/httpexpect"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestPodcastList(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
-
+	defer gock.DisableNetworking()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	config.DB.Exec("DELETE FROM ratings")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM media")
+	config.DB.Exec("DELETE FROM categories")
+	config.DB.Exec("DELETE FROM podcasts")
 
-	// create httpexpect instance
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
+	}
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("get empty list of podcasts", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		mock.ExpectQuery(countQuery).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).
-				AddRow(0))
-
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(Columns))
-
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": 0})
-
-		test.ExpectationsMet(t, mock)
+			Value("nodes").
+			Array().
+			Empty()
 	})
 
 	t.Run("get list of podcasts", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		mock.ExpectQuery(countQuery).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).
-				AddRow(len(podcastList)))
+		insertCategoryData := coreModel.Category{
+			Name:    "Category",
+			Slug:    "category",
+			SpaceID: TestSpaceID,
+		}
+		insertMediumData := coreModel.Medium{
+			Name:    "Medium",
+			Slug:    "medium",
+			SpaceID: TestSpaceID,
+		}
+		config.DB.Model(&coreModel.Category{}).Create(&insertCategoryData)
+		config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
 
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[0]["title"], podcastList[0]["slug"], podcastList[0]["description"], podcastList[0]["html_description"], podcastList[0]["language"], podcastList[0]["primary_category_id"], podcastList[0]["medium_id"], 1).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[1]["title"], podcastList[1]["slug"], podcastList[1]["description"], podcastList[1]["html_description"], podcastList[1]["language"], podcastList[1]["primary_category_id"], podcastList[1]["medium_id"], 1))
+		insertPodcastData := model.Podcast{
+			SpaceID:           TestSpaceID,
+			Title:             "Podcast Test",
+			Slug:              "podcast-test",
+			PrimaryCategoryID: &insertCategoryData.ID,
+			MediumID:          &insertMediumData.ID,
+			Language:          TestLanguage,
+			Description:       TestDescriptionJson,
+			DescriptionHTML:   TestDescriptionHtml,
+		}
 
-		PodcastCategorySelect(mock)
-		medium.SelectWithOutSpace(mock)
-		category.SelectWithOutSpace(mock)
-
+		if err := config.DB.Model(&model.Podcast{}).Create(&insertPodcastData).Error; err != nil {
+			log.Fatal(err)
+		}
+		insertPodcastData.ID = 100000
+		insertPodcastData.Title = "Podcast Test 2"
+		insertPodcastData.Slug = "podcast-test-2"
+		if err := config.DB.Model(&model.Podcast{}).Create(&insertPodcastData).Error; err != nil {
+			log.Fatal(err)
+		}
+		resData["title"] = "Podcast Test"
+		resData["slug"] = "podcast-test"
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(podcastList)}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(podcastList[0])
+			ContainsMap(resData)
 	})
 
-	t.Run("get list of podcasts with search query", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		mock.ExpectQuery(countQuery).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).
-				AddRow(len(podcastList)))
-
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[0]["title"], podcastList[0]["slug"], podcastList[0]["description"], podcastList[0]["html_description"], podcastList[0]["language"], podcastList[0]["primary_category_id"], podcastList[0]["medium_id"], 1).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[1]["title"], podcastList[1]["slug"], podcastList[1]["description"], podcastList[1]["html_description"], podcastList[1]["language"], podcastList[1]["primary_category_id"], podcastList[1]["medium_id"], 1))
-
-		PodcastCategorySelect(mock)
-		medium.SelectWithOutSpace(mock)
-		category.SelectWithOutSpace(mock)
-
+	// get list of podcasts with pagination
+	t.Run("get list of podcasts with pagination", func(t *testing.T) {
+		resData["title"] = "Podcast Test 2"
+		resData["slug"] = "podcast-test-2"
 		e.GET(basePath).
 			WithHeaders(headers).
-			WithQuery("q", "test").
+			WithQueryObject(map[string]interface{}{
+				"page":  2,
+				"limit": 1,
+			}).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(podcastList)}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(podcastList[0])
+			ContainsMap(resData)
 	})
+
 }

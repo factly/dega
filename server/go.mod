@@ -3,7 +3,6 @@ module github.com/factly/dega-server
 go 1.18
 
 require (
-	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/dlmiddlecote/sqlstats v1.0.2
 	github.com/eduncan911/podcast v1.4.2
@@ -15,6 +14,7 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/meilisearch/meilisearch-go v0.20.0
 	github.com/nats-io/gnatsd v1.4.1
+	github.com/nats-io/go-nats v1.7.2
 	github.com/nats-io/nats.go v1.10.0
 	github.com/prometheus/client_golang v1.9.0
 	github.com/spf13/cobra v1.1.3
@@ -74,7 +74,6 @@ require (
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/moul/http2curl v1.0.0 // indirect
-	github.com/nats-io/go-nats v1.7.2 // indirect
 	github.com/nats-io/jwt v1.1.0 // indirect
 	github.com/nats-io/nkeys v0.1.4 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
@@ -103,10 +102,10 @@ require (
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
-	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
-	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
-	golang.org/x/text v0.3.7 // indirect
-	golang.org/x/tools v0.1.2 // indirect
+	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
+	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
+	golang.org/x/text v0.3.8 // indirect
+	golang.org/x/tools v0.1.12 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

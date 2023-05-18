@@ -20,9 +20,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-// policyDataFile default json data file
-var policyDataFile = "./data/policies.json"
-var rolesDataFile = "./data/roles.json"
+// PolicyDataFile default json data file
+var PolicyDataFile = "./data/policies.json"
+var RolesDataFile = "./data/roles.json"
 
 // createDefaults - Create Default Policies
 // @Summary Create Default Policies
@@ -58,7 +58,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	policyJsonFile, err := os.Open(policyDataFile)
+	policyJsonFile, err := os.Open(PolicyDataFile)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -79,7 +79,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rolesJsonFile, err := os.Open(rolesDataFile)
+	rolesJsonFile, err := os.Open(RolesDataFile)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

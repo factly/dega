@@ -33,6 +33,23 @@ function Categories({ permission }) {
   const [filters, setFilters] = React.useState({
     ...params,
   });
+
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
   const pathName = useLocation().pathname;
   useEffect(() => {
     if (form) form.setFieldsValue(new Filters(params));
@@ -153,10 +170,10 @@ function Categories({ permission }) {
                 </Col>
               </Row>
             </Col>
-            <Col>
-              <Row justify="end" gutter={16}>
-                <Col>
-                  <Row justify="end">
+            <Col xs={24} md={8}>
+              <Row gutter={16} style={{ justifyContent: isMobileScreen ? 'space-between' : 'end', flexDirection: isMobileScreen && 'row-reverse' , marginTop: isMobileScreen && '1rem' }}>
+                <Col md={24} xs={12}>
+                  <Row justify="end" >
                     <Link to="/categories/create">
                       <Button
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
@@ -168,20 +185,18 @@ function Categories({ permission }) {
                       </Button>
                     </Link>
                   </Row>
-                  <Row gutter={16}>
-                    <Col>
-                      <Form.Item label="Sort By" name="sort">
-                        <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
-                          <Option value="desc" key={'desc'}>
-                            Latest
-                          </Option>
-                          <Option value="asc" key={'asc'}>
-                            Old
-                          </Option>
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                  </Row>
+                </Col>
+                <Col>
+                  <Form.Item label="Sort By" name="sort">
+                    <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
+                      <Option value="desc" key={'desc'}>
+                        Latest
+                      </Option>
+                      <Option value="asc" key={'asc'}>
+                        Old
+                      </Option>
+                    </Select>
+                  </Form.Item>
                 </Col>
               </Row>
             </Col>

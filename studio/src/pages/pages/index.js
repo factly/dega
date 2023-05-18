@@ -39,7 +39,7 @@ function Pages({ formats }) {
   const history = useHistory();
   const [expand, setExpand] = React.useState(false);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
-
+  const [status, setStatus] = React.useState('all');
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
 
   React.useEffect(() => {
@@ -143,6 +143,7 @@ function Pages({ formats }) {
 
   const onSave = (values) => {
     let searchFilter = new URLSearchParams();
+    status !== 'all' && searchFilter.set('status', status);
     Object.keys(values).forEach(function (key) {
       if (values[key]) {
         if (key === 'format' || key === 'tag' || key === 'author' || key === 'category') {
@@ -305,10 +306,11 @@ function Pages({ formats }) {
         defaultActiveKey={query.get('status') || 'all'}
         items={pageStatusItems}
         onChange={(key) => {
-          const formValues = form.getFieldsValue();
-          onSave({
-            ...formValues,
-            status: key,
+          key === 'all' ? query.delete('status') : query.set('status', key);
+          setStatus(key);
+          history.push({
+            pathName: pathname,
+            search: '?' + query.toString(),
           });
         }}
       />

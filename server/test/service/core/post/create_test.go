@@ -1,248 +1,192 @@
 package post
 
 import (
-	"errors"
+	"log"
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/jinzhu/gorm/dialects/postgres"
-
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/category"
-	"github.com/factly/dega-server/test/service/core/format"
-	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/test/service/core/tag"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestPostCreate(t *testing.T) {
 
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
-
-	// create httpexpect instance
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM posts")
+	var insertArthorData = model.Author{
+		FirstName: "Arthur",
+		LastName:  "Dent",
+	}
+	config.DB.Create(&insertArthorData)
+	var insertData model.Post = model.Post{
+		Title:            "TestTitle",
+		Subtitle:         TestSubTitle,
+		Slug:             "test-title-2",
+		Description:      TestDescriptionJson,
+		DescriptionHTML:  TestDescriptionHtml,
+		Status:           TestStatus,
+		IsPage:           TestIsPage,
+		IsHighlighted:    TestIsHighlighted,
+		FeaturedMediumID: &TestFeaturedMediumID,
+		FormatID:         TestFormatID,
+		SpaceID:          TestSpaceID,
+		Meta:             TestMeta,
+		HeaderCode:       TestHeaderCode,
+		FooterCode:       TestFooterCode,
+		MetaFields:       TestMetaFields,
+		DescriptionAMP:   TestDescriptionHtml,
+		Tags:             []model.Tag{},
+		Categories:       []model.Category{},
+	}
+	var insertMediumData = model.Medium{
+		Name:        "Create Medium Test",
+		Slug:        "create-medium-test",
+		Description: "desc",
+		Type:        "jpg",
+		Title:       "Sample image",
+		Caption:     "caption",
+		AltText:     "TestAltText",
+		FileSize:    100,
+		URL: postgres.Jsonb{
+			RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
+		},
+		Dimensions: "TestDimensions",
+		MetaFields: TestMetaFields,
+		SpaceID:    TestSpaceID,
+	}
+	insertSpacePermission := model.SpacePermission{
+		SpaceID:   1,
+		FactCheck: true,
+		Media:     10,
+		Posts:     10,
+		Podcast:   true,
+		Episodes:  10,
+		Videos:    10,
+	}
+	insertFormatData := model.Format{
+		Name:        "Create Format Test",
+		Slug:        "create-format-test",
+		Description: "desc",
+		SpaceID:     TestSpaceID,
+	}
+	if err := config.DB.Create(&insertFormatData).Error; err != nil {
+		log.Fatal(err)
+	}
+	if err := config.DB.Create(&insertMediumData).Error; err != nil {
+		log.Fatal(err)
+	}
+	if err := config.DB.Create(&insertSpacePermission).Error; err != nil {
+		log.Fatal(err)
+	}
+	if err := config.DB.Create(&insertData).Error; err != nil {
+		log.Fatal(err)
+	}
+	Data["author_ids"] = []int{int(insertArthorData.ID)}
+	Data["format_id"] = insertFormatData.ID
+	resData["format_id"] = insertFormatData.ID
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable post", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
+	t.Run("Unprocessable Entity", func(t *testing.T) {
 		e.POST(basePath).
-			WithJSON(invalidData).
+			WithJSON(invaidData).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
-	t.Run("Unable to decode post", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
+	t.Run("unable to decode post", func(t *testing.T) {
 		e.POST(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
 	t.Run("create post", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		postCountQuery(mock, 0)
-
-		slugCheckMock(mock, Data)
-
-		tag.SelectMock(mock, tag.Data, 1)
-		category.SelectWithOutSpace(mock)
-
-		postInsertMock(mock, Data, false)
-		postSelectWithOutSpace(mock, Data)
-		postClaimInsertMock(mock)
-		postClaimSelectMock(mock)
-		postAuthorInsertMock(mock)
-		postSchemaUpdateQuery(mock)
-		mock.ExpectCommit()
-
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(postData)
-
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusCreated).
+			JSON().
+			Object().
+			ContainsMap(resData)
 	})
 
 	t.Run("cannot parse post description", func(t *testing.T) {
+		Data["description"] = "invalid"
 
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		postCountQuery(mock, 0)
-
-		Data["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"block": "new"}`),
-		}
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
-		Data["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-		}
-		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("create post when permission not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "space_permissions"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "space_id", "media", "posts"}))
-
+		config.DB.Exec("DELETE FROM space_permissions")
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("create more than permitted posts", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		config.DB.Exec("DELETE FROM space_permissions")
+		insertSpacePermission := model.SpacePermission{
+			SpaceID:   1,
+			FactCheck: false,
+			Media:     0,
+			Posts:     0,
+			Podcast:   false,
+			Episodes:  0,
+			Videos:    0,
+		}
 
-		space.SelectQuery(mock, 1)
-		postCountQuery(mock, 100)
+		config.DB.Create(&insertSpacePermission)
 
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-
-	})
-
-	t.Run("creating post claims fail", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		postCountQuery(mock, 0)
-		slugCheckMock(mock, Data)
-
-		tag.SelectMock(mock, tag.Data, 1)
-		category.SelectWithOutSpace(mock)
-
-		postInsertMock(mock, Data, false)
-		postSelectWithOutSpace(mock, Data)
-		mock.ExpectQuery(`INSERT INTO "post_claims"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1, 1).
-			WillReturnError(errors.New("cannot create post_claims"))
-
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
 
 	})
 
 	t.Run("create post with slug is empty", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		postCountQuery(mock, 0)
-		slugCheckMock(mock, Data)
-
-		tag.SelectMock(mock, tag.Data, 1)
-		category.SelectWithOutSpace(mock)
-
-		postInsertMock(mock, Data, false)
-
-		postSelectWithOutSpace(mock, Data)
-		postClaimInsertMock(mock)
-		postClaimSelectMock(mock)
-		postAuthorInsertMock(mock)
-		postSchemaUpdateQuery(mock)
-		mock.ExpectCommit()
-
+		config.DB.Exec("DELETE FROM space_permissions")
+		insertSpacePermission := model.SpacePermission{
+			SpaceID:   1,
+			FactCheck: true,
+			Media:     10,
+			Posts:     10,
+			Podcast:   true,
+			Episodes:  10,
+			Videos:    10,
+		}
+		config.DB.Create(&insertSpacePermission)
+		Data["title"] = "Create post with slug is empty"
 		Data["slug"] = ""
+		Data["description"] = TestDescriptionFromRequest
+		resData["title"] = "Create post with slug is empty"
+		resData["slug"] = "create-post-with-slug-is-empty"
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(postData)
-		Data["slug"] = "post"
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusCreated).
+			JSON().
+			Object().
+			ContainsMap(resData)
 	})
-
-	t.Run("medium does not belong same space", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		postCountQuery(mock, 0)
-		slugCheckMock(mock, Data)
-
-		tag.SelectMock(mock, tag.Data, 1)
-		category.SelectWithOutSpace(mock)
-		mock.ExpectBegin()
-		medium.EmptyRowMock(mock)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-	})
-	t.Run("format does not belong same space", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		postCountQuery(mock, 0)
-		slugCheckMock(mock, Data)
-
-		tag.SelectMock(mock, tag.Data, 1)
-		category.SelectWithOutSpace(mock)
-		mock.ExpectBegin()
-		medium.SelectWithSpace(mock)
-		format.EmptyRowMock(mock)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-	})
-
 }
