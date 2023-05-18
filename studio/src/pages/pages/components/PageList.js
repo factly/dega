@@ -145,7 +145,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 size="large"
                 icon={<ThreeDotIcon style={{ color: '#858585' }} />}
                 onClick={() => {
-                  alert('this do nothing');
+                  // alert('this do nothing');
                 }}
               />
               <Modal
