@@ -262,7 +262,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// Update into meili index
 	meiliObj := map[string]interface{}{
 		"id":              sID,
-		"kind":            "space",
 		"name":            spaceObjectforDega.Name,
 		"slug":            spaceObjectforDega.Slug,
 		"description":     spaceObjectforDega.Description,
@@ -274,7 +273,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		err = meilisearchx.UpdateDocument("dega", meiliObj)
+		err = meilisearchx.UpdateDocument(util.IndexSpaces.String(), meiliObj)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)

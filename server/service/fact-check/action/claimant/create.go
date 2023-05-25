@@ -63,7 +63,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":          result.ID,
-		"kind":        "claimant",
 		"name":        result.Name,
 		"slug":        result.Slug,
 		"description": result.Description,
@@ -72,7 +71,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		_ = meilisearchx.AddDocument(util.IndexClaimants.String(), meiliObj)
 	}
 
 	if util.CheckNats() {

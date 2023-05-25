@@ -91,7 +91,7 @@ func (ts TagService) List(sID uint, offset, limit int, searchQuery, sort string)
 			filters := fmt.Sprint("space_id=", sID)
 			var hits []interface{}
 
-			hits, err := meilisearchx.SearchWithQuery("dega", searchQuery, filters, "tag")
+			hits, err := meilisearchx.SearchWithQuery(util.IndexTags.String(), searchQuery, filters)
 			if err != nil {
 				loggerx.Error(err)
 				return paging{}, errorx.Parser(errorx.NetworkError())

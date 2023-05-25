@@ -132,7 +132,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["medium_id"] = nil
 	}
 
-
 	if format.CreatedAt.IsZero() {
 		updateMap["created_at"] = result.CreatedAt
 	}
@@ -141,13 +140,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["updated_at"] = time.Now()
 	}
 
-
 	tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result)
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
 		"id":          result.ID,
-		"kind":        "format",
 		"name":        result.Name,
 		"slug":        result.Slug,
 		"description": result.Description,
@@ -155,7 +152,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearchx.UpdateDocument(util.IndexFormats.String(), meiliObj)
 	}
 
 	tx.Commit()
