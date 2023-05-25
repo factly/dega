@@ -141,10 +141,9 @@ func insertIntoMeili(result model.KavachPolicy) error {
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":          result.ID,
-		"kind":        "policy",
 		"name":        result.Name,
 		"description": result.Description,
 	}
 
-	return meilisearchx.AddDocument("dega", meiliObj)
+	return meilisearchx.AddDocument(util.IndexPolicies.String(), meiliObj)
 }

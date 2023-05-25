@@ -65,7 +65,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check if rating is associated with claims
 	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "rating")
+		_ = meilisearchx.DeleteDocument(util.IndexClaimants.String(), result.ID)
 	}
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("rating.deleted", strconv.Itoa(sID), r) {

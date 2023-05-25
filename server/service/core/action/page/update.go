@@ -293,7 +293,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
-		"kind":           "page",
 		"title":          result.Title,
 		"subtitle":       result.Subtitle,
 		"slug":           result.Slug,
@@ -315,7 +314,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearchx.UpdateDocument(util.IndexPages.String(), meiliObj)
 	}
 	tx.Commit()
 

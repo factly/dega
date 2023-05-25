@@ -72,7 +72,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// Update into meili index
 	meiliObj := map[string]interface{}{
 		"id":           result.ID,
-		"kind":         "podcast",
 		"title":        result.Title,
 		"slug":         result.Slug,
 		"description":  result.Description,
@@ -83,7 +82,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearchx.UpdateDocument(util.IndexPodcast.String(), meiliObj)
 	}
 
 	if util.CheckNats() {

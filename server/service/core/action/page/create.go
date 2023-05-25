@@ -182,7 +182,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
-		"kind":           "page",
 		"title":          result.Title,
 		"subtitle":       result.Subtitle,
 		"slug":           result.Slug,
@@ -204,7 +203,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		_ = meilisearchx.AddDocument(util.IndexPages.String(), meiliObj)
 	}
 
 	tx.Commit()

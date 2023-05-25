@@ -238,7 +238,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":              spaceObjectforDega.ID,
-		"kind":            "space",
 		"name":            spaceObjectforDega.Name,
 		"slug":            spaceObjectforDega.Slug,
 		"description":     spaceObjectforDega.Description,
@@ -250,7 +249,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		err = meilisearchx.AddDocument("dega", meiliObj)
+		err = meilisearchx.AddDocument(util.IndexSpaces.String(), meiliObj)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

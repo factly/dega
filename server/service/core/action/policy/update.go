@@ -125,7 +125,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			"name":        result.Name,
 			"description": result.Description,
 		}
-		err = meilisearchx.UpdateDocument("dega", meiliObj)
+		err = meilisearchx.UpdateDocument(util.IndexPolicies.String(), meiliObj)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

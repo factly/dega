@@ -91,7 +91,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if config.SearchEnabled() {
 		objectID := fmt.Sprint("policy_", policyId)
-		_, err = meilisearchx.Client.Index("dega").Delete(objectID)
+		_, err = meilisearchx.Client.Index(util.IndexPolicies.String()).Delete(objectID)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
