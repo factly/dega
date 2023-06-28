@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Space, Switch, Checkbox, Row, Col } from 'antd';
+import { Button, Form, Input, Space, Switch, Checkbox, Row, Col, ConfigProvider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEvents } from '../../../actions/events';
 import deepEqual from 'deep-equal';
@@ -65,72 +65,87 @@ const WebhookForm = ({ onCreate, data = {} }) => {
   };
   if (events) {
     return (
-      <Form
-        {...layout}
-        form={form}
-        initialValues={{ ...data }}
-        name="create-webhook"
-        onFinish={(values) => {
-          onSave(values);
-          onReset();
-        }}
-        onValuesChange={() => {
-          setValueChange(true);
+      <ConfigProvider
+        theme={{
+          components: {
+            Form: {
+              marginLG: 12,
+            },
+          },
         }}
       >
-        <Form.Item name="name" label="Name">
-          <Input />
-        </Form.Item>
-        <Form.Item name="url" label="Url">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Enable" name="enabled" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-        <Form.Item name="events" label="Events">
-          <Checkbox.Group>
-            <Row gutter={[4, 16]}>
-              {events.map((event) => (
-                <Col span={8} key={event.id} style={{ width: '550px' }}>
-                  <Checkbox label={event.name} value={event.id}>
-                    {getEventName(event.name)}
-                  </Checkbox>
-                </Col>
-              ))}
-            </Row>
-          </Checkbox.Group>
-        </Form.Item>
-        <Form.Item
-          {...buttonLayout}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={{ ...data }}
+          name="create-webhook"
+          onFinish={(values) => {
+            onSave(values);
+            onReset();
+          }}
+          onValuesChange={() => {
+            setValueChange(true);
           }}
         >
-          <Button
-            onClick={() => {
-              setFilters({ page: filters.page + 1, limit: filters.limit });
-            }}
-            size="small"
-            style={{
-              width: '90%',
-            }}
-          >
-            Load More Events
-          </Button>
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Space>
-            <Button disabled={!valueChange} type="primary" htmlType="submit">
-              {data && data.id ? 'Update' : 'Submit'}
-            </Button>
-            <Button htmlType="button" onClick={onReset}>
-              Reset
-            </Button>
-          </Space>
-        </Form.Item>
-      </Form>
+          <Row justify={'end'}>
+            <Form.Item>
+              <Button disabled={!valueChange} type="primary" htmlType="submit">
+                {data && data.id ? 'Update' : 'Submit'}
+              </Button>
+            </Form.Item>
+          </Row>
+          <Row gutter={[4, 16]}>
+            <Col span={8}>
+              <Form.Item name="name" label="Name">
+                <Input />
+              </Form.Item>
+              <Form.Item name="url" label="Url">
+                <Input />
+              </Form.Item>
+              <Form.Item name="enabled" valuePropName="checked">
+                <Row justify={'space-between'}>
+                  <span>Enabled</span>
+                  <Switch />
+                </Row>
+              </Form.Item>
+              <Form.Item name="podcast" valuePropName="checked">
+                <Row justify={'space-between'}>
+                  <span>Podcast</span>
+                  <Switch />
+                </Row>
+              </Form.Item>
+              <Form.Item name="events" label="Events">
+                <Checkbox.Group>
+                  <Row gutter={[4, 12]} justify={'start'}>
+                    {events.map((event) => (
+                      <Col span={8} key={event.id}>
+                        <Checkbox label={event.name} value={event.id}>
+                          {getEventName(event.name)}
+                        </Checkbox>
+                      </Col>
+                    ))}
+                  </Row>
+                </Checkbox.Group>
+              </Form.Item>
+              <Form.Item
+                style={{
+                  display: 'flex',
+                  justifyContent: 'start',
+                  alignItems: 'center',
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setFilters({ page: filters.page + 1, limit: filters.limit });
+                  }}
+                >
+                  Load More Events
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </ConfigProvider>
     );
   }
 };

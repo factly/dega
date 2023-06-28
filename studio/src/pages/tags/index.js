@@ -1,7 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import TagList from './components/TagList';
-import { Space, Button, Form, Select, Row, Col, Input } from 'antd';
+import {
+  Space,
+  Button,
+  Form,
+  Input,
+  Select,
+  Row,
+  Col,
+  ConfigProvider,
+  Typography,
+  Tooltip,
+} from 'antd';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../actions/tags';
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -16,11 +28,27 @@ function Tags({ permission }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
+  const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
 
   const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
     ...params,
   });
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   const pathName = useLocation().pathname;
 
@@ -63,66 +91,117 @@ function Tags({ permission }) {
   ) : (
     <Space direction="vertical">
       <Helmet title={'Tags'} />
-      <Form
-        initialValues={filters}
-        form={form}
-        name="filters"
-        onFinish={(values) => {
-          let filterValue = {};
-          Object.keys(values).forEach(function (key) {
-            if (values[key]) {
-              filterValue[key] = values[key];
-            }
-          });
-          setFilters({
-            ...filters,
-            ...filterValue,
-          });
-        }}
-        style={{ width: '100%' }}
-        onValuesChange={(changedValues, allValues) => {
-          if (!changedValues.q) {
-            if (changedValues.q === '') {
-              const { q, ...filtersWithoutQuery } = filters;
-              setFilters({ ...filtersWithoutQuery });
-              return;
-            }
-            setFilters({ ...filters, ...changedValues });
-          }
+      <ConfigProvider
+        theme={{
+          components: {
+            Form: {
+              marginLG: 0,
+            },
+          },
         }}
       >
-        <Row justify="end" gutter={16} style={{ marginBottom: '1rem' }}>
-          <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
-            <Form.Item name="q">
-              <Input placeholder="Search tags" />
-            </Form.Item>
-            <Form.Item>
-              <Button htmlType="submit">Search</Button>
-            </Form.Item>
-          </Col>
-
-          <Col>
-            <Form.Item name="sort">
-              <Select defaultValue="desc">
-                <Option value="desc">Sort By: Latest</Option>
-                <Option value="asc">Sort By: Old</Option>
-              </Select>
-            </Form.Item>
-          </Col>
-
-          <Col>
-            <Link key="1" to="/tags/create">
-              <Button
-                disabled={!(actions.includes('admin') || actions.includes('create'))}
-                type="primary"
-              >
-                New Tag
-              </Button>
-            </Link>
-          </Col>
-        </Row>
-      </Form>
-
+        <Form
+          initialValues={filters}
+          form={form}
+          name="filters"
+          onFinish={(values) => {
+            let filterValue = {};
+            Object.keys(values).forEach(function (key) {
+              if (values[key]) {
+                filterValue[key] = values[key];
+              }
+            });
+            setFilters({
+              ...filters,
+              ...filterValue,
+            });
+          }}
+          style={{ width: '100%' }}
+          onValuesChange={(changedValues, allValues) => {
+            if (!changedValues.q) {
+              if (changedValues.q === '') {
+                const { q, ...filtersWithoutQuery } = filters;
+                setFilters({ ...filtersWithoutQuery });
+                return;
+              }
+              setFilters({ ...filters, ...changedValues });
+            }
+          }}
+        >
+          <Row justify="space-between" gutter={16}>
+            <Col>
+              <Row gutter={16}>
+                <Col>
+                  <Typography.Title
+                    level={3}
+                    style={{ margin: 0, display: 'inline', color: '#1E1E1E' }}
+                  >
+                    Tags
+                  </Typography.Title>
+                </Col>
+                <Col>
+                  {searchFieldExpand ? (
+                    <Row>
+                      <Form.Item name="q">
+                        <Input placeholder="Search tags" />
+                      </Form.Item>
+                      <Form.Item>
+                        <Button htmlType="submit" icon={<SearchOutlined />}>
+                          Search
+                        </Button>
+                      </Form.Item>
+                    </Row>
+                  ) : (
+                    <Tooltip title="search">
+                      <Button
+                        shape="circle"
+                        type="text"
+                        onFocus={() => {
+                          setSearchFieldExpand(true);
+                          setTimeout(() => {
+                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
+                          }, 10000);
+                        }}
+                        icon={<SearchOutlined />}
+                      />
+                    </Tooltip>
+                  )}
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={24} md={8}>
+              <Row gutter={16} style={{ justifyContent: isMobileScreen ? 'space-between' : 'end', flexDirection: isMobileScreen && 'row-reverse', marginTop: isMobileScreen && '1rem' }}>
+                <Col md={24} xs={12}>
+                  <Row justify="end" >
+                    <Link to="/tags/create">
+                      <Button
+                        disabled={!(actions.includes('admin') || actions.includes('create'))}
+                        type="primary"
+                        icon={<PlusOutlined />}
+                        style={{ marginBottom: '1.5rem' }}
+                      >
+                        Create
+                      </Button>
+                    </Link>
+                  </Row>
+                </Col>
+                <Col>
+                  <Form.Item label="Sort By" name="sort">
+                    <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
+                      <Option value="desc" key={'desc'}>
+                        Latest
+                      </Option>
+                      <Option value="asc" key={'asc'}>
+                        Old
+                      </Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Form>
+      </ConfigProvider>
       <TagList
         actions={actions}
         data={{ tags: tags, total: total, loading: loading }}

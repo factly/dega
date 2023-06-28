@@ -1,56 +1,69 @@
 package rating
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
-	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/service/fact-check/action/rating"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/fact-check/action/rating"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestDefaultRatingCreate(t *testing.T) {
-
-	mock := test.SetupMockDB()
-
-	test.MockServer()
+func TestRatingDefault(t *testing.T) {
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM ratings")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM media")
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
+	}
 
+	var insertMediumData = coreModel.Medium{
+		Name:    "Test Medium",
+		Slug:    "test-medium",
+		SpaceID: TestSpaceID,
+	}
+
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
+	var insertData = model.Rating{
+		Name:             "Test Rating",
+		Slug:             "test-rating",
+		BackgroundColour: TestBackgroundColour,
+		TextColour:       TestTextColour,
+		Description:      TestDescriptionJson,
+		DescriptionHTML:  TestDescriptionHtml,
+		NumericValue:     TestNumericValue,
+		MediumID:         &insertMediumData.ID,
+		Medium:           &insertMediumData,
+		SpaceID:          TestSpaceID,
+		FooterCode:       TestFooterCode,
+		HeaderCode:       TestHeaderCode,
+	}
+	if err := config.DB.Model(&model.Rating{}).Create(&insertData).Error; err != nil {
+		log.Fatal(err)
+	}
+	e := httpexpect.New(t, testServer.URL)
 	rating.DataFile = "./testDefault.json"
 
-	// create httpexpect instance
-	e := httpexpect.New(t, testServer.URL)
-
-	t.Run("create default ratings", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		mock.ExpectBegin()
-
-		for i := 0; i < 6; i++ {
-			mock.ExpectQuery(selectQuery).
-				WillReturnRows(sqlmock.NewRows(columns))
-
-			mock.ExpectQuery(`INSERT INTO "ratings"`).
-				WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["background_colour"], defaultData[i]["text_colour"], defaultData[i]["description"], defaultData[i]["html_description"], defaultData[i]["numeric_value"], nil, 1).
-				WillReturnRows(sqlmock.
-					NewRows([]string{"id"}).
-					AddRow(1))
-		}
-		mock.ExpectCommit()
-
+	t.Run("create default rating", func(t *testing.T) {
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
@@ -59,22 +72,9 @@ func TestDefaultRatingCreate(t *testing.T) {
 			Object().
 			Value("nodes").
 			Array()
-		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("default ratings already created", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		mock.ExpectBegin()
-
-		for i := 0; i < 6; i++ {
-			mock.ExpectQuery(selectQuery).
-				WillReturnRows(sqlmock.NewRows(columns).
-					AddRow(1, time.Now(), time.Now(), nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["background_colour"], defaultData[i]["text_colour"], defaultData[i]["medium_id"], defaultData[i]["description"], defaultData[i]["html_description"], defaultData[i]["numeric_value"], 1))
-		}
-		mock.ExpectCommit()
-
+	t.Run("default rating already created", func(t *testing.T) {
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
@@ -83,34 +83,32 @@ func TestDefaultRatingCreate(t *testing.T) {
 			Object().
 			Value("nodes").
 			Array()
-		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("invalid space header", func(t *testing.T) {
+		e.POST(basePath).
+			WithHeaders(map[string]string{
+				"X-Space": "invalid",
+				"X-User":  "1",
+			}).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnauthorized)
 	})
 
 	t.Run("when cannot open data file", func(t *testing.T) {
 		rating.DataFile = "nofile.json"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-		rating.DataFile = "../../../../data/ratings.json"
-
 	})
 
 	t.Run("when cannot parse data file", func(t *testing.T) {
 		rating.DataFile = "invalidData.json"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-		rating.DataFile = "./testDefault.json"
 	})
-
 }

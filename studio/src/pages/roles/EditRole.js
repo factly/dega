@@ -21,7 +21,9 @@ function EditRole() {
     dispatch(getRole(id));
   }, [dispatch, id]);
   const onCreate = (values) => {
-    dispatch(updateRole({ ...role, ...values })).then(() => history.push('/members/roles'));
+    dispatch(updateRole({ ...role, ...values })).then(() =>
+      history.push('/settings/members/roles'),
+    );
   };
 
   return (

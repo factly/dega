@@ -1,13 +1,13 @@
 import React from 'react';
 import UppyUploader from '../../../components/Uppy';
 import { Modal, Space, Button } from 'antd';
-
+import { UploadOutlined } from '@ant-design/icons';
 const Audio = ({ url, onUpload }) => {
   const [show, setShow] = React.useState(false);
   return (
     <>
       <Modal
-        visible={show}
+        open={show}
         onCancel={() => setShow(false)}
         closable={false}
         width={'800px'}
@@ -44,7 +44,9 @@ const Audio = ({ url, onUpload }) => {
         ) : null}
         <Space direction="horizontal">
           {url ? <Button onClick={() => onUpload('')}>Remove</Button> : null}{' '}
-          <Button onClick={() => setShow(true)}>Select</Button>
+          <Button icon={<UploadOutlined />} onClick={() => setShow(true)}>
+            Upload
+          </Button>
         </Space>
       </Space>
     </>

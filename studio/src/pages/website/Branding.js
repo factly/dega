@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Col, Collapse, Form, Input, Row, Skeleton } from 'antd';
+import { Button, Col, Collapse, Form, Input, Row, Skeleton, ConfigProvider } from 'antd';
 
 import MediaSelector from '../../components/MediaSelector/index';
 import { useSelector, useDispatch } from 'react-redux';
@@ -37,7 +37,16 @@ function Branding() {
   };
   //! More Descriptive favicons and logo fields
   return (
-    <div>
+    <ConfigProvider
+      theme={{
+        components: {
+          Collapse: {
+            colorBgContainer: '#F9FAFB',
+            colorText: '#000000E0',
+          },
+        },
+      }}
+    >
       <Helmet title={'Branding'} />
       <Form
         layout="vertical"
@@ -48,6 +57,7 @@ function Branding() {
           onCreate(values);
           //onReset();
         }}
+        className="edit-form"
         scrollToFirstError={true}
         onFinishFailed={(errors) => {
           //let name = errors.errorFields[0].name[0];
@@ -56,9 +66,6 @@ function Branding() {
         }}
         onValuesChange={() => {
           setValueChange(true);
-        }}
-        style={{
-          paddingTop: '24px',
         }}
       >
         <Row justify="end">
@@ -71,98 +78,127 @@ function Branding() {
         <Collapse
           expandIconPosition="right"
           expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+          style={{ width: '100%', background: '#f0f2f5', border: 0 }}
           defaultActiveKey={['1']}
-          style={{ width: '100%' }}
         >
           <Panel header="Icons and Logos" key="1">
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
+            <Row gutter={[48, 16]}>
+              <Col xs={24} md={5}>
                 <Form.Item label="Primary Logo" name="logo_id" extra="Primary Logo">
                   <MediaSelector
-                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '152px' }}
-                    maxWidth="152px"
+                    containerStyles={{
+                      justifyContent: 'flex-start',
+                      maxWidth: '100%',
+                      margin: '8px 0',
+                    }}
+                    maxWidth="100%"
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={5}>
                 <Form.Item
                   label="Logo Mobile"
                   name="logo_mobile_id"
                   extra="Secondary logo for mobile sites or amp pages"
                 >
                   <MediaSelector
-                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '152px' }}
-                    maxWidth="152px"
+                    containerStyles={{
+                      justifyContent: 'flex-start',
+                      maxWidth: '100%',
+                      margin: '8px 0',
+                    }}
+                    maxWidth="100%"
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={5}>
                 <Form.Item
                   label="Fav Icon"
                   name="fav_icon_id"
                   extra="Default favicon for browsers and pwa sites"
                 >
                   <MediaSelector
-                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '152px' }}
-                    maxWidth="152px"
+                    containerStyles={{
+                      justifyContent: 'flex-start',
+                      maxWidth: '100%',
+                      margin: '8px 0',
+                    }}
+                    maxWidth="100%"
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={5}>
                 <Form.Item
                   label="Mobile Icon"
                   name="mobile_icon_id"
                   extra="Favicon for mobile and pwa sites"
                 >
                   <MediaSelector
-                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '152px' }}
-                    maxWidth="152px"
+                    containerStyles={{
+                      justifyContent: 'flex-start',
+                      maxWidth: '100%',
+                      margin: '8px 0',
+                    }}
+                    maxWidth="100%"
                   />
                 </Form.Item>
               </Col>
             </Row>
           </Panel>
-          <Panel header="Social Accounts" key="2">
-            <Form.Item name={['social_media_urls', 'facebook']} label="Facebook">
-              <Input
-                style={{ width: '100%' }}
-                placeholder="https://www.facebook.com/pages/factly"
-              />
-            </Form.Item>
-            <Form.Item name={['social_media_urls', 'twitter']} label="Twitter">
-              <Input style={{ width: '100%' }} placeholder="https://www.twitter.com/users/factly" />
-            </Form.Item>
-            <Form.Item name={['social_media_urls', 'instagram']} label="Instagram">
-              <Input
-                style={{ width: '100%' }}
-                placeholder="https://www.instagram.com/pages/factly"
-              />
-            </Form.Item>
-            <Form.Item name={['social_media_urls', 'github']} label="Github">
-              <Input style={{ width: '100%' }} placeholder="https://github.com/factly/" />
-            </Form.Item>
-            <Form.Item name={['social_media_urls', 'youtube']} label="Youtube">
-              <Input
-                style={{ width: '100%' }}
-                placeholder="https://www.youtube.com/c/Factlyindia"
-              />
-            </Form.Item>
-            <Form.Item name={['social_media_urls', 'linkedin']} label="Linkedin">
-              <Input
-                style={{ width: '100%' }}
-                placeholder="https://www.linkedin.com/company/factlyindia/"
-              />
-            </Form.Item>
-            <Form.Item name={['social_media_urls', 'pinterest']} label="Pinterest">
-              <Input
-                style={{ width: '100%' }}
-                placeholder="https://www.pinterest.com/pages/factly"
-              />
-            </Form.Item>
+        </Collapse>
+        <Collapse
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+          style={{ width: '100%', background: '#f0f2f5', border: 0, marginTop: 16 }}
+        >
+          <Panel header="Social Accounts" key="1">
+            <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
+              <Col xs={24} md={10}>
+                <Form.Item name={['social_media_urls', 'facebook']} label="Facebook">
+                  <Input
+                    style={{ width: '100%' }}
+                    placeholder="https://www.facebook.com/pages/factly"
+                  />
+                </Form.Item>
+                <Form.Item name={['social_media_urls', 'twitter']} label="Twitter">
+                  <Input
+                    style={{ width: '100%' }}
+                    placeholder="https://www.twitter.com/users/factly"
+                  />
+                </Form.Item>
+                <Form.Item name={['social_media_urls', 'instagram']} label="Instagram">
+                  <Input
+                    style={{ width: '100%' }}
+                    placeholder="https://www.instagram.com/pages/factly"
+                  />
+                </Form.Item>
+                <Form.Item name={['social_media_urls', 'github']} label="Github">
+                  <Input style={{ width: '100%' }} placeholder="https://github.com/factly/" />
+                </Form.Item>
+                <Form.Item name={['social_media_urls', 'youtube']} label="Youtube">
+                  <Input
+                    style={{ width: '100%' }}
+                    placeholder="https://www.youtube.com/c/Factlyindia"
+                  />
+                </Form.Item>
+                <Form.Item name={['social_media_urls', 'linkedin']} label="Linkedin">
+                  <Input
+                    style={{ width: '100%' }}
+                    placeholder="https://www.linkedin.com/company/factlyindia/"
+                  />
+                </Form.Item>
+                <Form.Item name={['social_media_urls', 'pinterest']} label="Pinterest">
+                  <Input
+                    style={{ width: '100%' }}
+                    placeholder="https://www.pinterest.com/pages/factly"
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
           </Panel>
         </Collapse>
       </Form>
-    </div>
+    </ConfigProvider>
   );
 }
 

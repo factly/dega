@@ -1,12 +1,11 @@
 package tag
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -45,40 +44,27 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Tag{}
-
-	result.ID = uint(id)
+	// check record exists or not
+	tagService := service.GetTagService()
 
 	// check record exists or not
-	err = config.DB.Where(&model.Tag{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
+	result, err := tagService.GetById(sID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	// check if tag is associated with posts
-	tag := new(model.Tag)
-	tag.ID = uint(id)
-	totAssociated := config.DB.Model(tag).Association("Posts").Count()
-
-	if totAssociated != 0 {
-		loggerx.Error(errors.New("tag is associated with post"))
-		errorx.Render(w, errorx.Parser(errorx.CannotDelete("tag", "post")))
+	serviceErr := tagService.Delete(sID, id)
+	if serviceErr != nil {
+		loggerx.Error(err)
+		errorx.Render(w, serviceErr)
 		return
 	}
-
-	tx := config.DB.Begin()
-	tx.Delete(&result)
 
 	if config.SearchEnabled() {
 		_ = meilisearchx.DeleteDocument("dega", result.ID, "tag")
 	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("tag.deleted", strconv.Itoa(sID), r) {

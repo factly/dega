@@ -1,111 +1,148 @@
 package episode
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/factly/dega-server/test/service/podcast"
-	"github.com/gavv/httpexpect"
-	"github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/spf13/viper"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestEpisodeCreate(t *testing.T) {
-
-	mock := test.SetupMockDB()
-	viper.Set("templates_path", "../../../../web/templates/*")
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	config.DB.Exec("DELETE FROM ratings")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM authors")
+	config.DB.Exec("DELETE FROM episodes")
+	config.DB.Exec("DELETE FROM media")
+	config.DB.Exec("DELETE FROM categories")
+	config.DB.Exec("DELETE FROM podcasts")
+	config.DB.Exec("DELETE FROM episode_authors")
 
-	// create httpexpect instance
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
+	}
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+	insertCategoryData := coreModel.Category{
+		Name:    "Category",
+		Slug:    "category",
+		SpaceID: TestSpaceID,
+	}
+
+	insertMediumData := coreModel.Medium{
+		Name:    "Medium",
+		Slug:    "medium",
+		SpaceID: TestSpaceID,
+	}
+
+	config.DB.Model(&coreModel.Category{}).Create(&insertCategoryData)
+	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
+
+	insertPodcastData := model.Podcast{
+		Title:             "Podcast Test",
+		Slug:              "podcast-test",
+		PrimaryCategoryID: &insertCategoryData.ID,
+		MediumID:          &insertMediumData.ID,
+		Description:       TestDescriptionJson,
+		DescriptionHTML:   TestDescriptionHtml,
+		SpaceID:           uint(TestSpaceID),
+	}
+
+	if err := config.DB.Model(&model.Podcast{}).Create(&insertPodcastData).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	inserAuthorData := coreModel.Author{
+		FirstName: "Author",
+		LastName:  "Test",
+	}
+
+	if err := config.DB.Model(&coreModel.Author{}).Create(&inserAuthorData).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	insertData := model.Episode{
+		Title:           "Episode Test",
+		Slug:            "episode-test",
+		MediumID:        &insertMediumData.ID,
+		Description:     TestDescriptionJson,
+		DescriptionHTML: TestDescriptionHtml,
+		PodcastID:       &insertPodcastData.ID,
+		SpaceID:         uint(TestSpaceID),
+		AudioURL:        TestAudioURL,
+	}
+
+	if err := config.DB.Model(&model.Episode{}).Create(&insertData).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	insertEpisodeAuthorData := model.EpisodeAuthor{
+		EpisodeID: insertData.ID,
+		AuthorID:  inserAuthorData.ID,
+	}
+	if err := config.DB.Model(&model.EpisodeAuthor{}).Create(&insertEpisodeAuthorData).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	Data["podcast_id"] = insertPodcastData.ID
+	Data["medium_id"] = insertMediumData.ID
+	Data["author_ids"] = []uint{inserAuthorData.ID}
+
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable episode", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	t.Run("unprocessable episode", func(t *testing.T) {
 		e.POST(basePath).
+			WithHeaders(headers).
 			WithJSON(invalidData).
-			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("Undecodable episode", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	// undecodable episode
+	t.Run("undecodable episode", func(t *testing.T) {
 		e.POST(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
 	})
+
+	// cannot parse episode description
 
 	t.Run("cannot parse episode description", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		Data["description"] = postgres.Jsonb{RawMessage: []byte(`{"raw":"test"}`)}
-
+		Data["description"] = "invalid description"
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-		Data["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-		}
+		Data["description"] = TestDescriptionFromRequest
 	})
 
+	// create episode
 	t.Run("create episode", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		slugCheckMock(mock, Data)
-
-		mock.ExpectBegin()
-		medium.SelectWithSpace(mock)
-		podcast.SelectQuery(mock)
-		mock.ExpectQuery(`INSERT INTO "episodes"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["slug"], Data["season"], Data["episode"], Data["audio_url"], Data["podcast_id"], Data["description"], Data["html_description"], test.AnyTime{}, 1, Data["medium_id"]).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"medium_id", "id"}).
-				AddRow(1, 1))
-
-		mock.ExpectQuery(`INSERT INTO "episode_authors"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 0, 0, 1, 1).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"id"}).
-				AddRow(1))
-
-		SelectQuery(mock)
-		medium.SelectWithOutSpace(mock)
-		podcast.SelectQuery(mock)
-		mock.ExpectCommit()
-
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusCreated).
 			JSON().
-			Object().ContainsMap(resData)
-		test.ExpectationsMet(t, mock)
+			Object().
+			ContainsMap(resData)
 	})
-
 }

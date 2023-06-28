@@ -4,12 +4,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -44,33 +42,17 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Episode{}
+	episodeService := service.GetEpisodeService()
 
-	result.ID = uint(id)
+	result, serviceErr := episodeService.GetById(r.Context(), sID, id)
 
-	// check record exists or not
-	err = config.DB.Where(&model.Episode{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
 
-	tx := config.DB.Begin()
-	tx.Delete(&result)
+	_ = episodeService.Delete(sID, id)
 
-	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
-		EpisodeID: uint(id),
-	}).Delete(&model.EpisodeAuthor{})
-
-	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "episode")
-	}
-
-	tx.Commit()
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("episode.deleted", strconv.Itoa(sID), r) {
 			if err = util.NC.Publish("episode.deleted", result); err != nil {

@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import { PageHeader as AntPageHeader } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
+import { PageHeader as AntPageHeader } from '@ant-design/pro-layout';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
 import { matchPath } from 'react-router';
 import { useSelector } from 'react-redux';
 
-function PageHeader() {
+function Pageheader() {
   const state = useSelector((state) => state);
   const location = useLocation();
   const history = useHistory();
@@ -112,12 +113,18 @@ function PageHeader() {
   const itemRender = (route, params, routes, paths) => {
     const last = routes.indexOf(route) === routes.length - 1;
     if (last && routes.length > 1) {
-      return !isBreadCrumbsHidden && <h2 style={{ display: 'inline' }}>{route.breadcrumbName}</h2>;
+      return (
+        !isBreadCrumbsHidden && (
+          <h2 style={{ display: 'inline', color: '#000000d9' }}>{route.breadcrumbName}</h2>
+        )
+      );
     }
     return (
       !isBreadCrumbsHidden && (
         <h2 style={{ display: 'inline' }}>
-          <Link to={route.path}>{route.breadcrumbName}</Link>
+          <Link style={routes.length === 1 ? { color: '#000000d9' } : null} to={route.path}>
+            {route.breadcrumbName}
+          </Link>
         </h2>
       )
     );
@@ -130,6 +137,7 @@ function PageHeader() {
   )
     return (
       <AntPageHeader
+        backIcon={isBreadCrumbsHidden ? <LeftOutlined /> : null}
         ghost={false}
         title={isBreadCrumbsHidden ? getTitle(pathSnippets[0]) : null}
         onBack={handleOnBack}
@@ -143,4 +151,4 @@ function PageHeader() {
   else return null;
 }
 
-export default PageHeader;
+export default Pageheader;

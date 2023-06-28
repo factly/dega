@@ -23,7 +23,7 @@ import { createClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import ClaimList from './ClaimList';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
@@ -118,7 +118,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [shouldBlockNavigation, setShouldBlockNavigation] = useState(false);
 
   const getCurrentDate = () => {
-    return moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ');
+    return dayjs(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ');
   };
 
   const onSave = (values) => {
@@ -135,7 +135,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.status = status;
     values.status === 'publish'
       ? (values.published_date = values.published_date
-          ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+          ? dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
           : getCurrentDate())
       : (values.published_date = null);
     onCreate(values);
@@ -150,7 +150,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   if (data && data.id) {
-    data.published_date = data.published_date ? moment(data.published_date) : null;
+    data.published_date = data.published_date ? dayjs(data.published_date) : null;
     if (data.meta_fields && typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
     }
@@ -214,7 +214,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         message="You have unsaved changes, are you sure you want to leave?"
       />
       {visible && (
-        <Modal visible={visible} onCancel={handleCancel} maskClosable={false} footer={null}>
+        <Modal open={visible} onCancel={handleCancel} maskClosable={false} footer={null}>
           <ClaimCreateForm
             data={details?.[claimID]}
             onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
@@ -245,16 +245,13 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
             <Space direction="horizontal">
               {data.id ? (
                 <Form.Item name="template">
-                  <Button type="secondary" onClick={createTemplate}>
-                    Create Template
-                  </Button>
+                  <Button onClick={createTemplate}>Create Template</Button>
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
                 <Dropdown overlay={readyToPublish}>
                   <Button
                     disabled={!valueChange}
-                    type="secondary"
                     htmlType="submit"
                     onClick={() => (status === 'ready' ? setStatus('ready') : setStatus('draft'))}
                   >
@@ -264,13 +261,13 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
               </Form.Item>
               {actions.includes('admin') || actions.includes('publish') ? (
                 <Form.Item name="submit">
-                  <Button type="secondary" htmlType="submit" onClick={() => setStatus('publish')}>
+                  <Button htmlType="submit" onClick={() => setStatus('publish')}>
                     {data.id && status === 'publish' ? 'Update' : 'Publish'}
                   </Button>
                 </Form.Item>
               ) : null}
               <Form.Item name="drawerOpen">
-                <Button type="secondary" onClick={showDrawer}>
+                <Button onClick={showDrawer}>
                   <SettingFilled />
                 </Button>
               </Form.Item>
@@ -325,8 +322,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 placement="right"
                 closable={true}
                 onClose={onClose}
-                visible={drawerVisible}
-                getContainer={false}
+                open={drawerVisible}
                 width={366}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -389,7 +385,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
                 <Modal
                   title="View Schemas"
-                  visible={isModalVisible}
+                  open={isModalVisible}
                   onOk={handleSchemaModalOk}
                   onCancel={handleSchemaModalCancel}
                   footer={[
@@ -429,8 +425,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 placement="right"
                 closable={true}
                 onClose={onClose}
-                visible={metaDrawer}
-                getContainer={false}
+                open={metaDrawer}
                 width={480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
@@ -456,8 +451,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 placement="right"
                 closable={true}
                 onClose={onClose}
-                visible={codeDrawer}
-                getContainer={false}
+                open={codeDrawer}
                 width={710}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
@@ -480,8 +474,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 placement="right"
                 closable={true}
                 onClose={onClose}
-                visible={metaFieldsDrawer}
-                getContainer={false}
+                open={metaFieldsDrawer}
                 width={480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}

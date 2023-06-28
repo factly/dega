@@ -2,23 +2,18 @@ package rating
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
-	"github.com/jinzhu/gorm/dialects/postgres"
-	"gorm.io/gorm"
 )
 
 // update - Update rating by id
@@ -59,32 +54,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rating := &rating{}
-	err = json.NewDecoder(r.Body).Decode(&rating)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-		return
-	}
+	ratingService := service.GetRatingService()
 
-	validationError := validationx.Check(rating)
-
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
-		return
-	}
-
-	result := model.Rating{}
-	result.ID = uint(id)
-
-	// check record exists or not
-	err = config.DB.Where(&model.Rating{
-		Base: config.Base{
-			ID: uint(id),
-		},
-		SpaceID: uint(sID),
-	}).First(&result).Error
+	_, err = ratingService.GetById(sID, id)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -92,95 +64,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var ratingSlug string
-
-	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
-	_ = stmt.Parse(&model.Rating{})
-	tableName := stmt.Schema.Table
-
-	if result.Slug == rating.Slug {
-		ratingSlug = result.Slug
-	} else if rating.Slug != "" && slugx.Check(rating.Slug) {
-		ratingSlug = slugx.Approve(&config.DB, rating.Slug, sID, tableName)
-	} else {
-		ratingSlug = slugx.Approve(&config.DB, slugx.Make(rating.Name), sID, tableName)
-	}
-
-	// Check if rating with same name exist
-	if rating.Name != result.Name && util.CheckName(uint(sID), rating.Name, tableName) {
-		loggerx.Error(errors.New(`rating with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
-		return
-	}
-
-	if rating.NumericValue != result.NumericValue {
-		// Check if rating with same numeric value exist
-		var sameValueRatings int64
-		config.DB.Model(&model.Rating{}).Where(&model.Rating{
-			SpaceID:      uint(sID),
-			NumericValue: rating.NumericValue,
-		}).Count(&sameValueRatings)
-
-		if sameValueRatings > 0 {
-			loggerx.Error(errors.New(`rating with same numeric value exist`))
-			errorx.Render(w, errorx.Parser(errorx.GetMessage(`rating with same numeric value exist`, http.StatusUnprocessableEntity)))
-			return
-		}
-	}
-
-	var descriptionHTML string
-	var jsonDescription postgres.Jsonb
-	if len(rating.Description.RawMessage) > 0 {
-		descriptionHTML, err = util.GetDescriptionHTML(rating.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-
-		jsonDescription, err = util.GetJSONDescription(rating.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-	}
-
-	tx := config.DB.Begin()
-
-	updateMap := map[string]interface{}{
-		"created_at":        rating.CreatedAt,
-		"updated_at":        rating.UpdatedAt,
-		"updated_by_id":     uint(uID),
-		"name":              rating.Name,
-		"slug":              ratingSlug,
-		"background_colour": rating.BackgroundColour,
-		"text_colour":       rating.TextColour,
-		"medium_id":         rating.MediumID,
-		"description":       jsonDescription,
-		"description_html":  descriptionHTML,
-		"numeric_value":     rating.NumericValue,
-		"meta_fields":       rating.MetaFields,
-		"meta":              rating.Meta,
-		"header_code":       rating.HeaderCode,
-		"footer_code":       rating.FooterCode,
-	}
-
-	if rating.MediumID == 0 {
-		updateMap["medium_id"] = nil
-	}
-
-	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
-
+	rating := &service.Rating{}
+	err = json.NewDecoder(r.Body).Decode(&rating)
 	if err != nil {
-		tx.Rollback()
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
-	// Update into meili index
+	result, serviceErr := ratingService.Update(sID, uID, id, rating)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
+		return
+	}
+
 	meiliObj := map[string]interface{}{
 		"id":                result.ID,
 		"kind":              "rating",
@@ -196,8 +93,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if config.SearchEnabled() {
 		_ = meilisearchx.UpdateDocument("dega", meiliObj)
 	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("rating.updated", strconv.Itoa(sID), r) {

@@ -1,6 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Space, Button, Row, Col, Form, Input, Select } from 'antd';
+import {
+  Space,
+  Button,
+  Row,
+  Col,
+  Form,
+  Input,
+  Select,
+  ConfigProvider,
+  Typography,
+  Tooltip,
+} from 'antd';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MediumList from './components/MediumList';
 import { getMedia } from '../../actions/media';
@@ -20,6 +32,7 @@ function Media({ permission }) {
   const [filters, setFilters] = React.useState({
     ...params,
   });
+  const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
 
   const pathName = useLocation().pathname;
 
@@ -63,64 +76,115 @@ function Media({ permission }) {
   ) : (
     <Space direction="vertical">
       <Helmet title={'Media'} />
-      <Form
-        initialValues={filters}
-        form={form}
-        name="filters"
-        onFinish={(values) => {
-          let filterValue = {};
-          Object.keys(values).forEach(function (key) {
-            if (values[key]) {
-              filterValue[key] = values[key];
-            }
-          });
-          setFilters({
-            ...filters,
-            ...filterValue,
-          });
-        }}
-        style={{ width: '100%', marginBottom: '1rem' }}
-        onValuesChange={(changedValues, allValues) => {
-          if (!changedValues.q) {
-            if (changedValues.q === '') {
-              const { q, ...filtersWithoutQuery } = filters;
-              setFilters({ ...filtersWithoutQuery });
-              return;
-            }
-            setFilters({ ...filters, ...changedValues });
-          }
+      <ConfigProvider
+        theme={{
+          components: {
+            Form: {
+              marginLG: 0,
+            },
+          },
         }}
       >
-        <Row justify="end" gutter={16} style={{ marginBottom: '1rem' }}>
-          <Col style={{ display: 'flex', justifyContent: 'end' }}>
-            <Form.Item name="q">
-              <Input placeholder="Search media" />
-            </Form.Item>
-            <Form.Item>
-              <Button htmlType="submit">Search</Button>
-            </Form.Item>
-          </Col>
-          <Col>
-            <Form.Item name="sort">
-              <Select defaultValue="desc">
-                <Option value="desc">Sort By: Latest</Option>
-                <Option value="asc">Sort By:Old</Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col>
-            <Link to="/media/upload">
-              <Button
-                disabled={!(actions.includes('admin') || actions.includes('create'))}
-                type="primary"
-              >
-                Upload
-              </Button>
-            </Link>
-          </Col>
-        </Row>
-      </Form>
-
+        <Form
+          initialValues={filters}
+          form={form}
+          name="filters"
+          onFinish={(values) => {
+            let filterValue = {};
+            Object.keys(values).forEach(function (key) {
+              if (values[key]) {
+                filterValue[key] = values[key];
+              }
+            });
+            setFilters({
+              ...filters,
+              ...filterValue,
+            });
+          }}
+          style={{ width: '100%', marginBottom: '1rem' }}
+          onValuesChange={(changedValues, allValues) => {
+            if (!changedValues.q) {
+              if (changedValues.q === '') {
+                const { q, ...filtersWithoutQuery } = filters;
+                setFilters({ ...filtersWithoutQuery });
+                return;
+              }
+              setFilters({ ...filters, ...changedValues });
+            }
+          }}
+        >
+          <Row justify="space-between" gutter={16}>
+            <Col>
+              <Row gutter={16}>
+                <Col>
+                  <Typography.Title level={3} style={{ margin: 0, display: 'inline' }}>
+                    Media
+                  </Typography.Title>
+                </Col>
+                <Col>
+                  {searchFieldExpand ? (
+                    <Row>
+                      <Form.Item name="q">
+                        <Input placeholder="Search media" />
+                      </Form.Item>
+                      <Form.Item>
+                        <Button htmlType="submit" icon={<SearchOutlined />}>
+                          Search
+                        </Button>
+                      </Form.Item>
+                    </Row>
+                  ) : (
+                    <Tooltip title="search">
+                      <Button
+                        shape="circle"
+                        type="text"
+                        onFocus={() => {
+                          setSearchFieldExpand(true);
+                          setTimeout(() => {
+                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
+                          }, 10000);
+                        }}
+                        icon={<SearchOutlined />}
+                      />
+                    </Tooltip>
+                  )}
+                </Col>
+              </Row>
+            </Col>
+            <Col>
+              <Row justify="end" gutter={16}>
+                <Col>
+                  <Row justify="end">
+                    <Link to="/media/upload">
+                      <Button
+                        disabled={!(actions.includes('admin') || actions.includes('create'))}
+                        type="primary"
+                        style={{ marginBottom: '1rem' }}
+                      >
+                        Upload
+                      </Button>
+                    </Link>
+                  </Row>
+                  <Row gutter={16}>
+                    <Col>
+                      <Form.Item label="Sort By" name="sort">
+                        <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
+                          <Option value="desc" key={'desc'}>
+                            Latest
+                          </Option>
+                          <Option value="asc" key={'asc'}>
+                            Old
+                          </Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Form>
+      </ConfigProvider>
       <MediumList
         actions={actions}
         data={{ media: media, total: total, loading: loading }}

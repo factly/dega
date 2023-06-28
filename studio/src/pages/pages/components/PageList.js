@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Popconfirm, Button, Space, Tag, Table } from 'antd';
+import { ConfigProvider, Button, Space, Tag, Table, Typography, Modal } from 'antd';
 import {
   EditOutlined,
   DeleteOutlined,
@@ -11,13 +11,19 @@ import {
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { deletePage } from '../../../actions/pages';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import QuickEdit from '../../../components/List/QuickEdit';
+import QuickEditIcon from '../../../assets/QuickEditIcon';
+import ThreeDotIcon from '../../../assets/ThreeDotIcon';
 
 function PageList({ actions, format, status, data, filters, setFilters, fetchPages }) {
   const dispatch = useDispatch();
   const [id, setID] = useState(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [deleteItemID, setDeleteItemID] = useState(null);
+
+  const history = useHistory();
 
   const getTagList = (tagids) => {
     return tagids.map((id) => (
@@ -45,44 +51,35 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      width: 400,
+      width: '400',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, item) => (
         <Link to={`/pages/${item.id}/edit`}>
-          <p style={{ fontSize: '1.125rem', fontWeight: 500 }}>{item.title}</p>
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {item.title}
+          </Typography.Text>
           {/*
           {item.published_date && (
             <p style={{ color: 'CaptionText' }}>
-              Published on {moment(item.published_date).format('MMMM Do YYYY')}
+              Published on {dayjs(item.published_date).format('MMMM Do YYYY')}
             </p>
           )}
-          <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p> 
+          <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p>
           */}
         </Link>
       ),
     },
     {
-      title: 'Categories',
-      dataIndex: 'categories',
-      key: 'categories',
-      ellipsis: true,
-      render: (item) => {
-        return item.length > 0 ? getCategoryList(item) : null;
-      },
-    },
-    {
-      title: 'Tags',
-      dataIndex: 'tags',
-      key: 'tags',
-      ellipsis: true,
-      render: (item) => {
-        return getTagList(item);
-      },
-    },
-    {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 200,
+      // width: 200,
       render: (status) => {
         return status === 'publish' ? (
           <Tag icon={<CheckCircleOutlined />} color="green">
@@ -102,16 +99,78 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
     {
       title: 'Actions',
       dataIndex: 'actions',
-      fixed: 'right',
-      align: 'center',
       width: 240,
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
         return (
-          <>
-            <div style={{ display: 'flex', padding: '0 1rem' }}>
-              <Link style={{ display: 'block' }} to={`/pages/${item.id}/edit`}>
-                <Button
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  controlHeight: 35,
+                  colorBorder: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
+                },
+              },
+            }}
+          >
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <Button
+                size="large"
+                disabled={!(actions.includes('admin') || actions.includes('update'))}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  isOpen ? setExpandedRowKeys([]) : setExpandedRowKeys([item.id]);
+                  return setID(item.id);
+                }}
+                icon={
+                  isOpen ? (
+                    <CloseOutlined style={{ color: '#858585' }} />
+                  ) : (
+                    <QuickEditIcon style={{ color: '#858585' }} />
+                  )
+                }
+              />
+              <Button
+                size="large"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setModalOpen(true);
+                  setDeleteItemID(item.id);
+                }}
+                icon={<DeleteOutlined style={{ color: '#858585' }} />}
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              />
+              <Button
+                size="large"
+                icon={<ThreeDotIcon style={{ color: '#858585' }} />}
+                onClick={() => {
+                  alert('this do nothing');
+                }}
+              />
+              <Modal
+                open={modalOpen}
+                closable={false}
+                centered
+                width={311}
+                className="delete-modal-container"
+                style={{
+                  borderRadius: '18px',
+                }}
+                onOk={() => {
+                  dispatch(deletePage(item.id)).then(() => fetchPages());
+                }}
+                cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+                onCancel={(e) => {
+                  e.stopPropagation();
+                  setModalOpen(false);
+                }}
+              >
+                <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+                  Are you sure you want to delete this page?
+                </Typography.Text>
+              </Modal>
+              {/* <Button
                   icon={<EditOutlined />}
                   disabled={!(actions.includes('admin') || actions.includes('update'))}
                   style={{
@@ -121,79 +180,106 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
-                />
-              </Link>
-              <Button
-                disabled={!(actions.includes('admin') || actions.includes('update'))}
-                onClick={() => {
-                  isOpen ? setExpandedRowKeys([]) : setExpandedRowKeys([item.id]);
-                  return setID(item.id);
-                }}
-                style={{ margin: '0.5rem' }}
-              >
-                {isOpen ? <CloseOutlined /> : <FormOutlined />}
-              </Button>
-              <Popconfirm
-                title="Are you sure you want to delete this?"
-                onConfirm={() => dispatch(deletePage(item.id)).then(() => fetchPages())}
-                disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              >
-                <Button
-                  disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                  type="danger"
-                  style={{ margin: '0.5rem' }}
-                >
-                  <DeleteOutlined />
-                </Button>
-              </Popconfirm>
+                /> */}
             </div>
-          </>
+          </ConfigProvider>
         );
       },
     },
   ];
 
   return (
-    <Space direction="vertical">
-      <Table
-        dataSource={data.pages}
-        columns={columns}
-        rowKey={(record) => record.id}
-        locale={{
-          emptyText: '-',
-        }}
-        expandable={{
-          expandIconColumnIndex: -1,
-          expandedRowKeys,
-          onExpand: (expanded, record) => {
-            let keys = [];
-            if (expanded) {
-              keys.push(record.id);
-            }
-
-            setExpandedRowKeys(keys);
+    <ConfigProvider
+      theme={{
+        components: {
+          Typography: {
+            colorText: '#101828',
           },
-          expandedRowRender: (item) => (
-            <QuickEdit
-              data={item}
-              setID={setID}
-              slug={format.slug}
-              onQuickEditUpdate={() => setExpandedRowKeys([])}
-            />
-          ),
-          expandIcon: () => {},
-        }}
-        pagination={{
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
-          total: data.total,
-          current: filters.page,
-          pageSize: filters.limit ? filters.limit : 10,
-          onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
-          pageSizeOptions: ['10', '15', '20'],
-        }}
-      />
-    </Space>
+        },
+      }}
+    >
+      <Space direction="vertical">
+        <Table
+          dataSource={data.pages.length !== 0 ? data.pages : []}
+          loading={data.loading}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                history.push(`/pages/${record.id}/edit`);
+              },
+              onMouseEnter: (event) => {
+                document.body.style.cursor = 'pointer';
+              },
+              onMouseLeave: (event) => {
+                document.body.style.cursor = 'default';
+              },
+            };
+          }}
+          // style={{ maxWidth: '100vw', overflowX: 'auto' }}
+          scroll={{
+            x: "1000",
+          }}
+          columns={columns}
+          rowKey={(record) => record.id}
+          expandable={{
+            expandIconColumnIndex: -1,
+            expandedRowKeys,
+            onExpand: (expanded, record) => {
+              let keys = [];
+              if (expanded) {
+                keys.push(record.id);
+              }
+              setExpandedRowKeys(keys);
+            },
+            expandedRowRender: (item) => (
+              <QuickEdit
+                data={item}
+                page={true}
+                setID={setID}
+                slug={format.slug}
+                onQuickEditUpdate={() => setExpandedRowKeys([])}
+              />
+            ),
+            expandIcon: () => { },
+          }}
+          pagination={{
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
+            total: data.total,
+            current: filters.page,
+            pageSize: filters.limit ? filters.limit : 10,
+            onChange: (pageNumber, pageSize) =>
+              setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+            pageSizeOptions: ['10', '15', '20'],
+          }}
+        />
+        <Modal
+          open={modalOpen}
+          closable={false}
+          centered
+          width={311}
+          className="delete-modal-container"
+          style={{
+            borderRadius: '18px',
+          }}
+          onOk={(e) => {
+            e.stopPropagation();
+            dispatch(deletePage(deleteItemID)).then(() => fetchPages())
+            setModalOpen(false);
+            setDeleteItemID(null);
+          }}
+          cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+          onCancel={(e) => {
+            e.stopPropagation();
+            setModalOpen(false);
+            setDeleteItemID(null);
+          }}
+        >
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            Are you sure you want to delete this page?
+          </Typography.Text>
+        </Modal>
+      </Space>
+    </ConfigProvider>
   );
 }
 

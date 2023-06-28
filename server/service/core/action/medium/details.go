@@ -4,8 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -42,14 +41,9 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Medium{}
+	mediumService := service.GetMediumService()
 
-	result.ID = uint(id)
-
-	err = config.DB.Model(&model.Medium{}).Where(&model.Medium{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
+	result, err := mediumService.GetById(sID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))

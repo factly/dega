@@ -1,12 +1,16 @@
 import React from 'react';
-import { Popconfirm, Button, Table, Avatar, Tooltip, Space } from 'antd';
+import { Button, Table, ConfigProvider, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import { deleteRole, getRoles } from '../../../actions/roles';
 
 function RoleList({ roles, total, loading }) {
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [deleteItemId, setDeleteItemId] = React.useState(null);
   const dispatch = useDispatch();
+
+  const history = useHistory();
   const onDelete = (id) => {
     dispatch(deleteRole(id)).then(() => dispatch(getRoles()));
   };
@@ -16,7 +20,14 @@ function RoleList({ roles, total, loading }) {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      width: '15%',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <div key={record.id}>
@@ -29,7 +40,9 @@ function RoleList({ roles, total, loading }) {
                 pathname: `/members/roles/${record.id}/edit`,
               }}
             >
-              {record?.name}
+              <Typography.Text style={{ fontSize: '1rem' }} strong>
+                {record.name}
+              </Typography.Text>
             </Link>
           </div>
         );
@@ -39,32 +52,71 @@ function RoleList({ roles, total, loading }) {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      width: '15%',
+      width: 400,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '400px',
+          },
+        };
+      },
+      render: (_, record) => (
+        <Typography.Paragraph style={{ fontSize: '1rem' }} strong ellipsis={{ rows: 2 }}>
+          {record.description}
+        </Typography.Paragraph>
+      ),
     },
     {
       title: 'Action',
       dataIndex: 'operation',
-      width: '20%',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
-          <span>
-            <Space>
-              <Link
-                to={{
-                  pathname: `/members/roles/${record.id}/users`,
-                }}
-              >
-                <Button icon={<UserOutlined />} primary="true">
-                  Users
-                </Button>
-              </Link>
-              <Popconfirm title="Sure to Revoke?" onConfirm={() => onDelete(record.id)}>
-                <Button type="danger" icon={<DeleteOutlined />}>
-                  Delete
-                </Button>
-              </Popconfirm>
-            </Space>
-          </span>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  controlHeight: 35,
+                  colorBorder: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
+                },
+                Modal: {
+                  colorBgMask: '#0000000B',
+                },
+              },
+            }}
+          >
+            <Link
+              to={{
+                pathname: `/settings/members/roles/${record.id}/users`,
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <Button
+                size="large"
+                style={{ marginRight: '8px' }}
+                icon={<UserOutlined style={{ color: '#858585' }} />}
+              />
+            </Link>
+            <Button
+              size="large"
+              onClick={(e) => {
+                e.stopPropagation();
+                setModalOpen(true);
+                setDeleteItemId(record.id);
+              }}
+              icon={<DeleteOutlined style={{ color: '#858585' }} />}
+            />
+          </ConfigProvider>
         );
       },
     },
@@ -72,7 +124,62 @@ function RoleList({ roles, total, loading }) {
 
   return (
     <div>
-      <Table bordered columns={columns} dataSource={roles} rowKey={'id'} loading={loading} />
+      <ConfigProvider
+        theme={{
+          components: {
+            Typography: {
+              colorText: '#101828',
+            },
+          },
+        }}
+      >
+        <Table
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                history.push(`/settings/members/roles/${record.id}/edit`);
+              },
+              onMouseEnter: (event) => {
+                document.body.style.cursor = 'pointer';
+              },
+              onMouseLeave: (event) => {
+                document.body.style.cursor = 'default';
+              },
+            };
+          }}
+          scroll={{
+            x: '1000',
+          }}
+          columns={columns}
+          dataSource={roles}
+          rowKey={'id'}
+          loading={loading}
+        />
+        <Modal
+          open={modalOpen}
+          closable={false}
+          centered
+          width={311}
+          className="delete-modal-container"
+          style={{
+            borderRadius: '18px',
+          }}
+          onOk={(e) => {
+            e.stopPropagation();
+            onDelete(deleteItemId);
+            setModalOpen(false);
+            setDeleteItemId(null);
+          }}
+          cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+          onCancel={(e) => {
+            e.stopPropagation();
+            setModalOpen(false);
+            setDeleteItemId(null);
+          }}
+        >
+          <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
+        </Modal>
+      </ConfigProvider>
     </div>
   );
 }

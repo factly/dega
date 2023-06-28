@@ -4,8 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -42,17 +41,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Podcast{}
+	podcastService := service.GetPodcastService()
 
-	result.ID = uint(id)
+	result, serviceErr := podcastService.GetById(sID, id)
 
-	err = config.DB.Model(&model.Podcast{}).Where(&model.Podcast{
-		SpaceID: uint(sID),
-	}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").First(&result).Error
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
 

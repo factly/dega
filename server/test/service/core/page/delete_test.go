@@ -1,99 +1,143 @@
 package page
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/category"
-	"github.com/factly/dega-server/test/service/core/tag"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestPageDelete(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all the entries from the db and then insert some data
+	config.DB.Exec("DELETE FROM media")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM posts")
+	config.DB.Exec("DELETE FROM authors")
+	config.DB.Exec("DELETE FROM formats")
+	var insertArthorData model.Author
+	var insertMediumData model.Medium
+	var insertSpacePermission model.SpacePermission
+	var insertFormatData model.Format
+	var insertPostAuthorData model.PostAuthor
+	insertArthorData = model.Author{
+		FirstName: "Arthur",
+		LastName:  "Dent",
+	}
+	config.DB.Create(&insertArthorData)
+	var insertData model.Post = model.Post{
+		Title:            "TestTitle",
+		Subtitle:         TestSubTitle,
+		Slug:             "test-title-2",
+		Description:      TestDescriptionJson,
+		DescriptionHTML:  TestDescriptionHtml,
+		Status:           TestStatus,
+		IsPage:           TestIsPage,
+		IsHighlighted:    TestIsHighlighted,
+		FeaturedMediumID: &TestFeaturedMediumID,
+		FormatID:         TestFormatID,
+		SpaceID:          TestSpaceID,
+		Meta:             TestMeta,
+		Excerpt:          TestExcerpt,
+		HeaderCode:       TestHeaderCode,
+		FooterCode:       TestFooterCode,
+		MetaFields:       TestMetaFields,
+		DescriptionAMP:   TestDescriptionHtml,
+		Tags:             []model.Tag{},
+		Categories:       []model.Category{},
+	}
+	insertMediumData = model.Medium{
+		Name:        "Create Medium Test",
+		Slug:        "create-medium-test",
+		Description: "desc",
+		Type:        "jpg",
+		Title:       "Sample image",
+		Caption:     "caption",
+		AltText:     "TestAltText",
+		FileSize:    100,
+		URL: postgres.Jsonb{
+			RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
+		},
+		Dimensions: "TestDimensions",
+		MetaFields: TestMetaFields,
+		SpaceID:    TestSpaceID,
+	}
+	insertSpacePermission = model.SpacePermission{
+		SpaceID:   1,
+		FactCheck: true,
+		Media:     10,
+		Posts:     10,
+		Podcast:   true,
+		Episodes:  10,
+		Videos:    10,
+	}
+	insertFormatData = model.Format{
+		Name:        "Create Format Test",
+		Slug:        "create-format-test",
+		Description: "desc",
+		SpaceID:     TestSpaceID,
+	}
+	if err := config.DB.Create(&insertFormatData).Error; err != nil {
+		log.Fatal(err)
+	}
+	if err := config.DB.Create(&insertMediumData).Error; err != nil {
+		log.Fatal(err)
+	}
+	if err := config.DB.Create(&insertSpacePermission).Error; err != nil {
+		log.Fatal(err)
+	}
+	if err := config.DB.Create(&insertData).Error; err != nil {
+		log.Fatal(err)
+	}
+	insertData.Title = "Create Data Test"
+	insertData.Slug = "create-data-test"
+	insertData.ID = 10000
+	config.DB.Create(&insertData)
+	insertPostAuthorData = model.PostAuthor{
+		AuthorID: insertArthorData.ID,
+		PostID:   insertArthorData.ID,
+	}
+	config.DB.Create(&insertPostAuthorData)
+	resData["format_id"] = insertFormatData.ID
+	resData["title"] = "TestTitle"
+	resData["slug"] = "test-title-2"
+	delete(resData, "authors")
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("invalid page id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
 		e.DELETE(path).
 			WithPath("page_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusBadRequest)
-
-		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("page record not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		mock.ExpectQuery(selectQuery).
-			WithArgs(true, 1, 100).
-			WillReturnRows(sqlmock.NewRows(columns))
-
 		e.DELETE(path).
-			WithPath("page_id", "100").
+			WithPath("page_id", 1000000).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
-
-		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("delete page", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		SelectMock(mock, true, 1, 1)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
-				AddRow(1, 1))
-		category.SelectWithOutSpace(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
-				AddRow(1, 1))
-		tag.SelectMock(mock, tag.Data, 1)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
-			WillReturnResult(sqlmock.NewResult(0, 1))
-
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
-			WillReturnResult(sqlmock.NewResult(0, 1))
-
-		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-
-		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "posts" SET "deleted_at"=`)).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectCommit()
-
 		e.DELETE(path).
-			WithPath("page_id", 1).
+			WithPath("page_id", insertData.ID).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK)
-		test.ExpectationsMet(t, mock)
 	})
-
 }

@@ -1,12 +1,12 @@
 package rating
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -48,38 +48,25 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	result.ID = uint(id)
 
-	// check record exists or not
-	err = config.DB.Model(&model.Rating{}).Where(&model.Rating{
-		SpaceID: uint(sID),
-	}).First(&result).Error
+	ratingService := service.GetRatingService()
 
+	_, err = ratingService.GetById(sID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	// check if rating is associated with claims
-	var totAssociated int64
-	config.DB.Model(&model.Claim{}).Where(&model.Claim{
-		RatingID: uint(id),
-	}).Count(&totAssociated)
-
-	if totAssociated != 0 {
-		loggerx.Error(errors.New("rating is associated with claim"))
-		errorx.Render(w, errorx.Parser(errorx.CannotDelete("rating", "claim")))
+	serviceErr := ratingService.Delete(int64(sID), int64(id))
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
 
-	tx := config.DB.Begin()
-	tx.Model(&model.Rating{}).Delete(&result)
-
+	// check if rating is associated with claims
 	if config.SearchEnabled() {
 		_ = meilisearchx.DeleteDocument("dega", result.ID, "rating")
 	}
-
-	tx.Commit()
-
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("rating.deleted", strconv.Itoa(sID), r) {
 			if err = util.NC.Publish("rating.deleted", result); err != nil {

@@ -5,7 +5,7 @@ import deepEqual from 'deep-equal';
 import { getWebhooklogs } from '../../../actions/webhooklogs';
 import WebhookLogsList from './components/WebhookLogsList';
 
-function Webhooklogs({WebhookId}) {
+function Webhooklogs({ WebhookId }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
@@ -14,7 +14,7 @@ function Webhooklogs({WebhookId}) {
   });
   const { webhooklogs, total, loading } = useSelector((state) => {
     const node = state.webhooklogs.req.find((item) => {
-        return deepEqual(item.query, filters);
+      return deepEqual(item.query, filters);
     });
     if (node)
       return {
@@ -30,7 +30,7 @@ function Webhooklogs({WebhookId}) {
   }, [filters]);
 
   const fetchWebhooklogs = () => {
-    dispatch(getWebhooklogs(WebhookId,filters));
+    dispatch(getWebhooklogs(WebhookId, filters));
   };
 
   return (

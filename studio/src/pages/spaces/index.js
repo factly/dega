@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Button, Row, Col } from 'antd';
+import { Space, Button, Row, Col, ConfigProvider } from 'antd';
 import { Link } from 'react-router-dom';
 import SpaceList from './components/SpaceList';
 import { useSelector } from 'react-redux';
@@ -22,22 +22,36 @@ function Spaces() {
   });
 
   return (
-    <Space direction="vertical">
-      <Helmet title={'Spaces'} />
-      <Row gutter={16} justify="end">
-        {role === 'owner' ? (
-          <Col>
-            <Link key="2" to="/advanced/reindex">
-              <Button>Reindex</Button>
-            </Link>
-          </Col>
-        ) : null}
-        <Link key="1" to="/admin/spaces/create">
-          <Button type="primary">New Space</Button>
-        </Link>
-      </Row>
-      <SpaceList />
-    </Space>
+    <ConfigProvider
+      theme={{
+        components: {
+          Button: {
+            controlHeight: 35,
+            colorBorder: '#1890FF',
+            colorPrimaryHover: '#00000026',
+            colorText: '#1890FF',
+            paddingXS: '2px, 16px, 2px, 16px',
+          },
+        },
+      }}
+    >
+      <Space direction="vertical">
+        <Helmet title={'Spaces'} />
+        <Row gutter={16} justify="end">
+          {role === 'owner' ? (
+            <Col>
+              <Link key="2" to="/settings/advanced/reindex">
+                <Button>Reindex</Button>
+              </Link>
+            </Col>
+          ) : null}
+          <Link key="1" to="/admin/spaces/create">
+            <Button type="primary">New Space</Button>
+          </Link>
+        </Row>
+        <SpaceList />
+      </Space>
+    </ConfigProvider>
   );
 }
 

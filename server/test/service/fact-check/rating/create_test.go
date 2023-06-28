@@ -5,170 +5,167 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/gavv/httpexpect/v2"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/gavv/httpexpect"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestRatingCreate(t *testing.T) {
 
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM ratings")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM media")
 
-	// create httpexpect instance
+	var insertData = model.Rating{
+		Name:             "Test Rating",
+		Slug:             "test-rating",
+		BackgroundColour: TestBackgroundColour,
+		TextColour:       TestTextColour,
+		Description:      TestDescriptionJson,
+		DescriptionHTML:  TestDescriptionHtml,
+		NumericValue:     TestNumericValue,
+		MediumID:         &TestMediumID,
+		SpaceID:          TestSpaceID,
+		FooterCode:       TestFooterCode,
+		HeaderCode:       TestHeaderCode,
+	}
+
+	config.DB.Model(&model.Rating{}).Create(&insertData)
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
+	}
+
+	var insertMediumData = coreModel.Medium{
+		Name:    "Test Medium",
+		Slug:    "test-medium",
+		SpaceID: TestSpaceID,
+	}
+
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable rating", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	t.Run("unprocessable entity", func(t *testing.T) {
 		e.POST(basePath).
-			WithJSON(invalidData).
 			WithHeaders(headers).
+			WithJSON(invalidData).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
+	})
+
+	t.Run("invalid space header", func(t *testing.T) {
+		e.POST(basePath).
+			WithHeaders(map[string]string{
+				"X-User": "1",
+			}).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnauthorized)
+	})
+
+	t.Run("invalid user id", func(t *testing.T) {
+		e.POST(basePath).
+			WithHeaders(map[string]string{
+				"X-Space": "0",
+				"X-User":  "0",
+			}).
+			Expect().
+			Status(http.StatusUnauthorized)
 
 	})
 
-	t.Run("Unable to decode rating", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	// unable to decode rating
+	t.Run("unable to decode rating", func(t *testing.T) {
 		e.POST(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
 	t.Run("create rating", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		sameNameCount(mock, 0, Data["name"])
-		ratingCountQuery(mock, 0)
-		slugCheckMock(mock, Data)
-
-		ratingInsertMock(mock)
-		SelectWithOutSpace(mock, Data)
-		mock.ExpectCommit()
-
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(resData)
-		test.ExpectationsMet(t, mock)
-
+			Status(http.StatusCreated).
+			JSON().Object().ContainsMap(resData)
 	})
 
-	t.Run("create rating with slug is empty", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		sameNameCount(mock, 0, Data["name"])
-		ratingCountQuery(mock, 0)
-		slugCheckMock(mock, Data)
-
-		ratingInsertMock(mock)
-
-		SelectWithOutSpace(mock, Data)
-		mock.ExpectCommit()
-
+	//create a rating with empty slug
+	t.Run("create rating with empty slug", func(t *testing.T) {
+		Data["name"] = "Test Rating 2"
 		Data["slug"] = ""
-		res := e.POST(basePath).
+		resData["name"] = "Test Rating 2"
+		resData["slug"] = "test-rating-2"
+		Data["numeric_value"] = 2
+		resData["numeric_value"] = 2
+		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object()
-		Data["slug"] = "true"
-		res.ContainsMap(resData)
-
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusCreated).
+			JSON().Object().ContainsMap(resData)
 	})
 
-	t.Run("medium does not belong same space", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		sameNameCount(mock, 0, Data["name"])
-		ratingCountQuery(mock, 0)
-		slugCheckMock(mock, Data)
-
-		ratingInsertError(mock)
-
+	// medium does not belong to same space
+	t.Run("medium does not belong to same space", func(t *testing.T) {
+		Data["medium_id"] = 100
+		Data["numeric_value"] = 3
+		Data["name"] = "Test Rating 3"
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("rating with same name exist", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		sameNameCount(mock, 1, Data["name"])
-
+	t.Run("create rating with same name", func(t *testing.T) {
+		Data["medium_id"] = TestMediumID
+		Data["name"] = TestName
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("rating with same numeric value exist", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		sameNameCount(mock, 0, Data["name"])
-		ratingCountQuery(mock, 1)
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("cannot parse rating description", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		sameNameCount(mock, 0, Data["name"])
-		ratingCountQuery(mock, 0)
-
-		Data["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"block": "new"}`),
-		}
+		Data["description"] = postgres.Jsonb{RawMessage: []byte(`{"json": "<p>Test Description</p>"}`)}
+		// Data
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-		Data["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-		}
+		Data["description"] = TestDescriptionFromRequest
+	})
+
+	t.Run("create a rating with same numeric value", func(t *testing.T) {
+		Data["numeric_value"] = insertData.NumericValue
+		Data["Name"] = "Test Rating 4"
+		Data["slug"] = "test-rating-4"
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+
 	})
 
 }

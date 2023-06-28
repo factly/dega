@@ -1,17 +1,13 @@
 package medium
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
-	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -44,98 +40,20 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
-
-	result := &model.Medium{}
-
-	result.ID = uint(id)
-
-	// check record exists or not
-	err = config.DB.Where(&model.Medium{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
+	mediumService := service.GetMediumService()
+	result, err := mediumService.GetById(sID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	uintID := uint(id)
-
-	// check if medium is associated with posts
-	var totAssociated int64
-	err = config.DB.Model(&model.Post{}).Where(&model.Post{
-		FeaturedMediumID: &uintID,
-	}).Count(&totAssociated).Error
+	serviceErr := mediumService.Delete(id, sID)
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, serviceErr)
 		return
 	}
-	if totAssociated != 0 {
-		loggerx.Error(errors.New("medium is associated with post"))
-		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "post")))
-		return
-	}
-
-	// check if medium is associated with categories
-	config.DB.Model(&model.Category{}).Where(&model.Category{
-		MediumID: &uintID,
-	}).Count(&totAssociated)
-
-	if totAssociated != 0 {
-		loggerx.Error(errors.New("medium is associated with category"))
-		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "category")))
-		return
-	}
-
-	// check if medium is associated with spaces
-	config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
-		LogoID: &uintID,
-	}).Or(&model.SpaceSettings{
-		LogoMobileID: &uintID,
-	}).Or(&model.SpaceSettings{
-		FavIconID: &uintID,
-	}).Or(&model.SpaceSettings{
-		MobileIconID: &uintID,
-	}).Count(&totAssociated)
-
-	if totAssociated != 0 {
-		loggerx.Error(errors.New("medium is associated with space"))
-		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "space")))
-		return
-	}
-
-	// check if medium is associated with ratings
-	config.DB.Model(&factCheckModel.Rating{}).Where(&factCheckModel.Rating{
-		MediumID: &uintID,
-	}).Count(&totAssociated)
-
-	if totAssociated != 0 {
-		loggerx.Error(errors.New("medium is associated with rating"))
-		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "rating")))
-		return
-	}
-
-	// check if medium is associated with claimants
-	config.DB.Model(&factCheckModel.Claimant{}).Where(&factCheckModel.Claimant{
-		MediumID: &uintID,
-	}).Count(&totAssociated)
-
-	if totAssociated != 0 {
-		loggerx.Error(errors.New("medium is associated with claimant"))
-		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "claimant")))
-		return
-	}
-
-	tx := config.DB.Begin()
-	tx.Delete(&result)
-
-	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "medium")
-	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("media.deleted", strconv.Itoa(sID), r) {

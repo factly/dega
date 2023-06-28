@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Form, Input, DatePicker, Row, Col, Collapse } from 'antd';
+import { Button, Form, Input, DatePicker, Row, Col, Collapse, ConfigProvider } from 'antd';
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, MetaForm, SlugInput } from '../../../components/FormItems';
@@ -19,6 +19,21 @@ const layout = {
 };
 
 const ClaimForm = ({ onCreate, data = {} }) => {
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   if (data && data.meta_fields) {
     if (typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
@@ -41,10 +56,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     values.claimant_id = values.claimant || 0;
     values.rating_id = values.rating || 0;
     values.claim_date = values.claim_date
-      ? moment(values.claim_date).format('YYYY-MM-DDTHH:mm:ssZ')
+      ? dayjs(values.claim_date).format('YYYY-MM-DDTHH:mm:ssZ')
       : null;
     values.checked_date = values.checked_date
-      ? moment(values.checked_date).format('YYYY-MM-DDTHH:mm:ssZ')
+      ? dayjs(values.checked_date).format('YYYY-MM-DDTHH:mm:ssZ')
       : null;
 
     onCreate(values);
@@ -63,8 +78,8 @@ const ClaimForm = ({ onCreate, data = {} }) => {
   };
 
   if (data && data.id) {
-    data.claim_date = data.claim_date ? moment(data.claim_date) : null;
-    data.checked_date = data.checked_date ? moment(data.checked_date) : null;
+    data.claim_date = data.claim_date ? dayjs(data.claim_date) : null;
+    data.checked_date = data.checked_date ? dayjs(data.checked_date) : null;
   }
 
   const handleCollapse = (props) => {
@@ -72,12 +87,23 @@ const ClaimForm = ({ onCreate, data = {} }) => {
   };
 
   return (
-    <div>
+    <ConfigProvider
+      theme={{
+        components: {
+          Collapse: {
+            colorBgContainer: '#F9FAFB',
+            colorText: '#000000E0',
+          },
+        },
+      }}
+    >
       <Form
         {...layout}
         form={form}
         initialValues={data}
+        style={{ padding: isMobileScreen || '0 1rem' }}
         name="create-claim"
+        className="edit-form"
         onFinish={(values) => {
           if (values.meta_fields) {
             values.meta_fields = getJsonValue(values.meta_fields);
@@ -101,9 +127,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           setValueChange(true);
         }}
         scrollToFirstError={true}
-        style={{
-          paddingTop: '24px',
-        }}
         layout="vertical"
       >
         <Form.Item>
@@ -117,177 +140,206 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           </Button>
         </Form.Item>
         <Collapse
-          style={{ width: '100%', marginBottom: '15px', maxWidth: 800, margin: '0 auto' }}
-          defaultActiveKey={['1', '2']}
+          style={{ width: '100%', marginBottom: 16, background: '#f0f2f5', border: 0 }}
+          defaultActiveKey={['1']}
           activeKey={activeKey && activeKey}
           onChange={(props) => handleCollapse(props)}
           expandIconPosition="right"
           expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
         >
           <Panel header="Basic" key="1">
-            <Form.Item
-              name="claim"
-              label="Claim"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input the Claim!',
-                },
-                { max: 5000, message: 'Claim must be maximum 5000 characters.' },
-              ]}
-            >
-              <Input.TextArea
-                rows={6}
-                placeholder="Enter claim...."
-                onChange={(e) => onClaimChange(e.target.value)}
-              />
-            </Form.Item>
-            <SlugInput />
-            <Form.Item name="fact" label="Fact">
-              <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
-            </Form.Item>
-            <Form.Item
-              name="claimant"
-              label="Claimant"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please add claimant!',
-                },
-              ]}
-            >
-              <Selector action="Claimants" />
-            </Form.Item>
+            <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
+              <Col span={isMobileScreen ? 24 : 16}>
+                <Form.Item
+                  name="claim"
+                  label="Claim"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input the Claim!',
+                    },
+                    { max: 5000, message: 'Claim must be maximum 5000 characters.' },
+                  ]}
+                >
+                  <Input.TextArea
+                    rows={6}
+                    placeholder="Enter claim...."
+                    onChange={(e) => onClaimChange(e.target.value)}
+                  />
+                </Form.Item>
+                <SlugInput />
+                <Form.Item name="fact" label="Fact">
+                  <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
+                </Form.Item>
+                <Form.Item
+                  name="claimant"
+                  label="Claimant"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please add claimant!',
+                    },
+                  ]}
+                >
+                  <Selector action="Claimants" />
+                </Form.Item>
 
-            <Form.Item
-              name="rating"
-              label="Rating"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please add rating!',
-                },
-              ]}
-            >
-              <Selector action="Ratings" />
-            </Form.Item>
-            <Form.Item>
-              <Form.Item
-                name="claim_date"
-                label="Claim Date"
-                style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}
-              >
-                <DatePicker disabledDate={disabledDate} />
-              </Form.Item>
-              <Form.Item
-                name="checked_date"
-                label="Checked Date"
-                style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}
-              >
-                <DatePicker disabledDate={disabledDate} />
-              </Form.Item>
-            </Form.Item>
-            <DescriptionInput
-              inputProps={{ placeholder: 'Enter Description...' }}
-              initialValue={data.description?.html}
-            />
-          </Panel>
-          <Panel header="Sources" key="2">
-            <Form.Item label="Claim Sources">
-              <Form.List name="claim_sources" label="Claim sources">
-                {(fields, { add, remove }) => (
-                  <>
-                    {fields.map((field) => (
-                      <Row
-                        style={{ justifyContent: 'center', alignItems: 'baseline' }}
-                        key={field}
-                        gutter={13}
+                <Form.Item
+                  name="rating"
+                  label="Rating"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please add rating!',
+                    },
+                  ]}
+                >
+                  <Selector action="Ratings" />
+                </Form.Item>
+                <Form.Item>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <Form.Item
+                        name="claim_date"
+                        label="Claim Date"
+                        style={{ display: 'inline-block', width: '100%' }}
                       >
-                        <Col span={11}>
-                          <Form.Item
-                            {...field}
-                            name={[field.name, 'url']}
-                            fieldKey={[field.fieldKey, 'url']}
-                            rules={[{ required: true, message: 'Url required' }]}
-                            wrapperCol={24}
-                          >
-                            <Input placeholder="Enter url" />
-                          </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                          <Form.Item
-                            {...field}
-                            name={[field.name, 'description']}
-                            fieldKey={[field.fieldKey, 'description']}
-                            rules={[{ required: true, message: 'Description required' }]}
-                            wrapperCol={24}
-                          >
-                            <Input placeholder="Enter description" />
-                          </Form.Item>
-                        </Col>
-                        <MinusCircleOutlined onClick={() => remove(field.name)} />
-                      </Row>
-                    ))}
-                    <Form.Item>
-                      <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                        Add Claim sources
-                      </Button>
-                    </Form.Item>
-                  </>
-                )}
-              </Form.List>
-            </Form.Item>
-            <Form.Item label="Review Sources">
-              <Form.List name="review_sources" label="Review sources">
-                {(fields, { add, remove }) => (
-                  <>
-                    {fields.map((field) => (
-                      <Row
-                        style={{ justifyContent: 'center', alignItems: 'baseline' }}
-                        gutter={13}
-                        key={field}
+                        <DatePicker disabledDate={disabledDate} style={{ width: '100%' }} />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name="checked_date"
+                        label="Checked Date"
+                        style={{ display: 'inline-block', width: '100%' }}
                       >
-                        <Col span={11}>
-                          <Form.Item
-                            {...field}
-                            name={[field.name, 'url']}
-                            fieldKey={[field.fieldKey, 'url']}
-                            rules={[{ required: true, message: 'Url required' }]}
-                            wrapperCol={24}
-                          >
-                            <Input placeholder="Enter url" />
-                          </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                          <Form.Item
-                            {...field}
-                            name={[field.name, 'description']}
-                            fieldKey={[field.fieldKey, 'description']}
-                            rules={[{ required: true, message: 'Description required' }]}
-                            wrapperCol={24}
-                          >
-                            <Input placeholder="Enter description" />
-                          </Form.Item>
-                        </Col>
-                        <MinusCircleOutlined onClick={() => remove(field.name)} />
-                      </Row>
-                    ))}
-                    <Form.Item>
-                      <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                        Add Review sources
-                      </Button>
-                    </Form.Item>
-                  </>
-                )}
-              </Form.List>
-            </Form.Item>
+                        <DatePicker disabledDate={disabledDate} style={{ width: '100%' }} />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Form.Item>
+                <DescriptionInput
+                  inputProps={{
+                    placeholder: 'Enter Description...',
+                    style: {
+                      minHeight: '92px',
+                      background: '#F9FAFB',
+                      padding: '0.25rem 0.5rem',
+                      borderRadius: '0.25rem',
+                      border: '1px solid rgba(0, 0, 0, 0.15)',
+                    },
+                  }}
+                  rows={5}
+                  initialValue={data.description_html}
+                />
+              </Col>
+            </Row>
           </Panel>
         </Collapse>
-        <MetaForm
-          style={{ width: '100%', marginBottom: '15px', maxWidth: 800, margin: '0 auto' }}
-        />
+        <Collapse
+          style={{ width: '100%', marginBottom: 16, background: '#f0f2f5', border: 0 }}
+          defaultActiveKey={['1']}
+          activeKey={activeKey && activeKey}
+          onChange={(props) => handleCollapse(props)}
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+        >
+          <Panel header="Sources" key="1">
+            <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
+              <Form.Item label="Claim Sources">
+                <Form.List name="claim_sources" label="Claim sources">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map((field) => (
+                        <Row
+                          style={{ justifyContent: 'center', alignItems: 'baseline' }}
+                          key={field}
+                          gutter={13}
+                        >
+                          <Col span={11}>
+                            <Form.Item
+                              {...field}
+                              name={[field.name, 'url']}
+                              fieldKey={[field.fieldKey, 'url']}
+                              rules={[{ required: true, message: 'Url required' }]}
+                              wrapperCol={24}
+                            >
+                              <Input placeholder="Enter url" />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item
+                              {...field}
+                              name={[field.name, 'description']}
+                              fieldKey={[field.fieldKey, 'description']}
+                              rules={[{ required: true, message: 'Description required' }]}
+                              wrapperCol={24}
+                            >
+                              <Input placeholder="Enter description" />
+                            </Form.Item>
+                          </Col>
+                          <MinusCircleOutlined onClick={() => remove(field.name)} />
+                        </Row>
+                      ))}
+                      <Form.Item>
+                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                          Add Claim sources
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </Form.List>
+              </Form.Item>
+              <Form.Item label="Review Sources">
+                <Form.List name="review_sources" label="Review sources">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map((field) => (
+                        <Row
+                          style={{ justifyContent: 'center', alignItems: 'baseline' }}
+                          gutter={13}
+                          key={field}
+                        >
+                          <Col span={11}>
+                            <Form.Item
+                              {...field}
+                              name={[field.name, 'url']}
+                              fieldKey={[field.fieldKey, 'url']}
+                              rules={[{ required: true, message: 'Url required' }]}
+                              wrapperCol={24}
+                            >
+                              <Input placeholder="Enter url" />
+                            </Form.Item>
+                          </Col>
+                          <Col span={12}>
+                            <Form.Item
+                              {...field}
+                              name={[field.name, 'description']}
+                              fieldKey={[field.fieldKey, 'description']}
+                              rules={[{ required: true, message: 'Description required' }]}
+                              wrapperCol={24}
+                            >
+                              <Input placeholder="Enter description" />
+                            </Form.Item>
+                          </Col>
+                          <MinusCircleOutlined onClick={() => remove(field.name)} />
+                        </Row>
+                      ))}
+                      <Form.Item>
+                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                          Add Review sources
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </Form.List>
+              </Form.Item>
+            </Row>
+          </Panel>
+        </Collapse>
+        <MetaForm style={{ marginBottom: 16, background: '#f0f2f5', border: 0 }} />
       </Form>
-    </div>
+    </ConfigProvider>
   );
 };
 
