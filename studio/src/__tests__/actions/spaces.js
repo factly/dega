@@ -279,6 +279,7 @@ describe('spaces actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.API_DELETE_SPACE + '/1');
   });
+
   it('should create actions to set selected space', () => {
     const space = { id: 1, name: 'Space' };
 
@@ -302,4 +303,57 @@ describe('spaces actions', () => {
     store.dispatch(actions.setSelectedSpace(space));
     expect(store.getActions()).toEqual(expectedActions);
   });
+
+  it('should create actions to fetch space users and update the selected space', () => {
+    const users = [{ id: 11, name: 'User 1' }, { id: 12, name: 'User 2' }];
+    const space = { id: 1, name: 'Space', users };
+    const resp = { data: users };
+    axios.get.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.LOADING_SPACES,
+      },
+      {
+        type: types.ADD_SPACE_USERS,
+        payload: {
+          id: 1,
+          data: users
+        },
+      }
+    ];
+
+    const store = mockStore({ ...initialState, spaces: { selected: space.id } });
+    store
+      .dispatch(actions.getSpaceUsers())
+      .then(() => expect(store.getActions()).toEqual(expectedActions))
+    expect(axios.get).toHaveBeenCalledWith(`/core/spaces/${space.id}/users`);
+  });
+
+  it('should create actions to fetch space users and update the selected space when failure', () => {
+    const errorMessage = 'Failed to fetch space users';
+    axios.get.mockRejectedValue(new Error(errorMessage));
+
+    const expectedActions = [
+      {
+        type: types.LOADING_SPACES,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+          time: Date.now(),
+        },
+      },
+    ];
+
+    const store = mockStore({ ...initialState, spaces: { selected: 1 } });
+    store
+      .dispatch(actions.getSpaceUsers())
+      .then(() => expect(store.getActions()).toEqual(expectedActions))
+    expect(axios.get).toHaveBeenCalledWith(`/core/spaces/1/users`);
+  });
+
 });

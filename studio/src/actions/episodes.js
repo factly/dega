@@ -51,6 +51,8 @@ export const getEpisodes = (query) => {
           addEpisodes(
             response.data.nodes.map((episode) => {
               episode.description = { json: episode.description, html: episode.description_html };
+              // !here we need to delete the description_html field
+              delete episode.description_html;
               return { ...episode, podcast: episode.podcast.id };
             }),
           ),
@@ -79,6 +81,8 @@ export const getEpisode = (id) => {
       .then((response) => {
         let episode = response.data;
         episode.description = { json: episode.description, html: episode.description_html };
+        // ! here we need to delete the description_html field also
+        delete episode.description_html;
         if (episode.podcast.id > 0) dispatch(addPodcasts([episode.podcast]));
         dispatch(addEpisode(GET_EPISODE, { ...episode, podcast: episode.podcast.id }));
       })
@@ -113,7 +117,15 @@ export const updateEpisode = (data) => {
       .put(EPISODES_API + '/' + data.id, data)
       .then((response) => {
         let episode = response.data;
-        episode.description = { json: episode.description, html: episode.description_html };
+        if ((!response.data.description)
+          ||(response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
+        }
         if (episode.podcast.id > 0) dispatch(addPodcasts([episode.podcast]));
         dispatch(addEpisode(UPDATE_EPISODE, { ...episode, podcast: episode.podcast.id }));
         dispatch(addSuccessNotification('Episode updated'));

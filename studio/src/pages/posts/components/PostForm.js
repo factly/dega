@@ -314,7 +314,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
               <DescriptionInput
                 type="editor"
                 formItemProps={{ className: 'post-description' }}
-                initialValue={data.description_html}
+                initialValue={data.description?.html}
                 noLabel
               />
               <Drawer

@@ -35,6 +35,16 @@ export const getClaimants = (query) => {
                 json: claimant.description,
                 html: claimant.description_html,
               };
+              // ! this needs to be modified as it is duplicating the value of description_html but not removing it from original object hence results in object structure = {
+              // ! ...
+              // ! description: {
+              // !   json: ...
+              // !   html: ::
+              // ! },
+              // ! description_html: ...
+              // ! }
+              //! possible solution is to delete the description_html
+              delete claimant.description_html;
               return { ...claimant, medium: claimant.medium?.id };
             }),
           ),
@@ -99,10 +109,17 @@ export const updateClaimant = (data) => {
       .put(CLAIMANTS_API + '/' + data.id, data)
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
-        response.data.description = {
-          json: response.data.description,
-          html: response.data.description_html,
-        };
+
+        if ( (response.data.description === undefined)
+          || (response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))
+        ) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
+        }
         dispatch(
           addClaimant(UPDATE_CLAIMANT, { ...response.data, medium: response.data.medium?.id }),
         );
@@ -139,6 +156,8 @@ export const addClaimants = (claimants) => {
     dispatch(
       addClaimantsList(
         claimants.map((claimant) => {
+          claimant.description = { json: claimant.description, html: claimant.description_html };
+          delete claimant.description_html;
           return { ...claimant, medium: claimant.medium?.id };
         }),
       ),

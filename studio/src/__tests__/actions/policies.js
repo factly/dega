@@ -400,7 +400,7 @@ describe('policies actions', () => {
   });
   it('should create actions to add default policies success', () => {
     const policies = [{ id: 1, name: 'Policy' }];
-    const resp = { data: { nodes: policies, total: 1 } };
+    const resp = { data: policies };
     axios.post.mockResolvedValue(resp);
 
     const expectedActions = [

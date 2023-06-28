@@ -183,6 +183,11 @@ const initialState = {
     details: {},
     loading: true,
   },
+  webhooklogs: {
+    req: [],
+    details: {},
+    loading: true,
+  },
   profile: {
     details: {},
     loading: true,

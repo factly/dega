@@ -22,7 +22,6 @@ const DescriptionInput = ({
 
   inputProps = { ...inputProps, onChange };
   formItemProps = noLabel ? formItemProps : { ...formItemProps, label };
-
   return (
     <Form.Item name={name} {...formItemProps}>
       {/* <Editor {...inputProps} /> */}

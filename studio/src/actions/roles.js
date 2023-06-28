@@ -22,9 +22,11 @@ export const getRoles = (query) => {
         dispatch(addRoles(response.data));
         dispatch(
           addRolesRequest({
+            //! HERE EITHER WE HAVE TO USE MAP OVER data.nodes
             data: response.data.map((item) => item.id),
             query: query,
-            total: response.data.total,
+            //! or we have to change the response.data.total to response.data.length
+            total: response.data.length,
           }),
         );
       })
@@ -65,7 +67,9 @@ export const createRole = (data) => {
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
-      });
+      })
+      //! HERE WE HAVE TO STOP LOADING AFTER CREATING ROLE
+      .finally(() => dispatch(stopRolesLoading()));
   };
 };
 
