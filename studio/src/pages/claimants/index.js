@@ -139,26 +139,28 @@ function Claimants({ permission }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row>
-                      <Form.Item name="q">
-                        <Input placeholder="Search pages" />
-                      </Form.Item>
-                      <Form.Item>
-                        <Button htmlType="submit" icon={<SearchOutlined />}>
-                          Search
-                        </Button>
-                      </Form.Item>
+                    <Row gutter={8}>
+                      <Col>
+                        <Form.Item name="q">
+                          <Input placeholder="Search claimants" />
+                          {/**/}
+                        </Form.Item>
+                      </Col>
+                      <Col>
+                        <Form.Item>
+                          <Button htmlType="submit" icon={<SearchOutlined />}>
+                            Search
+                          </Button>
+                        </Form.Item>
+                      </Col>
                     </Row>
                   ) : (
                     <Tooltip title="search">
                       <Button
                         shape="circle"
                         style={{ border: 'none' }}
-                        onFocus={() => {
+                        onClick={() => {
                           setSearchFieldExpand(true);
-                          setTimeout(() => {
-                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
-                          }, 10000);
                         }}
                         icon={<SearchOutlined />}
                       />
@@ -176,7 +178,7 @@ function Claimants({ permission }) {
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
                         icon={<PlusOutlined />}
-                        style={{ marginBottom: 16 }}
+                        style={{ margin: isMobileScreen ? '16px 0' : '0 0 16px 0' }}
                       >
                         Create
                       </Button>

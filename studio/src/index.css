@@ -62,3 +62,8 @@ code {
 .edit-form .ant-collapse-header {
   font-weight: 600 !important;
 }
+
+.template-list .ant-collapse-header {
+  font-weight: 600 !important;
+  align-items: center !important;
+}
