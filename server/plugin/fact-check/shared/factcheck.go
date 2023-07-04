@@ -1,6 +1,8 @@
 package shared
 
 import (
+	"errors"
+	"log"
 	"net/rpc"
 )
 
@@ -11,14 +13,14 @@ func (fc *FactcheckClient) RegisterRoutes() error {
 	return fc.client.Call("Plugin.RegisterRoutes", new(interface{}), &resp)
 }
 
-func (fc *FactcheckClient) HandleRequest(request Request) (interface{}, error) {
-	var resp interface{}
+func (fc *FactcheckClient) HandleRequest(request Request) (Any, Error) {
+	var resp Any
 	err := fc.client.Call("Plugin.HandleRequest", request, &resp)
 	if err != nil {
-		return nil, err
+		return nil, Error{Message: err.Error(), Code: 500, Error: err}
 	}
 
-	return resp, nil
+	return resp, Error{}
 }
 
 type FactcheckServer struct {
@@ -29,10 +31,11 @@ func (fs *FactcheckServer) RegisterRoutes(args interface{}, resp *interface{}) e
 	return fs.Impl.RegisterRoutes()
 }
 
-func (fs *FactcheckServer) HandleRequest(request Request, resp *interface{}) error {
+func (fs *FactcheckServer) HandleRequest(request Request, resp *Any) error {
 	result, err := fs.Impl.HandleRequest(request)
-	if err != nil {
-		return err
+	log.Println("FactcheckServer.HandleRequest", result, err)
+	if err.Code != 0 {
+		return errors.New(err.Message)
 	}
 	*resp = result
 	return nil

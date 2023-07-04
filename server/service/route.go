@@ -3,9 +3,11 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/x/errorx"
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/renderx"
 
@@ -95,10 +97,18 @@ func RegisterRoutes() http.Handler {
 	}
 
 	r.With().Get("/*", func(w http.ResponseWriter, r *http.Request) {
+		sID, err := middlewarex.GetSpace(r.Context())
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+			return
+		}
+
 		var body interface{}
 		err = json.NewDecoder(r.Body).Decode(&body)
 
 		request := shared.Request{
+			Space:      sID,
 			Host:       r.Host,
 			Header:     r.Header,
 			Body:       body,
@@ -108,10 +118,10 @@ func RegisterRoutes() http.Handler {
 			RequestURI: r.RequestURI,
 			Proto:      r.Proto,
 		}
-		resp, err := factCheckPlugin.HandleRequest(request)
-		if err != nil {
-			fmt.Println("Error while handling request:", err)
-			w.WriteHeader(http.StatusInternalServerError)
+		resp, errRes := factCheckPlugin.HandleRequest(request)
+		if errRes.Code != 0 {
+			log.Println("Error while handling request:", errRes.Error)
+			errorx.Render(w, errorx.Parser(errorx.Message{Message: errRes.Message, Code: errRes.Code}))
 			return
 		}
 		renderx.JSON(w, http.StatusOK, resp)
