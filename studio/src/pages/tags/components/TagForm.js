@@ -94,7 +94,7 @@ const TagForm = ({ onCreate, data = {} }) => {
                     <Col xs={24} md={10}>
                       <TitleInput
                         name="name"
-                        label="Category Name"
+                        label="Tag Name"
                         onChange={(e) => onTitleChange(e.target.value)}
                       />
                       <SlugInput />

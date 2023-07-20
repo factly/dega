@@ -170,7 +170,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   }
 
   const createTemplate = () => {
-    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/posts'));
+    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => {
+      page ? history.push('/pages')
+      : history.push('/posts')
+    });
   };
   const setReadyFlag = () => {
     status === 'ready' ? setStatus('draft') : setStatus('ready');
@@ -300,7 +303,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
               >
                 <Input.TextArea
                   bordered={false}
-                  placeholder="Add title for the post"
+                  placeholder={`Add title for the ${page ? "page" : "post"}`}
                   onChange={(e) => onTitleChange(e.target.value)}
                   style={{
                     fontSize: '2.5rem',
