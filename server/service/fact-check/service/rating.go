@@ -335,7 +335,7 @@ func (rs RatingService) Default(ctx context.Context, sID, uID int, ratings []mod
 			return ratingPaging{}, errorx.Parser(errorx.DecodeError())
 		}
 
-		ratings[i].BackgroundColour, err = util.GetJSONDescription(ratings[i].Description)
+		ratings[i].BackgroundColour, err = util.GetJSONDescription(ratings[i].BackgroundColour)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)

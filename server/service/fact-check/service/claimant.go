@@ -21,8 +21,8 @@ import (
 )
 
 type claimantPaging struct {
-	Total int64      `json:"total"`
-	Nodes []Claimant `json:"nodes"`
+	Total int64            `json:"total"`
+	Nodes []model.Claimant `json:"nodes"`
 }
 
 // claimant model
