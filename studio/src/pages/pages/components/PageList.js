@@ -141,35 +141,13 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 icon={<DeleteOutlined style={{ color: '#858585' }} />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               />
-              <Button
+              {/* <Button
                 size="large"
                 icon={<ThreeDotIcon style={{ color: '#858585' }} />}
                 onClick={() => {
                   alert('this do nothing');
                 }}
-              />
-              <Modal
-                open={modalOpen}
-                closable={false}
-                centered
-                width={311}
-                className="delete-modal-container"
-                style={{
-                  borderRadius: '18px',
-                }}
-                onOk={() => {
-                  dispatch(deletePage(item.id)).then(() => fetchPages());
-                }}
-                cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-                onCancel={(e) => {
-                  e.stopPropagation();
-                  setModalOpen(false);
-                }}
-              >
-                <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-                  Are you sure you want to delete this page?
-                </Typography.Text>
-              </Modal>
+              /> */}
               {/* <Button
                   icon={<EditOutlined />}
                   disabled={!(actions.includes('admin') || actions.includes('update'))}

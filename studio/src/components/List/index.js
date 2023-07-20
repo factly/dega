@@ -175,14 +175,14 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 }}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               />
-              <Button
+              {/* <Button
                 size="large"
                 icon={<ThreeDotIcon style={{ color: '#858585' }} />}
                 onClick={(e) => {
                   e.stopPropagation();
                   alert('this do nothing');
                 }}
-              />
+              /> */}
             </div>
           </ConfigProvider>
         );
