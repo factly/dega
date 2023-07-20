@@ -54,13 +54,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-	// Check if parent category exist or not
+
 	categoryService := service.GetCategoryService()
-	_, err = categoryService.GetById(sID, int(category.ParentID))
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category does not exist", http.StatusUnprocessableEntity)))
-		return
+
+	if category.ParentID != 0 {
+		// Check if parent category exist or not
+		_, err = categoryService.GetById(sID, int(category.ParentID))
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category does not exist", http.StatusUnprocessableEntity)))
+			return
+		}
 	}
 
 	result, serviceErr := categoryService.Create(r.Context(), sID, uID, category)
