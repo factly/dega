@@ -14,7 +14,7 @@ import (
 )
 
 type FactcheckPluginImpl struct {
-	requestHandlers map[string]shared.Handler
+	requestHandlers map[string]map[string]shared.Handler
 }
 
 func (f *FactcheckPluginImpl) RegisterRoutes() error {
@@ -33,9 +33,15 @@ func (f *FactcheckPluginImpl) RegisterRoutes() error {
 
 	log.Println("Registering routes")
 
-	f.requestHandlers = make(map[string]shared.Handler)
-	f.requestHandlers["/hello"] = handlers.HandleHello
-	f.requestHandlers["/ratings"] = rating.List
+	f.requestHandlers = make(map[string]map[string]shared.Handler)
+	f.requestHandlers["GET"] = make(map[string]shared.Handler)
+	f.requestHandlers["POST"] = make(map[string]shared.Handler)
+	f.requestHandlers["PUT"] = make(map[string]shared.Handler)
+	f.requestHandlers["DELETE"] = make(map[string]shared.Handler)
+
+	f.requestHandlers["GET"]["/hello"] = handlers.HandleHello
+	f.requestHandlers["GET"]["/ratings"] = rating.List
+	f.requestHandlers["POST"]["/ratings"] = rating.Create
 
 	return nil
 }
@@ -48,7 +54,7 @@ func (f *FactcheckPluginImpl) HandleRequest(request shared.Request) (shared.Any,
 	}
 	log.Println("Handling request for", urlStruct.Path)
 
-	if handler, ok := f.requestHandlers[urlStruct.Path]; !ok {
+	if handler, ok := f.requestHandlers[request.Method][urlStruct.Path]; !ok {
 		return nil, shared.Error{Code: 500, Message: fmt.Sprintf("No handler found for %s", urlStruct.Path)}
 	} else {
 		resp, err := handler(request)

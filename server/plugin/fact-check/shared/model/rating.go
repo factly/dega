@@ -21,7 +21,7 @@ type Rating struct {
 	TextColour       postgres.Jsonb `gorm:"column:text_colour" json:"text_colour" swaggertype:"primitive,string"`
 	Description      postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	DescriptionHTML  string         `gorm:"column:description_html" json:"description_html,omitempty"`
-	NumericValue     int            `gorm:"column:numeric_value" json:"numeric_value"`
+	NumericValue     float64        `gorm:"column:numeric_value" json:"numeric_value"`
 	MediumID         *uint          `gorm:"column:medium_id;default=NULL" json:"medium_id"`
 	Medium           *model.Medium  `json:"medium"`
 	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`

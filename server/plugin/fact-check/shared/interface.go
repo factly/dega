@@ -7,6 +7,7 @@ import (
 
 	"github.com/factly/dega-server/plugin/fact-check/shared/model"
 	"github.com/hashicorp/go-plugin"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 var Handshake = plugin.HandshakeConfig{
@@ -22,15 +23,15 @@ var PluginMap = map[string]plugin.Plugin{
 type Handler func(request Request) (Any, *Error)
 
 type Request struct {
-	Body       Any         `json:"body"`
-	Header     http.Header `json:"header"`
-	Host       string      `json:"host"`
-	Proto      string      `json:"proto"`
-	Method     string      `json:"method"`
-	RemoteAddr string      `json:"remote_addr"`
-	RequestURI string      `json:"request_uri"`
-	URL        string      `json:"url"`
-	Space      int         `json:"space"`
+	Body       map[string]interface{} `json:"body"`
+	Header     http.Header            `json:"header"`
+	Host       string                 `json:"host"`
+	Proto      string                 `json:"proto"`
+	Method     string                 `json:"method"`
+	RemoteAddr string                 `json:"remote_addr"`
+	RequestURI string                 `json:"request_uri"`
+	URL        string                 `json:"url"`
+	Space      int                    `json:"space"`
 }
 
 type Error struct {
@@ -52,14 +53,20 @@ type FactcheckPlugin struct {
 
 func (p FactcheckPlugin) Server(*plugin.MuxBroker) (interface{}, error) {
 	// Register types
+	gob.Register(map[string]interface{}{})
 	gob.Register(model.RatingPaging{})
+	gob.Register(model.Rating{})
+	gob.Register(postgres.Jsonb{})
 
 	return &FactcheckServer{Impl: p.Impl}, nil
 }
 
 func (*FactcheckPlugin) Client(b *plugin.MuxBroker, c *rpc.Client) (interface{}, error) {
 	// Register types
+	gob.Register(map[string]interface{}{})
 	gob.Register(model.RatingPaging{})
+	gob.Register(model.Rating{})
+	gob.Register(postgres.Jsonb{})
 
 	return &FactcheckClient{client: c}, nil
 }

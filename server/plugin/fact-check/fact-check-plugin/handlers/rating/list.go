@@ -25,9 +25,7 @@ import (
 // @Success 200 {object} paging
 // @Router /fact-check/ratings [get]
 func List(r shared.Request) (shared.Any, *shared.Error) {
-	log.Println("List Ratings")
-	r.Space = 1
-
+	log.Println("REQUEST: ", r)
 	result := model.RatingPaging{}
 	result.Nodes = make([]model.Rating, 0)
 
@@ -40,11 +38,9 @@ func List(r shared.Request) (shared.Any, *shared.Error) {
 	all := reqUrl.Query().Get("all")
 	offset, limit := paginationx.Parse(reqUrl.Query())
 
-	log.Println("Fetching ratings")
 	stmt := db.DB.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
 		SpaceID: uint(r.Space),
 	}).Count(&result.Total).Order("id desc")
-	log.Println("Fetched ratings")
 
 	if all == "true" {
 		err = stmt.Find(&result.Nodes).Error

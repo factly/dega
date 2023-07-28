@@ -96,7 +96,7 @@ func RegisterRoutes() http.Handler {
 		fmt.Println("Error while getting factcheck plugin", err)
 	}
 
-	r.With().Get("/*", func(w http.ResponseWriter, r *http.Request) {
+	r.With(middlewarex.CheckSpace(0)).HandleFunc("/*", func(w http.ResponseWriter, r *http.Request) {
 		sID, err := middlewarex.GetSpace(r.Context())
 		if err != nil {
 			loggerx.Error(err)
@@ -104,8 +104,15 @@ func RegisterRoutes() http.Handler {
 			return
 		}
 
-		var body interface{}
-		err = json.NewDecoder(r.Body).Decode(&body)
+		var body map[string]interface{}
+		if r.Method == http.MethodPost || r.Method == http.MethodPut {
+			err = json.NewDecoder(r.Body).Decode(&body)
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+				return
+			}
+		}
 
 		request := shared.Request{
 			Space:      sID,
