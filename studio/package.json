@@ -17,6 +17,7 @@
     "@editorjs/quote": "^2.3.0",
     "@editorjs/raw": "^2.1.2",
     "@editorjs/table": "^1.2.2",
+    "@factly/scooter-core": "^0.0.31",
     "@monaco-editor/react": "4.4.6",
     "@factly/scooter": "^0.0.11",
     "@testing-library/jest-dom": "^4.2.4",
