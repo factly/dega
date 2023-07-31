@@ -1,8 +1,10 @@
 import React from 'react';
 import { Form } from 'antd';
 import axios from 'axios';
-// import Editor from '../Editor';
-import { Editor } from '@factly/scooter';
+import { RATINGS_API } from '../../constants/ratings';
+import { CLAIMANTS_API } from '../../constants/claimants';
+import { CLAIMS_API } from '../../constants/claims';
+import { ScooterCore as Editor } from "@factly/scooter-core";
 import { MEDIA_API } from '../../constants/media';
 import { useSelector } from 'react-redux';
 
@@ -19,7 +21,6 @@ const DescriptionInput = ({
   const space_slug = useSelector((state) => {
     return state.spaces.details[state.spaces.selected]?.slug;
   });
-
   inputProps = { ...inputProps, onChange };
   formItemProps = noLabel ? formItemProps : { ...formItemProps, label };
 
@@ -34,6 +35,53 @@ const DescriptionInput = ({
         initialValue={initialValue}
         uploadEndpoint={window.REACT_APP_COMPANION_URL}
         iframelyEndpoint={window.REACT_APP_IFRAMELY_URL}
+        meta = {{
+          claims: {
+            1: { id: 1, claim: "Claim 1", fact: "Fact 1" },
+            2: { id: 2, claim: "Claim 2", fact: "Fact 2" },
+            3: { id: 3, claim: "Claim 3", fact: "Fact 3" },
+            4: { id: 4, claim: "Claim 4", fact: "Fact 4" }
+          }
+        }}
+        claimConfig={{
+          ratingsFetcher : (page=1) => {
+            return axios
+            .get(RATINGS_API, {
+              params: { page: page, limit: 10 },
+            }).then((res) => {console.log(res.data); return res.data})
+          },
+          claimantsFetcher : (page=1) => {
+            return axios
+            .get(CLAIMANTS_API, {
+              params: { page: page, limit: 10 },
+            }).then((res) => {console.log(res.data); return res.data})
+          },
+          claimsFetcher : (searchTerm, page=1 , limit=10 , sort = 'desc' ) => {
+            const params = new URLSearchParams();
+            params.append('q', searchTerm);
+            params.append('page', page);
+            params.append('limit', limit);
+            params.append('sort', sort);
+            return axios
+                   .get( CLAIMS_API , { params: params})
+                   .then((res) => {console.log(res.data); return res.data})
+          },
+          addClaim : (values) => {
+            function convertIdsToNumbers(obj) {
+              for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                  if (!isNaN(obj[key])) {
+                    obj[key] = Number(obj[key]);
+                  }
+                }
+              }
+              return obj;
+            }
+            return axios
+            .post(CLAIMS_API, convertIdsToNumbers(values))
+            .then((res) => {console.log(res.data); return res.data})
+         },
+       }}
         imagesFetcher={(currentPage) =>
           axios
             .get(MEDIA_API, {

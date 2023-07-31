@@ -29,6 +29,7 @@ import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 import { getDatefromStringWithoutDay } from '../../../utils/date';
+import { extractClaimIdsAndOrder, hasClaims } from '../../../utils/claims';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -122,7 +123,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   const onSave = (values) => {
-    setShouldBlockNavigation(false);
+   setShouldBlockNavigation(false);
     if (values.meta_fields) {
       values.meta_fields = getJsonValue(values.meta_fields);
     }
@@ -132,6 +133,12 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.author_ids = values.authors || [];
     values.claim_ids = values.claims ? claimOrder : [];
     values.claim_order = values.claim_ids;
+    // check for claims in the editor output 
+    if(hasClaims(values?.description?.json)){
+     const { claimIds, claimOrder }  = extractClaimIdsAndOrder(values.description.json)
+     values.claim_ids = claimIds
+     values.claim_order = claimOrder 
+    }
     values.status = status;
     values.status === 'publish'
       ? (values.published_date = values.published_date
