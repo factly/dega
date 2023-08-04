@@ -456,6 +456,12 @@ services:
       - PUBLIC_URL=http://127.0.0.1:4455/.factly/dega/studio
       - REACT_APP_KAVACH_PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
       - REACT_APP_SACH_API_URL=https://sach-server.factly.in
+      - WDS_SOCKET_HOST=127.0.0.1 
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true 
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"  
     volumes:
       - type: bind
         source: ./studio
