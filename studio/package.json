@@ -17,37 +17,29 @@
     "@editorjs/quote": "^2.3.0",
     "@editorjs/raw": "^2.1.2",
     "@editorjs/table": "^1.2.2",
-    "@factly/scooter-core": "^0.0.31",
+    "@factly/scooter-core": "^0.0.35",
     "@monaco-editor/react": "4.4.6",
-    "@factly/scooter": "^0.0.11",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "@uppy/aws-s3": "^1.7.2",
-    "@uppy/core": "^1.14.0",
-    "@uppy/google-drive": "^1.5.18",
-    "@uppy/image-editor": "^0.1.8",
-    "@uppy/react": "^1.10.10",
-    "@uppy/url": "^1.5.13",
+    "@uppy/google-drive": "^3.2.0",
+    "@uppy/image-editor": "^2.1.2",
     "antd": "^5.0.4",
     "axios": "^0.21.1",
     "dayjs": "^1.11.6",
     "deep-equal": "^2.0.3",
     "jest-sonar-reporter": "^2.0.0",
     "monaco-editor": "^0.25.2",
-    "react": "^16.13.1",
+    "react": "^18.2.0",
     "react-color": "^2.19.3",
-    "react-dom": "^16.13.1",
+    "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-redux": "^7.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.0",
+    "react-router-dom": "^6.9.0",
+    "react-scripts": "^5.0.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"
-  },
-  "engines": {
-    "node": ">=8.9.0"
   },
   "husky": {
     "hooks": {
@@ -72,6 +64,11 @@
     "format:check": "prettier --check \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\"",
     "format": "prettier --write \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\""
   },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -85,7 +82,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.10.4",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
     "@editorjs/code": "^2.6.0",
@@ -96,10 +93,7 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.0",
+    "eslint": "^8.46.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "prettier": "2.0.5",
