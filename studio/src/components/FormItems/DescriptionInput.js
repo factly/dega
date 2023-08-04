@@ -48,13 +48,13 @@ const DescriptionInput = ({
             return axios
             .get(RATINGS_API, {
               params: { page: page, limit: 10 },
-            }).then((res) => {console.log(res.data); return res.data})
+            }).then((res) => {return res.data})
           },
           claimantsFetcher : (page=1) => {
             return axios
             .get(CLAIMANTS_API, {
               params: { page: page, limit: 10 },
-            }).then((res) => {console.log(res.data); return res.data})
+            }).then((res) => {return res.data})
           },
           claimsFetcher : (searchTerm, page=1 , limit=10 , sort = 'desc' ) => {
             const params = new URLSearchParams();
@@ -64,7 +64,7 @@ const DescriptionInput = ({
             params.append('sort', sort);
             return axios
                    .get( CLAIMS_API , { params: params})
-                   .then((res) => {console.log(res.data); return res.data})
+                   .then((res) => {return res.data})
           },
           addClaim : (values) => {
             function convertIdsToNumbers(obj) {
@@ -79,7 +79,7 @@ const DescriptionInput = ({
             }
             return axios
             .post(CLAIMS_API, convertIdsToNumbers(values))
-            .then((res) => {console.log(res.data); return res.data})
+            .then((res) => {return res.data})
          },
        }}
         imagesFetcher={(currentPage) =>

@@ -46,7 +46,6 @@ function App() {
   React.useEffect(() => {
     fetchFormats();
   }, [dispatch, selected, reloadFlag]);
-  console.log(process.env.PUBLIC_URL , "process.env.PUBLIC_URL")
   const router = createBrowserRouter( extractV6RouteObject(routes , formats ,setReloadFlag ,reloadFlag) , { basename: process.env.PUBLIC_URL});  
   return (
     <div className="App">
