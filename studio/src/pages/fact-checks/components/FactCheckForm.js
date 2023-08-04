@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { createClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
-import { Prompt, useHistory } from 'react-router-dom';
+import { Prompt  } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import ClaimList from './ClaimList';
@@ -30,9 +30,10 @@ import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 import { getDatefromStringWithoutDay } from '../../../utils/date';
 import { extractClaimIdsAndOrder, hasClaims } from '../../../utils/claims';
+import useNavigation from '../../../utils/useNavigation';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
-  const history = useHistory();
+  const history = useNavigation();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -188,7 +189,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   const createTemplate = () => {
-    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/fact-checks'));
+    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history('/fact-checks'));
   };
   const setReadyFlag = () => {
     status === 'ready' ? setStatus('draft') : setStatus('ready');
@@ -216,10 +217,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   return (
     <>
-      <Prompt
+      {/* <Prompt
+        // need to fix this deprecated in react-router-dom v6
         when={shouldBlockNavigation}
         message="You have unsaved changes, are you sure you want to leave?"
-      />
+      /> */}
       {visible && (
         <Modal open={visible} onCancel={handleCancel} maskClosable={false} footer={null}>
           <ClaimCreateForm

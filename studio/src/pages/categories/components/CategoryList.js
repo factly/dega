@@ -3,14 +3,15 @@ import { Popconfirm, Button, Table, Space, Typography, Modal, ConfigProvider } f
 
 import { useDispatch } from 'react-redux';
 import { deleteCategory } from '../../../actions/categories';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [deleteItemID, setDeleteItemID] = React.useState(null);
-  const history = useHistory();
+  const history = useNavigation();
 
   const columns = [
     {
@@ -145,7 +146,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
-                history.push(`/categories/${record.id}/edit`);
+                history(`/categories/${record.id}/edit`);
               },
               onMouseEnter: (event) => {
                 document.body.style.cursor = 'pointer';

@@ -2,8 +2,9 @@ import React from 'react';
 import { Button, Table, Space, ConfigProvider, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteTag } from '../../../actions/tags';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function TagList({ actions, filters, setFilters, fetchTags, data }) {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -11,7 +12,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
 
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const history = useNavigation();
   const columns = [
     {
       title: 'Name',
@@ -128,7 +129,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
-                history.push(`/tags/${record.id}/edit`);
+                history(`/tags/${record.id}/edit`);
               },
               onMouseEnter: (event) => {
                 document.body.style.cursor = 'pointer';

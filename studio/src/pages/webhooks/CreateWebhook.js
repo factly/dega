@@ -2,14 +2,15 @@ import React from 'react';
 import WebhookCreateForm from './components/WebhookForm';
 import { useDispatch } from 'react-redux';
 import { addWebhook } from '../../actions/webhooks';
-import { useHistory } from 'react-router-dom';
+ 
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function CreateWebhook() {
-  const history = useHistory();
+  const history = useNavigation();
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addWebhook(values)).then(() => history.push('/settings/advanced/webhooks'));
+    dispatch(addWebhook(values)).then(() => history('/settings/advanced/webhooks'));
   };
   return (
     <>

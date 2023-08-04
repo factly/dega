@@ -2,15 +2,16 @@ import React from 'react';
 import { ConfigProvider, Modal, Button, Table, Typography, Switch } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteWebhook, updateWebhook } from '../../../actions/webhooks';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const history = useNavigation();
 
   const columns = [
     {
@@ -142,7 +143,7 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              history.push(`/advanced/formats/${record.id}/edit`);
+              history(`/advanced/formats/${record.id}/edit`);
             },
             onMouseEnter: (event) => {
               document.body.style.cursor = 'pointer';
