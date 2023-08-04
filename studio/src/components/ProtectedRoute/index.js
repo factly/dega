@@ -12,14 +12,11 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
   const { loading, orgs, selected } = spaces;
 
   if (loading) {
-    return <Route {...rest} render={() => null} />;
+    return () => null
   }
 
   if (!loading && orgs.length === 0)
     return (
-      <Route
-        {...rest}
-        render={() => (
           <Result
             title="You do not have any organisation."
             subTitle="Sorry, you are not authorized to access this page."
@@ -29,8 +26,6 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
               </a>
             }
           />
-        )}
-      />
     );
 
   if (
@@ -39,12 +34,7 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     selected === 0 &&
     orgs.filter((each) => each.permission.role === 'owner').length > 0
   ) {
-    return (
-      <Route
-        {...rest}
-        render={(props) => <Component {...rest} {...props} permission={{ actions }} />}
-      />
-    );
+    return (  <Component {...rest} permission={{ actions }} /> );
   }
   if (
     !loading &&
@@ -53,10 +43,7 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     orgs.filter((each) => each.permission.role === 'owner').length > 0
   )
     return (
-      <Route
-        {...rest}
-        render={(props) => <Component {...rest} {...props} permission={{ actions }} />}
-      />
+      <Component {...rest} permission={{ actions }} />
     );
 
   if (
@@ -65,25 +52,12 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     selected > 0 &&
     orgs.filter((each) => each.permission.role === 'owner').length > 0
   ) {
-    return (
-      <Route
-        {...rest}
-        render={(props) => <Component {...rest} {...props} permission={{ actions }} />}
-      />
-    );
+    return (<Component {...rest} permission={{ actions }} />);
   }
   if (actions.length > 0)
-    return (
-      <Route
-        {...rest}
-        render={(props) => <Component {...rest} {...props} permission={{ actions }} />}
-      />
-    );
+    return ( <Component {...rest}  permission={{ actions }} />);
 
   return (
-    <Route
-      {...rest}
-      render={() => (
         <Result
           status="403"
           title="401"
@@ -94,8 +68,6 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
             </Link>
           }
         />
-      )}
-    />
   );
 }
 
