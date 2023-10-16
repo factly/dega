@@ -7,6 +7,11 @@ import { CLAIMS_API } from '../../constants/claims';
 import { ScooterCore as Editor } from "@factly/scooter-core";
 import { MEDIA_API } from '../../constants/media';
 import { useSelector } from 'react-redux';
+import { FactCheck } from "@factly/scooter-claim";
+import { Image } from "@factly/scooter-image";
+import { Embed } from "@factly/scooter-embed";
+import { ScooterTable } from "@factly/scooter-table";
+import { CodeBlock } from "@factly/scooter-code-block";
 
 const DescriptionInput = ({
   name = 'description',
@@ -28,6 +33,13 @@ const DescriptionInput = ({
     <Form.Item name={name} {...formItemProps}>
       {/* <Editor {...inputProps} /> */}
       <Editor
+        extensions={[
+          FactCheck,
+          Image,
+          Embed,
+          ScooterTable,
+          CodeBlock,
+        ]}
         menuType="bubble"
         heightStrategy="flexible"
         rows={rows ? rows : 10}
