@@ -185,7 +185,6 @@ func (cs claimantService) List(sID uint, offset int, limit int, all, searchQuery
 		err = tx.Find(&result.Nodes).Error
 		if err != nil {
 			loggerx.Error(err)
-			log.Println("*****", err)
 			return result, errorx.Parser(errorx.DBError())
 		}
 	} else if searchQuery != "" {
