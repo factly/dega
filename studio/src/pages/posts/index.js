@@ -343,7 +343,7 @@ function Posts({ formats }) {
         onPagination={onPagination}
         query={query.get('status')}
       />
-    </Space >
+    </Space>
   ) : (
     <FormatNotFound
       status="info"
@@ -354,4 +354,3 @@ function Posts({ formats }) {
 }
 
 export default Posts;
-

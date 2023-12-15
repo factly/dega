@@ -183,12 +183,15 @@ function Claimants({ permission }) {
                     </Link>
                   </Row>
                   <Row gutter={16} justify={'end'}>
-                    <Col span={isMobileScreen ? 12 : 6} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'end',
-                      width: '100%',
-                    }}>
+                    <Col
+                      span={isMobileScreen ? 12 : 6}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'end',
+                        width: '100%',
+                      }}
+                    >
                       <label style={{ display: 'inline', marginRight: 8, color: '#00000080' }}>
                         Sort By
                       </label>

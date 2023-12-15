@@ -5,6 +5,12 @@ import axios from 'axios';
 import { Editor } from '@factly/scooter';
 import { MEDIA_API } from '../../constants/media';
 import { useSelector } from 'react-redux';
+import { ScooterCore } from '@factly/scooter-core';
+import { Image as Img } from '@factly/scooter-image';
+import { Embed } from '@factly/scooter-embed';
+import { ScooterTable } from '@factly/scooter-table';
+import { CodeBlock } from '@factly/scooter-code-block';
+import { TagoreAI } from '@factly/scooter-tagore';
 
 const DescriptionInput = ({
   name = 'description',
@@ -26,7 +32,87 @@ const DescriptionInput = ({
   return (
     <Form.Item name={name} {...formItemProps}>
       {/* <Editor {...inputProps} /> */}
-      <Editor
+      {/* <Editor
+        menuType="bubble"
+        heightStrategy="flexible"
+        rows={rows ? rows : 10}
+        {...inputProps}
+        initialValue={initialValue}
+        uploadEndpoint={window.REACT_APP_COMPANION_URL}
+        iframelyEndpoint={window.REACT_APP_IFRAMELY_URL}
+        imagesFetcher={(currentPage) =>
+          axios
+            .get(MEDIA_API, {
+              params: { page: currentPage, limit: 12 },
+            })
+            .then((res) => res.data)
+        }
+        onFileAdded={(file) => {
+          const data = file.data;
+          const url = data.thumbnail ? data.thumbnail : URL.createObjectURL(data);
+          const image = new Image();
+          image.src = url;
+          image.onload = () => {
+            // uppy.setFileMeta(file.id, { width: image.width, height: image.height });
+            URL.revokeObjectURL(url);
+          };
+          image.onerror = () => {
+            URL.revokeObjectURL(url);
+          };
+        }}
+        onUploadComplete={(result) => {
+          const successful = result.successful[0];
+          const { meta } = successful;
+          const upload = {};
+          upload['alt_text'] = meta.caption;
+          upload['caption'] = meta.caption;
+          upload['description'] = meta.caption;
+          upload['dimensions'] = `${meta.width}x${meta.height}`;
+          upload['file_size'] = successful.size;
+          upload['name'] = successful.fileName;
+          upload['slug'] = successful.response.body.key;
+          upload['title'] = meta.caption ? meta.caption : ' ';
+          upload['type'] = successful.meta.type;
+          upload['url'] = {};
+          upload['url']['raw'] = successful.uploadURL;
+
+          axios.post(MEDIA_API, [upload]).catch((error) => {
+            console.error(error);
+          });
+        }}
+        uploadConfig={{
+          restrictions: {
+            maxFileSize: 5242880,
+            allowedFileTypes: ['.jpg', '.jpeg', '.png', '.gif'],
+          },
+          onBeforeUpload: (files) => {
+            const updatedFiles = {};
+
+            Object.keys(files).forEach((fileID) => {
+              updatedFiles[fileID] = {
+                ...files[fileID],
+                fileName: files[fileID].meta.name,
+                meta: {
+                  ...files[fileID].meta,
+                  name:
+                    space_slug +
+                    '/' +
+                    new Date().getFullYear() +
+                    '/' +
+                    new Date().getMonth() +
+                    '/' +
+                    Date.now().toString() +
+                    '_' +
+                    files[fileID].meta.name,
+                },
+              };
+            });
+            return updatedFiles;
+          },
+        }}
+      /> */}
+      <ScooterCore
+        extensions={[Img, Embed, ScooterTable, TagoreAI, CodeBlock]}
         menuType="bubble"
         heightStrategy="flexible"
         rows={rows ? rows : 10}

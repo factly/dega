@@ -72,7 +72,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   const showSchemaModal = () => {
     setIsModalVisible(true);
   };
@@ -171,8 +170,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
 
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => {
-      page ? history.push('/pages')
-      : history.push('/posts')
+      page ? history.push('/pages') : history.push('/posts');
     });
   };
   const setReadyFlag = () => {
@@ -303,7 +301,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
               >
                 <Input.TextArea
                   bordered={false}
-                  placeholder={`Add title for the ${page ? "page" : "post"}`}
+                  placeholder={`Add title for the ${page ? 'page' : 'post'}`}
                   onChange={(e) => onTitleChange(e.target.value)}
                   style={{
                     fontSize: '2.5rem',
