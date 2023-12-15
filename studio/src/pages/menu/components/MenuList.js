@@ -2,15 +2,16 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteMenu } from '../../../actions/menu';
 import { Space, Button, Modal, Table, ConfigProvider, Typography } from 'antd';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function MenuList({ actions, data, filters, setFilters, fetchMenus }) {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [deleteItemId, setDeleteItemId] = React.useState(null);
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const history = useNavigation();
 
   const columns = [
     {
@@ -85,7 +86,7 @@ function MenuList({ actions, data, filters, setFilters, fetchMenus }) {
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
-                history.push(`/settings/website/menus/${record.id}/edit`);
+                history(`/settings/website/menus/${record.id}/edit`);
               },
               onMouseEnter: (event) => {
                 document.body.style.cursor = 'pointer';

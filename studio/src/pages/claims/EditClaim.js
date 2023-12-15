@@ -3,13 +3,14 @@ import ClaimEditForm from './components/ClaimForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateClaim, getClaim } from '../../actions/claims';
-import { useHistory } from 'react-router-dom';
+ 
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditClaim() {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ function EditClaim() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updateClaim({ ...claim, ...values })).then(() => history.push(`/claims/${id}/edit`));
+    dispatch(updateClaim({ ...claim, ...values })).then(() => history(`/claims/${id}/edit`));
   };
   return (
     <>

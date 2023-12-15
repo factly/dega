@@ -2,16 +2,17 @@ import React from 'react';
 import { Button, Table, Space, Typography, Modal, ConfigProvider } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteClaim } from '../../../actions/claims';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [deleteItemId, setDeleteItemId] = React.useState(null);
 
-  const history = useHistory();
+  const history = useNavigation();
   const columns = [
     {
       title: 'Claim',
@@ -170,7 +171,7 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
-                history.push(`/claims/${record.id}/edit`);
+                history(`/claims/${record.id}/edit`);
               },
               onMouseEnter: (event) => {
                 document.body.style.cursor = 'pointer';

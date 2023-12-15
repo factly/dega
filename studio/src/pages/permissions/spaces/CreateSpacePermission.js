@@ -2,14 +2,15 @@ import React from 'react';
 import SpacePermissionCreateForm from './components/PermissionForm';
 import { useDispatch } from 'react-redux';
 import { addSpacePermission } from '../../../actions/spacePermissions';
-import { useHistory } from 'react-router-dom';
+ 
+import useNavigation from '../../../utils/useNavigation';
 
 function CreateSpacePermission() {
-  const history = useHistory();
+  const history = useNavigation();
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addSpacePermission(values)).then(() => history.push('/admin/permissions/spaces'));
+    dispatch(addSpacePermission(values)).then(() => history('/admin/permissions/spaces'));
   };
   return <SpacePermissionCreateForm onCreate={onCreate} />;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Card, notification, BackTop, ConfigProvider, Drawer } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
@@ -17,7 +17,6 @@ import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 
 function BasicLayout(props) {
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
-
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 460) {
@@ -30,7 +29,7 @@ function BasicLayout(props) {
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  const { location } = props;
+  const location = useLocation();
   const { Content, Header } = Layout;
   const { children } = props;
   const [enteredRoute, setRoute] = React.useState({ menuKey: '/' });
@@ -121,7 +120,7 @@ function BasicLayout(props) {
   }, [redirect]);
 
   // React.useEffect(() => {
-  //   if (orgs.length > 0 && selected === 0) history.push('/spaces/create');
+  //   if (orgs.length > 0 && selected === 0) history('/spaces/create');
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [orgs, location.pathname]);
   const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
@@ -229,4 +228,4 @@ function BasicLayout(props) {
   );
 }
 
-export default withRouter(BasicLayout);
+export default BasicLayout;

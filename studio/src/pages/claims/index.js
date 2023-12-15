@@ -13,7 +13,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate  } from 'react-router-dom';
 import ClaimList from './components/ClaimList';
 import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
@@ -24,13 +24,14 @@ import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
 
+
 const { Option } = Select;
 
 function Claims({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
   const { search } = useLocation();
-  const history = useHistory();
+  const history = useNavigate();
   const query = new URLSearchParams(search);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
@@ -100,7 +101,7 @@ function Claims({ permission }) {
       }
     });
 
-    history.push({
+    history({
       pathName: '/claims',
       search: '?' + searchFilter.toString(),
     });
@@ -109,7 +110,7 @@ function Claims({ permission }) {
   const onPagination = (page, limit) => {
     query.set('limit', limit);
     query.set('page', page);
-    history.push({
+    history({
       pathName: '/claims',
       search: '?' + query.toString(),
     });

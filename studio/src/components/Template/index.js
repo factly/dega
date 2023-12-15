@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Card, Spin, Collapse, Button, List, Popconfirm } from 'antd';
 import deepEqual from 'deep-equal';
 import { addPost, deletePost, getPosts } from '../../actions/posts';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import PlaceholderImage from '../ErrorsAndImage/PlaceholderImage';
+import useNavigation from '../../utils/useNavigation';
 
 function Template({ format }) {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigation();
   const { Meta } = Card;
   const { Panel } = Collapse;
   const page = 1;
@@ -62,7 +63,7 @@ function Template({ format }) {
     if (format.slug === 'article') {
       dispatch(
         addPost({ ...item, tag_ids: item.tags, category_ids: item.categories, status: 'draft' }),
-      ).then((res) => history.push(`/posts/${res.id}/edit`));
+      ).then((res) => history(`/posts/${res.id}/edit`));
     } else if (format.slug === 'fact-check') {
       dispatch(
         addPost({
@@ -72,7 +73,7 @@ function Template({ format }) {
           claim_ids: item.claims,
           status: 'draft',
         }),
-      ).then((res) => history.push(`/fact-checks/${res.id}/edit`));
+      ).then((res) => history(`/fact-checks/${res.id}/edit`));
     }
   };
 

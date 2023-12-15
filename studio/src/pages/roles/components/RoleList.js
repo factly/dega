@@ -1,16 +1,17 @@
 import React from 'react';
 import { Button, Table, ConfigProvider, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import { deleteRole, getRoles } from '../../../actions/roles';
+import useNavigation from '../../../utils/useNavigation';
 
 function RoleList({ roles, total, loading }) {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [deleteItemId, setDeleteItemId] = React.useState(null);
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const history = useNavigation();
   const onDelete = (id) => {
     dispatch(deleteRole(id)).then(() => dispatch(getRoles()));
   };
@@ -137,7 +138,7 @@ function RoleList({ roles, total, loading }) {
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
-                history.push(`/settings/members/roles/${record.id}/edit`);
+                history(`/settings/members/roles/${record.id}/edit`);
               },
               onMouseEnter: (event) => {
                 document.body.style.cursor = 'pointer';

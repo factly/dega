@@ -1,17 +1,17 @@
-import React from 'react';
 import ClaimCreateForm from './components/ClaimForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { createClaim } from '../../actions/claims';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Button, Result } from 'antd';
+import useNavigation from '../../utils/useNavigation';
 
 function CreateClaim() {
-  const history = useHistory();
-
+  const history = useNavigation();
+ 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(createClaim(values)).then(() => history.push('/claims'));
+    dispatch(createClaim(values)).then(() => {history("/claims")});
   };
 
   const { claimantsCount } = useSelector(({ claimants }) => {

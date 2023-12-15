@@ -2,15 +2,16 @@ import React from 'react';
 import UppyUploader from '../../components/Uppy';
 import { useDispatch } from 'react-redux';
 import { createMedium } from '../../actions/media';
-import { useHistory } from 'react-router-dom';
+ 
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function UploadMedium() {
-  const history = useHistory();
+  const history = useNavigation();
 
   const dispatch = useDispatch();
   const onUpload = (values) => {
-    dispatch(createMedium(values)).then(() => history.push('/media'));
+    dispatch(createMedium(values)).then(() => history('/media'));
   };
   return (
     <>

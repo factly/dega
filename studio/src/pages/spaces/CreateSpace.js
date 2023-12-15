@@ -2,17 +2,18 @@ import React from 'react';
 import SpaceCreateForm from './components/SpaceCreateForm';
 import { useDispatch } from 'react-redux';
 import { addSpace, getSpaces } from '../../actions/spaces';
-import { useHistory } from 'react-router-dom';
+ 
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function CreateSpace() {
-  const history = useHistory();
+  const history = useNavigation();
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
     dispatch(addSpace(values)).then(() => {
       dispatch(getSpaces());
-      history.push('/admin/spaces');
+      history('/admin/spaces');
     });
   };
   return (

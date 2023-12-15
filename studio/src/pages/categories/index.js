@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import deepEqual from 'deep-equal';
@@ -22,12 +22,13 @@ import { getCategories } from '../../actions/categories';
 import getUrlParams from '../../utils/getUrlParams';
 import Filters from '../../utils/filters';
 
+
 function Categories({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
   const location = useLocation();
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
-  const history = useHistory();
+  const history = useNavigate();
   const query = new URLSearchParams(location.search);
   const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
@@ -55,7 +56,7 @@ function Categories({ permission }) {
     if (form) form.setFieldsValue(new Filters(params));
   }, [params]);
   useEffect(() => {
-    history.push({
+    history({
       pathname: pathName,
       search: new URLSearchParams(filters).toString(),
     });

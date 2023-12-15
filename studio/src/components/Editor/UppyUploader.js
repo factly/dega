@@ -361,7 +361,7 @@ class UppyUploader {
 
   getDashboard() {
     if (!this.data.url) {
-      const uppy = Uppy({
+      const uppy = new Uppy({
         debug: true,
         autoProceed: true,
         restrictions: {

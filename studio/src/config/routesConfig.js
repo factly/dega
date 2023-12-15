@@ -7,7 +7,8 @@ import {
   SettingOutlined,
   SecurityScanOutlined,
 } from '@ant-design/icons';
-
+import { Result, Button } from 'antd';
+import { Link } from "react-router-dom";
 //Pages
 import Dashboard from '../pages/dashboard';
 import Analytics from '../pages/analytics';
@@ -149,7 +150,71 @@ import { Component } from 'react';
 import ViewPolicy from '../pages/policies/components/ViewPolicy';
 import RoleUsers from '../pages/roles/users';
 import EditRole from '../pages/roles/EditRole';
+import BasicLayout from '../layouts/basic';
+import ProtectedRoute from '../components/ProtectedRoute';
+import AdminRoute from '../components/AdminRoute';
 
+export function extractV6RouteObject(routes, formats, setReloadFlag, reloadFlag) {
+  const extractedRoutes = [];
+
+  // Loop through the original routes object and convert each route to v6 format
+  for (const routeKey in routes) {
+    const route = routes[routeKey];
+    const { path, Component, title, permission, isAdmin, isOwner, menuKey } = route;
+
+    // Create the v6 route element based on the original route data
+    let v6RouteElement;
+
+    if (permission) {
+      v6RouteElement = (
+        <BasicLayout>
+          <ProtectedRoute
+            key={path}
+            permission={permission}
+            exact
+            path={path}
+            component={Component}
+            formats={formats}
+            setReloadFlag={setReloadFlag}
+            reloadFlag={reloadFlag}
+          />
+        </BasicLayout>
+      );
+    } else if (isAdmin) {
+      v6RouteElement = (
+        <BasicLayout>
+          <AdminRoute key={path} exact path={path} component={Component} formats={formats} />
+        </BasicLayout>
+      );
+    } else {
+      v6RouteElement = (
+        <BasicLayout>
+          <Component formats={formats} />
+        </BasicLayout>
+      );
+    }
+
+    // Create the v6 route object based on the original route data
+    const v6Route = {
+      path,
+      element: v6RouteElement,
+      title,
+      ...(permission && { permission }),
+      ...(isAdmin && { isAdmin }),
+      ...(isOwner && { isOwner }),
+    };
+
+    // Check if menuKey exists and add it to the v6 route object
+    if (menuKey) {
+      v6Route.menuKey = menuKey;
+    }
+
+    // Push the v6 route object to the extractedRoutes array
+    extractedRoutes.push(v6Route);
+  }
+
+  return extractedRoutes;
+}
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -861,6 +926,19 @@ const routes = {
     Component: Advanced,
     title: 'Advanced',
   },
+  noMatch: {
+    path: '*',
+    menuKey: '*',
+    Component:() => <Result
+    status="403"
+    title="404"
+    subTitle="Sorry, page not found"
+    extra={
+      <Link to="/">
+        <Button type="primary">Back Home</Button>
+      </Link>
+    }
+  />},
 };
 export const sidebarMenu = [
   {

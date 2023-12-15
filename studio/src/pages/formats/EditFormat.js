@@ -2,14 +2,15 @@ import React from 'react';
 import FormatEditForm from './components/FormatForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFormat, getFormat } from '../../actions/formats';
-import { useHistory } from 'react-router-dom';
+ 
 import { useParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditFormat() {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ function EditFormat() {
 
   const onUpdate = (values) => {
     dispatch(updateFormat({ ...format, ...values }));
-    history.push(`/settings/advanced/formats/${id}/edit`);
+    history(`/settings/advanced/formats/${id}/edit`);
   };
   return (
     <>

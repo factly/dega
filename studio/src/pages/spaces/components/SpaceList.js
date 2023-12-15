@@ -1,10 +1,11 @@
 import React from 'react';
 import { ConfigProvider, Modal, Button, Table, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { deleteSpace, getSpaces } from './../../../actions/spaces';
 import { spaceSelector } from '../../../selectors/spaces';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function SpaceList() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function SpaceList() {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [deleteItemId, setDeleteItemId] = React.useState(null);
 
-  const history = useHistory();
+  const history = useNavigation();
 
   const fetchSpaces = () => {
     dispatch(getSpaces());
@@ -163,7 +164,7 @@ function SpaceList() {
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              history.push(`/admin/spaces/${record.id}/edit`);
+              history(`/admin/spaces/${record.id}/edit`);
             },
             onMouseEnter: (event) => {
               document.body.style.cursor = 'pointer';

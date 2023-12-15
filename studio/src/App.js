@@ -1,17 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import './App.css';
+import { createBrowserRouter, RouterProvider , Route } from "react-router-dom";
 // import 'antd/dist/antd.css';
 import 'antd/dist/reset.css';
 import BasicLayout from './layouts/basic';
 //Routes
-import routes from './config/routesConfig';
+import routes, { extractV6RouteObject } from './config/routesConfig';
 import ProtectedRoute from './components/ProtectedRoute';
 import { Result, Button } from 'antd';
 import AdminRoute from './components/AdminRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
-import './App.css';
+
 
 function App() {
   const [reloadFlag, setReloadFlag] = React.useState(false);
@@ -45,58 +46,10 @@ function App() {
   React.useEffect(() => {
     fetchFormats();
   }, [dispatch, selected, reloadFlag]);
+  const router = createBrowserRouter( extractV6RouteObject(routes , formats ,setReloadFlag ,reloadFlag) , { basename: process.env.PUBLIC_URL});  
   return (
     <div className="App">
-      <Router basename={process.env.PUBLIC_URL}>
-        <BasicLayout>
-          <Switch>
-            {Object.values(routes).map((route) =>
-              route.permission ? (
-                <ProtectedRoute
-                  key={route.path}
-                  permission={route.permission}
-                  exact
-                  path={route.path}
-                  component={route.Component}
-                  formats={formats}
-                  setReloadFlag={setReloadFlag}
-                  reloadFlag={reloadFlag}
-                />
-              ) : route.isAdmin ? (
-                <AdminRoute
-                  key={route.path}
-                  exact
-                  path={route.path}
-                  component={route.Component}
-                  formats={formats}
-                />
-              ) : (
-                <Route
-                  key={route.path}
-                  exact
-                  path={route.path}
-                  isOwner={route.isOwner}
-                  render={(props) => <route.Component {...props} formats={formats} />}
-                />
-              ),
-            )}
-            <Route
-              render={() => (
-                <Result
-                  status="403"
-                  title="404"
-                  subTitle="Sorry, page not found"
-                  extra={
-                    <Link to="/">
-                      <Button type="primary">Back Home</Button>
-                    </Link>
-                  }
-                />
-              )}
-            />
-          </Switch>
-        </BasicLayout>
-      </Router>
+      <RouterProvider router={router} />
     </div>
   );
 }

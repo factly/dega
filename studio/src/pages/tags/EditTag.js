@@ -3,13 +3,14 @@ import TagEditForm from './components/TagForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateTag, getTag } from '../../actions/tags';
-import { useHistory } from 'react-router-dom';
+ 
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditTag() {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ function EditTag() {
 
   const onUpdate = (values) => {
     dispatch(updateTag({ ...tag, ...values }));
-    history.push(`/tags/${id}/edit`);
+    history(`/tags/${id}/edit`);
   };
   return (
     <>
