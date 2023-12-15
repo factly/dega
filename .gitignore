@@ -189,3 +189,5 @@ dist/
 *.sqlite
 
 setupConfig.sh
+
+postgres
