@@ -3,13 +3,14 @@ import ClaimantEditForm from './components/ClaimantForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateClaimant, getClaimant } from '../../actions/claimants';
-import { useHistory } from 'react-router-dom';
+ 
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditClaimant() {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ function EditClaimant() {
 
   const onUpdate = (values) => {
     dispatch(updateClaimant({ ...claimant, ...values })).then(() =>
-      history.push(`/claimants/${id}/edit`),
+      history(`/claimants/${id}/edit`),
     );
   };
 

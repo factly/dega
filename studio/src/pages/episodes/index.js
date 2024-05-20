@@ -14,7 +14,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate  } from 'react-router-dom';
 import getUserPermission from '../../utils/getUserPermission';
 import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
@@ -25,11 +25,12 @@ import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
 
+
 function Episodes({ permission }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'episodes', action: 'get', spaces });
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigate();
   const query = new URLSearchParams(useLocation().search);
 
   const keys = ['page', 'limit', 'q', 'sort', 'podcast'];
@@ -71,7 +72,7 @@ function Episodes({ permission }) {
         searchFilter.set(key, filters[key]);
       }
     });
-    history.push({
+    history({
       pathname: pathName,
       search: '?' + searchFilter.toString(),
     });

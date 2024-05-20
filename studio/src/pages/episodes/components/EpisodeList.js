@@ -3,12 +3,13 @@ import { Button, Table, Space, Typography, Modal, ConfigProvider } from 'antd';
 
 import { useDispatch } from 'react-redux';
 import { deleteEpisode } from '../../../actions/episodes';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigation();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [deleteItemId, setDeleteItemId] = React.useState(null);
 
@@ -152,7 +153,7 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
-                history.push(`/podcasts/${record.id}/edit`);
+                history(`/podcasts/${record.id}/edit`);
               },
               onMouseEnter: (event) => {
                 document.body.style.cursor = 'pointer';

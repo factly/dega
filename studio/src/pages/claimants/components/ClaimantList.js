@@ -2,14 +2,15 @@ import React from 'react';
 import { Button, Typography, Table, Space, Modal, ConfigProvider } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteClaimant } from '../../../actions/claimants';
-import { Link, useHistory } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [deleteItemId, setDeleteItemId] = React.useState(null);
-  const history = useHistory();
+  const history = useNavigation();
 
   const columns = [
     {
@@ -96,7 +97,7 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
-                history.push(`/claimants/${record.id}/edit`);
+                history(`/claimants/${record.id}/edit`);
               },
               onMouseEnter: (event) => {
                 document.body.style.cursor = 'pointer';

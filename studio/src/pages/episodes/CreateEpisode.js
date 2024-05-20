@@ -2,15 +2,16 @@ import React from 'react';
 import EpisodeCreateForm from './components/EpisodeForm';
 import { useDispatch } from 'react-redux';
 import { createEpisode } from '../../actions/episodes';
-import { useHistory } from 'react-router-dom';
+ 
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function CreateEpisode() {
-  const history = useHistory();
+  const history = useNavigation();
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(createEpisode(values)).then(() => history.push('/episodes'));
+    dispatch(createEpisode(values)).then(() => history('/episodes'));
   };
   return (
     <>

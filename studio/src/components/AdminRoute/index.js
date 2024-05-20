@@ -15,14 +15,11 @@ function AdminRoute({ component: Component, ...rest }) {
   });
 
   if (loading) {
-    return <Route {...rest} render={() => null} />;
+     return () => null
   }
 
   if (!loading && !org)
     return (
-      <Route
-        {...rest}
-        render={() => (
           <Result
             title="You do not have any organisation."
             subTitle="Sorry, you are not authorized to access this page."
@@ -32,18 +29,13 @@ function AdminRoute({ component: Component, ...rest }) {
               </a>
             }
           />
-        )}
-      />
     );
 
   if (!loading && org.is_admin && isOwner) {
-    return <Route {...rest} render={(props) => <Component {...rest} {...props} />} />;
+    return  <Component {...rest} />
   }
 
   return (
-    <Route
-      {...rest}
-      render={() => (
         <Result
           status="403"
           title="401"
@@ -54,8 +46,6 @@ function AdminRoute({ component: Component, ...rest }) {
             </Link>
           }
         />
-      )}
-    />
   );
 }
 

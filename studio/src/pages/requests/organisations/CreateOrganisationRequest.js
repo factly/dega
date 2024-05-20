@@ -2,16 +2,17 @@ import React from 'react';
 import OrganisationRequestCreateForm from './components/RequestForm';
 import { useDispatch } from 'react-redux';
 import { addOrganisationRequest } from '../../../actions/organisationRequests';
-import { useHistory } from 'react-router-dom';
+ 
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../../utils/useNavigation';
 
 function CreateOrganisationRequest() {
-  const history = useHistory();
+  const history = useNavigation();
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
     dispatch(addOrganisationRequest(values)).then(() =>
-      history.push('/admin/requests/organisations'),
+      history('/admin/requests/organisations'),
     );
   };
   return (

@@ -94,9 +94,39 @@
   width: 100%;
 }
 
-.ant-form {
+/* .ant-form {
   max-width: 600px;
+} */
+
+/* prosemirror default styles unset for list items in antd */
+ul.ant-pagination li::before {
+  background: none;
+  background-position: initial;
+  content: normal;
+  display: inline;
+  cursor: auto;
+  width: auto;
+  height: auto;
+  position: static;
+  left: auto;
+  opacity: 1;
+  transition: none;
 }
+
+nav.ant-breadcrumb ol li::before {
+  background: none;
+  background-position: initial;
+  content: normal;
+  display: inline;
+  cursor: auto;
+  width: auto;
+  height: auto;
+  position: static;
+  left: auto;
+  opacity: 1;
+  transition: none;
+}
+
 
 .post-description .codex-editor {
   font-size: 1.25rem;
