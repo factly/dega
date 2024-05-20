@@ -112,7 +112,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultFormats(selectedSpace)).then(() => history.push('/advanced/formats'));
+                  dispatch(addDefaultFormats(selectedSpace));
                 }}
               >
                 <PlusOutlined /> CREATE FORMATS
@@ -129,7 +129,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultPolicies()).then(() => history.push('/members/policies'));
+                  dispatch(addDefaultPolicies()).then(() => history.push('settings/members/policies'));
                 }}
               >
                 <PlusOutlined /> CREATE POLICIES
