@@ -116,8 +116,6 @@ function Claims({ permission }) {
     return { claims: [], total: 0, loading: state.claims.loading };
   });
 
-  console.log(ratingsCount, loading)
-
   const onSave = (values) => {
     let searchFilter = new URLSearchParams();
     Object.keys(values).forEach(function (key) {
