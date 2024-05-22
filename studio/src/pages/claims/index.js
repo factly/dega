@@ -11,6 +11,7 @@ import {
   Typography,
   Tooltip,
   ConfigProvider,
+  Result
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useLocation, useHistory } from 'react-router-dom';
@@ -23,6 +24,8 @@ import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
+import { getRatings } from '../../actions/ratings';
+import { getClaimants } from '../../actions/claimants';
 
 const { Option } = Select;
 
@@ -65,6 +68,33 @@ function Claims({ permission }) {
     dispatch(getClaims(params));
   };
 
+  React.useEffect(() => {
+    fetchClaimants();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchClaimants = () => {
+    dispatch(getClaimants());
+  };
+
+  useEffect(() => {
+    fetchRatings()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const fetchRatings = () => {
+    dispatch(getRatings());
+  }
+
+  const { claimantsCount, ratingsCount, claimantsLoading  } = useSelector(({ claimants, ratings }) => {
+    return {
+      claimantsCount: claimants?.req?.[0]?.data ? claimants?.req?.[0]?.data.length : 0,
+      ratingsCount: Object.keys(ratings.details).length,
+      claimantsLoading: claimants.loading
+    };
+  });
+
+
   const { claims, total, loading } = useSelector((state) => {
     const node = state.claims.req.find((item) => {
       return deepEqual(item.query, params);
@@ -85,6 +115,8 @@ function Claims({ permission }) {
     }
     return { claims: [], total: 0, loading: state.claims.loading };
   });
+
+  console.log(ratingsCount, loading)
 
   const onSave = (values) => {
     let searchFilter = new URLSearchParams();
@@ -115,7 +147,34 @@ function Claims({ permission }) {
     });
   };
 
-  return loading ? (
+  if (!loading && !claimantsLoading && claimantsCount === 0){
+    return (
+    <Result
+    status={'403'}
+    title={'Please create a claimant.'}
+    subTitle="You cannot create a claim without a claimant."
+    extra={
+      <Link to="/claimants/create">
+        <Button type="primary">Create claimant</Button>
+      </Link>
+    }
+  />)
+  }
+
+  if (!loading && ratingsCount === 0){
+   return (<Result
+    status={'403'}
+    title={'Please create Ratings.'}
+    subTitle="You cannot create a claim without a ratings."
+    extra={
+      <Link to="/ratings/create">
+        <Button type="primary">Create Ratings</Button>
+      </Link>
+    }
+  />)
+  }
+
+  return (loading) ? (
     <Loader />
   ) : (
     <Space direction="vertical">
