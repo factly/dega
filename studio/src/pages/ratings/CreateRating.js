@@ -2,15 +2,16 @@ import React from 'react';
 import RatingCreateForm from './components/RatingForm';
 import { useDispatch } from 'react-redux';
 import { createRating } from '../../actions/ratings';
-import { useHistory } from 'react-router-dom';
+
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function CreateRating() {
-  const history = useHistory();
+  const history = useNavigation();
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(createRating(values)).then(() => history.push('/ratings'));
+    dispatch(createRating(values)).then(() => history('/ratings'));
   };
   return (
     <>

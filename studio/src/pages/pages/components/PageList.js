@@ -11,10 +11,11 @@ import {
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { deletePage } from '../../../actions/pages';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import QuickEdit from '../../../components/List/QuickEdit';
 import QuickEditIcon from '../../../assets/QuickEditIcon';
 import ThreeDotIcon from '../../../assets/ThreeDotIcon';
+import useNavigation from '../../../utils/useNavigation';
 
 function PageList({ actions, format, status, data, filters, setFilters, fetchPages }) {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteItemID, setDeleteItemID] = useState(null);
 
-  const history = useHistory();
+  const history = useNavigation();
 
   const getTagList = (tagids) => {
     return tagids.map((id) => (
@@ -183,7 +184,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
-                history.push(`/pages/${record.id}/edit`);
+                history(`/pages/${record.id}/edit`);
               },
               onMouseEnter: (event) => {
                 document.body.style.cursor = 'pointer';

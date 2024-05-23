@@ -16,7 +16,7 @@ import {
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../actions/tags';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
@@ -25,7 +25,7 @@ import Filters from '../../utils/filters';
 
 function Tags({ permission }) {
   const { actions } = permission;
-  const history = useHistory();
+  const history = useNavigate();
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
@@ -52,7 +52,7 @@ function Tags({ permission }) {
   const pathName = useLocation().pathname;
 
   useEffect(() => {
-    history.push({
+    history({
       pathname: pathName,
       search: new URLSearchParams(filters).toString(),
     });

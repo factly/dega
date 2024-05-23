@@ -9,6 +9,7 @@ function AnalyticsForm() {
   const id = useSelector((state) => state.spaces.selected);
   const dispatch = useDispatch();
   const [valueChange, setValueChange] = useState(false);
+  const [form] = Form.useForm();
 
   const { space, loading } = useSelector((state) => {
     return {
@@ -26,8 +27,6 @@ function AnalyticsForm() {
   if (!space) {
     return <RecordNotFound />;
   }
-
-  const [form] = Form.useForm();
 
   const onReset = () => {
     form.resetFields();

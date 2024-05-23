@@ -3,14 +3,15 @@ import EditFactCheckForm from './components/FactCheckForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updatePost, getPost } from '../../actions/posts';
-import { useHistory } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import getUserPermission from '../../utils/getUserPermission';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditFactCheck({ formats }) {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'fact-checks', action: 'get', spaces });
@@ -36,7 +37,7 @@ function EditFactCheck({ formats }) {
 
   const onUpdate = (values) => {
     dispatch(updatePost({ ...post, ...values })).then(() => {
-      history.push(`/fact-checks/${id}/edit`);
+      history(`/fact-checks/${id}/edit`);
     });
   };
   return (

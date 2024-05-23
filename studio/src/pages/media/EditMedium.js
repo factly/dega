@@ -18,11 +18,12 @@ import { getMedium, updateMedium, deleteMedium } from '../../actions/media';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import getUserPermission from '../../utils/getUserPermission';
-import { useHistory } from 'react-router-dom';
+
 import MonacoEditor from '../../components/MonacoEditor';
 import getJsonValue from '../../utils/getJsonValue';
 import { TitleInput } from '../../components/FormItems';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditMedium() {
   const [form] = Form.useForm();
@@ -43,7 +44,7 @@ function EditMedium() {
   }, []);
 
   const { id } = useParams();
-  const history = useHistory();
+  const history = useNavigation();
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'media', action: 'get', spaces });
   const disabled = !(actions.includes('admin') || actions.includes('update'));
@@ -114,7 +115,7 @@ function EditMedium() {
                 <Popconfirm
                   title="Are you sure you want to delete this?"
                   onConfirm={() => {
-                    dispatch(deleteMedium(id)).then(() => history.push('/media'));
+                    dispatch(deleteMedium(id)).then(() => history('/media'));
                   }}
                 >
                   <Button

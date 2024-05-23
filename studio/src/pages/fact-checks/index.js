@@ -14,7 +14,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector, useDispatch } from 'react-redux';
 import FactCheckList from '../../components/List';
@@ -37,7 +37,7 @@ function FactCheck({ formats }) {
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigate();
   const [expand, setExpand] = React.useState(false);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
@@ -167,7 +167,7 @@ function FactCheck({ formats }) {
     if (formats && !formats.loading && formats.article) {
       searchFilter.set('format', formats.article.id);
     }
-    history.push({
+    history({
       pathName: pathname,
       search: '?' + searchFilter.toString(),
     });
@@ -176,7 +176,7 @@ function FactCheck({ formats }) {
   const onPagination = (page, limit) => {
     query.set('limit', limit);
     query.set('page', page);
-    history.push({
+    history({
       pathName: pathname,
       search: '?' + query.toString(),
     });
@@ -316,7 +316,7 @@ function FactCheck({ formats }) {
         onChange={(key) => {
           query.set('status', key);
           setStatus(key);
-          history.push({
+          history({
             pathName: pathname,
             search: '?' + query.toString(),
           });

@@ -14,7 +14,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClaimants } from '../../actions/claimants';
 import deepEqual from 'deep-equal';
@@ -26,7 +26,7 @@ import Filters from '../../utils/filters';
 function Claimants({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigate();
   const query = new URLSearchParams(useLocation().search);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
@@ -52,7 +52,7 @@ function Claimants({ permission }) {
 
   const pathName = useLocation().pathname;
   useEffect(() => {
-    history.push({
+    history({
       pathname: pathName,
       search: new URLSearchParams(filters).toString(),
     });

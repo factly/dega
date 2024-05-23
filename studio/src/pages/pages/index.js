@@ -14,7 +14,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PageList from './components/PageList';
 import { useSelector, useDispatch } from 'react-redux';
 import getUserPermission from '../../utils/getUserPermission';
@@ -36,7 +36,7 @@ function Pages({ formats }) {
   const dispatch = useDispatch();
   const { search, pathname } = useLocation();
   const query = new URLSearchParams(search);
-  const history = useHistory();
+  const history = useNavigate();
   const [expand, setExpand] = React.useState(false);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
   const [status, setStatus] = React.useState('all');
@@ -158,7 +158,7 @@ function Pages({ formats }) {
     if (formats && !formats.loading && formats.article) {
       searchFilter.set('format', formats.article.id);
     }
-    history.push({
+    history({
       pathName: pathname,
       search: '?' + searchFilter.toString(),
     });
@@ -167,7 +167,7 @@ function Pages({ formats }) {
   const onPagination = (page, limit) => {
     query.set('limit', limit);
     query.set('page', page);
-    history.push({
+    history({
       pathName: pathname,
       search: '?' + query.toString(),
     });
@@ -307,7 +307,7 @@ function Pages({ formats }) {
         onChange={(key) => {
           key === 'all' ? query.delete('status') : query.set('status', key);
           setStatus(key);
-          history.push({
+          history({
             pathName: pathname,
             search: '?' + query.toString(),
           });

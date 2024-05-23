@@ -6,11 +6,12 @@ import { addDefaultFormats, getFormats } from '../../../actions/formats';
 import { addDefaultPolicies, getPolicies } from '../../../actions/policies';
 import { addDefaultRatings, getRatings } from '../../../actions/ratings';
 import { addDefaultEvents, getEvents } from '../../../actions/events';
-import { useHistory } from 'react-router-dom';
+
+import useNavigation from '../../../utils/useNavigation';
 
 function Features() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigation();
 
   const superOrg = useSelector(({ admin }) => {
     return admin.organisation;
@@ -94,7 +95,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultRatings()).then(() => history.push('/ratings'));
+                  dispatch(addDefaultRatings()).then(() => history('/ratings'));
                 }}
               >
                 <PlusOutlined /> CREATE RATINGS
@@ -131,7 +132,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultPolicies()).then(() => history.push('/members/policies'));
+                  dispatch(addDefaultPolicies()).then(() => history('/members/policies'));
                 }}
               >
                 <PlusOutlined /> CREATE POLICIES
@@ -150,7 +151,7 @@ function Features() {
               actions={[
                 <Button
                   onClick={() => {
-                    dispatch(addDefaultEvents()).then(() => history.push('/admin/events'));
+                    dispatch(addDefaultEvents()).then(() => history('/admin/events'));
                   }}
                 >
                   <PlusOutlined /> CREATE EVENTS

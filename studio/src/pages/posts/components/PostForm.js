@@ -23,7 +23,7 @@ import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
-import { useHistory, Prompt } from 'react-router-dom';
+import { Prompt } from 'react-router-dom';
 import {
   SettingFilled,
   LeftOutlined,
@@ -43,9 +43,10 @@ import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 import { formatDate } from '../../../utils/date';
+import useNavigation from '../../../utils/useNavigation';
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
-  const history = useHistory();
+  const history = useNavigation();
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
@@ -238,10 +239,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
 
   return (
     <>
-      <Prompt
+      {/* <Prompt
+        // deprecated in react-router-dom v6
         when={shouldBlockNavigation}
         message="You have unsaved changes, are you sure you want to leave?"
-      />
+      /> */}
       <Form
         form={form}
         ref={formRef}

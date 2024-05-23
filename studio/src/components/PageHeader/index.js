@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import { LeftOutlined } from '@ant-design/icons';
 import { PageHeader as AntPageHeader } from '@ant-design/pro-layout';
 import routes from '../../config/routesConfig';
@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 function Pageheader() {
   const state = useSelector((state) => state);
   const location = useLocation();
-  const history = useHistory();
+  const history = useNavigate();
   const pathSnippets = location.pathname.split('/').filter((i) => i);
   const entity =
     pathSnippets[0] === 'fact-checks'
@@ -52,11 +52,8 @@ function Pageheader() {
             const generatedReferenceURL = `/${pathSnippets.slice(0, index - 1).join('/')}`
               .concat('/:id/')
               .concat(pathSnippets.slice(index, index + 2).join('/'));
-            let match = matchPath(location.pathname, {
-              path: generatedReferenceURL,
-              exact: true,
-              strict: false,
-            });
+            let match = matchPath({ path: generatedReferenceURL }, location.pathname);
+
             if (match) {
               const route = _.find(routes, { path: generatedReferenceURL });
               if (route) {
@@ -91,7 +88,7 @@ function Pageheader() {
         ['posts', 'fact-checks', 'pages'].includes(pathSnippets[0]) &&
         pathSnippets[2] === 'edit'
       ) {
-        history.push('/' + pathSnippets[0]);
+        history('/' + pathSnippets[0]);
         return;
       }
       window.history.back();

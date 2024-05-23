@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 function CodeInjection() {
   const id = useSelector((state) => state.spaces.selected);
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
   const [valueChange, setValueChange] = useState(false);
 
   const { space, loading } = useSelector((state) => {
@@ -27,8 +28,6 @@ function CodeInjection() {
   if (!space) {
     return <RecordNotFound />;
   }
-
-  const [form] = Form.useForm();
 
   const onReset = () => {
     form.resetFields();

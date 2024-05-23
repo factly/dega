@@ -18,7 +18,7 @@ function UppyUploader({ onUpload, allowedFileTypes = ['image/*'], profile = fals
     (state) => state.spaces.orgs.find((org) => org.spaces.includes(state.spaces.selected)).slug,
   );
   const slug = profile ? org_slug : space_slug;
-  const uppy = Uppy({
+  const uppy = new Uppy({
     id: 'uppy-media',
     meta: { type: 'avatar' },
     restrictions: {

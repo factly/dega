@@ -2,14 +2,15 @@ import React from 'react';
 import EventEditForm from './components/EventForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEvent, getEvent } from '../../actions/events';
-import { useHistory } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditEvent() {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ function EditEvent() {
 
   const onUpdate = (values) => {
     dispatch(updateEvent({ ...event, ...values }));
-    history.push(`/admin/events/${id}/edit`);
+    history(`/admin/events/${id}/edit`);
   };
   return (
     <>
