@@ -160,9 +160,9 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
           style={{
             borderRadius: '18px',
           }}
-          onOk={(e) =>{
+          onOk={(e) => {
             e.stopPropagation();
-            dispatch(deleteTag(deleteItemID)).then(() => fetchTags())
+            dispatch(deleteTag(deleteItemID)).then(() => fetchTags());
             setModalOpen(false);
             setDeleteItemID(null);
           }}

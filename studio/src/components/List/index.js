@@ -246,7 +246,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 onQuickEditUpdate={() => setExpandedRowKeys([])}
               />
             ),
-            expandIcon: () => { },
+            expandIcon: () => {},
           }}
           pagination={{
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
@@ -287,4 +287,3 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
 }
 
 export default PostList;
-

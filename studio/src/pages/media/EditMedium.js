@@ -163,9 +163,7 @@ function EditMedium() {
                     <Col xs={24} md={6}>
                       <Typography.Text>Featured Image</Typography.Text>
                       <img
-                        src={
-                          media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
-                        }
+                        src={media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
                         alt={'space'}
                         style={{
                           maxHeight: '250px',
