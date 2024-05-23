@@ -170,14 +170,18 @@ function Claims({ permission }) {
 
     const extra =
       isClaimantsCountZero && isRatingsCountZero ? (
-        <Space align="center" direction="horizontal">
-          <Link to="/claimants/create">
-            <Button type="primary">Create claimant</Button>
-          </Link>
-          <Link to="/ratings/create">
-            <Button type="primary">Create Ratings</Button>
-          </Link>
-        </Space>
+        <Row justify="center" gutter={16}>
+          <Col>
+            <Link to="/claimants/create">
+              <Button type="primary">Create claimant</Button>
+            </Link>
+          </Col>
+          <Col>
+            <Link to="/ratings/create">
+              <Button type="primary">Create Ratings</Button>
+            </Link>
+          </Col>
+        </Row>
       ) : isClaimantsCountZero ? (
         <Link to="/claimants/create">
           <Button type="primary">Create claimant</Button>
