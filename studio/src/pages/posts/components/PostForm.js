@@ -17,6 +17,7 @@ import {
   Collapse,
   Divider,
   ConfigProvider,
+  Select,
 } from 'antd';
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
@@ -43,6 +44,7 @@ import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 import { formatDate } from '../../../utils/date';
+import languages from '../../../utils/languages.json'
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const history = useHistory();
@@ -58,6 +60,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const [seoDrawer, setSeoDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isMobileScreen, setIsMobileScreen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('English');
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -71,6 +74,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+  const languagesList = languages.map(language => ({ value: language, label: language }));
+
+  const handleLanguageChange = (value) => {
+    setSelectedLanguage(value);
+  };
 
 
   const showSchemaModal = () => {
@@ -412,6 +420,13 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                       <Form.Item name="authors" label="Authors">
                         <Selector mode="multiple" display={'display_name'} action="Authors" />
                       </Form.Item>
+                      <Form.Item name="language" label="Language">
+            <Select
+              options={languagesList}
+              defaultValue={selectedLanguage}
+              onChange={handleLanguageChange}
+            />
+          </Form.Item>
                       <Form.Item name="featured_medium_id" label="Featured Image">
                         <MediaSelector />
                       </Form.Item>
