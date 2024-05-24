@@ -2,7 +2,7 @@ import React from 'react';
 import FormatEditForm from './components/FormatForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFormat, getFormat } from '../../actions/formats';
- 
+
 import { useParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';

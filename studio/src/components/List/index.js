@@ -6,7 +6,7 @@ import { EditOutlined, DeleteOutlined, CloseOutlined, CheckOutlined } from '@ant
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost } from '../../actions/posts';
 import { formatDate, getDifferenceInModifiedTime } from '../../utils/date';
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import QuickEdit from './QuickEdit';
 
 function PostList({ actions, format, filters, onPagination, data, fetchPosts, query }) {
@@ -246,7 +246,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 onQuickEditUpdate={() => setExpandedRowKeys([])}
               />
             ),
-            expandIcon: () => { },
+            expandIcon: () => {},
           }}
           pagination={{
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Table, Space, ConfigProvider, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteTag } from '../../../actions/tags';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 import useNavigation from '../../../utils/useNavigation';
 
@@ -161,9 +161,9 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
           style={{
             borderRadius: '18px',
           }}
-          onOk={(e) =>{
+          onOk={(e) => {
             e.stopPropagation();
-            dispatch(deleteTag(deleteItemID)).then(() => fetchTags())
+            dispatch(deleteTag(deleteItemID)).then(() => fetchTags());
             setModalOpen(false);
             setDeleteItemID(null);
           }}

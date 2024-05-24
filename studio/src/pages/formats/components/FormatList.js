@@ -2,7 +2,7 @@ import React from 'react';
 import { ConfigProvider, Modal, Button, Typography, Table } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteFormat } from '../../../actions/formats';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 import useNavigation from '../../../utils/useNavigation';
 

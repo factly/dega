@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
-import { Link, useLocation  , useMatch , useNavigate} from 'react-router-dom';
+import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import { LeftOutlined } from '@ant-design/icons';
 import { PageHeader as AntPageHeader } from '@ant-design/pro-layout';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
 import { matchPath } from 'react-router';
 import { useSelector } from 'react-redux';
-
 
 function Pageheader() {
   const state = useSelector((state) => state);
@@ -53,8 +52,8 @@ function Pageheader() {
             const generatedReferenceURL = `/${pathSnippets.slice(0, index - 1).join('/')}`
               .concat('/:id/')
               .concat(pathSnippets.slice(index, index + 2).join('/'));
-            let match = matchPath({path: generatedReferenceURL}, location.pathname);
-    
+            let match = matchPath({ path: generatedReferenceURL }, location.pathname);
+
             if (match) {
               const route = _.find(routes, { path: generatedReferenceURL });
               if (route) {

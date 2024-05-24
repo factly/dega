@@ -21,7 +21,7 @@
     "@factly/scooter-core": "^0.0.42",
     "@factly/scooter-embed": "^0.0.42",
     "@factly/scooter-table": "^0.0.42",
-    "@factly/scooter-claim":"^0.0.42",
+    "@factly/scooter-claim": "^0.0.42",
     "@monaco-editor/react": "4.4.6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",

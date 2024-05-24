@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 export default function useNavigation() {
   const navigate = useNavigate();
   const pathRef = useRef(null);
-  
+
   useEffect(() => {
     if (pathRef.current) {
       navigate(pathRef.current);
       pathRef.current = null; // Reset the path after navigation
     }
-  }, [pathRef,navigate]);
+  }, [pathRef, navigate]);
 
   const triggerNavigation = (newPath) => {
     pathRef.current = newPath;

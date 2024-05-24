@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPage } from '../../actions/pages';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
- 
+
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
 
@@ -16,7 +16,7 @@ function CreatePage({ formats }) {
 
   const onCreate = (values) => {
     dispatch(addPage(values)).then((page) => {
-      if (page && page.id)  history(`/pages/${page.id}/edit`);
+      if (page && page.id) history(`/pages/${page.id}/edit`);
     });
   };
   if (!formats.loading && formats.article) {

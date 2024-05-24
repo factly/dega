@@ -12,20 +12,20 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
   const { loading, orgs, selected } = spaces;
 
   if (loading) {
-    return () => null
+    return () => null;
   }
 
   if (!loading && orgs.length === 0)
     return (
-          <Result
-            title="You do not have any organisation."
-            subTitle="Sorry, you are not authorized to access this page."
-            extra={
-              <a href={`${window.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
-                <Button type="primary">Back to Kavach</Button>
-              </a>
-            }
-          />
+      <Result
+        title="You do not have any organisation."
+        subTitle="Sorry, you are not authorized to access this page."
+        extra={
+          <a href={`${window.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
+            <Button type="primary">Back to Kavach</Button>
+          </a>
+        }
+      />
     );
 
   if (
@@ -34,7 +34,7 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     selected === 0 &&
     orgs.filter((each) => each.permission.role === 'owner').length > 0
   ) {
-    return (  <Component {...rest} permission={{ actions }} /> );
+    return <Component {...rest} permission={{ actions }} />;
   }
   if (
     !loading &&
@@ -42,9 +42,7 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     selected === 0 &&
     orgs.filter((each) => each.permission.role === 'owner').length > 0
   )
-    return (
-      <Component {...rest} permission={{ actions }} />
-    );
+    return <Component {...rest} permission={{ actions }} />;
 
   if (
     !loading &&
@@ -52,22 +50,21 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     selected > 0 &&
     orgs.filter((each) => each.permission.role === 'owner').length > 0
   ) {
-    return (<Component {...rest} permission={{ actions }} />);
+    return <Component {...rest} permission={{ actions }} />;
   }
-  if (actions.length > 0)
-    return ( <Component {...rest}  permission={{ actions }} />);
+  if (actions.length > 0) return <Component {...rest} permission={{ actions }} />;
 
   return (
-        <Result
-          status="403"
-          title="401"
-          subTitle="Sorry, you are not authorized to access this page."
-          extra={
-            <Link to="/">
-              <Button type="primary">Back Home</Button>
-            </Link>
-          }
-        />
+    <Result
+      status="403"
+      title="401"
+      subTitle="Sorry, you are not authorized to access this page."
+      extra={
+        <Link to="/">
+          <Button type="primary">Back Home</Button>
+        </Link>
+      }
+    />
   );
 }
 

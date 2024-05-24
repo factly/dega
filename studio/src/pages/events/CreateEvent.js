@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { createEvent } from '../../actions/events';
- 
+
 import EventCreateForm from './components/EventForm';
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';

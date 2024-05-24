@@ -2,7 +2,7 @@ import React from 'react';
 import UppyUploader from '../../components/Uppy';
 import { useDispatch } from 'react-redux';
 import { createMedium } from '../../actions/media';
- 
+
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
 

@@ -15,37 +15,37 @@ function AdminRoute({ component: Component, ...rest }) {
   });
 
   if (loading) {
-     return () => null
+    return () => null;
   }
 
   if (!loading && !org)
     return (
-          <Result
-            title="You do not have any organisation."
-            subTitle="Sorry, you are not authorized to access this page."
-            extra={
-              <a href={`${window.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
-                <Button type="primary">Back to Kavach</Button>
-              </a>
-            }
-          />
+      <Result
+        title="You do not have any organisation."
+        subTitle="Sorry, you are not authorized to access this page."
+        extra={
+          <a href={`${window.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
+            <Button type="primary">Back to Kavach</Button>
+          </a>
+        }
+      />
     );
 
   if (!loading && org.is_admin && isOwner) {
-    return  <Component {...rest} />
+    return <Component {...rest} />;
   }
 
   return (
-        <Result
-          status="403"
-          title="401"
-          subTitle="Sorry, you are not authorized to access this page."
-          extra={
-            <Link to="/">
-              <Button type="primary">Back Home</Button>
-            </Link>
-          }
-        />
+    <Result
+      status="403"
+      title="401"
+      subTitle="Sorry, you are not authorized to access this page."
+      extra={
+        <Link to="/">
+          <Button type="primary">Back Home</Button>
+        </Link>
+      }
+    />
   );
 }
 

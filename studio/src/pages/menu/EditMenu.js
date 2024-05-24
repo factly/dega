@@ -3,7 +3,7 @@ import MenuEditForm from './components/MenuForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateMenu, getMenu } from '../../actions/menu';
- 
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';

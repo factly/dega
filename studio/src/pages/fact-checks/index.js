@@ -14,7 +14,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link , useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector, useDispatch } from 'react-redux';
 import FactCheckList from '../../components/List';
@@ -28,8 +28,6 @@ import { UpOutlined, DownOutlined } from '@ant-design/icons';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
-
-
 
 function FactCheck({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);

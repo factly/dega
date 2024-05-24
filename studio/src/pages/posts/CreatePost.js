@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../../actions/posts';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
- 
+
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
 
@@ -16,7 +16,7 @@ function CreatePost({ formats }) {
 
   const onCreate = (values) => {
     dispatch(addPost(values)).then((post) => {
-      if (post && post.id)  history(`/posts/${post.id}/edit`);
+      if (post && post.id) history(`/posts/${post.id}/edit`);
     });
   };
   if (!formats.loading && formats.article) {

@@ -3,7 +3,7 @@ import { Button, Table, Space, Typography, Modal, ConfigProvider } from 'antd';
 
 import { useDispatch } from 'react-redux';
 import { deletePodcast } from '../../../actions/podcasts';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 import useNavigation from '../../../utils/useNavigation';
 

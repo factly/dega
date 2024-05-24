@@ -28,8 +28,6 @@ function AnalyticsForm() {
     return <RecordNotFound />;
   }
 
- 
-
   const onReset = () => {
     form.resetFields();
   };
