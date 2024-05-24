@@ -37,4 +37,10 @@ Once the application is up and running you should be able to access it using the
 
 - Create config file with name config (and extension .env, .yml, .json) in `server/`, `api/` and `templates/` add config variables (for eg see config.env.example in each folder)
 - Create a `.env` file inside companion folder in root for companion config variables (for eg see .env.example file in companion folder)
-git fetch upstream
+git fetch upstream 
+- to add default env files automatically run `bash build.sh` 
+
+## Development Notes
+- If there are updates to npm dependencies for `dega-studio`, run `bash build-nocache.sh` from the project root.
+- If the script fails to update dependencies, enter the container and manually run `npm install --legacy-peer-deps`.
+
