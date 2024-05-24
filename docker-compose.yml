@@ -1,6 +1,462 @@
 version: "3.7"
 
 services:
+  ###########################################################################
+  #######             DB SERVICES                                     #######
+  ###########################################################################
+  postgres:
+    image: postgres:11.7-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg-init-scripts:/docker-entrypoint-initdb.d
+      - ./volumes/postgres:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_MULTIPLE_DATABASES=kratos,keto,kavach,dega,hukz
+    networks:
+      - dega
+
+  #########################################################################
+  #####                        MINIO                                #######
+  #########################################################################
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9002:9002"
+    volumes:
+      - ~/factly/dega/minio/data:/export
+      - ~/factly/dega/minio/config:/root/.minio
+    environment:
+      - MINIO_ACCESS_KEY=miniokey
+      - MINIO_SECRET_KEY=miniosecret
+    networks:
+      - dega
+    command: server -console-address :9002 /export
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    volumes:
+      - ./wait-for-it.sh:/usr/local/bin/wait-for-it.sh
+    networks:
+      - dega
+    entrypoint: >
+      /bin/sh -c " apk add --no-cache bash; wait-for-it.sh minio:9000 -- echo 'Minio is up. Creating the bucket!!'; /usr/bin/mc config host add myminio http://minio:9000 miniokey miniosecret; /usr/bin/mc mb myminio/dega; /usr/bin/mc anonymous set public myminio/dega; exit 0; "
+
+  ###########################################################################
+  #######                         IFRAMELY                            #######
+  ###########################################################################
+  iframely:
+    image: factly/iframely:v1.5.0-102820
+    ports:
+      - "8061:8061"
+    volumes:
+      - ./iframely/config.local.js:/iframely/config.local.js
+    networks:
+      - dega
+
+  ###########################################################################
+  #######                         IMGPROXY                            #######
+  ###########################################################################
+  imgproxy:
+    image: darthsim/imgproxy:v2.15.0
+    ports:
+      - 8080:8080
+    environment:
+      - IMGPROXY_BASE_URL=http://minio:9000/
+      - IMGPROXY_TTL=31536000
+    networks:
+      - dega
+
+  ###########################################################################
+  #######                            NGINX                            #######
+  ###########################################################################
+  nginx:
+    image: nginx:1.19.0-alpine
+    ports:
+      - 7001:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    restart: unless-stopped
+    depends_on:
+      - imgproxy
+    networks:
+      - dega
+
+  ###########################################################################
+  #######             UPLOAD SERVICES                                 #######
+  ###########################################################################
+  companion:
+    image: transloadit/companion
+    ports:
+      - "3020:3020"
+    env_file:
+      - ./companion/.env
+
+  ###########################################################################
+  #######             SMTP SERVICES                                 #######
+  ###########################################################################
+  mailslurper:
+    image: oryd/mailslurper:latest-smtps
+    ports:
+      - "4436:4436"
+      - "4437:4437"
+    networks:
+      - dega
+
+  ###########################################################################
+  #######             SEARCH SERVICES                                 #######
+  ###########################################################################
+  meilisearch:
+    image: getmeili/meilisearch:v0.28.0
+    ports:
+      - "7700:7700"
+    volumes:
+      - ~/factly/dega/meilisearch-0-28-0/data.ms/:/data.ms
+    environment:
+      # To put an upper limit of 100MB for the payload size during indexing
+      - MEILI_HTTP_PAYLOAD_SIZE_LIMIT=104857600
+      - MEILI_MASTER_KEY=password
+    networks:
+      - dega
+
+  ###########################################################################
+  #######             KRATOS, KETO AND OATHKEEPER                     #######
+  ###########################################################################
+  kratos-migrate:
+    depends_on:
+      - postgres
+    image: oryd/kratos:v0.10.1
+    environment:
+      - DSN=postgres://postgres:postgres@postgres:5432/kratos?sslmode=disable
+    volumes:
+      - type: bind
+        source: ./kratos/config
+        target: /etc/config/kratos
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+    restart: on-failure
+    networks:
+      - dega
+
+  keto-migrate:
+    image: oryd/keto:v0.9.0-alpha.0
+    environment:
+      - DSN=postgres://postgres:postgres@postgres:5432/keto?sslmode=disable
+      - LOG_LEVEL=debug
+    depends_on:
+      - postgres
+    volumes:
+      - type: bind
+        source: ./keto
+        target: /etc/config/keto
+    # command: namespace migrate legacy -c "/etc/config/keto/keto.yml" --yes
+    command: migrate up -c "/etc/config/keto/keto.yml" --yes
+    restart: on-failure
+    networks:
+      - dega
+
+  keto:
+    depends_on:
+      - keto-migrate
+    image: oryd/keto:v0.9.0-alpha.0
+    ports:
+      - "4466:4466" # read
+      - "4467:4467" # write
+      - "4468:4468" # metric
+    environment:
+      - LOG_LEVEL=debug
+    volumes:
+      - type: bind
+        source: ./keto
+        target: /etc/config/keto
+    command: serve -c "/etc/config/keto/keto.yml"
+    networks:
+      - dega
+
+  kratos:
+    depends_on:
+      - kratos-migrate
+    image: oryd/kratos:v0.10.1
+    ports:
+      - "4433:4433" # public
+      - "4434:4434" # admin
+    environment:
+      - DSN=postgres://postgres:postgres@postgres:5432/kratos?sslmode=disable
+    volumes:
+      - type: bind
+        source: ./kratos/config
+        target: /etc/config/kratos
+    command: serve -c /etc/config/kratos/kratos.yml --dev
+    restart: unless-stopped
+    networks:
+      - dega
+
+  oathkeeper:
+    image: oryd/oathkeeper:latest-alpine
+    depends_on:
+      - kratos
+    ports:
+      - "4455:4455"
+      - "4456:4456"
+    environment:
+      - LOG_LEVEL=debug
+    volumes:
+      - type: bind
+        source: ./oathkeeper
+        target: /etc/config/oathkeeper
+    command: serve proxy -c "/etc/config/oathkeeper/.oathkeeper.yml"
+    restart: on-failure
+    networks:
+      - dega
+
+  ###########################################################################
+  ########                    CACHE SERVICES                          #######
+  ###########################################################################
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ~/factly/dega/redis:/data
+    command: redis-server --appendonly yes --requirepass redispass
+    networks:
+      - dega
+
+  ###########################################################################
+  #######             KAVACH                                          #######
+  ###########################################################################
+  kavach-server:
+    depends_on:
+      - postgres
+      - keto
+      - kratos
+      - kavach-migrate
+    ports:
+      - 5001:8000
+    image: factly/kavach-server:0.33.2
+    volumes:
+      - type: bind
+        source: ./volumes/kavach-server/data
+        target: /app/data
+    environment:
+      - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
+      - KAVACH_DATABASE_HOST=postgres
+      - KAVACH_DATABASE_USER=postgres
+      - KAVACH_DATABASE_PASSWORD=postgres
+      - KAVACH_DATABASE_NAME=kavach
+      - KAVACH_DATABASE_PORT=5432
+      - KAVACH_DATABASE_SSL_MODE=disable
+      - KAVACH_KETO_READ_API_URL=http://keto:4466
+      - KAVACH_KETO_WRITE_API_URL=http://keto:4467
+      - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
+      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433
+      - KAVACH_MODE=development
+      - KAVACH_USE_SQLITE=false
+      - KAVACH_SQLITE_DB_PATH=kavach.db
+      - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
+      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
+      - KAVACH_DYNAMIC_FROM_EMAIL='kavach'
+      - KAVACH_MANDE_HOST=http://mande.factly.in
+      - KAVACH_DYNAMIC_MANDE_TEMPLATE_ID=1
+      - KAVACH_DYNAMIC_SENDGRID_API_KEY=SENDGRID_API_KEY
+      - KAVACH_ENABLE_MULTITENANCY=true
+      - KAVACH_DISABLE_REGISTRATION=false
+      - KAVACH_APPLICATION_NAME=Kavach
+      - KAVACH_DEFAULT_USER_EMAIL=dega@newchecker.in
+      - KAVACH_DEFAULT_USER_PASSWORD=Data123@#
+      - KAVACH_DEFAULT_ORGANISATION_NAME=NEWSCHECKER
+      - KAVACH_ENABLE_IMGPROXY=false
+      - KAVACH_DYNAMIC_EMAIL_ENABLED=true
+      - KAVACH_BUCKET_NAME=login.factly.in
+      - KAVACH_SENDGRID_FROM_EMAIL=vsumit030201@gmail.com
+      - KAVACH_SENDGRID_FROM_NAME=sumit
+    restart: unless-stopped
+    networks:
+      - dega
+
+  kavach-migrate:
+    depends_on:
+      - postgres
+      - keto
+      - kratos
+    image: factly/kavach-server:0.33.2
+    volumes:
+      - type: bind
+        source: ./volumes/kavach-server/data
+        target: /app/data
+    environment:
+      - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
+      - KAVACH_DATABASE_HOST=postgres
+      - KAVACH_DATABASE_USER=postgres
+      - KAVACH_DATABASE_PASSWORD=postgres
+      - KAVACH_DATABASE_NAME=kavach
+      - KAVACH_DATABASE_PORT=5432
+      - KAVACH_DATABASE_SSL_MODE=disable
+      - KAVACH_KETO_READ_API_URL=http://keto:4466
+      - KAVACH_KETO_WRITE_API_URL=http://keto:4467
+      - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
+      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433
+      - KAVACH_MODE=development
+      - KAVACH_USE_SQLITE=false
+      - KAVACH_SQLITE_DB_PATH=kavach.db
+      - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
+      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
+      - KAVACH_DYNAMIC_FROM_EMAIL='kavach'
+      - KAVACH_MANDE_HOST=http://mande.factly.in
+      - KAVACH_DYNAMIC_MANDE_TEMPLATE_ID=1
+      - KAVACH_DYNAMIC_SENDGRID_API_KEY=SENDGRID_API_KEY
+      - KAVACH_ENABLE_MULTITENANCY=true
+      - KAVACH_DISABLE_REGISTRATION=false
+      - KAVACH_APPLICATION_NAME=Kavach
+      - KAVACH_DEFAULT_USER_EMAIL=dega@newchecker.in
+      - KAVACH_DEFAULT_USER_PASSWORD=Data123@#
+      - KAVACH_DEFAULT_ORGANISATION_NAME=NEWSCHECKER
+      - KAVACH_ENABLE_IMGPROXY=false
+      - KAVACH_DYNAMIC_EMAIL_ENABLED=true
+      - KAVACH_BUCKET_NAME=login.factly.in
+      - KAVACH_SENDGRID_FROM_EMAIL=vsumit030201@gmail.com
+      - KAVACH_SENDGRID_FROM_NAME=sumit
+    entrypoint:
+      [
+        "/bin/sh",
+        "-c",
+        "/app/kavach-server migrate && /app/kavach-server create-super-org",
+      ]
+    networks:
+      - dega
+
+  kavach-web:
+    image: factly/kavach-web:0.33.2-dev
+    volumes:
+      - type: bind
+        source: ./volumes/kavach-web/config.js
+        target: /app/public/config.js
+
+    environment:
+      - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
+      - REACT_APP_PUBLIC_URL='http://127.0.0.1:4455/.factly/kavach/web';
+      - REACT_APP_KAVACH_TITLE='FACTLY';
+      - REACT_APP_COMPANION_URL='http://127.0.0.1:3020';
+      - REACT_APP_API_URL='http://127.0.0.1:4455/.factly/kavach/server';
+      - REACT_APP_KRATOS_PUBLIC_URL='http://127.0.0.1:4455/.ory/kratos/public';
+      - REACT_APP_ENABLE_MULTITENANCY='true';
+      - REACT_APP_DISABLE_REGISTRATION=false;
+      - REACT_APP_REDIRECT_SINGLE_APPLICATION_USERS=true;
+      - REACT_APP_LOGO_URL='https://images.factly.in/login/applications/logos/factly.png?rs:fill/h:60';
+      - REACT_APP_ENABLE_IMGPROXY=false;
+    restart: unless-stopped
+    networks:
+      - dega
+
+  ###########################################################################
+  #######             DEGA STUDIO UI, SERVER AND DB                   #######
+  ###########################################################################
+  dega-server:
+    depends_on:
+      - postgres
+      - keto
+      - kratos
+      - kavach-server
+    ports:
+      - 7789:8000
+      - 7788:8001
+      - 7787:8002
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    environment:
+      - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466, kavach-server:8000
+    volumes:
+      - type: bind
+        source: ./server
+        target: /app
+    restart: unless-stopped
+    networks:
+      - dega
+
+  dega-migrate:
+    depends_on:
+      - postgres
+      - keto
+      - kratos
+      - kavach-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile.migrate
+    environment:
+      - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466, kavach-server:8000
+    volumes:
+      - type: bind
+        source: ./server
+        target: /app
+    networks:
+      - dega
+
+  hukz:
+    depends_on:
+      - dega-server
+    ports:
+      - 7790:8000
+    image: factly/hukz
+    environment:
+      - WAIT_HOSTS=postgres:5432, dega-server:8000
+      - HUKZ_DATABASE_HOST=postgres
+      - HUKZ_DATABASE_USER=postgres
+      - HUKZ_DATABASE_PASSWORD=postgres
+      - HUKZ_DATABASE_NAME=hukz
+      - HUKZ_DATABASE_PORT=5432
+      - HUKZ_DATABASE_SSL_MODE=disable
+      - HUKZ_NATS_URL=nats://nats:4222
+      - HUKZ_NATS_USER_NAME=natsuser
+      - HUKZ_NATS_USER_PASSWORD=natspassword
+      - HUKZ_QUEUE_GROUP=dega
+      - HUKZ_DEGA_TO_GOOGLE_CHAT=true
+      - HUKZ_DEGA_TO_SLACK=false
+      - HUKZ_MODE=development
+    restart: unless-stopped
+    networks:
+      - dega
+
+  hukz-migrate:
+    depends_on:
+      - dega-server
+    image: factly/hukz
+    environment:
+      - WAIT_HOSTS=postgres:5432, dega-server:8000
+      - HUKZ_DATABASE_HOST=postgres
+      - HUKZ_DATABASE_USER=postgres
+      - HUKZ_DATABASE_PASSWORD=postgres
+      - HUKZ_DATABASE_NAME=hukz
+      - HUKZ_DATABASE_PORT=5432
+      - HUKZ_DATABASE_SSL_MODE=disable
+      - HUKZ_NATS_URL=nats://nats:4222
+      - HUKZ_NATS_USER_NAME=natsuser
+      - HUKZ_NATS_USER_PASSWORD=natspassword
+      - HUKZ_QUEUE_GROUP=dega
+      - HUKZ_DEGA_TO_GOOGLE_CHAT=true
+      - HUKZ_DEGA_TO_SLACK=false
+      - HUKZ_MODE=development
+    entrypoint: /app/hukz migrate
+    networks:
+      - dega
+
+  nats:
+    depends_on:
+      - dega-server
+      - hukz
+    ports:
+      - 4222:4222
+      - 8222:8222
+    command: "--user natsuser --pass natspassword"
+    image: nats:latest
+    restart: unless-stopped
+    networks:
+      - dega
+
   dega-studio:
     build:
       context: ./studio
@@ -27,5 +483,42 @@ services:
     networks:
       - dega
 
+  dega-api:
+    depends_on:
+      - postgres
+    ports:
+      - 9001:8000
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      - CONFIG_FILE=dega-api.yml
+      - WAIT_HOSTS=postgres:5432
+    volumes:
+      - type: bind
+        source: ./api
+        target: /app
+    restart: unless-stopped
+    networks:
+      - dega
+
+  dega-templates:
+    depends_on:
+      - postgres
+    ports:
+      - 7791:8000
+    build:
+      context: ./templates
+      dockerfile: Dockerfile
+    environment:
+      - WAIT_HOSTS=postgres:5432
+    volumes:
+      - type: bind
+        source: ./templates
+        target: /app
+    restart: unless-stopped
+    networks:
+      - dega
+
 networks:
-  dega: 
+  dega:
