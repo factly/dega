@@ -2,7 +2,7 @@ import React from 'react';
 import WebhookCreateForm from './components/WebhookForm';
 import { useDispatch } from 'react-redux';
 import { addWebhook } from '../../actions/webhooks';
- 
+
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
 

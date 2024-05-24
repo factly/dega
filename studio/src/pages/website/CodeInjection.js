@@ -29,8 +29,6 @@ function CodeInjection() {
     return <RecordNotFound />;
   }
 
- 
-
   const onReset = () => {
     form.resetFields();
   };

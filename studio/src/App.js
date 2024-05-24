@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { createBrowserRouter, RouterProvider , Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 // import 'antd/dist/antd.css';
 import 'antd/dist/reset.css';
 import BasicLayout from './layouts/basic';
@@ -12,7 +12,6 @@ import AdminRoute from './components/AdminRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
-
 
 function App() {
   const [reloadFlag, setReloadFlag] = React.useState(false);
@@ -46,7 +45,10 @@ function App() {
   React.useEffect(() => {
     fetchFormats();
   }, [dispatch, selected, reloadFlag]);
-  const router = createBrowserRouter( extractV6RouteObject(routes , formats ,setReloadFlag ,reloadFlag) , { basename: process.env.PUBLIC_URL});  
+  const router = createBrowserRouter(
+    extractV6RouteObject(routes, formats, setReloadFlag, reloadFlag),
+    { basename: process.env.PUBLIC_URL },
+  );
   return (
     <div className="App">
       <RouterProvider router={router} />

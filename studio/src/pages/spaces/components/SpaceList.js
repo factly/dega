@@ -1,7 +1,7 @@
 import React from 'react';
 import { ConfigProvider, Modal, Button, Table, Typography } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { deleteSpace, getSpaces } from './../../../actions/spaces';
 import { spaceSelector } from '../../../selectors/spaces';
 import { DeleteOutlined } from '@ant-design/icons';

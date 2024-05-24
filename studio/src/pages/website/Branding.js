@@ -31,8 +31,6 @@ function Branding() {
     return <RecordNotFound />;
   }
 
- 
-
   const onReset = () => {
     form.resetFields();
   };

@@ -2,7 +2,7 @@ import React from 'react';
 import ClaimantCreateForm from './components/ClaimantForm';
 import { useDispatch } from 'react-redux';
 import { createClaimant } from '../../actions/claimants';
- 
+
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
 

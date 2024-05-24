@@ -14,7 +14,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClaimants } from '../../actions/claimants';
 import deepEqual from 'deep-equal';
@@ -22,7 +22,6 @@ import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
-
 
 function Claimants({ permission }) {
   const { actions } = permission;
@@ -184,12 +183,15 @@ function Claimants({ permission }) {
                     </Link>
                   </Row>
                   <Row gutter={16} justify={'end'}>
-                    <Col span={isMobileScreen ? 12 : 6} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'end',
-                      width: '100%',
-                    }}>
+                    <Col
+                      span={isMobileScreen ? 12 : 6}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'end',
+                        width: '100%',
+                      }}
+                    >
                       <label style={{ display: 'inline', marginRight: 8, color: '#00000080' }}>
                         Sort By
                       </label>

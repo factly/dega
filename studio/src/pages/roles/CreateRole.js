@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRole } from '../../actions/roles';
 import { useDispatch } from 'react-redux';
- 
+
 import { Helmet } from 'react-helmet';
 import RoleCreateForm from './components/RoleForm';
 import useNavigation from '../../utils/useNavigation';

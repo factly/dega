@@ -3,7 +3,7 @@ import { Popconfirm, Button, Table, Space, Typography, Modal, ConfigProvider } f
 
 import { useDispatch } from 'react-redux';
 import { deleteCategory } from '../../../actions/categories';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 import useNavigation from '../../../utils/useNavigation';
 
@@ -180,12 +180,11 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
             borderRadius: '18px',
           }}
           onOk={(e) => {
-            e.stopPropagation()
-            dispatch(deleteCategory(deleteItemID)).then(() => fetchCategories())
+            e.stopPropagation();
+            dispatch(deleteCategory(deleteItemID)).then(() => fetchCategories());
             setDeleteItemID(null);
             setModalOpen(false);
-          }
-          }
+          }}
           cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
           onCancel={(e) => {
             e.stopPropagation();

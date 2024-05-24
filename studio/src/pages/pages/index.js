@@ -14,7 +14,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PageList from './components/PageList';
 import { useSelector, useDispatch } from 'react-redux';
 import getUserPermission from '../../utils/getUserPermission';
@@ -27,7 +27,6 @@ import { UpOutlined, DownOutlined } from '@ant-design/icons';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
-
 
 function Pages({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);

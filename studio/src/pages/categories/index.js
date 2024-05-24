@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import deepEqual from 'deep-equal';
@@ -21,7 +21,6 @@ import Loader from '../../components/Loader';
 import { getCategories } from '../../actions/categories';
 import getUrlParams from '../../utils/getUrlParams';
 import Filters from '../../utils/filters';
-
 
 function Categories({ permission }) {
   const { actions } = permission;
@@ -49,7 +48,6 @@ function Categories({ permission }) {
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
 
   const pathName = useLocation().pathname;
   useEffect(() => {
@@ -170,9 +168,16 @@ function Categories({ permission }) {
               </Row>
             </Col>
             <Col xs={24} md={8}>
-              <Row gutter={16} style={{ justifyContent: isMobileScreen ? 'space-between' : 'end', flexDirection: isMobileScreen && 'row-reverse' , marginTop: isMobileScreen && '1rem' }}>
+              <Row
+                gutter={16}
+                style={{
+                  justifyContent: isMobileScreen ? 'space-between' : 'end',
+                  flexDirection: isMobileScreen && 'row-reverse',
+                  marginTop: isMobileScreen && '1rem',
+                }}
+              >
                 <Col md={24} xs={12}>
-                  <Row justify="end" >
+                  <Row justify="end">
                     <Link to="/categories/create">
                       <Button
                         disabled={!(actions.includes('admin') || actions.includes('create'))}

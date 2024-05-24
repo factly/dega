@@ -18,7 +18,7 @@ import { getMedium, updateMedium, deleteMedium } from '../../actions/media';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import getUserPermission from '../../utils/getUserPermission';
- 
+
 import MonacoEditor from '../../components/MonacoEditor';
 import getJsonValue from '../../utils/getJsonValue';
 import { TitleInput } from '../../components/FormItems';
@@ -164,9 +164,7 @@ function EditMedium() {
                     <Col xs={24} md={6}>
                       <Typography.Text>Featured Image</Typography.Text>
                       <img
-                        src={
-                          media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
-                        }
+                        src={media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
                         alt={'space'}
                         style={{
                           maxHeight: '250px',

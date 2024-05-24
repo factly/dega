@@ -2,7 +2,7 @@ import React from 'react';
 import WebhookEditForm from './components/WebhookForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateWebhook, getWebhook } from '../../actions/webhooks';
- 
+
 import { useParams } from 'react-router-dom';
 import { Skeleton, Row, Col } from 'antd';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';

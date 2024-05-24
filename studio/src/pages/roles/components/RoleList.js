@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Table, ConfigProvider, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import { deleteRole, getRoles } from '../../../actions/roles';
 import useNavigation from '../../../utils/useNavigation';

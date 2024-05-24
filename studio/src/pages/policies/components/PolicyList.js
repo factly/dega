@@ -3,7 +3,7 @@ import { Modal, Button, Typography, Table, ConfigProvider } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePolicy } from '../../../actions/policies';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import useNavigation from '../../../utils/useNavigation';
 

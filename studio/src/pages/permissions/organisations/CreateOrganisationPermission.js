@@ -2,7 +2,7 @@ import React from 'react';
 import OrganisationPermissionCreateForm from './components/PermissionForm';
 import { useDispatch } from 'react-redux';
 import { addOrganisationPermission } from '../../../actions/organisations';
- 
+
 import useNavigation from '../../../utils/useNavigation';
 
 function CreateOrganisationPermission() {

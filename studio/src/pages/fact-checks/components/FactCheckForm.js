@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { createClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
-import { Prompt  } from 'react-router-dom';
+import { Prompt } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import ClaimList from './ClaimList';
@@ -124,7 +124,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   const onSave = (values) => {
-   setShouldBlockNavigation(false);
+    setShouldBlockNavigation(false);
     if (values.meta_fields) {
       values.meta_fields = getJsonValue(values.meta_fields);
     }
@@ -134,11 +134,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.author_ids = values.authors || [];
     values.claim_ids = values.claims ? claimOrder : [];
     values.claim_order = values.claim_ids;
-    // check for claims in the editor output 
-    if(hasClaims(values?.description?.json)){
-     const { claimIds, claimOrder }  = extractClaimIdsAndOrder(values.description.json)
-     values.claim_ids = claimIds
-     values.claim_order = claimOrder 
+    // check for claims in the editor output
+    if (hasClaims(values?.description?.json)) {
+      const { claimIds, claimOrder } = extractClaimIdsAndOrder(values.description.json);
+      values.claim_ids = claimIds;
+      values.claim_order = claimOrder;
     }
     values.status = status;
     values.status === 'publish'

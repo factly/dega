@@ -3,7 +3,7 @@ import EpisodeEditForm from './components/EpisodeForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateEpisode, getEpisode } from '../../actions/episodes';
- 
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
@@ -33,9 +33,7 @@ function EditEpisode() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updateEpisode({ ...episode, ...values })).then(() =>
-      history(`/episodes/${id}/edit`),
-    );
+    dispatch(updateEpisode({ ...episode, ...values })).then(() => history(`/episodes/${id}/edit`));
   };
 
   return (

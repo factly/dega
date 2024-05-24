@@ -8,10 +8,12 @@ import useNavigation from '../../utils/useNavigation';
 
 function CreateClaim() {
   const history = useNavigation();
- 
+
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(createClaim(values)).then(() => {history("/claims")});
+    dispatch(createClaim(values)).then(() => {
+      history('/claims');
+    });
   };
 
   const { claimantsCount } = useSelector(({ claimants }) => {

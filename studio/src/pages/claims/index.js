@@ -13,7 +13,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ClaimList from './components/ClaimList';
 import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
@@ -23,7 +23,6 @@ import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
-
 
 const { Option } = Select;
 

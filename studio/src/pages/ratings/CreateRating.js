@@ -2,7 +2,7 @@ import React from 'react';
 import RatingCreateForm from './components/RatingForm';
 import { useDispatch } from 'react-redux';
 import { createRating } from '../../actions/ratings';
- 
+
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
 
