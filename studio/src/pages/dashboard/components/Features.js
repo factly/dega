@@ -88,8 +88,7 @@ function Features() {
       ) : null}
 
       <Space>
-        {ratingsLoading && loadingServices ? null : ratings > 0 ||
-          !validServices.includes('fact-checking') ? null : (
+        {ratingsLoading ? null : ratings > 0 || !validServices.includes('fact-checking') ? null : (
           <Card
             title="Ratings"
             actions={[

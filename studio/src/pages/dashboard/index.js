@@ -25,8 +25,13 @@ function Dashboard() {
     dispatch(getInfo());
   };
 
-  const { article, factCheck } = info;
-
+  const { article = {}, factCheck = {} } = info;
+  const articlePublish = Number(article.publish) || 0;
+  const articleDraft = Number(article.draft) || 0;
+  const articleReady = Number(article.ready) || 0;
+  const factCheckPublish = Number(factCheck.publish) || 0;
+  const factCheckDraft = Number(factCheck.draft) || 0;
+  const factCheckReady = Number(factCheck.ready) || 0;
   return (
     <Space direction="vertical">
       <Helmet title={'Dashboard'} />
@@ -45,28 +50,28 @@ function Dashboard() {
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Total">
                       <Link to="/posts">
-                        <Statistic value={~~article.publish + ~~article.draft + ~~article.ready} />
+                        <Statistic value={articlePublish + articleDraft + articleReady} />
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 6 }}>
                     <Card size="small" hoverable={true} title="Published">
                       <Link to="/posts?status=publish">
-                        <Statistic value={info.article.publish} />
+                        <Statistic value={articlePublish} />
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Draft">
                       <Link to="/posts?status=draft">
-                        <Statistic value={info.article.draft} />
+                        <Statistic value={articleDraft} />
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 8 }}>
                     <Card size="small" hoverable={true} title="Ready to publish">
                       <Link to="/posts?status=ready">
-                        <Statistic value={info.article.ready} />
+                        <Statistic value={articleReady} />
                       </Link>
                     </Card>
                   </Col>
@@ -88,30 +93,28 @@ function Dashboard() {
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Total">
                       <Link to="/fact-checks">
-                        <Statistic
-                          value={~~factCheck.publish + ~~factCheck.draft + ~~factCheck.ready}
-                        />
+                        <Statistic value={factCheckPublish + factCheckDraft + factCheckReady} />
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 6 }}>
                     <Card size="small" hoverable={true} title="Published">
                       <Link to="/fact-checks?status=publish">
-                        <Statistic value={info.factCheck.publish} />
+                        <Statistic value={factCheckPublish} />
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Draft">
                       <Link to="/fact-checks?status=draft">
-                        <Statistic value={info.factCheck.draft} />
+                        <Statistic value={factCheckDraft} />
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 8 }}>
                     <Card size="small" hoverable={true} title="Ready to publish">
                       <Link to="/fact-checks?status=ready">
-                        <Statistic value={info.factCheck.ready} />
+                        <Statistic value={factCheckReady} />
                       </Link>
                     </Card>
                   </Col>
