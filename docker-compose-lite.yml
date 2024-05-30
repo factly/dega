@@ -1,7 +1,6 @@
-version: '3.7'
+version: "3.7"
 
 services:
-
   #########################################################################
   #####                        MINIO                                #######
   #########################################################################
@@ -20,7 +19,6 @@ services:
       - dega
     command: server -console-address :9002 /export
 
-
   createbuckets:
     image: minio/mc
     depends_on:
@@ -31,7 +29,6 @@ services:
       - dega
     entrypoint: >
       /bin/sh -c " apk add --no-cache bash; wait-for-it.sh minio:9000 -- echo 'Minio is up. Creating the bucket!!'; /usr/bin/mc config host add myminio http://minio:9000 miniokey miniosecret; /usr/bin/mc mb myminio/dega; /usr/bin/mc policy set download myminio/dega; exit 0; "
-
 
   ###########################################################################
   #######                         IFRAMELY                            #######
@@ -69,215 +66,32 @@ services:
       - ./companion/.env
 
   ###########################################################################
-  #######             SMTP SERVICES                                 #######
+  #######             SMTP SERVICES                                   #######
   ###########################################################################
-  mailslurper:
-    image: oryd/mailslurper:latest-smtps
+  mailhog:
+    build:
+      context: ./mailhog
     ports:
-      - "4436:4436"
-      - "4437:4437"
+      - "1025:1025"
+      - "8025:8025"
     networks:
-      - dega
-
+      - tagore
 
   ###########################################################################
-  #######             KRATOS, KETO AND OATHKEEPER                     #######
+  #######             Zitadel                                         #######
   ###########################################################################
-  kratos-migrate:
-    image: oryd/kratos:v0.10.1
-    environment:
-      - DSN=sqlite:///var/lib/sqlite/kratos-db.sqlite?_fk=true&mode=rwc
-    volumes:
-      - type: bind
-        source: ./volumes/kratos-sqlite
-        target: /var/lib/sqlite
-        read_only: false
-      - type: bind
-        source: ./kratos/config
-        target: /etc/config/kratos
-    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
-    restart: on-failure
-    networks:
-      - dega
-
-  kratos:
-    depends_on:
-      - kratos-migrate
-    image: oryd/kratos:v0.10.1
-    ports:
-      - "4433:4433" # public
-      - "4434:4434" # admin
-    environment:
-      - DSN=sqlite:///var/lib/sqlite/kratos-db.sqlite?_fk=true&mode=rwc
-      - LOG_LEVEL=trace
-    volumes:
-      - type: bind
-        source: ./volumes/kratos-sqlite
-        target: /var/lib/sqlite
-        read_only: false
-      - type: bind
-        source: ./kratos/config
-        target: /etc/config/kratos
-    command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
-    restart: unless-stopped
-    networks:
-      - dega
-
-
-  keto-migrate:
-    image: oryd/keto:v0.9.0-alpha.0
-    environment:
-      - DSN=sqlite:///var/lib/sqlite/keto-db.sqlite?_fk=true&mode=rwc
-      - LOG_LEVEL=debug
-    volumes:
-      - type: bind
-        source: ./keto
-        target: /etc/config/keto
-      - type: bind
-        source: ./volumes/keto-sqlite
-        target: /var/lib/sqlite
-        read_only: false
-    command: migrate up -c "/etc/config/keto/keto.yml" --yes
-    restart: on-failure
-    networks:
-      - dega
-
-  keto:
-    depends_on:
-      - keto-migrate
-    image: oryd/keto:v0.9.0-alpha.0
-    ports:
-      - "4466:4466" # read
-      - "4467:4467" # write 
-      - "4468:4468" # metric
-    environment:
-      - DSN=sqlite:///var/lib/sqlite/keto-db.sqlite?_fk=true&mode=rwc
-      - LOG_LEVEL=debug
-    volumes:
-      - type: bind
-        source: ./keto
-        target: /etc/config/keto
-      - type: bind
-        source: ./volumes/keto-sqlite
-        target: /var/lib/sqlite
-        read_only: false
-    command: serve -c "/etc/config/keto/keto.yml" 
-    networks:
-      - dega
-
-  oathkeeper:
-    image: oryd/oathkeeper:latest-alpine
-    depends_on:
-      - kratos
+  zitadel:
+    restart: "always"
+    image: "ghcr.io/zitadel/zitadel:stable"
+    command: "start-from-init --config /config.yaml --config /secrets.yaml --steps /init-steps.yaml --masterkey h9tyO3xu9Qr5ygDhkMgc44x0j3tWHjPL --tlsMode disabled"
     ports:
       - "4455:4455"
-      - "4456:4456"
-    environment:
-      - LOG_LEVEL=debug
     volumes:
-      - type: bind
-        source: ./oathkeeper
-        target: /etc/config/oathkeeper
-    command: serve proxy -c "/etc/config/oathkeeper/.oathkeeper.yml"
-    restart: on-failure
-    networks:
-      - dega
-
-  ###########################################################################
-  #################             KAVACH                          #############                
-  ###########################################################################
-  kavach-server:
+      - "./zitadel/config.yaml:/config.yaml:ro"
+      - "./zitadel/secrets.yaml:/secrets.yaml:ro"
+      - "./zitadel/init-steps.yaml:/init-steps.yaml:ro"
     depends_on:
-      - keto
-      - kratos
-      - kavach-migrate
-    ports:
-      - 5001:8000
-    image: factly/kavach-server:0.27.2
-    environment:
-      - WAIT_HOSTS=kratos:4434 , keto:4466
-      - KAVACH_KETO_READ_API_URL=http://keto:4466
-      - KAVACH_KETO_WRITE_API_URL=http://keto:4467
-      - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
-      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
-      - KAVACH_MODE=development
-      - KAVACH_USE_SQLITE=true
-      - KAVACH_SQLITE_DB_PATH=kavach.db
-      - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
-      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
-      - KAVACH_DYNAMIC_FROM_EMAIL='kavach'
-      - KAVACH_MANDE_HOST=http://mande.factly.in
-      - KAVACH_DYNAMIC_MANDE_TEMPLATE_ID=1
-      - KAVACH_DYNAMIC_SENDGRID_API_KEY=SENDGRID_API_KEY
-      - KAVACH_ENABLE_MULTITENANCY=true
-      - KAVACH_DISABLE_REGISTRATION=false
-      - KAVACH_APPLICATION_NAME=Kavach
-      - KAVACH_SUPER_USER_EMAIL=dega@newschecker.in
-      - KAVACH_DEFAULT_USER_EMAIL=dega@newchecker.com
-      - KAVACH_DEFAULT_USER_PASSWORD=Data123@#
-      - KAVACH_DEFAULT_ORGANISATION_NAME=NEWSCHECKER
-      - KAVACH_ENABLE_IMGPROXY=false
-      - KAVACH_BUCKET_NAME=login.factly.in
-    volumes:
-      - type: bind
-        source: ./volumes/kavach-sqlite/kavach.db
-        target: /app/kavach.db
-      - type: bind
-        source: ./kavach-config-server.env
-        target: /app/config.env
-      - type: bind
-        source: ./volumes/kavach-server/data
-        target: /app/data
-    restart: unless-stopped
-    networks:
-      - dega
-
-  kavach-migrate:
-    depends_on:
-      - keto
-      - kratos
-    image: factly/kavach-server:0.27.2
-    environment:
-      - WAIT_HOSTS=kratos:4434 , keto:4466
-      - KAVACH_KETO_READ_API_URL=http://keto:4466
-      - KAVACH_KETO_WRITE_API_URL=http://keto:4467
-      - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
-      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
-      - KAVACH_MODE=development
-      - KAVACH_USE_SQLITE=true
-      - KAVACH_SQLITE_DB_PATH=kavach.db
-      - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
-      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
-      - KAVACH_DYNAMIC_FROM_EMAIL='kavach'
-      - KAVACH_MANDE_HOST=http://mande.factly.in
-      - KAVACH_DYNAMIC_MANDE_TEMPLATE_ID=1
-      - KAVACH_DYNAMIC_SENDGRID_API_KEY=SENDGRID_API_KEY
-      - KAVACH_ENABLE_MULTITENANCY=true
-      - KAVACH_DISABLE_REGISTRATION=false
-      - KAVACH_APPLICATION_NAME=Kavach
-      - KAVACH_DEFAULT_USER_EMAIL=dega@newchecker.in
-      - KAVACH_DEFAULT_USER_PASSWORD=Data123@#
-      - KAVACH_DEFAULT_ORGANISATION_NAME=NEWSCHECKER
-      - KAVACH_ENABLE_IMGPROXY=false
-      - KAVACH_BUCKET_NAME=login.factly.in
-    volumes:
-      - type: bind
-        source: ./volumes/kavach-sqlite/kavach.db
-        target: /app/kavach.db
-    entrypoint: ["/bin/sh", "-c" , "/app/kavach-server migrate && /app/kavach-server create-super-org"]
-    networks:
-      - dega
-
-  kavach-web:
-    image: factly/kavach-web:0.27.2
-    volumes:
-      - type: bind
-        source: ./volumes/kavach-web/config.js
-        target: /app/public/config.js
-
-    environment:
-      - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
-    restart: unless-stopped
+      - postgres
     networks:
       - dega
 
@@ -286,9 +100,7 @@ services:
   ###########################################################################
   dega-server:
     depends_on:
-      - keto
-      - kratos
-      - kavach-server
+      - zitadel
     ports:
       - 7789:8000
       - 7788:8001
@@ -297,7 +109,7 @@ services:
       context: ./server
       dockerfile: Dockerfile.dev
     environment:
-      - WAIT_HOSTS=kratos:4434 , keto:4466
+      - WAIT_HOSTS=zitadel:4455
     volumes:
       - type: bind
         source: ./server
@@ -311,14 +123,12 @@ services:
 
   dega-migrate:
     depends_on:
-      - keto
-      - kratos
-      - kavach-server
+      - zitadel
     build:
       context: ./server
       dockerfile: Dockerfile.migrate
     environment:
-      - WAIT_HOSTS=kratos:4434 , keto:4466, kavach-server:8000
+      - WAIT_HOSTS=zitadel:4455
     volumes:
       - type: bind
         source: ./server
@@ -364,6 +174,6 @@ services:
     restart: unless-stopped
     networks:
       - dega
-    
+
 networks:
   dega:
