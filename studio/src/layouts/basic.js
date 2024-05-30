@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider, Drawer } from 'antd';
+import React from 'react';
+import { Layout, Card, notification, BackTop, ConfigProvider } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Sidebar from '../components/GlobalNav/Sidebar';
-import Header from '../components/GlobalNav/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces } from '../actions/spaces';
 import './basic.css';
-import { getSuperOrganisation } from '../actions/admin';
 import Pageheader from '../components/PageHeader';
 import routes from '../config/routesConfig';
 import _ from 'lodash';
@@ -30,7 +28,7 @@ function BasicLayout(props) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   const location = useLocation();
-  const { Content, Header } = Layout;
+  const { Content } = Layout;
   const { children } = props;
   const [enteredRoute, setRoute] = React.useState({ menuKey: '/' });
   React.useEffect(() => {
@@ -96,10 +94,6 @@ function BasicLayout(props) {
 
   React.useEffect(() => {
     dispatch(getSpaces());
-    // .then((org) => {
-    // if (org && org.length > 0) dispatch(getSuperOrganisation(org[0].id));
-    // }
-    // );
   }, [dispatch, selected]);
 
   React.useEffect(() => {
@@ -119,10 +113,6 @@ function BasicLayout(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirect]);
 
-  // React.useEffect(() => {
-  //   if (orgs.length > 0 && selected === 0) history('/spaces/create');
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [orgs, location.pathname]);
   const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
 
   if (spaceSelectorVisible.visible) {
@@ -142,11 +132,6 @@ function BasicLayout(props) {
   return (
     <ConfigProvider
       theme={{
-        // // we can customize the theme here
-        // token: {
-        //   colorPrimary: '#2f54eb',
-        //   colorLink: '#2f54eb',
-        // },
         components: {
           Menu: {
             colorItemBgSelected: '#0000000F',
@@ -201,7 +186,6 @@ function BasicLayout(props) {
           />
         )}
         <Layout style={{ background: '#fff' }}>
-          {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
           <Content className="layout-content">
             {[
               '/posts',
