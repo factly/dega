@@ -1,14 +1,9 @@
 import React from 'react';
 import './App.css';
-import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
-// import 'antd/dist/antd.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'antd/dist/reset.css';
-import BasicLayout from './layouts/basic';
 //Routes
 import routes, { extractV6RouteObject } from './config/routesConfig';
-import ProtectedRoute from './components/ProtectedRoute';
-import { Result, Button } from 'antd';
-import AdminRoute from './components/AdminRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
