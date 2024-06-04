@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState} from 'react';
 import { Col, Row, Space, Statistic, Typography, Card } from 'antd';
 
 import Features from './components/Features';
@@ -52,28 +52,32 @@ function Dashboard() {
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Total">
                       <Link to="/posts">
-                        <Statistic value={loading ? '--' : articlePublish + articleDraft + articleReady} />
+                        <Statistic value={articlePublish + articleDraft + articleReady} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 6 }}>
                     <Card size="small" hoverable={true} title="Published">
                       <Link to="/posts?status=publish">
-                        <Statistic value={loading ? '--' : articlePublish} />
+                        <Statistic value={articlePublish} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Draft">
                       <Link to="/posts?status=draft">
-                        <Statistic value={loading ? '--' : articleDraft} />
+                        <Statistic value={articleDraft} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 8 }}>
                     <Card size="small" hoverable={true} title="Ready to publish">
                       <Link to="/posts?status=ready">
-                        <Statistic value={loading ? '--' : articleReady} />
+                        <Statistic value={articleReady} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
@@ -95,28 +99,32 @@ function Dashboard() {
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Total">
                       <Link to="/fact-checks">
-                        <Statistic value={loading ? '--' : factCheckPublish + factCheckDraft + factCheckReady} />
+                        <Statistic value={factCheckPublish + factCheckDraft + factCheckReady} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 6 }}>
                     <Card size="small" hoverable={true} title="Published">
                       <Link to="/fact-checks?status=publish">
-                        <Statistic value={loading ? '--' : factCheckPublish} />
+                        <Statistic value={factCheckPublish} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Draft">
                       <Link to="/fact-checks?status=draft">
-                        <Statistic value={loading ? '--' : factCheckDraft} />
+                        <Statistic value={factCheckDraft} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 8 }}>
                     <Card size="small" hoverable={true} title="Ready to publish">
                       <Link to="/fact-checks?status=ready">
-                        <Statistic value={loading ? '--' : factCheckReady} />
+                        <Statistic value={factCheckReady} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
