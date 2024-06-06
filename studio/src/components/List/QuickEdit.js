@@ -8,7 +8,7 @@ import { updatePost } from '../../actions/posts';
 import { updatePage } from '../../actions/pages';
 import { SlugInput, TitleInput } from '../FormItems';
 
-function QuickEdit({ data, setID, slug, page = false, onQuickEditUpdate = () => {} }) {
+function QuickEdit({ data, setID, slug, page = false, createdAt, onQuickEditUpdate = () => {} }) {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
   const dispatch = useDispatch();
@@ -95,6 +95,10 @@ function QuickEdit({ data, setID, slug, page = false, onQuickEditUpdate = () => 
       <Form.Item name="published_date" label="Published Date">
         <DatePicker />
       </Form.Item>
+      <Form.Item label="Created Date">
+        <span>{createdAt ? dayjs(createdAt).format('YYYY-MM-DD') : 'N/A'}</span>
+      </Form.Item>
+
       {slug === 'fact-check' ? (
         <Form.Item name="claims" label="Claims">
           <Selector mode="multiple" display={'claim'} action="Claims" />
