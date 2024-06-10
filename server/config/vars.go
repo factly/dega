@@ -19,7 +19,7 @@ func SetupVars() {
 		log.Println("config file not found...")
 	}
 
-	if viper.IsSet("zitadel_domain") {
+	if !viper.IsSet("zitadel_domain") {
 		log.Fatal("please provide zitadel_domain config param")
 	}
 
