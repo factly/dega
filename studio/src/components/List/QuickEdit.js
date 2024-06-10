@@ -1,4 +1,4 @@
-import { Form, DatePicker, Button, Space, Select } from 'antd';
+import { Form, DatePicker, Button, Space, Select, Typography } from 'antd';
 import React from 'react';
 import { maker } from '../../utils/sluger';
 import Selector from '../Selector';
@@ -96,7 +96,9 @@ function QuickEdit({ data, setID, slug, page = false, createdAt, onQuickEditUpda
         <DatePicker />
       </Form.Item>
       <Form.Item label="Created Date">
-        <span>{createdAt ? dayjs(createdAt).format('YYYY-MM-DD') : 'N/A'}</span>
+      <Typography.Text>
+          {createdAt ? dayjs(createdAt).format('YYYY-MM-DD') : 'N/A'}
+  </Typography.Text>
       </Form.Item>
 
       {slug === 'fact-check' ? (
