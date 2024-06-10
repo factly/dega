@@ -37,7 +37,7 @@ import (
 // @Success 201 {object} model.Space
 // @Router /core/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	uID, err := middlewarex.GetUser(r.Context())
+	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -108,22 +108,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// if err == nil {
-		// 	// Fetch total number of spaces in organisation
-		// 	// var totSpaces int64
-		// 	// err = config.DB.Model(&model.Space{}).Where(&model.Space{
-		// 	// 	OrganisationID: space.OrganisationID,
-		// 	// }).Count(&totSpaces).Error
-		// 	// if err != nil {
-		// 	// 	loggerx.Error(err)
-		// 	// 	errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		// 	// 	return
-		// 	// }
-		// 	// if totSpaces >= permission.Spaces && permission.Spaces > 0 {
-		// 	// 	errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnprocessableEntity)))
-		// 	// 	return
-		// 	// }
-		// }
 	}
 
 	req, err := http.NewRequest("POST", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", space.OrganisationID)+"/applications/"+fmt.Sprintf("%d", applicationID)+"/spaces", buf)

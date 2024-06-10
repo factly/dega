@@ -153,8 +153,18 @@ import EditRole from '../pages/roles/EditRole';
 import BasicLayout from '../layouts/basic';
 import ProtectedRoute from '../components/ProtectedRoute';
 import AdminRoute from '../components/AdminRoute';
+import Callback from '../pages/redirect';
 
-export function extractV6RouteObject(routes, formats, setReloadFlag, reloadFlag) {
+export function extractV6RouteObject(
+  routes,
+  formats,
+  setReloadFlag,
+  reloadFlag,
+  authenticated,
+  setAuth,
+  userManager,
+  handleLogout,
+) {
   const extractedRoutes = [];
 
   // Loop through the original routes object and convert each route to v6 format
@@ -189,7 +199,13 @@ export function extractV6RouteObject(routes, formats, setReloadFlag, reloadFlag)
     } else {
       v6RouteElement = (
         <BasicLayout>
-          <Component formats={formats} />
+          <Component
+            formats={formats}
+            authenticated={authenticated}
+            setAuth={setAuth}
+            userManager={userManager}
+            handleLogout={handleLogout}
+          />
         </BasicLayout>
       );
     }
@@ -925,6 +941,11 @@ const routes = {
     menuKey: '/advanced',
     Component: Advanced,
     title: 'Advanced',
+  },
+  redirect: {
+    path: '/redirect',
+    menuKey: '/redirect',
+    Component: Callback,
   },
   noMatch: {
     path: '*',

@@ -42,7 +42,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userID, err := middlewarex.GetUser(r.Context())
+	userID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

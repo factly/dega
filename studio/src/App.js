@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'antd/dist/reset.css';
+
 //Routes
 import routes, { extractV6RouteObject } from './config/routesConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
+import { createZitadelAuth } from '@zitadel/react';
 
 function App() {
-  const [reloadFlag, setReloadFlag] = React.useState(false);
+  const config = {
+    authority: window.REACT_APP_ZITADEL_AUTHORITY,
+    client_id: window.REACT_APP_ZITADEL_CLIENT_ID,
+    redirect_uri: window.REACT_APP_ZITADEL_REDIRECT_URI,
+    post_logout_redirect_uri: window.REACT_APP_ZITADEL_POST_LOGOUT_REDIRECT_URI,
+  };
+  const [authenticated, setAuthenticated] = useState(null);
+  const [reloadFlag, setReloadFlag] = useState(false);
   const dispatch = useDispatch();
   const selected = useSelector((state) => state.spaces.selected);
-
   const { formats } = useSelector((state) => {
     const node = state.formats.req.find((item) => {
       return deepEqual(item.query, { space_id: selected });
@@ -33,16 +41,61 @@ function App() {
     return { formats: { loading: state.formats.loading } };
   });
 
+  useEffect(() => {
+    fetchFormats();
+  }, [dispatch, selected, reloadFlag]);
+
+  const zitadel = createZitadelAuth(config);
+
+  const login = () => {
+    zitadel.authorize();
+  };
+
+  const signout = () => {
+    zitadel.signout();
+  };
+
+  useEffect(() => {
+    zitadel.userManager.getUser().then((user) => {
+      console.log('user', user);
+      if (user) {
+        setAuthenticated(true);
+      } else {
+        setAuthenticated(false);
+      }
+    });
+  }, [zitadel]);
+
+  useEffect(() => {
+    if (
+      (authenticated || !authenticated) &&
+      !window.location.href.includes('redirect') &&
+      !window.localStorage.getItem(
+        'oidc.user:' +
+          window.REACT_APP_ZITADEL_AUTHORITY +
+          ':' +
+          window.REACT_APP_ZITADEL_CLIENT_ID,
+      )
+    ) {
+      login();
+    }
+  }, [authenticated]);
+
   const fetchFormats = () => {
     if (selected > 0) dispatch(getFormats({ space_id: selected }));
   };
 
-  React.useEffect(() => {
-    fetchFormats();
-  }, [dispatch, selected, reloadFlag]);
   const router = createBrowserRouter(
-    extractV6RouteObject(routes, formats, setReloadFlag, reloadFlag),
-    { basename: process.env.PUBLIC_URL },
+    extractV6RouteObject(
+      routes,
+      formats,
+      setReloadFlag,
+      reloadFlag,
+      authenticated,
+      setAuthenticated,
+      zitadel.userManager,
+      signout,
+    ),
   );
   return (
     <div className="App">

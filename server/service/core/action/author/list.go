@@ -39,7 +39,7 @@ type paging struct {
 // @Router /core/authors [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	uID, err := middlewarex.GetUser(r.Context())
+	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

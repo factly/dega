@@ -37,7 +37,7 @@ var RolesDataFile = "./data/roles.json"
 // @Failure 400 {array} string
 // @Router /core/policies/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {
-	uID, err := middlewarex.GetUser(r.Context())
+	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

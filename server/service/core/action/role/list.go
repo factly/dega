@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/factly/x/middlewarex"
 	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/service/core/model"
@@ -20,7 +19,7 @@ import (
 )
 
 func list(w http.ResponseWriter, r *http.Request) {
-	uID, err := middlewarex.GetUser(r.Context())
+	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

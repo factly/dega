@@ -34,7 +34,7 @@ import (
 // @Router /core/users/{user_id}/permissions [get]
 
 func userpermissions(w http.ResponseWriter, r *http.Request) {
-	uID, err := middlewarex.GetUser(r.Context())
+	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

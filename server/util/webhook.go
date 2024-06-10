@@ -8,7 +8,6 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 )
 
 type CheckEvent struct {
@@ -16,7 +15,7 @@ type CheckEvent struct {
 }
 
 func CheckWebhookEvent(event string, spaceID string, r *http.Request) bool {
-	uID, err := middlewarex.GetUser(r.Context())
+	uID, err := GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		return false

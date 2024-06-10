@@ -49,7 +49,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uID, err := middlewarex.GetUser(r.Context())
+	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -130,7 +130,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		return nil, errorx.Unauthorized()
 	}
 
-	uID, err := middlewarex.GetUser(ctx)
+	uID, err := util.GetUser(ctx)
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.Unauthorized()

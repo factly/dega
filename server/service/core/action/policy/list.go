@@ -33,7 +33,7 @@ type paging struct {
 // @Success 200 {object} paging
 // @Router /core/policies [get]
 func list(w http.ResponseWriter, r *http.Request) {
-	userID, err := middlewarex.GetUser(r.Context())
+	userID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

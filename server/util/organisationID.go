@@ -35,7 +35,7 @@ func GenerateOrganisation(h http.Handler) http.Handler {
 				return
 			}
 
-			userID, err := middlewarex.GetUser(r.Context())
+			userID, err := GetUser(r.Context())
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

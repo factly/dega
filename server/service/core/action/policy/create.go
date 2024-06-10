@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+
 	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -41,7 +42,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userID, err := middlewarex.GetUser(r.Context())
+	userID, err := util.GetUser(r.Context())
 
 	if err != nil {
 		loggerx.Error(err)

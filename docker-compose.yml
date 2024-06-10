@@ -5,16 +5,21 @@ services:
   #######             DB SERVICES                                     #######
   ###########################################################################
   postgres:
-    image: postgres:11.7-alpine
+    image: postgres:14.2-alpine
     ports:
       - "5432:5432"
     volumes:
-      - ./pg-init-scripts:/docker-entrypoint-initdb.d
-      - ./volumes/postgres:/var/lib/postgresql/data/
+      # - ./server/pg-init-scripts:/docker-entrypoint-initdb.d
+      - ./volumes/postgresql:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_MULTIPLE_DATABASES=zitadel,dega,hukz
+      - POSTGRES_MULTIPLE_DATABASES=dega,zitadel
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: 'pg_isready -U "$$POSTGRES_USER" -d "dega"'
+      timeout: 2s
     networks:
       - dega
 
@@ -107,7 +112,7 @@ services:
       - "1025:1025"
       - "8025:8025"
     networks:
-      - tagore
+      - dega
 
   ###########################################################################
   #######             Zitadel                                         #######

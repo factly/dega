@@ -19,6 +19,10 @@ func SetupVars() {
 		log.Println("config file not found...")
 	}
 
+	if viper.IsSet("zitadel_domain") {
+		log.Fatal("please provide zitadel_domain config param")
+	}
+
 	if !Sqlite() {
 		if !viper.IsSet("database_host") {
 			log.Fatal("please provide database_host config param")

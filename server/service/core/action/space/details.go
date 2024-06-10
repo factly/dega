@@ -4,8 +4,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/factly/x/middlewarex"
-
 	//	"github.com/factly/dega-server/config"
 
 	"github.com/factly/dega-server/util"
@@ -27,7 +25,7 @@ import (
 // @Success 200 {object} model.Space
 // @Router /core/spaces/{space_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
-	uID, err := middlewarex.GetUser(r.Context())
+	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

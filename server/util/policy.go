@@ -32,7 +32,7 @@ func CheckKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
 				return
 			}
 
-			uID, err := middlewarex.GetUser(ctx)
+			uID, err := GetUser(ctx)
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
