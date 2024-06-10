@@ -114,7 +114,7 @@ function Features() {
               <Button
                 onClick={() => {
                   dispatch(addDefaultFormats(selectedSpace)).then(() =>
-                    history.push('/advanced/formats'),
+                    history('/advanced/formats'),
                   );
                 }}
               >

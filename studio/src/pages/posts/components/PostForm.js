@@ -171,7 +171,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
 
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => {
-      page ? history.push('/pages') : history.push('/posts');
+      page ? history('/pages') : history('/posts');
     });
   };
   const setReadyFlag = () => {
