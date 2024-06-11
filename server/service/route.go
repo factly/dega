@@ -17,8 +17,6 @@ import (
 	"github.com/factly/dega-server/service/core/action/format"
 	"github.com/factly/dega-server/service/core/action/meta"
 	"github.com/factly/dega-server/service/core/action/post"
-	"github.com/factly/dega-server/service/core/action/request/organisation"
-	"github.com/factly/dega-server/service/core/action/request/space"
 	"github.com/factly/dega-server/service/core/action/tag"
 	factCheck "github.com/factly/dega-server/service/fact-check"
 	"github.com/factly/dega-server/service/podcast"
@@ -91,11 +89,6 @@ func RegisterRoutes() http.Handler {
 		r.With(util.FactCheckPermission).Mount("/fact-check", factCheck.Router())
 		r.With(util.PodcastPermission).Mount("/podcast", podcast.Router())
 		r.Mount("/reindex", reindex.Router())
-	})
-
-	r.With(ZitadelInterceptor.RequireAuthorization()).With(middlewarex.CheckUser).Group(func(r chi.Router) {
-		r.Post("/core/requests/organisations", organisation.Create)
-		r.With(middlewarex.CheckSpace(1)).Post("/core/requests/spaces", space.Create)
 	})
 
 	r.With(ZitadelInterceptor.RequireAuthorization(), util.CheckUser(ZitadelInterceptor)).Group(func(r chi.Router) {
