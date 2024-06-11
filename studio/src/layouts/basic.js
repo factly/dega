@@ -88,10 +88,6 @@ function BasicLayout(props) {
     return { ...state.notifications, redirect: state.redirect };
   });
 
-  const superOrg = useSelector(({ admin }) => {
-    return admin.organisation;
-  });
-
   React.useEffect(() => {
     dispatch(getSpaces());
   }, [dispatch, selected]);
@@ -165,7 +161,6 @@ function BasicLayout(props) {
               menuKey={enteredRoute?.menuKey}
               orgs={orgs}
               loading={loading}
-              superOrg={superOrg}
               applications={applications}
               services={services}
             />
@@ -180,7 +175,6 @@ function BasicLayout(props) {
             menuKey={enteredRoute?.menuKey}
             orgs={orgs}
             loading={loading}
-            superOrg={superOrg}
             applications={applications}
             services={services}
           />

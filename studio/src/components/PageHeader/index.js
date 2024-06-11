@@ -37,13 +37,11 @@ function Pageheader() {
       } else {
         if (url === '/permissions' && !pathSnippets[index + 2])
           return { breadcrumbName: 'Permissions' };
-        if (url === '/requests' && !pathSnippets[index + 2]) return { breadcrumbName: 'Requests' };
         if (url === '/spaces' && !pathSnippets[index + 2]) return { breadcrumbName: 'Spaces' };
         if (
           index === pathSnippets.length - 1 &&
           !(
             location.pathname.includes('permissions') ||
-            location.pathname.includes('requests') ||
             location.pathname.includes('spaces') ||
             location.pathname.includes('members')
           )

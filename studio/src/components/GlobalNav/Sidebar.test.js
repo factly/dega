@@ -110,7 +110,6 @@ describe('Sidebar component', () => {
               services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'posts', actions: ['create'] }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
-              superOrg={{ id: 1, is_admin: true }}
             />
           </Router>
         </Provider>,
@@ -130,7 +129,6 @@ describe('Sidebar component', () => {
               services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'posts', actions: ['create'] }]}
               orgs={[{ id: 1, spaces: [], permission: { role: 'owner' } }]}
-              superOrg={{ id: 1, is_admin: true }}
             />
           </Router>
         </Provider>,
@@ -153,7 +151,6 @@ describe('Sidebar component', () => {
               services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'posts', actions: ['create'] }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
-              superOrg={{ id: 1, is_admin: true }}
             />
           </Router>
         </Provider>,
@@ -178,7 +175,6 @@ describe('Sidebar component', () => {
               services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'admin' }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
-              superOrg={{ id: 1, is_admin: true }}
             />
           </Router>
         </Provider>,
@@ -203,7 +199,6 @@ describe('Sidebar component', () => {
               services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'posts', actions: ['update'] }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'member' } }]}
-              superOrg={{ id: 1 }}
             />
           </Router>
         </Provider>,
@@ -229,7 +224,6 @@ describe('Sidebar component', () => {
               loading={true}
               permission={[{ resource: 'admin' }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
-              superOrg={{ id: 1, is_admin: true }}
             />
           </Router>
         </Provider>,

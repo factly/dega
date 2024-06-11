@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addDefaultFormats, getFormats } from '../../../actions/formats';
 import { addDefaultPolicies, getPolicies } from '../../../actions/policies';
 import { addDefaultRatings, getRatings } from '../../../actions/ratings';
-import { addDefaultEvents, getEvents } from '../../../actions/events';
 
 import useNavigation from '../../../utils/useNavigation';
 
@@ -13,20 +12,11 @@ function Features() {
   const dispatch = useDispatch();
   const history = useNavigation();
 
-  const superOrg = useSelector(({ admin }) => {
-    return admin.organisation;
-  });
   const selectedSpace = useSelector((state) => ({ space_id: state.spaces.selected }));
   React.useEffect(() => {
     fetchEntities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  React.useEffect(() => {
-    if (superOrg.is_admin) {
-      fetchEvents();
-    }
-  }, [superOrg.is_admin]);
 
   const {
     ratings,
@@ -35,8 +25,6 @@ function Features() {
     formatsLoading,
     policies,
     policiesLoading,
-    events,
-    eventsLoading,
     validServices,
     loadingServices,
   } = useSelector(({ ratings, formats, policies, events, spaces }) => {
@@ -66,16 +54,6 @@ function Features() {
     }
     dispatch(getFormats());
     dispatch(getPolicies());
-  };
-
-  React.useEffect(() => {
-    if (superOrg.is_admin) {
-      fetchEvents();
-    }
-  }, [superOrg.is_admin]);
-
-  const fetchEvents = () => {
-    dispatch(getEvents());
   };
 
   return (
@@ -144,26 +122,6 @@ function Features() {
             create
           </Card>
         )}
-        {eventsLoading ? null : superOrg.is_admin ? (
-          events > 0 ? null : (
-            <Card
-              title="Events"
-              actions={[
-                <Button
-                  onClick={() => {
-                    dispatch(addDefaultEvents()).then(() => history('/admin/events'));
-                  }}
-                >
-                  <PlusOutlined /> CREATE EVENTS
-                </Button>,
-              ]}
-              style={{ width: 300 }}
-            >
-              Events for Create, Update and Delete for all entities will be created. Click below
-              Button to create
-            </Card>
-          )
-        ) : null}
       </Space>
     </>
   );

@@ -4,7 +4,6 @@ import {
   InfoCircleOutlined,
   AudioOutlined,
   GlobalOutlined,
-  SettingOutlined,
   SecurityScanOutlined,
 } from '@ant-design/icons';
 import { Result, Button } from 'antd';
@@ -88,24 +87,6 @@ import EditFactCheck from '../pages/fact-checks/EditFactCheck';
 import Users from '../pages/users';
 import PermissionList from '../pages/users/PermissionList';
 
-// Organisation Permissions
-import OrganisationPermissions from '../pages/permissions/organisations';
-import CreateOrganisationPermission from '../pages/permissions/organisations/CreateOrganisationPermission';
-import EditOrganisationPermission from '../pages/permissions/organisations/EditOrganisationPermission';
-
-// Space Permissions
-import SpacePermissions from '../pages/permissions/spaces';
-import CreateSpacePermission from '../pages/permissions/spaces/CreateSpacePermission';
-import EditSpacePermission from '../pages/permissions/spaces/EditSpacePermission';
-
-// Organisation Requests
-import OrganisationRequests from '../pages/requests/organisations';
-import CreateOrganisationRequest from '../pages/requests/organisations/CreateOrganisationRequest';
-
-// Space Requests
-import SpaceRequests from '../pages/requests/spaces';
-import CreateSpaceRequest from '../pages/requests/spaces/CreateSpaceRequest';
-
 // Menu
 import Menu from '../pages/menu';
 import CreateMenu from '../pages/menu/CreateMenu';
@@ -141,12 +122,9 @@ import AnalyticsForm from '../pages/website/AnalyticsForm';
 import Advanced from '../pages/advanced';
 // Members
 import Members from '../pages/members';
-import Requests from '../pages/requests';
-import Permissions from '../pages/permissions';
 
 //Reindex
 import Reindex from '../pages/spaces/Reindex';
-import { Component } from 'react';
 import ViewPolicy from '../pages/policies/components/ViewPolicy';
 import RoleUsers from '../pages/roles/users';
 import EditRole from '../pages/roles/EditRole';
@@ -374,90 +352,6 @@ const routes = {
       resource: 'podcasts',
       action: 'update',
     },
-  },
-  permissions: {
-    path: '/admin/permissions',
-    menuKey: '/admin/permissions',
-    Component: Permissions,
-    title: 'Permissions',
-    isAdmin: true,
-  },
-  requests: {
-    path: '/admin/requests',
-    menuKey: '/admin/requests',
-    Component: Requests,
-    title: 'Requests',
-    isOwner: true,
-  },
-  organisationPermissions: {
-    path: '/admin/permissions/organisations',
-    menuKey: '/admin/permissions',
-    Component: OrganisationPermissions,
-    title: 'Organisations',
-    isAdmin: true,
-  },
-  createOrganisationPermission: {
-    path: '/admin/permissions/organisations/create',
-    menuKey: '/admin/permissions',
-    Component: CreateOrganisationPermission,
-    title: 'Create',
-    isAdmin: true,
-  },
-  editOrganisationPermission: {
-    path: '/admin/organisations/:oid/permissions/:pid/edit',
-    menuKey: '/admin/permissions',
-    Component: EditOrganisationPermission,
-    title: 'Edit',
-    isAdmin: true,
-  },
-  spacePermissions: {
-    path: '/admin/permissions/spaces',
-    menuKey: '/admin/permissions',
-    Component: SpacePermissions,
-    title: 'Spaces',
-    isAdmin: true,
-  },
-  createSpacePermission: {
-    path: '/admin/permissions/spaces/create',
-    menuKey: '/admin/permissions',
-    Component: CreateSpacePermission,
-    title: 'Create',
-    isAdmin: true,
-  },
-  editSpacePermission: {
-    path: '/admin/spaces/:sid/permissions/:pid/edit',
-    menuKey: '/admin/spaces',
-    Component: EditSpacePermission,
-    title: 'Edit',
-    isAdmin: true,
-  },
-  organisationRequests: {
-    path: '/admin/requests/organisations',
-    menuKey: '/admin/requests',
-    Component: OrganisationRequests,
-    title: 'Organisations',
-    isOwner: true,
-  },
-  createOrganisationRequest: {
-    path: '/admin/requests/organisations/create',
-    menuKey: '/admin/requests',
-    Component: CreateOrganisationRequest,
-    title: 'New Request',
-    isOwner: true,
-  },
-  spaceRequests: {
-    path: '/admin/requests/spaces',
-    menuKey: '/admin/requests',
-    Component: SpaceRequests,
-    title: 'Spaces',
-    isOwner: true,
-  },
-  createSpaceRequest: {
-    path: '/admin/requests/spaces/create',
-    menuKey: '/admin/requests',
-    Component: CreateSpaceRequest,
-    title: 'New Request',
-    isOwner: true,
   },
   categories: {
     path: '/categories',
@@ -999,7 +893,7 @@ export const sidebarMenu = [
   {
     title: 'Administration',
     Icon: (props) => <GlobalOutlined {...props} />,
-    children: [routes.spaces, routes.requests, routes.permissions, routes.events],
+    children: [routes.spaces, routes.events],
     isService: false,
   },
 ];

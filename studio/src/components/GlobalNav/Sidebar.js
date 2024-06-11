@@ -21,7 +21,7 @@ import degaImg from '../../assets/dega.png';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar({ superOrg, permission, orgs, loading, applications, services, menuKey }) {
+function Sidebar({ permission, orgs, loading, applications, services, menuKey }) {
   const { collapsed } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
   const { details, selected } = useSelector((state) => state.spaces);
@@ -70,7 +70,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     'claims',
     'claimants',
     'ratings',
-    'organisations',
     'menus',
     'fact-checks',
     'episodes',
@@ -81,8 +80,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     'advanced',
     'members',
     'code-injection',
-    'requests',
-    'permissions',
   ];
   let buttonStyle = {
     width: '40px',
@@ -108,8 +105,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
-        ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
-        route.isAdmin !== superOrg.is_admin ? null : (
+        ['Events', 'Permissions'].indexOf(route.title) !== -1 ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
               <span>{route.title}</span>

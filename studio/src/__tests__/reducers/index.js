@@ -2,10 +2,6 @@ import rootReducer from '../../reducers';
 import { SET_SELECTED_SPACE } from '../../constants/spaces';
 
 const initialState = {
-  admin: {
-    organisation: {},
-    loading: true,
-  },
   info: {
     categories: 0,
     tag: 0,
@@ -68,11 +64,6 @@ const initialState = {
     details: {},
     loading: true,
   },
-  organisationRequests: {
-    req: [],
-    details: {},
-    loading: true,
-  },
   roles: {
     details: {},
     loading: true,
@@ -80,16 +71,6 @@ const initialState = {
   },
   sachFactChecks: {
     details: [],
-    loading: true,
-  },
-  spacePermissions: {
-    req: [],
-    details: {},
-    loading: true,
-  },
-  spaceRequests: {
-    req: [],
-    details: {},
     loading: true,
   },
   categories: {

@@ -1,20 +1,14 @@
 import React from 'react';
-import { Row, Col, Button, Form, Select, Typography, Space, ConfigProvider } from 'antd';
+import { Row, Col, Button, Form, Select, Space, ConfigProvider } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { reindex, reindexSpace } from '../../actions/meiliReindex';
 
 const Reindex = () => {
-  const { Title } = Typography;
-
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [spaceOption, setSpaceOption] = React.useState();
   const [status, setStatus] = React.useState();
   const [spaceSelected, setSpaceSelected] = React.useState(false);
-
-  const superOrg = useSelector(({ admin }) => {
-    return admin.organisation;
-  });
 
   const { orgId, orgs, spaces } = useSelector((state) => {
     const { selected, orgs, loading } = state.spaces;
@@ -29,7 +23,7 @@ const Reindex = () => {
         role: role,
         orgId: orgId,
         spaces: state.spaces.details,
-        orgs: superOrg.is_admin ? state.spaces.orgs : [org],
+        orgs: state.spaces.orgs,
       };
     }
     return { orgId: 0, orgs: [], spaces: [] };

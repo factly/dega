@@ -52,7 +52,7 @@ function Selector({
     let ids = [];
     let total = 0;
 
-    for (var i = 1; i <= query.page; i++) {
+    for (let i = 1; i <= query.page; i++) {
       let j = state[entity].req.findIndex((item) => deepEqual(item.query, { ...query, page: i }));
       if (j > -1) {
         total = state[entity].req[j].total;
@@ -67,23 +67,6 @@ function Selector({
     details = details.concat(
       ids.filter((id) => !value.includes(id)).map((id) => state[entity].details[id]),
     );
-
-    if (action === 'Organisations') {
-      const req = state[entity].req;
-
-      if (req.length > 0 && req[0].total > 0) {
-        const details = Object.keys(state[entity].details)
-          .map((key, index) => {
-            return !state[entity].details[key].permission ? state[entity].details[key] : undefined;
-          })
-          .filter((each) => each);
-        return {
-          details: details.slice(query.page - 1, 5 + (query.page - 1) * 5),
-          total: details.total,
-          loading: state[entity].loading,
-        };
-      }
-    }
 
     return { details, total: total, loading: state[entity].loading, ids };
   });

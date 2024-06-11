@@ -15,10 +15,6 @@ import notifications from './notificationsReducer';
 import policies from './policiesReducer';
 import permissions from './permissionsReducer';
 import organisations from './organisationsReducer';
-import organisationRequests from './organisationRequestsReducer';
-import spacePermissions from './spacePermissionsReducer';
-import spaceRequests from './spaceRequestsReducer';
-import admin from './adminReducer';
 import users from './usersReducer';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
 import menus from './menuReducer';
@@ -38,7 +34,6 @@ import roles from './rolesReducer';
 import webhooklogs from './webhooklogsReducer';
 
 const appReducer = combineReducers({
-  admin,
   info,
   settings,
   spaces,
@@ -46,9 +41,6 @@ const appReducer = combineReducers({
   redirect,
   episodes,
   podcasts,
-  organisationRequests,
-  spacePermissions,
-  spaceRequests,
   categories,
   tags,
   formats,

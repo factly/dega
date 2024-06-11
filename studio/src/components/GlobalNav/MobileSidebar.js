@@ -2,25 +2,22 @@ import React from 'react';
 import { Avatar, Layout, Button, Row, Col, Drawer, Menu, Popover, List } from 'antd';
 import degaImg from '../../assets/dega.png';
 import { useSelector, useDispatch } from 'react-redux';
-import routes, { sidebarMenu } from '../../config/routesConfig';
+import { sidebarMenu } from '../../config/routesConfig';
 import {
   AppstoreOutlined,
   DownOutlined,
-  MenuFoldOutlined,
   SettingOutlined,
   MenuUnfoldOutlined,
-  MenuOutlined,
 } from '@ant-design/icons';
 import AccountMenu from './AccountMenu';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Search from '../Search';
 import { setSpaceSelectorPage } from './../../actions/spaceSelectorPage';
-import Sidebar from './Sidebar';
 import { maker } from '../../utils/sluger';
 import MenuIcon from '../../assets/MenuIcon';
 import SearchIcon from '../../assets/SearchIcon';
 
-function MobileSidebar({ superOrg, permission, orgs, loading, applications, services, menuKey }) {
+function MobileSidebar({ permission, orgs, applications, services, menuKey }) {
   const { details, selected } = useSelector((state) => state.spaces);
   const { navTheme } = useSelector((state) => state.settings);
   const [open, setOpen] = React.useState(false);
@@ -53,7 +50,6 @@ function MobileSidebar({ superOrg, permission, orgs, loading, applications, serv
     'claims',
     'claimants',
     'ratings',
-    'organisations',
     'menus',
     'fact-checks',
     'episodes',
@@ -64,8 +60,6 @@ function MobileSidebar({ superOrg, permission, orgs, loading, applications, serv
     'advanced',
     'members',
     'code-injection',
-    'requests',
-    'permissions',
   ];
   let buttonStyle = {
     width: '40px',
@@ -91,8 +85,7 @@ function MobileSidebar({ superOrg, permission, orgs, loading, applications, serv
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
-        ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
-        route.isAdmin !== superOrg.is_admin ? null : (
+        ['Events', 'Permissions'].indexOf(route.title) !== -1 ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path} onClick={onClose}>
               <span>{route.title}</span>
@@ -201,7 +194,6 @@ function MobileSidebar({ superOrg, permission, orgs, loading, applications, serv
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              // padding: '12px 24px',
               lineHeight: '40px',
               alignItems: 'center',
               width: '100%',
