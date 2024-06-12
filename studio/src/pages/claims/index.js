@@ -74,8 +74,8 @@ function Claims({ permission }) {
     if (node) {
       const list = node.data.map((element) => {
         let claim = state.claims.details[element];
-        claim.claimant = state.claimants.details[claim.claimant_id].name;
-        claim.rating = state.ratings.details[claim.rating_id].name;
+        claim.claimant = state.claimants.details[claim.claimant_id]?.name;
+        claim.rating = state.ratings.details[claim.rating_id]?.name;
         return claim;
       });
       return {

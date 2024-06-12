@@ -1,0 +1,39 @@
+{
+  "cookies": [
+    {
+      "name": "csrf_token_2d785ea2f6536900108362e9bfff73eef3a32be3921b3abc74b0a990093487c9",
+      "value": "5hxtQVvesUHe6xmn4mrWjYjNdaEcD3/4avO/jkeP9+M=",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1749633467,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ory_kratos_session",
+      "value": "MTcxODA5NzQ2N3xpMnVndkpVcUZfYzM1N0V2a1lVaWRzMjdkb0FxSVJ6ckt3Z19UQWZOUVhhLXNtV0kwMHRYdllKQURPSHgwRmVMWWlSczhBd2VNYUVoYWdjdU9ZSW54b3ZGMHBKbVNCdHNpNWpaNjZlcE5jSUI0a2F6cF9QOXh3YlZXb3A4UXY3a3lzS1pHV0pNRHc9PXy2Bf-G1JZ5kNtvxoEltNqJt4JSztm9Xs5H_r3AC_0F2g==",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1718183867,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://127.0.0.1:4455",
+      "localStorage": [
+        {
+          "name": "returnTo",
+          "value": "http://127.0.0.1:4455/.factly/dega/studio/"
+        },
+        {
+          "name": "space",
+          "value": "1"
+        }
+      ]
+    }
+  ]
+}
