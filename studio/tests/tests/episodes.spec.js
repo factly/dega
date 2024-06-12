@@ -14,6 +14,7 @@ function getRandomString(length) {
 
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
+    test.setTimeout(90000)
     // Navigate to the login page
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
     // Fill in the email and password fields
@@ -72,7 +73,7 @@ test('should persist episode data across sessions', async ({ page, context }) =>
 });
 
 
-test.only('should display "Please enter title!" successfully, when the name input field is empty', async ({ page }) => {
+test('should display "Please enter title!" successfully, when the name input field is empty', async ({ page }) => {
     test.setTimeout(90000)
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');

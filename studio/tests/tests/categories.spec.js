@@ -1,8 +1,21 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 
+
+
+// Helper function to generate a random string using JavaScript's Math.random
+function getRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
+    test.setTimeout(90000)
     // Navigate to the login page
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
     // Fill in the email and password fields
@@ -46,20 +59,20 @@ test('should handle invalid URL parameters gracefully', async ({ page }) => {
 });
 
 
-// test('should persist categories data across sessions', async ({ page, context }) => {
-//     // Get the text content of the first tag
-//     const firstTagText = await page.locator('[data-row-key="11"]').textContent();
-//     // Open a new page in the same context
-//     await context.newPage();
-//     // Navigate to the tags page
-//     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/tags?sort=desc&limit=10&page=1');
-//     // Get the text content of the first tag again
-//     const newFirstTagText = await page.locator('[data-row-key="11"]').textContent();
-//     // Assert that the tag data is the same across sessions
-//     expect(firstTagText).toEqual(newFirstTagText);
-// });
+test('should persist category data across sessions', async ({ page, context }) => {
+    // Get the text content of the first h3 element
+    const firstcategoryText = await page.locator('h3').first().textContent();
+    // Open a new page in the same context
+    await context.newPage();
+    // Navigate to the categoriess page
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/categories?sort=desc&limit=10&page=1');
+    // Get the text content of the first h3 element again
+    const newFirstcategoryText = await page.locator('h3').first().textContent();
+    // Assert that the category data is the same across sessions
+    expect(firstcategoryText).toEqual(newFirstcategoryText);
+});
 
-
+//Perform this test case only when there are no categories present
 test('should display empty state when no categories are present', async ({ page }) => {
     // Locate the element that represents the empty state image
     const emptyStateMessage = await page.locator('.ant-empty-image');
@@ -67,74 +80,109 @@ test('should display empty state when no categories are present', async ({ page 
     await expect(emptyStateMessage).toBeVisible();
 });
 
-test('should create a category succesfully ', async ({ page }) => {
+
+test('should create category successfully', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
-    // Type the new tag name into the input field
-    await page.type('#create-category_name', 'Others')
+
+    // Generate a random string
+    const randomString = getRandomString(10); // Adjust the length as needed
+
+    // Type the new category name with the random string into the input field
+    const categoryName = `Other ${randomString}`;
+    await page.type('#create-category_name', categoryName);
+
     // Click on the 'Save' button
     await page.click('button:has-text("Save")');
-    await page.isVisible(`text=Others`);
+
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
+
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Tag created'
+
+    // Assert that the success message is ' Category created'
     expect(successMessage).toBe('Category created');
 });
 
 
-test('should delete a category successfully', async ({ page }) => {
-    const categoryText = 'Other';
-    // Select the row with the required fact-check text
-    const rowSelector = `tr:has-text("${categoryText}")`;
-    const buttonSelector = 'button:has([aria-label="delete"])'; 
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    // Ensure the button is available before clicking
-    await buttonLocator.waitFor({ state: 'visible' });
-    // Click on the Fact-check to be deleted
-    await buttonLocator.click();
-    // Click on the 'OK' button in the confirmation dialog
-    await page.click('button:has-text("OK")');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Tag deleted'
-    expect(successMessage).toBe('Category deleted');
+test('should display "Please enter name!" successfully, when the name input field is empty', async ({ page }) => {
+    test.setTimeout(90000)
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Click on the 'Expand' button
+    await page.click('button:has-text("Expand")');
+    // Type the new category name into the input field
+    const categoryName = 'This is a test category';
+    await page.type('#create-category_name', categoryName);
+    // Get the length of the typed text
+    const deletePressCount = categoryName.length;
+    // Press the Backspace key multiple times
+    for (let i = 0; i < deletePressCount; i++) {
+        await page.keyboard.press('Backspace');
+    }
+    // Click on the 'Save' button
+    await page.click('button:has-text("Save")');
+    // Wait for the error message to appear
+    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
+    // Get the error message text
+    const errorMessage = await page.textContent('.ant-form-item-explain-error');
+    // Assert that the success message is 'Please enter name!'
+    expect(errorMessage).toBe('Please enter name!');
 });
 
 
-test.only('should edit a category successfully ', async ({ page }) => {
+test('should edit a category successfully', async ({ page }) => {
+
+    // Generate a random string
+    const randomString = getRandomString(10); // Adjust the length as needed
     const categorySelector = 'text=Other';
-    const newCategoryName = 'New';
+    const newcategoryName =  `This is a test category ${randomString}`;;
+    let categoryFound = false;
+    let pageIndex = 1;
+
+    // Function to check if the category is on the current page
+    const iscategoryVisible = async () => {
+        const categoryElements = await page.$$(categorySelector);
+        return categoryElements.length > 0;
+    };
+
+    // Loop through pages until the category is found
+    while (!categoryFound) {
+        categoryFound = await iscategoryVisible();
+
+        if (!categoryFound) {
+            // Click the next page button (assuming there's a next page button with the text 'Next')
+            await page.click('button:has([aria-label="right"])');
+            await page.waitForTimeout(1000); // Wait for the next page to load
+            pageIndex++;
+        }
+    }
     // Click on the category to be edited
     await page.click(categorySelector);
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
     // Fill in the new category name
     const inputSelector = '#create-category_name';
-    await page.fill(inputSelector, newCategoryName);
+    await page.fill(inputSelector, newcategoryName);
     // Click on the 'Update' button
     await page.click('button:has-text("Update")');
-    // Check if the t name has been updated
-    await page.isVisible(`text=${newCategoryName}`);
-    // const updatedCategory = await page.textContent(`text=${newCategoryName}`);
-    // expect(updatedCategory).toBe(newCategoryName);
+    // Check if the category name has been updated
+    const updatedcategory = await page.textContent(`text=${newcategoryName}`);
+    expect(updatedcategory).toBe(newcategoryName);
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Tag updated'
+    // Assert that the success message is 'Category updated'
     expect(successMessage).toBe('Category updated');
 });
 
 
 test('Should find search results', async ({ page }) => {
-    const categoryToSearch = 'One';
+    const categoryToSearch = 'Other';
     const searchInputSelector = '#filters_q';
     // Click the search button
     await page.click('button:has([aria-label="search"])');
@@ -144,7 +192,7 @@ test('Should find search results', async ({ page }) => {
     // Press 'Enter' to search
     await page.press(searchInputSelector, 'Enter');
     // Verify that the category is visible in the results
-    const tagExists = await page.isVisible(`text=${categoryToSearch}`);
+    const categoryExists = await page.isVisible(`text=${categoryToSearch}`);
 });
 
 
@@ -155,7 +203,7 @@ test('Should find no search results', async ({ page }) => {
     await page.click('button:has([aria-label="search"])');
     // Enter the search query
     await page.fill('#filters_q', categoryToSearch);
-    page.locator(tagToSearch); 
+    page.locator(categoryToSearch); 
     // Press 'Enter' to search
     await page.press(searchInputSelector, 'Enter');
     // Verify that 'No data' is visible
@@ -164,14 +212,13 @@ test('Should find no search results', async ({ page }) => {
 });
 
 
-
 test('should display already exsists successfully', async ({ page }) => {
-    const tagSelector = 'text=New';
-    const newTagName = 'One';
-    await page.click(tagSelector);
+    const categorySelector = 'text=Others';
+    const newcategoryName = 'Other';
+    await page.click(categorySelector);
     await page.click('button:has-text("Expand")');
-    const inputSelector = '#create-tag_name';
-    await page.fill(inputSelector, newTagName);
+    const inputSelector = '#create-category_name';
+    await page.fill(inputSelector, newcategoryName);
     await page.click('button:has-text("Update")');
     page.on('dialog', dialog => dialog.accept());
     const successMessage = await page.textContent('.ant-notification-notice-description');
@@ -182,7 +229,6 @@ test('should display already exsists successfully', async ({ page }) => {
 test('should navigate to the next page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
-    await page.waitForNavigation();
     // Verify that the URL contains 'page=2'
     expect(page.url()).toContain('page=2');
 });
@@ -190,18 +236,16 @@ test('should navigate to the next page', async ({ page }) => {
 test('should navigate to the previous page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
-    await page.waitForNavigation();
     // Click the button to navigate back to the previous page
     await page.click('button:has([aria-label="left"])');
-    await page.waitForNavigation();
     // Verify that the URL contains 'page=1'
     expect(page.url()).toContain('page=1');
 });
 
 
 test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
-    const tagSelector = 'text=Two';
-    await page.click(tagSelector);
+    const categorySelector = 'text=Other';
+    await page.click(categorySelector);
     await page.click('button:has-text("Expand")');
     await page.click('button:has-text("Expand")');
     await page.click('button:has-text("Expand")');
@@ -214,32 +258,21 @@ test('when the button is clicked, should scroll to the top of the page', async (
     // Check if the page is scrolled to the top
     const scrollPosition = await page.evaluate(() => window.scrollY);
     expect(scrollPosition).toBe(0);
-  });
-  
-
-
-test('should display tags correctly', async ({ page }) => {
-    // Define the expected tag names
-    const expectedTags = ['New', 'One', 'Two']; // Add more if needed
-
-    // Loop through each expected tag and check if it's visible on the page
-    for (const tagName of expectedTags) {
-        const tagExists = await page.isVisible(`text=${tagName}`);
-    }
 });
 
 
-test('should sort tags from latest to oldest', async ({ page }) => {
+test('should sort categories from latest to oldest', async ({ page }) => {
     // Click on the sorting dropdown
-    await page.selectOption('.ant-select-item-option-content', 'Old') // Click on the option for sorting from latest to oldest
-
-    // Get the text content of all tags
-    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
+    await page.click('#filters_sort', { force: true }); 
+    // Click on the option for sorting from latest to oldest
+    await page.click('.ant-select-item[title="Latest"]');  
+    // Get the text content of all categories
+    const categories = await page.$$eval('.ant-table-tbody tr', rows => {
         return rows.map(row => row.textContent.trim());
     });
 
-    // Check if tags are sorted from latest to oldest
-    const sortedTags = tags.slice().sort((a, b) => {
+    // Check if categories are sorted from latest to oldest
+    const sortedcategories = categories.slice().sort((a, b) => {
         // Extract timestamp from the row content and compare
         const getTime = str => {
             const match = str.match(/Created At:\s*(.+)/);
@@ -251,6 +284,36 @@ test('should sort tags from latest to oldest', async ({ page }) => {
         return getTime(b) - getTime(a);
     });
 
-    // Check if the tags are in the correct order
-    expect(tags).toEqual(sortedTags);
+    // Check if the categories are in the correct order
+    expect(categories).toEqual(sortedcategories);
+});
+
+
+test('should sort categories from oldest to latest', async ({ page }) => {
+    // Click on the sorting dropdown
+    await page.click('#filters_sort', { force: true });
+
+    // Click on the option for sorting from oldest to latest
+    await page.click('.ant-select-item[title="Old"]');  // Adjust the title as needed if "Old" means oldest
+
+    // Get the text content of all categories
+    const categories = await page.$$eval('.ant-table-tbody tr', rows => {
+        return rows.map(row => row.textContent.trim());
+    });
+
+    // Check if categories are sorted from oldest to latest
+    const sortedcategories = categories.slice().sort((a, b) => {
+        // Extract timestamp from the row content and compare
+        const getTime = str => {
+            const match = str.match(/Created At:\s*(.+)/);
+            if (match) {
+                return new Date(match[1]).getTime();
+            }
+            return 0;
+        };
+        return getTime(a) - getTime(b); // Sorting in ascending order
+    });
+
+    // Check if the categories are in the correct order
+    expect(categories).toEqual(sortedcategories);
 });

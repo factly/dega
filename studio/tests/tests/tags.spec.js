@@ -115,9 +115,6 @@ test('should create tag successfully', async ({ page }) => {
     // Click on the 'Save' button
     await page.click('button:has-text("Save")');
 
-    // Check if the tag is visible
-    await page.isVisible(`text=${tagName}`);
-
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
 
@@ -303,7 +300,7 @@ test('should display tags correctly', async ({ page }) => {
     }
 });
 
-//Perform this test case when there are no tags present
+//Perform this test case only when there are no tags present
 test('should display empty state when no tags are present', async ({ page }) => {
     // Locate the element that represents the empty state image
     const emptyStateMessage = await page.locator('.ant-empty-image');
@@ -336,7 +333,7 @@ test('should navigate to the next page', async ({ page }) => {
 });
 
 
-test.only('should navigate to the previous page', async ({ page }) => {
+test('should navigate to the previous page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
     // Click the button to navigate back to the previous page
@@ -356,7 +353,7 @@ test.only('should navigate to the selected page', async ({ page }) => {
 });
 
 
-test.only('should sort tags from latest to oldest', async ({ page }) => {
+test('should sort tags from latest to oldest', async ({ page }) => {
     // Click on the sorting dropdown
     await page.click('#filters_sort', { force: true }); 
     // Click on the option for sorting from latest to oldest
@@ -384,7 +381,7 @@ test.only('should sort tags from latest to oldest', async ({ page }) => {
 });
 
 
-test.only('should sort tags from oldest to latest', async ({ page }) => {
+test('should sort tags from oldest to latest', async ({ page }) => {
     // Click on the sorting dropdown
     await page.click('#filters_sort', { force: true });
 

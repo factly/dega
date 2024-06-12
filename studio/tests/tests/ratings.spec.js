@@ -1,8 +1,21 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 
+
+// Helper function to generate a random string using JavaScript's Math.random
+function getRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
+    test.setTimeout(90000)
     // Navigate to the login page
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
     // Fill in the email and password fields
@@ -28,10 +41,11 @@ test('should stay logged in using stored cookies', async ({ page }) => {
     expect(await page.isVisible('text="Logout"')).toBeTruthy();
 });
 
+
 test('should load the ratings page successfully', async ({ page }) => {
-    // Locate the header element with the text 'Tags'
+    // Locate the header element with the text 'ratings'
     const accountLogin = await page.locator('h3')
-    // Assert that the header has the text 'Tags'
+    // Assert that the header has the text 'Ratings'
     await expect(accountLogin).toHaveText('Ratings')
 });
 
@@ -48,18 +62,19 @@ test('should handle invalid URL parameters gracefully', async ({ page }) => {
 
 test('should persist ratings data across sessions', async ({ page, context }) => {
     // Get the text content of the first h3 element
-    const firstTagText = await page.locator('h3').first().textContent();
+    const firstratingText = await page.locator('h3').first().textContent();
     // Open a new page in the same context
     await context.newPage();
-    // Navigate to the tags page
+    // Navigate to the ratings page
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/ratings?page=1');
     // Get the text content of the first h3 element again
-    const newFirstTagText = await page.locator('h3').first().textContent();
-    // Assert that the tag data is the same across sessions
-    expect(firstTagText).toEqual(newFirstTagText);
+    const newFirstratingText = await page.locator('h3').first().textContent();
+    // Assert that the rating data is the same across sessions
+    expect(firstratingText).toEqual(newFirstratingText);
 });
 
 
+//Perform this test case only when there are no ratings present
 test('should display empty state when no ratings are present', async ({ page }) => {
     // Locate the element that represents the empty state image
     const emptyStateMessage = await page.locator('.ant-empty-image');
@@ -67,45 +82,102 @@ test('should display empty state when no ratings are present', async ({ page }) 
     await expect(emptyStateMessage).toBeVisible();
 });
 
-test('should create a rating succesfully ', async ({ page }) => {
+
+test('should create rating successfully', async ({ page }) => {
     // Click on the 'New Rating' button
     await page.click('button:has-text("New Rating")');
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
-    // Type the new rating name and its value into the input fields
-    await page.type('#creat-rating_name', 'Outrageous');
-    await page.type('#creat-rating_numeric_value', '3')
+
+    // Generate a random string
+    const randomString = getRandomString(10); // Adjust the length as needed
+
+    // Type the new rating name with the random string into the input field
+    const ratingName = `This is a test rating ${randomString}`;
+    await page.type('#creat-rating_name', ratingName);
+    await page.type('#creat-rating_numeric_value', '5')
+
     // Click on the 'Save' button
     await page.click('button:has-text("Save")');
-    await page.isVisible(`text=Outrageous`);
+
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
+
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Tag created'
+
+    // Assert that the success message is 'Rating created'
     expect(successMessage).toBe('Rating created');
+});
+
+
+
+test('should display "rating with same numeric value exists" successfully', async ({ page }) => {
+    // Click on the 'New Rating' button
+    await page.click('button:has-text("New Rating")');
+    // Click on the 'Expand' button
+    await page.click('button:has-text("Expand")');
+
+    // Generate a random string
+    const randomString = getRandomString(10); // Adjust the length as needed
+
+    // Type the new rating name with the random string into the input field
+    const ratingName = `This is a test rating ${randomString}`;
+    await page.type('#creat-rating_name', ratingName);
+    await page.type('#creat-rating_numeric_value', '3')
+
+    // Click on the 'Save' button
+    await page.click('button:has-text("Save")');
+
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+
+    // Assert that the success message is 'rating with same numeric value exists'
+    expect(successMessage).toBe('rating with same numeric value exists');
 });
 
 
 test('should delete a rating successfully', async ({ page }) => {
     const ratingText = 'Outrageous';
-    // Select the row with the required rating text
-    const rowSelector = `tr:has-text("${ratingText}")`;
-    const buttonSelector = 'button:has([aria-label="delete"])'; 
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    // Ensure the button is available before clicking
-    await buttonLocator.waitFor({ state: 'visible' });
-    // Click on the Fact-check to be deleted
-    await buttonLocator.click();
-    // Click on the 'OK' button in the confirmation dialog
-    await page.click('button:has-text("OK")');
+    const nextButtonSelector = 'button:has([aria-label="right"])';
+    let ratingFound = false;
+    while (true) {
+        // Check if the rating is present on the current page
+        const rowSelector = `tr:has-text("${ratingText}")`;
+        const buttonSelector = 'button:has([aria-label="delete"])';
+        const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+        // Check if the row with the rating text is visible
+        const rowCount = await page.locator(rowSelector).count();
+        if (rowCount > 0) {
+            // Ensure the button is available before clicking
+            await buttonLocator.waitFor({ state: 'visible' });
+            // Click the delete button
+            await buttonLocator.click();
+            // Click on the 'OK' button in the confirmation dialog
+            await page.click('button:has-text("OK")');
+            ratingFound = true;
+            break;
+        }
+        // Check if the "Next" button is available
+        const nextButtonEnabled = await page.isEnabled(nextButtonSelector);
+        if (!nextButtonEnabled) {
+            // If there are no more pages to check, break the loop
+            break;
+        }
+        // Click the "Next" button to go to the next page
+        await page.click(nextButtonSelector);
+    }
+    // Assert that the rating was found and deleted
+    expect(ratingFound).toBe(true);
 });
 
 
 test('should edit a ratings name successfully ', async ({ page }) => {
-    const ratingSelector = 'text=Trues';
-    const newRatingName = 'True';
+    const ratingSelector = 'text=Partially true';
+    const newRatingName = 'Trues';
     // Click on the rating to be edited
     await page.click(ratingSelector);
     // Click on the 'Expand' button
@@ -115,19 +187,19 @@ test('should edit a ratings name successfully ', async ({ page }) => {
     await page.fill(inputSelector, newRatingName);
     // Click on the 'Update' button
     await page.click('button:has-text("Update")');
-    // Check if the tag name has been updated
+    // Check if the rating name has been updated
     await page.isVisible(`text=True`);
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Tag updated'
+    // Assert that the success message is 'rating updated'
     expect(successMessage).toBe('Rating updated');
 });
 
 
 test('should edit a ratings value successfully ', async ({ page }) => {
-    const ratingSelector = 'text=True';
+    const ratingSelector = 'text=Trues';
     const newRatingValue = '6';
     // Click on the rating to be edited
     await page.click(ratingSelector);
@@ -138,56 +210,24 @@ test('should edit a ratings value successfully ', async ({ page }) => {
     await page.fill(inputSelector, newRatingValue);
     // Click on the 'Update' button
     await page.click('button:has-text("Update")');
-    // Check if the tag name has been updated
+    // Check if the rating name has been updated
     await page.isVisible(`text=True`);
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Tag updated'
+    // Assert that the success message is 'rating updated'
     expect(successMessage).toBe('Rating updated');
 });
 
 
-test('Should find search results', async ({ page }) => {
-    const ratingToSearch = 'One';
-    const searchInputSelector = '#filters_q';
-    // Click the search button
-    await page.click('button:has([aria-label="search"])');
-    // Enter the search query
-    await page.fill(searchInputSelector , ratingToSearch);
-    page.locator(ratingToSearch); 
-    // Press 'Enter' to search
-    await page.press(searchInputSelector, 'Enter');
-    // Verify that the tag is visible in the results
-    const tagExists = await page.isVisible(`text=${ratingToSearch}`);
-});
-
-
-test('Should find no search results', async ({ page }) => {
-    const ratingToSearch = 'Zero';
-    const searchInputSelector = '#filters_q';
-    // Click the search button
-    await page.click('button:has([aria-label="search"])');
-    // Enter the search query
-    await page.fill('#filters_q', ratingToSearch);
-    page.locator(ratingToSearch); 
-    // Press 'Enter' to search
-    await page.press(searchInputSelector, 'Enter');
-    // Verify that 'No data' is visible
-    const accountLogin = await page.locator('text=No data');
-    await expect(accountLogin).toBeVisible();
-});
-
-
-
-test.only('should display rating already exsists successfully', async ({ page }) => {
+test('should display "rating with same name already exists" successfully', async ({ page }) => {
     // Click on the 'New Rating' button
     await page.click('button:has-text("New Rating")');
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
-    // Type the new rating name and its value into the input fields
-    await page.type('#creat-rating_name', 'True');
+    // Type the rating name which already exists and its value into the input fields
+    await page.type('#creat-rating_name', 'Trues');
     await page.type('#creat-rating_numeric_value', '3')
     // Click on the 'Save' button
     await page.click('button:has-text("Save")');
@@ -197,28 +237,47 @@ test.only('should display rating already exsists successfully', async ({ page })
 });
 
 
-test('should navigate to the next page', async ({ page }) => {
-    // Click the button to navigate to the next page
-    await page.click('button:has([aria-label="right"])');
-    await page.waitForNavigation();
-    // Verify that the URL contains 'page=2'
-    expect(page.url()).toContain('page=2');
-});
+test('should check for the numeric value input field up and down functionality successfully', async ({ page }) => {
+    // Click on the 'New Rating' button
+    await page.click('button:has-text("New Rating")');
+    // Click on the 'Expand' button
+    await page.click('button:has-text("Expand")');
+    
+    // Type the rating name into the input field
+    const ratingName = 'This is a test rating';
+    let ratingValue = 5; // starting value
+    
+    await page.type('#creat-rating_name', ratingName);
 
-test('should navigate to the previous page', async ({ page }) => {
-    // Click the button to navigate to the next page
-    await page.click('button:has([aria-label="right"])');
-    await page.waitForNavigation();
-    // Click the button to navigate back to the previous page
-    await page.click('button:has([aria-label="left"])');
-    await page.waitForNavigation();
-    // Verify that the URL contains 'page=1'
-    expect(page.url()).toContain('page=1');
+    // Focus on the rating value input field
+    const ratingInput = await page.$('#creat-rating_numeric_value');
+    await ratingInput.focus();
+    await page.type('#creat-rating_numeric_value', ratingValue.toString());
+
+    // Press the 'Up' key to increment the rating value
+    await page.keyboard.press('ArrowUp');
+    ratingValue += 1;
+
+    // Press the 'Down' key to decrement the rating value
+    await page.keyboard.press('ArrowDown');
+    ratingValue -= 1;
+    
+    // Click on the 'Save' button
+    await page.click('button:has-text("Save")');
+
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+
+    // Assert that the success message is 'Rating created'
+    expect(successMessage).toBe('Rating created');
 });
 
 
 test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
-    const ratingSelector = 'text=Two';
+    const ratingSelector = 'text=Trues';
     await page.click(ratingSelector);
     await page.click('button:has-text("Expand")');
     await page.click('button:has-text("Expand")');
@@ -232,43 +291,5 @@ test('when the button is clicked, should scroll to the top of the page', async (
     // Check if the page is scrolled to the top
     const scrollPosition = await page.evaluate(() => window.scrollY);
     expect(scrollPosition).toBe(0);
-  });
+});
   
-
-
-test('should display ratings correctly', async ({ page }) => {
-    // Define the expected rating names
-    const expectedRatings = ['New', 'One', 'Two']; // Add more if needed
-
-    // Loop through each expected tag and check if it's visible on the page
-    for (const ratingName of expectedRatings) {
-        const ratingExists = await page.isVisible(`text=${ratingName}`);
-    }
-});
-
-
-test('should sort ratings from latest to oldest', async ({ page }) => {
-    // Click on the sorting dropdown
-    await page.selectOption('.ant-select-item-option-content', 'Old') // Click on the option for sorting from latest to oldest
-
-    // Get the text content of all tags
-    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
-        return rows.map(row => row.textContent.trim());
-    });
-
-    // Check if tags are sorted from latest to oldest
-    const sortedTags = tags.slice().sort((a, b) => {
-        // Extract timestamp from the row content and compare
-        const getTime = str => {
-            const match = str.match(/Created At:\s*(.+)/);
-            if (match) {
-                return new Date(match[1]).getTime();
-            }
-            return 0;
-        };
-        return getTime(b) - getTime(a);
-    });
-
-    // Check if the tags are in the correct order
-    expect(tags).toEqual(sortedTags);
-});

@@ -21,7 +21,7 @@ test.beforeEach(async ({ page }) => {
     await page.type('#auth_password', 'Wrongpass@123')
     // Click the login button
     await page.click('text=Login')
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/tags?sort=desc&limit=10&page=1');
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/podcasts?sort=desc&limit=10&page=1');
     // Save session cookies to a file
     const cookies = await page.context().cookies();
     await page.context().storageState({ path: 'state.json' });
@@ -40,17 +40,17 @@ test('should stay logged in using stored cookies', async ({ page }) => {
 });
 
 
-test('should load the tags page successfully', async ({ page }) => {
-    // Locate the header element with the text 'Tags'
+test('should load the podcasts page successfully', async ({ page }) => {
+    // Locate the header element with the text 'podcasts'
     const accountLogin = await page.locator('h3')
-    // Assert that the header has the text 'Tags'
-    await expect(accountLogin).toHaveText('Tags')
+    // Assert that the header has the text 'podcasts'
+    await expect(accountLogin).toHaveText('podcasts')
 });
 
 
 test('should handle invalid URL parameters gracefully', async ({ page }) => {
     // Navigate to the URL with invalid parameters
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/tags?sort=desc&limit=10&page=NaN');
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/podcasts?sort=desc&limit=10&page=NaN');
     // Locate the element that shows 'No data' message
     const accountLogin = await page.locator('text=No data');
     // Assert that the 'No data' message is visible
@@ -58,54 +58,47 @@ test('should handle invalid URL parameters gracefully', async ({ page }) => {
 });
 
 
-test('should persist tag data across sessions', async ({ page, context }) => {
+test('should persist podcast data across sessions', async ({ page, context }) => {
     // Get the text content of the first h3 element
-    const firstTagText = await page.locator('h3').first().textContent();
+    const firstpodcastText = await page.locator('h3').first().textContent();
     // Open a new page in the same context
     await context.newPage();
-    // Navigate to the tags page
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/tags?sort=desc&limit=10&page=1');
+    // Navigate to the podcasts page
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/podcasts?sort=desc&limit=10&page=1');
     // Get the text content of the first h3 element again
-    const newFirstTagText = await page.locator('h3').first().textContent();
-    // Assert that the tag data is the same across sessions
-    expect(firstTagText).toEqual(newFirstTagText);
+    const newFirstpodcastText = await page.locator('h3').first().textContent();
+    // Assert that the podcast data is the same across sessions
+    expect(firstpodcastText).toEqual(newFirstpodcastText);
 });
 
 
-test('should display "Please enter name!" successfully, when the name input field is empty', async ({ page }) => {
+test('should display "Please enter title!" successfully, when the name input field is empty', async ({ page }) => {
     test.setTimeout(90000)
     // Click on the 'Create' button
-    console.log("Clicking 'Create' button...");
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
-    console.log("Clicking 'Expand' button...");
     await page.click('button:has-text("Expand")');
-    // Type the new tag name into the input field
-    const tagName = 'This is a test tag';
-    console.log("Typing tag name...");
-    await page.type('#create-tag_name', tagName);
+    // Type the new podcast name into the input field
+    const podcastName = 'This is a test podcast';
+    await page.type('#create-category_title', podcastName);
     // Get the length of the typed text
-    const deletePressCount = tagName.length;
-    console.log(`Deleting ${deletePressCount} characters...`);
+    const deletePressCount = podcastName.length;
     // Press the Backspace key multiple times
     for (let i = 0; i < deletePressCount; i++) {
         await page.keyboard.press('Backspace');
     }
     // Click on the 'Save' button
-    console.log("Clicking 'Save' button...");
     await page.click('button:has-text("Save")');
     // Wait for the error message to appear
-    console.log("Waiting for error message...");
     await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
     // Get the error message text
     const errorMessage = await page.textContent('.ant-form-item-explain-error');
-    // Assert that the success message is 'Please enter name!'
-    console.log("Asserting the error message...");
-    expect(errorMessage).toBe('Please enter name!');
+    // Assert that the success message is 'Please enter title!'
+    expect(errorMessage).toBe('Please enter title!');
 });
 
 
-test('should create tag successfully', async ({ page }) => {
+test('should create podcast successfully', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
@@ -114,15 +107,15 @@ test('should create tag successfully', async ({ page }) => {
     // Generate a random string
     const randomString = getRandomString(10); // Adjust the length as needed
 
-    // Type the new tag name with the random string into the input field
-    const tagName = `This is a test tag ${randomString}`;
-    await page.type('#create-tag_name', tagName);
+    // Type the new podcast name with the random string into the input field
+    const podcastName = `This is a test podcast ${randomString}`;
+    await page.type('#create-category_title', podcastName);
 
     // Click on the 'Save' button
     await page.click('button:has-text("Save")');
 
-    // Check if the tag is visible
-    await page.isVisible(`text=${tagName}`);
+    // Check if the podcast is visible
+    await page.isVisible(`text=${podcastName}`);
 
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
@@ -130,21 +123,21 @@ test('should create tag successfully', async ({ page }) => {
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
 
-    // Assert that the success message is 'Tag created'
-    expect(successMessage).toBe('Tag created');
+    // Assert that the success message is 'Podcast added'
+    expect(successMessage).toBe('Podcast added');
 });
 
 
-test('should delete tag successfully', async ({ page }) => {
-    const tagText = 'Two';
+test('should delete podcast successfully', async ({ page }) => {
+    const podcastText = 'Two';
     const nextButtonSelector = 'button:has([aria-label="right"])';
-    let tagFound = false;
+    let podcastFound = false;
     while (true) {
-        // Check if the tag is present on the current page
-        const rowSelector = `tr:has-text("${tagText}")`;
+        // Check if the podcast is present on the current page
+        const rowSelector = `tr:has-text("${podcastText}")`;
         const buttonSelector = 'button:has([aria-label="delete"])';
         const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-        // Check if the row with the tag text is visible
+        // Check if the row with the podcast text is visible
         const rowCount = await page.locator(rowSelector).count();
         if (rowCount > 0) {
             // Ensure the button is available before clicking
@@ -157,9 +150,9 @@ test('should delete tag successfully', async ({ page }) => {
             page.on('dialog', dialog => dialog.accept());
             // Get the success message text
             const successMessage = await page.textContent('.ant-notification-notice-description');
-            // Assert that the success message is 'Tag deleted'
-            expect(successMessage).toBe('Tag deleted');
-            tagFound = true;
+            // Assert that the success message is 'Podcast deleted'
+            expect(successMessage).toBe('Podcast deleted');
+            podcastFound = true;
             break;
         }
         // Check if the "Next" button is available
@@ -173,88 +166,88 @@ test('should delete tag successfully', async ({ page }) => {
         // Wait for the next page to load (adjust the selector as needed)
         await page.waitForSelector(rowSelector, { state: 'attached' });
     }
-    // Assert that the tag was found and deleted
-    expect(tagFound).toBe(true);
+    // Assert that the podcast was found and deleted
+    expect(podcastFound).toBe(true);
 });
 
+//Cannot edit the podcast for now
+// test('should edit a podcast successfully', async ({ page }) => {
 
-test('should edit a tag successfully', async ({ page }) => {
+//     // Generate a random string
+//     const randomString = getRandomString(10); // Adjust the length as needed
+//     const podcastSelector = 'text=Six';
+//     const newpodcastName =  `This is a test podcast ${randomString}`;;
+//     let podcastFound = false;
+//     let pageIndex = 1;
 
-    // Generate a random string
-    const randomString = getRandomString(10); // Adjust the length as needed
-    const tagSelector = 'text=Six';
-    const newTagName =  `This is a test tag ${randomString}`;;
-    let tagFound = false;
-    let pageIndex = 1;
+//     // Function to check if the podcast is on the current page
+//     const ispodcastVisible = async () => {
+//         const podcastElements = await page.$$(podcastSelector);
+//         return podcastElements.length > 0;
+//     };
 
-    // Function to check if the tag is on the current page
-    const isTagVisible = async () => {
-        const tagElements = await page.$$(tagSelector);
-        return tagElements.length > 0;
-    };
+//     // Loop through pages until the podcast is found
+//     while (!podcastFound) {
+//         podcastFound = await ispodcastVisible();
 
-    // Loop through pages until the tag is found
-    while (!tagFound) {
-        tagFound = await isTagVisible();
+//         if (!podcastFound) {
+//             // Click the next page button (assuming there's a next page button with the text 'Next')
+//             await page.click('button:has([aria-label="right"])');
+//             await page.waitForTimeout(1000); // Wait for the next page to load
+//             pageIndex++;
+//         }
+//     }
 
-        if (!tagFound) {
-            // Click the next page button (assuming there's a next page button with the text 'Next')
-            await page.click('button:has([aria-label="right"])');
-            await page.waitForTimeout(1000); // Wait for the next page to load
-            pageIndex++;
-        }
-    }
-
-    // Click on the tag to be edited
-    await page.click(tagSelector);
-    // Click on the 'Expand' button
-    await page.click('button:has-text("Expand")');
-    // Fill in the new tag name
-    const inputSelector = '#create-tag_name';
-    await page.fill(inputSelector, newTagName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the tag name has been updated
-    const updatedTag = await page.textContent(`text=${newTagName}`);
-    expect(updatedTag).toBe(newTagName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Tag updated'
-    expect(successMessage).toBe('Tag updated');
-});
+//     // Click on the podcast to be edited
+//     await page.click(podcastSelector);
+//     // Click on the 'Expand' button
+//     await page.click('button:has-text("Expand")');
+//     // Fill in the new podcast name
+//     const inputSelector = '#create-podcast_name';
+//     await page.fill(inputSelector, newpodcastName);
+//     // Click on the 'Update' button
+//     await page.click('button:has-text("Update")');
+//     // Check if the podcast name has been updated
+//     const updatedpodcast = await page.textContent(`text=${newpodcastName}`);
+//     expect(updatedpodcast).toBe(newpodcastName);
+//     // Handle any dialog that appears by accepting it
+//     page.on('dialog', dialog => dialog.accept());
+//     // Get the success message text
+//     const successMessage = await page.textContent('.ant-notification-notice-description');
+//     // Assert that the success message is 'podcast updated'
+//     expect(successMessage).toBe('podcast updated');
+// });
 
 
 test('Should find search results', async ({ page }) => {
-    const tagToSearch = 'Nine';
+    const podcastToSearch = 'Nine';
     const searchInputSelector = '#filters_q';
     // Click the search button
     await page.click('button:has([aria-label="search"])');
     // Enter the search query
-    await page.fill(searchInputSelector , tagToSearch);
-    page.locator(tagToSearch); 
+    await page.fill(searchInputSelector , podcastToSearch);
+    page.locator(podcastToSearch); 
     // Press 'Enter' to search
     await page.press(searchInputSelector, 'Enter');
-    // Verify that the tag is visible in the results
-    const tagExists = await page.isVisible(`text=${tagToSearch}`);
+    // Verify that the podcast is visible in the results
+    const podcastExists = await page.isVisible(`text=${podcastToSearch}`);
 });
 
 
-test('should display "tag already exists" successfully', async ({ page }) => {
-    // Define the selector for the tag to be clicked
-    const tagSelector = 'text=New';
-    // Define the new tag name to be entered
-    const newTagName = 'One';
-    // Click the tag to create a new entry
-    await page.click(tagSelector);
+test('should display "podcast already exists" successfully', async ({ page }) => {
+    // Define the selector for the podcast to be clicked
+    const podcastSelector = 'text=New';
+    // Define the new podcast name to be entered
+    const newpodcastName = 'One';
+    // Click the podcast to create a new entry
+    await page.click(podcastSelector);
     // Click the button to expand the form
     await page.click('button:has-text("Expand")');
-    // Define the selector for the input field where the tag name will be entered
-    const inputSelector = '#create-tag_name';
-    // Fill the input field with the new tag name
-    await page.fill(inputSelector, newTagName);
-    // Click the button to update/create the tag
+    // Define the selector for the input field where the podcast name will be entered
+    const inputSelector = '#create-podcast_name';
+    // Fill the input field with the new podcast name
+    await page.fill(inputSelector, newpodcastName);
+    // Click the button to update/create the podcast
     await page.click('button:has-text("Update")');
     // Handle the dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
@@ -267,25 +260,25 @@ test('should display "tag already exists" successfully', async ({ page }) => {
 
 
 test('should remove alert box when x is clicked successfully', async ({ page }) => {
-    const tagText = 'Twelve';
-    const tagSelector = `text=${tagText}`;
-    // Click on the delete button for the tag
+    const podcastText = 'Twelve';
+    const podcastSelector = `text=${podcastText}`;
+    // Click on the delete button for the podcast
     await page.click('button:has([aria-label="delete"])');
     // Click on the 'OK' button in the confirmation dialog
     await page.click('button:has-text("OK")');
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
     await page.click('.ant-notification-notice-close');
-    // Locate the element that shows 'Tag deleted' message
-    const accountLogin = await page.locator('text=Tag deleted');
+    // Locate the element that shows 'podcast deleted' message
+    const accountLogin = await page.locator('text=podcast deleted');
     // Assert that the 'No data' message is visible
     await expect(accountLogin).not.toBeVisible();
 });
 
 
 test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
-    const tagSelector = 'text=Ten';
-    await page.click(tagSelector);
+    const podcastSelector = 'text=Ten';
+    await page.click(podcastSelector);
     await page.click('button:has-text("Expand")');
     await page.click('button:has-text("Expand")');
     await page.click('button:has-text("Expand")');
@@ -302,18 +295,18 @@ test('when the button is clicked, should scroll to the top of the page', async (
   
 
 
-test('should display tags correctly', async ({ page }) => {
-    // Define the expected tag names
-    const expectedTags = ['New', 'One', 'Two']; // Add more if needed
+test('should display podcasts correctly', async ({ page }) => {
+    // Define the expected podcast names
+    const expectedpodcasts = ['New', 'One', 'Two']; // Add more if needed
 
-    // Loop through each expected tag and check if it's visible on the page
-    for (const tagName of expectedTags) {
-        const tagExists = await page.isVisible(`text=${tagName}`);
+    // Loop through each expected podcast and check if it's visible on the page
+    for (const podcastName of expectedpodcasts) {
+        const podcastExists = await page.isVisible(`text=${podcastName}`);
     }
 });
 
 
-test('should display empty state when no tags are present', async ({ page }) => {
+test('should display empty state when no podcasts are present', async ({ page }) => {
     // Locate the element that represents the empty state image
     const emptyStateMessage = await page.locator('.ant-empty-image');
     // Assert that the empty state image is visible
@@ -322,13 +315,13 @@ test('should display empty state when no tags are present', async ({ page }) => 
 
 
 test('Should find no search results', async ({ page }) => {
-    const tagToSearch = 'Zero';
+    const podcastToSearch = 'Zero';
     const searchInputSelector = '#filters_q';
     // Click the search button
     await page.click('button:has([aria-label="search"])');
     // Enter the search query
-    await page.fill('#filters_q', tagToSearch);
-    page.locator(tagToSearch); 
+    await page.fill('#filters_q', podcastToSearch);
+    page.locator(podcastToSearch); 
     // Press 'Enter' to search
     await page.press(searchInputSelector, 'Enter');
     // Verify that 'No data' is visible
@@ -370,18 +363,18 @@ test('should navigate to the selected page', async ({ page }) => {
 });
 
 
-test('should sort tags from latest to oldest', async ({ page }) => {
+test('should sort podcasts from latest to oldest', async ({ page }) => {
     // Click on the sorting dropdown
     await page.click('#filters_sort', { force: true }); 
     // Click on the option for sorting from latest to oldest
     await page.click('.ant-select-item[title="Latest"]');  
-    // Get the text content of all tags
-    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
+    // Get the text content of all podcasts
+    const podcasts = await page.$$eval('.ant-table-tbody tr', rows => {
         return rows.map(row => row.textContent.trim());
     });
 
-    // Check if tags are sorted from latest to oldest
-    const sortedtags = tags.slice().sort((a, b) => {
+    // Check if podcasts are sorted from latest to oldest
+    const sortedpodcasts = podcasts.slice().sort((a, b) => {
         // Extract timestamp from the row content and compare
         const getTime = str => {
             const match = str.match(/Created At:\s*(.+)/);
@@ -393,25 +386,25 @@ test('should sort tags from latest to oldest', async ({ page }) => {
         return getTime(b) - getTime(a);
     });
 
-    // Check if the tags are in the correct order
-    expect(tags).toEqual(sortedtags);
+    // Check if the podcasts are in the correct order
+    expect(podcasts).toEqual(sortedpodcasts);
 });
 
 
-test('should sort tags from oldest to latest', async ({ page }) => {
+test('should sort podcasts from oldest to latest', async ({ page }) => {
     // Click on the sorting dropdown
     await page.click('#filters_sort', { force: true });
 
     // Click on the option for sorting from oldest to latest
     await page.click('.ant-select-item[title="Old"]');  // Adjust the title as needed if "Old" means oldest
 
-    // Get the text content of all tags
-    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
+    // Get the text content of all podcasts
+    const podcasts = await page.$$eval('.ant-table-tbody tr', rows => {
         return rows.map(row => row.textContent.trim());
     });
 
-    // Check if tags are sorted from oldest to latest
-    const sortedtags = tags.slice().sort((a, b) => {
+    // Check if podcasts are sorted from oldest to latest
+    const sortedpodcasts = podcasts.slice().sort((a, b) => {
         // Extract timestamp from the row content and compare
         const getTime = str => {
             const match = str.match(/Created At:\s*(.+)/);
@@ -423,7 +416,7 @@ test('should sort tags from oldest to latest', async ({ page }) => {
         return getTime(a) - getTime(b); // Sorting in ascending order
     });
 
-    // Check if the tags are in the correct order
-    expect(tags).toEqual(sortedtags);
+    // Check if the podcasts are in the correct order
+    expect(podcasts).toEqual(sortedpodcasts);
 });
 

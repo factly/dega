@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "csrf_token_2d785ea2f6536900108362e9bfff73eef3a32be3921b3abc74b0a990093487c9",
-      "value": "CWfPD/Dwapr56zH6uJMeMdp4tuJFdXmt9azbCwmhMo0=",
+      "value": "jsB70F5DqMOPOVVZ9Wa0I8SMhhXwhZh61I7VRkqHx3o=",
       "domain": "127.0.0.1",
       "path": "/",
-      "expires": 1749713430,
+      "expires": 1749728195,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "ory_kratos_session",
-      "value": "MTcxODE3NzQyOXwwaTJPVlJlSlYtcE05elZ0eUxnWDNLbFlUZUZJNjhReVFVTnB5VWNHMEtUSGpiWlc1ZFNsMGp6cWhlMW1CdUh3UWo1aS0ydW9teXdwMXpMUTVvTUt4Q2k1amZGMWxmTWNoVGRFM2EzUUNxYVV3di1YSmM5VlplZTF0VlhrV016cC1tWkhpNW5Ybmc9PXwWotKKIbFAmQDmCK0njAmJnp248yHA__DQSZlrNJpE8g==",
+      "value": "MTcxODE5MjE5NXxpMlVMd0pOSEdkY3phbDkxSjYwRXAxRFZwSmFQRUYzY295amRvVlFtcFBHT2xvZjlyT1R5emVveDhHbng1NzAwRHJPU2Yzb1BsTkJ4MEwtR1BnY2JKZER6eXdQclAyNEZDd3MyU1l6UVRCUW45dUhCRFU0SDFET3JkNTBnRDc1NVpTNi1ncnlhd1E9PXzh2duxw3H6HPwFoRdLGcnHEZc-d0DrtYx-H3xFNGf3Bw==",
       "domain": "127.0.0.1",
       "path": "/",
-      "expires": 1718263830,
+      "expires": 1718278595,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
