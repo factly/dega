@@ -124,29 +124,38 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   const onSave = (values) => {
+    const finalData = { ...values };
+
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        if (!finalData.hasOwnProperty(key)) {
+          finalData[key] = data[key];
+        }
+      }
+    }
     setShouldBlockNavigation(false);
-    if (values.meta_fields) {
-      values.meta_fields = getJsonValue(values.meta_fields);
+    if (finalData.meta_fields) {
+      finalData.meta_fields = getJsonValue(finalData.meta_fields);
     }
-    values.category_ids = values.categories || [];
-    values.tag_ids = values.tags || [];
-    values.format_id = format.id;
-    values.author_ids = values.authors || [];
-    values.claim_ids = values.claims ? claimOrder : [];
-    values.claim_order = values.claim_ids;
+    finalData.category_ids = finalData.categories || [];
+    finalData.tag_ids = finalData.tags || [];
+    finalData.format_id = format.id;
+    finalData.author_ids = finalData.authors || [];
+    finalData.claim_ids = finalData.claims ? claimOrder : [];
+    finalData.claim_order = finalData.claim_ids;
     // check for claims in the editor output
-    if (hasClaims(values?.description?.json)) {
-      const { claimIds, claimOrder } = extractClaimIdsAndOrder(values.description.json);
-      values.claim_ids = claimIds;
-      values.claim_order = claimOrder;
+    if (hasClaims(finalData?.description?.json)) {
+      const { claimIds, claimOrder } = extractClaimIdsAndOrder(finalData.description.json);
+      finalData.claim_ids = claimIds;
+      finalData.claim_order = claimOrder;
     }
-    values.status = status;
-    values.status === 'publish'
-      ? (values.published_date = values.published_date
-          ? dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+    finalData.status = status;
+    finalData.status === 'publish'
+      ? (finalData.published_date = finalData.published_date
+          ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
           : getCurrentDate())
-      : (values.published_date = null);
-    onCreate(values);
+      : (finalData.published_date = null);
+    onCreate(finalData);
   };
 
   const onTitleChange = (string) => {
