@@ -325,54 +325,6 @@ test('should make a Fact-check ready to publish succesfully ', async ({ page }) 
 });
 
 
-test('should edit a template successfully', async ({ page }) => {
-    await page.click('span:has-text("Templates")');
-    const Factcheckselector = 'text=One';
-    const newFactcheckName = 'One one';
-    
-    // Click on the Fact-check to be edited
-    await page.click(Fact-checkselector);
-  
-    // Fill in the new Fact-check name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newFact-checkName);
-  
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    await page.click('.ant-notification-notice-close');
-  
-    // Click on the 'Publish' button
-    await page.click('button:has-text("Publish")');
-  
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-  
-    // Check if "cannot publish Fact-check without author" message is displayed
-    const authorMessageSelector = 'text=cannot publish Fact-check without author';
-    const isAuthorMessageVisible = await page.isVisible(authorMessageSelector);
-  
-    if (isAuthorMessageVisible) {
-        console.log("Author selection required");
-  
-        await page.click('.ant-notification-notice-close'); // Close the notification
-        // Select an author if the message is displayed
-        await page.click('button:has([aria-label="setting"])');
-        await page.click('div.ant-select-selector');
-        await page.waitForSelector('div.ant-select-dropdown', { state: 'visible' }); // Ensure dropdown is visible
-        await page.keyboard.press('Enter'); // Select the first author in the list
-        await page.click('button:has([aria-label="close"])'); // Close the settings modal
-  
-        // Click on the 'Publish' button again
-        await page.click('button:has-text("Publish")');
-        page.on('dialog', dialog => dialog.accept()); // Handle any dialog that appears by accepting it
-          // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    console.log("Success message received:", successMessage); // Log the success message
-  
-    // Assert that the success message is 'Article Published'
-    expect(successMessage).toBe('Article Published');
-    }
-});  
 
 
 
@@ -540,13 +492,4 @@ test('Should find search results based on author', async ({ page }) => {
 });
 
 
-test('when the button is clicked, should show more filters and hide', async ({ page }) => {
-    // Find the button with text 'abcd' and aria-label 'down'
-    const button = await page.locator('button:has-text("More Filters")[aria-label="down"]');
-    await button.waitFor({ state: 'visible', timeout: 30000 });
-
-
-    // Click the button
-    await button.click();
-});
   

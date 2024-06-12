@@ -14,7 +14,6 @@ function getRandomString(length) {
 
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
-    test.setTimeout(90000)
     // Navigate to the login page
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
     // Fill in the email and password fields
@@ -76,25 +75,32 @@ test('should persist tag data across sessions', async ({ page, context }) => {
 test('should display "Please enter name!" successfully, when the name input field is empty', async ({ page }) => {
     test.setTimeout(90000)
     // Click on the 'Create' button
+    console.log("Clicking 'Create' button...");
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
+    console.log("Clicking 'Expand' button...");
     await page.click('button:has-text("Expand")');
     // Type the new tag name into the input field
     const tagName = 'This is a test tag';
+    console.log("Typing tag name...");
     await page.type('#create-tag_name', tagName);
     // Get the length of the typed text
     const deletePressCount = tagName.length;
+    console.log(`Deleting ${deletePressCount} characters...`);
     // Press the Backspace key multiple times
     for (let i = 0; i < deletePressCount; i++) {
         await page.keyboard.press('Backspace');
     }
     // Click on the 'Save' button
+    console.log("Clicking 'Save' button...");
     await page.click('button:has-text("Save")');
     // Wait for the error message to appear
+    console.log("Waiting for error message...");
     await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
     // Get the error message text
     const errorMessage = await page.textContent('.ant-form-item-explain-error');
     // Assert that the success message is 'Please enter name!'
+    console.log("Asserting the error message...");
     expect(errorMessage).toBe('Please enter name!');
 });
 
@@ -130,7 +136,7 @@ test('should create tag successfully', async ({ page }) => {
 
 
 test('should delete tag successfully', async ({ page }) => {
-    const tagText = 'Ten';
+    const tagText = 'Two';
     const nextButtonSelector = 'button:has([aria-label="right"])';
     let tagFound = false;
     while (true) {
@@ -164,6 +170,8 @@ test('should delete tag successfully', async ({ page }) => {
         }
         // Click the "Next" button to go to the next page
         await page.click(nextButtonSelector);
+        // Wait for the next page to load (adjust the selector as needed)
+        await page.waitForSelector(rowSelector, { state: 'attached' });
     }
     // Assert that the tag was found and deleted
     expect(tagFound).toBe(true);
@@ -196,6 +204,7 @@ test('should edit a tag successfully', async ({ page }) => {
             pageIndex++;
         }
     }
+
     // Click on the tag to be edited
     await page.click(tagSelector);
     // Click on the 'Expand' button
@@ -275,7 +284,7 @@ test('should remove alert box when x is clicked successfully', async ({ page }) 
 
 
 test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
-    const tagSelector = 'text=Nine';
+    const tagSelector = 'text=Ten';
     await page.click(tagSelector);
     await page.click('button:has-text("Expand")');
     await page.click('button:has-text("Expand")');
@@ -303,7 +312,7 @@ test('should display tags correctly', async ({ page }) => {
     }
 });
 
-//Perform this test case when there are no tags present
+
 test('should display empty state when no tags are present', async ({ page }) => {
     // Locate the element that represents the empty state image
     const emptyStateMessage = await page.locator('.ant-empty-image');
@@ -331,32 +340,37 @@ test('Should find no search results', async ({ page }) => {
 test('should navigate to the next page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
+    await page.waitForNavigation();
     // Verify that the URL contains 'page=2'
     expect(page.url()).toContain('page=2');
 });
 
 
-test.only('should navigate to the previous page', async ({ page }) => {
+test('should navigate to the previous page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
+    await page.waitForNavigation();
     // Click the button to navigate back to the previous page
     await page.click('button:has([aria-label="left"])');
+    await page.waitForNavigation();
     // Verify that the URL contains 'page=1'
     expect(page.url()).toContain('page=1');
 });
 
 
-test.only('should navigate to the selected page', async ({ page }) => {
+test('should navigate to the selected page', async ({ page }) => {
     const pageNumber = 2; // You can set this to any number dynamically
   
     // Click the button to navigate to the next page
-    await page.click(`.ant-pagination-item-${pageNumber}`);  
+    await page.click(`.ant-pagination-item-${pageNumber}`);
+    await page.waitForNavigation();
+  
     // Verify that the URL contains 'page=2'
     expect(page.url()).toContain(`page=${pageNumber}`);
 });
 
 
-test.only('should sort tags from latest to oldest', async ({ page }) => {
+test('should sort tags from latest to oldest', async ({ page }) => {
     // Click on the sorting dropdown
     await page.click('#filters_sort', { force: true }); 
     // Click on the option for sorting from latest to oldest
@@ -384,7 +398,7 @@ test.only('should sort tags from latest to oldest', async ({ page }) => {
 });
 
 
-test.only('should sort tags from oldest to latest', async ({ page }) => {
+test('should sort tags from oldest to latest', async ({ page }) => {
     // Click on the sorting dropdown
     await page.click('#filters_sort', { force: true });
 
