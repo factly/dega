@@ -537,7 +537,6 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	}
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
-		"kind":           "post",
 		"title":          result.Title,
 		"subtitle":       result.Subtitle,
 		"slug":           result.Slug,
@@ -561,7 +560,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		_ = meilisearchx.AddDocument(util.IndexPosts.String(), meiliObj)
 	}
 
 	tx.Commit()

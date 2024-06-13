@@ -193,7 +193,7 @@ func (cs claimantService) List(sID uint, offset int, limit int, all, searchQuery
 			filters := fmt.Sprint("space_id=", sID)
 			var hits []interface{}
 
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claimant")
+			hits, err = meilisearchx.SearchWithQuery(util.IndexClaimants.String(), searchQuery, filters)
 			if err != nil {
 				loggerx.Error(err)
 				return result, errorx.Parser(errorx.NetworkError())

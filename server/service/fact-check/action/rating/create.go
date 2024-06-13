@@ -80,16 +80,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 func insertIntoMeili(rating model.Rating) error {
 	meiliObj := map[string]interface{}{
-		"id":                rating.ID,
-		"kind":              "rating",
-		"name":              rating.Name,
-		"background_colour": rating.BackgroundColour,
-		"text_colour":       rating.TextColour,
-		"slug":              rating.Slug,
-		"description":       rating.Description,
-		"numeric_value":     rating.NumericValue,
-		"space_id":          rating.SpaceID,
+		"id":            rating.ID,
+		"name":          rating.Name,
+		"slug":          rating.Slug,
+		"description":   rating.Description,
+		"numeric_value": rating.NumericValue,
+		"space_id":      rating.SpaceID,
 	}
 
-	return meilisearchx.AddDocument("dega", meiliObj)
+	return meilisearchx.AddDocument(util.IndexClaimants.String(), meiliObj)
 }
