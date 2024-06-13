@@ -31,7 +31,7 @@ type page struct {
 	FooterCode       string         `json:"footer_code"`
 	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 	DescriptionAMP   string         `json:"description_amp"`
-	MigrationID      *uint          `json:"migration_id"`
+	MigrationID      *string          `json:"migration_id"`
 	MigratedHTML     string         `json:"migrated_html"`
 	SpaceID          uint           `json:"space_id"`
 	CategoryIDs      []uint         `json:"category_ids"`
