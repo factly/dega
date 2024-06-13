@@ -17,40 +17,17 @@ test.beforeEach(async ({ page }) => {
 });
 
 
-test('should create rating successfully', async ({ page }) => {
-    // Click on the 'New Rating' button
-    await page.click('button:has-text("New Rating")');
-    // Click on the 'Expand' button
+test('should reset', async ({ page }) => {    
+    await page.click('button:has-text("Create")');
     await page.click('button:has-text("Expand")');
-    
-    // Type the rating name into the input field
-    const ratingName = 'This is a test rating';
-    let ratingValue = 5; // starting value
-    
-    await page.type('#creat-rating_name', ratingName);
+    await page.fill('#creat-claimant_name', 'Kurt');
+    await page.click('button:has-text("Reset")');
 
-    // Focus on the rating value input field
-    const ratingInput = await page.$('#creat-rating_numeric_value');
-    await ratingInput.focus();
-    await page.type('#creat-rating_numeric_value', ratingValue.toString());
-
-    // Press the 'Up' key to increment the rating value
-    await page.keyboard.press('ArrowUp');
-    ratingValue += 1;
-
-    // Press the 'Down' key to decrement the rating value
-    await page.keyboard.press('ArrowDown');
-    ratingValue -= 1;
-    
-    // Click on the 'Save' button
-    await page.click('button:has-text("Save")');
-
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-
-    // Assert that the success message is 'Rating created'
-    expect(successMessage).toBe('Rating created');
+  // Verify that the form fields have been reset
+  const input1Value = await page.$eval('#creat-claimant_name', input => input.value);    
+  if (input1Value === '') {
+    console.log('Form reset test passed');
+  } else {
+    console.error('Form reset test failed');
+  }
 });

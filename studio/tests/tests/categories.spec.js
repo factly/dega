@@ -243,6 +243,17 @@ test('should navigate to the previous page', async ({ page }) => {
 });
 
 
+test('should navigate to the selected page', async ({ page }) => {
+    const pageNumber = 2; // You can set this to any number dynamically
+  
+    // Click the button to navigate to the next page
+    await page.click(`.ant-pagination-item-${pageNumber}`);  
+    // Verify that the URL contains 'page=2'
+    expect(page.url()).toContain(`page=${pageNumber}`);
+});
+
+
+
 test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
     const categorySelector = 'text=Other';
     await page.click(categorySelector);

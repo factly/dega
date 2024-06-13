@@ -1,7 +1,6 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 
-
 // Helper function to generate a random string using JavaScript's Math.random
 function getRandomString(length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -11,6 +10,7 @@ function getRandomString(length) {
     }
     return result;
 }
+
 
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
@@ -32,10 +32,8 @@ test.beforeEach(async ({ page }) => {
 test('should stay logged in using stored cookies', async ({ page }) => {
     // Load session cookies from the file
     await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
-
     // Navigate to a page that requires login
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
-
     // Verify the user is still logged in
     expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
 });
@@ -104,30 +102,24 @@ test('should create tag successfully', async ({ page }) => {
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
-
     // Generate a random string
     const randomString = getRandomString(10); // Adjust the length as needed
-
     // Type the new tag name with the random string into the input field
     const tagName = `This is a test tag ${randomString}`;
     await page.type('#create-tag_name', tagName);
-
     // Click on the 'Save' button
     await page.click('button:has-text("Save")');
-
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
-
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-
     // Assert that the success message is 'Tag created'
     expect(successMessage).toBe('Tag created');
 });
 
 
 test('should delete tag successfully', async ({ page }) => {
-    const tagText = 'Ten';
+    const tagText = 'Nine';
     const nextButtonSelector = 'button:has([aria-label="right"])';
     let tagFound = false;
     while (true) {
@@ -168,24 +160,20 @@ test('should delete tag successfully', async ({ page }) => {
 
 
 test('should edit a tag successfully', async ({ page }) => {
-
     // Generate a random string
     const randomString = getRandomString(10); // Adjust the length as needed
     const tagSelector = 'text=Six';
     const newTagName =  `This is a test tag ${randomString}`;;
     let tagFound = false;
     let pageIndex = 1;
-
     // Function to check if the tag is on the current page
     const isTagVisible = async () => {
         const tagElements = await page.$$(tagSelector);
         return tagElements.length > 0;
     };
-
     // Loop through pages until the tag is found
     while (!tagFound) {
         tagFound = await isTagVisible();
-
         if (!tagFound) {
             // Click the next page button (assuming there's a next page button with the text 'Next')
             await page.click('button:has([aria-label="right"])');
@@ -293,12 +281,12 @@ test('when the button is clicked, should scroll to the top of the page', async (
 test('should display tags correctly', async ({ page }) => {
     // Define the expected tag names
     const expectedTags = ['New', 'One', 'Two']; // Add more if needed
-
     // Loop through each expected tag and check if it's visible on the page
     for (const tagName of expectedTags) {
         const tagExists = await page.isVisible(`text=${tagName}`);
     }
 });
+
 
 //Perform this test case only when there are no tags present
 test('should display empty state when no tags are present', async ({ page }) => {
@@ -343,9 +331,8 @@ test('should navigate to the previous page', async ({ page }) => {
 });
 
 
-test.only('should navigate to the selected page', async ({ page }) => {
+test('should navigate to the selected page', async ({ page }) => {
     const pageNumber = 2; // You can set this to any number dynamically
-  
     // Click the button to navigate to the next page
     await page.click(`.ant-pagination-item-${pageNumber}`);  
     // Verify that the URL contains 'page=2'
@@ -362,7 +349,6 @@ test('should sort tags from latest to oldest', async ({ page }) => {
     const tags = await page.$$eval('.ant-table-tbody tr', rows => {
         return rows.map(row => row.textContent.trim());
     });
-
     // Check if tags are sorted from latest to oldest
     const sortedtags = tags.slice().sort((a, b) => {
         // Extract timestamp from the row content and compare
@@ -375,7 +361,6 @@ test('should sort tags from latest to oldest', async ({ page }) => {
         };
         return getTime(b) - getTime(a);
     });
-
     // Check if the tags are in the correct order
     expect(tags).toEqual(sortedtags);
 });
@@ -384,15 +369,12 @@ test('should sort tags from latest to oldest', async ({ page }) => {
 test('should sort tags from oldest to latest', async ({ page }) => {
     // Click on the sorting dropdown
     await page.click('#filters_sort', { force: true });
-
     // Click on the option for sorting from oldest to latest
     await page.click('.ant-select-item[title="Old"]');  // Adjust the title as needed if "Old" means oldest
-
     // Get the text content of all tags
     const tags = await page.$$eval('.ant-table-tbody tr', rows => {
         return rows.map(row => row.textContent.trim());
     });
-
     // Check if tags are sorted from oldest to latest
     const sortedtags = tags.slice().sort((a, b) => {
         // Extract timestamp from the row content and compare
@@ -405,7 +387,6 @@ test('should sort tags from oldest to latest', async ({ page }) => {
         };
         return getTime(a) - getTime(b); // Sorting in ascending order
     });
-
     // Check if the tags are in the correct order
     expect(tags).toEqual(sortedtags);
 });
