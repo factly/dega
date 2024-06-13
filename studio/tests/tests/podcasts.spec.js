@@ -1,7 +1,6 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 
-
 // Helper function to generate a random string using JavaScript's Math.random
 function getRandomString(length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -14,6 +13,7 @@ function getRandomString(length) {
 
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
+    test.setTimeout(90000)
     // Navigate to the login page
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
     // Fill in the email and password fields
@@ -31,10 +31,8 @@ test.beforeEach(async ({ page }) => {
 test('should stay logged in using stored cookies', async ({ page }) => {
     // Load session cookies from the file
     await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
-
     // Navigate to a page that requires login
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
-
     // Verify the user is still logged in
     expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
 });
@@ -43,8 +41,8 @@ test('should stay logged in using stored cookies', async ({ page }) => {
 test('should load the podcasts page successfully', async ({ page }) => {
     // Locate the header element with the text 'podcasts'
     const accountLogin = await page.locator('h3')
-    // Assert that the header has the text 'podcasts'
-    await expect(accountLogin).toHaveText('podcasts')
+    // Assert that the header has the text 'Podcasts'
+    await expect(accountLogin).toHaveText('Podcasts')
 });
 
 
@@ -98,31 +96,24 @@ test('should display "Please enter title!" successfully, when the name input fie
 });
 
 
-test('should create podcast successfully', async ({ page }) => {
+test('should create a podcast successfully', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
-
     // Generate a random string
     const randomString = getRandomString(10); // Adjust the length as needed
-
     // Type the new podcast name with the random string into the input field
     const podcastName = `This is a test podcast ${randomString}`;
     await page.type('#create-category_title', podcastName);
-
     // Click on the 'Save' button
     await page.click('button:has-text("Save")');
-
     // Check if the podcast is visible
     await page.isVisible(`text=${podcastName}`);
-
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
-
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-
     // Assert that the success message is 'Podcast added'
     expect(successMessage).toBe('Podcast added');
 });
@@ -170,53 +161,52 @@ test('should delete podcast successfully', async ({ page }) => {
     expect(podcastFound).toBe(true);
 });
 
-//Cannot edit the podcast for now
-// test('should edit a podcast successfully', async ({ page }) => {
+test('should edit a podcast successfully', async ({ page }) => {
 
-//     // Generate a random string
-//     const randomString = getRandomString(10); // Adjust the length as needed
-//     const podcastSelector = 'text=Six';
-//     const newpodcastName =  `This is a test podcast ${randomString}`;;
-//     let podcastFound = false;
-//     let pageIndex = 1;
+    // Generate a random string
+    const randomString = getRandomString(10); // Adjust the length as needed
+    const podcastSelector = 'text=Six';
+    const newpodcastName =  `This is a test podcast ${randomString}`;;
+    let podcastFound = false;
+    let pageIndex = 1;
 
-//     // Function to check if the podcast is on the current page
-//     const ispodcastVisible = async () => {
-//         const podcastElements = await page.$$(podcastSelector);
-//         return podcastElements.length > 0;
-//     };
+    // Function to check if the podcast is on the current page
+    const ispodcastVisible = async () => {
+        const podcastElements = await page.$$(podcastSelector);
+        return podcastElements.length > 0;
+    };
 
-//     // Loop through pages until the podcast is found
-//     while (!podcastFound) {
-//         podcastFound = await ispodcastVisible();
+    // Loop through pages until the podcast is found
+    while (!podcastFound) {
+        podcastFound = await ispodcastVisible();
 
-//         if (!podcastFound) {
-//             // Click the next page button (assuming there's a next page button with the text 'Next')
-//             await page.click('button:has([aria-label="right"])');
-//             await page.waitForTimeout(1000); // Wait for the next page to load
-//             pageIndex++;
-//         }
-//     }
+        if (!podcastFound) {
+            // Click the next page button (assuming there's a next page button with the text 'Next')
+            await page.click('button:has([aria-label="right"])');
+            await page.waitForTimeout(1000); // Wait for the next page to load
+            pageIndex++;
+        }
+    }
 
-//     // Click on the podcast to be edited
-//     await page.click(podcastSelector);
-//     // Click on the 'Expand' button
-//     await page.click('button:has-text("Expand")');
-//     // Fill in the new podcast name
-//     const inputSelector = '#create-podcast_name';
-//     await page.fill(inputSelector, newpodcastName);
-//     // Click on the 'Update' button
-//     await page.click('button:has-text("Update")');
-//     // Check if the podcast name has been updated
-//     const updatedpodcast = await page.textContent(`text=${newpodcastName}`);
-//     expect(updatedpodcast).toBe(newpodcastName);
-//     // Handle any dialog that appears by accepting it
-//     page.on('dialog', dialog => dialog.accept());
-//     // Get the success message text
-//     const successMessage = await page.textContent('.ant-notification-notice-description');
-//     // Assert that the success message is 'podcast updated'
-//     expect(successMessage).toBe('podcast updated');
-// });
+    // Click on the podcast to be edited
+    await page.click(podcastSelector);
+    // Click on the 'Expand' button
+    await page.click('button:has-text("Expand")');
+    // Fill in the new podcast name
+    const inputSelector = '#create-podcast_name';
+    await page.fill(inputSelector, newpodcastName);
+    // Click on the 'Update' button
+    await page.click('button:has-text("Update")');
+    // Check if the podcast name has been updated
+    const updatedpodcast = await page.textContent(`text=${newpodcastName}`);
+    expect(updatedpodcast).toBe(newpodcastName);
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'podcast updated'
+    expect(successMessage).toBe('podcast updated');
+});
 
 
 test('Should find search results', async ({ page }) => {

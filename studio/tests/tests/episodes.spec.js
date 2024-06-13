@@ -1,7 +1,6 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 
-
 // Helper function to generate a random string using JavaScript's Math.random
 function getRandomString(length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -32,10 +31,8 @@ test.beforeEach(async ({ page }) => {
 test('should stay logged in using stored cookies', async ({ page }) => {
     // Load session cookies from the file
     await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
-
     // Navigate to a page that requires login
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
-
     // Verify the user is still logged in
     expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
 });
@@ -97,31 +94,24 @@ test('should display "Please enter title!" successfully, when the name input fie
 });
 
 
-test('should create episode successfully', async ({ page }) => {
+test('should create a episode successfully', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
-
     // Generate a random string
     const randomString = getRandomString(10); // Adjust the length as needed
-
     // Type the new episode name with the random string into the input field
     const episodeName = `This is a test episode ${randomString}`;
-    await page.type('#create-episode_name', episodeName);
-
+    await page.type('#create-category_title', episodeName);
     // Click on the 'Save' button
     await page.click('button:has-text("Save")');
-
     // Check if the episode is visible
     await page.isVisible(`text=${episodeName}`);
-
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
-
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-
     // Assert that the success message is 'episode created'
     expect(successMessage).toBe('episode created');
 });
@@ -171,7 +161,6 @@ test('should delete episode successfully', async ({ page }) => {
 
 
 test('should edit a episode successfully', async ({ page }) => {
-
     // Generate a random string
     const randomString = getRandomString(10); // Adjust the length as needed
     const episodeselector = 'text=Six';
@@ -184,7 +173,6 @@ test('should edit a episode successfully', async ({ page }) => {
         const episodeElements = await page.$$(episodeselector);
         return episodeElements.length > 0;
     };
-
     // Loop through pages until the episode is found
     while (!episodeFound) {
         episodeFound = await isepisodeVisible();
@@ -196,7 +184,6 @@ test('should edit a episode successfully', async ({ page }) => {
             pageIndex++;
         }
     }
-
     // Click on the episode to be edited
     await page.click(episodeSelector);
     // Click on the 'Expand' button
@@ -231,6 +218,44 @@ test('Should find search results', async ({ page }) => {
     // Verify that the episode is visible in the results
     const episodeExists = await page.isVisible(`text=${episodeToSearch}`);
 });
+
+
+test('Should find no search results', async ({ page }) => {
+    const episodeToSearch = 'Zero';
+    const searchInputSelector = '#filters_q';
+    // Click the search button
+    await page.click('button:has([aria-label="search"])');
+    // Enter the search query
+    await page.fill('#filters_q', episodeToSearch);
+    page.locator(episodeToSearch); 
+    // Press 'Enter' to search
+    await page.press(searchInputSelector, 'Enter');
+    // Verify that 'No data' is visible
+    const accountLogin = await page.locator('text=No data');
+    await expect(accountLogin).toBeVisible();
+});
+
+
+
+test('Should find search results based on podcasts', async ({ page }) => {
+    // Locate the specific dropdown using a more specific selector
+    const dropdownContainerSelector = '.ant-form-item-control-input-content';
+    const dropdownSelector = `${dropdownContainerSelector} .ant-select-selector`;
+    // Click on the dropdown to open it
+    await page.locator(dropdownSelector).first().click();
+    // Select the option "Seven" from the dropdown
+    const optionSelector = '.ant-select-item-option[title="Seven"]';
+    await page.locator(optionSelector).click();
+    await page.press(dropdownContainerSelector, 'Enter');
+    // Wait for all the search results to be visible
+    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
+    const results = page.locator(resultsSelector);
+    const count = await results.count();
+    for (let i = 0; i < count; i++) {
+      await expect(results.nth(i)).toBeVisible();
+    }  
+});
+
 
 
 test('should display "episode already exists" successfully', async ({ page }) => {
@@ -294,17 +319,6 @@ test('when the button is clicked, should scroll to the top of the page', async (
   
 
 
-test('should display episodes correctly', async ({ page }) => {
-    // Define the expected episode names
-    const expectedepisodes = ['New', 'One', 'Two']; // Add more if needed
-
-    // Loop through each expected episode and check if it's visible on the page
-    for (const episodeName of expectedepisodes) {
-        const episodeExists = await page.isVisible(`text=${episodeName}`);
-    }
-});
-
-
 test('should display empty state when no episodes are present', async ({ page }) => {
     // Locate the element that represents the empty state image
     const emptyStateMessage = await page.locator('.ant-empty-image');
@@ -313,26 +327,9 @@ test('should display empty state when no episodes are present', async ({ page })
 });
 
 
-test('Should find no search results', async ({ page }) => {
-    const episodeToSearch = 'Zero';
-    const searchInputSelector = '#filters_q';
-    // Click the search button
-    await page.click('button:has([aria-label="search"])');
-    // Enter the search query
-    await page.fill('#filters_q', episodeToSearch);
-    page.locator(episodeToSearch); 
-    // Press 'Enter' to search
-    await page.press(searchInputSelector, 'Enter');
-    // Verify that 'No data' is visible
-    const accountLogin = await page.locator('text=No data');
-    await expect(accountLogin).toBeVisible();
-});
-
-
 test('should navigate to the next page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
-    await page.waitForNavigation();
     // Verify that the URL contains 'page=2'
     expect(page.url()).toContain('page=2');
 });
@@ -341,10 +338,8 @@ test('should navigate to the next page', async ({ page }) => {
 test('should navigate to the previous page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
-    await page.waitForNavigation();
     // Click the button to navigate back to the previous page
     await page.click('button:has([aria-label="left"])');
-    await page.waitForNavigation();
     // Verify that the URL contains 'page=1'
     expect(page.url()).toContain('page=1');
 });
@@ -352,11 +347,8 @@ test('should navigate to the previous page', async ({ page }) => {
 
 test('should navigate to the selected page', async ({ page }) => {
     const pageNumber = 2; // You can set this to any number dynamically
-  
     // Click the button to navigate to the next page
     await page.click(`.ant-pagination-item-${pageNumber}`);
-    await page.waitForNavigation();
-  
     // Verify that the URL contains 'page=2'
     expect(page.url()).toContain(`page=${pageNumber}`);
 });
@@ -371,7 +363,6 @@ test('should sort episodes from latest to oldest', async ({ page }) => {
     const episodes = await page.$$eval('.ant-table-tbody tr', rows => {
         return rows.map(row => row.textContent.trim());
     });
-
     // Check if episodes are sorted from latest to oldest
     const sortedepisodes = episodes.slice().sort((a, b) => {
         // Extract timestamp from the row content and compare
@@ -384,7 +375,6 @@ test('should sort episodes from latest to oldest', async ({ page }) => {
         };
         return getTime(b) - getTime(a);
     });
-
     // Check if the episodes are in the correct order
     expect(episodes).toEqual(sortedepisodes);
 });
@@ -401,7 +391,6 @@ test('should sort episodes from oldest to latest', async ({ page }) => {
     const episodes = await page.$$eval('.ant-table-tbody tr', rows => {
         return rows.map(row => row.textContent.trim());
     });
-
     // Check if episodes are sorted from oldest to latest
     const sortedepisodes = episodes.slice().sort((a, b) => {
         // Extract timestamp from the row content and compare
@@ -414,7 +403,6 @@ test('should sort episodes from oldest to latest', async ({ page }) => {
         };
         return getTime(a) - getTime(b); // Sorting in ascending order
     });
-
     // Check if the episodes are in the correct order
     expect(episodes).toEqual(sortedepisodes);
 });

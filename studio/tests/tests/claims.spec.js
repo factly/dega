@@ -225,15 +225,13 @@ test('Should find search results based on claimant', async ({ page }) => {
     const optionSelector = '.ant-select-item-option[title="Seven"]';
     await page.locator(optionSelector).click();
     await page.press(dropdownContainerSelector, 'Enter');
-  
     // Wait for all the search results to be visible
     const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
     const results = page.locator(resultsSelector);
     const count = await results.count();
     for (let i = 0; i < count; i++) {
       await expect(results.nth(i)).toBeVisible();
-    }
-  
+    }  
 });
 
 
