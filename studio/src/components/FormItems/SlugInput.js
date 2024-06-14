@@ -7,7 +7,6 @@ const SlugInput = ({ onChange, inputProps, formItemProps }) => {
   return (
     <Form.Item
       name="slug"
-      label="Slug"
       rules={[
         {
           required: true,
@@ -20,6 +19,7 @@ const SlugInput = ({ onChange, inputProps, formItemProps }) => {
       ]}
       {...formItemProps}
     >
+      <label>Slug</label>
       <Input {...inputProps} />
     </Form.Item>
   );

@@ -102,7 +102,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     setClaimCreatedFlag(false);
   }
 
-  useEffect(() => {}, [details, loading]);
+  useEffect(() => { }, [details, loading]);
 
   const [drawerVisible, setDrawerVisible] = useState(false);
   const showDrawer = () => {
@@ -143,8 +143,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.status = status;
     values.status === 'publish'
       ? (values.published_date = values.published_date
-          ? dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
-          : getCurrentDate())
+        ? dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+        : getCurrentDate())
       : (values.published_date = null);
     onCreate(values);
   };
@@ -308,8 +308,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 </p>
               ) : null}
               {form.getFieldValue('claims') &&
-              form.getFieldValue('claims').length > 0 &&
-              !loading ? (
+                form.getFieldValue('claims').length > 0 &&
+                !loading ? (
                 <Form.Item name="claimOrder">
                   <ClaimList
                     ids={form.getFieldValue('claims')}
@@ -327,7 +327,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 initialValue={data.description_html}
               />
               <Drawer
-                title={<h4 style={{ fontWeight: 'bold' }}>Post Settings</h4>}
+                title={<h4 style={{ fontWeight: 'bold', marginTop: "0.5rem" }}>Post Settings</h4>}
                 placement="right"
                 closable={true}
                 onClose={onClose}
@@ -338,8 +338,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 <Form.Item name="featured_medium_id" label="Featured Image">
                   <MediaSelector />
                 </Form.Item>
-                <Form.Item name="claims" label="Claims" key={!visible}>
-                  <Selector mode="multiple" display={'claim'} action="Claims" />
+                <Form.Item name="claims" key={!visible}>
+                  <label>Claims</label>
+                  <Selector mode="multiple" display={'claim'} action="Claims" style={{ width: '100%', marginTop: "0.5rem" }} />
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" onClick={showModal}>
@@ -348,26 +349,32 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
                 <Form.Item
                   name="excerpt"
-                  label="Excerpt"
                   rules={[{ max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' }]}
                 >
-                  <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
+                  <label>Excerpt</label>
+                  <Input.TextArea rows={4} placeholder="Excerpt"
+                  style={{ width: '100%', marginTop: "0.5rem", fontSize: 'medium' }} />
                 </Form.Item>
-                <Form.Item name="subtitle" label="Subtitle">
-                  <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
+                <Form.Item name="subtitle">
+                  <label>Subtitle</label>
+                  <Input placeholder="Subtitle" style={{ width: '100%', marginTop: "0.5rem", fontSize: 'medium' }}  />
                 </Form.Item>
-                <SlugInput />
-                <Form.Item name="published_date" label="Published Date">
-                  <DatePicker />
+                <SlugInput  style={{ width: '100%', marginTop: "0.5rem", fontSize: 'medium' }}/>
+                <Form.Item name="published_date" >
+                  <label>Publish Date</label>
+                  <DatePicker style={{ width: '100%', marginTop: "0.5rem", fontSize: 'medium' }} />
                 </Form.Item>
-                <Form.Item name="categories" label="Categories">
-                  <Selector mode="multiple" action="Categories" createEntity="Category" />
+                <Form.Item name="categories">
+                  <label>Categories</label>
+                  <Selector mode="multiple" action="Categories" createEntity="Category" style={{ width: '100%', marginTop: "0.5rem", fontSize: 'medium' }} />
                 </Form.Item>
-                <Form.Item name="tags" label="Tags">
-                  <Selector mode="multiple" action="Tags" createEntity="Tag" />
+                <Form.Item name="tags">
+                  <label>Tags</label>
+                  <Selector mode="multiple" action="Tags" createEntity="Tag" style={{ width: '100%', marginTop: "0.5rem", fontSize: 'medium' }} />
                 </Form.Item>
-                <Form.Item name="authors" label="Authors">
-                  <Selector mode="multiple" display={'display_name'} action="Authors" />
+                <Form.Item name="authors">
+                  <label>Authors</label>
+                  <Selector mode="multiple" display={'display_name'} action="Authors" style={{ width: '100%', marginTop: "0.5rem", fontSize: 'medium' }} />
                 </Form.Item>
                 <Form.Item>
                   <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>

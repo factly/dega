@@ -158,15 +158,20 @@ function Episodes({ permission }) {
                 </Col>
                 <Col>
                   {searchFieldExpand ? (
-                    <Row>
-                      <Form.Item name="q">
-                        <Input placeholder="Search podcasts" />
-                      </Form.Item>
-                      <Form.Item>
-                        <Button htmlType="submit" icon={<SearchOutlined />}>
-                          Search
-                        </Button>
-                      </Form.Item>
+                    <Row gutter={8}>
+                      <Col>
+                        <Form.Item name="q">
+                          <Input placeholder="Search episodes" />
+                          {/**/}
+                        </Form.Item>
+                      </Col>
+                      <Col>
+                        <Form.Item>
+                          <Button htmlType="submit" icon={<SearchOutlined />}>
+                            Search
+                          </Button>
+                        </Form.Item>
+                      </Col>
                     </Row>
                   ) : (
                     <Tooltip title="search">
@@ -174,11 +179,8 @@ function Episodes({ permission }) {
                         shape="circle"
                         // style={{ border: 'none' }}
                         type="text"
-                        onFocus={() => {
+                        onClick={() => {
                           setSearchFieldExpand(true);
-                          setTimeout(() => {
-                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
-                          }, 10000);
                         }}
                         icon={<SearchOutlined />}
                       />
@@ -196,7 +198,7 @@ function Episodes({ permission }) {
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
                         icon={<PlusOutlined />}
-                        style={{ marginBottom: 16 }}
+                        style={{ margin: isMobileScreen ? '16px 0' : '0 0 16px 0' }}
                       >
                         Create
                       </Button>

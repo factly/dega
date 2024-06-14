@@ -180,7 +180,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 icon={<ThreeDotIcon style={{ color: '#858585' }} />}
                 onClick={(e) => {
                   e.stopPropagation();
-                  alert('this do nothing');
+                  // alert('this do nothing');
                 }}
               /> */}
             </div>

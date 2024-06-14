@@ -591,7 +591,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 </Form>
               </Drawer>
               <Drawer
-                title={<h4 style={{ fontWeight: 'bold' }}>Code Injection</h4>}
+                title={<h4 style={{ fontWeight: 'bold',paddingTop: '0.4rem' }}>Code Injection</h4>}
                 placement="right"
                 closable={true}
                 onClose={onClose}
@@ -617,7 +617,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 </Form>
               </Drawer>
               <Drawer
-                title={<h4 style={{ fontWeight: 'bold' }}>Meta Fields</h4>}
+                title={<h4 style={{ fontWeight: 'bold', paddingTop: '0.4rem' }}>Meta Fields</h4>}
                 placement="right"
                 closable={true}
                 onClose={onClose}
@@ -644,12 +644,12 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 </Form>
               </Drawer>
               <Drawer
-                title={<h4 style={{ fontWeight: 'bold' }}>Seo Data</h4>}
+                title={<h4 style={{ fontWeight: 'bold', paddingTop: '0.4rem' }}>Seo Data</h4>}
                 placement="right"
                 style={{ width: '100%' }}
                 closable={true}
                 onClose={() => setSeoDrawerVisible(false)}
-                visible={seoDrawer}
+                open={seoDrawer}
                 //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
                 width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
