@@ -93,20 +93,53 @@ test('should display "Please input the Claim!" successfully, when the respective
     const errorMessage = await page.textContent('.ant-form-item-explain-error');
     // Assert that the success message is 'Please input the Claim!'
     expect(errorMessage).toBe('Please input the Claim!');
-//     // Get the error message text
-//     const errorMessage1 = await page.textContent('.ant-form-item-explain-error').nth(1);
-//     expect(errorMessage1).toBe('Please input the claimant!');
-//     // Get the error message text
-//     const errorMessage2 = await page.textContent('.ant-form-item-explain-error').nth(2);
-//     expect(errorMessage2).toBe('Please input the rating!');
 });
 
-
-test('should create claim successfully', async ({ page }) => {
+test('should display "Please add claimant!" successfully, when the claimant input fields are empty', async ({ page }) => {
+    test.setTimeout(90000)
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
+    // Type the new claim name into the input field
+    const claimName = 'Th';
+    await page.type('#create-claim_claim', claimName);
+    // Click on the 'Submit' button
+    await page.click('button:has-text("Submit")');
+    // Wait for the error message to appear
+    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
+    // Get the error message text
+    const errorMessage = await page.textContent('.ant-form-item-explain-error');
+    // Assert that the success message is 'Please input the Claim!'
+    expect(errorMessage).toBe('Please add claimant!');
+});
+
+
+test('should display "Please add rating!" successfully, when the claima input field is empty', async ({ page }) => {
+    test.setTimeout(90000)
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Click on the 'Expand' button
+    await page.click('button:has-text("Expand")');
+    // Type the new claim name into the input field
+    const claimName = 'Th';
+    await page.type('#create-claim_claim', claimName);
+    await page.locator('div.ant-select-selector').first().click();
+    await page.click('div[title="Nine"]');
+    // Click on the 'Submit' button
+    await page.click('button:has-text("Submit")');
+    // Wait for the error message to appear
+    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
+    // Get the error message text
+    const errorMessage = await page.textContent('.ant-form-item-explain-error');
+    // Assert that the success message is 'Please add rating!'
+    expect(errorMessage).toBe('Please add rating!');
+});
+
+
+test.only('should create claim successfully', async ({ page }) => {
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
     // Generate a random string
     const randomString = getRandomString(10); // Adjust the length as needed
     // Type the new claim name with the random string into the input field
@@ -116,6 +149,9 @@ test('should create claim successfully', async ({ page }) => {
     await page.click('div[title="Nine"]');
     await page.locator('div.ant-select-selector').nth(1).click();
     await page.click('div[title="True"]');
+    // Click on the date input field using the selector
+    await page.type('#create-claim_claim_date', '2023-09-09');
+    await page.keyboard.press('Enter');
     // Click on the 'Submit' button
     await page.click('button:has-text("Submit")');
     // Handle any dialog that appears by accepting it
@@ -128,24 +164,20 @@ test('should create claim successfully', async ({ page }) => {
 
 
 test('should edit a claim successfully', async ({ page }) => {
-
     // Generate a random string
     const randomString = getRandomString(10); // Adjust the length as needed
     const claimSelector = 'text=Cong win';
     const newclaimName =  `This is a test claim ${randomString}`;;
     let claimFound = false;
     let pageIndex = 1;
-
     // Function to check if the claim is on the current page
     const isclaimVisible = async () => {
         const claimElements = await page.$$(claimSelector);
         return claimElements.length > 0;
     };
-
     // Loop through pages until the claim is found
     while (!claimFound) {
         claimFound = await isclaimVisible();
-
         if (!claimFound) {
             // Click the next page button (assuming there's a next page button with the text 'Next')
             await page.click('button:has([aria-label="right"])');
@@ -251,12 +283,49 @@ test('Should find no search results based on claimant', async ({ page }) => {
 });
 
 
+test('Should find search results based on rating', async ({ page }) => {
+    // Locate the specific dropdown using a more specific selector
+    const dropdownContainerSelector = '.ant-form-item-control-input-content';
+    const dropdownSelector = `${dropdownContainerSelector} .ant-select-selector`;
+    // Click on the dropdown to open it
+    await page.locator(dropdownSelector).nth(1).click();
+    // Select the option "One" from the dropdown
+    const optionSelector = '.ant-select-item-option[title="One"]';
+    await page.locator(optionSelector).click();
+    await page.press(dropdownContainerSelector, 'Enter');
+    // Wait for all the search results to be visible
+    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
+    const results = page.locator(resultsSelector);
+    const count = await results.count();
+    for (let i = 0; i < count; i++) {
+      await expect(results.nth(i)).toBeVisible();
+    }  
+});
+
+
+test('Should find no search results based on rating successfully', async ({ page }) => {
+    // Locate the specific dropdown using a more specific selector
+    const dropdownContainerSelector = '.ant-form-item-control-input-content';
+    const dropdownSelector = `${dropdownContainerSelector} .ant-select-selector`;
+    // Click on the dropdown to open it
+    await page.locator(dropdownSelector).nth(1).click();
+    // Select the option "One" from the dropdown
+    const optionSelector = '.ant-select-item-option[title="This is a test rating"]';
+    await page.locator(optionSelector).click();
+    await page.press(dropdownContainerSelector, 'Enter');
+    // Verify that 'No data' is visible
+    const accountLogin = await page.locator('text=No data');
+    await expect(accountLogin).toBeVisible();
+});
+
+
 test('should navigate to the next page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
     // Verify that the URL contains 'page=2'
     expect(page.url()).toContain('page=2');
 });
+
 
 test('should navigate to the previous page', async ({ page }) => {
     // Click the button to navigate to the next page

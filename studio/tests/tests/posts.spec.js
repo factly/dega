@@ -13,6 +13,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts');
 });
 
+
 test('should load the posts page successfully', async ({ page }) => {
     // Locate the header postwith the text 'posts'
     const accountLogin = await page.locator('h3')
@@ -54,7 +55,7 @@ test('should display empty state when no posts are present', async ({ page }) =>
 
 
 test('Should find search results', async ({ page }) => {
-    const postToSearch = 'm';
+    const postToSearch = 'new post';
     const searchInputSelector = '#filters_q';
     // Click the search button
     await page.click('button:has([aria-label="search"])');
@@ -87,7 +88,6 @@ test('Should find no search results', async ({ page }) => {
 test('should navigate to the next page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
-    await page.waitForNavigation();
     // Verify that the URL contains 'page=2'
     expect(page.url()).toContain('page=2');
 });
@@ -95,13 +95,73 @@ test('should navigate to the next page', async ({ page }) => {
 test('should navigate to the previous page', async ({ page }) => {
     // Click the button to navigate to the next page
     await page.click('button:has([aria-label="right"])');
-    await page.waitForNavigation();
     // Click the button to navigate back to the previous page
     await page.click('button:has([aria-label="left"])');
-    await page.waitForNavigation();
     // Verify that the URL contains 'page=1'
     expect(page.url()).toContain('page=1');
 });
+
+
+test('should navigate to the selected page', async ({ page }) => {
+    const pageNumber = 2; // You can set this to any number dynamically
+    // Click the button to navigate to the next page
+    await page.click(`.ant-pagination-item-${pageNumber}`);  
+    // Verify that the URL contains 'page=2'
+    expect(page.url()).toContain(`page=${pageNumber}`);
+});
+
+
+test('should sort tags from latest to oldest', async ({ page }) => {
+    // Click on the sorting dropdown
+    await page.click('#filters_sort', { force: true }); 
+    // Click on the option for sorting from latest to oldest
+    await page.click('.ant-select-item[title="Latest"]');  
+    // Get the text content of all tags
+    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
+        return rows.map(row => row.textContent.trim());
+    });
+    // Check if tags are sorted from latest to oldest
+    const sortedtags = tags.slice().sort((a, b) => {
+        // Extract timestamp from the row content and compare
+        const getTime = str => {
+            const match = str.match(/Created At:\s*(.+)/);
+            if (match) {
+                return new Date(match[1]).getTime();
+            }
+            return 0;
+        };
+        return getTime(b) - getTime(a);
+    });
+    // Check if the tags are in the correct order
+    expect(tags).toEqual(sortedtags);
+});
+
+
+test('should sort tags from oldest to latest', async ({ page }) => {
+    // Click on the sorting dropdown
+    await page.click('#filters_sort', { force: true });
+    // Click on the option for sorting from oldest to latest
+    await page.click('.ant-select-item[title="Old"]');  // Adjust the title as needed if "Old" means oldest
+    // Get the text content of all tags
+    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
+        return rows.map(row => row.textContent.trim());
+    });
+    // Check if tags are sorted from oldest to latest
+    const sortedtags = tags.slice().sort((a, b) => {
+        // Extract timestamp from the row content and compare
+        const getTime = str => {
+            const match = str.match(/Created At:\s*(.+)/);
+            if (match) {
+                return new Date(match[1]).getTime();
+            }
+            return 0;
+        };
+        return getTime(a) - getTime(b); // Sorting in ascending order
+    });
+    // Check if the tags are in the correct order
+    expect(tags).toEqual(sortedtags);
+});
+
 
 test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
     const postSelector = 'text=Two';
@@ -475,7 +535,7 @@ test('should edit a draft post successfully ', async ({ page }) => {
 
 test.only('should edit a published post successfully from the shortcut edit button  ', async ({ page }) => {
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
-    const postName = 'Onem';
+    const postName = 'New post';
     const newPostName = 'dknweredkm';
     const rowSelector = `tr:has-text("${postName}")`;
     const buttonSelector = 'button.ant-btn.css-dev-only-do-not-override-1cn9vqe.ant-btn-default.ant-btn-lg.ant-btn-icon-only';  
@@ -574,7 +634,23 @@ test('should edit a template successfully', async ({ page }) => {
     expect(successMessage).toBe('Article Published');
     }
 });  
-  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 test('Should find search results based on tag', async ({ page }) => {
     // Locate the specific dropdown using a more specific selector
@@ -608,7 +684,6 @@ test('Should find search results based on category', async ({ page }) => {
     const optionSelector = '.ant-select-item-option[title="True"]';
     await page.locator(optionSelector).click();
     await page.press(dropdownContainerSelector, 'Enter');
-  
     // Wait for all the search results to be visible
     const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
     const results = page.locator(resultsSelector);
@@ -629,7 +704,6 @@ test('Should find search results based on author', async ({ page }) => {
     const optionSelector = '.ant-select-item-option[title="True"]';
     await page.locator(optionSelector).click();
     await page.press(dropdownContainerSelector, 'Enter');
-  
     // Wait for all the search results to be visible
     const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
     const results = page.locator(resultsSelector);

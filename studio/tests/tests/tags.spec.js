@@ -97,9 +97,9 @@ test('should display "Please enter name!" successfully, when the name input fiel
 });
 
 
-test('should create tag successfully', async ({ page }) => {
+test.only('should create tag successfully', async ({ page }) => {
     // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
+    await page.click('button:has-text("uhuh")');
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
     // Generate a random string

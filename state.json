@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "csrf_token_2d785ea2f6536900108362e9bfff73eef3a32be3921b3abc74b0a990093487c9",
-      "value": "s0WDTyV0qDO21xPLndYdl/zKJ9R3m2mfmxQtO52QKZk=",
+      "value": "ZuCBOfqeHHkR+fp3CumXSiUZHMeT/8PlRDFiyqiN7Go=",
       "domain": "127.0.0.1",
       "path": "/",
-      "expires": 1749898134,
+      "expires": 1749818658.186398,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "ory_kratos_session",
-      "value": "MTcxODM2MjEzNHw2OGR5dGxiTjVJUFdTRnFKdlQyc2xsQ2ZFd2d1QUNqVWNYV3ZpakJOZmowWmJfbFlzVjRtcXF2VEEybDg0cFhuOHlYQm1CaVNUV054ZEdRbE5LaDZJWkQzM3AzUUN4eENZckt5LXlHSXRZYzU3UWxmQ1hfa3RJX1ludVUyNjdPQ1hPczUxNkZTd2c9PXx46nunaPOKtyIuIOymwRoPU6G3ublPUN7Md45hW-4fXw==",
+      "value": "MTcxODI4MjY1OHxKOWpGMERiNkpIaEhtVm1pa09NZkFxdVJkdTFtby1jOTJNcWNhZVBYMjlJRmVzWW1HdHllMlNKd0luc3NLWVJqYnZ1WmJaM0VaSFZ3UGVTX01Mb3dxdHRjaF9qWFpldmVBRFNoOThxaFdlZHBGaUp6NTk4M3pNaGVhWE1vYnlVd1pBdTVxZDJzREE9PXztrznqKo_KUBN2bi893EUAy67CSGX4doSttWyWUrCRyg==",
       "domain": "127.0.0.1",
       "path": "/",
-      "expires": 1718448534,
+      "expires": 1718369058.186497,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
@@ -28,10 +28,6 @@
         {
           "name": "returnTo",
           "value": "http://127.0.0.1:4455/.factly/dega/studio/"
-        },
-        {
-          "name": "space",
-          "value": "1"
         }
       ]
     }

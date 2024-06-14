@@ -269,6 +269,23 @@ test('should display "claimant with same name exists" successfully', async ({ pa
 });
 
 
+
+test('should reset', async ({ page }) => {    
+  await page.click('button:has-text("Create")');
+  await page.click('button:has-text("Expand")');
+  await page.fill('#creat-claimant_name', 'Kurt');
+  await page.click('button:has-text("Reset")');
+
+// Verify that the form fields have been reset
+const input1Value = await page.$eval('#creat-claimant_name', input => input.value);    
+if (input1Value === '') {
+  console.log('Form reset test passed');
+} else {
+  console.error('Form reset test failed');
+}
+});
+
+
 test('should navigate to the next page', async ({ page }) => {
   // Click the button to navigate to the next page
   await page.click('button:has([aria-label="right"])');

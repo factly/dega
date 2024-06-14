@@ -191,3 +191,7 @@ dist/
 setupConfig.sh
 
 postgres
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

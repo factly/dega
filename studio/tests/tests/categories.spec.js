@@ -86,23 +86,19 @@ test('should create category successfully', async ({ page }) => {
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
     await page.click('button:has-text("Expand")');
-
     // Generate a random string
     const randomString = getRandomString(10); // Adjust the length as needed
-
     // Type the new category name with the random string into the input field
     const categoryName = `Other ${randomString}`;
     await page.type('#create-category_name', categoryName);
-
+    await page.locator('div.ant-select-selector').click();
+    await page.click('div[title="jn cikk"]');
     // Click on the 'Save' button
     await page.click('button:has-text("Save")');
-
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
-
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-
     // Assert that the success message is ' Category created'
     expect(successMessage).toBe('Category created');
 });
