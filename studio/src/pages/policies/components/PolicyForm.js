@@ -56,11 +56,7 @@ const entities = [
     label: 'Ratings',
     options: options,
   },
-  {
-    name: 'policies',
-    label: 'Policies',
-    options: options,
-  },
+
   {
     name: 'podcasts',
     label: 'Podcasts',
@@ -96,7 +92,6 @@ const dependencies = {
   claims: ['claimants', 'ratings'],
   claimants: ['media'],
   ratings: ['media'],
-  policies: [],
   podcasts: ['categories', 'media'],
   episodes: ['podcasts', 'media'],
   menus: [],
