@@ -1,8 +1,20 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 
+// Helper function to generate a random string using JavaScript's Math.random
+function getRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
+    test.setTimeout(90000)
     // Navigate to the login page
     await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
     // Fill in the email and password fields
@@ -46,8 +58,9 @@ test('should persist posts data across sessions', async ({ page, context }) => {
 });
 
 
+//Perform this test case only when there are no tags present
 test('should display empty state when no posts are present', async ({ page }) => {
-    // Locate the postthat represents the empty state image
+    // Locate the selector that represents the empty state image
     const emptyStateMessage = await page.locator('.ant-empty-image');
     // Assert that the empty state image is visible
     await expect(emptyStateMessage).toBeVisible();
@@ -91,6 +104,7 @@ test('should navigate to the next page', async ({ page }) => {
     // Verify that the URL contains 'page=2'
     expect(page.url()).toContain('page=2');
 });
+
 
 test('should navigate to the previous page', async ({ page }) => {
     // Click the button to navigate to the next page
@@ -164,7 +178,7 @@ test('should sort tags from oldest to latest', async ({ page }) => {
 
 
 test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
-    const postSelector = 'text=Two';
+    const postSelector = 'text=One';
     await page.click(postSelector);
     await page.click('button:has-text("Expand")');
     await page.click('button:has-text("Expand")');
@@ -205,7 +219,7 @@ test('when the button is clicked, should scroll to the top of the page', async (
 
 
 
-test('should show "cannot publish post without author" succesfully ', async ({ page }) => {
+test('should show "cannot publish post without author" successfully ', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
     // Type the new post name into the input field
@@ -239,7 +253,8 @@ test('should create a draft post succesfully ', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
     // Type the new post name into the input field
-    await page.type('#title', 'New Post')
+    const randomString = getRandomString(10); // Adjust the length as needed
+    await page.type('#title', `This is a test post ${randomString}`)
     // Type the new post name into the input block
     await page.click('p.is-empty.is-editor-empty');
     await page.keyboard.type('Sub title');
@@ -264,7 +279,8 @@ test('should create a ready to publish post succesfully ', async ({ page }) => {
      // Click on the 'Create' button
      await page.click('button:has-text("Create")');
      // Type the new post name into the input field
-     await page.type('#title', 'New Post')
+     const randomString = getRandomString(10); // Adjust the length as needed
+     await page.type('#title', `This is a test post ${randomString}`)
      // Type the new post name into the input block
      await page.click('p.is-empty.is-editor-empty');
      await page.keyboard.type('Sub title');
@@ -288,8 +304,9 @@ test('should create a ready to publish post succesfully ', async ({ page }) => {
 test('should publish post succesfully ', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
+    const randomString = getRandomString(10); // Adjust the length as needed
     // Type the new post name into the input field
-    await page.type('#title', 'New Post')
+    await page.type('#title', `This is a test post ${randomString}`)
     // Type the new post name into the input block
     await page.click('p.is-empty.is-editor-empty');
     await page.keyboard.type('Sub title');
@@ -307,6 +324,310 @@ test('should publish post succesfully ', async ({ page }) => {
     // Assert that the success message is 'Article Published'
     expect(errorMessage).toBe('Article Published');
 });
+
+
+test('should display tippy ', async ({ page }) => {
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Type the new post name into the input field
+    await page.type('#title', 'New Post')
+    // Type the new post name into the input block
+    await page.click('p.is-empty.is-editor-empty');
+    await page.keyboard.press('/');
+    await page.isVisible('#tippy-11');
+});
+
+
+test('should delete a published post successfully', async ({ page }) => {
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
+    const postText = 'ndscn';
+    //const postDateTime = 'Jun 03, 2024 03:25 PM'; // specify the exact date and time of the post
+    // Select the row with the required fact-check text and date-time
+    const rowSelector = `tr:has-text("${postText}")`;
+    const buttonSelector = 'button:has([aria-label="delete"])'; 
+    // Find the button within the specific row and click it
+    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+    // Ensure the button is available before clicking
+    await buttonLocator.waitFor({ state: 'visible' });
+    // Click on the Fact-check to be deleted
+    await buttonLocator.click();
+    // Click on the 'OK' button in the confirmation dialog
+    await page.click('button:has-text("OK")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Post deleted'
+    expect(successMessage).toBe('Post deleted');
+});
+
+
+
+test('should delete a post from ready to publish successfully', async ({ page }) => {
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=ready');
+    const postText = 'Onel';
+    // Select the row with the required fact-check text
+    const rowSelector = `tr:has-text("${postText}")`;
+    const buttonSelector = 'button:has([aria-label="delete"])'; 
+    // Find the button within the specific row and click it
+    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+    // Ensure the button is available before clicking
+    await buttonLocator.waitFor({ state: 'visible' });
+    // Click on the Fact-check to be deleted
+    await buttonLocator.click();
+    // Click on the 'OK' button in the confirmation dialog
+    await page.click('button:has-text("OK")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Post deleted'
+    expect(successMessage).toBe('Post deleted');
+});
+
+
+test('should delete a post from drafts successfully', async ({ page }) => {
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=draft');
+    const postText = 'asax';
+    // Select the row with the required fact-check text
+    const rowSelector = `tr:has-text("${postText}")`;
+    const buttonSelector = 'button:has([aria-label="delete"])'; 
+    // Find the button within the specific row and click it
+    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+    // Click on the Fact-check to be deleted
+    await buttonLocator.click();
+    // Click on the 'OK' button in the confirmation dialog
+    await page.click('button:has-text("OK")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Post deleted'
+    expect(successMessage).toBe('Post deleted');
+});
+
+
+test('should edit a published post successfully ', async ({ page }) => {
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
+    const randomString = getRandomString(10); // Adjust the length as needed
+    const postSelector = 'text=dkndkm';
+    const newPostName = `This is a test post ${randomString}`;
+    // Click on the post to be edited
+    await page.click(postSelector);
+    // Fill in the new post name
+    const inputSelector = '#title';
+    await page.fill(inputSelector, newPostName);
+    // Click on the 'Update' button
+    await page.click('button:has-text("Update")');
+    // Check if the postname has been updated
+    const updatedpost= await page.textContent(`text=${newPostName}`);
+    expect(updatedpost).toBe(newPostName);
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Article Published'
+    expect(successMessage).toBe('Article Published');
+});
+
+
+test('should edit a ready to publish post successfully ', async ({ page }) => {
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=ready');
+    const randomString = getRandomString(10); // Adjust the length as needed
+    const postSelector = 'text=cddc';
+    const newPostName = `This is a test post ${randomString}`;
+    // Click on the post to be edited
+    await page.click(postSelector);
+    // Fill in the new post name
+    const inputSelector = '#title';
+    await page.fill(inputSelector, newPostName);
+    // Click on the 'Update' button
+    await page.click('button:has-text("Update")');
+    // Check if the postname has been updated
+    const updatedpost= await page.textContent(`text=${newPostName}`);
+    expect(updatedpost).toBe(newPostName);
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Article Published'
+    expect(successMessage).toBe('Article Published');
+});
+
+
+test('should edit a draft post successfully ', async ({ page }) => {
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=draft');
+    const randomString = getRandomString(10); // Adjust the length as needed
+    const postSelector = 'text=cddc';
+    const newPostName = `This is a test post ${randomString}`;
+    // Click on the post to be edited
+    await page.click(postSelector);
+    // Fill in the new post name
+    const inputSelector = '#title';
+    await page.fill(inputSelector, newPostName);
+    // Click on the 'Update' button
+    await page.click('button:has-text("Update")');
+    // Check if the postname has been updated
+    const updatedpost= await page.textContent(`text=${newPostName}`);
+    expect(updatedpost).toBe(newPostName);
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Article Published'
+    expect(successMessage).toBe('Article Published');
+});
+
+
+test('should edit a published post successfully from the shortcut edit button  ', async ({ page }) => {
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
+    const randomString = getRandomString(10); // Adjust the length as needed
+    const postName = 'dkndkm';
+    const newPostName = `This is a test post ${randomString}`;
+    const rowSelector = `tr:has-text("${postName}")`;
+    const buttonSelector = 'button.ant-btn.css-dev-only-do-not-override-1cn9vqe.ant-btn-default.ant-btn-lg.ant-btn-icon-only';  
+    // Find the button within the specific row and click it
+    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+    await buttonLocator.first().click();
+    // Fill in the new post name
+    const inputSelector = '#title';
+    await page.fill(inputSelector, newPostName);
+    // Click on the 'Update' button
+    await page.click('button:has-text("Update")');
+    // Check if the postname has been updated
+    const updatedpost= await page.textContent(`text=${newPostName}`);
+    expect(updatedpost).toBe(newPostName);
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Article Published'
+    expect(successMessage).toBe('Article Published');
+});
+
+
+test('should edit a ready to publish post successfully from the shortcut edit button  ', async ({ page }) => {
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=ready');
+    const randomString = getRandomString(10); // Adjust the length as needed
+    const postName = 'jxks';
+    const newPostName = `This is a test post ${randomString}`;
+    const rowSelector = `tr:has-text("${postName}")`;
+    const buttonSelector = 'button.ant-btn.css-dev-only-do-not-override-1cn9vqe.ant-btn-default.ant-btn-lg.ant-btn-icon-only';  
+    // Find the button within the specific row and click it
+    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+    await buttonLocator.first().click();
+    // Fill in the new post name
+    const inputSelector = '#title';
+    await page.fill(inputSelector, newPostName);
+    // Click on the 'Update' button
+    await page.click('button:has-text("Update")');
+    // Check if the postname has been updated
+    const updatedpost= await page.textContent(`text=${newPostName}`);
+    expect(updatedpost).toBe(newPostName);
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Draft saved & Ready to Publish'
+    expect(successMessage).toBe('Draft saved & Ready to Publish');
+});
+
+
+test('should edit a draft post successfully from the shortcut edit button  ', async ({ page }) => {
+    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=draft');
+    const randomString = getRandomString(10); // Adjust the length as needed
+    const postName = 'skis';
+    const newPostName = `This is a test post ${randomString}`;
+    const rowSelector = `tr:has-text("${postName}")`;
+    const buttonSelector = 'button.ant-btn.css-dev-only-do-not-override-1cn9vqe.ant-btn-default.ant-btn-lg.ant-btn-icon-only';  
+    // Find the button within the specific row and click it
+    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+    await buttonLocator.first().click();
+    // Fill in the new post name
+    const inputSelector = '#title';
+    await page.fill(inputSelector, newPostName);
+    // Click on the 'Update' button
+    await page.click('button:has-text("Update")');
+    // Check if the postname has been updated
+    const updatedpost= await page.textContent(`text=${newPostName}`);
+    expect(updatedpost).toBe(newPostName);
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Draft Saved'
+    expect(successMessage).toBe('Draft Saved');
+});
+
+
+
+test('Should find search results based on tag', async ({ page }) => {
+    await page.click('span:has-text("More Filters ")');
+    // Locate the specific dropdown using a more specific selector
+    const dropdownContainerSelector = '.ant-form-item-control-input-content';
+    const dropdownSelector = `${dropdownContainerSelector}.ant-select-selector`;
+    // Click on the dropdown to open it
+    await page.locator(dropdownSelector).first().click();
+    // Select the option "Nine" from the dropdown
+    const optionSelector = '.ant-select-item-option[title="This is a test tag 5kEiPQD4Mi"]';
+    await page.locator(optionSelector).click();
+    await page.press(dropdownContainerSelector, 'Enter');
+  
+    // Wait for all the search results to be visible
+    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
+    const results = page.locator(resultsSelector);
+    const count = await results.count();
+    for (let i = 0; i < count; i++) {
+      await expect(results.nth(i)).toBeVisible();
+    }  
+});
+
+
+test('Should find search results based on category', async ({ page }) => {
+    await page.click('span:has-text("More Filters ")');
+    // Locate the specific dropdown using a more specific selector
+    const dropdownContainerSelector = '.ant-form-item-control-input-content';
+    const dropdownSelector = `${dropdownContainerSelector}.ant-select-selector`;
+    // Click on the dropdown to open it
+    await page.locator(dropdownSelector).nth(1).click();
+    // Select the option "Nine" from the dropdown
+    const optionSelector = '.ant-select-item-option[title="True"]';
+    await page.locator(optionSelector).click();
+    await page.press(dropdownContainerSelector, 'Enter');
+    // Wait for all the search results to be visible
+    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
+    const results = page.locator(resultsSelector);
+    const count = await results.count();
+    for (let i = 0; i < count; i++) {
+      await expect(results.nth(i)).toBeVisible();
+    }  
+});
+
+
+test('Should find search results based on author', async ({ page }) => {
+    await page.click('span:has-text("More Filters ")');
+    // Locate the specific dropdown using a more specific selector
+    const dropdownContainerSelector = '.ant-form-item-control-input-content';
+    const dropdownSelector = `${dropdownContainerSelector}.ant-select-selector`;
+    // Click on the dropdown to open it
+    await page.locator(dropdownSelector).nth(2).click();
+    // Select the option "Nine" from the dropdown
+    const optionSelector = '.ant-select-item-option[title="True"]';
+    await page.locator(optionSelector).click();
+    await page.press(dropdownContainerSelector, 'Enter');
+    // Wait for all the search results to be visible
+    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
+    const results = page.locator(resultsSelector);
+    const count = await results.count();
+    for (let i = 0; i < count; i++) {
+      await expect(results.nth(i)).toBeVisible();
+    }  
+});
+
+  
+
+
+
 
 
 
@@ -334,255 +655,21 @@ test('should create a template successfully ', async ({ page }) => {
     expect(successMessage).toBe('Template created');
 });
 
+
 test('should save a draft when clicked on a template successfully ', async ({ page }) => {
     // Click on the 'Templates' button
-    await page.click('button#template');
+    await page.click('span[aria-label="right"]');
+    // Click on the 'Show more' button
+    await page.click('button:has-text("Show more")');
     const postSelector = 'text=One';
     // Click on the post to be edited
     await page.click(postSelector);
-    // Click on the 'Update' button
-    await page.click('button#template');
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Template created'
-    expect(successMessage).toBe('Template created');
-});
-
-
-
-test('should display or hide templates successfully ', async ({ page }) => {
-    // Click on the 'Templates' button
-    await page.click('button#template');
-    // Click on the 'Templates' button
-    await page.click('button#template');
-    const postSelector = 'text=One';
-    // Click on the post to be edited
-    await page.click(postSelector);
-    // Click on the 'Update' button
-    await page.click('button#template');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Template created'
-    expect(successMessage).toBe('Template created');
-});
-
-
-
-
-
-
-
-
-
-
-
-
-test('should display tippy ', async ({ page }) => {
-    // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
-    // Type the new post name into the input field
-    await page.type('#title', 'New Post')
-    // Type the new post name into the input block
-    await page.click('p.is-empty.is-editor-empty');
-    await page.keyboard.press('/');
-    await page.isVisible('#tippy-11');
-});
-
-
-test('should delete a published post successfully', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
-    const postText = 'New post';
-    // Select the row with the required fact-check text
-    const rowSelector = `tr:has-text("${postText}")`;
-    const buttonSelector = 'button:has([aria-label="delete"])'; 
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    // Ensure the button is available before clicking
-    await buttonLocator.waitFor({ state: 'visible' });
-    // Click on the Fact-check to be deleted
-    await buttonLocator.click();
-    // Click on the 'OK' button in the confirmation dialog
-    await page.click('button:has-text("OK")');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Post deleted'
-    expect(successMessage).toBe('Post deleted');
-});
-
-
-
-
-test('should delete a post from ready to publish successfully', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=ready');
-    const postText = 'New post';
-    // Select the row with the required fact-check text
-    const rowSelector = `tr:has-text("${postText}")`;
-    const buttonSelector = 'button:has([aria-label="delete"])'; 
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    // Ensure the button is available before clicking
-    await buttonLocator.waitFor({ state: 'visible' });
-    // Click on the Fact-check to be deleted
-    await buttonLocator.click();
-    // Click on the 'OK' button in the confirmation dialog
-    await page.click('button:has-text("OK")');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Post deleted'
-    expect(successMessage).toBe('Post deleted');
-});
-
-
-test('should delete a post from drafts successfully', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=draft');
-    const postText = 'New post';
-    // Select the row with the required fact-check text
-    const rowSelector = `tr:has-text("${postText}")`;
-    const buttonSelector = 'button:has([aria-label="delete"])'; 
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    // Ensure the button is available before clicking
-    await buttonLocator.waitFor({ state: 'visible' });
-    // Click on the Fact-check to be deleted
-    await buttonLocator.click();
-    // Click on the 'OK' button in the confirmation dialog
-    await page.click('button:has-text("OK")');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Post deleted'
-    expect(successMessage).toBe('Post deleted');
-});
-
-
-test('should edit a published post successfully ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
-    const postSelector = 'text=cddc';
-    const newPostName = 'New post';
-    // Click on the post to be edited
-    await page.click(postSelector);
-    // Fill in the new post name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newPostName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the postname has been updated
-    const updatedpost= await page.textContent(`text=${newPostName}`);
-    expect(updatedpost).toBe(newPostName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    expect(successMessage).toBe('Article Published');
-});
-
-
-test('should edit a ready to publish post successfully ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=ready');
-    const postSelector = 'text=cddc';
-    const newPostName = 'New post';
-    // Click on the post to be edited
-    await page.click(postSelector);
-    // Fill in the new post name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newPostName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the postname has been updated
-    const updatedpost= await page.textContent(`text=${newPostName}`);
-    expect(updatedpost).toBe(newPostName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    expect(successMessage).toBe('Article Published');
-});
-
-
-test('should edit a draft post successfully ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=draft');
-    const postSelector = 'text=cddc';
-    const newPostName = 'New post';
-    // Click on the post to be edited
-    await page.click(postSelector);
-    // Fill in the new post name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newPostName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the postname has been updated
-    const updatedpost= await page.textContent(`text=${newPostName}`);
-    expect(updatedpost).toBe(newPostName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    expect(successMessage).toBe('Article Published');
-});
-
-
-test.only('should edit a published post successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
-    const postName = 'New post';
-    const newPostName = 'dknweredkm';
-    const rowSelector = `tr:has-text("${postName}")`;
-    const buttonSelector = 'button.ant-btn.css-dev-only-do-not-override-1cn9vqe.ant-btn-default.ant-btn-lg.ant-btn-icon-only';  
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    // Ensure the button is available before clicking
-    await buttonLocator.waitFor({ state: 'visible' });
-    await buttonLocator.click();
-    // Fill in the new post name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newPostName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the postname has been updated
-    const updatedpost= await page.textContent(`text=${newPostName}`);
-    expect(updatedpost).toBe(newPostName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    expect(successMessage).toBe('Article Published');
-});
-
-
-
-test('should make a post ready to publish succesfully ', async ({ page }) => {
-    // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
-    // Type the new post name into the input field
-    await page.type('#title', 'New Postx2')
-    // Type the new post name into the input block
-    await page.click('p.is-empty.is-editor-empty');
-    await page.keyboard.type('Sub title');
-    await page.click('button:has([aria-label="setting"])');
-    await page.click('div.ant-select-selector');
-    // Wait for the dropdown list to appear and populate
-    await page.click('div[title="Ramsai Rapole"]');
-    await page.click('button:has([data-icon="down"])');
-    // Click on the 'Publish' button
-    await page.click('button:has-text("Ready to Publish")');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the error message text
-    const errorMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    //expect(errorMessage).toBe('Article Published');
+    // Assert that the success message is 'Post added'
+    expect(successMessage).toBe('Post added');
 });
 
 
@@ -590,31 +677,23 @@ test('should edit a template successfully', async ({ page }) => {
     await page.click('span:has-text("Templates")');
     const postSelector = 'text=One';
     const newPostName = 'One one';
-    
     // Click on the post to be edited
     await page.click(postSelector);
-  
     // Fill in the new post name
     const inputSelector = '#title';
     await page.fill(inputSelector, newPostName);
-  
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
     await page.click('.ant-notification-notice-close');
-  
     // Click on the 'Publish' button
     await page.click('button:has-text("Publish")');
-  
     // Handle any dialog that appears by accepting it
     page.on('dialog', dialog => dialog.accept());
-  
     // Check if "cannot publish post without author" message is displayed
     const authorMessageSelector = 'text=cannot publish post without author';
     const isAuthorMessageVisible = await page.isVisible(authorMessageSelector);
-  
     if (isAuthorMessageVisible) {
         console.log("Author selection required");
-  
         await page.click('.ant-notification-notice-close'); // Close the notification
         // Select an author if the message is displayed
         await page.click('button:has([aria-label="setting"])');
@@ -622,95 +701,14 @@ test('should edit a template successfully', async ({ page }) => {
         await page.waitForSelector('div.ant-select-dropdown', { state: 'visible' }); // Ensure dropdown is visible
         await page.keyboard.press('Enter'); // Select the first author in the list
         await page.click('button:has([aria-label="close"])'); // Close the settings modal
-  
         // Click on the 'Publish' button again
         await page.click('button:has-text("Publish")');
         page.on('dialog', dialog => dialog.accept()); // Handle any dialog that appears by accepting it
           // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
     console.log("Success message received:", successMessage); // Log the success message
-  
     // Assert that the success message is 'Article Published'
     expect(successMessage).toBe('Article Published');
     }
 });  
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-test('Should find search results based on tag', async ({ page }) => {
-    // Locate the specific dropdown using a more specific selector
-    const dropdownContainerSelector = '.ant-form-item-control-input-content';
-    const dropdownSelector = `${dropdownContainerSelector}.ant-select-selector`;
-    // Click on the dropdown to open it
-    await page.locator(dropdownSelector).nth(1).click();
-    // Select the option "Nine" from the dropdown
-    const optionSelector = '.ant-select-item-option[title="True"]';
-    await page.locator(optionSelector).click();
-    await page.press(dropdownContainerSelector, 'Enter');
-  
-    // Wait for all the search results to be visible
-    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
-    const results = page.locator(resultsSelector);
-    const count = await results.count();
-    for (let i = 0; i < count; i++) {
-      await expect(results.nth(i)).toBeVisible();
-    }  
-});
-
-
-
-test('Should find search results based on category', async ({ page }) => {
-    // Locate the specific dropdown using a more specific selector
-    const dropdownContainerSelector = '.ant-form-item-control-input-content';
-    const dropdownSelector = `${dropdownContainerSelector}.ant-select-selector`;
-    // Click on the dropdown to open it
-    await page.locator(dropdownSelector).nth(1).click();
-    // Select the option "Nine" from the dropdown
-    const optionSelector = '.ant-select-item-option[title="True"]';
-    await page.locator(optionSelector).click();
-    await page.press(dropdownContainerSelector, 'Enter');
-    // Wait for all the search results to be visible
-    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
-    const results = page.locator(resultsSelector);
-    const count = await results.count();
-    for (let i = 0; i < count; i++) {
-      await expect(results.nth(i)).toBeVisible();
-    }  
-});
-
-
-test('Should find search results based on author', async ({ page }) => {
-    // Locate the specific dropdown using a more specific selector
-    const dropdownContainerSelector = '.ant-form-item-control-input-content';
-    const dropdownSelector = `${dropdownContainerSelector}.ant-select-selector`;
-    // Click on the dropdown to open it
-    await page.locator(dropdownSelector).nth(1).click();
-    // Select the option "Nine" from the dropdown
-    const optionSelector = '.ant-select-item-option[title="True"]';
-    await page.locator(optionSelector).click();
-    await page.press(dropdownContainerSelector, 'Enter');
-    // Wait for all the search results to be visible
-    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
-    const results = page.locator(resultsSelector);
-    const count = await results.count();
-    for (let i = 0; i < count; i++) {
-      await expect(results.nth(i)).toBeVisible();
-    }  
-});
-
-  

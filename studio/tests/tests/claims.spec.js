@@ -137,7 +137,7 @@ test('should display "Please add rating!" successfully, when the claima input fi
 });
 
 
-test.only('should create claim successfully', async ({ page }) => {
+test('should create claim successfully', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
     // Generate a random string
