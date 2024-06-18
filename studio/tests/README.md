@@ -25,5 +25,14 @@ Before you begin writing test cases with Playwright, ensure you have the followi
 - Headless Mode: Running a browser in headless mode means running without a graphical user interface. This is useful for automated testing.
 
 - Selectors: Patterns used to select elements on a web page. Playwright supports various selectors like CSS, XPath, and text selectors.
-    
 
+### Env files to be added
+
+- Create a `.env` file in the root folder for companion config variables (for eg see .env.example file in companion folder)
+- To make environment variables easier to manage, we have .env files. Use dotenv package to read environment variables directly in the configuration file.  
+    ```
+    import dotenv from 'dotenv';
+
+    // Read from default ".env" file.
+    dotenv.config();
+  ```
