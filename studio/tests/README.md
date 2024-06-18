@@ -16,7 +16,7 @@ Before you begin writing test cases with Playwright, ensure you have the followi
     npm install --save-dev @playwright/test
   ```
 - Execute the following command to run the tests:
-      ```
+    ```
     npx playwright test
   ```
  ### Important keywords
