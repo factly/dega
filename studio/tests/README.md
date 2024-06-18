@@ -28,7 +28,7 @@ Before you begin writing test cases with Playwright, ensure you have the followi
 
 ### Env files to be added
 
-- Create a `.env` file in the root folder for companion config variables (for eg see .env.example file in companion folder)
+- Create a `.env` file in the root folder for environment variables (for eg see .env)
 - To make environment variables easier to manage, we have .env files. Use dotenv package to read environment variables directly in the configuration file.  
     ```
     import dotenv from 'dotenv';
