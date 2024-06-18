@@ -8,8 +8,7 @@ dotenv.config();
 
 
 // This beforeEach hook runs before each test, setting up the test environment
-test.only('lohin',async ({ page }) => {
-    test.setTimeout(900000)
+test.beforeAll(async ({ page }) => {
     // Navigate to the login page
     await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
     // Fill in the email and password fields
@@ -24,6 +23,7 @@ test.only('lohin',async ({ page }) => {
 
 
 test.beforeEach( async ({ page }) => {
+    test.setTimeout(90000)
     // Load session cookies from the file
     await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
     // Navigate to a page that requires login
