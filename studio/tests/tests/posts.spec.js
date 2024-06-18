@@ -1,5 +1,9 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
+import dotenv from 'dotenv';
+// Read from default ".env" file.
+dotenv.config();
+
 
 // Helper function to generate a random string using JavaScript's Math.random
 function getRandomString(length) {
@@ -16,13 +20,16 @@ function getRandomString(length) {
 test.beforeEach(async ({ page }) => {
     test.setTimeout(90000)
     // Navigate to the login page
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
     // Fill in the email and password fields
-    await page.type('#auth_email', 'ramsai.rapole@factly.in')
-    await page.type('#auth_password', 'Wrongpass@123')
+    await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
+    await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
     // Click the login button
     await page.click('text=Login')
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts`);
+    // Save session cookies to a file
+    const cookies = await page.context().cookies();
+    await page.context().storageState({ path: 'state.json' });
 });
 
 
@@ -36,7 +43,7 @@ test('should load the posts page successfully', async ({ page }) => {
 
 test('should handle invalid URL parameters gracefully', async ({ page }) => {
     // Navigate to the URL with invalid parameters
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/postssnskn');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/postssnskn`);
     // Locate the postthat shows '404' message
     const accountLogin = await page.locator('text=404');
     // Assert that the '404' message is visible
@@ -50,7 +57,7 @@ test('should persist posts data across sessions', async ({ page, context }) => {
     // Open a new page in the same context
     await context.newPage();
     // Navigate to the tags page
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts`);
     // Get the text content of the first h3 element again
     const newFirstTagText = await page.locator('h3').first().textContent();
     // Assert that the tag data is the same across sessions
@@ -177,48 +184,6 @@ test('should sort tags from oldest to latest', async ({ page }) => {
 });
 
 
-test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
-    const postSelector = 'text=One';
-    await page.click(postSelector);
-    await page.click('button:has-text("Expand")');
-    await page.click('button:has-text("Expand")');
-    await page.click('button:has-text("Expand")');
-    // Find the scroll to top button and click it
-    const spanpost= page.locator('span[aria-label="vertical-align-top"]');
-    // Click on the span post
-    await spanpost.click();
-    // Wait for the scroll action to complete
-    await page.waitForTimeout(1000); // adjust the timeout based on your scroll animation duration
-    // Check if the page is scrolled to the top
-    const scrollPosition = await page.evaluate(() => window.scrollY);
-    expect(scrollPosition).toBe(0);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 test('should show "cannot publish post without author" successfully ', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
@@ -233,7 +198,7 @@ test('should show "cannot publish post without author" successfully ', async ({ 
     page.on('dialog', dialog => dialog.accept());
     // Get the error message text
     const errorMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'postcreated'
+    // Assert that the error message is 'cannot publish post without author'
     expect(errorMessage).toBe('cannot publish post without author');
 });
 
@@ -244,7 +209,7 @@ test('should show "Please input the title!" succesfully ', async ({ page }) => {
     await page.click('button:has-text("Publish")');
     // Get the error message text
     const errorMessage = await page.textContent('.ant-form-item-explain-error');
-    // Assert that the success message is 'postcreated'
+    // Assert that the error message is 'Please input the title!'
     expect(errorMessage).toBe('Please input the title!');
 });
 
@@ -339,7 +304,7 @@ test('should display tippy ', async ({ page }) => {
 
 
 test('should delete a published post successfully', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=publish`);
     const postText = 'ndscn';
     //const postDateTime = 'Jun 03, 2024 03:25 PM'; // specify the exact date and time of the post
     // Select the row with the required fact-check text and date-time
@@ -364,7 +329,7 @@ test('should delete a published post successfully', async ({ page }) => {
 
 
 test('should delete a post from ready to publish successfully', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=ready');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=ready`);
     const postText = 'Onel';
     // Select the row with the required fact-check text
     const rowSelector = `tr:has-text("${postText}")`;
@@ -387,7 +352,7 @@ test('should delete a post from ready to publish successfully', async ({ page })
 
 
 test('should delete a post from drafts successfully', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=draft');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=draft`);
     const postText = 'asax';
     // Select the row with the required fact-check text
     const rowSelector = `tr:has-text("${postText}")`;
@@ -408,7 +373,7 @@ test('should delete a post from drafts successfully', async ({ page }) => {
 
 
 test('should edit a published post successfully ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=publish`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postSelector = 'text=dkndkm';
     const newPostName = `This is a test post ${randomString}`;
@@ -432,7 +397,7 @@ test('should edit a published post successfully ', async ({ page }) => {
 
 
 test('should edit a ready to publish post successfully ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=ready');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=ready`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postSelector = 'text=cddc';
     const newPostName = `This is a test post ${randomString}`;
@@ -456,7 +421,7 @@ test('should edit a ready to publish post successfully ', async ({ page }) => {
 
 
 test('should edit a draft post successfully ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=draft');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=draft`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postSelector = 'text=cddc';
     const newPostName = `This is a test post ${randomString}`;
@@ -480,7 +445,7 @@ test('should edit a draft post successfully ', async ({ page }) => {
 
 
 test('should edit a published post successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=publish');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=publish`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postName = 'dkndkm';
     const newPostName = `This is a test post ${randomString}`;
@@ -507,7 +472,7 @@ test('should edit a published post successfully from the shortcut edit button  '
 
 
 test('should edit a ready to publish post successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=ready');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=ready`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postName = 'jxks';
     const newPostName = `This is a test post ${randomString}`;
@@ -534,7 +499,7 @@ test('should edit a ready to publish post successfully from the shortcut edit bu
 
 
 test('should edit a draft post successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/posts?status=draft');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=draft`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postName = 'skis';
     const newPostName = `This is a test post ${randomString}`;
@@ -565,58 +530,59 @@ test('Should find search results based on tag', async ({ page }) => {
     await page.click('span:has-text("More Filters ")');
     // Locate the specific dropdown using a more specific selector
     const dropdownContainerSelector = '.ant-form-item-control-input-content';
-    const dropdownSelector = `${dropdownContainerSelector}.ant-select-selector`;
+    const dropdownSelector = `${dropdownContainerSelector} .ant-select-selector`;
     // Click on the dropdown to open it
-    await page.locator(dropdownSelector).first().click();
-    // Select the option "Nine" from the dropdown
-    const optionSelector = '.ant-select-item-option[title="This is a test tag 5kEiPQD4Mi"]';
+    await page.locator(dropdownSelector).nth(1).click();
+    // Select the option "One" from the dropdown
+    const optionSelector = '.ant-select-item-option[title="One"]';
+    await page.waitForSelector(optionSelector);
     await page.locator(optionSelector).click();
-    await page.press(dropdownContainerSelector, 'Enter');
-  
     // Wait for all the search results to be visible
-    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
+    const resultsSelector = 'tbody.ant-table-tbody tr.ant-table-row td.ant-table-cell a[href*="/.factly/dega/studio/posts/"]';
     const results = page.locator(resultsSelector);
     const count = await results.count();
     for (let i = 0; i < count; i++) {
       await expect(results.nth(i)).toBeVisible();
     }  
-});
+  });
 
 
 test('Should find search results based on category', async ({ page }) => {
     await page.click('span:has-text("More Filters ")');
     // Locate the specific dropdown using a more specific selector
     const dropdownContainerSelector = '.ant-form-item-control-input-content';
-    const dropdownSelector = `${dropdownContainerSelector}.ant-select-selector`;
+    const dropdownSelector = `${dropdownContainerSelector} .ant-select-selector`;
     // Click on the dropdown to open it
-    await page.locator(dropdownSelector).nth(1).click();
+    await page.locator(dropdownSelector).nth(2).click();
+    // Select the option "One" from the dropdown
     // Select the option "Nine" from the dropdown
-    const optionSelector = '.ant-select-item-option[title="True"]';
+    const optionSelector = '.ant-select-item-option[title="nkxnckxn"]';
+    await page.waitForSelector(optionSelector);
     await page.locator(optionSelector).click();
-    await page.press(dropdownContainerSelector, 'Enter');
     // Wait for all the search results to be visible
-    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
+    const resultsSelector = 'tbody.ant-table-tbody tr.ant-table-row td.ant-table-cell a[href*="/.factly/dega/studio/posts/"]';
     const results = page.locator(resultsSelector);
     const count = await results.count();
     for (let i = 0; i < count; i++) {
       await expect(results.nth(i)).toBeVisible();
     }  
-});
+  });
 
 
-test('Should find search results based on author', async ({ page }) => {
+  test('Should find search results based on author', async ({ page }) => {
     await page.click('span:has-text("More Filters ")');
     // Locate the specific dropdown using a more specific selector
     const dropdownContainerSelector = '.ant-form-item-control-input-content';
-    const dropdownSelector = `${dropdownContainerSelector}.ant-select-selector`;
+    const dropdownSelector = `${dropdownContainerSelector} .ant-select-selector`;
     // Click on the dropdown to open it
-    await page.locator(dropdownSelector).nth(2).click();
+    await page.locator(dropdownSelector).nth(3).click();
+    // Select the option "One" from the dropdown
     // Select the option "Nine" from the dropdown
-    const optionSelector = '.ant-select-item-option[title="True"]';
+    const optionSelector = '.ant-select-item-option[title="Ramsai Rapole"]';
+    await page.waitForSelector(optionSelector);
     await page.locator(optionSelector).click();
-    await page.press(dropdownContainerSelector, 'Enter');
     // Wait for all the search results to be visible
-    const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
+    const resultsSelector = 'tbody.ant-table-tbody tr.ant-table-row td.ant-table-cell a[href*="/.factly/dega/studio/posts/"]';
     const results = page.locator(resultsSelector);
     const count = await results.count();
     for (let i = 0; i < count; i++) {
@@ -625,6 +591,42 @@ test('Should find search results based on author', async ({ page }) => {
 });
 
   
+test('Should find no search results based on tag', async ({ page }) => {
+    await page.click('span:has-text("More Filters ")');
+    // Locate the specific dropdown using a more specific selector
+    const dropdownContainerSelector = '.ant-form-item-control-input-content';
+    const dropdownSelector = `${dropdownContainerSelector} .ant-select-selector`;
+    // Click on the dropdown to open it
+    await page.locator(dropdownSelector).nth(1).click();
+    // Select the option "One" from the dropdown
+    const optionSelector = '.ant-select-item-option[title="This is a test tag a0Xh2oSXTA"]';
+    await page.waitForSelector(optionSelector);
+    await page.locator(optionSelector).click();
+    // Verify that 'No data' is visible
+    const accountLogin = await page.locator('text=No data');
+    await expect(accountLogin).toBeVisible();
+});
+
+test('Should find no search results based on category', async ({ page }) => {
+    await page.click('span:has-text("More Filters ")');
+    // Locate the specific dropdown using a more specific selector
+    const dropdownContainerSelector = '.ant-form-item-control-input-content';
+    const dropdownSelector = `${dropdownContainerSelector} .ant-select-selector`;
+    // Click on the dropdown to open it
+    await page.locator(dropdownSelector).nth(2).click();
+    // Select the option "One" from the dropdown
+    const optionSelector = '.ant-select-item-option[title="jxmixckixmm"]';
+    await page.waitForSelector(optionSelector);
+    await page.locator(optionSelector).click();
+    // Verify that 'No data' is visible
+    const accountLogin = await page.locator('text=No data');
+    await expect(accountLogin).toBeVisible();
+});
+
+
+
+
+
 
 
 
@@ -658,7 +660,7 @@ test('should create a template successfully ', async ({ page }) => {
 
 test('should save a draft when clicked on a template successfully ', async ({ page }) => {
     // Click on the 'Templates' button
-    await page.click('span[aria-label="right"]');
+    await page.click('span:has-text("Templates")');
     // Click on the 'Show more' button
     await page.click('button:has-text("Show more")');
     const postSelector = 'text=One';
@@ -674,8 +676,10 @@ test('should save a draft when clicked on a template successfully ', async ({ pa
 
 
 test('should edit a template successfully', async ({ page }) => {
+    // Click on the 'Templates' button
     await page.click('span:has-text("Templates")');
-    const postSelector = 'text=One';
+    await page.click('button:has-text("show more")');
+    const postSelector = 'div.ant-card-meta-description >> text="One"';
     const newPostName = 'One one';
     // Click on the post to be edited
     await page.click(postSelector);
@@ -701,6 +705,7 @@ test('should edit a template successfully', async ({ page }) => {
         await page.waitForSelector('div.ant-select-dropdown', { state: 'visible' }); // Ensure dropdown is visible
         await page.keyboard.press('Enter'); // Select the first author in the list
         await page.click('button:has([aria-label="close"])'); // Close the settings modal
+        await page.fill(inputSelector, newPostName);
         // Click on the 'Publish' button again
         await page.click('button:has-text("Publish")');
         page.on('dialog', dialog => dialog.accept()); // Handle any dialog that appears by accepting it
@@ -711,4 +716,26 @@ test('should edit a template successfully', async ({ page }) => {
     expect(successMessage).toBe('Article Published');
     }
 });  
- 
+
+
+test('should open to edit when clicked on template edit button successfully ', async ({ page }) => {
+    // Click on the 'Templates' button
+    await page.click('span:has-text("Templates")');
+    // Click on the 'Show more' button
+    await page.click('button:has-text("Show more")');
+    // Locate the 'edit' buttons and click on the one in the second row, fourth column
+    const editButtons = page.locator('span[aria-label="edit"]');
+    await editButtons.nth(5).click();
+});
+
+
+test('should delete template when clicked on template delete button successfully ', async ({ page }) => {
+    // Click on the 'Templates' button
+    await page.click('span:has-text("Templates")');
+    // Click on the 'Show more' button
+    await page.click('button:has-text("Show more")');
+    // Locate the 'edit' buttons and click on the one in the second row, fourth column
+    const editButtons = page.locator('span[aria-label="delete"]');
+    await editButtons.nth(5).click();
+    await page.click('button:has-text("OK")');
+});

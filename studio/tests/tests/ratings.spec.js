@@ -1,5 +1,8 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
+import dotenv from 'dotenv';
+// Read from default ".env" file.
+dotenv.config();
 
 
 // Helper function to generate a random string using JavaScript's Math.random
@@ -17,13 +20,13 @@ function getRandomString(length) {
 test.beforeEach(async ({ page }) => {
     test.setTimeout(90000)
     // Navigate to the login page
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
     // Fill in the email and password fields
-    await page.type('#auth_email', 'ramsai.rapole@factly.in')
-    await page.type('#auth_password', 'Wrongpass@123')
+    await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
+    await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
     // Click the login button
     await page.click('text=Login')
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/ratings?page=1');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/ratings?page=1`);
     // Save session cookies to a file
     const cookies = await page.context().cookies();
     await page.context().storageState({ path: 'state.json' });
@@ -33,10 +36,8 @@ test.beforeEach(async ({ page }) => {
 test('should stay logged in using stored cookies', async ({ page }) => {
     // Load session cookies from the file
     await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
-
     // Navigate to a page that requires login
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
-
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
     // Verify the user is still logged in
     expect(await page.isVisible('text="Logout"')).toBeTruthy();
 });
@@ -52,7 +53,7 @@ test('should load the ratings page successfully', async ({ page }) => {
 
 test('should handle invalid URL parameters gracefully', async ({ page }) => {
     // Navigate to the URL with invalid parameters
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/ratings?page=NaN');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/ratings?page=NaN`);
     // Locate the element that shows 'No data' message
     const accountLogin = await page.locator('text=No data');
     // Assert that the 'No data' message is visible
@@ -66,7 +67,7 @@ test('should persist ratings data across sessions', async ({ page, context }) =>
     // Open a new page in the same context
     await context.newPage();
     // Navigate to the ratings page
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/ratings?page=1');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/ratings?page=1`);
     // Get the text content of the first h3 element again
     const newFirstratingText = await page.locator('h3').first().textContent();
     // Assert that the rating data is the same across sessions

@@ -12,6 +12,7 @@
     "@types/node": "^20.12.12"
   },
   "dependencies": {
-    "axe-core": "^4.9.1"
+    "axe-core": "^4.9.1",
+    "dotenv": "^16.4.5"
   }
 }

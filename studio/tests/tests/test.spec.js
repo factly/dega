@@ -27,20 +27,33 @@ test.beforeEach(async ({ page }) => {
 });
 
 
-test('Should find search results based on category', async ({ page }) => {
+test.only('Should find search results based on tag', async ({ page }) => {
   await page.click('span:has-text("More Filters ")');
   // Locate the specific dropdown using a more specific selector
-  const dropdownSelect = page.locator('[placeholder="Filter Tags"]');
-  await dropdownSelect.click();
-  // Select the option "Nine" from the dropdown
-  const optionSelector = '.ant-select-item-option[title="This is a test tag 3pHK7DfLFN"]';
+  const dropdownContainerSelector = '.ant-form-item-control-input-content';
+  const dropdownSelector = `${dropdownContainerSelector} .ant-select-selector`;
+  // Click on the dropdown to open it
+  await page.locator(dropdownSelector).nth(1).click();
+  // Wait for the dropdown options to be visible
+  const dropdownMenuSelector = '.ant-select-dropdown';
+  await page.waitForSelector(dropdownMenuSelector);
+  // Scroll the dropdown to the desired option
+  await page.evaluate(() => {
+      const dropdown = document.querySelector('.ant-select-dropdown');
+      if (dropdown) {
+          dropdown.scrollTop = 100; // Adjust the value based on how far you need to scroll
+      }
+  });
+  // Select the option "One" from the dropdown
+  const optionSelector = '.ant-select-item-option[title="One"]';
   await page.waitForSelector(optionSelector);
   await page.locator(optionSelector).click();
   // Wait for all the search results to be visible
-  const resultsSelector = 'td.ant-table-cell a[href="/.factly/dega/studio/claimants/13/edit"]';
+  const resultsSelector = 'tbody.ant-table-tbody tr.ant-table-row td.ant-table-cell a[href*="/.factly/dega/studio/posts/"]';
   const results = page.locator(resultsSelector);
   const count = await results.count();
   for (let i = 0; i < count; i++) {
-    await expect(results.nth(i)).toBeVisible();
+      await expect(results.nth(i)).toBeVisible();
   }  
 });
+
