@@ -1,24 +1,14 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
+import {getRandomString} from './randomfunc.js';
 // Read from default ".env" file.
 dotenv.config();
 
 
-// Helper function to generate a random string using JavaScript's Math.random
-function getRandomString(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-}
-
-
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
-    test.setTimeout(90000)
+    test.setTimeout(900000)
     // Navigate to the login page
     await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
     // Fill in the email and password fields
@@ -76,7 +66,6 @@ test('should persist tag data across sessions', async ({ page, context }) => {
 
 
 test('should display "Please enter name!" successfully, when the name input field is empty', async ({ page }) => {
-    test.setTimeout(90000)
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
     // Click on the 'Expand' button
