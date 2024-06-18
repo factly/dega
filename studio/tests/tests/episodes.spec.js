@@ -1,5 +1,8 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
+import dotenv from 'dotenv';
+// Read from default ".env" file.
+dotenv.config();
 
 // Helper function to generate a random string using JavaScript's Math.random
 function getRandomString(length) {
@@ -15,13 +18,13 @@ function getRandomString(length) {
 test.beforeEach(async ({ page }) => {
     test.setTimeout(90000)
     // Navigate to the login page
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
     // Fill in the email and password fields
-    await page.type('#auth_email', 'ramsai.rapole@factly.in')
-    await page.type('#auth_password', 'Wrongpass@123')
+    await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
+    await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
     // Click the login button
     await page.click('text=Login')
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/episodes?sort=desc&limit=10&page=1');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/episodes?sort=desc&limit=10&page=1`);
     // Save session cookies to a file
     const cookies = await page.context().cookies();
     await page.context().storageState({ path: 'state.json' });
@@ -32,7 +35,7 @@ test('should stay logged in using stored cookies', async ({ page }) => {
     // Load session cookies from the file
     await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
     // Navigate to a page that requires login
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
     // Verify the user is still logged in
     expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
 });
@@ -48,7 +51,7 @@ test('should load the episodes page successfully', async ({ page }) => {
 
 test('should handle invalid URL parameters gracefully', async ({ page }) => {
     // Navigate to the URL with invalid parameters
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/episodes?sort=desc&limit=10&page=NaN');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/episodes?sort=desc&limit=10&page=NaN`);
     // Locate the element that shows 'No data' message
     const accountLogin = await page.locator('text=No data');
     // Assert that the 'No data' message is visible
@@ -62,12 +65,138 @@ test('should persist episode data across sessions', async ({ page, context }) =>
     // Open a new page in the same context
     await context.newPage();
     // Navigate to the episodes page
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/episodes?sort=desc&limit=10&page=1');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/episodes?sort=desc&limit=10&page=1`);
     // Get the text content of the first h3 element again
     const newFirstepisodeText = await page.locator('h3').first().textContent();
     // Assert that the episode data is the same across sessions
     expect(firstepisodeText).toEqual(newFirstepisodeText);
 });
+
+//Perform this test case only when there are no tags present
+test('should display empty state when no episodes are present', async ({ page }) => {
+    // Locate the element that represents the empty state image
+    const emptyStateMessage = await page.locator('.ant-empty-image');
+    // Assert that the empty state image is visible
+    await expect(emptyStateMessage).toBeVisible();
+});
+
+
+test('should navigate to the next page', async ({ page }) => {
+    // Click the button to navigate to the next page
+    await page.click('button:has([aria-label="right"])');
+    // Verify that the URL contains 'page=2'
+    expect(page.url()).toContain('page=2');
+});
+
+
+test('should navigate to the previous page', async ({ page }) => {
+    // Click the button to navigate to the next page
+    await page.click('button:has([aria-label="right"])');
+    // Click the button to navigate back to the previous page
+    await page.click('button:has([aria-label="left"])');
+    // Verify that the URL contains 'page=1'
+    expect(page.url()).toContain('page=1');
+});
+
+
+test('should navigate to the selected page', async ({ page }) => {
+    const pageNumber = 2; // You can set this to any number dynamically
+    // Click the button to navigate to the next page
+    await page.click(`.ant-pagination-item-${pageNumber}`);
+    // Verify that the URL contains 'page=2'
+    expect(page.url()).toContain(`page=${pageNumber}`);
+});
+
+
+test('should sort episodes from latest to oldest', async ({ page }) => {
+    // Click on the sorting dropdown
+    await page.click('#filters_sort', { force: true }); 
+    // Click on the option for sorting from latest to oldest
+    await page.click('.ant-select-item[title="Latest"]');  
+    // Get the text content of all episodes
+    const episodes = await page.$$eval('.ant-table-tbody tr', rows => {
+        return rows.map(row => row.textContent.trim());
+    });
+    // Check if episodes are sorted from latest to oldest
+    const sortedepisodes = episodes.slice().sort((a, b) => {
+        // Extract timestamp from the row content and compare
+        const getTime = str => {
+            const match = str.match(/Created At:\s*(.+)/);
+            if (match) {
+                return new Date(match[1]).getTime();
+            }
+            return 0;
+        };
+        return getTime(b) - getTime(a);
+    });
+    // Check if the episodes are in the correct order
+    expect(episodes).toEqual(sortedepisodes);
+});
+
+
+test('should sort episodes from oldest to latest', async ({ page }) => {
+    // Click on the sorting dropdown
+    await page.click('#filters_sort', { force: true });
+
+    // Click on the option for sorting from oldest to latest
+    await page.click('.ant-select-item[title="Old"]');  // Adjust the title as needed if "Old" means oldest
+
+    // Get the text content of all episodes
+    const episodes = await page.$$eval('.ant-table-tbody tr', rows => {
+        return rows.map(row => row.textContent.trim());
+    });
+    // Check if episodes are sorted from oldest to latest
+    const sortedepisodes = episodes.slice().sort((a, b) => {
+        // Extract timestamp from the row content and compare
+        const getTime = str => {
+            const match = str.match(/Created At:\s*(.+)/);
+            if (match) {
+                return new Date(match[1]).getTime();
+            }
+            return 0;
+        };
+        return getTime(a) - getTime(b); // Sorting in ascending order
+    });
+    // Check if the episodes are in the correct order
+    expect(episodes).toEqual(sortedepisodes);
+});
+
+
+
+test('should remove alert box when x is clicked successfully', async ({ page }) => {
+    const episodeText = 'Twelve';
+    const episodeSelector = `text=${episodeText}`;
+    // Click on the delete button for the episode
+    await page.click('button:has([aria-label="delete"])');
+    // Click on the 'OK' button in the confirmation dialog
+    await page.click('button:has-text("OK")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    await page.click('.ant-notification-notice-close');
+    // Locate the element that shows 'episode deleted' message
+    const accountLogin = await page.locator('text=episode deleted');
+    // Assert that the 'No data' message is visible
+    await expect(accountLogin).not.toBeVisible();
+});
+
+
+test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
+    const episodeSelector = 'text=Ten';
+    await page.click(episodeSelector);
+    await page.click('button:has-text("Expand")');
+    await page.click('button:has-text("Expand")');
+    await page.click('button:has-text("Expand")');
+    // Find the scroll to top button and click it
+    const spanElement = page.locator('span[aria-label="vertical-align-top"]');
+    // Click on the span element
+    await spanElement.click();
+    // Wait for the scroll action to complete
+    await page.waitForTimeout(1000); // adjust the timeout based on your scroll animation duration
+    // Check if the page is scrolled to the top
+    const scrollPosition = await page.evaluate(() => window.scrollY);
+    expect(scrollPosition).toBe(0);
+});
+  
 
 
 test('should display "Please enter title!" successfully, when the name input field is empty', async ({ page }) => {
@@ -279,131 +408,5 @@ test('should display "episode already exists" successfully', async ({ page }) =>
     const successMessage = await page.textContent('.ant-notification-notice-description');
     // Assert that the success message matches the expected text
     expect(successMessage).toBe('Entity with same name exists');
-});
-
-
-
-test('should remove alert box when x is clicked successfully', async ({ page }) => {
-    const episodeText = 'Twelve';
-    const episodeSelector = `text=${episodeText}`;
-    // Click on the delete button for the episode
-    await page.click('button:has([aria-label="delete"])');
-    // Click on the 'OK' button in the confirmation dialog
-    await page.click('button:has-text("OK")');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    await page.click('.ant-notification-notice-close');
-    // Locate the element that shows 'episode deleted' message
-    const accountLogin = await page.locator('text=episode deleted');
-    // Assert that the 'No data' message is visible
-    await expect(accountLogin).not.toBeVisible();
-});
-
-
-test('when the button is clicked, should scroll to the top of the page', async ({ page }) => {
-    const episodeSelector = 'text=Ten';
-    await page.click(episodeSelector);
-    await page.click('button:has-text("Expand")');
-    await page.click('button:has-text("Expand")');
-    await page.click('button:has-text("Expand")');
-    // Find the scroll to top button and click it
-    const spanElement = page.locator('span[aria-label="vertical-align-top"]');
-    // Click on the span element
-    await spanElement.click();
-    // Wait for the scroll action to complete
-    await page.waitForTimeout(1000); // adjust the timeout based on your scroll animation duration
-    // Check if the page is scrolled to the top
-    const scrollPosition = await page.evaluate(() => window.scrollY);
-    expect(scrollPosition).toBe(0);
-  });
-  
-
-
-test('should display empty state when no episodes are present', async ({ page }) => {
-    // Locate the element that represents the empty state image
-    const emptyStateMessage = await page.locator('.ant-empty-image');
-    // Assert that the empty state image is visible
-    await expect(emptyStateMessage).toBeVisible();
-});
-
-
-test('should navigate to the next page', async ({ page }) => {
-    // Click the button to navigate to the next page
-    await page.click('button:has([aria-label="right"])');
-    // Verify that the URL contains 'page=2'
-    expect(page.url()).toContain('page=2');
-});
-
-
-test('should navigate to the previous page', async ({ page }) => {
-    // Click the button to navigate to the next page
-    await page.click('button:has([aria-label="right"])');
-    // Click the button to navigate back to the previous page
-    await page.click('button:has([aria-label="left"])');
-    // Verify that the URL contains 'page=1'
-    expect(page.url()).toContain('page=1');
-});
-
-
-test('should navigate to the selected page', async ({ page }) => {
-    const pageNumber = 2; // You can set this to any number dynamically
-    // Click the button to navigate to the next page
-    await page.click(`.ant-pagination-item-${pageNumber}`);
-    // Verify that the URL contains 'page=2'
-    expect(page.url()).toContain(`page=${pageNumber}`);
-});
-
-
-test('should sort episodes from latest to oldest', async ({ page }) => {
-    // Click on the sorting dropdown
-    await page.click('#filters_sort', { force: true }); 
-    // Click on the option for sorting from latest to oldest
-    await page.click('.ant-select-item[title="Latest"]');  
-    // Get the text content of all episodes
-    const episodes = await page.$$eval('.ant-table-tbody tr', rows => {
-        return rows.map(row => row.textContent.trim());
-    });
-    // Check if episodes are sorted from latest to oldest
-    const sortedepisodes = episodes.slice().sort((a, b) => {
-        // Extract timestamp from the row content and compare
-        const getTime = str => {
-            const match = str.match(/Created At:\s*(.+)/);
-            if (match) {
-                return new Date(match[1]).getTime();
-            }
-            return 0;
-        };
-        return getTime(b) - getTime(a);
-    });
-    // Check if the episodes are in the correct order
-    expect(episodes).toEqual(sortedepisodes);
-});
-
-
-test('should sort episodes from oldest to latest', async ({ page }) => {
-    // Click on the sorting dropdown
-    await page.click('#filters_sort', { force: true });
-
-    // Click on the option for sorting from oldest to latest
-    await page.click('.ant-select-item[title="Old"]');  // Adjust the title as needed if "Old" means oldest
-
-    // Get the text content of all episodes
-    const episodes = await page.$$eval('.ant-table-tbody tr', rows => {
-        return rows.map(row => row.textContent.trim());
-    });
-    // Check if episodes are sorted from oldest to latest
-    const sortedepisodes = episodes.slice().sort((a, b) => {
-        // Extract timestamp from the row content and compare
-        const getTime = str => {
-            const match = str.match(/Created At:\s*(.+)/);
-            if (match) {
-                return new Date(match[1]).getTime();
-            }
-            return 0;
-        };
-        return getTime(a) - getTime(b); // Sorting in ascending order
-    });
-    // Check if the episodes are in the correct order
-    expect(episodes).toEqual(sortedepisodes);
 });
 

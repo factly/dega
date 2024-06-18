@@ -1,5 +1,8 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
+import dotenv from 'dotenv';
+// Read from default ".env" file.
+dotenv.config();
 
 // Helper function to generate a random string using JavaScript's Math.random
 function getRandomString(length) {
@@ -15,13 +18,13 @@ function getRandomString(length) {
 test.beforeEach(async ({ page }) => {
     test.setTimeout(90000)
     // Navigate to the login page
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
     // Fill in the email and password fields
-    await page.type('#auth_email', 'ramsai.rapole@factly.in')
-    await page.type('#auth_password', 'Wrongpass@123')
+    await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
+    await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
     // Click the login button
     await page.click('text=Login')
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/podcasts?sort=desc&limit=10&page=1');
+    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/podcasts?sort=desc&limit=10&page=1`);
     // Save session cookies to a file
     const cookies = await page.context().cookies();
     await page.context().storageState({ path: 'state.json' });
