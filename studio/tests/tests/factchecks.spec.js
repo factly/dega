@@ -225,6 +225,93 @@ test('should display tippy ', async ({ page }) => {
     await page.isVisible('#tippy-11');
 });
 
+test('should create a draft factcheck succesfully ', async ({ page }) => {
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Type the new factcheck name into the input field
+    const randomString = getRandomString(10); // Adjust the length as needed
+    await page.type('#title', `This is a test factcheck ${randomString}`)
+    // Type the new factcheck name into the input block
+    await page.click('p.is-empty.is-editor-empty');
+    await page.keyboard.type('Sub title');
+    await page.click('button:has([aria-label="setting"])');
+    // Locate the 4th div with class 'ant-select-selector'
+    const selectorDiv = page.locator('div.ant-select-selector').nth(3);
+    // Click on the located div
+    await selectorDiv.click();  // Wait for the dropdown list to appear and populate
+    await page.keyboard.press('Enter');
+    await page.click('button:has([aria-label="close"])');
+    // Click on the 'Save as Draft' button
+    await page.click('span:has-text("Save")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Post added'
+    expect(successMessage).toBe('Post added');
+});
+
+
+test('should create a ready to publish factcheck succesfully ', async ({ page }) => {
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Type the new factcheck name into the input field
+    const randomString = getRandomString(10); // Adjust the length as needed
+    await page.type('#title', `This is a test factcheck ${randomString}`)
+    // Type the new factcheck name into the input block
+    await page.click('p.is-empty.is-editor-empty');
+    await page.keyboard.type('Sub title');
+    await page.click('button:has([aria-label="setting"])');
+    // Locate the 4th div with class 'ant-select-selector'
+    const selectorDiv = page.locator('div.ant-select-selector').nth(3);
+    // Click on the located div
+    await selectorDiv.click();  // Wait for the dropdown list to appear and populate
+    await page.keyboard.press('Enter');
+    await page.click('button:has([aria-label="close"])');
+    // Click on the 'Save as Draft' button
+    await page.hover('span:has-text("Save")');
+    await page.click('button[role="switch"]');
+    await page.click('span:has-text("Save")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Draft saved & Ready to Publish'
+    expect(successMessage).toBe('Draft saved & Ready to Publish');
+});
+
+
+test('should publish a post succesfully ', async ({ page }) => {
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Type the new factcheck name into the input field
+    const randomString = getRandomString(10); // Adjust the length as needed
+    await page.type('#title', `This is a test factcheck ${randomString}`)
+    // Type the new factcheck name into the input block
+    await page.click('p.is-empty.is-editor-empty');
+    await page.keyboard.type('Sub title');
+    await page.click('button:has([aria-label="setting"])');
+    // Locate the 4th div with class 'ant-select-selector'
+    const selectorDiv = page.locator('div.ant-select-selector').nth(3);
+    // Click on the located div
+    await selectorDiv.click();  // Wait for the dropdown list to appear and populate
+    await page.keyboard.press('Enter');
+    await page.click('button:has([aria-label="close"])');
+    // Click on the 'Publish' button
+    await page.click('span:has-text("Publish")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Fact Check Published'
+    expect(successMessage).toBe('Fact Check Published');
+});
+
+
+
+
+
+
 
 test('should delete a published factcheck successfully', async ({ page }) => {
     await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/fact-checks?status=publish`);
