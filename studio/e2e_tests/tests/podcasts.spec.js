@@ -1,101 +1,25 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
+import {getRandomString} from './randomfunc.js';
 // Read from default ".env" file.
 dotenv.config();
 
-// Helper function to generate a random string using JavaScript's Math.random
-function getRandomString(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-}
 
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
     test.setTimeout(90000)
     // Navigate to the login page
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
+    await page.goto(`${process.env.BASE_URL}`);
     // Fill in the email and password fields
     await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
     await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
     // Click the login button
     await page.click('text=Login')
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/podcasts?sort=desc&limit=10&page=1`);
+    await page.goto(`${process.env.BASE_URL}podcasts?sort=desc&limit=10&page=1`);
     // Save session cookies to a file
     const cookies = await page.context().cookies();
     await page.context().storageState({ path: 'state.json' });
-});
-
-
-test('should stay logged in using stored cookies', async ({ page }) => {
-    // Load session cookies from the file
-    await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
-    // Navigate to a page that requires login
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/');
-    // Verify the user is still logged in
-    expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
-});
-
-
-test('should load the podcasts page successfully', async ({ page }) => {
-    // Locate the header element with the text 'podcasts'
-    const accountLogin = await page.locator('h3')
-    // Assert that the header has the text 'Podcasts'
-    await expect(accountLogin).toHaveText('Podcasts')
-});
-
-
-test('should handle invalid URL parameters gracefully', async ({ page }) => {
-    // Navigate to the URL with invalid parameters
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/podcasts?sort=desc&limit=10&page=NaN');
-    // Locate the element that shows 'No data' message
-    const accountLogin = await page.locator('text=No data');
-    // Assert that the 'No data' message is visible
-    await expect(accountLogin).toBeVisible();
-});
-
-
-test('should persist podcast data across sessions', async ({ page, context }) => {
-    // Get the text content of the first h3 element
-    const firstpodcastText = await page.locator('h3').first().textContent();
-    // Open a new page in the same context
-    await context.newPage();
-    // Navigate to the podcasts page
-    await page.goto('http://127.0.0.1:4455/.factly/dega/studio/podcasts?sort=desc&limit=10&page=1');
-    // Get the text content of the first h3 element again
-    const newFirstpodcastText = await page.locator('h3').first().textContent();
-    // Assert that the podcast data is the same across sessions
-    expect(firstpodcastText).toEqual(newFirstpodcastText);
-});
-
-
-test('should display "Please enter title!" successfully, when the name input field is empty', async ({ page }) => {
-    test.setTimeout(90000)
-    // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
-    // Click on the 'Expand' button
-    await page.click('button:has-text("Expand")');
-    // Type the new podcast name into the input field
-    const podcastName = 'This is a test podcast';
-    await page.type('#create-category_title', podcastName);
-    // Get the length of the typed text
-    const deletePressCount = podcastName.length;
-    // Press the Backspace key multiple times
-    for (let i = 0; i < deletePressCount; i++) {
-        await page.keyboard.press('Backspace');
-    }
-    // Click on the 'Save' button
-    await page.click('button:has-text("Save")');
-    // Wait for the error message to appear
-    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
-    // Get the error message text
-    const errorMessage = await page.textContent('.ant-form-item-explain-error');
-    // Assert that the success message is 'Please enter title!'
-    expect(errorMessage).toBe('Please enter title!');
 });
 
 
@@ -284,20 +208,8 @@ test('when the button is clicked, should scroll to the top of the page', async (
     // Check if the page is scrolled to the top
     const scrollPosition = await page.evaluate(() => window.scrollY);
     expect(scrollPosition).toBe(0);
-  });
-  
-
-
-test('should display podcasts correctly', async ({ page }) => {
-    // Define the expected podcast names
-    const expectedpodcasts = ['New', 'One', 'Two']; // Add more if needed
-
-    // Loop through each expected podcast and check if it's visible on the page
-    for (const podcastName of expectedpodcasts) {
-        const podcastExists = await page.isVisible(`text=${podcastName}`);
-    }
 });
-
+  
 
 test('should display empty state when no podcasts are present', async ({ page }) => {
     // Locate the element that represents the empty state image
@@ -413,3 +325,69 @@ test('should sort podcasts from oldest to latest', async ({ page }) => {
     expect(podcasts).toEqual(sortedpodcasts);
 });
 
+test('should stay logged in using stored cookies', async ({ page }) => {
+    // Load session cookies from the file
+    await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
+    // Navigate to a page that requires login
+    await page.goto(`${process.env.BASE_URL}`);
+    // Verify the user is still logged in
+    expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
+});
+
+
+test('should load the podcasts page successfully', async ({ page }) => {
+    // Locate the header element with the text 'podcasts'
+    const accountLogin = await page.locator('h3')
+    // Assert that the header has the text 'Podcasts'
+    await expect(accountLogin).toHaveText('Podcasts')
+});
+
+
+test('should handle invalid URL parameters gracefully', async ({ page }) => {
+    // Navigate to the URL with invalid parameters
+    await page.goto(`${process.env.BASE_URL}podcasts?sort=desc&limit=10&page=NaN`);
+    // Locate the element that shows 'No data' message
+    const accountLogin = await page.locator('text=No data');
+    // Assert that the 'No data' message is visible
+    await expect(accountLogin).toBeVisible();
+});
+
+
+test('should persist podcast data across sessions', async ({ page, context }) => {
+    // Get the text content of the first h3 element
+    const firstpodcastText = await page.locator('h3').first().textContent();
+    // Open a new page in the same context
+    await context.newPage();
+    // Navigate to the podcasts page
+    await page.goto(`${process.env.BASE_URL}podcasts?sort=desc&limit=10&page=1`);
+    // Get the text content of the first h3 element again
+    const newFirstpodcastText = await page.locator('h3').first().textContent();
+    // Assert that the podcast data is the same across sessions
+    expect(firstpodcastText).toEqual(newFirstpodcastText);
+});
+
+
+test('should display "Please enter title!" successfully, when the name input field is empty', async ({ page }) => {
+    test.setTimeout(90000)
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Click on the 'Expand' button
+    await page.click('button:has-text("Expand")');
+    // Type the new podcast name into the input field
+    const podcastName = 'This is a test podcast';
+    await page.type('#create-category_title', podcastName);
+    // Get the length of the typed text
+    const deletePressCount = podcastName.length;
+    // Press the Backspace key multiple times
+    for (let i = 0; i < deletePressCount; i++) {
+        await page.keyboard.press('Backspace');
+    }
+    // Click on the 'Save' button
+    await page.click('button:has-text("Save")');
+    // Wait for the error message to appear
+    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
+    // Get the error message text
+    const errorMessage = await page.textContent('.ant-form-item-explain-error');
+    // Assert that the success message is 'Please enter title!'
+    expect(errorMessage).toBe('Please enter title!');
+});

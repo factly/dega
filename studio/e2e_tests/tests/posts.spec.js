@@ -1,217 +1,27 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
+import {getRandomString} from './randomfunc.js';
 // Read from default ".env" file.
 dotenv.config();
-
-
-// Helper function to generate a random string using JavaScript's Math.random
-function getRandomString(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-}
 
 
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
     test.setTimeout(90000)
     // Navigate to the login page
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
+    await page.goto(`${process.env.BASE_URL}`);
     // Fill in the email and password fields
     await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
     await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
     // Click the login button
     await page.click('text=Login')
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts`);
+    await page.goto(`${process.env.BASE_URL}posts`);
     // Save session cookies to a file
     const cookies = await page.context().cookies();
     await page.context().storageState({ path: 'state.json' });
 });
 
-
-test('should load the posts page successfully', async ({ page }) => {
-    // Locate the header postwith the text 'posts'
-    const accountLogin = await page.locator('h3')
-    // Assert that the header has the text 'posts'
-    await expect(accountLogin).toHaveText('Posts')
-});
-
-
-test('should handle invalid URL parameters gracefully', async ({ page }) => {
-    // Navigate to the URL with invalid parameters
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/postssnskn`);
-    // Locate the postthat shows '404' message
-    const accountLogin = await page.locator('text=404');
-    // Assert that the '404' message is visible
-    await expect(accountLogin).toBeVisible();
-});
-
-
-test('should persist posts data across sessions', async ({ page, context }) => {
-    // Get the text content of the first h3 element
-    const firstTagText = await page.locator('h3').first().textContent();
-    // Open a new page in the same context
-    await context.newPage();
-    // Navigate to the tags page
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts`);
-    // Get the text content of the first h3 element again
-    const newFirstTagText = await page.locator('h3').first().textContent();
-    // Assert that the tag data is the same across sessions
-    expect(firstTagText).toEqual(newFirstTagText);
-});
-
-
-//Perform this test case only when there are no tags present
-test('should display empty state when no posts are present', async ({ page }) => {
-    // Locate the selector that represents the empty state image
-    const emptyStateMessage = await page.locator('.ant-empty-image');
-    // Assert that the empty state image is visible
-    await expect(emptyStateMessage).toBeVisible();
-});
-
-
-test('Should find search results', async ({ page }) => {
-    const postToSearch = 'new post';
-    const searchInputSelector = '#filters_q';
-    // Click the search button
-    await page.click('button:has([aria-label="search"])');
-    // Enter the search query
-    await page.fill(searchInputSelector , postToSearch);
-    page.locator(postToSearch); 
-    // Press 'Enter' to search
-    await page.press(searchInputSelector, 'Enter');
-    // Verify that the post is visible in the results
-    const postExists = await page.isVisible(`text=${postToSearch}`);
-});
-
-
-test('Should find no search results', async ({ page }) => {
-    const postToSearch = 'Zero';
-    const searchInputSelector = '#filters_q';
-    // Click the search button
-    await page.click('button:has([aria-label="search"])');
-    // Enter the search query
-    await page.fill('#filters_q', postToSearch);
-    page.locator(postToSearch); 
-    // Press 'Enter' to search
-    await page.press(searchInputSelector, 'Enter');
-    // Verify that 'No data' is visible
-    const accountLogin = await page.locator('text=No data');
-    await expect(accountLogin).toBeVisible();
-});
-
-
-test('should navigate to the next page', async ({ page }) => {
-    // Click the button to navigate to the next page
-    await page.click('button:has([aria-label="right"])');
-    // Verify that the URL contains 'page=2'
-    expect(page.url()).toContain('page=2');
-});
-
-
-test('should navigate to the previous page', async ({ page }) => {
-    // Click the button to navigate to the next page
-    await page.click('button:has([aria-label="right"])');
-    // Click the button to navigate back to the previous page
-    await page.click('button:has([aria-label="left"])');
-    // Verify that the URL contains 'page=1'
-    expect(page.url()).toContain('page=1');
-});
-
-
-test('should navigate to the selected page', async ({ page }) => {
-    const pageNumber = 2; // You can set this to any number dynamically
-    // Click the button to navigate to the next page
-    await page.click(`.ant-pagination-item-${pageNumber}`);  
-    // Verify that the URL contains 'page=2'
-    expect(page.url()).toContain(`page=${pageNumber}`);
-});
-
-
-test('should sort tags from latest to oldest', async ({ page }) => {
-    // Click on the sorting dropdown
-    await page.click('#filters_sort', { force: true }); 
-    // Click on the option for sorting from latest to oldest
-    await page.click('.ant-select-item[title="Latest"]');  
-    // Get the text content of all tags
-    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
-        return rows.map(row => row.textContent.trim());
-    });
-    // Check if tags are sorted from latest to oldest
-    const sortedtags = tags.slice().sort((a, b) => {
-        // Extract timestamp from the row content and compare
-        const getTime = str => {
-            const match = str.match(/Created At:\s*(.+)/);
-            if (match) {
-                return new Date(match[1]).getTime();
-            }
-            return 0;
-        };
-        return getTime(b) - getTime(a);
-    });
-    // Check if the tags are in the correct order
-    expect(tags).toEqual(sortedtags);
-});
-
-
-test('should sort tags from oldest to latest', async ({ page }) => {
-    // Click on the sorting dropdown
-    await page.click('#filters_sort', { force: true });
-    // Click on the option for sorting from oldest to latest
-    await page.click('.ant-select-item[title="Old"]');  // Adjust the title as needed if "Old" means oldest
-    // Get the text content of all tags
-    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
-        return rows.map(row => row.textContent.trim());
-    });
-    // Check if tags are sorted from oldest to latest
-    const sortedtags = tags.slice().sort((a, b) => {
-        // Extract timestamp from the row content and compare
-        const getTime = str => {
-            const match = str.match(/Created At:\s*(.+)/);
-            if (match) {
-                return new Date(match[1]).getTime();
-            }
-            return 0;
-        };
-        return getTime(a) - getTime(b); // Sorting in ascending order
-    });
-    // Check if the tags are in the correct order
-    expect(tags).toEqual(sortedtags);
-});
-
-
-test('should show "cannot publish post without author" successfully ', async ({ page }) => {
-    // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
-    // Type the new post name into the input field
-    await page.type('#title', 'New Post')
-    // Type the new post name into the input block
-    await page.click('p.is-empty.is-editor-empty');
-    await page.keyboard.type('Sub title');
-    // Click on the 'Save' button
-    await page.click('button:has-text("Publish")');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the error message text
-    const errorMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the error message is 'cannot publish post without author'
-    expect(errorMessage).toBe('cannot publish post without author');
-});
-
-
-test('should show "Please input the title!" succesfully ', async ({ page }) => {
-    // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
-    await page.click('button:has-text("Publish")');
-    // Get the error message text
-    const errorMessage = await page.textContent('.ant-form-item-explain-error');
-    // Assert that the error message is 'Please input the title!'
-    expect(errorMessage).toBe('Please input the title!');
-});
 
 
 test('should create a draft post succesfully ', async ({ page }) => {
@@ -304,7 +114,7 @@ test('should display tippy ', async ({ page }) => {
 
 
 test('should delete a published post successfully', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=publish`);
+    await page.goto(`${process.env.BASE_URL}posts?status=publish`);
     const postText = 'ndscn';
     //const postDateTime = 'Jun 03, 2024 03:25 PM'; // specify the exact date and time of the post
     // Select the row with the required fact-check text and date-time
@@ -329,7 +139,7 @@ test('should delete a published post successfully', async ({ page }) => {
 
 
 test('should delete a post from ready to publish successfully', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=ready`);
+    await page.goto(`${process.env.BASE_URL}posts?status=ready`);
     const postText = 'Onel';
     // Select the row with the required fact-check text
     const rowSelector = `tr:has-text("${postText}")`;
@@ -352,7 +162,7 @@ test('should delete a post from ready to publish successfully', async ({ page })
 
 
 test('should delete a post from drafts successfully', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=draft`);
+    await page.goto(`${process.env.BASE_URL}posts?status=draft`);
     const postText = 'asax';
     // Select the row with the required fact-check text
     const rowSelector = `tr:has-text("${postText}")`;
@@ -373,7 +183,7 @@ test('should delete a post from drafts successfully', async ({ page }) => {
 
 
 test('should edit a published post successfully ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=publish`);
+    await page.goto(`${process.env.BASE_URL}posts?status=publish`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postSelector = 'text=dkndkm';
     const newPostName = `This is a test post ${randomString}`;
@@ -397,7 +207,7 @@ test('should edit a published post successfully ', async ({ page }) => {
 
 
 test('should edit a ready to publish post successfully ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=ready`);
+    await page.goto(`${process.env.BASE_URL}posts?status=ready`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postSelector = 'text=cddc';
     const newPostName = `This is a test post ${randomString}`;
@@ -421,7 +231,7 @@ test('should edit a ready to publish post successfully ', async ({ page }) => {
 
 
 test('should edit a draft post successfully ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=draft`);
+    await page.goto(`${process.env.BASE_URL}posts?status=draft`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postSelector = 'text=cddc';
     const newPostName = `This is a test post ${randomString}`;
@@ -445,7 +255,7 @@ test('should edit a draft post successfully ', async ({ page }) => {
 
 
 test('should edit a published post successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=publish`);
+    await page.goto(`${process.env.BASE_URL}posts?status=publish`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postName = 'dkndkm';
     const newPostName = `This is a test post ${randomString}`;
@@ -472,7 +282,7 @@ test('should edit a published post successfully from the shortcut edit button  '
 
 
 test('should edit a ready to publish post successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=ready`);
+    await page.goto(`${process.env.BASE_URL}posts?status=ready`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postName = 'jxks';
     const newPostName = `This is a test post ${randomString}`;
@@ -499,7 +309,7 @@ test('should edit a ready to publish post successfully from the shortcut edit bu
 
 
 test('should edit a draft post successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/posts?status=draft`);
+    await page.goto(`${process.env.BASE_URL}posts?status=draft`);
     const randomString = getRandomString(10); // Adjust the length as needed
     const postName = 'skis';
     const newPostName = `This is a test post ${randomString}`;
@@ -624,25 +434,6 @@ test('Should find no search results based on category', async ({ page }) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 test('should create a template successfully ', async ({ page }) => {
     const postSelector = 'text=One';
     // Click on the post to be edited
@@ -718,6 +509,70 @@ test('should edit a template successfully', async ({ page }) => {
 });  
 
 
+
+test('Should find search results', async ({ page }) => {
+    const postToSearch = 'new post';
+    const searchInputSelector = '#filters_q';
+    // Click the search button
+    await page.click('button:has([aria-label="search"])');
+    // Enter the search query
+    await page.fill(searchInputSelector , postToSearch);
+    page.locator(postToSearch); 
+    // Press 'Enter' to search
+    await page.press(searchInputSelector, 'Enter');
+    // Verify that the post is visible in the results
+    const postExists = await page.isVisible(`text=${postToSearch}`);
+});
+
+
+test('Should find no search results', async ({ page }) => {
+    const postToSearch = 'Zero';
+    const searchInputSelector = '#filters_q';
+    // Click the search button
+    await page.click('button:has([aria-label="search"])');
+    // Enter the search query
+    await page.fill('#filters_q', postToSearch);
+    page.locator(postToSearch); 
+    // Press 'Enter' to search
+    await page.press(searchInputSelector, 'Enter');
+    // Verify that 'No data' is visible
+    const accountLogin = await page.locator('text=No data');
+    await expect(accountLogin).toBeVisible();
+});
+
+
+test('should show "cannot publish post without author" successfully ', async ({ page }) => {
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Type the new post name into the input field
+    await page.type('#title', 'New Post')
+    // Type the new post name into the input block
+    await page.click('p.is-empty.is-editor-empty');
+    await page.keyboard.type('Sub title');
+    // Click on the 'Save' button
+    await page.click('button:has-text("Publish")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', dialog => dialog.accept());
+    // Get the error message text
+    const errorMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the error message is 'cannot publish post without author'
+    expect(errorMessage).toBe('cannot publish post without author');
+});
+
+
+test('should show "Please input the title!" succesfully ', async ({ page }) => {
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    await page.click('button:has-text("Publish")');
+    // Get the error message text
+    const errorMessage = await page.textContent('.ant-form-item-explain-error');
+    // Assert that the error message is 'Please input the title!'
+    expect(errorMessage).toBe('Please input the title!');
+});
+
+
+
+
 test('should open to edit when clicked on template edit button successfully ', async ({ page }) => {
     // Click on the 'Templates' button
     await page.click('span:has-text("Templates")');
@@ -738,4 +593,123 @@ test('should delete template when clicked on template delete button successfully
     const editButtons = page.locator('span[aria-label="delete"]');
     await editButtons.nth(5).click();
     await page.click('button:has-text("OK")');
+});
+
+
+test('should navigate to the next page', async ({ page }) => {
+    // Click the button to navigate to the next page
+    await page.click('button:has([aria-label="right"])');
+    // Verify that the URL contains 'page=2'
+    expect(page.url()).toContain('page=2');
+});
+
+
+test('should navigate to the previous page', async ({ page }) => {
+    // Click the button to navigate to the next page
+    await page.click('button:has([aria-label="right"])');
+    // Click the button to navigate back to the previous page
+    await page.click('button:has([aria-label="left"])');
+    // Verify that the URL contains 'page=1'
+    expect(page.url()).toContain('page=1');
+});
+
+
+test('should navigate to the selected page', async ({ page }) => {
+    const pageNumber = 2; // You can set this to any number dynamically
+    // Click the button to navigate to the next page
+    await page.click(`.ant-pagination-item-${pageNumber}`);  
+    // Verify that the URL contains 'page=2'
+    expect(page.url()).toContain(`page=${pageNumber}`);
+});
+
+
+test('should sort tags from latest to oldest', async ({ page }) => {
+    // Click on the sorting dropdown
+    await page.click('#filters_sort', { force: true }); 
+    // Click on the option for sorting from latest to oldest
+    await page.click('.ant-select-item[title="Latest"]');  
+    // Get the text content of all tags
+    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
+        return rows.map(row => row.textContent.trim());
+    });
+    // Check if tags are sorted from latest to oldest
+    const sortedtags = tags.slice().sort((a, b) => {
+        // Extract timestamp from the row content and compare
+        const getTime = str => {
+            const match = str.match(/Created At:\s*(.+)/);
+            if (match) {
+                return new Date(match[1]).getTime();
+            }
+            return 0;
+        };
+        return getTime(b) - getTime(a);
+    });
+    // Check if the tags are in the correct order
+    expect(tags).toEqual(sortedtags);
+});
+
+test('should load the posts page successfully', async ({ page }) => {
+    // Locate the header postwith the text 'posts'
+    const accountLogin = await page.locator('h3')
+    // Assert that the header has the text 'posts'
+    await expect(accountLogin).toHaveText('Posts')
+});
+
+
+test('should handle invalid URL parameters gracefully', async ({ page }) => {
+    // Navigate to the URL with invalid parameters
+    await page.goto(`${process.env.BASE_URL}posts-`);
+    // Locate the postthat shows '404' message
+    const accountLogin = await page.locator('text=404');
+    // Assert that the '404' message is visible
+    await expect(accountLogin).toBeVisible();
+});
+
+
+test('should persist posts data across sessions', async ({ page, context }) => {
+    // Get the text content of the first h3 element
+    const firstTagText = await page.locator('h3').first().textContent();
+    // Open a new page in the same context
+    await context.newPage();
+    // Navigate to the tags page
+    await page.goto(`${process.env.BASE_URL}`);
+    // Get the text content of the first h3 element again
+    const newFirstTagText = await page.locator('h3').first().textContent();
+    // Assert that the tag data is the same across sessions
+    expect(firstTagText).toEqual(newFirstTagText);
+});
+
+
+//Perform this test case only when there are no tags present
+test('should display empty state when no posts are present', async ({ page }) => {
+    // Locate the selector that represents the empty state image
+    const emptyStateMessage = await page.locator('.ant-empty-image');
+    // Assert that the empty state image is visible
+    await expect(emptyStateMessage).toBeVisible();
+});
+
+
+test('should sort tags from oldest to latest', async ({ page }) => {
+    // Click on the sorting dropdown
+    await page.click('#filters_sort', { force: true });
+    // Click on the option for sorting from oldest to latest
+    await page.click('.ant-select-item[title="Old"]');  // Adjust the title as needed if "Old" means oldest
+    // Get the text content of all tags
+    const tags = await page.$$eval('.ant-table-tbody tr', rows => {
+        return rows.map(row => row.textContent.trim());
+    });
+    // Check if tags are sorted from oldest to latest
+    const sortedtags = tags.slice().sort((a, b) => {
+        // Extract timestamp from the row content and compare
+        const getTime = str => {
+            const match = str.match(/Created At:\s*(.+)/);
+            if (match) {
+                return new Date(match[1]).getTime();
+            }
+            return 0;
+        };
+        return getTime(a) - getTime(b); // Sorting in ascending order
+    });
+    // Check if the tags are in the correct order
+    expect(tags).toEqual(sortedtags);
 });

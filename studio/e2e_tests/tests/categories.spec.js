@@ -1,31 +1,22 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
+import {getRandomString} from './randomfunc.js';
 // Read from default ".env" file.
 dotenv.config();
 
-
-// Helper function to generate a random string using JavaScript's Math.random
-function getRandomString(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-}
 
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
     test.setTimeout(90000)
     // Navigate to the login page
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
+    await page.goto(`${process.env.BASE_URL}`);
     // Fill in the email and password fields
     await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
     await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
     // Click the login button
     await page.click('text=Login')
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/categories?sort=desc&limit=10&page=1`);
+    await page.goto(`${process.env.BASE_URL}categories?sort=desc&limit=10&page=1`);
     // Save session cookies to a file
     const cookies = await page.context().cookies();
     await page.context().storageState({ path: 'state.json' });
@@ -37,49 +28,10 @@ test('should stay logged in using stored cookies', async ({ page }) => {
     await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
 
     // Navigate to a page that requires login
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
+    await page.goto(`${process.env.BASE_URL}`);
 
     // Verify the user is still logged in
     expect(await page.isVisible('text="Categories"')).toBeTruthy();
-});
-
-test('should load the Categories page successfully', async ({ page }) => {
-    // Locate the header element with the text 'Categories'
-    const accountLogin = await page.locator('h3')
-    // Assert that the header has the text 'Categories'
-    await expect(accountLogin).toHaveText('Categories')
-});
-
-
-test('should handle invalid URL parameters gracefully', async ({ page }) => {
-    // Navigate to the URL with invalid parameters
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/categories?sort=desc&limit=10&page=NaN`);
-    // Locate the element that shows 'No data' message
-    const invalidPage = await page.locator('text=No data');
-    // Assert that the 'No data' message is visible
-    await expect(invalidPage).toBeVisible();
-});
-
-
-test('should persist category data across sessions', async ({ page, context }) => {
-    // Get the text content of the first h3 element
-    const firstcategoryText = await page.locator('h3').first().textContent();
-    // Open a new page in the same context
-    await context.newPage();
-    // Navigate to the categoriess page
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/categories?sort=desc&limit=10&page=1`);
-    // Get the text content of the first h3 element again
-    const newFirstcategoryText = await page.locator('h3').first().textContent();
-    // Assert that the category data is the same across sessions
-    expect(firstcategoryText).toEqual(newFirstcategoryText);
-});
-
-//Perform this test case only when there are no categories present
-test('should display empty state when no categories are present', async ({ page }) => {
-    // Locate the element that represents the empty state image
-    const emptyStateMessage = await page.locator('.ant-empty-image');
-    // Assert that the empty state image is visible
-    await expect(emptyStateMessage).toBeVisible();
 });
 
 
@@ -325,4 +277,44 @@ test('should sort categories from oldest to latest', async ({ page }) => {
 
     // Check if the categories are in the correct order
     expect(categories).toEqual(sortedcategories);
+});
+
+
+test('should load the Categories page successfully', async ({ page }) => {
+    // Locate the header element with the text 'Categories'
+    const accountLogin = await page.locator('h3')
+    // Assert that the header has the text 'Categories'
+    await expect(accountLogin).toHaveText('Categories')
+});
+
+
+test('should handle invalid URL parameters gracefully', async ({ page }) => {
+    // Navigate to the URL with invalid parameters
+    await page.goto(`${process.env.BASE_URL}/categories?sort=desc&limit=10&page=NaN`);
+    // Locate the element that shows 'No data' message
+    const invalidPage = await page.locator('text=No data');
+    // Assert that the 'No data' message is visible
+    await expect(invalidPage).toBeVisible();
+});
+
+
+test('should persist category data across sessions', async ({ page, context }) => {
+    // Get the text content of the first h3 element
+    const firstcategoryText = await page.locator('h3').first().textContent();
+    // Open a new page in the same context
+    await context.newPage();
+    // Navigate to the categoriess page
+    await page.goto(`${process.env.BASE_URL}/categories?sort=desc&limit=10&page=1`);
+    // Get the text content of the first h3 element again
+    const newFirstcategoryText = await page.locator('h3').first().textContent();
+    // Assert that the category data is the same across sessions
+    expect(firstcategoryText).toEqual(newFirstcategoryText);
+});
+
+//Perform this test case only when there are no categories present
+test('should display empty state when no categories are present', async ({ page }) => {
+    // Locate the element that represents the empty state image
+    const emptyStateMessage = await page.locator('.ant-empty-image');
+    // Assert that the empty state image is visible
+    await expect(emptyStateMessage).toBeVisible();
 });

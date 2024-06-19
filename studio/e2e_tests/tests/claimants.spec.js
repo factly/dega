@@ -1,32 +1,23 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
+import {getRandomString} from './randomfunc.js';
 // Read from default ".env" file.
 dotenv.config();
 
-
-// Helper function to generate a random string using JavaScript's Math.random
-function getRandomString(length) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
 
 
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
   test.setTimeout(90000)
   // Navigate to the login page
-  await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
+  await page.goto(`${process.env.BASE_URL}`);
   // Fill in the email and password fields
   await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
   await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
   // Click the login button
   await page.click('text=Login')
-  await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/claimants?sort=desc&limit=10&page=1`);
+  await page.goto(`${process.env.BASE_URL}claimants?sort=desc&limit=10&page=1`);
   // Save session cookies to a file
   const cookies = await page.context().cookies();
   await page.context().storageState({ path: 'state.json' });
@@ -38,104 +29,10 @@ test('should stay logged in using stored cookies', async ({ page }) => {
   await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
 
   // Navigate to a page that requires login
-  await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
+  await page.goto(`${process.env.BASE_URL}`);
 
   // Verify the user is still logged in
   expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
-});
-
-
-test('should load the claimants page successfully', async ({ page }) => {
-  // Locate the header element with the text 'claimants'
-  const accountLogin = await page.locator('h3')
-  // Assert that the header has the text 'Claimants'
-  await expect(accountLogin).toHaveText('Claimants')
-});
-
-
-test('should handle invalid URL parameters gracefully', async ({ page }) => {
-  // Navigate to the URL with invalid parameters
-  await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/claimants?sort=desc&limit=10&page=NaN`);
-  // Locate the element that shows 'No data' message
-  const accountLogin = await page.locator('text=No data');
-  // Assert that the 'No data' message is visible
-  await expect(accountLogin).toBeVisible();
-});
-
-
-test('should persist claimant data across sessions', async ({ page, context }) => {
-  // Get the text content of the first h3 element
-  const firstclaimantText = await page.locator('h3').first().textContent();
-  // Open a new page in the same context
-  await context.newPage();
-  // Navigate to the Claimants page
-  await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/claimants?sort=desc&limit=10&page=1`);
-  // Get the text content of the first h3 element again
-  const newFirstclaimantText = await page.locator('h3').first().textContent();
-  // Assert that the claimant data is the same across sessions
-  expect(firstclaimantText).toEqual(newFirstclaimantText);
-});
-
-
-//Perform this test case only when there are no claimants present
-test('should display empty state when no claimants are present', async ({ page }) => {
-  // Locate the element that represents the empty state image
-  const emptyStateMessage = await page.locator('.ant-empty-image');
-  // Assert that the empty state image is visible
-  await expect(emptyStateMessage).toBeVisible();
-});
-
-
-test('Should find search results', async ({ page }) => {
-  const claimantToSearch = 'Shiro';
-  const searchInputSelector = '#filters_q';
-  await page.click('button:has([aria-label="search"])');
-  await page.fill('#filters_q', claimantToSearch);
-  page.locator(claimantToSearch); 
-  await page.press(searchInputSelector, 'Enter');
-  const claimantExists = await page.isVisible(`text=${claimantToSearch}`);
-});
-
-
-test('Should find no search results', async ({ page }) => {
-  const claimantToSearch = 'Zero';
-  const searchInputSelector = '#filters_q';
-  // Click the search button
-  await page.click('button:has([aria-label="search"])');
-  // Enter the search query
-  await page.fill('#filters_q', claimantToSearch);
-  page.locator(claimantToSearch); 
-  // Press 'Enter' to search
-  await page.press(searchInputSelector, 'Enter');
-  // Verify that 'No data' is visible
-  const accountLogin = await page.locator('text=No data');
-  await expect(accountLogin).toBeVisible();
-});
-
-
-test('should display "Please enter name!" successfully, when the name input field is empty', async ({ page }) => {
-  test.setTimeout(90000)
-  // Click on the 'Create' button
-  await page.click('button:has-text("Create")');
-  // Click on the 'Expand' button
-  await page.click('button:has-text("Expand")');
-  // Type the new claimant name into the input field
-  const claimantName = 'This is a test claimant';
-  await page.type('#creat-claimant_name', claimantName);
-  // Get the length of the typed text
-  const deletePressCount = claimantName.length;
-  // Press the Backspace key multiple times
-  for (let i = 0; i < deletePressCount; i++) {
-      await page.keyboard.press('Backspace');
-  }
-  // Click on the 'Submit' button
-  await page.click('button:has-text("Submit")');
-  // Wait for the error message to appear
-  await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
-  // Get the error message text
-  const errorMessage = await page.textContent('.ant-form-item-explain-error');
-  // Assert that the success message is 'Please enter name!'
-  expect(errorMessage).toBe('Please enter name!');
 });
 
 
@@ -393,6 +290,98 @@ test('should sort claimants from oldest to latest', async ({ page }) => {
 });
 
 
+test('should load the claimants page successfully', async ({ page }) => {
+  // Locate the header element with the text 'claimants'
+  const accountLogin = await page.locator('h3')
+  // Assert that the header has the text 'Claimants'
+  await expect(accountLogin).toHaveText('Claimants')
+});
+
+
+test('should handle invalid URL parameters gracefully', async ({ page }) => {
+  // Navigate to the URL with invalid parameters
+  await page.goto(`${process.env.BASE_URL}claimants?sort=desc&limit=10&page=NaN`);
+  // Locate the element that shows 'No data' message
+  const accountLogin = await page.locator('text=No data');
+  // Assert that the 'No data' message is visible
+  await expect(accountLogin).toBeVisible();
+});
+
+
+test('should persist claimant data across sessions', async ({ page, context }) => {
+  // Get the text content of the first h3 element
+  const firstclaimantText = await page.locator('h3').first().textContent();
+  // Open a new page in the same context
+  await context.newPage();
+  // Navigate to the Claimants page
+  await page.goto(`${process.env.BASE_URL}claimants?sort=desc&limit=10&page=1`);
+  // Get the text content of the first h3 element again
+  const newFirstclaimantText = await page.locator('h3').first().textContent();
+  // Assert that the claimant data is the same across sessions
+  expect(firstclaimantText).toEqual(newFirstclaimantText);
+});
+
+
+//Perform this test case only when there are no claimants present
+test('should display empty state when no claimants are present', async ({ page }) => {
+  // Locate the element that represents the empty state image
+  const emptyStateMessage = await page.locator('.ant-empty-image');
+  // Assert that the empty state image is visible
+  await expect(emptyStateMessage).toBeVisible();
+});
+
+
+test('Should find search results', async ({ page }) => {
+  const claimantToSearch = 'Shiro';
+  const searchInputSelector = '#filters_q';
+  await page.click('button:has([aria-label="search"])');
+  await page.fill('#filters_q', claimantToSearch);
+  page.locator(claimantToSearch); 
+  await page.press(searchInputSelector, 'Enter');
+  const claimantExists = await page.isVisible(`text=${claimantToSearch}`);
+});
+
+
+test('Should find no search results', async ({ page }) => {
+  const claimantToSearch = 'Zero';
+  const searchInputSelector = '#filters_q';
+  // Click the search button
+  await page.click('button:has([aria-label="search"])');
+  // Enter the search query
+  await page.fill('#filters_q', claimantToSearch);
+  page.locator(claimantToSearch); 
+  // Press 'Enter' to search
+  await page.press(searchInputSelector, 'Enter');
+  // Verify that 'No data' is visible
+  const accountLogin = await page.locator('text=No data');
+  await expect(accountLogin).toBeVisible();
+});
+
+
+test('should display "Please enter name!" successfully, when the name input field is empty', async ({ page }) => {
+  test.setTimeout(90000)
+  // Click on the 'Create' button
+  await page.click('button:has-text("Create")');
+  // Click on the 'Expand' button
+  await page.click('button:has-text("Expand")');
+  // Type the new claimant name into the input field
+  const claimantName = 'This is a test claimant';
+  await page.type('#creat-claimant_name', claimantName);
+  // Get the length of the typed text
+  const deletePressCount = claimantName.length;
+  // Press the Backspace key multiple times
+  for (let i = 0; i < deletePressCount; i++) {
+      await page.keyboard.press('Backspace');
+  }
+  // Click on the 'Submit' button
+  await page.click('button:has-text("Submit")');
+  // Wait for the error message to appear
+  await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
+  // Get the error message text
+  const errorMessage = await page.textContent('.ant-form-item-explain-error');
+  // Assert that the success message is 'Please enter name!'
+  expect(errorMessage).toBe('Please enter name!');
+});
 
 
 

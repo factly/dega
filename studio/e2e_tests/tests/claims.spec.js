@@ -1,142 +1,25 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
+import {getRandomString} from './randomfunc.js';
 // Read from default ".env" file.
 dotenv.config();
 
-// Helper function to generate a random string using JavaScript's Math.random
-function getRandomString(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-}
 
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
     test.setTimeout(90000)
     // Navigate to the login page
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
+    await page.goto(`${process.env.BASE_URL}`);
     // Fill in the email and password fields
     await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
     await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
     // Click the login button
     await page.click('text=Login')
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/claims?sort=desc&limit=10&page=1`);
+    await page.goto(`${process.env.BASE_URL}claims?sort=desc&limit=10&page=1`);
     // Save session cookies to a file
     const cookies = await page.context().cookies();
     await page.context().storageState({ path: 'state.json' });
-});
-
-
-test('should stay logged in using stored cookies', async ({ page }) => {
-    // Load session cookies from the file
-    await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
-
-    // Navigate to a page that requires login
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/`);
-
-    // Verify the user is still logged in
-    expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
-});
-
-
-test('should load the claims page successfully', async ({ page }) => {
-    // Locate the header element with the text 'claims'
-    const accountLogin = await page.locator('h3')
-    // Assert that the header has the text 'Claims'
-    await expect(accountLogin).toHaveText('Claims')
-});
-
-
-test('should handle invalid URL parameters gracefully', async ({ page }) => {
-    // Navigate to the URL with invalid parameters
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/claims?sort=desc&limit=10&page=NaN`);
-    // Locate the element that shows 'No data' message
-    const accountLogin = await page.locator('text=No data');
-    // Assert that the 'No data' message is visible
-    await expect(accountLogin).toBeVisible();
-});
-
-
-test('should persist claim data across sessions', async ({ page, context }) => {
-    // Get the text content of the first h3 element
-    const firstclaimText = await page.locator('h3').first().textContent();
-    // Open a new page in the same context
-    await context.newPage();
-    // Navigate to the claims page
-    await page.goto(`${process.env.BASE_URL}/.factly/dega/studio/claims?sort=desc&limit=10&page=1`);
-    // Get the text content of the first h3 element again
-    const newFirstclaimText = await page.locator('h3').first().textContent();
-    // Assert that the claim data is the same across sessions
-    expect(firstclaimText).toEqual(newFirstclaimText);
-});
-
-
-test('should display "Please input the Claim!" successfully, when the respective input fields are empty', async ({ page }) => {
-    test.setTimeout(90000)
-    // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
-    // Enter text into the claim input field
-    const claimName = 'New claimss';
-    await page.type('#create-claim_claim', claimName);
-    // Get the length of the typed text
-    const deletePressCount = claimName.length;
-    // Press the Backspace key multiple times
-    for (let i = 0; i < deletePressCount; i++) {
-        await page.keyboard.press('Backspace');
-    }
-    // Click on the 'Submit' button
-    await page.click('button:has-text("Submit")');
-    // Wait for the error message to appear
-    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
-    // Get the error message text
-    const errorMessage = await page.textContent('.ant-form-item-explain-error');
-    // Assert that the success message is 'Please input the Claim!'
-    expect(errorMessage).toBe('Please input the Claim!');
-});
-
-test('should display "Please add claimant!" successfully, when the claimant input fields are empty', async ({ page }) => {
-    test.setTimeout(90000)
-    // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
-    // Click on the 'Expand' button
-    await page.click('button:has-text("Expand")');
-    // Type the new claim name into the input field
-    const claimName = 'Th';
-    await page.type('#create-claim_claim', claimName);
-    // Click on the 'Submit' button
-    await page.click('button:has-text("Submit")');
-    // Wait for the error message to appear
-    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
-    // Get the error message text
-    const errorMessage = await page.textContent('.ant-form-item-explain-error');
-    // Assert that the success message is 'Please input the Claim!'
-    expect(errorMessage).toBe('Please add claimant!');
-});
-
-
-test('should display "Please add rating!" successfully, when the claima input field is empty', async ({ page }) => {
-    test.setTimeout(90000)
-    // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
-    // Click on the 'Expand' button
-    await page.click('button:has-text("Expand")');
-    // Type the new claim name into the input field
-    const claimName = 'Th';
-    await page.type('#create-claim_claim', claimName);
-    await page.locator('div.ant-select-selector').first().click();
-    await page.click('div[title="Nine"]');
-    // Click on the 'Submit' button
-    await page.click('button:has-text("Submit")');
-    // Wait for the error message to appear
-    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
-    // Get the error message text
-    const errorMessage = await page.textContent('.ant-form-item-explain-error');
-    // Assert that the success message is 'Please add rating!'
-    expect(errorMessage).toBe('Please add rating!');
 });
 
 
@@ -452,3 +335,113 @@ test('should sort claims from oldest to latest', async ({ page }) => {
     // Check if the claims are in the correct order
     expect(claims).toEqual(sortedclaims);
 });
+
+
+test('should stay logged in using stored cookies', async ({ page }) => {
+    // Load session cookies from the file
+    await page.context().addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
+
+    // Navigate to a page that requires login
+    await page.goto(`${process.env.BASE_URL}`);
+
+    // Verify the user is still logged in
+    expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
+});
+
+
+test('should load the claims page successfully', async ({ page }) => {
+    // Locate the header element with the text 'claims'
+    const accountLogin = await page.locator('h3')
+    // Assert that the header has the text 'Claims'
+    await expect(accountLogin).toHaveText('Claims')
+});
+
+
+test('should handle invalid URL parameters gracefully', async ({ page }) => {
+    // Navigate to the URL with invalid parameters
+    await page.goto(`${process.env.BASE_URL}claims?sort=desc&limit=10&page=NaN`);
+    // Locate the element that shows 'No data' message
+    const accountLogin = await page.locator('text=No data');
+    // Assert that the 'No data' message is visible
+    await expect(accountLogin).toBeVisible();
+});
+
+
+test('should persist claim data across sessions', async ({ page, context }) => {
+    // Get the text content of the first h3 element
+    const firstclaimText = await page.locator('h3').first().textContent();
+    // Open a new page in the same context
+    await context.newPage();
+    // Navigate to the claims page
+    await page.goto(`${process.env.BASE_URL}claims?sort=desc&limit=10&page=1`);
+    // Get the text content of the first h3 element again
+    const newFirstclaimText = await page.locator('h3').first().textContent();
+    // Assert that the claim data is the same across sessions
+    expect(firstclaimText).toEqual(newFirstclaimText);
+});
+
+
+test('should display "Please input the Claim!" successfully, when the respective input fields are empty', async ({ page }) => {
+    test.setTimeout(90000)
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Enter text into the claim input field
+    const claimName = 'New claimss';
+    await page.type('#create-claim_claim', claimName);
+    // Get the length of the typed text
+    const deletePressCount = claimName.length;
+    // Press the Backspace key multiple times
+    for (let i = 0; i < deletePressCount; i++) {
+        await page.keyboard.press('Backspace');
+    }
+    // Click on the 'Submit' button
+    await page.click('button:has-text("Submit")');
+    // Wait for the error message to appear
+    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
+    // Get the error message text
+    const errorMessage = await page.textContent('.ant-form-item-explain-error');
+    // Assert that the success message is 'Please input the Claim!'
+    expect(errorMessage).toBe('Please input the Claim!');
+});
+
+test('should display "Please add claimant!" successfully, when the claimant input fields are empty', async ({ page }) => {
+    test.setTimeout(90000)
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Click on the 'Expand' button
+    await page.click('button:has-text("Expand")');
+    // Type the new claim name into the input field
+    const claimName = 'Th';
+    await page.type('#create-claim_claim', claimName);
+    // Click on the 'Submit' button
+    await page.click('button:has-text("Submit")');
+    // Wait for the error message to appear
+    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
+    // Get the error message text
+    const errorMessage = await page.textContent('.ant-form-item-explain-error');
+    // Assert that the success message is 'Please input the Claim!'
+    expect(errorMessage).toBe('Please add claimant!');
+});
+
+
+test('should display "Please add rating!" successfully, when the claima input field is empty', async ({ page }) => {
+    test.setTimeout(90000)
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Click on the 'Expand' button
+    await page.click('button:has-text("Expand")');
+    // Type the new claim name into the input field
+    const claimName = 'Th';
+    await page.type('#create-claim_claim', claimName);
+    await page.locator('div.ant-select-selector').first().click();
+    await page.click('div[title="Nine"]');
+    // Click on the 'Submit' button
+    await page.click('button:has-text("Submit")');
+    // Wait for the error message to appear
+    await page.waitForSelector('.ant-form-item-explain-error', { timeout: 80000 });
+    // Get the error message text
+    const errorMessage = await page.textContent('.ant-form-item-explain-error');
+    // Assert that the success message is 'Please add rating!'
+    expect(errorMessage).toBe('Please add rating!');
+});
+
