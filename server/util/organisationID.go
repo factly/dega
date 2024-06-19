@@ -2,25 +2,21 @@ package util
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 
-	//	"github.com/factly/dega-server/config"
-
-	httpx "github.com/factly/dega-server/util/http"
+	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
-	"github.com/spf13/viper"
 )
 
-type ctxKeyOrganisationID int
+type ctxKeyOrganisationID string
 
 // OrganisationIDKey is the key that holds the unique user ID in a request context.
-const OrganisationIDKey ctxKeyOrganisationID = 0
+const OrganisationIDKey ctxKeyOrganisationID = ""
 
 // GenerateOrganisation check X-User in header
 func GenerateOrganisation(h http.Handler) http.Handler {
@@ -59,39 +55,29 @@ func GenerateOrganisation(h http.Handler) http.Handler {
 }
 
 // GetOrganisation return organisation ID
-func GetOrganisation(ctx context.Context) (int, error) {
+func GetOrganisation(ctx context.Context) (string, error) {
 	if ctx == nil {
-		return 0, errors.New("context not found")
+		return "", errors.New("context not found")
 	}
 	organisationID := ctx.Value(OrganisationIDKey)
 	if organisationID != nil {
-		return organisationID.(int), nil
+		return organisationID.(string), nil
 	}
-	return 0, errors.New("something went wrong")
+	return "", errors.New("something went wrong")
 }
 
-func GetOrganisationIDfromSpaceID(spaceID, userID uint) (int, error) {
+func GetOrganisationIDfromSpaceID(spaceID, userID uint) (string, error) {
 	//** need to make change in x-package if space id is given organisation should be returned
-	req, err := http.NewRequest(http.MethodGet, viper.GetString("kavach_url")+fmt.Sprintf("/util/space/%d/getOrganisation", spaceID), nil)
+
+	space := model.Space{}
+
+	err := config.DB.Model(&model.Space{}).Where(&model.Space{
+		Base: config.Base{ID: spaceID},
+	}).First(&space).Error
+
 	if err != nil {
-		return 0, err
-	}
-	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
-	client := httpx.CustomHttpClient()
-	response, err := client.Do(req)
-	if err != nil {
-		return 0, err
-	}
-	defer response.Body.Close()
-	responseBody := map[string]interface{}{}
-	err = json.NewDecoder(response.Body).Decode(&responseBody)
-	if err != nil {
-		return 0, err
+		return "", err
 	}
 
-	if response.StatusCode != 200 {
-		return 0, errors.New("internal server error on kavach while getting organisation id from space id")
-	}
-	organisationID := int(responseBody["organisation_id"].(float64))
-	return organisationID, nil
+	return space.OrganisationID, nil
 }

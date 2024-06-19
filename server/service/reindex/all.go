@@ -26,7 +26,7 @@ func all(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	isAdmin, err := util.CheckAdmin(uint(oID), uint(uID))
+	isAdmin, err := util.CheckAdmin(oID, uint(uID))
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

@@ -16,6 +16,11 @@ function App() {
     client_id: window.REACT_APP_ZITADEL_CLIENT_ID,
     redirect_uri: window.REACT_APP_ZITADEL_REDIRECT_URI,
     post_logout_redirect_uri: window.REACT_APP_ZITADEL_POST_LOGOUT_REDIRECT_URI,
+    scope:
+      'openid profile email urn:zitadel:iam:user:metadata urn:zitadel:iam:user:resourceowner urn:zitadel:iam:org:project:id:zitadel:aud',
+    response_type: 'code',
+    response_mode: 'query',
+    code_challenge_method: 'S256',
   };
   const [authenticated, setAuthenticated] = useState(null);
   const [reloadFlag, setReloadFlag] = useState(false);

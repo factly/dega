@@ -10,7 +10,6 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
@@ -19,12 +18,12 @@ import (
 )
 
 func Feeds(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// uID, err := util.GetUser(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 	spaceID := chi.URLParam(r, "space_id")
 	sID, err := strconv.Atoi(spaceID)
 	if err != nil {
@@ -33,12 +32,12 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	orgID, err := util.GetOrganisationIDfromSpaceID(uint(sID), uint(uID))
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// orgID, err := util.GetOrganisationIDfromSpaceID(uint(sID), uint(uID))
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 	sort := r.URL.Query().Get("sort")
@@ -55,12 +54,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		slugMap[each] = true
 	}
 
-	space, err := util.GetSpacefromKavach(uint(uID), uint(orgID), uint(sID))
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	space := model.Space{}
 
 	now := time.Now()
 	feed := &feeds.Feed{
@@ -88,20 +82,20 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	postAuthors := make([]model.PostAuthor, 0)
 	config.DB.Model(&model.PostAuthor{}).Joins("JOIN posts ON posts.id = post_authors.post_id").Where("status = ? AND space_id = ? AND page = ?", "publish", spaceID, false).Find(&postAuthors)
 
-	var userID int
-	if len(postAuthors) > 0 {
-		userID = int(postAuthors[0].AuthorID)
-	}
+	// var userID int
+	// if len(postAuthors) > 0 {
+	// 	userID = int(postAuthors[0].AuthorID)
+	// }
 
 	// create list of author ids whose posts are to be included
 	authorIDs := make([]uint, 0)
-	authorMap := Mapper(space.OrganisationID, userID)
+	// authorMap := Mapper(space.OrganisationID, userID)
 
-	for _, author := range authorMap {
-		if _, found := slugMap[author.Slug]; found {
-			authorIDs = append(authorIDs, author.ID)
-		}
-	}
+	// for _, author := range authorMap {
+	// 	if _, found := slugMap[author.Slug]; found {
+	// 		authorIDs = append(authorIDs, author.ID)
+	// 	}
+	// }
 
 	postList := make([]model.Post, 0)
 	config.DB.Model(&model.Post{}).Joins("JOIN post_authors ON posts.id = post_authors.post_id").Where(&model.Post{
@@ -119,7 +113,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, post := range postList {
-		author := authorMap[fmt.Sprint(postAuthorMap[post.ID][0])]
+		// author := authorMap[fmt.Sprint(postAuthorMap[post.ID][0])]
 
 		item := feeds.Item{
 			Id:          fmt.Sprint(post.ID),
@@ -130,10 +124,10 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 			Description: post.Excerpt,
 			Content:     post.DescriptionHTML,
 		}
-		authorName := fmt.Sprint(author.FirstName, " ", author.LastName)
-		if authorName != " " {
-			item.Author = &feeds.Author{Name: authorName, Email: author.Email}
-		}
+		// authorName := fmt.Sprint(author.FirstName, " ", author.LastName)
+		// if authorName != " " {
+		// 	item.Author = &feeds.Author{Name: authorName, Email: author.Email}
+		// }
 		feed.Items = append(feed.Items, &item)
 	}
 

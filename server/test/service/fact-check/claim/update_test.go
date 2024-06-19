@@ -8,7 +8,6 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -63,17 +62,6 @@ func TestClaimUpdate(t *testing.T) {
 	Data["rating_id"] = insertRatingData.ID
 
 	config.DB.Model(&model.Claim{}).Create(&insertData)
-
-	var insertSpacePermissionData = coreModel.SpacePermission{
-		SpaceID:   TestSpaceID,
-		FactCheck: true,
-		Media:     100,
-		Posts:     100,
-		Podcast:   true,
-		Episodes:  100,
-		Videos:    100,
-	}
-	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
 
 	e := httpexpect.New(t, testServer.URL)
 

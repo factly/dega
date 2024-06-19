@@ -1,7 +1,6 @@
 package medium
 
 import (
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -35,17 +34,8 @@ func TestMediumCreate(t *testing.T) {
 		MetaFields:  TestMetaFields,
 		SpaceID:     TestSpaceID,
 	}
-	insertSpacePermission := &model.SpacePermission{
-		SpaceID:   1,
-		FactCheck: true,
-		Media:     10,
-		Posts:     10,
-		Podcast:   true,
-		Episodes:  10,
-		Videos:    10,
-	}
+
 	config.DB.Create(insertData)
-	config.DB.Create(insertSpacePermission)
 
 	e := httpexpect.New(t, testServer.URL)
 
@@ -90,10 +80,7 @@ func TestMediumCreate(t *testing.T) {
 
 	t.Run("create more than permitted medium", func(t *testing.T) {
 		config.DB.Exec("DELETE FROM space_permissions")
-		insertSpacePermission.Media = 0
-		if err := config.DB.Model(&model.SpacePermission{}).Create(insertSpacePermission).Error; err != nil {
-			log.Fatal(err)
-		}
+
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(createArr).
@@ -103,10 +90,7 @@ func TestMediumCreate(t *testing.T) {
 
 	t.Run("create medium with empty slug", func(t *testing.T) {
 		config.DB.Exec("DELETE FROM space_permissions")
-		insertSpacePermission.Media = 5
-		if err := config.DB.Model(&model.SpacePermission{}).Create(insertSpacePermission).Error; err != nil {
-			log.Fatal(err)
-		}
+
 		createArr[0]["name"] = "Image-2"
 		createArr[0]["slug"] = ""
 
@@ -127,10 +111,7 @@ func TestMediumCreate(t *testing.T) {
 
 	t.Run("medium does not belong same space", func(t *testing.T) {
 		config.DB.Exec("DELETE FROM space_permissions")
-		insertSpacePermission.SpaceID = 3
-		if err := config.DB.Model(&model.SpacePermission{}).Create(insertSpacePermission).Error; err != nil {
-			log.Fatal(err)
-		}
+
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(createArr).

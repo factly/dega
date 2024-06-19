@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 
@@ -15,7 +14,6 @@ import (
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/spf13/viper"
 )
 
 // create - Create medium
@@ -57,38 +55,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if viper.GetBool("create_super_organisation") {
-		// Fetch space permissions
-		permission := model.SpacePermission{}
-		err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
-			SpaceID: uint(sID),
-		}).First(&permission).Error
-
-		// log.Fatal(err)
-
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more media", http.StatusUnprocessableEntity)))
-			return
-		}
-
-		// Fetch total number of medium in space
-		var totMedia int64
-		config.DB.Model(&model.Medium{}).Where(&model.Medium{
-			SpaceID: uint(sID),
-		}).Count(&totMedia)
-		// log.Fatal(totMedia)
-		// log.Fatal()
-		// if totMedia+int64(len(mediumList)) > permission.Media && permission.Media > 0 {
-		// 	errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more media", http.StatusUnprocessableEntity)))
-		// 	return
-		// }
-
-		if permission.Media != -1 && totMedia+int64(len(mediumList)) > permission.Media {
-			errorx.Render(w, errorx.Parser((errorx.GetMessage("cannot create more media", http.StatusUnprocessableEntity))))
-		}
-
-	}
 	mediumService := service.GetMediumService()
 	result, serviceErr := mediumService.Create(r.Context(), sID, uID, mediumList)
 

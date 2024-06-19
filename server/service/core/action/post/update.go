@@ -65,12 +65,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	oID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// oID, err := util.GetOrganisation(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
 	post := &post{}
 	postAuthors := []model.PostAuthor{}
@@ -225,19 +225,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 	oldStatus := result.Post.Status
 	// Check if post status is changed back to draft or ready from published
 	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready") {
-		status, err := getPublishPermissions(oID, sID, uID)
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-			return
-		}
+		// status, err := getPublishPermissions(oID, sID, uID)
+		// if err != nil {
+		// 	tx.Rollback()
+		// 	loggerx.Error(err)
+		// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		// 	return
+		// }
 
-		if status != http.StatusOK {
-			tx.Rollback()
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
+		// if status != http.StatusOK {
+		// 	tx.Rollback()
+		// 	w.WriteHeader(http.StatusUnauthorized)
+		// 	return
+		// }
 
 		updateMap["status"] = post.Status
 		updateMap["published_date"] = nil
@@ -249,26 +249,26 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		status, err := getPublishPermissions(oID, sID, uID)
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-			return
-		}
-		if status == http.StatusOK {
-			updateMap["status"] = "publish"
-			if post.PublishedDate == nil {
-				currTime := time.Now()
-				updateMap["published_date"] = &currTime
-			} else {
-				updateMap["published_date"] = post.PublishedDate
-			}
-		} else {
-			tx.Rollback()
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
+		// status, err := getPublishPermissions(oID, sID, uID)
+		// if err != nil {
+		// 	tx.Rollback()
+		// 	loggerx.Error(err)
+		// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		// 	return
+		// }
+		// if status == http.StatusOK {
+		// 	updateMap["status"] = "publish"
+		// 	if post.PublishedDate == nil {
+		// 		currTime := time.Now()
+		// 		updateMap["published_date"] = &currTime
+		// 	} else {
+		// 		updateMap["published_date"] = post.PublishedDate
+		// 	}
+		// } else {
+		// 	tx.Rollback()
+		// 	w.WriteHeader(http.StatusUnauthorized)
+		// 	return
+		// }
 	} else if post.Status == "ready" {
 		updateMap["status"] = "ready"
 	} else if oldStatus == "ready" && post.Status == "draft" {
@@ -402,12 +402,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(oID), uint(sID))
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	space := model.Space{}
 
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
@@ -566,43 +561,43 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	schemaxSpace := schemax.Space{
 		Base: schemax.Base{
-			ID:          spaceObjectforDega.ID,
-			CreatedAt:   spaceObjectforDega.CreatedAt,
-			UpdatedAt:   spaceObjectforDega.UpdatedAt,
-			DeletedAt:   spaceObjectforDega.DeletedAt,
-			CreatedByID: spaceObjectforDega.CreatedByID,
-			UpdatedByID: spaceObjectforDega.UpdatedByID,
+			ID:          space.ID,
+			CreatedAt:   space.CreatedAt,
+			UpdatedAt:   space.UpdatedAt,
+			DeletedAt:   space.DeletedAt,
+			CreatedByID: space.CreatedByID,
+			UpdatedByID: space.UpdatedByID,
 		},
-		Name:        spaceObjectforDega.Name,
-		Slug:        spaceObjectforDega.Slug,
-		Description: spaceObjectforDega.Description,
-		MetaFields:  spaceObjectforDega.MetaFields,
+		Name:        space.Name,
+		Slug:        space.Slug,
+		Description: space.Description,
+		MetaFields:  space.MetaFields,
 		SpaceSettings: &schemax.SpaceSettings{
-			SiteTitle:         spaceObjectforDega.SiteTitle,
-			SiteAddress:       spaceObjectforDega.SiteAddress,
-			VerificationCodes: spaceObjectforDega.VerificationCodes,
-			SocialMediaURLs:   spaceObjectforDega.SocialMediaURLs,
-			ContactInfo:       spaceObjectforDega.ContactInfo,
-			Analytics:         spaceObjectforDega.Analytics,
-			HeaderCode:        spaceObjectforDega.HeaderCode,
-			FooterCode:        spaceObjectforDega.FooterCode,
+			SiteTitle:         space.SiteTitle,
+			SiteAddress:       space.SiteAddress,
+			VerificationCodes: space.VerificationCodes,
+			SocialMediaURLs:   space.SocialMediaURLs,
+			ContactInfo:       space.ContactInfo,
+			Analytics:         space.Analytics,
+			HeaderCode:        space.HeaderCode,
+			FooterCode:        space.FooterCode,
 		},
 	}
 
-	if spaceObjectforDega.LogoID != nil {
-		schemaxSpace.SpaceSettings.LogoID = spaceObjectforDega.LogoID
+	if space.LogoID != nil {
+		schemaxSpace.SpaceSettings.LogoID = space.LogoID
 	}
 
-	if spaceObjectforDega.LogoMobileID != nil {
-		schemaxSpace.SpaceSettings.LogoMobileID = spaceObjectforDega.LogoMobileID
+	if space.LogoMobileID != nil {
+		schemaxSpace.SpaceSettings.LogoMobileID = space.LogoMobileID
 	}
 
-	if spaceObjectforDega.FavIconID != nil {
-		schemaxSpace.SpaceSettings.FavIconID = spaceObjectforDega.FavIconID
+	if space.FavIconID != nil {
+		schemaxSpace.SpaceSettings.FavIconID = space.FavIconID
 	}
 
-	if spaceObjectforDega.MobileIconID != nil {
-		schemaxSpace.SpaceSettings.MobileIconID = spaceObjectforDega.MobileIconID
+	if space.MobileIconID != nil {
+		schemaxSpace.SpaceSettings.MobileIconID = space.MobileIconID
 	}
 
 	schemas := schemax.GetSchemas(schemax.PostData{
@@ -700,12 +695,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusOK, result)
 }
 
-func getPublishPermissions(oID, sID, uID int) (int, error) {
+// func getPublishPermissions(oID, sID, uID int) (int, error) {
 
-	resStatus, err := util.IsAllowed("posts", "publish", uint(oID), uint(sID), uint(uID))
-	if err != nil {
-		return 0, err
-	}
+// 	// resStatus, err := util.IsAllowed("posts", "publish", oID, uint(sID), uint(uID))
+// 	// if err != nil {
+// 	// 	return 0, err
+// 	// }
 
-	return resStatus, nil
-}
+// 	// return resStatus, nil
+// }

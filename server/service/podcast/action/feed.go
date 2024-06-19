@@ -9,7 +9,6 @@ import (
 
 	pcast "github.com/eduncan911/podcast"
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/x/errorx"
@@ -126,12 +125,12 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 
 	var authorMap map[string]coreModel.Author
 	if len(episodeAuthors) > 0 {
-		authorMap = author.Mapper(space.OrganisationID, int(episodeAuthors[0].AuthorID))
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		// authorMap = author.Mapper(space.OrganisationID, int(episodeAuthors[0].AuthorID))
+		// if err != nil {
+		// 	loggerx.Error(err)
+		// 	errorx.Render(w, errorx.Parser(errorx.DBError()))
+		// 	return
+		// }
 	}
 
 	episodeAuthorMap := make(map[uint]uint)

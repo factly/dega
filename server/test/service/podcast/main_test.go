@@ -16,7 +16,7 @@ func TestMain(m *testing.M) {
 	defer gock.Disable()
 	test.MockServer()
 	test.SetupSqlite("./podcast.db")
-	config.DB.AutoMigrate(&model.Podcast{}, &coreModel.Medium{}, &coreModel.SpacePermission{})
+	config.DB.AutoMigrate(&model.Podcast{}, &coreModel.Medium{})
 	defer gock.DisableNetworking()
 	exitValue := m.Run()
 	if err := os.Remove("./podcast.db"); err != nil {

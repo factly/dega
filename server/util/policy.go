@@ -43,7 +43,7 @@ func CheckKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
 				return
 			}
 
-			resStatus, err := IsAllowed(entity, action, uint(oID), uint(sID), uint(uID))
+			resStatus, err := IsAllowed(entity, action, oID, uint(sID), uint(uID))
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
@@ -58,7 +58,7 @@ func CheckKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
 	}
 }
 
-func CheckAdmin(orgID, uID uint) (bool, error) {
+func CheckAdmin(orgID string, uID uint) (bool, error) {
 	requestBody := map[string]interface{}{
 		"namespace":  "organisations",
 		"object":     fmt.Sprintf("org:%d", orgID),
@@ -95,7 +95,7 @@ func CheckAdmin(orgID, uID uint) (bool, error) {
 }
 
 // IsAllowed checks if keto policy allows user to action on resource
-func IsAllowed(entity, action string, orgID, spaceID, userID uint) (int, error) {
+func IsAllowed(entity, action, orgID string, spaceID, userID uint) (int, error) {
 	isAdmin, err := CheckAdmin(orgID, userID)
 	if err != nil {
 		return 0, err

@@ -13,7 +13,7 @@ import (
 
 // Mapper map user with id
 // if any error occurs then Mapper just returns empty list
-func Mapper(oID int, uID int) map[string]model.Author {
+func Mapper(oID string, uID int) map[string]model.Author {
 	userMap := make(map[string]model.Author)
 	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", oID, "/users")
 

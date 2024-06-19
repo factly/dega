@@ -3,21 +3,15 @@ package user
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"github.com/factly/dega-server/util/arrays"
 
 	"github.com/factly/x/renderx"
-	"github.com/go-chi/chi"
 
 	"github.com/factly/dega-server/service/core/action/policy"
-	"github.com/factly/dega-server/util"
 
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/x/errorx"
-	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 )
 
 // userpermissions - Get user's permission
@@ -34,69 +28,69 @@ import (
 // @Router /core/users/{user_id}/permissions [get]
 
 func userpermissions(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// uID, err := util.GetUser(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// sID, err := middlewarex.GetSpace(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
-	oID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// oID, err := util.GetOrganisation(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
-	userID := chi.URLParam(r, "user_id")
-	id, err := strconv.Atoi(userID)
+	// userID := chi.URLParam(r, "user_id")
+	// id, err := strconv.Atoi(userID)
 
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-		return
-	}
-	isAdmin, err := util.CheckAdmin(uint(oID), uint(uID))
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-		return
-	}
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+	// 	return
+	// }
+	// isAdmin, err := util.CheckAdmin(uint(oID), uint(uID))
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+	// 	return
+	// }
 	var result []model.Permission
 
 	// fetch all the keto policies
-	policyList, err := policy.GetAllPolicies()
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	// policyList, err := policy.GetAllPolicies()
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+	// 	return
+	// }
 
-	if isAdmin {
-		// logged user is admin and user_id is also admin's
-		if id == uID {
-			allPermission := append([]model.Permission{},
-				model.Permission{
-					Resource: "admin",
-					Actions:  []string{"admin"},
-				})
+	// if isAdmin {
+	// 	// logged user is admin and user_id is also admin's
+	// 	if id == uID {
+	// 		allPermission := append([]model.Permission{},
+	// 			model.Permission{
+	// 				Resource: "admin",
+	// 				Actions:  []string{"admin"},
+	// 			})
 
-			renderx.JSON(w, http.StatusOK, allPermission)
-			return
-		}
-		result = GetPermissions(int(oID), int(sID), id, policyList)
-	} else {
-		// logged user not admin
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("Not allowed", http.StatusUnauthorized)))
-		return
-	}
+	// 		renderx.JSON(w, http.StatusOK, allPermission)
+	// 		return
+	// 	}
+	// 	// result = GetPermissions(int(oID), int(sID), id, policyList)
+	// } else {
+	// 	// logged user not admin
+	// 	errorx.Render(w, errorx.Parser(errorx.GetMessage("Not allowed", http.StatusUnauthorized)))
+	// 	return
+	// }
 
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -14,7 +14,6 @@ import (
 	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
 	"github.com/spf13/viper"
@@ -37,26 +36,26 @@ var RolesDataFile = "./data/roles.json"
 // @Failure 400 {array} string
 // @Router /core/policies/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// uID, err := util.GetUser(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// sID, err := middlewarex.GetSpace(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
-	oID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// oID, err := util.GetOrganisation(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
 	policyJsonFile, err := os.Open(PolicyDataFile)
 	if err != nil {
@@ -101,16 +100,16 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defaultPolicies := make([]model.KavachPolicy, 0)
-	for index, role := range roles {
-		policy, err := createRoleandPolicyonKavach(role, policies[index], uint(oID), uint(sID), uint(uID))
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
-		}
+	// for index, role := range roles {
+	// policy, err := createRoleandPolicyonKavach(role, policies[index], uint(oID), uint(sID), uint(uID))
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+	// 	return
+	// }
 
-		defaultPolicies = append(defaultPolicies, *policy)
-	}
+	// defaultPolicies = append(defaultPolicies, *policy)
+	// }
 	renderx.JSON(w, http.StatusCreated, defaultPolicies)
 }
 

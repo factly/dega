@@ -71,15 +71,6 @@ func SetupVars() {
 		log.Fatal("please provide create_super_organisation (bool) config param")
 	}
 
-	if !viper.IsSet("organisation_permission_enabled") {
-		log.Fatal("please provide organisation permission enabled bool config param")
-	}
-	if viper.GetBool("create_super_organisation") {
-		if !viper.IsSet("kratos_public_url") {
-			log.Fatal("please provide kratos_public_url config param")
-		}
-	}
-
 	if SearchEnabled() {
 		if !viper.IsSet("meili_url") {
 			log.Fatal("please provide meili_url config param")

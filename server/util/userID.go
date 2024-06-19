@@ -42,7 +42,7 @@ func GetUser(ctx context.Context) (int, error) {
 
 	log.Println("userID", userID)
 	if userID != nil {
-		return userID.(int), nil
+		return 0, nil
 	}
 	return 0, errors.New("something went wrong")
 }

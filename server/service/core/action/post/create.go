@@ -24,7 +24,6 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
@@ -49,19 +48,19 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// uID, err := util.GetUser(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
-	oID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	// oID, err := util.GetOrganisation(r.Context())
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+	// 	return
+	// }
 
 	post := post{}
 
@@ -91,16 +90,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		stat, err := getPublishPermissions(oID, sID, uID)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-			return
-		}
+		// stat, err := getPublishPermissions(oID, sID, uID)
+		// if err != nil {
+		// 	loggerx.Error(err)
+		// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		// 	return
+		// }
 
-		if stat == http.StatusOK {
-			status = "publish"
-		}
+		// if stat == http.StatusOK {
+		// 	status = "publish"
+		// }
 	}
 
 	if post.Status == "ready" {
@@ -136,33 +135,11 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		return nil, errorx.Unauthorized()
 	}
 
-	orgID, err := util.GetOrganisation(ctx)
-	if err != nil {
-		loggerx.Error(err)
-		return nil, errorx.Unauthorized()
-	}
-	if viper.GetBool("create_super_organisation") {
-		// Fetch space permissions
-		permission := model.SpacePermission{}
-		err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
-			SpaceID: uint(sID),
-		}).First(&permission).Error
-
-		if err != nil {
-			return nil, errorx.GetMessage("cannot create more posts", http.StatusUnprocessableEntity)
-		}
-
-		// Fetch total number of posts in space
-		var totPosts int64
-		config.DB.Model(&model.Post{}).Where(&model.Post{
-			SpaceID: uint(sID),
-		}).Where("status != 'template'").Count(&totPosts)
-
-		if totPosts >= permission.Posts || permission.Posts == 0 {
-			return nil, errorx.GetMessage("cannot create more posts", http.StatusUnprocessableEntity)
-		}
-
-	}
+	// orgID, err := util.GetOrganisation(ctx)
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	return nil, errorx.Unauthorized()
+	// }
 
 	// Get table name
 	stmt := &gorm.Statement{DB: config.DB}
@@ -308,11 +285,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		}
 	}
 
-	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(orgID), uint(sID))
-	if err != nil {
-		loggerx.Error(err)
-		return nil, errorx.InternalServerError()
-	}
+	space := model.Space{}
 
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
@@ -469,47 +442,47 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 
 	schemaxSpace := schemax.Space{
 		Base: schemax.Base{
-			ID:          spaceObjectforDega.ID,
-			CreatedAt:   spaceObjectforDega.CreatedAt,
-			UpdatedAt:   spaceObjectforDega.UpdatedAt,
-			DeletedAt:   spaceObjectforDega.DeletedAt,
-			CreatedByID: spaceObjectforDega.CreatedByID,
-			UpdatedByID: spaceObjectforDega.UpdatedByID,
+			ID:          space.ID,
+			CreatedAt:   space.CreatedAt,
+			UpdatedAt:   space.UpdatedAt,
+			DeletedAt:   space.DeletedAt,
+			CreatedByID: space.CreatedByID,
+			UpdatedByID: space.UpdatedByID,
 		},
-		Name:        spaceObjectforDega.Name,
-		Slug:        spaceObjectforDega.Slug,
-		Description: spaceObjectforDega.Description,
-		MetaFields:  spaceObjectforDega.MetaFields,
+		Name:        space.Name,
+		Slug:        space.Slug,
+		Description: space.Description,
+		MetaFields:  space.MetaFields,
 		SpaceSettings: &schemax.SpaceSettings{
-			SiteTitle:         spaceObjectforDega.SiteTitle,
-			SiteAddress:       spaceObjectforDega.SiteAddress,
-			LogoID:            spaceObjectforDega.LogoID,
-			LogoMobileID:      spaceObjectforDega.LogoMobileID,
-			FavIconID:         spaceObjectforDega.FavIconID,
-			MobileIconID:      spaceObjectforDega.MobileIconID,
-			VerificationCodes: spaceObjectforDega.VerificationCodes,
-			SocialMediaURLs:   spaceObjectforDega.SocialMediaURLs,
-			ContactInfo:       spaceObjectforDega.ContactInfo,
-			Analytics:         spaceObjectforDega.Analytics,
-			HeaderCode:        spaceObjectforDega.HeaderCode,
-			FooterCode:        spaceObjectforDega.FooterCode,
+			SiteTitle:         space.SiteTitle,
+			SiteAddress:       space.SiteAddress,
+			LogoID:            space.LogoID,
+			LogoMobileID:      space.LogoMobileID,
+			FavIconID:         space.FavIconID,
+			MobileIconID:      space.MobileIconID,
+			VerificationCodes: space.VerificationCodes,
+			SocialMediaURLs:   space.SocialMediaURLs,
+			ContactInfo:       space.ContactInfo,
+			Analytics:         space.Analytics,
+			HeaderCode:        space.HeaderCode,
+			FooterCode:        space.FooterCode,
 		},
 	}
 
-	if spaceObjectforDega.LogoID != nil {
-		schemaxSpace.SpaceSettings.LogoID = spaceObjectforDega.LogoID
+	if space.LogoID != nil {
+		schemaxSpace.SpaceSettings.LogoID = space.LogoID
 	}
 
-	if spaceObjectforDega.LogoMobileID != nil {
-		schemaxSpace.SpaceSettings.LogoMobileID = spaceObjectforDega.LogoMobileID
+	if space.LogoMobileID != nil {
+		schemaxSpace.SpaceSettings.LogoMobileID = space.LogoMobileID
 	}
 
-	if spaceObjectforDega.FavIconID != nil {
-		schemaxSpace.SpaceSettings.FavIconID = spaceObjectforDega.FavIconID
+	if space.FavIconID != nil {
+		schemaxSpace.SpaceSettings.FavIconID = space.FavIconID
 	}
 
-	if spaceObjectforDega.MobileIconID != nil {
-		schemaxSpace.SpaceSettings.MobileIconID = spaceObjectforDega.MobileIconID
+	if space.MobileIconID != nil {
+		schemaxSpace.SpaceSettings.MobileIconID = space.MobileIconID
 	}
 
 	schemas := schemax.GetSchemas(schemax.PostData{

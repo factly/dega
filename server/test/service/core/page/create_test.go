@@ -63,15 +63,7 @@ func TestPageCreate(t *testing.T) {
 		MetaFields: TestMetaFields,
 		SpaceID:    TestSpaceID,
 	}
-	insertSpacePermission := model.SpacePermission{
-		SpaceID:   1,
-		FactCheck: true,
-		Media:     10,
-		Posts:     10,
-		Podcast:   true,
-		Episodes:  10,
-		Videos:    10,
-	}
+
 	insertFormatData := model.Format{
 		Name:        "Create Format Test",
 		Slug:        "create-format-test",
@@ -84,9 +76,7 @@ func TestPageCreate(t *testing.T) {
 	if err := config.DB.Create(&insertMediumData).Error; err != nil {
 		log.Fatal(err)
 	}
-	if err := config.DB.Create(&insertSpacePermission).Error; err != nil {
-		log.Fatal(err)
-	}
+
 	if err := config.DB.Create(&insertData).Error; err != nil {
 		log.Fatal(err)
 	}

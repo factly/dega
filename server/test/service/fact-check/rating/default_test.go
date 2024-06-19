@@ -25,15 +25,6 @@ func TestRatingDefault(t *testing.T) {
 	config.DB.Exec("DELETE FROM ratings")
 	config.DB.Exec("DELETE FROM space_permissions")
 	config.DB.Exec("DELETE FROM media")
-	var insertSpacePermissionData = coreModel.SpacePermission{
-		SpaceID:   TestSpaceID,
-		FactCheck: true,
-		Media:     100,
-		Posts:     100,
-		Podcast:   true,
-		Episodes:  100,
-		Videos:    100,
-	}
 
 	var insertMediumData = coreModel.Medium{
 		Name:    "Test Medium",
@@ -41,7 +32,6 @@ func TestRatingDefault(t *testing.T) {
 		SpaceID: TestSpaceID,
 	}
 
-	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
 	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
 	var insertData = model.Rating{
 		Name:             "Test Rating",

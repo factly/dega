@@ -26,23 +26,12 @@ func TestDelete(t *testing.T) {
 	config.DB.Exec("DELETE FROM space_permissions")
 	config.DB.Exec("DELETE FROM media")
 
-	var insertSpacePermissionData = coreModel.SpacePermission{
-		SpaceID:   TestSpaceID,
-		FactCheck: true,
-		Media:     100,
-		Posts:     100,
-		Podcast:   true,
-		Episodes:  100,
-		Videos:    100,
-	}
-
 	var insertMediumData = coreModel.Medium{
 		Name:    "Test Medium",
 		Slug:    "test-medium",
 		SpaceID: TestSpaceID,
 	}
 
-	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
 	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
 	var insertData = model.Claimant{
 		Name:            "Test Claimant",

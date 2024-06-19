@@ -34,6 +34,8 @@ type Medium struct {
 	URL         postgres.Jsonb `json:"url" swaggertype:"primitive,string"`
 	Dimensions  string         `json:"dimensions" validate:"required"`
 	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
+	SpaceID     uint           `json:"space_id"`
+	Space       *model.Space   `json:"space,omitempty"`
 }
 
 var userMediumContext config.ContextKey = "medium_user"
@@ -229,13 +231,13 @@ func (m MediumService) Delete(sID, id int) []errorx.Message {
 	}
 
 	// check if medium is associated with spaces
-	config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
+	config.DB.Model(&model.Space{}).Where(&model.Space{
 		LogoID: &uintID,
-	}).Or(&model.SpaceSettings{
+	}).Or(&model.Space{
 		LogoMobileID: &uintID,
-	}).Or(&model.SpaceSettings{
+	}).Or(&model.Space{
 		FavIconID: &uintID,
-	}).Or(&model.SpaceSettings{
+	}).Or(&model.Space{
 		MobileIconID: &uintID,
 	}).Count(&totAssociated)
 

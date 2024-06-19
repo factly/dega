@@ -17,7 +17,6 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
-	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
@@ -79,19 +78,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	stmt := &gorm.Statement{DB: config.DB}
 	_ = stmt.Parse(&model.Format{})
 	tableName := stmt.Schema.Table
-
-	if formatSlug == "fact-check" && viper.GetBool("create_super_organisation") {
-		permission := model.SpacePermission{}
-		err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
-			SpaceID: uint(sID),
-		}).First(&permission).Error
-
-		if err != nil || !permission.FactCheck {
-			loggerx.Error(errors.New(`does not have permission to create fact-check`))
-			errorx.Render(w, errorx.Parser(errorx.GetMessage(`does not have permission to create fact-check`, http.StatusUnprocessableEntity)))
-			return
-		}
-	}
 
 	// Check if format with same name exist
 	if util.CheckName(uint(sID), format.Name, tableName) {

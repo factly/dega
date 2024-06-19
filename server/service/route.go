@@ -86,8 +86,8 @@ func RegisterRoutes() http.Handler {
 	// After Latest kavach changes
 	r.With(ZitadelInterceptor.RequireAuthorization(), util.CheckUser(ZitadelInterceptor), middlewarex.CheckSpace(1), util.GenerateOrganisation).Group(func(r chi.Router) {
 		r.Mount("/core", core.Router())
-		r.With(util.FactCheckPermission).Mount("/fact-check", factCheck.Router())
-		r.With(util.PodcastPermission).Mount("/podcast", podcast.Router())
+		r.Mount("/fact-check", factCheck.Router())
+		r.Mount("/podcast", podcast.Router())
 		r.Mount("/reindex", reindex.Router())
 	})
 

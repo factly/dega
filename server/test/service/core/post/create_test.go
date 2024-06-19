@@ -64,15 +64,7 @@ func TestPostCreate(t *testing.T) {
 		MetaFields: TestMetaFields,
 		SpaceID:    TestSpaceID,
 	}
-	insertSpacePermission := model.SpacePermission{
-		SpaceID:   1,
-		FactCheck: true,
-		Media:     10,
-		Posts:     10,
-		Podcast:   true,
-		Episodes:  10,
-		Videos:    10,
-	}
+
 	insertFormatData := model.Format{
 		Name:        "Create Format Test",
 		Slug:        "create-format-test",
@@ -85,9 +77,7 @@ func TestPostCreate(t *testing.T) {
 	if err := config.DB.Create(&insertMediumData).Error; err != nil {
 		log.Fatal(err)
 	}
-	if err := config.DB.Create(&insertSpacePermission).Error; err != nil {
-		log.Fatal(err)
-	}
+
 	if err := config.DB.Create(&insertData).Error; err != nil {
 		log.Fatal(err)
 	}
@@ -143,17 +133,6 @@ func TestPostCreate(t *testing.T) {
 
 	t.Run("create more than permitted posts", func(t *testing.T) {
 		config.DB.Exec("DELETE FROM space_permissions")
-		insertSpacePermission := model.SpacePermission{
-			SpaceID:   1,
-			FactCheck: false,
-			Media:     0,
-			Posts:     0,
-			Podcast:   false,
-			Episodes:  0,
-			Videos:    0,
-		}
-
-		config.DB.Create(&insertSpacePermission)
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -165,16 +144,7 @@ func TestPostCreate(t *testing.T) {
 
 	t.Run("create post with slug is empty", func(t *testing.T) {
 		config.DB.Exec("DELETE FROM space_permissions")
-		insertSpacePermission := model.SpacePermission{
-			SpaceID:   1,
-			FactCheck: true,
-			Media:     10,
-			Posts:     10,
-			Podcast:   true,
-			Episodes:  10,
-			Videos:    10,
-		}
-		config.DB.Create(&insertSpacePermission)
+
 		Data["title"] = "Create post with slug is empty"
 		Data["slug"] = ""
 		Data["description"] = TestDescriptionFromRequest

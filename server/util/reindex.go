@@ -264,7 +264,7 @@ func AddSpace(spaceID uint) error {
 	if spaceID > 0 {
 		tx.Where("id IN (?)", spaceID)
 	}
-	tx.Preload("SpaceSettings").First(&spaces)
+	tx.First(&spaces)
 
 	meiliSpaceObjects := make([]map[string]interface{}, 0)
 	for _, s := range spaces {
@@ -275,11 +275,11 @@ func AddSpace(spaceID uint) error {
 			"name":            s.Name,
 			"slug":            s.Slug,
 			"description":     s.Description,
-			"site_title":      s.SpaceSettings.SiteTitle,
-			"site_address":    s.SpaceSettings.SiteAddress,
-			"tag_line":        s.SpaceSettings.TagLine,
+			"site_title":      s.SiteTitle,
+			"site_address":    s.SiteAddress,
+			"tag_line":        s.TagLine,
 			"organisation_id": s.OrganisationID,
-			"analytics":       s.SpaceSettings.Analytics,
+			"analytics":       s.Analytics,
 		}
 		meiliSpaceObjects = append(meiliSpaceObjects, meiliObj)
 	}

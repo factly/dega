@@ -8,7 +8,6 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/post"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
@@ -33,7 +32,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	slugs := chi.URLParam(r, "slugs")
 	tagSlugs := strings.Split(slugs, ",")
 
-	space := util.Space{}
+	space := model.Space{}
 	space.ID = uint(sID)
 	if err := config.DB.Model(&model.Space{}).Preload("SpaceSettings.Logo").First(&space).Error; err != nil {
 		loggerx.Error(err)
