@@ -24,8 +24,9 @@ Before you begin writing test cases with Playwright, ensure you have the followi
     ```
     npx playwright test tests/example.spec.js
   ```
+
     
- - Execute the following command to run all the test cases in a particular folder ( Suppose you have a folder named tests in your project directory containing all your test cases )
+- Execute the following command to run all the test cases in a particular folder ( Suppose you have a folder named tests in your project directory containing all your test cases )
 
     ```
     npx playwright test tests/example.spec.js
