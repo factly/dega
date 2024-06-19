@@ -11,13 +11,31 @@ Before you begin writing test cases with Playwright, ensure you have the followi
 
 
 ### Starting the application
-- Execute the following command to install Playwright and its test runner:
+- Execute the following command to install Playwright:
     ```
-    npm install --save-dev @playwright/test
+    npm install @playwright/test
   ```
 - Execute the following command to run the tests:
     ```
     npx playwright test
+  ```
+- Execute the following command to run a single test file (for example to run a file with name example.spec.js)
+    ```
+    npx playwright test tests/example.spec.js
+  ```
+ - Execute the following command to run all the test cases in a particular folder ( Suppose you have a folder named tests in your project directory containing all your test cases )
+       ```
+    npx playwright test tests/example.spec.js
+  ```
+- Execute the following command to run your tests in headed mode, use the --headed flag. This will give you the ability to visually see how Playwright interacts with the website.
+       ```
+    npx playwright test tests/example.spec.js --headed
+  ```
+- To run the tests in desired speed, add slowmo to the launchOptions in the playwright config file 
+       ```
+    launchOptions: {
+      slowMo: 2000,      
+    },
   ```
  ### Important keywords
 - Assertions: Statements that check if a condition is true. Playwright uses the expect API for assertions.
