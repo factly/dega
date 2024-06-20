@@ -1,5 +1,9 @@
 // @ts-check
 const { defineConfig, devices } = require('@playwright/test');
+require('dotenv').config();
+
+const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENVI === 'development';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -13,7 +17,7 @@ module.exports = defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: isDevelopment ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -22,20 +26,16 @@ module.exports = defineConfig({
     // baseURL: 'http://127.0.0.1:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    headless: !isProduction,
     trace: 'retain-on-failure',
-    headless: false,
     launchOptions: {
-
-      slowMo: 2000,      
+      slowMo: 1000,
     },
     video: 'retain-on-failure',
-
   },
 
   /* Configure projects for major browsers */
   projects: [
-   
-
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
