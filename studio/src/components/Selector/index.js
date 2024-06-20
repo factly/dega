@@ -17,7 +17,7 @@ function Selector({
 }) {
   const entity = action.toLowerCase();
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resources: ['categories', 'tags'], action: 'create', spaces });
+  const actions = getUserPermission({ resource: createEntity, action: 'create', spaces });
 
   const selectorType = require(`../../actions/${entity}`);
   const [entityCreatedFlag, setEntityCreatedFlag] = React.useState(false);
