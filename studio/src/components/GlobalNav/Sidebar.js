@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Layout, Menu, Popover, List, Avatar, Button } from 'antd';
+import { Layout, Menu, Popover, List, Avatar, Button, Skeleton } from 'antd';
 import routes, { sidebarMenu } from '../../config/routesConfig';
 import _ from 'lodash';
 import { setCollapse } from './../../actions/sidebar';
@@ -46,9 +46,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (loading) {
-    return null;
-  }
   let resource = [
     'home',
     'dashboard',
@@ -244,6 +241,18 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
         >
           {sidebarMenu.map((menu, index) => {
             const { Icon } = menu;
+            if (loading) {
+              return (
+                <Skeleton
+                  paragraph={false}
+                  loading={loading}
+                  style={{ padding: '12px' }}
+                  active
+                  round
+                  avatar={{ shape: 'circle' }}
+                />
+              );
+            }
             return menu.title === 'CORE' && !showCoreMenu
               ? null
               : !menu.isService
