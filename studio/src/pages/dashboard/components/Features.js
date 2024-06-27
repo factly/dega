@@ -11,7 +11,7 @@ import useNavigation from '../../../utils/useNavigation';
 
 function Features() {
   const dispatch = useDispatch();
-  const history = useNavigation();
+  const navigate = useNavigation();
 
   const superOrg = useSelector(({ admin }) => {
     return admin.organisation;
@@ -95,7 +95,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultRatings()).then(() => history('/ratings'));
+                  dispatch(addDefaultRatings()).then(() => navigate('/ratings'));
                 }}
               >
                 <PlusOutlined /> CREATE RATINGS
@@ -113,9 +113,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultFormats(selectedSpace)).then(() =>
-                    history('/advanced/formats'),
-                  );
+                  dispatch(addDefaultFormats(selectedSpace));
                 }}
               >
                 <PlusOutlined /> CREATE FORMATS
@@ -132,7 +130,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultPolicies()).then(() => history('/members/policies'));
+                  dispatch(addDefaultPolicies()).then(() => navigate('settings/members/policies'));
                 }}
               >
                 <PlusOutlined /> CREATE POLICIES
@@ -151,7 +149,7 @@ function Features() {
               actions={[
                 <Button
                   onClick={() => {
-                    dispatch(addDefaultEvents()).then(() => history('/admin/events'));
+                    dispatch(addDefaultEvents()).then(() => navigate('/admin/events'));
                   }}
                 >
                   <PlusOutlined /> CREATE EVENTS

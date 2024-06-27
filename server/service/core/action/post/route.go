@@ -32,9 +32,10 @@ type post struct {
 	Meta             postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `json:"header_code"`
 	FooterCode       string         `json:"footer_code"`
+	Language         string         `json:"language"`
 	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 	DescriptionAMP   string         `json:"description_amp"`
-	MigrationID      *uint           `json:"migration_id"`
+	MigrationID      *uint          `json:"migration_id"`
 	MigratedHTML     string         `json:"migrated_html"`
 	CategoryIDs      []uint         `json:"category_ids"`
 	TagIDs           []uint         `json:"tag_ids"`
