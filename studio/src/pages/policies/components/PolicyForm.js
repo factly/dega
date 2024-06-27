@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Input, Button, Checkbox, Divider, Typography, ConfigProvider } from 'antd';
 import Selector from '../../../components/Selector';
 import { TitleInput } from '../../../components/FormItems';
@@ -90,10 +90,10 @@ const entities = [
 
 function PolicyForm({ data = {}, onCreate }) {
   const [form] = Form.useForm();
-  const [valueChange, setValueChange] = React.useState(false);
-  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+  const [valueChange, setValueChange] = useState(false);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setIsMobileScreen(true);
@@ -146,8 +146,8 @@ function PolicyForm({ data = {}, onCreate }) {
         <Row justify={'space-between'}>
           <Col md={10} xs={24}>
             <TitleInput label="Name" name="name" />
-            <Form.Item name="roles" label="Roles" required={true}>
-              <Selector mode="multiple" display={'name'} action="Roles" />
+            <Form.Item name="users" label="Users" required={true}>
+              <Selector mode="multiple" display={'display_name'} action="Authors" />
             </Form.Item>
             <Form.Item name="description" label="Description">
               <Input.TextArea rows={4} />
@@ -167,23 +167,20 @@ function PolicyForm({ data = {}, onCreate }) {
             </Typography.Title>
             <Divider style={{ margin: '14 0' }} />
             {entities.map((entity, index) => (
-              <Form.Item key={'permissions-' + index} name={['permissions', entity.name]}>
-                <Row gutter={[16, 8]}>
-                  <Col md={6} xs={24}>
-                    <Typography.Text>{entity.label}</Typography.Text>
-                  </Col>
-                  <Col md={18} xs={24}>
-                    <Checkbox.Group
-                      style={{ flexWrap: 'wrap', justifyContent: 'space-between' }}
-                      defaultValue={
-                        data.permissions && data.permissions[entity.name]
-                          ? data.permissions[entity.name]
-                          : []
-                      }
-                      options={entity.options}
-                    />
-                  </Col>
-                </Row>
+              <Form.Item
+                label={entity.label}
+                key={'permissions-' + index}
+                name={['permissions', entity.name]}
+              >
+                <Checkbox.Group
+                  style={{ flexWrap: 'wrap', justifyContent: 'space-between' }}
+                  defaultValue={
+                    data.permissions && data.permissions[entity.name]
+                      ? data.permissions[entity.name]
+                      : []
+                  }
+                  options={entity.options}
+                />
               </Form.Item>
             ))}
           </Col>

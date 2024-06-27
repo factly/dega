@@ -1,18 +1,16 @@
 package category
 
 import (
+	"errors"
 	"net/http"
-	"strconv"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // delete - Delete category by id
@@ -29,15 +27,20 @@ import (
 func delete(w http.ResponseWriter, r *http.Request) {
 
 	categoryID := chi.URLParam(r, "category_id")
-	id, err := strconv.Atoi(categoryID)
-
+	id, err := uuid.Parse(categoryID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	if categoryID != "" {
+		loggerx.Error(errors.New("category id is required"))
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -45,7 +48,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 	// check record exists or not
 	categoryService := service.GetCategoryService()
-	result, err := categoryService.GetById(sID, int(id))
+	result, err := categoryService.GetById(sID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -59,12 +62,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "category")
-	}
+	// if config.SearchEnabled() {
+	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "category")
+	// }
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("category.deleted", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("category.deleted", sID.String(), r) {
 			if err = util.NC.Publish("category.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

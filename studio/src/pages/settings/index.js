@@ -8,10 +8,8 @@ import {
   DeploymentUnitOutlined,
   UserOutlined,
   EyeTwoTone,
-  UsergroupAddOutlined,
   InteractionTwoTone,
   FileTextTwoTone,
-  SearchOutlined,
 } from '@ant-design/icons';
 
 import Website from '../website/index.js';
@@ -92,8 +90,8 @@ const settings = [
       // user policies and roles here
       {
         name: 'Users',
-        keywords: ['members', 'users'],
-        url: '/members/users',
+        keywords: ['members'],
+        url: '/members',
         description: 'View Users',
         avatar: () => (
           <Avatar
@@ -116,19 +114,6 @@ const settings = [
           />
         ),
       },
-      {
-        name: 'Roles',
-        url: '/members/roles',
-        description: 'Role Settings',
-        keywords: ['members', 'roles'],
-        avatar: () => (
-          <Avatar
-            gap={4}
-            icon={<UsergroupAddOutlined twoToneColor="#ffb41f" />}
-            style={{ backgroundColor: '#E8EFF2', color: '#ffb41f' }}
-          />
-        ),
-      },
     ],
   },
   {
@@ -136,6 +121,19 @@ const settings = [
     component: Advanced,
     children: [
       //  webhooks, reindexing, and formats here
+      {
+        name: 'Tokens',
+        url: '/advanced/tokens',
+        keywords: ['webhooks', 'tokens'],
+        description: 'Create tokens',
+        avatar: () => (
+          <Avatar
+            gap={4}
+            icon={<ApiTwoTone twoToneColor="#51bbf6" />}
+            style={{ backgroundColor: '#E8EFF2' }}
+          />
+        ),
+      },
       {
         name: 'Webhooks',
         url: '/advanced/webhooks',

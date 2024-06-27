@@ -5,6 +5,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -18,20 +19,20 @@ type Podcast struct {
 	DescriptionHTML   string           `gorm:"column:description_html" json:"description_html,omitempty"`
 	Language          string           `gorm:"column:language" json:"language"`
 	Categories        []model.Category `gorm:"many2many:podcast_categories;" json:"categories"`
-	PrimaryCategoryID *uint            `gorm:"column:primary_category_id;default:NULL" json:"primary_category_id" sql:"DEFAULT:NULL"`
+	PrimaryCategoryID *uuid.UUID       `gorm:"type:uuid;column:primary_category_id;default:NULL" json:"primary_category_id" sql:"DEFAULT:NULL"`
 	PrimaryCategory   *model.Category  `gorm:"foreignKey:primary_category_id" json:"primary_category"`
-	MediumID          *uint            `gorm:"column:medium_id;default:NULL" json:"medium_id"`
+	MediumID          *uuid.UUID       `gorm:"type:uuid;column:medium_id;default:NULL" json:"medium_id"`
 	Medium            *model.Medium    `json:"medium"`
 	HeaderCode        string           `gorm:"column:header_code" json:"header_code"`
 	FooterCode        string           `gorm:"column:footer_code" json:"footer_code"`
 	MetaFields        postgres.Jsonb   `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Meta              postgres.Jsonb   `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
-	SpaceID           uint             `gorm:"column:space_id" json:"space_id"`
+	SpaceID           uuid.UUID        `gorm:"type:uuid;column:space_id" json:"space_id"`
 }
 
 // BeforeSave - validation for medium
 func (podcast *Podcast) BeforeSave(tx *gorm.DB) (e error) {
-	if podcast.MediumID != nil && *podcast.MediumID > 0 {
+	if podcast.MediumID != nil && *podcast.MediumID != uuid.Nil {
 		medium := model.Medium{}
 		medium.ID = *podcast.MediumID
 
@@ -44,7 +45,7 @@ func (podcast *Podcast) BeforeSave(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if podcast.PrimaryCategoryID != nil && *podcast.PrimaryCategoryID > 0 {
+	if podcast.PrimaryCategoryID != nil && *podcast.PrimaryCategoryID != uuid.Nil {
 		category := model.Category{}
 		category.ID = *podcast.PrimaryCategoryID
 
@@ -76,9 +77,10 @@ func (podcast *Podcast) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	podcast.CreatedByID = uint(uID)
-	podcast.UpdatedByID = uint(uID)
+	podcast.CreatedByID = uID
+	podcast.UpdatedByID = uID
+	podcast.ID = uuid.New()
 	return nil
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
+	"github.com/google/uuid"
 	"github.com/spf13/cobra"
 )
 
@@ -24,17 +24,17 @@ var reindexCommand = &cobra.Command{
 
 		config.SetupDB()
 
-		err := meilisearchx.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids","author_ids", "claimant_id", "rating_id"})
+		err := config.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
 		if err != nil {
 			loggerx.Error(err)
 		}
 
-		_, err = meilisearchx.Client.Index("dega").DeleteAllDocuments()
+		_, err = config.MeilisearchClient.Index("dega").DeleteAllDocuments()
 		if err != nil {
 			loggerx.Error(err)
 		}
 
-		if err = util.ReindexAllEntities(0); err != nil {
+		if err = util.ReindexAllEntities(uuid.Nil); err != nil {
 			loggerx.Error(err)
 		}
 

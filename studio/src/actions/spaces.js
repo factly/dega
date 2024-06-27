@@ -21,11 +21,7 @@ export const getSpaces = () => {
     return axios
       .get(API_GET_SPACES)
       .then((response) => {
-        dispatch(
-          getSpacesSuccess(
-            response.data.filter((org) => org.applications !== null && org.spaces !== null),
-          ),
-        );
+        dispatch(getSpacesSuccess(response.data));
         return response.data;
       })
       .catch((error) => {
@@ -96,13 +92,29 @@ export const getSpaceUsers = () => {
     return axios
       .get(`/core/spaces/${currentSpaceID}/users`)
       .then((response) => {
-        dispatch(addSpaceUsers(currentSpaceID, response.data));
+        dispatch(addSpaceUsers(currentSpaceID, response.data.nodes));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
       });
   };
 };
+
+export const updateSpaceUsers = (data) => {
+  return (dispatch, getState) => {
+    const currentSpaceID = getState().spaces?.selected;
+    dispatch(loadingSpaces());
+    return axios
+      .put(`/core/spaces/${currentSpaceID}/users`, data)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(getError(error)));
+      });
+  };
+};
+
 export const loadingSpaces = () => ({
   type: LOADING_SPACES,
 });

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/factly/dega-server/config"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -25,7 +26,7 @@ type Medium struct {
 	URL         postgres.Jsonb `gorm:"column:url" json:"url" swaggertype:"primitive,string"`
 	Dimensions  string         `gorm:"column:dimensions" json:"dimensions"`
 	MetaFields  postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
-	SpaceID     uint           `gorm:"column:space_id" json:"space_id"`
+	SpaceID     uuid.UUID      `gorm:"type:uuid;column:space_id" json:"space_id"`
 }
 
 func (Medium) TableName() string {
@@ -42,10 +43,11 @@ func (media *Medium) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	media.CreatedByID = uint(uID)
-	media.UpdatedByID = uint(uID)
+	media.CreatedByID = uID
+	media.UpdatedByID = uID
+	media.ID = uuid.New()
 	return nil
 }
 

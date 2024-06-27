@@ -11,11 +11,11 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
+	"github.com/google/uuid"
 
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
@@ -37,9 +37,9 @@ type Claim struct {
 	CheckedDate    *time.Time     `json:"checked_date"`
 	ClaimSources   postgres.Jsonb `json:"claim_sources" swaggertype:"primitive,string"`
 	Description    postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
-	ClaimantID     uint           `json:"claimant_id" validate:"required"`
-	RatingID       uint           `json:"rating_id" validate:"required"`
-	MediumID       uint           `json:"medium_id"`
+	ClaimantID     uuid.UUID      `json:"claimant_id" validate:"required"`
+	RatingID       uuid.UUID      `json:"rating_id" validate:"required"`
+	MediumID       uuid.UUID      `json:"medium_id"`
 	Fact           string         `json:"fact"`
 	ReviewSources  postgres.Jsonb `json:"review_sources" swaggertype:"primitive,string"`
 	MetaFields     postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
@@ -47,16 +47,16 @@ type Claim struct {
 	HeaderCode     string         `json:"header_code"`
 	FooterCode     string         `json:"footer_code"`
 	DescriptionAMP string         `json:"description_amp"`
-	MigrationID    *uint          `json:"migration_id"`
+	MigrationID    *uuid.UUID     `json:"migration_id"`
 	MigratedHTML   string         `json:"migrated_html"`
 }
 
 type IClaimService interface {
-	GetById(sID, id int) (model.Claim, []errorx.Message)
-	List(sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (claimPaging, []errorx.Message)
-	Create(ctx context.Context, sID, uID int, claim *Claim) (model.Claim, []errorx.Message)
-	Update(sID, uID, id int, claim *Claim) (model.Claim, []errorx.Message)
-	Delete(sID, id int) []errorx.Message
+	GetById(sID, id uuid.UUID) (model.Claim, []errorx.Message)
+	List(sID uuid.UUID, offset, limit int, searchQuery, sort string, queryMap url.Values) (claimPaging, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID string, claim *Claim) (model.Claim, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, claim *Claim) (model.Claim, []errorx.Message)
+	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
 type claimService struct {
@@ -64,7 +64,7 @@ type claimService struct {
 }
 
 // Create implements IClaimService
-func (cs *claimService) Create(ctx context.Context, sID int, uID int, claim *Claim) (model.Claim, []errorx.Message) {
+func (cs *claimService) Create(ctx context.Context, sID uuid.UUID, uID string, claim *Claim) (model.Claim, []errorx.Message) {
 	validationError := validationx.Check(claim)
 
 	if validationError != nil {
@@ -82,13 +82,13 @@ func (cs *claimService) Create(ctx context.Context, sID int, uID int, claim *Cla
 	if len(slug) > 150 {
 		slug = claim.Slug[:150]
 	}
-	if claim.Slug != "" && slugx.Check(slug) {
+	if claim.Slug != "" && util.CheckSlug(slug) {
 		claimSlug = slug
 	} else {
 		if len(claim.Claim) > 150 {
-			claimSlug = slugx.Make(claim.Claim[:150])
+			claimSlug = util.MakeSlug(claim.Claim[:150])
 		} else {
-			claimSlug = slugx.Make(claim.Claim)
+			claimSlug = util.MakeSlug(claim.Claim)
 		}
 	}
 
@@ -110,9 +110,6 @@ func (cs *claimService) Create(ctx context.Context, sID int, uID int, claim *Cla
 	}
 
 	mediumID := &claim.MediumID
-	if claim.MediumID == 0 {
-		mediumID = nil
-	}
 
 	result := &model.Claim{
 		Base: config.Base{
@@ -120,7 +117,7 @@ func (cs *claimService) Create(ctx context.Context, sID int, uID int, claim *Cla
 			UpdatedAt: claim.UpdatedAt,
 		},
 		Claim:           claim.Claim,
-		Slug:            slugx.Approve(&cs.model, claimSlug, sID, tableName),
+		Slug:            util.ApproveSlug(claimSlug, sID, tableName),
 		ClaimDate:       claim.ClaimDate,
 		CheckedDate:     claim.CheckedDate,
 		ClaimSources:    claim.ClaimSources,
@@ -134,7 +131,7 @@ func (cs *claimService) Create(ctx context.Context, sID int, uID int, claim *Cla
 		Meta:            claim.Meta,
 		HeaderCode:      claim.HeaderCode,
 		FooterCode:      claim.FooterCode,
-		SpaceID:         uint(sID),
+		SpaceID:         sID,
 		MediumID:        mediumID,
 		DescriptionAMP:  claim.DescriptionAMP,
 		MigrationID:     claim.MigrationID,
@@ -157,15 +154,15 @@ func (cs *claimService) Create(ctx context.Context, sID int, uID int, claim *Cla
 }
 
 // Delete implements IClaimService
-func (cs *claimService) Delete(sID int, id int) []errorx.Message {
+func (cs *claimService) Delete(sID, id uuid.UUID) []errorx.Message {
 
 	claim := model.Claim{}
-	claim.ID = uint(id)
+	claim.ID = id
 
 	// check if claim is associated with posts
 	var totAssociated int64
 	cs.model.Model(&model.PostClaim{}).Where(&model.PostClaim{
-		ClaimID: uint(id),
+		ClaimID: id,
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -182,14 +179,14 @@ func (cs *claimService) Delete(sID int, id int) []errorx.Message {
 }
 
 // GetById implements IClaimService
-func (cs *claimService) GetById(sID int, id int) (model.Claim, []errorx.Message) {
+func (cs *claimService) GetById(sID, id uuid.UUID) (model.Claim, []errorx.Message) {
 
 	result := &model.Claim{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	err := cs.model.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	if err != nil {
@@ -205,11 +202,11 @@ func (cs *claimService) GetById(sID int, id int) (model.Claim, []errorx.Message)
 }
 
 // List implements IClaimService
-func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (claimPaging, []errorx.Message) {
+func (cs *claimService) List(sID uuid.UUID, offset, limit int, searchQuery, sort string, queryMap url.Values) (claimPaging, []errorx.Message) {
 	var result claimPaging
 	result.Nodes = make([]model.Claim, 0)
 	tx := cs.model.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Order("created_at " + sort)
 	var err error
 	filters := generateFilters(queryMap["rating"], queryMap["claimant"])
@@ -220,13 +217,13 @@ func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string
 			if filters != "" {
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claim")
+			hits, err = meilisearch.SearchWithQuery("dega", searchQuery, filters, "claim")
 			if err != nil {
 				loggerx.Error(err)
 				return claimPaging{}, errorx.Parser(errorx.NetworkError())
 			}
 
-			filteredClaimIDs := meilisearchx.GetIDArray(hits)
+			filteredClaimIDs := meilisearch.GetIDArray(hits)
 			if len(filteredClaimIDs) == 0 {
 				return result, nil
 			} else {
@@ -258,7 +255,7 @@ func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string
 }
 
 // Update implements IClaimService
-func (cs *claimService) Update(sID int, uID int, id int, claim *Claim) (model.Claim, []errorx.Message) {
+func (cs *claimService) Update(sID, id uuid.UUID, uID string, claim *Claim) (model.Claim, []errorx.Message) {
 
 	validationError := validationx.Check(claim)
 
@@ -268,14 +265,14 @@ func (cs *claimService) Update(sID int, uID int, id int, claim *Claim) (model.Cl
 	}
 
 	result := &model.Claim{}
-	result.ID = uint(id)
+	result.ID = id
 	var err error
 	// check record exists or not
 	err = cs.model.Where(&model.Claim{
 		Base: config.Base{
-			ID: uint(id),
+			ID: id,
 		},
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	if err != nil {
@@ -297,13 +294,13 @@ func (cs *claimService) Update(sID int, uID int, id int, claim *Claim) (model.Cl
 
 	if result.Slug == claim.Slug {
 		claimSlug = result.Slug
-	} else if claim.Slug != "" && slugx.Check(slug) {
-		claimSlug = slugx.Approve(&cs.model, slug, sID, tableName)
+	} else if claim.Slug != "" && util.CheckSlug(slug) {
+		claimSlug = util.ApproveSlug(slug, sID, tableName)
 	} else {
 		if len(claim.Claim) > 150 {
-			claimSlug = slugx.Approve(&cs.model, slugx.Make(claim.Claim[:150]), sID, tableName)
+			claimSlug = util.ApproveSlug(util.MakeSlug(claim.Claim[:150]), sID, tableName)
 		} else {
-			claimSlug = slugx.Approve(&cs.model, slugx.Make(claim.Claim), sID, tableName)
+			claimSlug = util.ApproveSlug(util.MakeSlug(claim.Claim), sID, tableName)
 		}
 	}
 
@@ -328,7 +325,7 @@ func (cs *claimService) Update(sID int, uID int, id int, claim *Claim) (model.Cl
 	updateMap := map[string]interface{}{
 		"created_at":       claim.CreatedAt,
 		"updated_at":       claim.UpdatedAt,
-		"updated_by_id":    uint(uID),
+		"updated_by_id":    uID,
 		"claim":            claim.Claim,
 		"slug":             claimSlug,
 		"claim_sources":    claim.ClaimSources,
@@ -353,7 +350,7 @@ func (cs *claimService) Update(sID int, uID int, id int, claim *Claim) (model.Cl
 		updateMap["migration_id"] = *claim.MigrationID
 	}
 
-	if claim.MediumID == 0 {
+	if claim.MediumID == uuid.Nil {
 		updateMap["medium_id"] = nil
 	}
 	// check if claimant with claimant_id exists also check if claimant belongs to same space
@@ -431,10 +428,10 @@ func generateFilters(ratingIDs, claimantIDs []string) string {
 	filters := ""
 
 	if len(ratingIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(ratingIDs, "rating_id"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(ratingIDs, "rating_id"), " AND ")
 	}
 	if len(claimantIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
 	}
 	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]

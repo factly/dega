@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -13,12 +12,13 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 	"github.com/gorilla/feeds"
 )
 
 func Feeds(w http.ResponseWriter, r *http.Request) {
 	spaceID := chi.URLParam(r, "space_id")
-	sID, err := strconv.Atoi(spaceID)
+	sID, err := uuid.Parse(spaceID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
@@ -32,7 +32,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	}
 
 	space := model.Space{}
-	space.ID = uint(sID)
+	space.ID = sID
 	if err := config.DB.Model(&model.Space{}).Preload("Logo").First(&space).Error; err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -44,7 +44,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	postList := make([]model.Post, 0)
 	config.DB.Model(&model.Post{}).Where(&model.Post{
 		Status:  "publish",
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Where("is_page = ?", false).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
 	feed.Items = GetItemsList(postList, space)
@@ -82,7 +82,7 @@ func GetFeed(space model.Space) *feeds.Feed {
 }
 
 func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
-	postIDs := make([]uint, 0)
+	postIDs := make([]uuid.UUID, 0)
 	for _, post := range postList {
 		postIDs = append(postIDs, post.ID)
 	}
@@ -90,25 +90,25 @@ func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
 	postAuthors := make([]model.PostAuthor, 0)
 	config.DB.Model(&model.PostAuthor{}).Where("post_id IN (?)", postIDs).Find(&postAuthors)
 
-	// var userID int
+	//TODO: fetch all authors
+	// var userID string
 	// if len(postAuthors) > 0 {
-	// 	userID = int(postAuthors[0].AuthorID)
+	// 	userID = postAuthors[0].AuthorID
 	// }
-
-	// authorMap := author.Mapper(space.OrganisationID, userID)
+	authorMap := map[string]model.Author{}
 
 	// generate post author map
-	postAuthorMap := make(map[uint][]uint)
+	postAuthorMap := make(map[uuid.UUID][]string)
 	for _, po := range postAuthors {
 		if _, found := postAuthorMap[po.PostID]; !found {
-			postAuthorMap[po.PostID] = make([]uint, 0)
+			postAuthorMap[po.PostID] = make([]string, 0)
 		}
 		postAuthorMap[po.PostID] = append(postAuthorMap[po.PostID], po.AuthorID)
 	}
 
 	itemList := make([]*feeds.Item, 0)
 	for _, post := range postList {
-		// author := authorMap[fmt.Sprint(postAuthorMap[post.ID][0])]
+		author := authorMap[fmt.Sprint(postAuthorMap[post.ID][0])]
 
 		item := feeds.Item{
 			Id:          fmt.Sprint(post.ID),
@@ -119,10 +119,10 @@ func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
 			Description: post.Excerpt,
 			Content:     post.DescriptionHTML,
 		}
-		// authorName := fmt.Sprint(author.FirstName, " ", author.LastName)
-		// if authorName != " " {
-		// 	item.Author = &feeds.Author{Name: authorName, Email: author.Email}
-		// }
+		authorName := fmt.Sprint(author.FirstName, " ", author.LastName)
+		if authorName != " " {
+			item.Author = &feeds.Author{Name: authorName, Email: author.Email}
+		}
 		itemList = append(itemList, &item)
 	}
 	return itemList

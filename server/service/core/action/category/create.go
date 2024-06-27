@@ -3,16 +3,15 @@ package category
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/x/loggerx"
+	"github.com/google/uuid"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 )
 
@@ -31,7 +30,7 @@ import (
 // @Router /core/categories [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -57,9 +56,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	categoryService := service.GetCategoryService()
 
-	if category.ParentID != 0 {
+	if category.ParentID != uuid.Nil {
 		// Check if parent category exist or not
-		_, err = categoryService.GetById(sID, int(category.ParentID))
+		_, err = categoryService.GetById(sID, category.ParentID)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category does not exist", http.StatusUnprocessableEntity)))
@@ -75,7 +74,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
-		"id":                result.ID,
+		"id":                result.ID.String(),
 		"kind":              "category",
 		"name":              result.Name,
 		"slug":              result.Slug,
@@ -86,11 +85,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		_ = meilisearch.AddDocument("dega", meiliObj)
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("category.created", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("category.created", sID.String(), r) {
 			if err = util.NC.Publish("category.created", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

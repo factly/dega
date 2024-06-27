@@ -120,11 +120,14 @@ function BasicLayout(props) {
     );
   }
 
+  console.log('location.pathname', location.pathname);
+
   const hideSidebar =
     (location.pathname.includes('posts') ||
       location.pathname.includes('fact-checks') ||
       location.pathname.includes('pages')) &&
     (location.pathname.includes('edit') || location.pathname.includes('create'));
+
   return (
     <ConfigProvider
       theme={{
@@ -177,6 +180,7 @@ function BasicLayout(props) {
             loading={loading}
             applications={applications}
             services={services}
+            signOut={children.props.handleLogout}
           />
         )}
         <Layout style={{ background: '#fff' }}>

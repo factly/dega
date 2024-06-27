@@ -2,9 +2,11 @@ package space
 
 import (
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/role"
+	"github.com/factly/dega-server/service/core/action/space/tokens"
+	"github.com/factly/dega-server/service/core/action/space/users"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -17,13 +19,13 @@ type space struct {
 	TagLine           string         `json:"tag_line"`
 	Description       string         `json:"description"`
 	SiteAddress       string         `json:"site_address"`
-	LogoID            *uint          `json:"logo_id"`
+	LogoID            *uuid.UUID     `json:"logo_id"`
 	Logo              *model.Medium  `gorm:"foreignKey:logo_id" json:"logo"`
-	LogoMobileID      *uint          `json:"logo_mobile_id"`
+	LogoMobileID      *uuid.UUID     `json:"logo_mobile_id"`
 	LogoMobile        *model.Medium  `gorm:"foreignKey:logo_mobile_id" json:"logo_mobile"`
-	FavIconID         *uint          `json:"fav_icon_id"`
+	FavIconID         *uuid.UUID     `json:"fav_icon_id"`
 	FavIcon           *model.Medium  `gorm:"foreignKey:fav_icon_id" json:"fav_icon"`
-	MobileIconID      *uint          `json:"mobile_icon_id"`
+	MobileIconID      *uuid.UUID     `json:"mobile_icon_id"`
 	MobileIcon        *model.Medium  `gorm:"foreignKey:mobile_icon_id" json:"mobile_icon"`
 	VerificationCodes postgres.Jsonb `json:"verification_codes" swaggertype:"primitive,string"`
 	SocialMediaURLs   postgres.Jsonb `json:"social_media_urls" swaggertype:"primitive,string"`
@@ -32,7 +34,7 @@ type space struct {
 	HeaderCode        string         `json:"header_code"`
 	FooterCode        string         `json:"footer_code"`
 	MetaFields        postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
-	OrganisationID    int            `json:"organisation_id" validate:"required"`
+	OrganisationID    string         `json:"organisation_id" validate:"required"`
 }
 
 // Router - Group of currency router
@@ -44,9 +46,9 @@ func Router() chi.Router {
 	r.Route("/{space_id}", func(r chi.Router) {
 		r.Get("/", details)
 		r.Put("/", update)
-		r.Mount("/roles", role.Router())
 		r.Delete("/", delete)
-		r.Get("/users", users)
+		r.Mount("/users", users.Router())
+		r.Mount("/tokens", tokens.Router())
 	})
 
 	return r

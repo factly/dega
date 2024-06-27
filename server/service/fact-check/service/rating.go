@@ -11,10 +11,11 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
+
+	"github.com/google/uuid"
 )
 
 // rating model
@@ -27,7 +28,7 @@ type Rating struct {
 	TextColour       postgres.Jsonb `json:"text_colour" validate:"required" swaggertype:"primitive,string"`
 	Description      postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	NumericValue     int            `json:"numeric_value" validate:"required"`
-	MediumID         uint           `json:"medium_id"`
+	MediumID         uuid.UUID      `json:"medium_id"`
 	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 	Meta             postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `json:"header_code"`
@@ -41,12 +42,12 @@ type ratingPaging struct {
 }
 
 type IRatingService interface {
-	GetById(sID, id int) (model.Rating, error)
-	List(sID int64, offset, limit int, all string, sort string) (ratingPaging, []errorx.Message)
-	Create(ctx context.Context, sID, uID int, rating *Rating) (model.Rating, []errorx.Message)
-	Update(sID, uID, id int, rating *Rating) (model.Rating, []errorx.Message)
-	Delete(sID, id int64) []errorx.Message
-	Default(ctx context.Context, sID, uID int, ratings []model.Rating) (ratingPaging, []errorx.Message)
+	GetById(sID, id uuid.UUID) (model.Rating, error)
+	List(sID uuid.UUID, offset, limit int, all string, sort string) (ratingPaging, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID string, rating *Rating) (model.Rating, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, rating *Rating) (model.Rating, []errorx.Message)
+	Delete(sID, id uuid.UUID) []errorx.Message
+	Default(ctx context.Context, sID uuid.UUID, uID string, ratings []model.Rating) (ratingPaging, []errorx.Message)
 }
 
 var ratingContext config.ContextKey = "rating_user"
@@ -56,7 +57,7 @@ type RatingService struct {
 }
 
 // Create implements IRatingService
-func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Rating) (model.Rating, []errorx.Message) {
+func (rs RatingService) Create(ctx context.Context, sID uuid.UUID, uID string, rating *Rating) (model.Rating, []errorx.Message) {
 
 	validationErr := validationx.Check(rating)
 
@@ -71,13 +72,14 @@ func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Ra
 
 	var ratingSlug string
 
-	if rating.Slug != "" && slugx.Check(rating.Slug) {
+	if rating.Slug != "" && util.CheckSlug(rating.Slug) {
 		ratingSlug = rating.Slug
 	} else {
-		ratingSlug = slugx.Make(rating.Name)
+		ratingSlug = util.MakeSlug(rating.Name)
 	}
+
 	// check  if  rating name exists
-	if util.CheckName(uint(sID), rating.Name, tableName) {
+	if util.CheckName(sID, rating.Name, tableName) {
 		loggerx.Error(errors.New(`rating with same name exist`))
 		return model.Rating{}, errorx.Parser(errorx.SameNameExist())
 	}
@@ -85,7 +87,7 @@ func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Ra
 	// check if rating with same numeric value exists
 	var sameValueRatings int64
 	rs.model.Model(&model.Rating{}).Where(&model.Rating{
-		SpaceID:      uint(sID),
+		SpaceID:      sID,
 		NumericValue: rating.NumericValue,
 	}).Count(&sameValueRatings)
 
@@ -94,7 +96,7 @@ func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Ra
 		return model.Rating{}, errorx.Parser(errorx.GetMessage("rating with same numeric value exists", http.StatusUnprocessableEntity))
 	}
 	mediumID := &rating.MediumID
-	if rating.MediumID == 0 {
+	if rating.MediumID == uuid.Nil {
 		mediumID = nil
 	}
 
@@ -121,13 +123,13 @@ func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Ra
 			UpdatedAt: rating.UpdatedAt,
 		},
 		Name:             rating.Name,
-		Slug:             slugx.Approve(&config.DB, ratingSlug, sID, tableName),
+		Slug:             util.ApproveSlug(ratingSlug, sID, tableName),
 		BackgroundColour: rating.BackgroundColour,
 		TextColour:       rating.TextColour,
 		Description:      jsonDescription,
 		DescriptionHTML:  descriptionHTML,
 		MediumID:         mediumID,
-		SpaceID:          uint(sID),
+		SpaceID:          sID,
 		NumericValue:     rating.NumericValue,
 		MetaFields:       rating.MetaFields,
 		Meta:             rating.Meta,
@@ -151,10 +153,10 @@ func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Ra
 }
 
 // Delete implements IRatingService
-func (rs RatingService) Delete(sID int64, id int64) []errorx.Message {
+func (rs RatingService) Delete(sID, id uuid.UUID) []errorx.Message {
 	//check if rating is associated with any post
 	rating := new(model.Rating)
-	rating.ID = uint(id)
+	rating.ID = id
 
 	totAssociated := rs.model.Model(rating).Association("Claims").Count()
 	if totAssociated != 0 {
@@ -170,24 +172,24 @@ func (rs RatingService) Delete(sID int64, id int64) []errorx.Message {
 }
 
 // GetById implements IRatingService
-func (rs RatingService) GetById(sID int, id int) (model.Rating, error) {
+func (rs RatingService) GetById(sID, id uuid.UUID) (model.Rating, error) {
 	result := &model.Rating{}
 
-	result.ID = uint(id)
+	result.ID = id
 
-	err := rs.model.Where(&model.Rating{SpaceID: uint(sID)}).First(&result).Error
+	err := rs.model.Where(&model.Rating{SpaceID: sID}).First(&result).Error
 
 	return *result, err
 }
 
 // List implements IRatingService
-func (rs RatingService) List(sID int64, offset int, limit int, all string, sort string) (ratingPaging, []errorx.Message) {
+func (rs RatingService) List(sID uuid.UUID, offset, limit int, all, sort string) (ratingPaging, []errorx.Message) {
 
 	result := ratingPaging{}
 	result.Nodes = make([]model.Rating, 0)
 
 	stmt := rs.model.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Count(&result.Total).Order(sort)
 
 	var err error
@@ -207,9 +209,9 @@ func (rs RatingService) List(sID int64, offset int, limit int, all string, sort 
 }
 
 // Update implements IRatingService
-func (rs RatingService) Update(sID int, uID int, id int, rating *Rating) (model.Rating, []errorx.Message) {
+func (rs RatingService) Update(sID, id uuid.UUID, uID string, rating *Rating) (model.Rating, []errorx.Message) {
 	result := &model.Rating{}
-	result.ID = uint(id)
+	result.ID = id
 
 	validationErr := validationx.Check(rating)
 	if validationErr != nil {
@@ -218,9 +220,9 @@ func (rs RatingService) Update(sID int, uID int, id int, rating *Rating) (model.
 	}
 
 	err := rs.model.Where(&model.Rating{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 		Base: config.Base{
-			ID: uint(id),
+			ID: id,
 		},
 	}).First(&result).Error
 
@@ -236,16 +238,16 @@ func (rs RatingService) Update(sID int, uID int, id int, rating *Rating) (model.
 	_ = stmt.Parse(&model.Rating{})
 	tableName := stmt.Schema.Table
 
-	if result.Slug == rating.Slug {
-		ratingSlug = result.Slug
-	} else if rating.Slug != "" && slugx.Check(rating.Slug) {
-		ratingSlug = slugx.Approve(&config.DB, rating.Slug, sID, tableName)
-	} else {
-		ratingSlug = slugx.Approve(&config.DB, slugx.Make(rating.Name), sID, tableName)
-	}
+	// if result.Slug == rating.Slug {
+	// 	ratingSlug = result.Slug
+	// } else if rating.Slug != "" && util.CheckSlug(rating.Slug) {
+	// 	ratingSlug = util.ApproveSlug( rating.Slug, sID, tableName)
+	// } else {
+	// 	ratingSlug = util.ApproveSlug( util.MakeSlug(rating.Name), sID, tableName)
+	// }
 
 	// Check if rating with same name exist
-	if rating.Name != result.Name && util.CheckName(uint(sID), rating.Name, tableName) {
+	if rating.Name != result.Name && util.CheckName(sID, rating.Name, tableName) {
 		loggerx.Error(errors.New(`rating with same name exist`))
 		return model.Rating{}, errorx.Parser(errorx.GetMessage(`rating with same name exist`, http.StatusUnprocessableEntity))
 	}
@@ -254,7 +256,7 @@ func (rs RatingService) Update(sID int, uID int, id int, rating *Rating) (model.
 		// Check if rating with same numeric value exist
 		var sameValueRatings int64
 		config.DB.Model(&model.Rating{}).Where(&model.Rating{
-			SpaceID:      uint(sID),
+			SpaceID:      sID,
 			NumericValue: rating.NumericValue,
 		}).Count(&sameValueRatings)
 
@@ -285,7 +287,7 @@ func (rs RatingService) Update(sID int, uID int, id int, rating *Rating) (model.
 	updateMap := map[string]interface{}{
 		"created_at":        rating.CreatedAt,
 		"updated_at":        rating.UpdatedAt,
-		"updated_by_id":     uint(uID),
+		"updated_by_id":     uID,
 		"name":              rating.Name,
 		"slug":              ratingSlug,
 		"background_colour": rating.BackgroundColour,
@@ -300,7 +302,7 @@ func (rs RatingService) Update(sID int, uID int, id int, rating *Rating) (model.
 		"footer_code":       rating.FooterCode,
 	}
 
-	if rating.MediumID == 0 {
+	if rating.MediumID == uuid.Nil {
 		updateMap["medium_id"] = nil
 	}
 
@@ -323,12 +325,12 @@ func GetRatingService() IRatingService {
 	}
 }
 
-func (rs RatingService) Default(ctx context.Context, sID, uID int, ratings []model.Rating) (ratingPaging, []errorx.Message) {
+func (rs RatingService) Default(ctx context.Context, sID uuid.UUID, uID string, ratings []model.Rating) (ratingPaging, []errorx.Message) {
 	tx := rs.model.WithContext(context.WithValue(ctx, ratingContext, uID)).Begin()
 
 	var err error
 	for i := range ratings {
-		ratings[i].SpaceID = uint(sID)
+		ratings[i].SpaceID = sID
 		ratings[i].DescriptionHTML, err = util.GetDescriptionHTML(ratings[i].Description)
 		if err != nil {
 			loggerx.Error(err)

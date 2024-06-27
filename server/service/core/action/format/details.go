@@ -2,15 +2,15 @@ package format
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // details - Get format by id
@@ -26,7 +26,7 @@ import (
 // @Router /core/formats/{format_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -34,7 +34,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	formatID := chi.URLParam(r, "format_id")
-	id, err := strconv.Atoi(formatID)
+	id, err := uuid.Parse(formatID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -44,10 +44,10 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	result := &model.Format{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	err = config.DB.Model(&model.Format{}).Where(&model.Format{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	if err != nil {

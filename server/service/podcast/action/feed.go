@@ -14,11 +14,12 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 func Feeds(w http.ResponseWriter, r *http.Request) {
 	spaceID := chi.URLParam(r, "space_id")
-	sID, err := strconv.Atoi(spaceID)
+	sID, err := uuid.Parse(spaceID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
@@ -26,7 +27,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	}
 
 	space := &coreModel.Space{}
-	space.ID = uint(sID)
+	space.ID = sID
 	if err = config.DB.First(&space).Error; err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -65,7 +66,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	result := &model.Podcast{}
 
 	err = config.DB.Model(&model.Podcast{}).Where(&model.Podcast{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 		Slug:    slug,
 	}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").First(&result).Error
 
@@ -115,7 +116,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		PodcastID: &result.ID,
 	}).Preload("Medium").Order("created_at " + sort).Limit(limit).Offset((pageNo - 1) * limit).Find(&episodeList)
 
-	episodeIDs := make([]uint, 0)
+	episodeIDs := make([]uuid.UUID, 0)
 	for _, each := range episodeList {
 		episodeIDs = append(episodeIDs, each.ID)
 	}
@@ -123,7 +124,8 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	episodeAuthors := make([]model.EpisodeAuthor, 0)
 	config.DB.Model(&model.EpisodeAuthor{}).Where("episode_id IN (?)", episodeIDs).Find(&episodeAuthors)
 
-	var authorMap map[string]coreModel.Author
+	//TODO: fetch all authors
+	// var authorMap map[string]coreModel.Author
 	if len(episodeAuthors) > 0 {
 		// authorMap = author.Mapper(space.OrganisationID, int(episodeAuthors[0].AuthorID))
 		// if err != nil {
@@ -133,12 +135,12 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		// }
 	}
 
-	episodeAuthorMap := make(map[uint]uint)
-	for _, ea := range episodeAuthors {
-		if _, found := episodeAuthorMap[ea.EpisodeID]; !found {
-			episodeAuthorMap[ea.EpisodeID] = ea.AuthorID
-		}
-	}
+	// episodeAuthorMap := make(map[uint]uint)
+	// for _, ea := range episodeAuthors {
+	// 	if _, found := episodeAuthorMap[ea.EpisodeID]; !found {
+	// 		episodeAuthorMap[ea.EpisodeID] = ea.AuthorID
+	// 	}
+	// }
 
 	for _, episode := range episodeList {
 		description := episode.DescriptionHTML
@@ -166,14 +168,14 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		if authID, found := episodeAuthorMap[episode.ID]; found {
-			if author, found := authorMap[fmt.Sprint(authID)]; found {
-				item.Author = &pcast.Author{
-					Name:  fmt.Sprint(author.FirstName, " ", author.LastName),
-					Email: author.Email,
-				}
-			}
-		}
+		// if authID, found := episodeAuthorMap[episode.ID]; found {
+		// 	if author, found := authorMap[fmt.Sprint(authID)]; found {
+		// 		item.Author = &pcast.Author{
+		// 			Name:  fmt.Sprint(author.FirstName, " ", author.LastName),
+		// 			Email: author.Email,
+		// 		}
+		// 	}
+		// }
 
 		if _, err := p.AddItem(item); err != nil {
 			fmt.Println(item.Title, ": error", err.Error())

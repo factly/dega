@@ -17,7 +17,7 @@ function App() {
     redirect_uri: window.REACT_APP_ZITADEL_REDIRECT_URI,
     post_logout_redirect_uri: window.REACT_APP_ZITADEL_POST_LOGOUT_REDIRECT_URI,
     scope:
-      'openid profile email urn:zitadel:iam:user:metadata urn:zitadel:iam:user:resourceowner urn:zitadel:iam:org:project:id:zitadel:aud',
+      'openid profile email urn:zitadel:iam:user:metadata urn:zitadel:iam:user:resourceowner urn:zitadel:iam:org:project:id:zitadel:aud urn:zitadel:iam:org:project:268579264306114801:roles', // urn:zitadel:iam:org:project:268579264306114801:zitadel:aud
     response_type: 'code',
     response_mode: 'query',
     code_challenge_method: 'S256',
@@ -47,6 +47,7 @@ function App() {
   });
 
   useEffect(() => {
+    console.log('fetching formats');
     fetchFormats();
   }, [dispatch, selected, reloadFlag]);
 
@@ -62,7 +63,6 @@ function App() {
 
   useEffect(() => {
     zitadel.userManager.getUser().then((user) => {
-      console.log('user', user);
       if (user) {
         setAuthenticated(true);
       } else {
@@ -82,12 +82,14 @@ function App() {
           window.REACT_APP_ZITADEL_CLIENT_ID,
       )
     ) {
+      window.localStorage.setItem('return_to', window.location.href);
       login();
     }
   }, [authenticated]);
 
   const fetchFormats = () => {
-    if (selected > 0) dispatch(getFormats({ space_id: selected }));
+    console.log('fetching formats', selected);
+    if (selected !== '') dispatch(getFormats({ space_id: selected }));
   };
 
   const router = createBrowserRouter(

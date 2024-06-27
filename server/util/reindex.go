@@ -7,10 +7,10 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	podcastModel "github.com/factly/dega-server/service/podcast/model"
-	"github.com/factly/x/meilisearchx"
+	"github.com/google/uuid"
 )
 
-func ReindexAllEntities(spaceID uint) error {
+func ReindexAllEntities(spaceID uuid.UUID) error {
 	var err error
 	if err = AddPosts(spaceID); err != nil {
 		return err
@@ -49,7 +49,7 @@ func ReindexAllEntities(spaceID uint) error {
 	return nil
 }
 
-func AddPosts(spaceID uint) error {
+func AddPosts(spaceID uuid.UUID) error {
 	posts := make([]model.Post, 0)
 	tx := config.DB.Begin()
 	err := config.DB.Model(&model.Post{}).Where(&model.Post{
@@ -59,9 +59,8 @@ func AddPosts(spaceID uint) error {
 		tx.Rollback()
 		return err
 	}
-	// log.Fatal("============================================================", posts)
 
-	postAuthorMap := make(map[uint][]uint)
+	postAuthorMap := make(map[uuid.UUID][]string)
 	postAuthors := make([]model.PostAuthor, 0)
 
 	err = tx.Model(&model.PostAuthor{}).Find(&postAuthors).Error
@@ -74,7 +73,7 @@ func AddPosts(spaceID uint) error {
 		postAuthorMap[pa.PostID] = append(postAuthorMap[pa.PostID], pa.AuthorID)
 	}
 
-	postClaimsMap := make(map[uint][]uint)
+	postClaimsMap := make(map[uuid.UUID][]uuid.UUID)
 	postClaims := make([]factCheckModel.PostClaim, 0)
 
 	err = tx.Model(&factCheckModel.PostClaim{}).Find(&postClaims).Error
@@ -93,19 +92,19 @@ func AddPosts(spaceID uint) error {
 			meiliPublishDate = p.PublishedDate.Unix()
 		}
 
-		tagIDs := make([]uint, 0)
-		categoryIDs := make([]uint, 0)
+		tagIDs := make([]string, 0)
+		categoryIDs := make([]string, 0)
 
 		for _, each := range p.Categories {
-			categoryIDs = append(categoryIDs, each.ID)
+			categoryIDs = append(categoryIDs, each.ID.String())
 		}
 		for _, each := range p.Tags {
-			tagIDs = append(tagIDs, each.ID)
+			tagIDs = append(tagIDs, each.ID.String())
 		}
 
 		meiliObj := map[string]interface{}{
-			"object_id":      fmt.Sprint("post_", p.ID),
-			"id":             p.ID,
+			"object_id":      fmt.Sprint("post_", p.ID.String()),
+			"id":             p.ID.String(),
 			"kind":           "post",
 			"title":          p.Title,
 			"subtitle":       p.Subtitle,
@@ -120,14 +119,14 @@ func AddPosts(spaceID uint) error {
 			"format_id":      p.FormatID,
 			"published_date": meiliPublishDate,
 			"meta_fields":    p.MetaFields,
-			"space_id":       p.SpaceID,
+			"space_id":       p.SpaceID.String(),
 			"tag_ids":        tagIDs,
 			"category_ids":   categoryIDs,
 			"author_ids":     postAuthorMap[p.ID],
 		}
 
 		if p.IsPage {
-			meiliObj["object_id"] = fmt.Sprint("page_", p.ID)
+			meiliObj["object_id"] = fmt.Sprint("page_", p.ID.String())
 			meiliObj["kind"] = "page"
 		}
 
@@ -137,16 +136,15 @@ func AddPosts(spaceID uint) error {
 
 		meiliPostObjects = append(meiliPostObjects, meiliObj)
 	}
-	// log.Fatal("===============================", meiliPostObjects)
-	_, err = meilisearchx.Client.Index("dega").UpdateDocuments(meiliPostObjects)
+	_, err = config.MeilisearchClient.Index("dega").UpdateDocuments(meiliPostObjects)
 	tx.Commit()
 	return err
 }
 
-func AddCategories(spaceID uint) error {
+func AddCategories(spaceID uuid.UUID) error {
 	categories := make([]model.Category, 0)
 	tx := config.DB.Model(&model.Category{})
-	if spaceID > 0 {
+	if spaceID != uuid.Nil {
 		tx.Where("space_id IN (?)", spaceID)
 	}
 	tx.Find(&categories)
@@ -154,27 +152,27 @@ func AddCategories(spaceID uint) error {
 	meiliCategoryObjects := make([]map[string]interface{}, 0)
 	for _, c := range categories {
 		meiliObj := map[string]interface{}{
-			"object_id":   fmt.Sprint("category_", c.ID),
-			"id":          c.ID,
+			"object_id":   fmt.Sprint("category_", c.ID.String()),
+			"id":          c.ID.String(),
 			"kind":        "category",
 			"name":        c.Name,
 			"slug":        c.Slug,
 			"description": c.Description,
-			"space_id":    c.SpaceID,
+			"space_id":    c.SpaceID.String(),
 			"meta_fields": c.MetaFields,
 		}
 		meiliCategoryObjects = append(meiliCategoryObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliCategoryObjects)
+	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliCategoryObjects)
 
 	return err
 }
 
-func AddTags(spaceID uint) error {
+func AddTags(spaceID uuid.UUID) error {
 	tags := make([]model.Tag, 0)
 	tx := config.DB.Model(&model.Tag{})
-	if spaceID > 0 {
+	if spaceID != uuid.Nil {
 		tx.Where("space_id IN (?)", spaceID)
 	}
 	tx.Find(&tags)
@@ -182,23 +180,23 @@ func AddTags(spaceID uint) error {
 	meiliTagObjects := make([]map[string]interface{}, 0)
 	for _, t := range tags {
 		meiliObj := map[string]interface{}{
-			"object_id":   fmt.Sprint("tag_", t.ID),
-			"id":          t.ID,
+			"object_id":   fmt.Sprint("tag_", t.ID.String()),
+			"id":          t.ID.String(),
 			"kind":        "tag",
 			"name":        t.Name,
 			"slug":        t.Slug,
 			"description": t.Description,
-			"space_id":    t.SpaceID,
+			"space_id":    t.SpaceID.String(),
 		}
 		meiliTagObjects = append(meiliTagObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliTagObjects)
+	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliTagObjects)
 
 	return err
 }
 
-func AddMedium(spaceID uint) error {
+func AddMedium(spaceID uuid.UUID) error {
 	medium := make([]model.Medium, 0)
 	tx := config.DB.Begin()
 	err := config.DB.Model(&model.Medium{}).Where(&model.Medium{
@@ -213,28 +211,28 @@ func AddMedium(spaceID uint) error {
 	meiliMediumObjects := make([]map[string]interface{}, 0)
 	for _, m := range medium {
 		meiliObj := map[string]interface{}{
-			"object_id":   fmt.Sprint("medium_", m.ID),
-			"id":          m.ID,
+			"object_id":   fmt.Sprint("medium_", m.ID.String()),
+			"id":          m.ID.String(),
 			"kind":        "medium",
 			"name":        m.Name,
 			"slug":        m.Slug,
 			"title":       m.Title,
 			"type":        m.Type,
 			"description": m.Description,
-			"space_id":    m.SpaceID,
+			"space_id":    m.SpaceID.String(),
 		}
 		meiliMediumObjects = append(meiliMediumObjects, meiliObj)
 	}
 
-	_, err = meilisearchx.Client.Index("dega").UpdateDocuments(meiliMediumObjects)
+	_, err = config.MeilisearchClient.Index("dega").UpdateDocuments(meiliMediumObjects)
 	tx.Commit()
 	return err
 }
 
-func AddMenu(spaceID uint) error {
+func AddMenu(spaceID uuid.UUID) error {
 	menus := make([]model.Menu, 0)
 	tx := config.DB.Model(&model.Menu{})
-	if spaceID > 0 {
+	if spaceID != uuid.Nil {
 		tx.Where("space_id IN (?)", spaceID)
 	}
 	tx.Find(&menus)
@@ -242,26 +240,26 @@ func AddMenu(spaceID uint) error {
 	meiliMenuObjects := make([]map[string]interface{}, 0)
 	for _, m := range menus {
 		meiliObj := map[string]interface{}{
-			"object_id": fmt.Sprint("menu_", m.ID),
-			"id":        m.ID,
+			"object_id": fmt.Sprint("menu_", m.ID.String()),
+			"id":        m.ID.String(),
 			"kind":      "menu",
 			"name":      m.Name,
 			"slug":      m.Slug,
 			"menu":      m.Menu,
-			"space_id":  m.SpaceID,
+			"space_id":  m.SpaceID.String(),
 		}
 		meiliMenuObjects = append(meiliMenuObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliMenuObjects)
+	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliMenuObjects)
 
 	return err
 }
 
-func AddSpace(spaceID uint) error {
+func AddSpace(spaceID uuid.UUID) error {
 	spaces := make([]model.Space, 0)
 	tx := config.DB.Model(&model.Space{})
-	if spaceID > 0 {
+	if spaceID != uuid.Nil {
 		tx.Where("id IN (?)", spaceID)
 	}
 	tx.First(&spaces)
@@ -269,8 +267,8 @@ func AddSpace(spaceID uint) error {
 	meiliSpaceObjects := make([]map[string]interface{}, 0)
 	for _, s := range spaces {
 		meiliObj := map[string]interface{}{
-			"object_id":       fmt.Sprint("space_", s.ID),
-			"id":              s.ID,
+			"object_id":       fmt.Sprint("space_", s.ID.String()),
+			"id":              s.ID.String(),
 			"kind":            "space",
 			"name":            s.Name,
 			"slug":            s.Slug,
@@ -284,15 +282,15 @@ func AddSpace(spaceID uint) error {
 		meiliSpaceObjects = append(meiliSpaceObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliSpaceObjects)
+	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliSpaceObjects)
 
 	return err
 }
 
-func AddClaim(spaceID uint) error {
+func AddClaim(spaceID uuid.UUID) error {
 	claims := make([]factCheckModel.Claim, 0)
 	tx := config.DB.Model(&factCheckModel.Claim{})
-	if spaceID > 0 {
+	if spaceID != uuid.Nil {
 		tx.Where("space_id IN (?)", spaceID)
 	}
 	tx.Find(&claims)
@@ -309,8 +307,8 @@ func AddClaim(spaceID uint) error {
 		}
 
 		meiliObj := map[string]interface{}{
-			"object_id":      fmt.Sprint("claim_", c.ID),
-			"id":             c.ID,
+			"object_id":      fmt.Sprint("claim_", c.ID.String()),
+			"id":             c.ID.String(),
 			"kind":           "claim",
 			"claim":          c.Claim,
 			"slug":           c.Slug,
@@ -322,20 +320,20 @@ func AddClaim(spaceID uint) error {
 			"rating_id":      c.RatingID,
 			"fact":           c.Fact,
 			"review_sources": c.ReviewSources,
-			"space_id":       c.SpaceID,
+			"space_id":       c.SpaceID.String(),
 		}
 		meiliClaimObjects = append(meiliClaimObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliClaimObjects)
+	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliClaimObjects)
 
 	return err
 }
 
-func AddClaimant(spaceID uint) error {
+func AddClaimant(spaceID uuid.UUID) error {
 	claimants := make([]factCheckModel.Claimant, 0)
 	tx := config.DB.Model(&factCheckModel.Claimant{})
-	if spaceID > 0 {
+	if spaceID != uuid.Nil {
 		tx.Where("space_id IN (?)", spaceID)
 	}
 	tx.Find(&claimants)
@@ -343,27 +341,27 @@ func AddClaimant(spaceID uint) error {
 	meiliClaimantObjects := make([]map[string]interface{}, 0)
 	for _, c := range claimants {
 		meiliObj := map[string]interface{}{
-			"object_id":   fmt.Sprint("claimant_", c.ID),
-			"id":          c.ID,
+			"object_id":   fmt.Sprint("claimant_", c.ID.String()),
+			"id":          c.ID.String(),
 			"kind":        "claimant",
 			"name":        c.Name,
 			"slug":        c.Slug,
 			"description": c.Description,
 			"tag_line":    c.TagLine,
-			"space_id":    c.SpaceID,
+			"space_id":    c.SpaceID.String(),
 		}
 		meiliClaimantObjects = append(meiliClaimantObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliClaimantObjects)
+	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliClaimantObjects)
 
 	return err
 }
 
-func AddRating(spaceID uint) error {
+func AddRating(spaceID uuid.UUID) error {
 	ratings := make([]factCheckModel.Rating, 0)
 	tx := config.DB.Model(&factCheckModel.Rating{})
-	if spaceID > 0 {
+	if spaceID != uuid.Nil {
 		tx.Where("space_id IN (?)", spaceID)
 	}
 	tx.Find(&ratings)
@@ -371,8 +369,8 @@ func AddRating(spaceID uint) error {
 	meiliRatingObjects := make([]map[string]interface{}, 0)
 	for _, r := range ratings {
 		meiliObj := map[string]interface{}{
-			"object_id":         fmt.Sprint("rating_", r.ID),
-			"id":                r.ID,
+			"object_id":         fmt.Sprint("rating_", r.ID.String()),
+			"id":                r.ID.String(),
 			"kind":              "rating",
 			"name":              r.Name,
 			"background_colour": r.BackgroundColour,
@@ -380,56 +378,56 @@ func AddRating(spaceID uint) error {
 			"slug":              r.Slug,
 			"description":       r.Description,
 			"numeric_value":     r.NumericValue,
-			"space_id":          r.SpaceID,
+			"space_id":          r.SpaceID.String(),
 		}
 		meiliRatingObjects = append(meiliRatingObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliRatingObjects)
+	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliRatingObjects)
 
 	return err
 }
 
-func AddPodcast(spaceID uint) error {
+func AddPodcast(spaceID uuid.UUID) error {
 	podcasts := make([]podcastModel.Podcast, 0)
 	tx := config.DB.Model(&podcastModel.Podcast{}).Preload("Categories")
-	if spaceID > 0 {
+	if spaceID != uuid.Nil {
 		tx.Where("space_id IN (?)", spaceID)
 	}
 	tx.Find(&podcasts)
 
 	meiliPodcastObjects := make([]map[string]interface{}, 0)
 	for _, p := range podcasts {
-		categoryIDs := make([]uint, 0)
+		categoryIDs := make([]string, 0)
 		for _, each := range p.Categories {
-			categoryIDs = append(categoryIDs, each.ID)
+			categoryIDs = append(categoryIDs, each.ID.String())
 		}
 
 		meiliObj := map[string]interface{}{
-			"object_id":           fmt.Sprint("podcast_", p.ID),
-			"id":                  p.ID,
+			"object_id":           fmt.Sprint("podcast_", p.ID.String()),
+			"id":                  p.ID.String(),
 			"kind":                "podcast",
 			"title":               p.Title,
 			"slug":                p.Slug,
 			"description":         p.Description,
 			"language":            p.Language,
 			"category_ids":        categoryIDs,
-			"space_id":            p.SpaceID,
+			"space_id":            p.SpaceID.String(),
 			"primary_category_id": p.PrimaryCategoryID,
 			"medium_id":           p.MediumID,
 		}
 		meiliPodcastObjects = append(meiliPodcastObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliPodcastObjects)
+	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliPodcastObjects)
 
 	return err
 }
 
-func AddEpisode(spaceID uint) error {
+func AddEpisode(spaceID uuid.UUID) error {
 	episodes := make([]podcastModel.Episode, 0)
 	tx := config.DB.Model(&podcastModel.Episode{})
-	if spaceID > 0 {
+	if spaceID != uuid.Nil {
 		tx.Where("space_id IN (?)", spaceID)
 	}
 	tx.Find(&episodes)
@@ -444,8 +442,8 @@ func AddEpisode(spaceID uint) error {
 		}
 
 		meiliObj := map[string]interface{}{
-			"object_id":      fmt.Sprint("episode_", e.ID),
-			"id":             e.ID,
+			"object_id":      fmt.Sprint("episode_", e.ID.String()),
+			"id":             e.ID.String(),
 			"kind":           "episode",
 			"title":          e.Title,
 			"slug":           e.Slug,
@@ -455,13 +453,13 @@ func AddEpisode(spaceID uint) error {
 			"podcast_id":     e.PodcastID,
 			"description":    e.Description,
 			"published_date": publishedDate,
-			"space_id":       e.SpaceID,
+			"space_id":       e.SpaceID.String(),
 			"medium_id":      e.MediumID,
 		}
 		meiliEpisodeObjects = append(meiliEpisodeObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliEpisodeObjects)
+	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliEpisodeObjects)
 
 	return err
 }

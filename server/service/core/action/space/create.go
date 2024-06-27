@@ -12,7 +12,6 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -52,12 +51,25 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// check if user is admin of the organisation or not
+	orgRole := util.GetOrgRole(config.ZitadelInterceptor.Context(r.Context()).Claims, space.OrganisationID)
+
+	if orgRole != "admin" {
+		if orgRole == "member" {
+			loggerx.Error(errors.New("user is not admin of the organisation"))
+		} else {
+			loggerx.Error(errors.New("user is not part of the organisation"))
+		}
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	result := &model.Space{
 		Name:              space.Name,
 		Slug:              space.Slug,
+		Description:       space.Description,
 		SiteTitle:         space.SiteTitle,
 		TagLine:           space.TagLine,
-		Description:       space.Description,
 		SiteAddress:       space.SiteAddress,
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
@@ -66,7 +78,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		HeaderCode:        space.HeaderCode,
 		FooterCode:        space.FooterCode,
 		MetaFields:        space.MetaFields,
-		// OrganisationID:    space.OrganisationID,
+		OrganisationID:    space.OrganisationID,
 	}
 
 	if space.LogoID != nil {
@@ -85,35 +97,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		result.MobileIconID = space.MobileIconID
 	}
 
-	err = config.DB.Model(&model.Space{}).Create(result).Error
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+
+	err = tx.Model(&model.Space{}).Create(result).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
-	}
-
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-
-	// Insert into meili index
-	meiliObj := map[string]interface{}{
-		"id":              result.ID,
-		"kind":            "space",
-		"name":            result.Name,
-		"slug":            result.Slug,
-		"site_title":      result.SiteTitle,
-		"tag_line":        result.TagLine,
-		"description":     result.Description,
-		"site_address":    result.SiteAddress,
-		"organisation_id": result.OrganisationID,
-	}
-
-	if config.SearchEnabled() {
-		err = meilisearchx.AddDocument("dega", meiliObj)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
-		}
 	}
 
 	tx.Commit()

@@ -3,17 +3,16 @@ package tag
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // update - Update tag by id
@@ -31,7 +30,7 @@ import (
 // @Router /core/tags/{tag_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 	tagID := chi.URLParam(r, "tag_id")
-	id, err := strconv.Atoi(tagID)
+	id, err := uuid.Parse(tagID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -39,7 +38,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -71,7 +70,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, serviceErr := tagService.Update(sID, uID, id, tag)
+	result, serviceErr := tagService.Update(sID, id, uID, tag)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -89,11 +88,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearch.UpdateDocument("dega", meiliObj)
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("tag.updated", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("tag.updated", sID.String(), r) {
 			if err = util.NC.Publish("tag.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

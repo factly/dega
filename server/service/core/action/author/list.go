@@ -1,27 +1,21 @@
 package author
 
 import (
-	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
-	"strconv"
 
-	"github.com/factly/x/loggerx"
-	"github.com/spf13/viper"
-
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	httpx "github.com/factly/dega-server/util/http"
+	"github.com/factly/dega-server/util/zitadel"
 	"github.com/factly/x/errorx"
-	"github.com/factly/x/middlewarex"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
 
 // list response
 type paging struct {
-	Total int            `json:"total"`
+	Total int64          `json:"total"`
 	Nodes []model.Author `json:"nodes"`
 }
 
@@ -39,7 +33,7 @@ type paging struct {
 // @Router /core/authors [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	uID, err := util.GetUser(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -47,21 +41,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	oID, err := util.GetOrganisation(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	applicationID, err := util.GetApplicationID(uint(uID), "dega")
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -71,53 +50,41 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 	result.Nodes = make([]model.Author, 0)
 
-	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", oID, "/applications/", applicationID, "/spaces/", sID, "/users")
+	// get space users
+	authors := make([]model.Author, 0)
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-User", strconv.Itoa(uID))
-	client := httpx.CustomHttpClient()
-	resp, err := client.Do(req)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-		return
-	}
-
-	defer resp.Body.Close()
-
-	users := make([]model.Author, 0)
-	err = json.NewDecoder(resp.Body).Decode(&users)
-
-	if err != nil {
-		log.Fatal(err)
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	spaceUsers := make([]model.SpaceUser, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	total := len(users)
-	lowerLimit := offset
-	upperLimit := offset + limit
-	if offset > total {
-		lowerLimit = 0
-		upperLimit = 0
-	} else if offset+limit > total {
-		lowerLimit = offset
-		upperLimit = total
+	// get total authors
+	err = config.DB.Model(&model.SpaceUser{}).Where("space_id = ?", sID).Count(&result.Total).Limit(limit).Offset(offset).Find(&spaceUsers).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
 	}
 
-	result.Nodes = users[lowerLimit:upperLimit]
-	result.Total = total
+	uIDs := make([]string, 0)
+
+	for _, spaceUser := range spaceUsers {
+		uIDs = append(uIDs, spaceUser.UserID)
+	}
+
+	// get users details from zitadel
+	zitadelUsers, _ := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), oID, uIDs)
+
+	for _, zitadelUser := range zitadelUsers {
+		authors = append(authors, model.Author{
+			ID:          zitadelUser.ID,
+			DisplayName: zitadelUser.Human.Profile.DisplayName,
+			FirstName:   zitadelUser.Human.Profile.FirstName,
+			LastName:    zitadelUser.Human.Profile.LastName,
+		})
+	}
+
+	result.Nodes = authors
 
 	renderx.JSON(w, http.StatusOK, result)
 }

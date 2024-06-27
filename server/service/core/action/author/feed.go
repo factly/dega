@@ -25,7 +25,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	// 	return
 	// }
 	spaceID := chi.URLParam(r, "space_id")
-	sID, err := strconv.Atoi(spaceID)
+	_, err := strconv.Atoi(spaceID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
@@ -80,7 +80,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 
 	// get post authors from published posts in given space
 	postAuthors := make([]model.PostAuthor, 0)
-	config.DB.Model(&model.PostAuthor{}).Joins("JOIN posts ON posts.id = post_authors.post_id").Where("status = ? AND space_id = ? AND page = ?", "publish", spaceID, false).Find(&postAuthors)
+	config.DB.Model(&model.PostAuthor{}).Joins("JOIN de_posts ON de_posts.id = de_post_authors.post_id").Where("status = ? AND space_id = ? AND page = ?", "publish", spaceID, false).Find(&postAuthors)
 
 	// var userID int
 	// if len(postAuthors) > 0 {
@@ -98,19 +98,19 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	postList := make([]model.Post, 0)
-	config.DB.Model(&model.Post{}).Joins("JOIN post_authors ON posts.id = post_authors.post_id").Where(&model.Post{
-		Status:  "publish",
-		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Where("author_id IN (?)", authorIDs).Where("post_authors.deleted_at IS NULL").Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
+	config.DB.Model(&model.Post{}).Joins("JOIN de_post_authors ON de_posts.id = de_post_authors.post_id").Where(&model.Post{
+		Status: "publish",
+		// SpaceID: sID,
+	}).Where("is_page = ?", false).Where("author_id IN (?)", authorIDs).Where("de_post_authors.deleted_at IS NULL").Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
 	// generate post author map
-	postAuthorMap := make(map[uint][]uint)
-	for _, po := range postAuthors {
-		if _, found := postAuthorMap[po.PostID]; !found {
-			postAuthorMap[po.PostID] = make([]uint, 0)
-		}
-		postAuthorMap[po.PostID] = append(postAuthorMap[po.PostID], po.AuthorID)
-	}
+	// postAuthorMap := make(map[uint][]uint)
+	// for _, po := range postAuthors {
+	// 	if _, found := postAuthorMap[po.PostID]; !found {
+	// 		postAuthorMap[po.PostID] = make([]uint, 0)
+	// 	}
+	// 	postAuthorMap[po.PostID] = append(postAuthorMap[po.PostID], po.AuthorID)
+	// }
 
 	for _, post := range postList {
 		// author := authorMap[fmt.Sprint(postAuthorMap[post.ID][0])]

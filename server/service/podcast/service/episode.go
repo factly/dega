@@ -13,12 +13,11 @@ import (
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/arrays"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -37,12 +36,12 @@ type Episode struct {
 	Season        int            `json:"season"  validate:"required"`
 	Episode       int            `json:"episode"  validate:"required"`
 	AudioURL      string         `json:"audio_url" validate:"required"`
-	PodcastID     uint           `json:"podcast_id"`
+	PodcastID     uuid.UUID      `json:"podcast_id"`
 	Description   postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	PublishedDate *time.Time     `json:"published_date" sql:"DEFAULT:NULL"`
-	MediumID      uint           `json:"medium_id"`
-	SpaceID       uint           `json:"space_id"`
-	AuthorIDs     []uint         `json:"author_ids"`
+	MediumID      uuid.UUID      `json:"medium_id"`
+	SpaceID       uuid.UUID      `json:"space_id"`
+	AuthorIDs     []string       `json:"author_ids"`
 	MetaFields    postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
@@ -54,11 +53,11 @@ type episodePaging struct {
 }
 
 type IEpisodeService interface {
-	GetById(ctx context.Context, sID, id int) (model.Episode, []errorx.Message)
-	List(ctx context.Context, sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (episodePaging, []errorx.Message)
-	Create(ctx context.Context, sID, uID int, episode *Episode) (EpisodeData, []errorx.Message)
-	Update(ctx context.Context, sID, uID, id int, episode *Episode) (EpisodeData, []errorx.Message)
-	Delete(sID, id int) []errorx.Message
+	GetById(ctx context.Context, sID, id uuid.UUID) (model.Episode, []errorx.Message)
+	List(ctx context.Context, sID uuid.UUID, offset, limit int, searchQuery, sort string, queryMap url.Values) (episodePaging, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID string, episode *Episode) (EpisodeData, []errorx.Message)
+	Update(ctx context.Context, sID, id uuid.UUID, uID string, episode *Episode) (EpisodeData, []errorx.Message)
+	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
 type episodeService struct {
@@ -66,7 +65,7 @@ type episodeService struct {
 }
 
 // Create implements IEpisodeService
-func (es *episodeService) Create(ctx context.Context, sID int, uID int, episode *Episode) (EpisodeData, []errorx.Message) {
+func (es *episodeService) Create(ctx context.Context, sID uuid.UUID, uID string, episode *Episode) (EpisodeData, []errorx.Message) {
 
 	validationError := validationx.Check(episode)
 
@@ -76,10 +75,10 @@ func (es *episodeService) Create(ctx context.Context, sID int, uID int, episode 
 	}
 
 	var episodeSlug string
-	if episode.Slug != "" && slugx.Check(episode.Slug) {
+	if episode.Slug != "" && util.CheckSlug(episode.Slug) {
 		episodeSlug = episode.Slug
 	} else {
-		episodeSlug = slugx.Make(episode.Title)
+		episodeSlug = util.MakeSlug(episode.Title)
 	}
 
 	// Get table name
@@ -88,11 +87,11 @@ func (es *episodeService) Create(ctx context.Context, sID int, uID int, episode 
 	tableName := stmt.Schema.Table
 
 	mediumID := &episode.MediumID
-	if episode.MediumID == 0 {
+	if episode.MediumID == uuid.Nil {
 		mediumID = nil
 	}
 	podcastID := &episode.PodcastID
-	if episode.PodcastID == 0 {
+	if episode.PodcastID == uuid.Nil {
 		podcastID = nil
 	}
 
@@ -122,7 +121,7 @@ func (es *episodeService) Create(ctx context.Context, sID int, uID int, episode 
 		Title:           episode.Title,
 		Description:     jsonDescription,
 		DescriptionHTML: descriptionHTML,
-		Slug:            slugx.Approve(&es.model, episodeSlug, sID, tableName),
+		Slug:            util.ApproveSlug(episodeSlug, sID, tableName),
 		Season:          episode.Season,
 		Episode:         episode.Episode,
 		AudioURL:        episode.AudioURL,
@@ -130,7 +129,7 @@ func (es *episodeService) Create(ctx context.Context, sID int, uID int, episode 
 		PublishedDate:   episode.PublishedDate,
 		MediumID:        mediumID,
 		MetaFields:      episode.MetaFields,
-		SpaceID:         uint(sID),
+		SpaceID:         sID,
 	}
 	tx := es.model.WithContext(context.WithValue(ctx, episodeUser, uID)).Begin()
 	err = tx.Model(&model.Episode{}).Create(&result.Episode).Error
@@ -175,20 +174,20 @@ func (es *episodeService) Create(ctx context.Context, sID int, uID int, episode 
 }
 
 // Delete implements IEpisodeService
-func (es *episodeService) Delete(sID int, id int) []errorx.Message {
+func (es *episodeService) Delete(sID, id uuid.UUID) []errorx.Message {
 	result := model.EpisodeAuthor{}
-	result.ID = uint(id)
+	result.ID = id
 
 	tx := es.model.Begin()
 	tx.Delete(&result)
 
 	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
-		EpisodeID: uint(id),
+		EpisodeID: id,
 	}).Delete(&model.EpisodeAuthor{})
 
-	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "episode")
-	}
+	// if config.SearchEnabled() {
+	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "episode")
+	// }
 
 	tx.Commit()
 
@@ -196,15 +195,15 @@ func (es *episodeService) Delete(sID int, id int) []errorx.Message {
 }
 
 // GetById implements IEpisodeService
-func (es *episodeService) GetById(ctx context.Context, sID int, id int) (model.Episode, []errorx.Message) {
+func (es *episodeService) GetById(ctx context.Context, sID, id uuid.UUID) (model.Episode, []errorx.Message) {
 
 	result := EpisodeData{}
 
-	result.Episode.ID = uint(id)
+	result.Episode.ID = id
 
 	var err error
 	err = es.model.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").Preload("Podcast.Medium").Preload("Podcast.PrimaryCategory").Preload("Podcast.Categories").Where(&model.Episode{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result.Episode).Error
 
 	if err != nil {
@@ -221,7 +220,7 @@ func (es *episodeService) GetById(ctx context.Context, sID int, id int) (model.E
 	// 123
 	authorEpisodes := make([]model.EpisodeAuthor, 0)
 	es.model.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
-		EpisodeID: uint(id),
+		EpisodeID: id,
 	}).Find(&authorEpisodes)
 
 	for _, each := range authorEpisodes {
@@ -232,10 +231,10 @@ func (es *episodeService) GetById(ctx context.Context, sID int, id int) (model.E
 }
 
 // List implements IEpisodeService
-func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (episodePaging, []errorx.Message) {
+func (es *episodeService) List(ctx context.Context, sID uuid.UUID, offset, limit int, searchQuery, sort string, queryMap url.Values) (episodePaging, []errorx.Message) {
 
 	tx := es.model.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").Preload("Podcast.Medium").Preload("Podcast.PrimaryCategory").Preload("Podcast.Categories").Where(&model.Episode{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Order("created_at " + sort)
 
 	episodes := make([]model.Episode, 0)
@@ -251,13 +250,13 @@ func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit 
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
 			var hits []interface{}
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "episode")
+			hits, err = meilisearch.SearchWithQuery("dega", searchQuery, filters, "episode")
 			if err != nil {
 				loggerx.Error(err)
 				return episodePaging{}, errorx.Parser(errorx.NetworkError())
 			}
 
-			filteredEpisodeIDs := meilisearchx.GetIDArray(hits)
+			filteredEpisodeIDs := meilisearch.GetIDArray(hits)
 			if len(filteredEpisodeIDs) == 0 {
 				return result, nil
 			} else {
@@ -287,41 +286,41 @@ func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit 
 		return result, nil
 	}
 
-	episodeIDs := make([]uint, 0)
+	episodeIDs := make([]uuid.UUID, 0)
 	for _, each := range episodes {
 		episodeIDs = append(episodeIDs, each.ID)
 	}
 
 	// Adding authors in response
-	authorMap, err := author.All(ctx)
-	if err != nil {
-		loggerx.Error(err)
-		return episodePaging{}, errorx.Parser(errorx.DBError())
-	}
+	// authorMap, err := author.All(ctx)
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	return episodePaging{}, errorx.Parser(errorx.DBError())
+	// }
 
 	authorEpisodes := make([]model.EpisodeAuthor, 0)
 	es.model.Model(&model.EpisodeAuthor{}).Where("episode_id IN (?)", episodeIDs).Find(&authorEpisodes)
 
-	episodeAuthorMap := make(map[uint][]coreModel.Author)
-	for _, authEpi := range authorEpisodes {
-		if _, found := episodeAuthorMap[authEpi.EpisodeID]; !found {
-			episodeAuthorMap[authEpi.EpisodeID] = make([]coreModel.Author, 0)
-		}
-		episodeAuthorMap[authEpi.EpisodeID] = append(episodeAuthorMap[authEpi.EpisodeID], authorMap[fmt.Sprint(authEpi.AuthorID)])
-	}
+	// episodeAuthorMap := make(map[uint][]coreModel.Author)
+	// for _, authEpi := range authorEpisodes {
+	// 	if _, found := episodeAuthorMap[authEpi.EpisodeID]; !found {
+	// 		episodeAuthorMap[authEpi.EpisodeID] = make([]coreModel.Author, 0)
+	// 	}
+	// 	episodeAuthorMap[authEpi.EpisodeID] = append(episodeAuthorMap[authEpi.EpisodeID], authorMap[fmt.Sprint(authEpi.AuthorID)])
+	// }
 
-	for _, each := range episodes {
-		data := EpisodeData{}
-		data.Episode = each
-		data.Authors = episodeAuthorMap[each.ID]
-		result.Nodes = append(result.Nodes, data)
-	}
+	// for _, each := range episodes {
+	// 	data := EpisodeData{}
+	// 	data.Episode = each
+	// 	data.Authors = episodeAuthorMap[each.ID]
+	// 	result.Nodes = append(result.Nodes, data)
+	// }
 
 	return result, nil
 }
 
 // Update implements IEpisodeService
-func (es *episodeService) Update(ctx context.Context, sID int, uID int, id int, episode *Episode) (EpisodeData, []errorx.Message) {
+func (es *episodeService) Update(ctx context.Context, sID, id uuid.UUID, uID string, episode *Episode) (EpisodeData, []errorx.Message) {
 
 	validationError := validationx.Check(episode)
 
@@ -330,14 +329,14 @@ func (es *episodeService) Update(ctx context.Context, sID int, uID int, id int, 
 		return EpisodeData{}, validationError
 	}
 	var result EpisodeData
-	result.Episode.ID = uint(id)
+	result.Episode.ID = id
 	var err error
 	// check record exists or not
 	err = es.model.Where(&model.Episode{
 		Base: config.Base{
-			ID: uint(id),
+			ID: id,
 		},
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result.Episode).Error
 
 	if err != nil {
@@ -354,10 +353,10 @@ func (es *episodeService) Update(ctx context.Context, sID int, uID int, id int, 
 
 	if result.Slug == episode.Slug {
 		episodeSlug = result.Slug
-	} else if episode.Slug != "" && slugx.Check(episode.Slug) {
-		episodeSlug = slugx.Approve(&es.model, episode.Slug, sID, tableName)
+	} else if episode.Slug != "" && util.CheckSlug(episode.Slug) {
+		episodeSlug = util.ApproveSlug(episode.Slug, sID, tableName)
 	} else {
-		episodeSlug = slugx.Approve(&es.model, slugx.Make(episode.Title), sID, tableName)
+		episodeSlug = util.ApproveSlug(util.MakeSlug(episode.Title), sID, tableName)
 	}
 
 	var descriptionHTML string
@@ -381,7 +380,7 @@ func (es *episodeService) Update(ctx context.Context, sID int, uID int, id int, 
 	updateMap := map[string]interface{}{
 		"created_at":       episode.CreatedAt,
 		"updated_at":       episode.UpdatedAt,
-		"updated_by_id":    uint(uID),
+		"updated_by_id":    uID,
 		"title":            episode.Title,
 		"slug":             episodeSlug,
 		"description_html": descriptionHTML,
@@ -395,11 +394,11 @@ func (es *episodeService) Update(ctx context.Context, sID int, uID int, id int, 
 		"meta_fields":      episode.MetaFields,
 	}
 
-	if episode.MediumID == 0 {
+	if episode.MediumID == uuid.Nil {
 		updateMap["medium_id"] = nil
 	}
 
-	if episode.PodcastID == 0 {
+	if episode.PodcastID == uuid.Nil {
 		updateMap["podcast_id"] = nil
 	}
 
@@ -408,36 +407,36 @@ func (es *episodeService) Update(ctx context.Context, sID int, uID int, id int, 
 	// fetch old authors
 	prevEpisodeAuthors := make([]model.EpisodeAuthor, 0)
 	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
-		EpisodeID: uint(result.Episode.ID),
+		EpisodeID: result.Episode.ID,
 	}).Find(&prevEpisodeAuthors)
 
-	prevAuthorIDs := make([]uint, 0)
-	for _, each := range prevEpisodeAuthors {
-		prevAuthorIDs = append(prevAuthorIDs, each.AuthorID)
-	}
+	// prevAuthorIDs := make([]uint, 0)
+	// for _, each := range prevEpisodeAuthors {
+	// 	prevAuthorIDs = append(prevAuthorIDs, each.AuthorID)
+	// }
 
-	toCreateIDs, toDeleteIDs := arrays.Difference(prevAuthorIDs, episode.AuthorIDs)
+	// toCreateIDs, toDeleteIDs := arrays.Difference(prevAuthorIDs, episode.AuthorIDs)
 
-	if len(toDeleteIDs) > 0 {
-		tx.Model(&model.EpisodeAuthor{}).Where("author_id IN (?)", toDeleteIDs).Delete(&model.EpisodeAuthor{})
-	}
+	// if len(toDeleteIDs) > 0 {
+	// 	tx.Model(&model.EpisodeAuthor{}).Where("author_id IN (?)", toDeleteIDs).Delete(&model.EpisodeAuthor{})
+	// }
 
-	if len(toCreateIDs) > 0 {
-		createEpisodeAuthors := make([]model.EpisodeAuthor, 0)
-		for _, each := range toCreateIDs {
-			epiAuth := model.EpisodeAuthor{
-				EpisodeID: uint(result.Episode.ID),
-				AuthorID:  each,
-			}
-			createEpisodeAuthors = append(createEpisodeAuthors, epiAuth)
-		}
+	// if len(toCreateIDs) > 0 {
+	// 	createEpisodeAuthors := make([]model.EpisodeAuthor, 0)
+	// 	for _, each := range toCreateIDs {
+	// 		epiAuth := model.EpisodeAuthor{
+	// 			EpisodeID: uint(result.Episode.ID),
+	// 			AuthorID:  each,
+	// 		}
+	// 		createEpisodeAuthors = append(createEpisodeAuthors, epiAuth)
+	// 	}
 
-		if err = tx.Model(&model.EpisodeAuthor{}).Create(&createEpisodeAuthors).Error; err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			return EpisodeData{}, errorx.Parser(errorx.DBError())
-		}
-	}
+	// 	if err = tx.Model(&model.EpisodeAuthor{}).Create(&createEpisodeAuthors).Error; err != nil {
+	// 		tx.Rollback()
+	// 		loggerx.Error(err)
+	// 		return EpisodeData{}, errorx.Parser(errorx.DBError())
+	// 	}
+	// }
 
 	// Fetch current authors
 	authorMap, err := author.All(ctx)
@@ -448,7 +447,7 @@ func (es *episodeService) Update(ctx context.Context, sID int, uID int, id int, 
 
 	authorEpisodes := make([]model.EpisodeAuthor, 0)
 	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
-		EpisodeID: uint(id),
+		EpisodeID: id,
 	}).Find(&authorEpisodes)
 
 	for _, each := range authorEpisodes {
@@ -466,7 +465,7 @@ func GetEpisodeService() IEpisodeService {
 func generateEpisodeFilters(podcast []string) string {
 	filters := ""
 	if len(podcast) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(podcast, "podcast_id"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(podcast, "podcast_id"), " AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {

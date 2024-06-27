@@ -10,6 +10,10 @@ export const ADD_SPACE_FAILURE = 'ADD_SPACE_SUCCESS';
 export const DELETE_SPACE_SUCCESS = 'DELETE_SPACE_SUCCESS';
 export const DELETE_SPACE_FAILURE = 'DELETE_SPACE_SUCCESS';
 export const ADD_SPACE_USERS = 'ADD_SPACE_USERS';
+
+// tokens
+export const SET_TOKENS_LOADING = 'SET_TOKENS_LOADING';
+export const ADD_SPACE_TOKENS = 'ADD_SPACE_TOKENS';
 //API
 export const API_GET_SPACES = '/core/spaces';
 export const API_ADD_SPACE = '/core/spaces';

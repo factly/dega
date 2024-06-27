@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button, Typography, Table, ConfigProvider } from 'antd';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { deletePolicy } from '../../../actions/policies';
 import { Link } from 'react-router-dom';
 import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
@@ -34,7 +34,7 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
             style={{
               marginRight: 8,
             }}
-            to={`settings/members/policies/${record.id}/edit`}
+            to={`/settings/members/policies/${record.id}/edit`}
           >
             <Typography.Text style={{ fontSize: '1rem' }} strong>
               {record.name}

@@ -132,6 +132,8 @@ import BasicLayout from '../layouts/basic';
 import ProtectedRoute from '../components/ProtectedRoute';
 import AdminRoute from '../components/AdminRoute';
 import Callback from '../pages/redirect';
+import Tokens from '../pages/tokens';
+import CreateSpaceTokenForm from '../pages/tokens/components/CreateToken';
 
 export function extractV6RouteObject(
   routes,
@@ -688,13 +690,13 @@ const routes = {
     title: 'Sach',
   },
   users: {
-    path: '/settings/members/users',
+    path: '/settings/members',
     menuKey: '/members',
     Component: Users,
     title: 'Users',
   },
   usersPermission: {
-    path: '/settings/members/users/:id/permissions',
+    path: '/settings/members/:id/permissions',
     menuKey: '/members',
     Component: PermissionList,
     title: 'Users Permission ',
@@ -775,6 +777,18 @@ const routes = {
     Component: EditEvent,
     title: 'Edit',
     isAdmin: true,
+  },
+  tokens: {
+    path: '/settings/advanced/tokens',
+    menuKey: '/tokens',
+    Component: Tokens,
+    title: 'Tokens',
+  },
+  createTokens: {
+    path: '/settings/advanced/tokens/create',
+    menuKey: '/tokens',
+    Component: CreateSpaceTokenForm,
+    title: 'New Token',
   },
   webhooks: {
     path: '/settings/advanced/webhooks',
@@ -863,13 +877,11 @@ export const sidebarMenu = [
     title: 'Dashboard',
     Icon: (props) => <HomeOutlined {...props} />,
     children: [routes.home, routes.analytics],
-    isService: false,
   },
   {
     title: 'Core',
     Icon: (props) => <InfoCircleOutlined {...props} />,
     children: [routes.posts, routes.pages, routes.categories, routes.tags, routes.media],
-    isService: true,
   },
   {
     title: 'Fact Checking',
@@ -882,13 +894,11 @@ export const sidebarMenu = [
       routes.googleFactCheck,
       routes.sach,
     ],
-    isService: true,
   },
   {
     title: 'Podcast',
     Icon: (props) => <AudioOutlined {...props} />,
     children: [routes.episodes, routes.podcasts],
-    isService: true,
   },
   {
     title: 'Administration',

@@ -6,6 +6,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -20,7 +21,7 @@ type format struct {
 	Meta        postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
 	HeaderCode  string         `json:"header_code"`
 	FooterCode  string         `json:"footer_code"`
-	MediumID    uint           `json:"medium_id"`
+	MediumID    uuid.UUID      `json:"medium_id"`
 }
 
 var userContext config.ContextKey = "format_user"
@@ -31,14 +32,14 @@ func Router() chi.Router {
 
 	entity := "formats"
 
-	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
-	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
-	r.With(util.CheckKetoPolicy(entity, "create")).Post("/default", createDefaults)
+	r.With(util.CheckEntityAccess(entity, "get")).Get("/", list)
+	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
+	r.With(util.CheckEntityAccess(entity, "create")).Post("/default", createDefaults)
 
 	r.Route("/{format_id}", func(r chi.Router) {
-		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
-		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
-		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
+		r.With(util.CheckEntityAccess(entity, "get")).Get("/", details)
+		r.With(util.CheckEntityAccess(entity, "update")).Put("/", update)
+		r.With(util.CheckEntityAccess(entity, "delete")).Delete("/", delete)
 	})
 
 	return r

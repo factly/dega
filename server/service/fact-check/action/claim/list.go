@@ -9,10 +9,10 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/service/fact-check/service"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
@@ -41,7 +41,7 @@ type paging struct {
 // @Router /fact-check/claims [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -61,7 +61,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 	claimService := service.GetClaimService()
-	result, serviceErr := claimService.List(uint(sID), offset, limit, searchQuery, sort, queryMap)
+	result, serviceErr := claimService.List(sID, offset, limit, searchQuery, sort, queryMap)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -73,10 +73,10 @@ func generateFilters(ratingIDs, claimantIDs []string) string {
 	filters := ""
 
 	if len(ratingIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(ratingIDs, "rating_id"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(ratingIDs, "rating_id"), " AND ")
 	}
 	if len(claimantIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
 	}
 	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]

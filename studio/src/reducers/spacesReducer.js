@@ -6,6 +6,7 @@ import {
   DELETE_SPACE_SUCCESS,
   UPDATE_SPACE_SUCCESS,
   ADD_SPACE_USERS,
+  ADD_SPACE_TOKENS,
 } from '../constants/spaces';
 
 const initialState = {
@@ -48,9 +49,8 @@ export default function spacesReducer(state = initialState, action = {}) {
         ...state,
         orgs: action.payload.map((each) => {
           return {
-            ...each.organisation,
-            applications: each.applications,
-            permission: each.permission,
+            ...each,
+            permission: { role: 'owner' },
             spaces: each.spaces.map((e) => e.id),
           };
         }),
@@ -105,6 +105,14 @@ export default function spacesReducer(state = initialState, action = {}) {
             ...state.details[action.payload.id],
             users: action.payload.data,
           },
+        },
+      };
+    case ADD_SPACE_TOKENS:
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          [action.payload.id]: { ...state.details[action.payload.id], ...action.payload },
         },
       };
     default:

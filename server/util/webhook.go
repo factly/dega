@@ -3,7 +3,6 @@ package util
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/spf13/viper"
 
@@ -22,7 +21,7 @@ func CheckWebhookEvent(event string, spaceID string, r *http.Request) bool {
 	}
 	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + spaceID + "/check"
 	req, err := http.NewRequest("GET", hukzURL, nil)
-	req.Header.Set("X-User", strconv.Itoa(uID))
+	req.Header.Set("X-User", uID)
 	q := req.URL.Query()
 	q.Add("event", event)
 	req.URL.RawQuery = q.Encode()

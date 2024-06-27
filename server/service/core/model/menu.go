@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/factly/dega-server/config"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -12,7 +13,7 @@ type Menu struct {
 	Name       string         `gorm:"column:name" json:"name" validate:"required"`
 	Slug       string         `gorm:"column:slug" json:"slug" validate:"required"`
 	Menu       postgres.Jsonb `gorm:"column:menu" json:"menu" swaggertype:"primitive,string"`
-	SpaceID    uint           `gorm:"column:space_id" json:"space_id"`
+	SpaceID    uuid.UUID      `gorm:"type:uuid;column:space_id" json:"space_id"`
 	MetaFields postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 }
 
@@ -26,9 +27,10 @@ func (menu *Menu) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	menu.CreatedByID = uint(uID)
-	menu.UpdatedByID = uint(uID)
+	menu.CreatedByID = uID
+	menu.UpdatedByID = uID
+	menu.ID = uuid.New()
 	return nil
 }

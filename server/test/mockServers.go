@@ -44,7 +44,6 @@ func KavachGock() {
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+/policy").Persist().Get("/").Reply(http.StatusOK).JSON(KavachPolicy)
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+/policy").Persist().Post("/").Reply(http.StatusOK).JSON(KavachPolicy[0])
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+/users").Persist().Get("/").Reply(http.StatusOK).JSON(Dummy_AuthorList)
-	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]/roles").Persist().Post("/").Reply(http.StatusOK).JSON(SpaceRole)
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]").Persist().Get("/").Reply(http.StatusOK).JSON(KavachPolicy[0])
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces").Persist().Post("/").Reply(http.StatusCreated).JSON(KavachCreateSpace)
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces").Persist().Get("/").Reply(http.StatusOK).JSON([]interface{}{KavachCreateSpace})

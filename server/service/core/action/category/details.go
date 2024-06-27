@@ -2,14 +2,14 @@ package category
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/service/core/service"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // details - Get category by id
@@ -25,7 +25,7 @@ import (
 // @Router /core/categories/{category_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -33,8 +33,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	categoryID := chi.URLParam(r, "category_id")
-	id, err := strconv.Atoi(categoryID)
-
+	id, err := uuid.Parse(categoryID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))

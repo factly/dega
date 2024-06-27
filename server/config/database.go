@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
@@ -38,6 +39,10 @@ func SetupDB() {
 			LogLevel:      logger.Info,
 			Colorful:      true,
 		}),
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix:   "de_",
+			SingularTable: true,
+		},
 	})
 
 	if err != nil {

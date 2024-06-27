@@ -22,6 +22,26 @@ function SpaceList() {
 
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      width: 200,
+      render: (_, record) => {
+        return (
+          <Link
+            style={{
+              marginRight: 8,
+            }}
+            to={`/admin/spaces/${record.id}/edit`}
+          >
+            <Typography.Text style={{ fontSize: '1rem', color: '#101828' }}>
+              {record.id}
+            </Typography.Text>
+          </Link>
+        );
+      },
+    },
+    {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',

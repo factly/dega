@@ -3,17 +3,15 @@ package format
 import (
 	"errors"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // delete - Delete format by id
@@ -28,7 +26,7 @@ import (
 // @Router /core/formats/{format_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -36,7 +34,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	formatID := chi.URLParam(r, "format_id")
-	id, err := strconv.Atoi(formatID)
+	id, err := uuid.Parse(formatID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -46,11 +44,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	result := &model.Format{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	// check record exists or not
 	err = config.DB.Where(&model.Format{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	if err != nil {
@@ -62,7 +60,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// check if format is associated with posts
 	var totAssociated int64
 	config.DB.Model(&model.Post{}).Where(&model.Post{
-		FormatID: uint(id),
+		FormatID: id,
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -74,14 +72,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 	tx.Delete(&result)
 
-	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "format")
-	}
+	// if config.SearchEnabled() {
+	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "format")
+	// }
 
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("format.deleted", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("format.deleted", sID.String(), r) {
 			if err = util.NC.Publish("format.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

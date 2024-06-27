@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/google/uuid"
 
 	"gorm.io/gorm"
 
@@ -23,20 +24,20 @@ type Claim struct {
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	DescriptionHTML string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	DescriptionAMP  string         `gorm:"column:description_amp" json:"description_amp"`
-	MigrationID     *uint          `gorm:"column:migration_id;default:NULL;" json:"migration_id"`
+	MigrationID     *uuid.UUID     `gorm:"type:uuid;column:migration_id;default:NULL;" json:"migration_id"`
 	MigratedHTML    string         `gorm:"column:migrated_html" json:"migrated_html"`
-	ClaimantID      uint           `gorm:"column:claimant_id" json:"claimant_id"`
-	Claimant        Claimant       `json:"claimant"`
-	RatingID        uint           `gorm:"column:rating_id" json:"rating_id"`
-	Rating          Rating         `json:"rating"`
-	MediumID        *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
-	Medium          *model.Medium  `json:"medium"`
+	ClaimantID      uuid.UUID      `gorm:"type:uuid;column:claimant_id" json:"claimant_id"`
+	Claimant        Claimant       `gorm:"foreignKey:claimant_id" json:"claimant"`
+	RatingID        uuid.UUID      `gorm:"type:uuid;column:rating_id" json:"rating_id"`
+	Rating          Rating         `gorm:"foreignKey:rating_id" json:"rating"`
+	MediumID        *uuid.UUID     `gorm:"type:uuid;column:medium_id;default:NULL" json:"medium_id"`
+	Medium          *model.Medium  `gorm:"foreignKey:medium_id" json:"medium"`
 	Fact            string         `gorm:"column:fact" json:"fact"`
 	ReviewSources   postgres.Jsonb `gorm:"column:review_sources" json:"review_sources" swaggertype:"primitive,string"`
 	MetaFields      postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
-	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
-	VideoID         *uint          `gorm:"column:video_id" json:"video_id"`
-	Video           *Video         `json:"video"`
+	SpaceID         uuid.UUID      `gorm:"type:uuid;column:space_id" json:"space_id"`
+	VideoID         *uuid.UUID     `gorm:"type:uuid;column:video_id" json:"video_id"`
+	Video           *Video         `gorm:"foreignKey:video_id" json:"video"`
 	EndTime         int            `gorm:"column:end_time" json:"end_time"`
 	StartTime       int            `gorm:"column:start_time" json:"start_time"`
 	Meta            postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
@@ -47,15 +48,15 @@ type Claim struct {
 // PostClaim model
 type PostClaim struct {
 	config.Base
-	ClaimID  uint  `gorm:"column:claim_id" json:"claim_id"`
-	Claim    Claim `json:"claim"`
-	PostID   uint  `gorm:"column:post_id" json:"post_id"`
-	Position uint  `gorm:"column:position" json:"position"`
+	ClaimID  uuid.UUID `gorm:"type:uuid;column:claim_id" json:"claim_id"`
+	Claim    Claim     `gorm:"foreignKey:claim_id" json:"claim"`
+	PostID   uuid.UUID `gorm:"type:uuid;column:post_id" json:"post_id"`
+	Position int       `gorm:"type:uuid;column:position" json:"position"`
 }
 
 // BeforeSave - validation for rating & claimant
 func (claim *Claim) BeforeSave(tx *gorm.DB) (e error) {
-	if claim.ClaimantID > 0 {
+	if claim.ClaimantID != uuid.Nil {
 		claimant := Claimant{}
 		claimant.ID = claim.ClaimantID
 
@@ -68,7 +69,7 @@ func (claim *Claim) BeforeSave(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if claim.RatingID > 0 {
+	if claim.RatingID != uuid.Nil {
 		rating := Rating{}
 		rating.ID = claim.RatingID
 
@@ -94,10 +95,11 @@ func (claim *Claim) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	claim.CreatedByID = uint(uID)
-	claim.UpdatedByID = uint(uID)
+	claim.CreatedByID = uID
+	claim.UpdatedByID = uID
+	claim.ID = uuid.New()
 	return nil
 }
 
@@ -111,9 +113,10 @@ func (pc *PostClaim) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	pc.CreatedByID = uint(uID)
-	pc.UpdatedByID = uint(uID)
+	pc.CreatedByID = uID
+	pc.UpdatedByID = uID
+	pc.ID = uuid.New()
 	return nil
 }

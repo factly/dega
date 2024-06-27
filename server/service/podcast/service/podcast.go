@@ -13,11 +13,11 @@ import (
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -36,21 +36,21 @@ type Podcast struct {
 	Slug              string         `json:"slug"`
 	Language          string         `json:"language"  validate:"required"`
 	Description       postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
-	MediumID          uint           `json:"medium_id"`
-	SpaceID           uint           `json:"space_id"`
-	PrimaryCategoryID uint           `json:"primary_category_id"`
-	CategoryIDs       []uint         `json:"category_ids"`
+	MediumID          uuid.UUID      `json:"medium_id"`
+	SpaceID           uuid.UUID      `json:"space_id"`
+	PrimaryCategoryID uuid.UUID      `json:"primary_category_id"`
+	CategoryIDs       []uuid.UUID    `json:"category_ids"`
 	HeaderCode        string         `json:"header_code"`
 	FooterCode        string         `json:"footer_code"`
 	MetaFields        postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 type IPodcastService interface {
-	GetById(sID, id int) (model.Podcast, []errorx.Message)
-	List(sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (podcastPaging, []errorx.Message)
-	Create(ctx context.Context, sID, uID int, podcast *Podcast) (model.Podcast, []errorx.Message)
-	Update(sID, uID, id int, podcast *Podcast) (model.Podcast, []errorx.Message)
-	Delete(sID, id int, result model.Podcast) []errorx.Message
+	GetById(sID, id uuid.UUID) (model.Podcast, []errorx.Message)
+	List(sID uuid.UUID, offset, limit int, searchQuery, sort string, queryMap url.Values) (podcastPaging, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID string, podcast *Podcast) (model.Podcast, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, podcast *Podcast) (model.Podcast, []errorx.Message)
+	Delete(sID, id uuid.UUID, result model.Podcast) []errorx.Message
 }
 
 type PodcastService struct {
@@ -60,7 +60,7 @@ type PodcastService struct {
 var podcastUser config.ContextKey = "podcast_user"
 
 // Create implements IPodcastService
-func (ps *PodcastService) Create(ctx context.Context, sID int, uID int, podcast *Podcast) (model.Podcast, []errorx.Message) {
+func (ps *PodcastService) Create(ctx context.Context, sID uuid.UUID, uID string, podcast *Podcast) (model.Podcast, []errorx.Message) {
 
 	validationError := validationx.Check(podcast)
 
@@ -70,10 +70,10 @@ func (ps *PodcastService) Create(ctx context.Context, sID int, uID int, podcast 
 	}
 
 	var podcastSlug string
-	if podcast.Slug != "" && slugx.Check(podcast.Slug) {
+	if podcast.Slug != "" && util.CheckSlug(podcast.Slug) {
 		podcastSlug = podcast.Slug
 	} else {
-		podcastSlug = slugx.Make(podcast.Title)
+		podcastSlug = util.MakeSlug(podcast.Title)
 	}
 
 	// Get table name
@@ -82,18 +82,18 @@ func (ps *PodcastService) Create(ctx context.Context, sID int, uID int, podcast 
 	tableName := stmt.Schema.Table
 
 	// Check if podcast with same name exist
-	if util.CheckName(uint(sID), podcast.Title, tableName) {
+	if util.CheckName(sID, podcast.Title, tableName) {
 		loggerx.Error(errors.New(`podcast with same name exist`))
 		return model.Podcast{}, errorx.Parser(errorx.SameNameExist())
 	}
 
 	mediumID := &podcast.MediumID
-	if podcast.MediumID == 0 {
+	if podcast.MediumID == uuid.Nil {
 		mediumID = nil
 	}
 
 	primaryCategoryID := &podcast.PrimaryCategoryID
-	if podcast.PrimaryCategoryID == 0 {
+	if podcast.PrimaryCategoryID == uuid.Nil {
 		primaryCategoryID = nil
 	}
 
@@ -123,14 +123,14 @@ func (ps *PodcastService) Create(ctx context.Context, sID int, uID int, podcast 
 		Title:             podcast.Title,
 		Description:       jsonDescription,
 		DescriptionHTML:   descriptionHTML,
-		Slug:              slugx.Approve(&ps.model, podcastSlug, sID, tableName),
+		Slug:              util.ApproveSlug(podcastSlug, sID, tableName),
 		Language:          podcast.Language,
 		MediumID:          mediumID,
 		PrimaryCategoryID: primaryCategoryID,
 		HeaderCode:        podcast.HeaderCode,
 		FooterCode:        podcast.FooterCode,
 		MetaFields:        podcast.MetaFields,
-		SpaceID:           uint(sID),
+		SpaceID:           sID,
 	}
 
 	if len(podcast.CategoryIDs) > 0 {
@@ -153,7 +153,7 @@ func (ps *PodcastService) Create(ctx context.Context, sID int, uID int, podcast 
 }
 
 // Delete implements IPodcastService
-func (ps *PodcastService) Delete(sID int, id int, result model.Podcast) []errorx.Message {
+func (ps *PodcastService) Delete(sID, id uuid.UUID, result model.Podcast) []errorx.Message {
 
 	tx := ps.model.Begin()
 
@@ -169,15 +169,15 @@ func (ps *PodcastService) Delete(sID int, id int, result model.Podcast) []errorx
 }
 
 // GetById implements IPodcastService
-func (ps *PodcastService) GetById(sID int, id int) (model.Podcast, []errorx.Message) {
+func (ps *PodcastService) GetById(sID, id uuid.UUID) (model.Podcast, []errorx.Message) {
 
 	result := &model.Podcast{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	var err error
 	err = ps.model.Model(&model.Podcast{}).Where(&model.Podcast{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").First(&result).Error
 
 	if err != nil {
@@ -188,12 +188,12 @@ func (ps *PodcastService) GetById(sID int, id int) (model.Podcast, []errorx.Mess
 }
 
 // List implements IPodcastService
-func (ps *PodcastService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (podcastPaging, []errorx.Message) {
+func (ps *PodcastService) List(sID uuid.UUID, offset, limit int, searchQuery, sort string, queryMap url.Values) (podcastPaging, []errorx.Message) {
 
 	var result podcastPaging
 	var err error
 	tx := ps.model.Model(&model.Podcast{}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").Where(&model.Podcast{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Order("created_at " + sort)
 
 	filters := generatePodcastFilters(queryMap["category"], queryMap["primary_category"], queryMap["language"])
@@ -204,13 +204,13 @@ func (ps *PodcastService) List(sID uint, offset int, limit int, searchQuery stri
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
 			var hits []interface{}
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "podcast")
+			hits, err = meilisearch.SearchWithQuery("dega", searchQuery, filters, "podcast")
 			if err != nil {
 				loggerx.Error(err)
 				return podcastPaging{}, errorx.Parser(errorx.NetworkError())
 			}
 
-			filteredPodcastIDs := meilisearchx.GetIDArray(hits)
+			filteredPodcastIDs := meilisearch.GetIDArray(hits)
 			if len(filteredPodcastIDs) == 0 {
 				return result, nil
 			} else {
@@ -241,7 +241,7 @@ func (ps *PodcastService) List(sID uint, offset int, limit int, searchQuery stri
 }
 
 // Update implements IPodcastService
-func (ps *PodcastService) Update(sID int, uID int, id int, podcast *Podcast) (model.Podcast, []errorx.Message) {
+func (ps *PodcastService) Update(sID, id uuid.UUID, uID string, podcast *Podcast) (model.Podcast, []errorx.Message) {
 	var err error
 	validationError := validationx.Check(podcast)
 
@@ -251,14 +251,14 @@ func (ps *PodcastService) Update(sID int, uID int, id int, podcast *Podcast) (mo
 	}
 
 	result := &model.Podcast{}
-	result.ID = uint(id)
+	result.ID = id
 
 	// check record exists or not
 	err = ps.model.Where(&model.Podcast{
 		Base: config.Base{
-			ID: uint(id),
+			ID: id,
 		},
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	if err != nil {
@@ -275,14 +275,14 @@ func (ps *PodcastService) Update(sID int, uID int, id int, podcast *Podcast) (mo
 
 	if result.Slug == podcast.Slug {
 		podcastSlug = result.Slug
-	} else if podcast.Slug != "" && slugx.Check(podcast.Slug) {
-		podcastSlug = slugx.Approve(&ps.model, podcast.Slug, sID, tableName)
+	} else if podcast.Slug != "" && util.CheckSlug(podcast.Slug) {
+		podcastSlug = util.ApproveSlug(podcast.Slug, sID, tableName)
 	} else {
-		podcastSlug = slugx.Approve(&ps.model, slugx.Make(podcast.Title), sID, tableName)
+		podcastSlug = util.ApproveSlug(util.MakeSlug(podcast.Title), sID, tableName)
 	}
 
 	// Check if podcast with same title exist
-	if podcast.Title != result.Title && util.CheckName(uint(sID), podcast.Title, tableName) {
+	if podcast.Title != result.Title && util.CheckName(sID, podcast.Title, tableName) {
 		loggerx.Error(errors.New(`podcast with same title exist`))
 		return model.Podcast{}, errorx.Parser(errorx.SameNameExist())
 	}
@@ -320,7 +320,7 @@ func (ps *PodcastService) Update(sID int, uID int, id int, podcast *Podcast) (mo
 	updateMap := map[string]interface{}{
 		"created_at":          podcast.CreatedAt,
 		"updated_at":          podcast.UpdatedAt,
-		"updated_by_id":       uint(uID),
+		"updated_by_id":       uID,
 		"title":               podcast.Title,
 		"slug":                podcastSlug,
 		"description_html":    descriptionHTML,
@@ -333,7 +333,7 @@ func (ps *PodcastService) Update(sID int, uID int, id int, podcast *Podcast) (mo
 		"footer_code":         podcast.FooterCode,
 	}
 
-	if podcast.MediumID == 0 {
+	if podcast.MediumID == uuid.Nil {
 		updateMap["medium_id"] = nil
 	} else {
 		// check if medium exists and belongs to same space
@@ -345,7 +345,7 @@ func (ps *PodcastService) Update(sID int, uID int, id int, podcast *Podcast) (mo
 		}
 	}
 
-	if podcast.PrimaryCategoryID == 0 {
+	if podcast.PrimaryCategoryID == uuid.Nil {
 		updateMap["primary_category_id"] = nil
 	} else {
 		// check if category exists and belongs to same space
@@ -370,15 +370,15 @@ func GetPodcastService() IPodcastService {
 func generatePodcastFilters(categoryIDs, primaryCatID, language []string) string {
 	filters := ""
 	if len(categoryIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
 	}
 
 	if len(primaryCatID) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(primaryCatID, "primary_category_id"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(primaryCatID, "primary_category_id"), " AND ")
 	}
 
 	if len(language) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(language, "language"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(language, "language"), " AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {
@@ -416,8 +416,8 @@ func generatePodcastSQLFilters(tx *gorm.DB, searchQuery string, categoryIDs, pri
 	}
 
 	if len(categoryIDs) > 0 {
-		tx.Joins("INNER JOIN podcast_categories ON podcasts.id = podcast_categories.podcast_id")
-		filters = filters + " podcast_categories.category_id IN ("
+		tx.Joins("INNER JOIN de_podcast_categories ON de_podcasts.id = de_podcast_categories.podcast_id")
+		filters = filters + " de_podcast_categories.category_id IN ("
 		for _, id := range categoryIDs {
 			filters = fmt.Sprint(filters, id, ", ")
 		}

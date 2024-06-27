@@ -8,7 +8,8 @@ function AdminRoute({ component: Component, ...rest }) {
     let orgs = spaces.orgs.filter((each) => each.permission.role === 'owner');
 
     return {
-      loading: admin.loading,
+      // loading: admin.loading,
+      loading: false,
       org: admin.organisation,
       isOwner: orgs.length > 0,
     };

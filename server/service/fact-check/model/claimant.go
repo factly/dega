@@ -7,6 +7,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -19,10 +20,10 @@ type Claimant struct {
 	DescriptionHTML string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	IsFeatured      bool           `gorm:"column:is_featured" json:"is_featured"`
 	TagLine         string         `gorm:"column:tag_line" json:"tag_line"`
-	MediumID        *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
-	Medium          *model.Medium  `json:"medium"`
+	MediumID        *uuid.UUID     `gorm:"type:uuid;column:medium_id;default:NULL" json:"medium_id"`
+	Medium          *model.Medium  `gorm:"foreignKey:medium_id" json:"medium"`
 	MetaFields      postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
-	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
+	SpaceID         uuid.UUID      `gorm:"type:uuid;column:space_id" json:"space_id"`
 	Meta            postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode      string         `gorm:"column:header_code" json:"header_code"`
 	FooterCode      string         `gorm:"column:footer_code" json:"footer_code"`
@@ -30,7 +31,7 @@ type Claimant struct {
 
 // BeforeSave - validation for medium
 func (claimant *Claimant) BeforeSave(tx *gorm.DB) (e error) {
-	if claimant.MediumID != nil && *claimant.MediumID > 0 {
+	if claimant.MediumID != nil && *claimant.MediumID != uuid.Nil {
 		medium := model.Medium{}
 		medium.ID = *claimant.MediumID
 
@@ -56,9 +57,10 @@ func (claimant *Claimant) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	claimant.CreatedByID = uint(uID)
-	claimant.UpdatedByID = uint(uID)
+	claimant.CreatedByID = uID
+	claimant.UpdatedByID = uID
+	claimant.ID = uuid.New()
 	return nil
 }

@@ -11,11 +11,11 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -34,7 +34,7 @@ type Claimant struct {
 	IsFeatured  bool           `json:"is_featured"`
 	Description postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	TagLine     string         `json:"tag_line"`
-	MediumID    uint           `json:"medium_id"`
+	MediumID    uuid.UUID      `json:"medium_id"`
 	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 	Meta        postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
 	HeaderCode  string         `json:"header_code"`
@@ -44,11 +44,11 @@ type Claimant struct {
 var claimantContext config.ContextKey = "claimant_user"
 
 type IClaimantService interface {
-	GetById(sID, id int) (model.Claimant, error)
-	List(sID uint, offset, limit int, all, searchQuery, sort string) (claimantPaging, []errorx.Message)
-	Create(ctx context.Context, sID, uID int, claimant *Claimant) (model.Claimant, []errorx.Message)
-	Update(sID, uID, id int, claimant *Claimant) (model.Claimant, []errorx.Message)
-	Delete(sID, id int) []errorx.Message
+	GetById(sID, id uuid.UUID) (model.Claimant, error)
+	List(sID uuid.UUID, offset, limit int, all, searchQuery, sort string) (claimantPaging, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID string, claimant *Claimant) (model.Claimant, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, claimant *Claimant) (model.Claimant, []errorx.Message)
+	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
 type claimantService struct {
@@ -56,7 +56,7 @@ type claimantService struct {
 }
 
 // Create implements IClaimantService
-func (cs claimantService) Create(ctx context.Context, sID int, uID int, claimant *Claimant) (model.Claimant, []errorx.Message) {
+func (cs claimantService) Create(ctx context.Context, sID uuid.UUID, uID string, claimant *Claimant) (model.Claimant, []errorx.Message) {
 
 	validationErr := validationx.Check(claimant)
 	if validationErr != nil {
@@ -69,19 +69,19 @@ func (cs claimantService) Create(ctx context.Context, sID int, uID int, claimant
 	tableName := stmt.Schema.Table
 
 	var claimantSlug string
-	if claimant.Slug != "" && slugx.Check(claimant.Slug) {
+	if claimant.Slug != "" && util.CheckSlug(claimant.Slug) {
 		claimantSlug = claimant.Slug
 	} else {
-		claimantSlug = slugx.Make(claimant.Name)
+		claimantSlug = util.MakeSlug(claimant.Name)
 	}
 
 	mediumID := &claimant.MediumID
-	if claimant.MediumID == 0 {
+	if claimant.MediumID == uuid.Nil {
 		mediumID = nil
 	}
 
 	// Check if claimant with same name exist
-	if util.CheckName(uint(sID), claimant.Name, tableName) {
+	if util.CheckName(sID, claimant.Name, tableName) {
 		loggerx.Error(errors.New(`claimant with same name exist`))
 		return model.Claimant{}, errorx.Parser(errorx.SameNameExist())
 	}
@@ -109,12 +109,12 @@ func (cs claimantService) Create(ctx context.Context, sID int, uID int, claimant
 			UpdatedAt: claimant.UpdatedAt,
 		},
 		Name:            claimant.Name,
-		Slug:            slugx.Approve(&cs.model, claimantSlug, sID, tableName),
+		Slug:            util.ApproveSlug(claimantSlug, sID, tableName),
 		Description:     jsonDescription,
 		DescriptionHTML: descriptionHTML,
 		MediumID:        mediumID,
 		IsFeatured:      claimant.IsFeatured,
-		SpaceID:         uint(sID),
+		SpaceID:         sID,
 		TagLine:         claimant.TagLine,
 		MetaFields:      claimant.MetaFields,
 		Meta:            claimant.Meta,
@@ -138,16 +138,16 @@ func (cs claimantService) Create(ctx context.Context, sID int, uID int, claimant
 }
 
 // Delete implements IClaimantService
-func (cs claimantService) Delete(sID int, id int) []errorx.Message {
+func (cs claimantService) Delete(sID, id uuid.UUID) []errorx.Message {
 
 	result := new(model.Claimant)
 
-	result.ID = uint(id)
+	result.ID = id
 
 	// check if claimant is associated with claims
 	var totAssociated int64
 	cs.model.Model(&model.Claim{}).Where(&model.Claim{
-		ClaimantID: uint(id),
+		ClaimantID: id,
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -163,22 +163,22 @@ func (cs claimantService) Delete(sID int, id int) []errorx.Message {
 }
 
 // GetById implements IClaimantService
-func (cs claimantService) GetById(sID int, id int) (model.Claimant, error) {
+func (cs claimantService) GetById(sID, id uuid.UUID) (model.Claimant, error) {
 
 	result := model.Claimant{}
-	result.ID = uint(id)
+	result.ID = id
 
-	err := cs.model.Where(&model.Claimant{SpaceID: uint(sID)}).First(&result).Error
+	err := cs.model.Where(&model.Claimant{SpaceID: sID}).First(&result).Error
 
 	return result, err
 }
 
 // List implements IClaimantService
-func (cs claimantService) List(sID uint, offset int, limit int, all, searchQuery string, sort string) (claimantPaging, []errorx.Message) {
+func (cs claimantService) List(sID uuid.UUID, offset, limit int, all, searchQuery string, sort string) (claimantPaging, []errorx.Message) {
 	var result claimantPaging
 	var err error
 	tx := cs.model.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Order("created_at " + sort)
 
 	if all == "true" {
@@ -193,13 +193,13 @@ func (cs claimantService) List(sID uint, offset int, limit int, all, searchQuery
 			filters := fmt.Sprint("space_id=", sID)
 			var hits []interface{}
 
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claimant")
+			hits, err = meilisearch.SearchWithQuery("dega", searchQuery, filters, "claimant")
 			if err != nil {
 				loggerx.Error(err)
 				return result, errorx.Parser(errorx.NetworkError())
 			}
 
-			filteredClaimantIDs := meilisearchx.GetIDArray(hits)
+			filteredClaimantIDs := meilisearch.GetIDArray(hits)
 			if len(filteredClaimantIDs) == 0 {
 				return result, nil
 			} else {
@@ -236,7 +236,7 @@ func (cs claimantService) List(sID uint, offset int, limit int, all, searchQuery
 }
 
 // Update implements IClaimantService
-func (claimantService) Update(sID int, uID int, id int, claimant *Claimant) (model.Claimant, []errorx.Message) {
+func (claimantService) Update(sID, id uuid.UUID, uID string, claimant *Claimant) (model.Claimant, []errorx.Message) {
 	panic("unimplemented")
 }
 

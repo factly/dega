@@ -3,17 +3,17 @@ package post
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // details - Get post by id
@@ -29,7 +29,7 @@ import (
 // @Router /core/posts/{post_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -37,7 +37,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	postID := chi.URLParam(r, "post_id")
-	id, err := strconv.Atoi(postID)
+	id, err := uuid.Parse(postID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -51,10 +51,10 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	postAuthors := []model.PostAuthor{}
 	postClaims := []factCheckModel.PostClaim{}
-	result.ID = uint(id)
+	result.ID = id
 
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Where("is_page = ?", false).First(&result.Post).Error
 
 	if err != nil {
@@ -65,21 +65,22 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	if result.Format.Slug == "fact-check" {
 		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
-			PostID: uint(id),
+			PostID: id,
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
-		result.ClaimOrder = make([]uint, len(postClaims))
+		result.ClaimOrder = make([]uuid.UUID, len(postClaims))
 
 		// appending all post claims
 		for _, postClaim := range postClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
-			result.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
+			//TODO : fix claim order
+			// result.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
 		}
 	}
 
 	// fetch all authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
+		PostID: id,
 	}).Find(&postAuthors)
 
 	// Adding author

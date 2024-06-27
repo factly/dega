@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -23,20 +24,20 @@ type page struct {
 	IsFeatured       bool           `json:"is_featured"`
 	IsSticky         bool           `json:"is_sticky"`
 	IsHighlighted    bool           `json:"is_highlighted"`
-	FeaturedMediumID uint           `json:"featured_medium_id"`
+	FeaturedMediumID uuid.UUID      `json:"featured_medium_id"`
 	PublishedDate    *time.Time     `json:"published_date"`
-	FormatID         uint           `json:"format_id" validate:"required"`
+	FormatID         uuid.UUID      `json:"format_id" validate:"required"`
 	Meta             postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `json:"header_code"`
 	FooterCode       string         `json:"footer_code"`
 	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 	DescriptionAMP   string         `json:"description_amp"`
-	MigrationID      *uint          `json:"migration_id"`
+	MigrationID      *uuid.UUID     `json:"migration_id"`
 	MigratedHTML     string         `json:"migrated_html"`
-	SpaceID          uint           `json:"space_id"`
-	CategoryIDs      []uint         `json:"category_ids"`
-	TagIDs           []uint         `json:"tag_ids"`
-	AuthorIDs        []uint         `json:"author_ids"`
+	SpaceID          uuid.UUID      `json:"space_id"`
+	CategoryIDs      []uuid.UUID    `json:"category_ids"`
+	TagIDs           []uuid.UUID    `json:"tag_ids"`
+	AuthorIDs        []string       `json:"author_ids"`
 }
 
 type pageData struct {
@@ -51,13 +52,13 @@ func Router() chi.Router {
 
 	entity := "pages"
 
-	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
-	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
+	r.With(util.CheckEntityAccess(entity, "get")).Get("/", list)
+	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
 
 	r.Route("/{page_id}", func(r chi.Router) {
-		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
-		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
-		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
+		r.With(util.CheckEntityAccess(entity, "get")).Get("/", details)
+		r.With(util.CheckEntityAccess(entity, "update")).Put("/", update)
+		r.With(util.CheckEntityAccess(entity, "delete")).Delete("/", delete)
 	})
 
 	return r

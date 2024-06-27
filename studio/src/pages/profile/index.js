@@ -8,20 +8,6 @@ import { getUserProfile, updateProfile } from '../../actions/profile';
 import { SlugInput } from '../../components/FormItems';
 import { Helmet } from 'react-helmet';
 
-const layout = {
-  labelCol: {
-    span: 7,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 3,
-    span: 17,
-  },
-};
 function Profile() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();

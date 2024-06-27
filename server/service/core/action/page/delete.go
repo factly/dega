@@ -2,17 +2,15 @@ package page
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // delete - Delete page by id
@@ -26,7 +24,7 @@ import (
 // @Success 200
 // @Router /core/pages/{page_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -34,7 +32,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	postID := chi.URLParam(r, "page_id")
-	id, err := strconv.Atoi(postID)
+	id, err := uuid.Parse(postID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
@@ -42,11 +40,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Post{}
-	result.ID = uint(id)
+	result.ID = id
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 		IsPage:  true,
 	}).Preload("Tags").Preload("Categories").First(&result).Error
 	if err != nil {
@@ -66,19 +64,19 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
+		PostID: id,
 	}).Delete(&model.PostAuthor{})
 
 	tx.Model(&model.Post{}).Delete(&result)
 
-	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "page")
-	}
+	// if config.SearchEnabled() {
+	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "page")
+	// }
 
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("page.deleted", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("page.deleted", sID.String(), r) {
 			if err = util.NC.Publish("page.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

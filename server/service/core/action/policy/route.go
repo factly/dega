@@ -1,30 +1,38 @@
 package policy
 
 import (
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 type policyReq struct {
-	Name        string             `json:"name"`
-	Description string             `json:"description"`
-	Permissions []model.Permission `json:"permissions"`
-	Users       []string           `json:"users"`
+	Name        string       `json:"name"`
+	Description string       `json:"description"`
+	Permissions []permission `json:"permissions"`
+	Users       []string     `json:"users"`
 }
 
-type kavachPolicy struct {
-	Name        string             `json:"name"`
-	Description string             `json:"description"`
-	Permissions []model.Permission `json:"permissions"`
-	Roles       []uint             `json:"roles"`
+type permission struct {
+	Actions  []string `json:"actions"`
+	Resource string   `json:"resource"`
 }
 
-type roleReq struct {
-	Name        string `json:"name"`
-	Slug        string `json:"slug"`
-	Description string `json:"description"`
+type policyRes struct {
+	ID          uuid.UUID    `json:"id"`
+	Name        string       `json:"name"`
+	Description string       `json:"description"`
+	Permissions []permission `json:"permissions"`
+	Users       []policyUser `json:"users"`
 }
+
+type policyUser struct {
+	UserID      string `json:"user_id"`
+	DisplayName string `json:"display_name"`
+}
+
+var userContext config.ContextKey = "policy_user"
 
 // Router - Group of medium router
 func Router() chi.Router {
@@ -33,13 +41,13 @@ func Router() chi.Router {
 	entity := "policies"
 
 	r.Get("/", list)
-	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
-	r.With(util.CheckKetoPolicy(entity, "create")).Post("/default", createDefaults)
+	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
+	r.With(util.CheckEntityAccess(entity, "create")).Post("/default", createDefaults)
 
 	r.Route("/{policy_id}", func(r chi.Router) {
-		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
-		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
-		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
+		r.With(util.CheckEntityAccess(entity, "get")).Get("/", details)
+		r.With(util.CheckEntityAccess(entity, "update")).Put("/", update)
+		r.With(util.CheckEntityAccess(entity, "delete")).Delete("/", delete)
 	})
 
 	return r

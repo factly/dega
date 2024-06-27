@@ -10,8 +10,8 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -33,11 +33,11 @@ type pagingMenu struct {
 }
 
 type IMenuService interface {
-	GetById(sID, id int) (model.Menu, error)
-	List(sID uint, offset, limit int) (pagingMenu, []errorx.Message)
-	Create(ctx context.Context, sID, uID int, menu *Menu) (model.Menu, []errorx.Message)
-	Update(sID, uID, id int, menu *Menu) (model.Menu, []errorx.Message)
-	Delete(sID, id int) []errorx.Message
+	GetById(sID, id uuid.UUID) (model.Menu, error)
+	List(sID uuid.UUID, offset, limit int) (pagingMenu, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID string, menu *Menu) (model.Menu, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, menu *Menu) (model.Menu, []errorx.Message)
+	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
 type MenuService struct {
@@ -50,24 +50,24 @@ func GetMenuService() IMenuService {
 	}
 }
 
-func (ms MenuService) GetById(sID, id int) (model.Menu, error) {
+func (ms MenuService) GetById(sID, id uuid.UUID) (model.Menu, error) {
 	result := &model.Menu{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	err := ms.model.Where(&model.Menu{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	return *result, err
 }
 
-func (ms MenuService) List(sID uint, offset, limit int) (pagingMenu, []errorx.Message) {
+func (ms MenuService) List(sID uuid.UUID, offset, limit int) (pagingMenu, []errorx.Message) {
 	result := pagingMenu{}
 	result.Nodes = make([]model.Menu, 0)
 
 	err := config.DB.Model(&model.Menu{}).Where(&model.Menu{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Order("id desc").Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 
 	if err != nil {
@@ -76,7 +76,7 @@ func (ms MenuService) List(sID uint, offset, limit int) (pagingMenu, []errorx.Me
 	}
 	return result, nil
 }
-func (ms MenuService) Create(ctx context.Context, sID, uID int, menu *Menu) (model.Menu, []errorx.Message) {
+func (ms MenuService) Create(ctx context.Context, sID uuid.UUID, uID string, menu *Menu) (model.Menu, []errorx.Message) {
 	validationError := validationx.Check(menu)
 
 	if validationError != nil {
@@ -85,10 +85,10 @@ func (ms MenuService) Create(ctx context.Context, sID, uID int, menu *Menu) (mod
 	}
 
 	var menuSlug string
-	if menu.Slug != "" && slugx.Check(menu.Slug) {
+	if menu.Slug != "" && util.CheckSlug(menu.Slug) {
 		menuSlug = menu.Slug
 	} else {
-		menuSlug = slugx.Make(menu.Name)
+		menuSlug = util.MakeSlug(menu.Name)
 	}
 
 	// Get table name
@@ -97,7 +97,7 @@ func (ms MenuService) Create(ctx context.Context, sID, uID int, menu *Menu) (mod
 	tableName := stmt.Schema.Table
 
 	// Check if menu with same name exist
-	if util.CheckName(uint(sID), menu.Name, tableName) {
+	if util.CheckName(sID, menu.Name, tableName) {
 		loggerx.Error(errors.New(`menu with same name exist`))
 		return model.Menu{}, errorx.Parser(errorx.SameNameExist())
 	}
@@ -109,9 +109,9 @@ func (ms MenuService) Create(ctx context.Context, sID, uID int, menu *Menu) (mod
 		},
 		Name:       menu.Name,
 		Menu:       menu.Menu,
-		Slug:       slugx.Approve(&config.DB, menuSlug, sID, tableName),
+		Slug:       util.ApproveSlug(menuSlug, sID, tableName),
 		MetaFields: menu.MetaFields,
-		SpaceID:    uint(sID),
+		SpaceID:    sID,
 	}
 	tx := config.DB.WithContext(context.WithValue(ctx, userMenuContext, uID)).Begin()
 	err := tx.Model(&model.Menu{}).Create(&result).Error
@@ -126,7 +126,7 @@ func (ms MenuService) Create(ctx context.Context, sID, uID int, menu *Menu) (mod
 	return *result, nil
 }
 
-func (ms MenuService) Update(sID, uID, id int, menu *Menu) (model.Menu, []errorx.Message) {
+func (ms MenuService) Update(sID, id uuid.UUID, uID string, menu *Menu) (model.Menu, []errorx.Message) {
 	validationError := validationx.Check(menu)
 
 	if validationError != nil {
@@ -135,7 +135,7 @@ func (ms MenuService) Update(sID, uID, id int, menu *Menu) (model.Menu, []errorx
 	}
 
 	result := model.Menu{}
-	result.ID = uint(id)
+	result.ID = id
 	var menuSlug string
 
 	// Get table name
@@ -145,14 +145,14 @@ func (ms MenuService) Update(sID, uID, id int, menu *Menu) (model.Menu, []errorx
 
 	if result.Slug == menu.Slug {
 		menuSlug = result.Slug
-	} else if menu.Slug != "" && slugx.Check(menu.Slug) {
-		menuSlug = slugx.Approve(&config.DB, menu.Slug, sID, tableName)
+	} else if menu.Slug != "" && util.CheckSlug(menu.Slug) {
+		menuSlug = util.ApproveSlug(menu.Slug, sID, tableName)
 	} else {
-		menuSlug = slugx.Approve(&config.DB, slugx.Make(menu.Name), sID, tableName)
+		menuSlug = util.ApproveSlug(util.MakeSlug(menu.Name), sID, tableName)
 	}
 
 	// Check if menu with same name exist
-	if menu.Name != result.Name && util.CheckName(uint(sID), menu.Name, tableName) {
+	if menu.Name != result.Name && util.CheckName(sID, menu.Name, tableName) {
 		loggerx.Error(errors.New(`menu with same name exist`))
 		return model.Menu{}, errorx.Parser(errorx.SameNameExist())
 	}
@@ -162,7 +162,7 @@ func (ms MenuService) Update(sID, uID, id int, menu *Menu) (model.Menu, []errorx
 	updateMap := map[string]interface{}{
 		"created_at":    menu.CreatedAt,
 		"updated_at":    menu.UpdatedAt,
-		"updated_by_id": uint(uID),
+		"updated_by_id": uID,
 		"name":          menu.Name,
 		"slug":          menuSlug,
 		"menu":          menu.Menu,
@@ -180,10 +180,10 @@ func (ms MenuService) Update(sID, uID, id int, menu *Menu) (model.Menu, []errorx
 	return result, nil
 }
 
-func (ms MenuService) Delete(sID, id int) []errorx.Message {
+func (ms MenuService) Delete(sID, id uuid.UUID) []errorx.Message {
 	result := &model.Menu{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	tx := config.DB.Begin()
 

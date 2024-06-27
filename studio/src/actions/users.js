@@ -1,17 +1,23 @@
 import axios from 'axios';
-import { USERS_API, ADD_USERS_REQUEST, SET_USERS_LOADING } from '../constants/users';
+import { USERS_API, ADD_USERS_REQUEST, SET_USERS_LOADING, ADD_USERS } from '../constants/users';
 import { addErrorNotification } from './notifications';
 import getError from '../utils/getError';
 
-export const getUsers = () => {
+export const getUsers = (query) => {
   return (dispatch) => {
     dispatch(loadingUsers());
     return axios
-      .get(USERS_API)
+      .get(USERS_API, {
+        params: query,
+      })
       .then((response) => {
+        dispatch(addUsers(response.data.nodes));
+
         dispatch(
           addRequest({
-            data: response.data.nodes,
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
           }),
         );
       })
@@ -21,6 +27,11 @@ export const getUsers = () => {
       .finally(() => dispatch(stopLoading()));
   };
 };
+
+export const addUsers = (data) => ({
+  type: ADD_USERS,
+  payload: data,
+});
 
 export const addRequest = (data) => ({
   type: ADD_USERS_REQUEST,

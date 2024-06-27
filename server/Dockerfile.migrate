@@ -1,4 +1,4 @@
-FROM golang:1.18.3-alpine3.16
+FROM golang:1.20-alpine
 
 WORKDIR /app
 
@@ -11,4 +11,4 @@ RUN go mod download
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
 RUN chmod +x /wait
 
-ENTRYPOINT /wait && go build main.go && ./main migrate && ./main create-super-org
+ENTRYPOINT /wait && go build main.go && ./main migrate

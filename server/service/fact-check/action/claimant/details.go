@@ -2,14 +2,14 @@ package claimant
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/service/fact-check/service"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // details - Get claimant by id
@@ -25,7 +25,7 @@ import (
 // @Router /fact-check/claimants/{claimant_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -33,7 +33,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	claimantID := chi.URLParam(r, "claimant_id")
-	id, err := strconv.Atoi(claimantID)
+	id, err := uuid.Parse(claimantID)
 
 	if err != nil {
 		loggerx.Error(err)

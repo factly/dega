@@ -25,7 +25,6 @@ function Features() {
     formatsLoading,
     policies,
     policiesLoading,
-    validServices,
     loadingServices,
   } = useSelector(({ ratings, formats, policies, events, spaces }) => {
     return {
@@ -37,9 +36,6 @@ function Features() {
       policiesLoading: policies.loading,
       events: Object.keys(events.details).length,
       eventsLoading: events.loading,
-      validServices: spaces.details[spaces.selected].services?.length
-        ? spaces.details[spaces.selected].services
-        : [],
       loadingServices: spaces.loading,
     };
   });
@@ -49,11 +45,12 @@ function Features() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const fetchEntities = () => {
-    if (!loadingServices && validServices?.includes('fact-checking')) {
+    if (!loadingServices) {
       dispatch(getRatings());
+
+      dispatch(getFormats());
+      dispatch(getPolicies());
     }
-    dispatch(getFormats());
-    dispatch(getPolicies());
   };
 
   return (
@@ -66,25 +63,26 @@ function Features() {
       ) : null}
 
       <Space>
-        {ratingsLoading && loadingServices ? null : ratings > 0 ||
-          !validServices.includes('fact-checking') ? null : (
-          <Card
-            title="Ratings"
-            actions={[
-              <Button
-                onClick={() => {
-                  dispatch(addDefaultRatings()).then(() => history('/ratings'));
-                }}
+        {ratingsLoading && loadingServices
+          ? null
+          : ratings > 0 || (
+              <Card
+                title="Ratings"
+                actions={[
+                  <Button
+                    onClick={() => {
+                      dispatch(addDefaultRatings()).then(() => history('/ratings'));
+                    }}
+                  >
+                    <PlusOutlined /> CREATE RATINGS
+                  </Button>,
+                ]}
+                style={{ width: 300 }}
               >
-                <PlusOutlined /> CREATE RATINGS
-              </Button>,
-            ]}
-            style={{ width: 300 }}
-          >
-            Five ratings will be created True, Partly True, Misleading, Partly False and False.
-            Click below Button to create
-          </Card>
-        )}
+                Five ratings will be created True, Partly True, Misleading, Partly False and False.
+                Click below Button to create
+              </Card>
+            )}
         {formatsLoading ? null : formats > 0 ? null : (
           <Card
             title="Formats"

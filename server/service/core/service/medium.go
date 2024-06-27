@@ -9,12 +9,12 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -34,8 +34,7 @@ type Medium struct {
 	URL         postgres.Jsonb `json:"url" swaggertype:"primitive,string"`
 	Dimensions  string         `json:"dimensions" validate:"required"`
 	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
-	SpaceID     uint           `json:"space_id"`
-	Space       *model.Space   `json:"space,omitempty"`
+	SpaceID     uuid.UUID      `json:"space_id"`
 }
 
 var userMediumContext config.ContextKey = "medium_user"
@@ -49,11 +48,11 @@ type MediumService struct {
 	model *gorm.DB
 }
 type IMediumService interface {
-	GetById(sID, id int) (model.Medium, error)
-	List(sID uint, offset, limit int, searchQuery, sort string) (pagingMedium, []errorx.Message)
-	Create(ctx context.Context, sID, uID int, mediumList []Medium) (pagingMedium, []errorx.Message)
-	Update(sID, uID, id int, medium *Medium) (model.Medium, []errorx.Message)
-	Delete(sID, id int) []errorx.Message
+	GetById(sID, id uuid.UUID) (model.Medium, error)
+	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (pagingMedium, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID string, mediumList []Medium) (pagingMedium, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, medium *Medium) (model.Medium, []errorx.Message)
+	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
 func GetMediumService() IMediumService {
@@ -62,19 +61,19 @@ func GetMediumService() IMediumService {
 	}
 }
 
-func (ms MediumService) GetById(sID, id int) (model.Medium, error) {
+func (ms MediumService) GetById(sID, id uuid.UUID) (model.Medium, error) {
 	result := &model.Medium{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	err := ms.model.Where(&model.Medium{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	return *result, err
 }
 
-func (ms MediumService) List(sID uint, offset, limit int, searchQuery, sort string) (pagingMedium, []errorx.Message) {
+func (ms MediumService) List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (pagingMedium, []errorx.Message) {
 	result := pagingMedium{}
 	result.Nodes = make([]model.Medium, 0)
 
@@ -83,7 +82,7 @@ func (ms MediumService) List(sID uint, offset, limit int, searchQuery, sort stri
 	}
 
 	tx := config.DB.Model(&model.Medium{}).Where(&model.Medium{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Order("created_at " + sort)
 
 	if searchQuery != "" {
@@ -93,13 +92,13 @@ func (ms MediumService) List(sID uint, offset, limit int, searchQuery, sort stri
 
 			var hits []interface{}
 
-			hits, err := meilisearchx.SearchWithQuery("dega", searchQuery, filters, "medium")
+			hits, err := meilisearch.SearchWithQuery("dega", searchQuery, filters, "medium")
 			if err != nil {
 				loggerx.Error(err)
 				return pagingMedium{}, errorx.Parser(errorx.NetworkError())
 			}
 
-			filteredMediumIDs := meilisearchx.GetIDArray(hits)
+			filteredMediumIDs := meilisearch.GetIDArray(hits)
 			if len(filteredMediumIDs) == 0 {
 				return result, nil
 			} else {
@@ -138,7 +137,7 @@ func (ms MediumService) List(sID uint, offset, limit int, searchQuery, sort stri
 	}
 }
 
-func (ms MediumService) Create(ctx context.Context, sID, uID int, mediumList []Medium) (pagingMedium, []errorx.Message) {
+func (ms MediumService) Create(ctx context.Context, sID uuid.UUID, uID string, mediumList []Medium) (pagingMedium, []errorx.Message) {
 	result := pagingMedium{}
 	result.Nodes = make([]model.Medium, 0)
 
@@ -151,10 +150,10 @@ func (ms MediumService) Create(ctx context.Context, sID, uID int, mediumList []M
 		}
 
 		var mediumSlug string
-		if medium.Slug != "" && slugx.Check(medium.Slug) {
+		if medium.Slug != "" && util.CheckSlug(medium.Slug) {
 			mediumSlug = medium.Slug
 		} else {
-			mediumSlug = slugx.Make(medium.Name)
+			mediumSlug = util.MakeSlug(medium.Name)
 		}
 
 		// Get table name
@@ -168,7 +167,7 @@ func (ms MediumService) Create(ctx context.Context, sID, uID int, mediumList []M
 				UpdatedAt: medium.UpdatedAt,
 			},
 			Name:        medium.Name,
-			Slug:        slugx.Approve(&config.DB, mediumSlug, sID, tableName),
+			Slug:        util.ApproveSlug(mediumSlug, sID, tableName),
 			Title:       medium.Title,
 			Type:        medium.Type,
 			Description: medium.Description,
@@ -178,7 +177,7 @@ func (ms MediumService) Create(ctx context.Context, sID, uID int, mediumList []M
 			URL:         medium.URL,
 			Dimensions:  medium.Dimensions,
 			MetaFields:  medium.MetaFields,
-			SpaceID:     uint(sID),
+			SpaceID:     sID,
 		}
 
 		result.Nodes = append(result.Nodes, med)
@@ -195,13 +194,13 @@ func (ms MediumService) Create(ctx context.Context, sID, uID int, mediumList []M
 	tx.Commit()
 	return result, nil
 }
-func (m MediumService) Delete(sID, id int) []errorx.Message {
+func (m MediumService) Delete(sID, id uuid.UUID) []errorx.Message {
 	var errs []errorx.Message
 
 	result := &model.Medium{}
-	result.ID = uint(id)
+	result.ID = id
 
-	uintID := uint(id)
+	uintID := id
 
 	// check if medium is associated with posts
 	var totAssociated int64
@@ -248,9 +247,9 @@ func (m MediumService) Delete(sID, id int) []errorx.Message {
 	}
 
 	// check if medium is associated with claimants
-	config.DB.Model(&factCheckModel.Claimant{}).Where(&factCheckModel.Claimant{
-		MediumID: &uintID,
-	}).Count(&totAssociated)
+	// config.DB.Model(&factCheckModel.Claimant{}).Where(&factCheckModel.Claimant{
+	// 	MediumID: &uintID,
+	// }).Count(&totAssociated)
 
 	if totAssociated != 0 {
 		loggerx.Error(errors.New("medium is associated with claimant"))
@@ -266,7 +265,7 @@ func (m MediumService) Delete(sID, id int) []errorx.Message {
 	return nil
 }
 
-func (m MediumService) Update(sID, uID, id int, medium *Medium) (model.Medium, []errorx.Message) {
+func (m MediumService) Update(sID, id uuid.UUID, uID string, medium *Medium) (model.Medium, []errorx.Message) {
 	validationError := validationx.Check(medium)
 
 	if validationError != nil {
@@ -275,7 +274,7 @@ func (m MediumService) Update(sID, uID, id int, medium *Medium) (model.Medium, [
 	}
 
 	result := &model.Medium{}
-	result.ID = uint(id)
+	result.ID = id
 
 	// check record exists or not
 
@@ -287,10 +286,10 @@ func (m MediumService) Update(sID, uID, id int, medium *Medium) (model.Medium, [
 
 	if result.Slug == medium.Slug {
 		mediumSlug = result.Slug
-	} else if medium.Slug != "" && slugx.Check(medium.Slug) {
-		mediumSlug = slugx.Approve(&config.DB, medium.Slug, sID, tableName)
+	} else if medium.Slug != "" && util.CheckSlug(medium.Slug) {
+		mediumSlug = util.ApproveSlug(medium.Slug, sID, tableName)
 	} else {
-		mediumSlug = slugx.Approve(&config.DB, slugx.Make(medium.Name), sID, tableName)
+		mediumSlug = util.ApproveSlug(util.MakeSlug(medium.Name), sID, tableName)
 	}
 
 	tx := config.DB.Begin()
@@ -298,7 +297,7 @@ func (m MediumService) Update(sID, uID, id int, medium *Medium) (model.Medium, [
 	updateMap := map[string]interface{}{
 		"created_at":    medium.CreatedAt,
 		"updated_at":    medium.UpdatedAt,
-		"updated_by_id": uint(uID),
+		"updated_by_id": uID,
 		"name":          medium.Name,
 		"slug":          mediumSlug,
 		"title":         medium.Title,

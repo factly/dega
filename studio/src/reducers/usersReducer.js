@@ -1,7 +1,9 @@
-import { ADD_USERS_REQUEST, SET_USERS_LOADING } from '../constants/users';
+import deepEqual from 'deep-equal';
+import { ADD_USERS, ADD_USERS_REQUEST, SET_USERS_LOADING } from '../constants/users';
 
 const initialState = {
-  details: [],
+  req: [],
+  details: {},
   loading: true,
 };
 
@@ -15,7 +17,20 @@ export default function usersReducer(state = initialState, action = {}) {
     case ADD_USERS_REQUEST:
       return {
         ...state,
-        details: action.payload.data,
+        req: state.req
+          .filter((value) => !deepEqual(value.query, action.payload.query))
+          .concat(action.payload),
+      };
+    case ADD_USERS:
+      if (action.payload.length === 0) {
+        return state;
+      }
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
+        },
       };
     default:
       return state;

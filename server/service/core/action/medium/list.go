@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/service/core/service"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
@@ -27,7 +27,7 @@ import (
 // @Router /core/media [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -39,7 +39,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	offset, limit := paginationx.Parse(r.URL.Query())
 
 	mediumService := service.GetMediumService()
-	result, errMessages := mediumService.List(uint(sID), offset, limit, searchQuery, sort)
+	result, errMessages := mediumService.List(sID, offset, limit, searchQuery, sort)
 	if errMessages != nil {
 		errorx.Render(w, errMessages)
 		return

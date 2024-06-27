@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/factly/dega-server/config"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -12,13 +13,13 @@ type Format struct {
 	Name        string         `gorm:"column:name" json:"name" validate:"required"`
 	Slug        string         `gorm:"column:slug" json:"slug" validate:"required"`
 	Description string         `gorm:"column:description" json:"description"`
-	MediumID    *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
-	Medium      *Medium        `json:"medium"`
+	MediumID    *uuid.UUID     `gorm:"type:uuid;column:medium_id;default:NULL" json:"medium_id"`
+	Medium      *Medium        `gorm:"foreignKey:medium_id" json:"medium"`
 	MetaFields  postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Meta        postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode  string         `gorm:"column:header_code" json:"header_code"`
 	FooterCode  string         `gorm:"column:footer_code" json:"footer_code"`
-	SpaceID     uint           `gorm:"column:space_id" json:"space_id"`
+	SpaceID     uuid.UUID      `gorm:"type:uuid;column:space_id" json:"space_id"`
 }
 
 var formatUser config.ContextKey = "format_user"
@@ -31,9 +32,10 @@ func (format *Format) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	format.CreatedByID = uint(uID)
-	format.UpdatedByID = uint(uID)
+	format.CreatedByID = uID
+	format.UpdatedByID = uID
+	format.ID = uuid.New()
 	return nil
 }

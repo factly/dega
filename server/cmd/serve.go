@@ -9,7 +9,6 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/x/meilisearchx"
 	"github.com/go-chi/chi"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -28,9 +27,12 @@ var serveCmd = &cobra.Command{
 		// db setup
 		config.SetupDB()
 
+		// setup zitadel interceptor
+		config.SetupZitadelInterceptor()
+
 		if config.SearchEnabled() {
 			meiliIndex := viper.GetString("MEILISEARCH_INDEX")
-			err := meilisearchx.SetupMeiliSearch(meiliIndex, []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
+			err := config.SetupMeiliSearch(meiliIndex, []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
 			if err != nil {
 				fmt.Println(err)
 			}

@@ -2,17 +2,14 @@ package tag
 
 import (
 	"net/http"
-	"strconv"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // delete - Delete tag by id
@@ -29,7 +26,7 @@ import (
 func delete(w http.ResponseWriter, r *http.Request) {
 
 	tagID := chi.URLParam(r, "tag_id")
-	id, err := strconv.Atoi(tagID)
+	id, err := uuid.Parse(tagID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -37,7 +34,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -62,12 +59,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "tag")
-	}
+	// if config.SearchEnabled() {
+	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "tag")
+	// }
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("tag.deleted", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("tag.deleted", sID.String(), r) {
 			if err = util.NC.Publish("tag.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

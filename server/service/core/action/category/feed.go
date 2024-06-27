@@ -2,7 +2,6 @@ package category
 
 import (
 	"net/http"
-	"strconv"
 	"strings"
 
 	"github.com/factly/dega-server/config"
@@ -12,6 +11,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 func Feeds(w http.ResponseWriter, r *http.Request) {
@@ -23,7 +23,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	spaceID := chi.URLParam(r, "space_id")
-	sID, err := strconv.Atoi(spaceID)
+	sID, err := uuid.Parse(spaceID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
@@ -48,7 +48,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	slugs := chi.URLParam(r, "slugs")
 	categorySlugs := strings.Split(slugs, ",")
 
-	categoryIDs := make([]uint, 0)
+	categoryIDs := make([]uuid.UUID, 0)
 	categoryList := make([]model.Category, 0)
 	config.DB.Model(&model.Category{}).Where("slug IN (?)", categorySlugs).Find(&categoryList)
 	for _, each := range categoryList {
@@ -58,9 +58,9 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	feed := post.GetFeed(space)
 
 	postList := make([]model.Post, 0)
-	config.DB.Model(&model.Post{}).Joins("JOIN post_categories ON posts.id = post_categories.post_id").Where(&model.Post{
+	config.DB.Model(&model.Post{}).Joins("JOIN de_post_categories ON de_posts.id = de_post_categories.post_id").Where(&model.Post{
 		Status:  "publish",
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Where("is_page = ?", false).Where("category_id IN (?)", categoryIDs).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
 	feed.Items = post.GetItemsList(postList, space)

@@ -1,24 +1,21 @@
 package policy
 
 import (
-	"encoding/json"
-	"fmt"
+	"errors"
 	"net/http"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
-	"github.com/spf13/viper"
 )
 
 type paging struct {
-	Total int                  `json:"total"`
-	Nodes []model.KavachPolicy `json:"nodes"`
+	Total int64          `json:"total"`
+	Nodes []model.Policy `json:"nodes"`
 }
 
 // list - Get all policies
@@ -33,85 +30,43 @@ type paging struct {
 // @Success 200 {object} paging
 // @Router /core/policies [get]
 func list(w http.ResponseWriter, r *http.Request) {
-	userID, err := util.GetUser(r.Context())
+
+	orgRole, err := util.GetOrgRoleFromContext(r.Context())
+
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	spaceID, err := middlewarex.GetSpace(r.Context())
+	spaceID, err := util.GetSpace(r.Context())
+
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	organisationID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
+	if orgRole != "admin" {
+		loggerx.Error(errors.New("user is not an admin"))
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	applicationID, err := util.GetApplicationID(uint(userID), "dega")
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy", organisationID, applicationID, spaceID)
-	req, err := http.NewRequest("GET", reqURL, nil)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
-	req.Header.Set("Content-Type", "application/json")
-
-	client := httpx.CustomHttpClient()
-	resp, err := client.Do(req)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-		return
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	var polices []model.KavachPolicy
-
-	err = json.NewDecoder(resp.Body).Decode(&polices)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	total := len(polices)
-	lowerLimit := offset
-	upperLimit := offset + limit
-	if offset > total {
-		lowerLimit = 0
-		upperLimit = 0
-	} else if offset+limit > total {
-		lowerLimit = offset
-		upperLimit = total
+	result := paging{}
+	result.Nodes = make([]model.Policy, 0)
+
+	err = config.DB.Model(&model.Policy{}).Where(&model.Policy{
+		SpaceID: spaceID,
+	}).Count(&result.Total).Limit(limit).Offset(offset).Find(&result.Nodes).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
 	}
 
-	polices = polices[lowerLimit:upperLimit]
-	var result paging
-	result.Nodes = polices
-	result.Total = total
 	renderx.JSON(w, http.StatusOK, result)
 }

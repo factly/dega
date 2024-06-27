@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -18,30 +19,30 @@ type Episode struct {
 	Season          int            `gorm:"column:season" json:"season"`
 	Episode         int            `gorm:"column:episode" json:"episode"`
 	AudioURL        string         `gorm:"column:audio_url" json:"audio_url"`
-	PodcastID       *uint          `gorm:"column:podcast_id" json:"podcast_id"`
-	Podcast         *Podcast       `json:"podcast"`
+	PodcastID       *uuid.UUID     `gorm:"type:uuid;column:podcast_id" json:"podcast_id"`
+	Podcast         *Podcast       `gorm:"foreignKey:podcast_id" json:"podcast"`
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	DescriptionHTML string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	PublishedDate   *time.Time     `gorm:"column:published_date" json:"published_date" sql:"DEFAULT:NULL"`
-	MediumID        *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
-	Medium          *model.Medium  `json:"medium"`
+	MediumID        *uuid.UUID     `gorm:"type:uuid;column:medium_id;default:NULL" json:"medium_id"`
+	Medium          *model.Medium  `gorm:"foreignKey:medium_id" json:"medium"`
 	MetaFields      postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Meta            postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode      string         `gorm:"column:header_code" json:"header_code"`
 	FooterCode      string         `gorm:"column:footer_code" json:"footer_code"`
-	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
+	SpaceID         uuid.UUID      `gorm:"type:uuid;column:space_id" json:"space_id"`
 }
 
 // EpisodeAuthor model
 type EpisodeAuthor struct {
 	config.Base
-	AuthorID  uint `gorm:"column:author_id" json:"author_id"`
-	EpisodeID uint `gorm:"column:episode_id" json:"episode_id"`
+	AuthorID  string    `gorm:"type:uuid;column:author_id" json:"author_id"`
+	EpisodeID uuid.UUID `gorm:"type:uuid;column:episode_id" json:"episode_id"`
 }
 
 // BeforeSave - validation for medium & podcast
 func (episode *Episode) BeforeSave(tx *gorm.DB) (e error) {
-	if episode.MediumID != nil && *episode.MediumID > 0 {
+	if episode.MediumID != nil && *episode.MediumID != uuid.Nil {
 		medium := model.Medium{}
 		medium.ID = *episode.MediumID
 
@@ -53,7 +54,7 @@ func (episode *Episode) BeforeSave(tx *gorm.DB) (e error) {
 			return errors.New("medium do not belong to same space")
 		}
 	}
-	if episode.PodcastID != nil && *episode.PodcastID > 0 {
+	if episode.PodcastID != nil && *episode.PodcastID != uuid.Nil {
 		podcast := Podcast{}
 		podcast.ID = *episode.PodcastID
 
@@ -78,9 +79,10 @@ func (episode *Episode) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	episode.CreatedByID = uint(uID)
-	episode.UpdatedByID = uint(uID)
+	episode.CreatedByID = uID
+	episode.UpdatedByID = uID
+	episode.ID = uuid.New()
 	return nil
 }

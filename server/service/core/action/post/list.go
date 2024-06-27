@@ -4,19 +4,19 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"strconv"
 	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"github.com/google/uuid"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
@@ -48,7 +48,7 @@ type paging struct {
 // @Router /core/posts [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -71,9 +71,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 
-	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
-		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Order("posts.created_at " + sort)
+	tx := config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
+		SpaceID: sID,
+	}).Where("is_page = ?", false)
 	var statusTemplate bool = false
 	for _, status := range queryMap["status"] {
 		if status == "template" {
@@ -82,10 +82,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	formatIDs := make([]uint, 0)
+	formatIDs := make([]uuid.UUID, 0)
 	for _, fid := range queryMap["format"] {
-		fidStr, _ := strconv.Atoi(fid)
-		formatIDs = append(formatIDs, uint(fidStr))
+		fidStr, _ := uuid.Parse(fid)
+		formatIDs = append(formatIDs, fidStr)
 	}
 
 	if len(formatIDs) > 0 {
@@ -101,14 +101,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 			}
 			// Search posts with filter
 			var hits []interface{}
-			hits, err = meilisearchx.SearchWithQuery(viper.GetString("MEILISEARCH_INDEX"), searchQuery, filters, "post")
+			hits, err = meilisearch.SearchWithQuery(viper.GetString("MEILISEARCH_INDEX"), searchQuery, filters, "post")
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 				return
 			}
 
-			filteredPostIDs := meilisearchx.GetIDArray(hits)
+			filteredPostIDs := meilisearch.GetIDArray(hits)
 			if len(filteredPostIDs) == 0 {
 				renderx.JSON(w, http.StatusOK, result)
 				return
@@ -139,7 +139,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		// return all
-		err = tx.Where("status != ?", "template").Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+		err = tx.Where("status != ?", "template").Order("created_at " + sort).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
@@ -147,7 +147,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var postIDs []uint
+	tx.Commit()
+
+	var postIDs []uuid.UUID
 	for _, p := range posts {
 		postIDs = append(postIDs, p.ID)
 	}
@@ -156,7 +158,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	postClaims := []factCheckModel.PostClaim{}
 	config.DB.Model(&factCheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
-	postClaimMap := make(map[uint][]factCheckModel.PostClaim)
+	postClaimMap := make(map[uuid.UUID][]factCheckModel.PostClaim)
 	for _, pc := range postClaims {
 		if _, found := postClaimMap[pc.PostID]; !found {
 			postClaimMap[pc.PostID] = make([]factCheckModel.PostClaim, 0)
@@ -176,10 +178,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 	postAuthors := []model.PostAuthor{}
 	config.DB.Model(&model.PostAuthor{}).Where("post_id in (?)", postIDs).Find(&postAuthors)
 
-	postAuthorMap := make(map[uint][]uint)
+	postAuthorMap := make(map[uuid.UUID][]string)
 	for _, po := range postAuthors {
 		if _, found := postAuthorMap[po.PostID]; !found {
-			postAuthorMap[po.PostID] = make([]uint, 0)
+			postAuthorMap[po.PostID] = make([]string, 0)
 		}
 		postAuthorMap[po.PostID] = append(postAuthorMap[po.PostID], po.AuthorID)
 	}
@@ -189,7 +191,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		postList.Claims = make([]factCheckModel.Claim, 0)
 		postList.Authors = make([]model.Author, 0)
 		if len(postClaimMap[post.ID]) > 0 {
-			postList.ClaimOrder = make([]uint, len(postClaimMap[post.ID]))
+			postList.ClaimOrder = make([]uuid.UUID, len(postClaimMap[post.ID]))
 			for _, postCla := range postClaimMap[post.ID] {
 				postList.Claims = append(postList.Claims, postCla.Claim)
 				postList.ClaimOrder[int(postCla.Position-1)] = postCla.ClaimID
@@ -217,19 +219,19 @@ func list(w http.ResponseWriter, r *http.Request) {
 func generateFilters(tagIDs, categoryIDs, authorIDs, status []string) string {
 	filters := ""
 	if len(tagIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(tagIDs, "tag_ids"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(tagIDs, "tag_ids"), " AND ")
 	}
 
 	if len(categoryIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
 	}
 
 	if len(authorIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(authorIDs, "author_ids"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(authorIDs, "author_ids"), " AND ")
 	}
 
 	if len(status) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(status, "status"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(status, "status"), " AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {
@@ -256,8 +258,8 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	}
 
 	if len(categoryIDs) > 0 {
-		tx.Joins("INNER JOIN post_categories ON posts.id = post_categories.post_id")
-		filters = filters + " post_categories.category_id IN ("
+		tx.Joins("INNER JOIN de_post_categories ON de_posts.id = de_post_categories.post_id")
+		filters = filters + " de_post_categories.category_id IN ("
 		for _, id := range categoryIDs {
 			filters = fmt.Sprint(filters, id, ", ")
 		}
@@ -265,8 +267,8 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	}
 
 	if len(tagIDs) > 0 {
-		tx.Joins("INNER JOIN post_tags ON posts.id = post_tags.post_id")
-		filters = filters + " post_tags.tag_id IN ("
+		tx.Joins("INNER JOIN de_post_tags ON de_posts.id = de_post_tags.post_id")
+		filters = filters + " de_post_tags.tag_id IN ("
 		for _, id := range tagIDs {
 			filters = fmt.Sprint(filters, id, ", ")
 		}
@@ -274,8 +276,8 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	}
 
 	if len(authorIDs) > 0 {
-		tx.Joins("INNER JOIN post_authors ON posts.id = post_authors.post_id")
-		filters = filters + " post_authors.author_id IN ("
+		tx.Joins("INNER JOIN de_post_authors ON de_posts.id = de_post_authors.post_id")
+		filters = filters + " de_post_authors.author_id IN ("
 		for _, id := range authorIDs {
 			filters = fmt.Sprint(filters, id, ", ")
 		}
@@ -283,7 +285,7 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	}
 
 	if len(status) > 0 {
-		filters = filters + " posts.status IN ("
+		filters = filters + " de_posts.status IN ("
 		for _, sts := range status {
 			filters = fmt.Sprint(filters, "'", sts, "'", ", ")
 		}
@@ -293,7 +295,7 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]
 	}
-	tx.Group("posts.id")
+	tx.Group("de_posts.id")
 
 	return filters
 }

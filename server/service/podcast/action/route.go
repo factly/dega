@@ -11,13 +11,13 @@ func Router() chi.Router {
 
 	entity := "podcasts"
 
-	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
-	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
+	r.With(util.CheckEntityAccess(entity, "get")).Get("/", list)
+	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
 
 	r.Route("/{podcast_id}", func(r chi.Router) {
-		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
-		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
-		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
+		r.With(util.CheckEntityAccess(entity, "get")).Get("/", details)
+		r.With(util.CheckEntityAccess(entity, "update")).Put("/", update)
+		r.With(util.CheckEntityAccess(entity, "delete")).Delete("/", delete)
 	})
 
 	return r

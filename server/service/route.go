@@ -1,9 +1,7 @@
 package service
 
 import (
-	"context"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -25,17 +23,11 @@ import (
 	"github.com/factly/dega-server/service/user"
 
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	"github.com/spf13/viper"
 	httpSwagger "github.com/swaggo/http-swagger"
-
-	"github.com/zitadel/zitadel-go/v3/pkg/authorization"
-	"github.com/zitadel/zitadel-go/v3/pkg/authorization/oauth"
-	zitadelMiddleware "github.com/zitadel/zitadel-go/v3/pkg/http/middleware"
-	"github.com/zitadel/zitadel-go/v3/pkg/zitadel"
 )
 
 func RegisterRoutes() http.Handler {
@@ -74,24 +66,14 @@ func RegisterRoutes() http.Handler {
 		"meilisearch": util.MeiliChecker,
 	})
 
-	ctx := context.Background()
-
-	authZ, err := authorization.New(ctx, zitadel.New(viper.GetString("ZITADEL_DOMAIN")), oauth.DefaultAuthorization("./zitadel_key.json"))
-	if err != nil {
-		log.Fatal("zitadel sdk could not initialize", "error", err)
-	}
-
-	ZitadelInterceptor := zitadelMiddleware.New(authZ)
-
-	// After Latest kavach changes
-	r.With(ZitadelInterceptor.RequireAuthorization(), util.CheckUser(ZitadelInterceptor), middlewarex.CheckSpace(1), util.GenerateOrganisation).Group(func(r chi.Router) {
+	r.With(config.ZitadelInterceptor.RequireAuthorization(), util.CheckUser(config.ZitadelInterceptor)).Group(func(r chi.Router) {
 		r.Mount("/core", core.Router())
 		r.Mount("/fact-check", factCheck.Router())
 		r.Mount("/podcast", podcast.Router())
 		r.Mount("/reindex", reindex.Router())
 	})
 
-	r.With(ZitadelInterceptor.RequireAuthorization(), util.CheckUser(ZitadelInterceptor)).Group(func(r chi.Router) {
+	r.With(config.ZitadelInterceptor.RequireAuthorization(), util.CheckUser(config.ZitadelInterceptor)).Group(func(r chi.Router) {
 		r.Mount("/user", user.Router())
 	})
 

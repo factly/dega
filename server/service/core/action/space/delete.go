@@ -4,7 +4,6 @@ import (
 	//	"encoding/json"
 
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -13,6 +12,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // delete - Delete space
@@ -29,7 +29,7 @@ import (
 // @Router /core/spaces/{space_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 	spaceID := chi.URLParam(r, "space_id")
-	sID, err := strconv.Atoi(spaceID)
+	sID, err := uuid.Parse(spaceID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
@@ -38,7 +38,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	result := &model.Space{}
 
-	result.ID = uint(sID)
+	result.ID = sID
 
 	// check record exists or not
 	err = config.DB.First(&result).Error
@@ -50,7 +50,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("space.deleted", strconv.Itoa(int(result.ID)), r) {
+		if util.CheckWebhookEvent("space.deleted", result.ID.String(), r) {
 			if err = util.NC.Publish("space.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

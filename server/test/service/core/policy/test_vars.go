@@ -1,7 +1,5 @@
 package policy
 
-import "github.com/factly/dega-server/service/core/model"
-
 var headers = map[string]string{
 	"X-Space": "1",
 	"X-User":  "1",
@@ -24,15 +22,6 @@ var policy_test = map[string]interface{}{
 }
 
 var TestName = "test policy"
-var TestPermissions []model.Permission = []model.Permission{
-	{
-		Resource: "test",
-		Actions:  []string{"create", "update"},
-	}, {
-		Resource: "test2",
-		Actions:  []string{"create", "update"},
-	},
-}
 
 var TestUsers = []uint{
 	1,

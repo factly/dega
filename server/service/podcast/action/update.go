@@ -3,17 +3,16 @@ package podcast
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // update - Update podcast by id
@@ -31,7 +30,7 @@ import (
 // @Router /podcast/{podcast_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -46,7 +45,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	podcastID := chi.URLParam(r, "podcast_id")
-	id, err := strconv.Atoi(podcastID)
+	id, err := uuid.Parse(podcastID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -64,7 +63,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	podcastService := service.GetPodcastService()
 
-	result, serviceErr := podcastService.Update(sID, uID, id, podcast)
+	result, serviceErr := podcastService.Update(sID, id, uID, podcast)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -83,11 +82,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearch.UpdateDocument("dega", meiliObj)
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("podcast.updated", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("podcast.updated", sID.String(), r) {
 			if err = util.NC.Publish("podcast.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

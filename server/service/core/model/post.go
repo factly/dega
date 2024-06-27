@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -24,18 +25,18 @@ type Post struct {
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	IsSticky         bool           `gorm:"column:is_sticky" json:"is_sticky"`
 	IsHighlighted    bool           `gorm:"column:is_highlighted" json:"is_highlighted"`
-	FeaturedMediumID *uint          `gorm:"column:featured_medium_id;default:NULL" json:"featured_medium_id"`
+	FeaturedMediumID *uuid.UUID     `gorm:"type:uuid;column:featured_medium_id;default:NULL" json:"featured_medium_id"`
 	Medium           *Medium        `gorm:"foreignKey:featured_medium_id" json:"medium"`
-	FormatID         uint           `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
-	Format           *Format        `json:"format"`
+	FormatID         uuid.UUID      `gorm:"type:uuid;column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
+	Format           *Format        `gorm:"foreignKey:format_id" json:"format"`
 	PublishedDate    *time.Time     `gorm:"column:published_date" json:"published_date"`
-	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
+	SpaceID          uuid.UUID      `gorm:"type:uuid;column:space_id" json:"space_id"`
 	Schemas          postgres.Jsonb `gorm:"column:schemas" json:"schemas" swaggertype:"primitive,string"`
 	Meta             postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `gorm:"column:header_code" json:"header_code"`
 	FooterCode       string         `gorm:"column:footer_code" json:"footer_code"`
 	DescriptionAMP   string         `gorm:"column:description_amp" json:"description_amp"`
-	MigrationID      uint           `gorm:"column:migration_id;default:NULL;" json:"migration_id"`
+	MigrationID      uuid.UUID      `gorm:"type:uuid;column:migration_id;default:NULL;" json:"migration_id"`
 	MigratedHTML     string         `gorm:"column:migrated_html" json:"migrated_html"`
 	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
@@ -45,15 +46,15 @@ type Post struct {
 // PostAuthor model
 type PostAuthor struct {
 	config.Base
-	AuthorID uint `gorm:"column:author_id" json:"author_id"`
-	PostID   uint `gorm:"column:post_id" json:"post_id"`
+	AuthorID string    `gorm:"column:author_id" json:"author_id"`
+	PostID   uuid.UUID `gorm:"type:uuid;column:post_id" json:"post_id"`
 }
 
 var postUser config.ContextKey = "post_user"
 
 // BeforeSave - validation for associations
 func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
-	if post.FeaturedMediumID != nil && *post.FeaturedMediumID > 0 {
+	if post.FeaturedMediumID != nil && *post.FeaturedMediumID != uuid.Nil {
 		medium := Medium{}
 		medium.ID = *post.FeaturedMediumID
 
@@ -66,7 +67,7 @@ func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if post.FormatID > 0 {
+	if post.FormatID != uuid.Nil {
 		format := Format{}
 		format.ID = post.FormatID
 
@@ -102,10 +103,11 @@ func (post *Post) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	post.CreatedByID = uint(uID)
-	post.UpdatedByID = uint(uID)
+	post.CreatedByID = uID
+	post.UpdatedByID = uID
+	post.ID = uuid.New()
 	return nil
 }
 
@@ -117,9 +119,9 @@ func (pa *PostAuthor) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	pa.CreatedByID = uint(uID)
-	pa.UpdatedByID = uint(uID)
+	pa.CreatedByID = uID
+	pa.UpdatedByID = uID
 	return nil
 }

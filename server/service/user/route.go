@@ -16,7 +16,7 @@ func Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.Route("/profile", func(r chi.Router) {
-		r.Get("/", redirectToKavach)
+		r.Get("/", details)
 		r.Put("/", redirectToKavach)
 	})
 

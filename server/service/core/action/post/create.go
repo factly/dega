@@ -6,8 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-
-	"strconv"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -15,14 +13,12 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/schemax"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -41,26 +37,26 @@ import (
 // @Router /core/posts [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	// uID, err := util.GetUser(r.Context())
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-	// 	return
-	// }
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
 
-	// oID, err := util.GetOrganisation(r.Context())
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-	// 	return
-	// }
+	orgRole, err := util.GetOrgRoleFromContext(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
 
 	post := post{}
 
@@ -73,9 +69,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	validationError := validationx.Check(post)
-	// log.Fatal(post.FormatID)
 	if validationError != nil {
-		// log.Fatalf("validation error: %v", validationError)
 		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
 		return
@@ -90,23 +84,23 @@ func create(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// stat, err := getPublishPermissions(oID, sID, uID)
-		// if err != nil {
-		// 	loggerx.Error(err)
-		// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		// 	return
-		// }
+		isAllowed, e := util.CheckSpaceEntityPermission(sID, uID, "posts", "publish", orgRole)
+		if !isAllowed {
 
-		// if stat == http.StatusOK {
-		// 	status = "publish"
-		// }
+			errorx.Render(w, errorx.Parser(e))
+			return
+		}
+
+		if isAllowed {
+			status = "publish"
+		}
 	}
 
 	if post.Status == "ready" {
 		status = "ready"
 	}
 
-	post.SpaceID = uint(sID)
+	post.SpaceID = sID
 
 	result, errMessage := createPost(r.Context(), post, status, r)
 
@@ -123,7 +117,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factCheckModel.Claim, 0)
 
-	sID, err := middlewarex.GetSpace(ctx)
+	sID, err := util.GetSpace(ctx)
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.Unauthorized()
@@ -135,26 +129,21 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		return nil, errorx.Unauthorized()
 	}
 
-	// orgID, err := util.GetOrganisation(ctx)
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	return nil, errorx.Unauthorized()
-	// }
-
 	// Get table name
 	stmt := &gorm.Statement{DB: config.DB}
 	_ = stmt.Parse(&model.Post{})
 	tableName := stmt.Schema.Table
 
 	var postSlug string
-	if post.Slug != "" && slugx.Check(post.Slug) {
+	if post.Slug != "" && util.CheckSlug(post.Slug) {
 		postSlug = post.Slug
 	} else {
-		postSlug = slugx.Make(post.Title)
+		postSlug = util.MakeSlug(post.Title)
 	}
 
 	featuredMediumID := &post.FeaturedMediumID
-	if post.FeaturedMediumID == 0 {
+
+	if post.FeaturedMediumID == uuid.Nil {
 		featuredMediumID = nil
 	}
 
@@ -180,7 +169,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 			UpdatedAt: post.UpdatedAt,
 		},
 		Title:            post.Title,
-		Slug:             slugx.Approve(&config.DB, postSlug, sID, tableName),
+		Slug:             util.ApproveSlug(postSlug, sID, tableName),
 		Status:           status,
 		IsPage:           post.IsPage,
 		Subtitle:         post.Subtitle,
@@ -195,7 +184,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		HeaderCode:       post.HeaderCode,
 		FooterCode:       post.FooterCode,
 		MetaFields:       post.MetaFields,
-		SpaceID:          uint(sID),
+		SpaceID:          sID,
 		DescriptionAMP:   post.DescriptionAMP,
 		MigratedHTML:     post.MigratedHTML,
 	}
@@ -237,9 +226,9 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		// create post claim
 		for i, id := range post.ClaimIDs {
 			postClaim := &factCheckModel.PostClaim{}
-			postClaim.ClaimID = uint(id)
+			postClaim.ClaimID = id
 			postClaim.PostID = result.ID
-			postClaim.Position = uint(i + 1)
+			postClaim.Position = i + 1
 
 			err = tx.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
@@ -255,7 +244,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 			PostID: result.ID,
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
-		result.ClaimOrder = make([]uint, len(postClaims))
+		result.ClaimOrder = make([]uuid.UUID, len(postClaims))
 		// appending all post claims
 		for _, postClaim := range postClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
@@ -273,7 +262,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 
 	for _, id := range post.AuthorIDs {
 		aID := fmt.Sprint(id)
-		if _, found := authors[aID]; found && id != 0 {
+		if _, found := authors[aID]; found && id != "" {
 			author := model.PostAuthor{
 				AuthorID: id,
 				PostID:   result.Post.ID,
@@ -289,207 +278,45 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Order("numeric_value asc").Find(&ratings)
 
-	schemaxPost := schemax.Post{
-		Base:            schemax.Base(result.Post.Base),
-		Title:           result.Title,
-		Subtitle:        result.Subtitle,
-		Slug:            result.Slug,
-		Status:          result.Status,
-		IsPage:          result.IsPage,
-		Excerpt:         result.Excerpt,
-		Description:     result.Description,
-		DescriptionHTML: result.DescriptionHTML,
-		IsFeatured:      result.IsFeatured,
-		IsSticky:        result.IsSticky,
-		IsHighlighted:   result.IsHighlighted,
-		FormatID:        result.FormatID,
-		PublishedDate:   result.PublishedDate,
-		SpaceID:         result.SpaceID,
-		Schemas:         result.Schemas,
-		Meta:            result.Meta,
-		HeaderCode:      result.HeaderCode,
-		FooterCode:      result.FooterCode,
-		MetaFields:      result.MetaFields,
+	postData := PostData{
+		Post: Post{
+			Title:         result.Post.Title,
+			Slug:          result.Post.Slug,
+			PublishedDate: result.Post.PublishedDate,
+			CreatedAt:     result.Post.CreatedAt,
+		},
 	}
 
-	if result.FeaturedMediumID != nil {
-		schemaxPost.FeaturedMediumID = result.FeaturedMediumID
-		schemaxPost.Medium = &schemax.Medium{
-			Base:        schemax.Base(result.Medium.Base),
-			Name:        result.Medium.Name,
-			Slug:        result.Medium.Slug,
-			Type:        result.Medium.Type,
-			Title:       result.Medium.Title,
-			Description: result.Medium.Description,
-			Caption:     result.Medium.Caption,
-			AltText:     result.Medium.AltText,
-			FileSize:    result.Medium.FileSize,
-			URL:         result.Medium.URL,
-			Dimensions:  result.Medium.Dimensions,
-			MetaFields:  result.Medium.MetaFields,
-			SpaceID:     result.Medium.SpaceID,
-		}
-	}
-	schemaxAuthors := make([]schemax.PostAuthor, 0)
+	schemaAuthors := make([]PostAuthor, 0)
 	for _, author := range result.Authors {
-		schemaxAuthor := schemax.PostAuthor{
-			Base:            schemax.Base(author.Base),
-			Email:           author.Email,
-			KID:             author.KID,
-			FirstName:       author.FirstName,
-			LastName:        author.LastName,
-			Slug:            author.Slug,
-			DisplayName:     author.DisplayName,
-			BirthDate:       author.BirthDate,
-			Gender:          author.Gender,
-			SocialMediaURLs: author.SocialMediaURLs,
+		schemaAuthor := PostAuthor{
+			ID:          author.ID,
+			DisplayName: author.DisplayName,
 		}
 
-		if author.FeaturedMediumID != nil {
-			schemaxAuthor.FeaturedMediumID = author.FeaturedMediumID
-			schemaxAuthor.Medium = &schemax.Medium{
-				Base:        schemax.Base(author.Medium.Base),
-				Name:        author.Medium.Name,
-				Slug:        author.Medium.Slug,
-				Type:        author.Medium.Type,
-				Title:       author.Medium.Title,
-				Description: author.Medium.Description,
-				Caption:     author.Medium.Caption,
-				AltText:     author.Medium.AltText,
-				FileSize:    author.Medium.FileSize,
-				URL:         author.Medium.URL,
-				Dimensions:  author.Medium.Dimensions,
-				MetaFields:  author.Medium.MetaFields,
-				SpaceID:     author.Medium.SpaceID,
-			}
-		}
-		schemaxAuthors = append(schemaxAuthors, schemaxAuthor)
+		schemaAuthors = append(schemaAuthors, schemaAuthor)
 	}
 
-	schemaxClaims := make([]schemax.Claim, 0)
+	postData.Authors = schemaAuthors
+
+	schemaClaims := make([]Claim, 0)
 	for _, claim := range result.Claims {
-		schemaxClaim := schemax.Claim{
-			Base:            schemax.Base(claim.Base),
-			Claim:           claim.Claim,
-			Slug:            claim.Slug,
-			ClaimDate:       claim.ClaimDate,
-			CheckedDate:     claim.CheckedDate,
-			ClaimSources:    claim.ClaimSources,
-			Description:     claim.Description,
-			DescriptionHTML: claim.DescriptionHTML,
-			ClaimantID:      claim.ClaimantID,
-			Claimant: schemax.Claimant{
-				Base:            schemax.Base(claim.Claimant.Base),
-				Name:            claim.Claimant.Name,
-				Slug:            claim.Claimant.Slug,
-				Description:     claim.Claimant.Description,
-				DescriptionHTML: claim.Claimant.DescriptionHTML,
-				IsFeatured:      claim.Claimant.IsFeatured,
-				TagLine:         claim.Claimant.TagLine,
-				MediumID:        claim.Claimant.MediumID,
-				MetaFields:      claim.Claimant.MetaFields,
-				SpaceID:         claim.Claimant.SpaceID,
-				Meta:            claim.Claimant.Meta,
-				HeaderCode:      claim.Claimant.HeaderCode,
-				FooterCode:      claim.Claimant.FooterCode,
-			},
-			RatingID:      claim.RatingID,
-			Fact:          claim.Fact,
-			ReviewSources: claim.ReviewSources,
-			MetaFields:    claim.MetaFields,
-			SpaceID:       claim.SpaceID,
-			VideoID:       claim.VideoID,
-			EndTime:       claim.EndTime,
-			StartTime:     claim.StartTime,
-			Meta:          claim.Meta,
-			HeaderCode:    claim.HeaderCode,
-			FooterCode:    claim.FooterCode,
+		schemaClaim := Claim{
+			Claim:       claim.Claim,
+			Slug:        claim.Slug,
+			CheckedDate: claim.CheckedDate,
+			Claimant:    claim.Claimant,
+			Fact:        claim.Fact,
+			Rating:      claim.Rating,
 		}
-		if claim.MediumID != nil {
-			schemaxClaim.MediumID = claim.MediumID
-		}
-		if claim.Claimant.MediumID != nil {
-			schemaxClaim.Claimant.MediumID = claim.Claimant.MediumID
-		}
-		schemaxClaims = append(schemaxClaims, schemaxClaim)
+
+		schemaClaims = append(schemaClaims, schemaClaim)
 	}
 
-	schemaxRatings := make([]schemax.Rating, 0)
-	for _, rating := range ratings {
-		schemaxRating := schemax.Rating{
-			Base:             schemax.Base(rating.Base),
-			Name:             rating.Name,
-			Slug:             rating.Slug,
-			BackgroundColour: rating.BackgroundColour,
-			TextColour:       rating.TextColour,
-			Description:      rating.Description,
-			DescriptionHTML:  rating.DescriptionHTML,
-			NumericValue:     rating.NumericValue,
-			MetaFields:       rating.MetaFields,
-			SpaceID:          rating.SpaceID,
-			Meta:             rating.Meta,
-			HeaderCode:       rating.HeaderCode,
-			FooterCode:       rating.FooterCode,
-		}
-		if rating.MediumID != nil {
-			schemaxRating.MediumID = rating.MediumID
-		}
-		schemaxRatings = append(schemaxRatings, schemaxRating)
-	}
-
-	schemaxSpace := schemax.Space{
-		Base: schemax.Base{
-			ID:          space.ID,
-			CreatedAt:   space.CreatedAt,
-			UpdatedAt:   space.UpdatedAt,
-			DeletedAt:   space.DeletedAt,
-			CreatedByID: space.CreatedByID,
-			UpdatedByID: space.UpdatedByID,
-		},
-		Name:        space.Name,
-		Slug:        space.Slug,
-		Description: space.Description,
-		MetaFields:  space.MetaFields,
-		SpaceSettings: &schemax.SpaceSettings{
-			SiteTitle:         space.SiteTitle,
-			SiteAddress:       space.SiteAddress,
-			LogoID:            space.LogoID,
-			LogoMobileID:      space.LogoMobileID,
-			FavIconID:         space.FavIconID,
-			MobileIconID:      space.MobileIconID,
-			VerificationCodes: space.VerificationCodes,
-			SocialMediaURLs:   space.SocialMediaURLs,
-			ContactInfo:       space.ContactInfo,
-			Analytics:         space.Analytics,
-			HeaderCode:        space.HeaderCode,
-			FooterCode:        space.FooterCode,
-		},
-	}
-
-	if space.LogoID != nil {
-		schemaxSpace.SpaceSettings.LogoID = space.LogoID
-	}
-
-	if space.LogoMobileID != nil {
-		schemaxSpace.SpaceSettings.LogoMobileID = space.LogoMobileID
-	}
-
-	if space.FavIconID != nil {
-		schemaxSpace.SpaceSettings.FavIconID = space.FavIconID
-	}
-
-	if space.MobileIconID != nil {
-		schemaxSpace.SpaceSettings.MobileIconID = space.MobileIconID
-	}
-
-	schemas := schemax.GetSchemas(schemax.PostData{
-		Post:    schemaxPost,
-		Authors: schemaxAuthors,
-		Claims:  schemaxClaims,
-	}, schemaxSpace, schemaxRatings)
+	schemas := GetSchemas(postData, space)
 
 	byteArr, err := json.Marshal(schemas)
 	if err != nil {
@@ -509,7 +336,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		meiliPublishDate = result.Post.PublishedDate.Unix()
 	}
 	meiliObj := map[string]interface{}{
-		"id":             result.ID,
+		"id":             result.ID.String(),
 		"kind":           "post",
 		"title":          result.Title,
 		"subtitle":       result.Subtitle,
@@ -534,13 +361,13 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		_ = meilisearch.AddDocument("dega", meiliObj)
 	}
 
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("post.created", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("post.created", sID.String(), r) {
 			if err = util.NC.Publish("post.created", result); err != nil {
 				return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
 			}
@@ -548,7 +375,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		}
 
 		if result.Post.Status == "publish" {
-			if util.CheckWebhookEvent("post.published", strconv.Itoa(sID), r) {
+			if util.CheckWebhookEvent("post.published", sID.String(), r) {
 				if err = util.NC.Publish("post.published", result); err != nil {
 					return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
 				}

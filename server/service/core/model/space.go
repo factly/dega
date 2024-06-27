@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -18,13 +19,13 @@ type Space struct {
 	SiteTitle         string         `gorm:"site_title" json:"site_title"`
 	TagLine           string         `gorm:"tag_line" json:"tag_line"`
 	SiteAddress       string         `gorm:"site_address" json:"site_address"`
-	LogoID            *uint          `gorm:"column:logo_id;default:NULL" json:"logo_id"`
+	LogoID            *uuid.UUID     `gorm:"type:uuid;column:logo_id;default:NULL" json:"logo_id"`
 	Logo              *Medium        `gorm:"foreignKey:logo_id" json:"logo"`
-	LogoMobileID      *uint          `gorm:"column:logo_mobile_id;default:NULL" json:"logo_mobile_id"`
+	LogoMobileID      *uuid.UUID     `gorm:"type:uuid;column:logo_mobile_id;default:NULL" json:"logo_mobile_id"`
 	LogoMobile        *Medium        `gorm:"foreignKey:logo_mobile_id" json:"logo_mobile"`
-	FavIconID         *uint          `gorm:"column:fav_icon_id;default:NULL" json:"fav_icon_id"`
+	FavIconID         *uuid.UUID     `gorm:"type:uuid;column:fav_icon_id;default:NULL" json:"fav_icon_id"`
 	FavIcon           *Medium        `gorm:"foreignKey:fav_icon_id" json:"fav_icon"`
-	MobileIconID      *uint          `gorm:"column:mobile_icon_id;default:NULL" json:"mobile_icon_id"`
+	MobileIconID      *uuid.UUID     `gorm:"type:uuid;column:mobile_icon_id;default:NULL" json:"mobile_icon_id"`
 	MobileIcon        *Medium        `gorm:"foreignKey:mobile_icon_id" json:"mobile_icon"`
 	VerificationCodes postgres.Jsonb `gorm:"column:verification_codes" json:"verification_codes" swaggertype:"primitive,string"`
 	SocialMediaURLs   postgres.Jsonb `gorm:"column:social_media_urls" json:"social_media_urls" swaggertype:"primitive,string"`
@@ -34,6 +35,20 @@ type Space struct {
 	FooterCode        string         `gorm:"column:footer_code" json:"footer_code"`
 	MetaFields        postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	OrganisationID    string         `gorm:"column:organisation_id" json:"organisation_id"`
+}
+
+type SpaceUser struct {
+	config.Base
+	SpaceID uuid.UUID `gorm:"type:uuid;column:space_id" json:"space_id"`
+	UserID  string    `gorm:"column:user_id" json:"user_id"`
+}
+
+type SpaceToken struct {
+	config.Base
+	Name        string    `gorm:"column:name" json:"name"`
+	Description string    `gorm:"column:description" json:"description"`
+	SpaceID     uuid.UUID `gorm:"type:uuid;column:space_id" json:"space_id"`
+	Token       string    `gorm:"column:token" json:"token"`
 }
 
 var spaceUser config.ContextKey = "space_user"
@@ -46,15 +61,16 @@ func (space *Space) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	space.CreatedByID = uint(uID)
-	space.UpdatedByID = uint(uID)
+	space.CreatedByID = uID
+	space.UpdatedByID = uID
+	space.ID = uuid.New()
 	return nil
 }
 
 func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
-	if space.LogoID != nil && *space.LogoID > 0 {
+	if space.LogoID != nil && *space.LogoID != uuid.Nil {
 
 		medium := Medium{}
 		medium.ID = *space.LogoID
@@ -68,7 +84,7 @@ func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if space.LogoMobileID != nil && *space.LogoMobileID > 0 {
+	if space.LogoMobileID != nil && *space.LogoMobileID != uuid.Nil {
 		medium := Medium{}
 		medium.ID = *space.LogoMobileID
 
@@ -81,7 +97,7 @@ func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if space.FavIconID != nil && *space.FavIconID > 0 {
+	if space.FavIconID != nil && *space.FavIconID != uuid.Nil {
 		medium := Medium{}
 		medium.ID = *space.FavIconID
 
@@ -94,7 +110,7 @@ func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if space.MobileIconID != nil && *space.MobileIconID > 0 {
+	if space.MobileIconID != nil && *space.MobileIconID != uuid.Nil {
 		medium := Medium{}
 		medium.ID = *space.MobileIconID
 

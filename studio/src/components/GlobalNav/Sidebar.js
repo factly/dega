@@ -21,7 +21,7 @@ import degaImg from '../../assets/dega.png';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar({ permission, orgs, loading, applications, services, menuKey }) {
+function Sidebar({ permission, orgs, loading, applications, services, menuKey, signOut }) {
   const { collapsed } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
   const { details, selected } = useSelector((state) => state.spaces);
@@ -242,13 +242,9 @@ function Sidebar({ permission, orgs, loading, applications, services, menuKey })
             const { Icon } = menu;
             return menu.title === 'CORE' && !showCoreMenu
               ? null
-              : !menu.isService
-              ? !menu.isAdmin
-                ? getSubMenuItems(menu, index, Icon)
-                : permission.filter((each) => each.resource === 'admin').length > 0
-                ? getSubMenuItems(menu, index, Icon)
-                : null
-              : services?.includes(maker(menu.title))
+              : !menu.isAdmin
+              ? getSubMenuItems(menu, index, Icon)
+              : permission.filter((each) => each.resource === 'admin').length > 0
               ? getSubMenuItems(menu, index, Icon)
               : null;
           })}
@@ -267,7 +263,7 @@ function Sidebar({ permission, orgs, loading, applications, services, menuKey })
               background: '#f0f2f5',
             }}
           >
-            <AccountMenu />
+            <AccountMenu signOut={signOut} />
             <div>
               <Link to="/settings">
                 <Button style={{ ...buttonStyle }}>

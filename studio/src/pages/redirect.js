@@ -32,7 +32,7 @@ const Callback = ({ authenticated, setAuth, userManager, handleLogout }) => {
             setAuth(false);
           }
         })
-        .catch((error) => {
+        .catch(() => {
           setAuth(false);
         });
     }
@@ -49,21 +49,9 @@ const Callback = ({ authenticated, setAuth, userManager, handleLogout }) => {
   };
 
   if (authenticated === true && userInfo) {
-    return (
-      <div className="user">
-        <h2>Welcome, {userInfo.profile.name}!</h2>
-        <p className="description">Your ZITADEL Profile Information</p>
-        <p>Name: {userInfo.profile.name}</p>
-        <p>Email: {userInfo.profile.email}</p>
-        <p>Email Verified: {userInfo.profile.email_verified ? 'Yes' : 'No'}</p>
-        <p>Roles: {JSON.stringify(userInfo.profile['urn:zitadel:iam:org:project:roles'])}</p>
-
-        <button onClick={handleLogout}>Log out</button>
-      </div>
-    );
-  } else {
-    return <div>Loading...</div>;
+    window.location.href = window.localStorage.getItem('return_to') || window.PUBLIC_URL;
   }
+  return <div>Loading...</div>;
 };
 
 export default Callback;

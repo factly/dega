@@ -2,15 +2,14 @@ package medium
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // delete - Delete medium by id
@@ -25,7 +24,7 @@ import (
 // @Router /core/media/{medium_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -33,7 +32,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	mediumID := chi.URLParam(r, "medium_id")
-	id, err := strconv.Atoi(mediumID)
+	id, err := uuid.Parse(mediumID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -56,7 +55,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("media.deleted", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("media.deleted", sID.String(), r) {
 			if err = util.NC.Publish("media.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

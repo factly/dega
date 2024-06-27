@@ -4,20 +4,18 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -37,7 +35,7 @@ import (
 // @Router /fact-check/claimants/{claimant_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -52,7 +50,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	claimantID := chi.URLParam(r, "claimant_id")
-	id, err := strconv.Atoi(claimantID)
+	id, err := uuid.Parse(claimantID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -79,14 +77,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := model.Claimant{}
-	result.ID = uint(id)
+	result.ID = id
 
 	// check record exists or not
 	err = config.DB.Where(&model.Claimant{
 		Base: config.Base{
-			ID: uint(id),
+			ID: id,
 		},
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	if err != nil {
@@ -104,14 +102,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Slug == claimant.Slug {
 		claimantSlug = result.Slug
-	} else if claimant.Slug != "" && slugx.Check(claimant.Slug) {
-		claimantSlug = slugx.Approve(&config.DB, claimant.Slug, sID, tableName)
+	} else if claimant.Slug != "" && util.CheckSlug(claimant.Slug) {
+		claimantSlug = util.ApproveSlug(claimant.Slug, sID, tableName)
 	} else {
-		claimantSlug = slugx.Approve(&config.DB, slugx.Make(claimant.Name), sID, tableName)
+		claimantSlug = util.ApproveSlug(util.MakeSlug(claimant.Name), sID, tableName)
 	}
 
 	// Check if claimant with same name exist
-	if claimant.Name != result.Name && util.CheckName(uint(sID), claimant.Name, tableName) {
+	if claimant.Name != result.Name && util.CheckName(sID, claimant.Name, tableName) {
 		loggerx.Error(errors.New(`claimant with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
@@ -184,13 +182,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 			"tag_line":    result.TagLine,
 			"space_id":    result.SpaceID,
 		}
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearch.UpdateDocument("dega", meiliObj)
 	}
 
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("claimant.updated", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("claimant.updated", sID.String(), r) {
 			if err = util.NC.Publish("claimant.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

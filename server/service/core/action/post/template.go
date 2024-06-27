@@ -5,22 +5,21 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 )
 
 type templateData struct {
-	PostID uint `json:"post_id" validate:"required"`
+	PostID uuid.UUID `json:"post_id" validate:"required"`
 }
 
 // create - create template
@@ -36,7 +35,7 @@ type templateData struct {
 // @Success 200 {object} model.Post
 // @Router /core/posts/templates [post]
 func createTemplate(w http.ResponseWriter, r *http.Request) {
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -67,11 +66,11 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := postData{}
-	result.Post.ID = uint(templateReq.PostID)
+	result.Post.ID = templateReq.PostID
 
 	// check of post exist
 	err = config.DB.Where(&model.Post{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
@@ -103,15 +102,15 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	if template.Post.Format.Slug == "fact-check" {
 
 		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
-			PostID: uint(templateReq.PostID),
+			PostID: templateReq.PostID,
 		}).Find(&postClaims)
 
 		// create post claim
-		for i, claim := range postClaims {
+		for _, claim := range postClaims {
 			postClaim := &factCheckModel.PostClaim{}
 			postClaim.ClaimID = claim.ClaimID
 			postClaim.PostID = template.Post.ID
-			postClaim.Position = uint(i + 1)
+			// postClaim.Position = uint(i + 1)
 
 			err = tx.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
@@ -127,16 +126,16 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 			PostID: template.Post.ID,
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
-		template.ClaimOrder = make([]uint, len(postClaims))
+		template.ClaimOrder = make([]uuid.UUID, len(postClaims))
 		// appending all post claims
 		for _, postClaim := range postClaims {
 			template.Claims = append(template.Claims, postClaim.Claim)
-			template.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
+			// template.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
 		}
 	}
 
-	tagIDs := make([]uint, 0)
-	categoryIDs := make([]uint, 0)
+	tagIDs := make([]uuid.UUID, 0)
+	categoryIDs := make([]uuid.UUID, 0)
 
 	for _, tag := range template.Tags {
 		tagIDs = append(tagIDs, tag.ID)
@@ -152,7 +151,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	}
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
-		"id":             template.ID,
+		"id":             template.ID.String(),
 		"kind":           "post",
 		"title":          template.Title,
 		"subtitle":       template.Subtitle,
@@ -171,13 +170,13 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		_ = meilisearch.AddDocument("dega", meiliObj)
 	}
 
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("post.template.created", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("post.template.created", sID.String(), r) {
 			if err = util.NC.Publish("post.template.created", template); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

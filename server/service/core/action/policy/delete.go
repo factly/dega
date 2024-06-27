@@ -1,20 +1,18 @@
 package policy
 
 import (
-	"errors"
-	"fmt"
+	"context"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	meilisearchx "github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
-	"github.com/spf13/viper"
+	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 // delete - Delete policy by ID
@@ -30,7 +28,14 @@ import (
 // @Success 200 {object} model.Policy
 // @Router /core/policies/{policy_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
-	spaceID, err := middlewarex.GetSpace(r.Context())
+	policyId := chi.URLParam(r, "policy_id")
+	pID, err := uuid.Parse(policyId)
+	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+
+	spaceID, err := util.GetSpace(r.Context())
 
 	if err != nil {
 		loggerx.Error(err)
@@ -45,7 +50,8 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
-	organisationID, err := util.GetOrganisation(r.Context())
+
+	orgRole, err := util.GetOrgRoleFromContext(r.Context())
 
 	if err != nil {
 		loggerx.Error(err)
@@ -53,51 +59,43 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	applicationID, err := util.GetApplicationID(uint(userID), "dega")
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+	// check if the user is admin or not
+	if orgRole != "admin" {
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	/* delete old policy */
-	policyId := chi.URLParam(r, "policy_id")
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, userID)).Begin()
 
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy/%s", organisationID, applicationID, spaceID, policyId)
-	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	policy := model.Policy{
+		Base: config.Base{
+			ID: pID,
+		},
+		SpaceID: spaceID,
 	}
-	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
-	req.Header.Set("Content-Type", "application/json")
 
-	client := httpx.CustomHttpClient()
-	resp, err := client.Do(req)
+	// check record exists or not
+	err = tx.Model(&model.Policy{}).First(&policy).Error
 
 	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-		return
-	}
-
-	defer resp.Body.Close()
-	if resp.StatusCode != 200 {
-		loggerx.Error(errors.New("unable to delete policy on kavach"))
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	if config.SearchEnabled() {
-		objectID := fmt.Sprint("policy_", policyId)
-		_, err = meilisearchx.Client.Index("dega").Delete(objectID)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		tx.Rollback()
+		if err == gorm.ErrRecordNotFound {
+			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 			return
 		}
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
 	}
+
+	err = tx.Model(&model.Policy{}).Delete(&policy).Error
+
+	if err != nil {
+		tx.Rollback()
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	tx.Commit()
 
 	renderx.JSON(w, http.StatusOK, nil)
 }

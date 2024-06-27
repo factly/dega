@@ -8,10 +8,10 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/podcast/service"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
@@ -39,7 +39,7 @@ type paging struct {
 // @Router /podcast/episodes [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -61,7 +61,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	episodeService := service.GetEpisodeService()
 
-	result, serviceErr := episodeService.List(r.Context(), uint(sID), offset, limit, searchQuery, sort, queryMap)
+	result, serviceErr := episodeService.List(r.Context(), sID, offset, limit, searchQuery, sort, queryMap)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -73,7 +73,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 func generateFilters(podcast []string) string {
 	filters := ""
 	if len(podcast) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(podcast, "podcast_id"), " AND ")
+		filters = fmt.Sprint(filters, meilisearch.GenerateFieldFilter(podcast, "podcast_id"), " AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {

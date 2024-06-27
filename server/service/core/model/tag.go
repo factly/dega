@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/factly/dega-server/config"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -16,9 +17,9 @@ type Tag struct {
 	DescriptionHTML  string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
-	MediumID         *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
-	Medium           *Medium        `json:"medium"`
-	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
+	MediumID         *uuid.UUID     `gorm:"type:uuid;column:medium_id;default:NULL" json:"medium_id"`
+	Medium           *Medium        `gorm:"foreignKey:medium_id" json:"medium"`
+	SpaceID          uuid.UUID      `gorm:"type:uuid;column:space_id" json:"space_id"`
 	Posts            []*Post        `gorm:"many2many:post_tags;" json:"posts"`
 	Meta             postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `gorm:"column:header_code" json:"header_code"`
@@ -35,9 +36,10 @@ func (tag *Tag) BeforeCreate(tx *gorm.DB) error {
 	if userID == nil {
 		return nil
 	}
-	uID := userID.(int)
+	uID := userID.(string)
 
-	tag.CreatedByID = uint(uID)
-	tag.UpdatedByID = uint(uID)
+	tag.CreatedByID = uID
+	tag.UpdatedByID = uID
+	tag.ID = uuid.New()
 	return nil
 }

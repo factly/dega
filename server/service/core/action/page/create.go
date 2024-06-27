@@ -6,20 +6,19 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
+
 	"gorm.io/gorm"
 )
 
@@ -36,7 +35,7 @@ import (
 // @Success 201 {object} pageData
 // @Router /core/pages [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	sID, err := middlewarex.GetSpace(r.Context())
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -74,14 +73,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tableName := stmt.Schema.Table
 
 	var postSlug string
-	if page.Slug != "" && slugx.Check(page.Slug) {
+	if page.Slug != "" && util.CheckSlug(page.Slug) {
 		postSlug = page.Slug
 	} else {
-		postSlug = slugx.Make(page.Title)
+		postSlug = util.MakeSlug(page.Title)
 	}
 
 	featuredMediumID := &page.FeaturedMediumID
-	if page.FeaturedMediumID == 0 {
+	if page.FeaturedMediumID == uuid.Nil {
 		featuredMediumID = nil
 	}
 
@@ -110,7 +109,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			UpdatedAt: page.UpdatedAt,
 		},
 		Title:            page.Title,
-		Slug:             slugx.Approve(&config.DB, postSlug, sID, tableName),
+		Slug:             util.ApproveSlug(postSlug, sID, tableName),
 		Status:           page.Status,
 		IsPage:           true,
 		Subtitle:         page.Subtitle,
@@ -125,7 +124,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		MetaFields:       page.MetaFields,
 		HeaderCode:       page.HeaderCode,
 		FooterCode:       page.FooterCode,
-		SpaceID:          uint(sID),
+		SpaceID:          sID,
 		DescriptionAMP:   page.DescriptionAMP,
 		MigratedHTML:     page.MigratedHTML,
 	}
@@ -163,7 +162,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	for _, id := range page.AuthorIDs {
 		aID := fmt.Sprint(id)
-		if _, found := authors[aID]; found && id != 0 {
+		if _, found := authors[aID]; found && id != "" {
 			author := model.PostAuthor{
 				AuthorID: id,
 				PostID:   result.Post.ID,
@@ -181,7 +180,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		meiliPublishDate = result.Post.PublishedDate.Unix()
 	}
 	meiliObj := map[string]interface{}{
-		"id":             result.ID,
+		"id":             result.ID.String(),
 		"kind":           "page",
 		"title":          result.Title,
 		"subtitle":       result.Subtitle,
@@ -206,13 +205,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		_ = meilisearch.AddDocument("dega", meiliObj)
 	}
 
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("page.created", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("page.created", sID.String(), r) {
 			if err = util.NC.Publish("page.created", result); err != nil {
 				errorx.Render(w, errorx.Parser(errorx.GetMessage("not able to publish event", http.StatusInternalServerError)))
 				return

@@ -1,6 +1,7 @@
 package space
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -36,12 +37,14 @@ type orgWithSpace struct {
 // @Success 200 {array} orgWithSpace
 // @Router /core/spaces [get]
 func my(w http.ResponseWriter, r *http.Request) {
-	_, err := util.GetUser(r.Context())
+	id, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
+
+	log.Println("Space USer id", id)
 
 	// Fetched all organisations of the user
 	orgs := zitadel.GetOrganisations(r.Header.Get("Authorization"))

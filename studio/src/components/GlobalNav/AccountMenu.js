@@ -1,12 +1,12 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Menu, Dropdown, Button, Avatar, notification } from 'antd';
+import { Menu, Dropdown, Button, Avatar } from 'antd';
 import React from 'react';
 import { LogoutOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile } from '../../actions/profile';
 
-const AccountMenu = () => {
+const AccountMenu = ({ signOut }) => {
   const dispatch = useDispatch();
   const { profile, loading } = useSelector((state) => {
     return {
@@ -19,25 +19,8 @@ const AccountMenu = () => {
   }, [dispatch]);
 
   const handleLogout = () => {
-    fetch(window.REACT_APP_KRATOS_PUBLIC_URL + '/self-service/logout/browser', {
-      credentials: 'include',
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        } else {
-          throw new Error(res.status);
-        }
-      })
-      .then((res) => {
-        window.location.href = res.logout_url;
-      })
-      .catch(() => {
-        notification.error({
-          message: 'Error',
-          description: 'Unable to logout',
-        });
-      });
+    // clear all local storage and cookies
+    localStorage.clear();
   };
 
   const accountMenu = (
