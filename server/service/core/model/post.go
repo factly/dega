@@ -28,6 +28,7 @@ type Post struct {
 	Medium           *Medium        `gorm:"foreignKey:featured_medium_id" json:"medium"`
 	FormatID         uint           `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
 	Format           *Format        `json:"format"`
+	Language         string         `gorm:"column:language" json:"language"`
 	PublishedDate    *time.Time     `gorm:"column:published_date" json:"published_date"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
 	Schemas          postgres.Jsonb `gorm:"column:schemas" json:"schemas" swaggertype:"primitive,string"`
