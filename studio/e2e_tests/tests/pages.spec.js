@@ -5,33 +5,52 @@ import {getRandomString} from './randomfunc.js';
 // Read from default ".env" file.
 dotenv.config();
 
-
-
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
-    test.setTimeout(90000)
+    test.setTimeout(900000);
+    // Load session cookies from the file
+    await page
+      .context()
+      .addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
+    // Navigate to a page that requires login
+    await page.goto(`${process.env.BASE_URL}`);
+    await page.goto(`${process.env.BASE_URL}pages`);
+});
+  
+  test('login', async ({ page }) => {
     // Navigate to the login page
     await page.goto(`${process.env.BASE_URL}`);
     // Fill in the email and password fields
     await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
     await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
     // Click the login button
-    await page.click('text=Login')
-    await page.goto(`${process.env.BASE_URL}pages`);
+    await page.click('text=Login');
+    // Verify the user is still logged in
+    expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
     // Save session cookies to a file
     const cookies = await page.context().cookies();
     await page.context().storageState({ path: 'state.json' });
 });
 
+let draftpageName = '';
+let draftnewPageName = '';
+let drafteditedPageName = ''; 
+let readypageName = '';
+let readynewPageName = '';
+let publishpageName = '';
+let publishnewPageName = '';
 
 
-test('should create a draft page succesfully ', async ({ page }) => {
+
+test('should create a draft page successfully', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
-    // Type the new page name into the input field
+    // Generate a random string and construct the page title
     const randomString = getRandomString(10); // Adjust the length as needed
-    await page.type('#title', `This is a test page ${randomString}`)
-    // Type the new page name into the input block
+    draftpageName = `This is a test page ${randomString}`;
+    // Type the new page name into the input field
+    await page.type('#title', draftpageName);
+    // Type the subtitle into the input block
     await page.click('p.is-empty.is-editor-empty');
     await page.keyboard.type('Sub title');
     await page.click('button:has([aria-label="setting"])');
@@ -43,47 +62,107 @@ test('should create a draft page succesfully ', async ({ page }) => {
     // Click on the 'Save as Draft' button
     await page.click('span:has-text("Save Draft")');
     // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
+    page.on('dialog', (dialog) => dialog.accept());
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'page added''
-    expect(successMessage).toBe('page added');
+    // Assert that the success message is 'Page added'
+    expect(successMessage).toBe('Page added');
+});
+  
+  
+test('Should find search results', async ({ page }) => {
+    const pageToSearch = draftpageName;
+    const searchInputSelector = '#filters_q';
+    // Click the search button
+    await page.click('button:has([aria-label="search"])');
+    // Enter the search query
+    await page.fill(searchInputSelector, pageToSearch);
+    page.locator(pageToSearch);
+    // Press 'Enter' to search
+    await page.press(searchInputSelector, 'Enter');
+    // Verify that the page is visible in the results
+    const pageExists = await page.isVisible(`text=${pageToSearch}`);
+});
+  
+
+test('should edit a draft page successfully', async ({ page }) => {
+    // Go to the drafts page
+    await page.goto(`${process.env.BASE_URL}pages?status=draft`);
+    // Construct the new page title
+    const randomString = getRandomString(10); // Adjust the length as needed
+    draftnewPageName = `This is a test page ${randomString}`;
+    // Click on the page to be edited using the pageName from the previous test
+    await page.click(`text=${draftpageName}`);
+    // Fill in the new page name
+    await page.fill('#title', draftnewPageName);
+    // Click on the 'Publish' button
+    await page.click('button:has-text("Publish")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', (dialog) => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Page Published'
+    expect(successMessage).toBe('Page Published');
+});
+  
+  
+test('should edit a draft page successfully from the shortcut edit button', async ({ page }) => {
+    // Go to the drafts page
+    await page.goto(`${process.env.BASE_URL}pages?status=publish`);
+    // Construct the new page title
+    const randomString = getRandomString(10); // Adjust the length as needed
+    const draftnewNewPageName = `This is a test page ${randomString}`;
+    drafteditedPageName = draftnewNewPageName; // Store the new page name in the global variable
+    const rowSelector = `tr:has-text("${draftnewPageName}")`;
+    const buttonSelector =
+      'button.ant-btn.css-dev-only-do-not-override-1cn9vqe.ant-btn-default.ant-btn-lg.ant-btn-icon-only';
+    // Find the button within the specific row and click it
+    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+    await buttonLocator.first().click();
+    // Fill in the new page name
+    const inputSelector = '#title';
+    await page.fill(inputSelector, draftnewNewPageName);
+    // Click on the 'Update' button
+    await page.click('button:has-text("Update")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', (dialog) => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Page Published'
+    expect(successMessage).toBe('Page Published');
+});
+  
+
+test('should delete a page from drafts successfully', async ({ page }) => {
+    // Go to the drafts page
+    await page.goto(`${process.env.BASE_URL}pages?status=publish`);
+    // Use the edited page name from the previous test
+    const rowSelector = `tr:has-text("${drafteditedPageName}")`;
+    const buttonSelector = 'button:has([aria-label="delete"])';
+    // Find the button within the specific row and click it
+    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+    // Click on the Fact-check to be deleted
+    await buttonLocator.click();
+    // Click on the 'OK' button in the confirmation dialog
+    await page.click('button:has-text("OK")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', (dialog) => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Page deleted'
+    expect(successMessage).toBe('Page deleted');
 });
 
 
-test('should create a ready to publish page succesfully ', async ({ page }) => {
-     // Click on the 'Create' button
-     await page.click('button:has-text("Create")');
-     // Type the new page name into the input field
-     const randomString = getRandomString(10); // Adjust the length as needed
-     await page.type('#title', `This is a test page ${randomString}`)
-     // Type the new page name into the input block
-     await page.click('p.is-empty.is-editor-empty');
-     await page.keyboard.type('Sub title');
-     await page.click('button:has([aria-label="setting"])');
-     await page.click('div.ant-select-selector');
-     // Wait for the dropdown list to appear and populate
-     await page.keyboard.press('Enter');
-     await page.click('button:has([aria-label="close"])');
-     await page.click('button:has([aria-label="down"])');
-     // Click on the 'Ready to Publish' button
-     await page.click('span:has-text("Ready to Publish")');
-     // Handle any dialog that appears by accepting it
-     page.on('dialog', dialog => dialog.accept());
-     // Get the success message text
-     const successMessage = await page.textContent('.ant-notification-notice-description');
-     // Assert that the success message is 'page added & Ready to Publish'
-     expect(successMessage).toBe('page added & Ready to Publish');
-});
-
-
-test('should publish page succesfully ', async ({ page }) => {
+test('should create a ready to publish page successfully', async ({ page }) => {
     // Click on the 'Create' button
     await page.click('button:has-text("Create")');
+    // Generate a random string and construct the page title
     const randomString = getRandomString(10); // Adjust the length as needed
+    readypageName = `This is a test page ${randomString}`;
     // Type the new page name into the input field
-    await page.type('#title', `This is a test page ${randomString}`)
-    // Type the new page name into the input block
+    await page.type('#title', readypageName);
+    // Type the subtitle into the input block
     await page.click('p.is-empty.is-editor-empty');
     await page.keyboard.type('Sub title');
     await page.click('button:has([aria-label="setting"])');
@@ -91,83 +170,115 @@ test('should publish page succesfully ', async ({ page }) => {
     // Wait for the dropdown list to appear and populate
     await page.keyboard.press('Enter');
     await page.click('button:has([aria-label="close"])');
+    await page.click('button:has([aria-label="down"])');
+    // Click on the 'Ready to Publish' button
+    await page.click('span:has-text("Ready to Publish")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', (dialog) => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Page added & Ready to Publish'
+    expect(successMessage).toBe('Page added & Ready to Publish');
+});
+ 
+
+test('should edit a ready to publish page successfully', async ({ page }) => {
+    // Go to the drafts page
+    await page.goto(`${process.env.BASE_URL}pages?status=ready`);
+    // Construct the new page title
+    const randomString = getRandomString(10); // Adjust the length as needed
+    readynewPageName = `This is a test page ${randomString}`;
+    // Click on the page to be edited using the pageName from the previous test
+    await page.click(`text=${readypageName}`);
+    // Fill in the new page name
+    await page.fill('#title', readynewPageName);
+    // Click on the 'Publish' button
+    await page.click('button:has-text("Publish")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', (dialog) => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Page Published'
+    expect(successMessage).toBe('Page Published');
+});
+ 
+
+test('should delete a page from ready to publish successfully', async ({ page }) => {
+    // Go to the drafts page
+    await page.goto(`${process.env.BASE_URL}pages?status=publish`);
+    // Use the edited page name from the previous test
+    const rowSelector = `tr:has-text("${readynewPageName}")`;
+    const buttonSelector = 'button:has([aria-label="delete"])';
+    // Find the button within the specific row and click it
+    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
+    // Click on the Fact-check to be deleted
+    await buttonLocator.click();
+    // Click on the 'OK' button in the confirmation dialog
+    await page.click('button:has-text("OK")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', (dialog) => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Page deleted'
+    expect(successMessage).toBe('Page deleted');
+});
+
+
+test('should publish page succesfully', async ({ page }) => {
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Generate a random string and construct the page title
+    const randomString = getRandomString(10); // Adjust the length as needed
+    publishpageName = `This is a test page ${randomString}`;
+    // Type the new page name into the input field
+    await page.type('#title', publishpageName);
+    // Type the subtitle into the input block
+    await page.click('p.is-empty.is-editor-empty');
+    await page.keyboard.type('Sub title');
+    await page.click('button:has([aria-label="setting"])');
+    await page.click('div.ant-select-selector');
+    // Wait for the dropdown list to appear and populate
+    await page.keyboard.press('Enter');
+    await page.click('button:has([aria-label="close"])');
+    await page.click('button:has([aria-label="down"])');
     // Click on the 'Publish' button
     await page.click('span:has-text("Publish")');
     // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
+    page.on('dialog', (dialog) => dialog.accept());
     // Get the error message text
     const errorMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    expect(errorMessage).toBe('Article Published');
+    // Assert that the success message is 'Page Published'
+    expect(errorMessage).toBe('Page Published');
 });
+  
 
-
-test('should display tippy ', async ({ page }) => {
-    // Click on the 'Create' button
-    await page.click('button:has-text("Create")');
-    // Type the new page name into the input field
-    await page.type('#title', 'New page')
-    // Type the new page name into the input block
-    await page.click('p.is-empty.is-editor-empty');
-    await page.keyboard.press('/');
-    await page.isVisible('#tippy-11');
+test('should edit a published page successfully', async ({ page }) => {
+    // Go to the drafts page
+    await page.goto(`${process.env.BASE_URL}pages?status=publish`);
+    // Construct the new page title
+    const randomString = getRandomString(10); // Adjust the length as needed
+    publishnewPageName = `This is a test page ${randomString}`;
+    // Click on the page to be edited using the pageName from the previous test
+    await page.click(`text=${publishpageName}`);
+    // Fill in the new page name
+    await page.fill('#title', publishnewPageName);
+    // Click on the 'Update' button
+    await page.click('button:has-text("Update")');
+    // Handle any dialog that appears by accepting it
+    page.on('dialog', (dialog) => dialog.accept());
+    // Get the success message text
+    const successMessage = await page.textContent('.ant-notification-notice-description');
+    // Assert that the success message is 'Page Published'
+    expect(successMessage).toBe('Page Published');
 });
-
+ 
 
 test('should delete a published page successfully', async ({ page }) => {
+    // Go to the drafts page
     await page.goto(`${process.env.BASE_URL}pages?status=publish`);
-    const pageText = 'ndscn';
-    //const pageDateTime = 'Jun 03, 2024 03:25 PM'; // specify the exact date and time of the page
-    // Select the row with the required fact-check text and date-time
-    const rowSelector = `tr:has-text("${pageText}")`;
-    const buttonSelector = 'button:has([aria-label="delete"])'; 
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    // Ensure the button is available before clicking
-    await buttonLocator.waitFor({ state: 'visible' });
-    // Click on the Fact-check to be deleted
-    await buttonLocator.click();
-    // Click on the 'OK' button in the confirmation dialog
-    await page.click('button:has-text("OK")');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'page deleted'
-    expect(successMessage).toBe('page deleted');
-});
-
-
-
-test('should delete a page from ready to publish successfully', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}pages?status=ready`);
-    const pageText = 'Onel';
-    // Select the row with the required fact-check text
-    const rowSelector = `tr:has-text("${pageText}")`;
-    const buttonSelector = 'button:has([aria-label="delete"])'; 
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    // Ensure the button is available before clicking
-    await buttonLocator.waitFor({ state: 'visible' });
-    // Click on the Fact-check to be deleted
-    await buttonLocator.click();
-    // Click on the 'OK' button in the confirmation dialog
-    await page.click('button:has-text("OK")');
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'page deleted'
-    expect(successMessage).toBe('page deleted');
-});
-
-
-test('should delete a page from drafts successfully', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}pages?status=draft`);
-    const pageText = 'asax';
-    // Select the row with the required fact-check text
-    const rowSelector = `tr:has-text("${pageText}")`;
-    const buttonSelector = 'button:has([aria-label="delete"])'; 
+    // Use the edited page name from the previous test
+    const rowSelector = `tr:has-text("${publishnewPageName}")`;
+    const buttonSelector = 'button:has([aria-label="delete"])';
     // Find the button within the specific row and click it
     const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
     // Click on the Fact-check to be deleted
@@ -175,165 +286,16 @@ test('should delete a page from drafts successfully', async ({ page }) => {
     // Click on the 'OK' button in the confirmation dialog
     await page.click('button:has-text("OK")');
     // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
+    page.on('dialog', (dialog) => dialog.accept());
     // Get the success message text
     const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'page deleted'
-    expect(successMessage).toBe('page deleted');
+    // Assert that the success message is 'Page deleted'
+    expect(successMessage).toBe('Page deleted');
 });
 
 
-test('should edit a published page successfully ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}pages?status=publish`);
-    const randomString = getRandomString(10); // Adjust the length as needed
-    const pageSelector = 'text=dkndkm';
-    const newpageName = `This is a test page ${randomString}`;
-    // Click on the page to be edited
-    await page.click(pageSelector);
-    // Fill in the new page name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newpageName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the pagename has been updated
-    const updatedpage= await page.textContent(`text=${newpageName}`);
-    expect(updatedpage).toBe(newpageName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    expect(successMessage).toBe('Article Published');
-});
 
 
-test('should edit a ready to publish page successfully ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}pages?status=ready`);
-    const randomString = getRandomString(10); // Adjust the length as needed
-    const pageSelector = 'text=cddc';
-    const newpageName = `This is a test page ${randomString}`;
-    // Click on the page to be edited
-    await page.click(pageSelector);
-    // Fill in the new page name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newpageName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the pagename has been updated
-    const updatedpage= await page.textContent(`text=${newpageName}`);
-    expect(updatedpage).toBe(newpageName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    expect(successMessage).toBe('Article Published');
-});
-
-
-test('should edit a draft page successfully ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}pages?status=draft`);
-    const randomString = getRandomString(10); // Adjust the length as needed
-    const pageSelector = 'text=cddc';
-    const newpageName = `This is a test page ${randomString}`;
-    // Click on the page to be edited
-    await page.click(pageSelector);
-    // Fill in the new page name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newpageName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the pagename has been updated
-    const updatedpage= await page.textContent(`text=${newpageName}`);
-    expect(updatedpage).toBe(newpageName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    expect(successMessage).toBe('Article Published');
-});
-
-
-test('should edit a published page successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}pages?status=publish`);
-    const randomString = getRandomString(10); // Adjust the length as needed
-    const pageName = 'dkndkm';
-    const newpageName = `This is a test page ${randomString}`;
-    const rowSelector = `tr:has-text("${pageName}")`;
-    const buttonSelector = 'button.ant-btn.css-dev-only-do-not-override-1cn9vqe.ant-btn-default.ant-btn-lg.ant-btn-icon-only';  
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    await buttonLocator.first().click();
-    // Fill in the new page name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newpageName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the pagename has been updated
-    const updatedpage= await page.textContent(`text=${newpageName}`);
-    expect(updatedpage).toBe(newpageName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Article Published'
-    expect(successMessage).toBe('Article Published');
-});
-
-
-test('should edit a ready to publish page successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}pages?status=ready`);
-    const randomString = getRandomString(10); // Adjust the length as needed
-    const pageName = 'jxks';
-    const newpageName = `This is a test page ${randomString}`;
-    const rowSelector = `tr:has-text("${pageName}")`;
-    const buttonSelector = 'button.ant-btn.css-dev-only-do-not-override-1cn9vqe.ant-btn-default.ant-btn-lg.ant-btn-icon-only';  
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    await buttonLocator.first().click();
-    // Fill in the new page name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newpageName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the pagename has been updated
-    const updatedpage= await page.textContent(`text=${newpageName}`);
-    expect(updatedpage).toBe(newpageName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Draft saved & Ready to Publish'
-    expect(successMessage).toBe('Draft saved & Ready to Publish');
-});
-
-
-test('should edit a draft page successfully from the shortcut edit button  ', async ({ page }) => {
-    await page.goto(`${process.env.BASE_URL}pages?status=draft`);
-    const randomString = getRandomString(10); // Adjust the length as needed
-    const pageName = 'skis';
-    const newpageName = `This is a test page ${randomString}`;
-    const rowSelector = `tr:has-text("${pageName}")`;
-    const buttonSelector = 'button.ant-btn.css-dev-only-do-not-override-1cn9vqe.ant-btn-default.ant-btn-lg.ant-btn-icon-only';  
-    // Find the button within the specific row and click it
-    const buttonLocator = page.locator(`${rowSelector} ${buttonSelector}`);
-    await buttonLocator.first().click();
-    // Fill in the new page name
-    const inputSelector = '#title';
-    await page.fill(inputSelector, newpageName);
-    // Click on the 'Update' button
-    await page.click('button:has-text("Update")');
-    // Check if the pagename has been updated
-    const updatedpage= await page.textContent(`text=${newpageName}`);
-    expect(updatedpage).toBe(newpageName);
-    // Handle any dialog that appears by accepting it
-    page.on('dialog', dialog => dialog.accept());
-    // Get the success message text
-    const successMessage = await page.textContent('.ant-notification-notice-description');
-    // Assert that the success message is 'Draft Saved'
-    expect(successMessage).toBe('Draft Saved');
-});
 
 
 
@@ -435,21 +397,6 @@ test('Should find no search results based on category', async ({ page }) => {
 });
 
 
-test('Should find search results', async ({ page }) => {
-    const pageToSearch = 'new page';
-    const searchInputSelector = '#filters_q';
-    // Click the search button
-    await page.click('button:has([aria-label="search"])');
-    // Enter the search query
-    await page.fill(searchInputSelector , pageToSearch);
-    page.locator(pageToSearch); 
-    // Press 'Enter' to search
-    await page.press(searchInputSelector, 'Enter');
-    // Verify that the page is visible in the results
-    const pageExists = await page.isVisible(`text=${pageToSearch}`);
-});
-
-
 test('Should find no search results', async ({ page }) => {
     const pageToSearch = 'Zero';
     const searchInputSelector = '#filters_q';
@@ -465,7 +412,16 @@ test('Should find no search results', async ({ page }) => {
     await expect(accountLogin).toBeVisible();
 });
 
-
+test('should display tippy ', async ({ page }) => {
+    // Click on the 'Create' button
+    await page.click('button:has-text("Create")');
+    // Type the new page name into the input field
+    await page.type('#title', 'New page')
+    // Type the new page name into the input block
+    await page.click('p.is-empty.is-editor-empty');
+    await page.keyboard.press('/');
+    await page.isVisible('#tippy-11');
+});
 
 test('should show "cannot publish page without author" successfully ', async ({ page }) => {
     // Click on the 'Create' button

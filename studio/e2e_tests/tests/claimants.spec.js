@@ -14,8 +14,6 @@ test.beforeEach(async ({ page }) => {
     .addCookies(JSON.parse(require('fs').readFileSync('state.json', 'utf8')).cookies);
   // Navigate to a page that requires login
   await page.goto(`${process.env.BASE_URL}`);
-  // Verify the user is still logged in
-  expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
   await page.goto(`${process.env.BASE_URL}claimants?sort=desc&limit=10&page=1`);
 });
 
@@ -27,6 +25,8 @@ test('login', async ({ page }) => {
   await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`);
   // Click the login button
   await page.click('text=Login');
+  // Verify the user is still logged in
+  expect(await page.isVisible('text="Dashboard"')).toBeTruthy();
   // Save session cookies to a file
   const cookies = await page.context().cookies();
   await page.context().storageState({ path: 'state.json' });

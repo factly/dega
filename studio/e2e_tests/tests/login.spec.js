@@ -1,11 +1,16 @@
 // Import necessary modules from Playwright
 import { test, expect } from '@playwright/test';
+import dotenv from 'dotenv';
+// Read from default ".env" file.
+dotenv.config();
+
+
 // This beforeEach hook runs before each test, setting up the test environment
 test.beforeEach(async ({ page }) => {
     // Navigate to the login page
     await page.goto(`${process.env.BASE_URL}`);
     // Fill in the email and password fields
-    await page.type('#auth_email', 'ramsai.rapole@factly.in')
+    await page.type('#auth_email', `${process.env.AUTH_EMAIL}`);
   });
 
 
@@ -24,7 +29,7 @@ test('Button click refreshes the page', async ({ page }) => {
   
 
 test('should login correctly', async ({ page }) => {
-    await page.type('#auth_password', 'Wrongpass@123')
+    await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`)
     // Click the login button
     await page.click('text=Login')
     // Locate the element with the 'h2' tag
@@ -35,7 +40,7 @@ test('should login correctly', async ({ page }) => {
 
 
 test('should fail login correctly', async ({ page }) => {
-    await page.type('#auth_password', 'Wrongpass@123')
+    await page.type('#auth_password', `${process.env.AUTH_PASSWORD}`)
     // Click the login button
     await page.click('text=Login')
     // Locate the element containing the specific text message indicating invalid credentials
