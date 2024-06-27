@@ -2,6 +2,8 @@
 FROM node:18-alpine
 
 # set working directory
+ARG CACHEBUST=100
+
 WORKDIR /app
 
 # install app dependencies

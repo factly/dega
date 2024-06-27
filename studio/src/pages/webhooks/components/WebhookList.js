@@ -2,7 +2,7 @@ import React from 'react';
 import { ConfigProvider, Modal, Button, Table, Typography, Switch } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteWebhook, updateWebhook } from '../../../actions/webhooks';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 import useNavigation from '../../../utils/useNavigation';
 

@@ -3,7 +3,7 @@ import PodcastEditForm from './components/PodcastForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updatePodcast, getPodcast } from '../../actions/podcasts';
- 
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
@@ -33,9 +33,7 @@ function EditPodcast() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updatePodcast({ ...podcast, ...values })).then(() =>
-      history(`/podcasts/${id}/edit`),
-    );
+    dispatch(updatePodcast({ ...podcast, ...values })).then(() => history(`/podcasts/${id}/edit`));
   };
 
   return (

@@ -16,13 +16,12 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MediumList from './components/MediumList';
 import { getMedia } from '../../actions/media';
-import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
-
 
 function Media({ permission }) {
   const { actions } = permission;

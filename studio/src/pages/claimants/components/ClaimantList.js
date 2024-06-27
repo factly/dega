@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Typography, Table, Space, Modal, ConfigProvider } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteClaimant } from '../../../actions/claimants';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 import useNavigation from '../../../utils/useNavigation';
 

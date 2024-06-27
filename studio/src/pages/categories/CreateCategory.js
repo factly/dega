@@ -2,7 +2,7 @@ import React from 'react';
 import CategoryCreateForm from './components/CategoryForm';
 import { useDispatch } from 'react-redux';
 import { createCategory } from '../../actions/categories';
- 
+
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
 function CreateCategory() {

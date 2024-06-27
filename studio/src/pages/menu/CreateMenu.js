@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuForm from './components/MenuForm';
 import { useDispatch } from 'react-redux';
- 
+
 import { createMenu } from '../../actions/menu';
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';

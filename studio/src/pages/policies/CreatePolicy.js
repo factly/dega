@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPolicy } from '../../actions/policies';
 import { useDispatch } from 'react-redux';
- 
+
 import PolicyCreateForm from './components/PolicyForm';
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';

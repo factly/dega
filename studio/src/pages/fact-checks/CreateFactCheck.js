@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../../actions/posts';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
- 
+
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
 
@@ -15,7 +15,7 @@ function CreateFactCheck({ formats }) {
   const dispatch = useDispatch();
   const onCreate = (values) => {
     dispatch(addPost(values)).then((post) => {
-      if (post && post.id)  history(`/fact-checks/${post.id}/edit`);
+      if (post && post.id) history(`/fact-checks/${post.id}/edit`);
     });
   };
 

@@ -14,7 +14,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import getUserPermission from '../../utils/getUserPermission';
 import { getPodcasts } from '../../actions/podcasts';
@@ -24,7 +24,6 @@ import Selector from '../../components/Selector';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
-
 
 function Podcasts({ permission }) {
   const spaces = useSelector(({ spaces }) => spaces);

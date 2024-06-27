@@ -8,7 +8,7 @@ import {
   SecurityScanOutlined,
 } from '@ant-design/icons';
 import { Result, Button } from 'antd';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 //Pages
 import Dashboard from '../pages/dashboard';
 import Analytics from '../pages/analytics';
@@ -929,16 +929,19 @@ const routes = {
   noMatch: {
     path: '*',
     menuKey: '*',
-    Component:() => <Result
-    status="403"
-    title="404"
-    subTitle="Sorry, page not found"
-    extra={
-      <Link to="/">
-        <Button type="primary">Back Home</Button>
-      </Link>
-    }
-  />},
+    Component: () => (
+      <Result
+        status="403"
+        title="404"
+        subTitle="Sorry, page not found"
+        extra={
+          <Link to="/">
+            <Button type="primary">Back Home</Button>
+          </Link>
+        }
+      />
+    ),
+  },
 };
 export const sidebarMenu = [
   {

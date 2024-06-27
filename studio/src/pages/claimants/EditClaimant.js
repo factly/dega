@@ -3,7 +3,7 @@ import ClaimantEditForm from './components/ClaimantForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateClaimant, getClaimant } from '../../actions/claimants';
- 
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';

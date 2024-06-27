@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Card, Spin, Collapse, Button, List, Popconfirm } from 'antd';
 import deepEqual from 'deep-equal';
 import { addPost, deletePost, getPosts } from '../../actions/posts';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import PlaceholderImage from '../ErrorsAndImage/PlaceholderImage';
 import useNavigation from '../../utils/useNavigation';

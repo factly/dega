@@ -3,7 +3,7 @@ import PolicyEditForm from './components/PolicyForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { getPolicy, updatePolicy } from '../../actions/policies';
- 
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';

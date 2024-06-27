@@ -4,14 +4,14 @@ import axios from 'axios';
 import { RATINGS_API } from '../../constants/ratings';
 import { CLAIMANTS_API } from '../../constants/claimants';
 import { CLAIMS_API } from '../../constants/claims';
-import { ScooterCore as Editor } from "@factly/scooter-core";
+import { ScooterCore as Editor } from '@factly/scooter-core';
 import { MEDIA_API } from '../../constants/media';
 import { useSelector } from 'react-redux';
-import { FactCheck } from "@factly/scooter-claim";
-import { Image } from "@factly/scooter-image";
-import { Embed } from "@factly/scooter-embed";
-import { ScooterTable } from "@factly/scooter-table";
-import { CodeBlock } from "@factly/scooter-code-block";
+import { FactCheck } from '@factly/scooter-claim';
+import { Image } from '@factly/scooter-image';
+import { Embed } from '@factly/scooter-embed';
+import { ScooterTable } from '@factly/scooter-table';
+import { CodeBlock } from '@factly/scooter-code-block';
 
 const DescriptionInput = ({
   name = 'description',
@@ -33,13 +33,7 @@ const DescriptionInput = ({
     <Form.Item name={name} {...formItemProps}>
       {/* <Editor {...inputProps} /> */}
       <Editor
-        extensions={[
-          FactCheck,
-          Image,
-          Embed,
-          ScooterTable,
-          CodeBlock,
-        ]}
+        extensions={[FactCheck, Image, Embed, ScooterTable, CodeBlock]}
         menuType="bubble"
         heightStrategy="flexible"
         rows={rows ? rows : 10}
@@ -47,38 +41,44 @@ const DescriptionInput = ({
         initialValue={initialValue}
         uploadEndpoint={window.REACT_APP_COMPANION_URL}
         iframelyEndpoint={window.REACT_APP_IFRAMELY_URL}
-        meta = {{
+        meta={{
           claims: {
-            1: { id: 1, claim: "Claim 1", fact: "Fact 1" },
-            2: { id: 2, claim: "Claim 2", fact: "Fact 2" },
-            3: { id: 3, claim: "Claim 3", fact: "Fact 3" },
-            4: { id: 4, claim: "Claim 4", fact: "Fact 4" }
-          }
+            1: { id: 1, claim: 'Claim 1', fact: 'Fact 1' },
+            2: { id: 2, claim: 'Claim 2', fact: 'Fact 2' },
+            3: { id: 3, claim: 'Claim 3', fact: 'Fact 3' },
+            4: { id: 4, claim: 'Claim 4', fact: 'Fact 4' },
+          },
         }}
         claimConfig={{
-          ratingsFetcher : (page=1) => {
+          ratingsFetcher: (page = 1) => {
             return axios
-            .get(RATINGS_API, {
-              params: { page: page, limit: 10 },
-            }).then((res) => {return res.data})
+              .get(RATINGS_API, {
+                params: { page: page, limit: 10 },
+              })
+              .then((res) => {
+                return res.data;
+              });
           },
-          claimantsFetcher : (page=1) => {
+          claimantsFetcher: (page = 1) => {
             return axios
-            .get(CLAIMANTS_API, {
-              params: { page: page, limit: 10 },
-            }).then((res) => {return res.data})
+              .get(CLAIMANTS_API, {
+                params: { page: page, limit: 10 },
+              })
+              .then((res) => {
+                return res.data;
+              });
           },
-          claimsFetcher : (searchTerm, page=1 , limit=10 , sort = 'desc' ) => {
+          claimsFetcher: (searchTerm, page = 1, limit = 10, sort = 'desc') => {
             const params = new URLSearchParams();
             params.append('q', searchTerm);
             params.append('page', page);
             params.append('limit', limit);
             params.append('sort', sort);
-            return axios
-                   .get( CLAIMS_API , { params: params})
-                   .then((res) => {return res.data})
+            return axios.get(CLAIMS_API, { params: params }).then((res) => {
+              return res.data;
+            });
           },
-          addClaim : (values) => {
+          addClaim: (values) => {
             function convertIdsToNumbers(obj) {
               for (const key in obj) {
                 if (obj.hasOwnProperty(key)) {
@@ -89,11 +89,11 @@ const DescriptionInput = ({
               }
               return obj;
             }
-            return axios
-            .post(CLAIMS_API, convertIdsToNumbers(values))
-            .then((res) => {return res.data})
-         },
-       }}
+            return axios.post(CLAIMS_API, convertIdsToNumbers(values)).then((res) => {
+              return res.data;
+            });
+          },
+        }}
         imagesFetcher={(currentPage) =>
           axios
             .get(MEDIA_API, {

@@ -3,7 +3,7 @@ import SpacePermissionEditForm from './components/PermissionForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateSpacePermission, getSpaces } from '../../../actions/spacePermissions';
- 
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../../components/ErrorsAndImage/RecordNotFound';
 import useNavigation from '../../../utils/useNavigation';

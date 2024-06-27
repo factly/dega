@@ -3,7 +3,7 @@ import RatingEditForm from './components/RatingForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateRating, getRating } from '../../actions/ratings';
- 
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
@@ -33,9 +33,7 @@ function EditRating() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updateRating({ ...rating, ...values })).then(() =>
-      history(`/ratings/${id}/edit`),
-    );
+    dispatch(updateRating({ ...rating, ...values })).then(() => history(`/ratings/${id}/edit`));
   };
 
   return (

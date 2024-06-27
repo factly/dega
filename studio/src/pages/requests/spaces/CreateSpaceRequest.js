@@ -2,7 +2,7 @@ import React from 'react';
 import SpaceRequestCreateForm from './components/RequestForm';
 import { useDispatch } from 'react-redux';
 import { addSpaceRequest } from '../../../actions/spaceRequests';
- 
+
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../../utils/useNavigation';
 

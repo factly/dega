@@ -91,7 +91,7 @@ services:
   #######             UPLOAD SERVICES                                 #######
   ###########################################################################
   companion:
-    image: transloadit/companion
+    image: transloadit/companion:sha-e80a7f7
     ports:
       - "3020:3020"
     env_file:
@@ -461,6 +461,9 @@ services:
     build:
       context: ./studio
       dockerfile: Dockerfile
+      no_cache: true
+      args:
+        - CACHEBUST
     environment:
       - PUBLIC_URL=http://127.0.0.1:4455/.factly/dega/studio
       - REACT_APP_KAVACH_PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web

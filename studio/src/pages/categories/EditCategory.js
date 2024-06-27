@@ -2,7 +2,7 @@ import React from 'react';
 import CategoryEditForm from './components/CategoryForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCategory, getCategory } from '../../actions/categories';
- 
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';

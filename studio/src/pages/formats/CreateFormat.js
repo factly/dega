@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { createFormat } from '../../actions/formats';
- 
+
 import FormatCreateForm from './components/FormatForm';
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';

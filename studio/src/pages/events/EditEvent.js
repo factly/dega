@@ -2,7 +2,7 @@ import React from 'react';
 import EventEditForm from './components/EventForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEvent, getEvent } from '../../actions/events';
- 
+
 import { useParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';

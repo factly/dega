@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { deletePage } from '../../../actions/pages';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import QuickEdit from '../../../components/List/QuickEdit';
 import QuickEditIcon from '../../../assets/QuickEditIcon';
 import ThreeDotIcon from '../../../assets/ThreeDotIcon';
@@ -196,7 +196,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
           }}
           // style={{ maxWidth: '100vw', overflowX: 'auto' }}
           scroll={{
-            x: "1000",
+            x: '1000',
           }}
           columns={columns}
           rowKey={(record) => record.id}
@@ -219,7 +219,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 onQuickEditUpdate={() => setExpandedRowKeys([])}
               />
             ),
-            expandIcon: () => { },
+            expandIcon: () => {},
           }}
           pagination={{
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
@@ -242,7 +242,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
           }}
           onOk={(e) => {
             e.stopPropagation();
-            dispatch(deletePage(deleteItemID)).then(() => fetchPages())
+            dispatch(deletePage(deleteItemID)).then(() => fetchPages());
             setModalOpen(false);
             setDeleteItemID(null);
           }}

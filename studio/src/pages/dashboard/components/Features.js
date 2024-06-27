@@ -6,7 +6,7 @@ import { addDefaultFormats, getFormats } from '../../../actions/formats';
 import { addDefaultPolicies, getPolicies } from '../../../actions/policies';
 import { addDefaultRatings, getRatings } from '../../../actions/ratings';
 import { addDefaultEvents, getEvents } from '../../../actions/events';
- 
+
 import useNavigation from '../../../utils/useNavigation';
 
 function Features() {
@@ -16,7 +16,7 @@ function Features() {
   const superOrg = useSelector(({ admin }) => {
     return admin.organisation;
   });
-  const selectedSpace = useSelector((state) =>({space_id:state.spaces.selected}));
+  const selectedSpace = useSelector((state) => ({ space_id: state.spaces.selected }));
   React.useEffect(() => {
     fetchEntities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -113,7 +113,9 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultFormats(selectedSpace)).then(() => history('/advanced/formats'));
+                  dispatch(addDefaultFormats(selectedSpace)).then(() =>
+                    history('/advanced/formats'),
+                  );
                 }}
               >
                 <PlusOutlined /> CREATE FORMATS
