@@ -96,7 +96,7 @@ services:
   #######             UPLOAD SERVICES                                 #######
   ###########################################################################
   companion:
-    image: transloadit/companion
+    image: transloadit/companion:sha-e80a7f7
     ports:
       - "3020:3020"
     env_file:

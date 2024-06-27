@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Form, Input, Button, Checkbox, Divider, Typography, ConfigProvider } from 'antd';
 import Selector from '../../../components/Selector';
 import { TitleInput } from '../../../components/FormItems';
@@ -56,11 +56,7 @@ const entities = [
     label: 'Ratings',
     options: options,
   },
-  {
-    name: 'policies',
-    label: 'Policies',
-    options: options,
-  },
+
   {
     name: 'podcasts',
     label: 'Podcasts',
@@ -87,11 +83,27 @@ const entities = [
     options: options,
   },
 ];
+const dependencies = {
+  posts: ['categories', 'tags', 'media'],
+  categories: ['media'],
+  tags: ['media'],
+  formats: ['media'],
+  factchecks: ['categories', 'tags', 'media', 'claims'],
+  claims: ['claimants', 'ratings'],
+  claimants: ['media'],
+  ratings: ['media'],
+  podcasts: ['categories', 'media'],
+  episodes: ['podcasts', 'media'],
+  menus: [],
+  pages: ['categories', 'tags', 'media'],
+  webhooks: ['podcasts'],
+};
 
 function PolicyForm({ data = {}, onCreate }) {
   const [form] = Form.useForm();
-  const [valueChange, setValueChange] = useState(false);
-  const [isMobileScreen, setIsMobileScreen] = useState(false);
+  const [valueChange, setValueChange] = React.useState(false);
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+  const [checkedValues, setCheckedValues] = React.useState({});
 
   useEffect(() => {
     const handleResize = () => {
@@ -105,6 +117,41 @@ function PolicyForm({ data = {}, onCreate }) {
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const updateDependencies = (newState, entityName) => {
+    if (dependencies[entityName]) {
+      dependencies[entityName].forEach((dependency) => {
+        newState[dependency] = Array.from(new Set([...(newState[dependency] || []), 'get']));
+        updateDependencies(newState, dependency);
+      });
+    }
+  };
+
+  const handleCheckboxChange = (newCheckedValues, entityName) => {
+    let updatedCheckedValues = [...newCheckedValues];
+
+    if (
+      newCheckedValues.includes('create') ||
+      newCheckedValues.includes('update') ||
+      newCheckedValues.includes('delete') ||
+      newCheckedValues.includes('publish')
+    ) {
+      updatedCheckedValues = Array.from(new Set([...newCheckedValues, 'get']));
+    }
+
+    setCheckedValues((prevState) => {
+      const newState = {
+        ...prevState,
+        [entityName]: updatedCheckedValues,
+      };
+
+      updateDependencies(newState, entityName);
+
+      return newState;
+    });
+
+    setValueChange(true);
+  };
   return (
     <ConfigProvider
       theme={{
@@ -167,19 +214,12 @@ function PolicyForm({ data = {}, onCreate }) {
             </Typography.Title>
             <Divider style={{ margin: '14 0' }} />
             {entities.map((entity, index) => (
-              <Form.Item
-                label={entity.label}
-                key={'permissions-' + index}
-                name={['permissions', entity.name]}
-              >
+              <Form.Item key={'permissions-' + index} name={['permissions', entity.name]}>
                 <Checkbox.Group
                   style={{ flexWrap: 'wrap', justifyContent: 'space-between' }}
-                  defaultValue={
-                    data.permissions && data.permissions[entity.name]
-                      ? data.permissions[entity.name]
-                      : []
-                  }
+                  value={checkedValues[entity.name] || []}
                   options={entity.options}
+                  onChange={(checkedValues) => handleCheckboxChange(checkedValues, entity.name)}
                 />
               </Form.Item>
             ))}

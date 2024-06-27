@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
-
+import getUserPermission from '../../utils/getUserPermission';
 function Selector({
   invalidOptions = [],
   setLoading = true,
@@ -16,6 +16,9 @@ function Selector({
   style,
 }) {
   const entity = action.toLowerCase();
+  const spaces = useSelector(({ spaces }) => spaces);
+  const actions = getUserPermission({ resource: createEntity, action: 'create', spaces });
+
   const selectorType = require(`../../actions/${entity}`);
   const [entityCreatedFlag, setEntityCreatedFlag] = React.useState(false);
   const [query, setQuery] = React.useState({
@@ -116,7 +119,7 @@ function Selector({
         }
       }}
       notFoundContent={
-        query.q?.trim() && createEntity ? (
+        actions.includes('admin') || actions.includes('create') ? (
           <Button
             block
             type="dashed"
@@ -135,12 +138,12 @@ function Selector({
           >
             Create a {createEntity} '{query.q}'
           </Button>
-        ) : createEntity ? (
+        ) : (
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description={`No ${entity} available. Type something to create new ${createEntity}`}
+            description="No results found"
           />
-        ) : null
+        )
       }
       getPopupContainer={(trigger) => trigger.parentNode}
       autoClearSearchValue={true}

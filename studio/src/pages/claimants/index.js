@@ -76,6 +76,7 @@ function Claimants({ permission }) {
   useEffect(() => {
     if (form) form.setFieldsValue(new Filters(params));
   }, [params]);
+
   React.useEffect(() => {
     fetchClaimants();
     // eslint-disable-next-line react-hooks/exhaustive-deps

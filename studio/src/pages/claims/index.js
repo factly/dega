@@ -11,6 +11,7 @@ import {
   Typography,
   Tooltip,
   ConfigProvider,
+  Result,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -23,6 +24,8 @@ import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
+import { getRatings } from '../../actions/ratings';
+import { getClaimants } from '../../actions/claimants';
 
 const { Option } = Select;
 
@@ -65,6 +68,35 @@ function Claims({ permission }) {
     dispatch(getClaims(params));
   };
 
+  React.useEffect(() => {
+    fetchClaimants();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchClaimants = () => {
+    dispatch(getClaimants());
+  };
+
+  useEffect(() => {
+    fetchRatings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchRatings = () => {
+    dispatch(getRatings());
+  };
+
+  const { claimantsCount, ratingsCount, claimantsLoading, ratingsLoading } = useSelector(
+    ({ claimants, ratings }) => {
+      return {
+        claimantsCount: claimants?.req?.[0]?.data ? claimants?.req?.[0]?.data.length : 0,
+        ratingsCount: Object.keys(ratings.details).length,
+        claimantsLoading: claimants.loading,
+        ratingsLoading: ratings.loading,
+      };
+    },
+  );
+
   const { claims, total, loading } = useSelector((state) => {
     const node = state.claims.req.find((item) => {
       return deepEqual(item.query, params);
@@ -73,8 +105,8 @@ function Claims({ permission }) {
     if (node) {
       const list = node.data.map((element) => {
         let claim = state.claims.details[element];
-        claim.claimant = state.claimants.details[claim.claimant_id].name;
-        claim.rating = state.ratings.details[claim.rating_id].name;
+        claim.claimant = state.claimants.details[claim.claimant_id]?.name;
+        claim.rating = state.ratings.details[claim.rating_id]?.name;
         return claim;
       });
       return {
@@ -114,6 +146,54 @@ function Claims({ permission }) {
       search: '?' + query.toString(),
     });
   };
+
+  if (
+    (!loading && !claimantsLoading && claimantsCount === 0) ||
+    (!ratingsLoading && ratingsCount === 0)
+  ) {
+    const isRatingsCountZero = !ratingsLoading && ratingsCount === 0;
+    const isClaimantsCountZero = !claimantsLoading && claimantsCount === 0;
+
+    const title =
+      isClaimantsCountZero && isRatingsCountZero
+        ? 'No claimants and ratings found'
+        : isClaimantsCountZero
+        ? 'No claimants found'
+        : 'No ratings found';
+
+    const subTitle =
+      isClaimantsCountZero && isRatingsCountZero
+        ? 'Create claimants and ratings first to create claims'
+        : isClaimantsCountZero
+        ? 'Create claimants to first to create claims'
+        : 'Create ratings first to create claims';
+
+    const extra =
+      isClaimantsCountZero && isRatingsCountZero ? (
+        <Row justify="center" gutter={16}>
+          <Col>
+            <Link to="/claimants/create">
+              <Button type="primary">Create claimant</Button>
+            </Link>
+          </Col>
+          <Col>
+            <Link to="/ratings/create">
+              <Button type="primary">Create Ratings</Button>
+            </Link>
+          </Col>
+        </Row>
+      ) : isClaimantsCountZero ? (
+        <Link to="/claimants/create">
+          <Button type="primary">Create claimant</Button>
+        </Link>
+      ) : (
+        <Link to="/ratings/create">
+          <Button type="primary">Create Ratings</Button>
+        </Link>
+      );
+
+    return <Result status={'403'} title={title} subTitle={subTitle} extra={extra} />;
+  }
 
   return loading ? (
     <Loader />

@@ -187,6 +187,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		SpaceID:          sID,
 		DescriptionAMP:   post.DescriptionAMP,
 		MigratedHTML:     post.MigratedHTML,
+		Language:         post.Language,
 	}
 
 	if post.MigrationID != nil {
@@ -354,6 +355,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		"tag_ids":        post.TagIDs,
 		"category_ids":   post.CategoryIDs,
 		"author_ids":     post.AuthorIDs,
+		"language":       result.Language,
 	}
 
 	if result.Format.Slug == "fact-check" {

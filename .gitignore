@@ -194,3 +194,8 @@ postgres
 
 volumes
 zitadel_key.json
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+

@@ -16,14 +16,13 @@ import {
   Typography,
   Collapse,
   Divider,
-  ConfigProvider,
+  Select,
 } from 'antd';
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
-import { Prompt } from 'react-router-dom';
 import {
   SettingFilled,
   LeftOutlined,
@@ -43,22 +42,23 @@ import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 import { formatDate } from '../../../utils/date';
+import languages from '../../../utils/languages.json';
 import useNavigation from '../../../utils/useNavigation';
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
-  const history = useNavigation();
+  const navigate = useNavigation();
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const dispatch = useDispatch();
   const [valueChange, setValueChange] = React.useState(false);
-  const [metaDrawer, setMetaDrawer] = React.useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [codeDrawer, setCodeDrawerVisible] = useState(false);
   const [metaFieldsDrawer, setMetaFieldsDrawerVisible] = useState(false);
   const [seoDrawer, setSeoDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isMobileScreen, setIsMobileScreen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('English');
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -72,6 +72,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+  const languagesList = languages.map((language) => ({ value: language, label: language }));
+
+  const handleLanguageChange = (value) => {
+    setSelectedLanguage(value);
+  };
 
   const showSchemaModal = () => {
     setIsModalVisible(true);
@@ -171,7 +176,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
 
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => {
-      page ? history('/pages') : history('/posts');
+      page ? navigate('/pages') : navigate('/posts');
     });
   };
   const setReadyFlag = () => {
@@ -411,6 +416,13 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                       </Form.Item>
                       <Form.Item name="authors" label="Authors">
                         <Selector mode="multiple" display={'display_name'} action="Authors" />
+                      </Form.Item>
+                      <Form.Item name="language" label="Language">
+                        <Select
+                          options={languagesList}
+                          defaultValue={selectedLanguage}
+                          onChange={handleLanguageChange}
+                        />
                       </Form.Item>
                       <Form.Item name="featured_medium_id" label="Featured Image">
                         <MediaSelector />

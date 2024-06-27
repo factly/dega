@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState} from 'react';
 import { Col, Row, Space, Statistic, Typography, Card } from 'antd';
 
 import Features from './components/Features';
@@ -16,17 +16,24 @@ function Dashboard() {
   }));
   const actions = getUserPermission({ resource: 'dashboard', action: 'get', spaces });
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchInfo();
   }, []);
 
   const fetchInfo = () => {
-    dispatch(getInfo());
+    dispatch(getInfo()).then(() => setLoading(false));
   };
 
-  const { article, factCheck } = info;
 
+  const { article = {}, factCheck = {} } = info;
+  const articlePublish = Number(article.publish) || 0;
+  const articleDraft = Number(article.draft) || 0;
+  const articleReady = Number(article.ready) || 0;
+  const factCheckPublish = Number(factCheck.publish) || 0;
+  const factCheckDraft = Number(factCheck.draft) || 0;
+  const factCheckReady = Number(factCheck.ready) || 0;
   return (
     <Space direction="vertical">
       <Helmet title={'Dashboard'} />
@@ -45,28 +52,32 @@ function Dashboard() {
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Total">
                       <Link to="/posts">
-                        <Statistic value={~~article.publish + ~~article.draft + ~~article.ready} />
+                        <Statistic value={articlePublish + articleDraft + articleReady} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 6 }}>
                     <Card size="small" hoverable={true} title="Published">
                       <Link to="/posts?status=publish">
-                        <Statistic value={info.article.publish} />
+                        <Statistic value={articlePublish} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Draft">
                       <Link to="/posts?status=draft">
-                        <Statistic value={info.article.draft} />
+                        <Statistic value={articleDraft} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 8 }}>
                     <Card size="small" hoverable={true} title="Ready to publish">
                       <Link to="/posts?status=ready">
-                        <Statistic value={info.article.ready} />
+                        <Statistic value={articleReady} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
@@ -88,30 +99,32 @@ function Dashboard() {
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Total">
                       <Link to="/fact-checks">
-                        <Statistic
-                          value={~~factCheck.publish + ~~factCheck.draft + ~~factCheck.ready}
-                        />
+                        <Statistic value={factCheckPublish + factCheckDraft + factCheckReady} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 6 }}>
                     <Card size="small" hoverable={true} title="Published">
                       <Link to="/fact-checks?status=publish">
-                        <Statistic value={info.factCheck.publish} />
+                        <Statistic value={factCheckPublish} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Draft">
                       <Link to="/fact-checks?status=draft">
-                        <Statistic value={info.factCheck.draft} />
+                        <Statistic value={factCheckDraft} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>
                   <Col md={{ span: 8 }}>
                     <Card size="small" hoverable={true} title="Ready to publish">
                       <Link to="/fact-checks?status=ready">
-                        <Statistic value={info.factCheck.ready} />
+                        <Statistic value={factCheckReady} 
+                        loading={loading}/>
                       </Link>
                     </Card>
                   </Col>

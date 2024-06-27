@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider } from 'antd';
+import { Layout, Card, notification, BackTop, ConfigProvider, Result } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -127,6 +127,114 @@ function BasicLayout(props) {
       location.pathname.includes('fact-checks') ||
       location.pathname.includes('pages')) &&
     (location.pathname.includes('edit') || location.pathname.includes('create'));
+
+  const permissionRequirements = {
+    '/posts': [
+      { resource: 'categories', action: 'get' },
+      { resource: 'tags', action: 'get' },
+      { resource: 'posts', action: ['get', 'create'] },
+    ],
+    '/posts/create': [
+      { resource: 'categories', action: 'get' },
+      { resource: 'media', action: 'get' },
+      { resource: 'tags', action: 'get' },
+      { resource: 'posts', action: ['get', 'create'] },
+    ],
+    '/pages': [
+      { resource: 'categories', action: 'get' },
+      { resource: 'tags', action: 'get' },
+      { resource: 'pages', action: ['get', 'create'] },
+    ],
+    '/pages/create': [
+      { resource: 'categories', action: 'get' },
+      { resource: 'media', action: 'get' },
+      { resource: 'tags', action: 'get' },
+      { resource: 'pages', action: ['get', 'create'] },
+    ],
+    '/fact-checks': [
+      { resource: 'categories', action: 'get' },
+      { resource: 'tags', action: 'get' },
+      { resource: 'fact-checks', action: ['get', 'create'] },
+    ],
+    '/fact-checks/create': [
+      { resource: 'categories', action: 'get' },
+      { resource: 'tags', action: 'get' },
+      { resource: 'media', action: 'get' },
+      { resource: 'claims', action: 'get' },
+      { resource: 'fact-checks', action: ['get', 'create'] },
+    ],
+    '/claims': [
+      { resource: 'claimants', action: 'get' },
+      { resource: 'ratings', action: 'get' },
+      { resource: 'claims', action: ['get', 'create'] },
+    ],
+    '/claims/create': [
+      { resource: 'claimants', action: 'get' },
+      { resource: 'ratings', action: 'get' },
+      { resource: 'claims', action: ['get', 'create'] },
+    ],
+    '/categories/create': [
+      { resource: 'media', action: 'get' },
+      { resource: 'categories', action: ['get', 'create'] },
+    ],
+    '/tags/create': [
+      { resource: 'media', action: 'get' },
+      { resource: 'tags', action: ['get', 'create'] },
+    ],
+    '/claimants/create': [
+      { resource: 'media', action: 'get' },
+      { resource: 'claimants', action: ['get', 'create'] },
+    ],
+    '/ratings/create': [
+      { resource: 'media', action: 'get' },
+      { resource: 'ratings', action: ['get', 'create'] },
+    ],
+  };
+
+  function checkPermissions(pathname, selected, orgs, userPermission) {
+    const requiredPermissions = permissionRequirements[pathname];
+
+    // Check if userPermission includes 'admin' for any resource
+    const isAdmin = userPermission.some((perm) => perm.resource === 'admin');
+
+    // If user has 'admin' permission, allow access
+    if (isAdmin) {
+      return null;
+    }
+
+    // Otherwise, check if user has specific permissions for the current location
+    const missingPermissions = requiredPermissions.filter((reqPerm) => {
+      const matchingPerm = userPermission.find(
+        (perm) =>
+          perm.resource === reqPerm.resource &&
+          (Array.isArray(reqPerm.action)
+            ? reqPerm.action.every((action) => perm.actions.includes(action))
+            : perm.actions.includes(reqPerm.action)),
+      );
+      return !matchingPerm;
+    });
+
+    return missingPermissions.length > 0 ? missingPermissions : null;
+  }
+  // Render based on permission check
+  const missingPermissions = checkPermissions(location.pathname, selected, orgs, permission);
+
+  if (missingPermissions) {
+    return (
+      <Result
+        status="403"
+        title="403 Forbidden"
+        subTitle={`You don't have required permissions: ${missingPermissions
+          .map(
+            (perm) =>
+              `${perm.resource} (${
+                Array.isArray(perm.action) ? perm.action.join(', ') : perm.action
+              })`,
+          )
+          .join(', ')}`}
+      />
+    );
+  }
 
   return (
     <ConfigProvider

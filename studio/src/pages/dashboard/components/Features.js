@@ -10,7 +10,7 @@ import useNavigation from '../../../utils/useNavigation';
 
 function Features() {
   const dispatch = useDispatch();
-  const history = useNavigation();
+  const navigate = useNavigation();
 
   const selectedSpace = useSelector((state) => ({ space_id: state.spaces.selected }));
   React.useEffect(() => {
@@ -63,35 +63,32 @@ function Features() {
       ) : null}
 
       <Space>
-        {ratingsLoading && loadingServices
-          ? null
-          : ratings > 0 || (
-              <Card
-                title="Ratings"
-                actions={[
-                  <Button
-                    onClick={() => {
-                      dispatch(addDefaultRatings()).then(() => history('/ratings'));
-                    }}
-                  >
-                    <PlusOutlined /> CREATE RATINGS
-                  </Button>,
-                ]}
-                style={{ width: 300 }}
+        {ratingsLoading && loadingServices ? null : ratings > 0 ? null : (
+          <Card
+            title="Ratings"
+            actions={[
+              <Button
+                onClick={() => {
+                  dispatch(addDefaultRatings()).then(() => navigate('/ratings'));
+                }}
               >
-                Five ratings will be created True, Partly True, Misleading, Partly False and False.
-                Click below Button to create
-              </Card>
-            )}
+                <PlusOutlined /> CREATE RATINGs
+              </Button>,
+            ]}
+            style={{ width: 300 }}
+          >
+            Five ratings will be created True, Partly True, Misleading, Partly False and False.
+            Click below Button to create
+          </Card>
+        )}
+
         {formatsLoading ? null : formats > 0 ? null : (
           <Card
             title="Formats"
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultFormats(selectedSpace)).then(() =>
-                    history('/advanced/formats'),
-                  );
+                  dispatch(addDefaultFormats(selectedSpace));
                 }}
               >
                 <PlusOutlined /> CREATE FORMATS
@@ -108,7 +105,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultPolicies()).then(() => history('/members/policies'));
+                  dispatch(addDefaultPolicies()).then(() => navigate('settings/members/policies'));
                 }}
               >
                 <PlusOutlined /> CREATE POLICIES
