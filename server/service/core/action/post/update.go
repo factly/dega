@@ -203,6 +203,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"meta_fields":        post.MetaFields,
 		"description_amp":    post.DescriptionAMP,
 		"migrated_html":      post.MigratedHTML,
+		"language":           post.Language,
 	}
 
 	if post.MigrationID != nil {
@@ -648,6 +649,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"tag_ids":        post.TagIDs,
 		"category_ids":   post.CategoryIDs,
 		"author_ids":     post.AuthorIDs,
+		"language":       result.Language,
 	}
 
 	if result.Format.Slug == "fact-check" {
