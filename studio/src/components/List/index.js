@@ -243,6 +243,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 data={item}
                 setID={setID}
                 slug={format.slug}
+                createdAt={item.created_at}
                 onQuickEditUpdate={() => setExpandedRowKeys([])}
               />
             ),
