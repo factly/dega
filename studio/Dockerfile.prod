@@ -1,4 +1,4 @@
-FROM node:14.17.1-alpine as build
+FROM node:18-alpine as build
 WORKDIR /app
 
 # install node modules
