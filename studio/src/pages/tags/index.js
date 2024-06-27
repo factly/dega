@@ -16,7 +16,7 @@ import {
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../actions/tags';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
@@ -25,7 +25,7 @@ import Filters from '../../utils/filters';
 
 function Tags({ permission }) {
   const { actions } = permission;
-  const history = useHistory();
+  const history = useNavigate();
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
@@ -49,11 +49,10 @@ function Tags({ permission }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   const pathName = useLocation().pathname;
 
   useEffect(() => {
-    history.push({
+    history({
       pathname: pathName,
       search: new URLSearchParams(filters).toString(),
     });
@@ -170,9 +169,16 @@ function Tags({ permission }) {
               </Row>
             </Col>
             <Col xs={24} md={8}>
-              <Row gutter={16} style={{ justifyContent: isMobileScreen ? 'space-between' : 'end', flexDirection: isMobileScreen && 'row-reverse', marginTop: isMobileScreen && '1rem' }}>
+              <Row
+                gutter={16}
+                style={{
+                  justifyContent: isMobileScreen ? 'space-between' : 'end',
+                  flexDirection: isMobileScreen && 'row-reverse',
+                  marginTop: isMobileScreen && '1rem',
+                }}
+              >
                 <Col md={24} xs={12}>
-                  <Row justify="end" >
+                  <Row justify="end">
                     <Link to="/tags/create">
                       <Button
                         disabled={!(actions.includes('admin') || actions.includes('create'))}

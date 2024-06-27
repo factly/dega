@@ -2,15 +2,16 @@ import React from 'react';
 import OrganisationPermissionCreateForm from './components/PermissionForm';
 import { useDispatch } from 'react-redux';
 import { addOrganisationPermission } from '../../../actions/organisations';
-import { useHistory } from 'react-router-dom';
+
+import useNavigation from '../../../utils/useNavigation';
 
 function CreateOrganisationPermission() {
-  const history = useHistory();
+  const history = useNavigation();
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
     dispatch(addOrganisationPermission(values)).then(() =>
-      history.push('/admin/permissions/organisations'),
+      history('/admin/permissions/organisations'),
     );
   };
   return <OrganisationPermissionCreateForm onCreate={onCreate} />;

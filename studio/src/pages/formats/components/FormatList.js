@@ -2,8 +2,9 @@ import React from 'react';
 import { ConfigProvider, Modal, Button, Typography, Table } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteFormat } from '../../../actions/formats';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -11,7 +12,7 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
 
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const history = useNavigation();
 
   const columns = [
     {
@@ -121,7 +122,7 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              history.push(`/advanced/formats/${record.id}/edit`);
+              history(`/advanced/formats/${record.id}/edit`);
             },
             onMouseEnter: (event) => {
               document.body.style.cursor = 'pointer';

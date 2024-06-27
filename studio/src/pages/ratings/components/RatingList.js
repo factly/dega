@@ -3,11 +3,12 @@ import { ConfigProvider, Button, Table, Modal, Typography } from 'antd';
 
 import { useDispatch } from 'react-redux';
 import { deleteRating } from '../../../actions/ratings';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
-  const history = useHistory();
+  const history = useNavigation();
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [deleteItemId, setDeleteItemId] = React.useState(null);
@@ -142,7 +143,7 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              history.push(`/ratings/${record.id}/edit`);
+              history(`/ratings/${record.id}/edit`);
             },
             onMouseEnter: (event) => {
               document.body.style.cursor = 'pointer';

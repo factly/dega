@@ -2,14 +2,15 @@ import React from 'react';
 import CategoryCreateForm from './components/CategoryForm';
 import { useDispatch } from 'react-redux';
 import { createCategory } from '../../actions/categories';
-import { useHistory } from 'react-router-dom';
+
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 function CreateCategory() {
-  const history = useHistory();
+  const history = useNavigation();
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(createCategory(values)).then(() => history.push('/categories'));
+    dispatch(createCategory(values)).then(() => history('/categories'));
   };
   return (
     <>

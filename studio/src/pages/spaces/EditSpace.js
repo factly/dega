@@ -1,14 +1,15 @@
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateSpace } from '../../actions/spaces';
 import SpaceEditForm from './components/SpaceEditForm';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditSpace() {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -20,7 +21,7 @@ function EditSpace() {
   });
 
   const onCreate = (values) => {
-    dispatch(updateSpace({ ...space, ...values })).then(() => history.push(`/admin/spaces`));
+    dispatch(updateSpace({ ...space, ...values })).then(() => history(`/admin/spaces`));
   };
 
   if (loading) return <Skeleton />;

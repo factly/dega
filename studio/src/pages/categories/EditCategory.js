@@ -2,13 +2,14 @@ import React from 'react';
 import CategoryEditForm from './components/CategoryForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCategory, getCategory } from '../../actions/categories';
-import { useHistory } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
 import { Skeleton } from 'antd';
+import useNavigation from '../../utils/useNavigation';
 function EditCategory() {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ function EditCategory() {
   }
   const onUpdate = (values) => {
     dispatch(updateCategory({ ...category, ...values })).then(() => {
-      history.push(`/categories/${id}/edit`);
+      history(`/categories/${id}/edit`);
     });
   };
 

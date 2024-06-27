@@ -3,14 +3,15 @@ import PostEditForm from './components/PostForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updatePost, getPost } from '../../actions/posts';
-import { useHistory } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import getUserPermission from '../../utils/getUserPermission';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditPost({ formats }) {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
@@ -39,7 +40,7 @@ function EditPost({ formats }) {
 
   const onUpdate = (values) => {
     dispatch(updatePost({ ...post, ...values })).then(() => {
-      history.push(`/posts/${id}/edit`);
+      history(`/posts/${id}/edit`);
     });
   };
   return (

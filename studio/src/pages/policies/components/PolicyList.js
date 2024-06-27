@@ -3,8 +3,9 @@ import { Modal, Button, Typography, Table, ConfigProvider } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePolicy } from '../../../actions/policies';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import useNavigation from '../../../utils/useNavigation';
 
 function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -12,7 +13,7 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
 
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const history = useNavigation();
 
   const columns = [
     {
@@ -136,7 +137,7 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              history.push(`/settings/members/policies/${record.id}/edit`);
+              history(`/settings/members/policies/${record.id}/edit`);
             },
             onMouseEnter: (event) => {
               document.body.style.cursor = 'pointer';

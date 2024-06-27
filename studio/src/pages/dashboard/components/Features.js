@@ -6,16 +6,17 @@ import { addDefaultFormats, getFormats } from '../../../actions/formats';
 import { addDefaultPolicies, getPolicies } from '../../../actions/policies';
 import { addDefaultRatings, getRatings } from '../../../actions/ratings';
 import { addDefaultEvents, getEvents } from '../../../actions/events';
-import { useHistory } from 'react-router-dom';
+
+import useNavigation from '../../../utils/useNavigation';
 
 function Features() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigation();
 
   const superOrg = useSelector(({ admin }) => {
     return admin.organisation;
   });
-  const selectedSpace = useSelector((state) =>({space_id:state.spaces.selected}));
+  const selectedSpace = useSelector((state) => ({ space_id: state.spaces.selected }));
   React.useEffect(() => {
     fetchEntities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -94,7 +95,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultRatings()).then(() => history.push('/ratings'));
+                  dispatch(addDefaultRatings()).then(() => navigate('/ratings'));
                 }}
               >
                 <PlusOutlined /> CREATE RATINGS
@@ -129,7 +130,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultPolicies()).then(() => history.push('settings/members/policies'));
+                  dispatch(addDefaultPolicies()).then(() => navigate('settings/members/policies'));
                 }}
               >
                 <PlusOutlined /> CREATE POLICIES
@@ -148,7 +149,7 @@ function Features() {
               actions={[
                 <Button
                   onClick={() => {
-                    dispatch(addDefaultEvents()).then(() => history.push('/admin/events'));
+                    dispatch(addDefaultEvents()).then(() => navigate('/admin/events'));
                   }}
                 >
                   <PlusOutlined /> CREATE EVENTS

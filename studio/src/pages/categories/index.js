@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import deepEqual from 'deep-equal';
@@ -27,7 +27,7 @@ function Categories({ permission }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
-  const history = useHistory();
+  const history = useNavigate();
   const query = new URLSearchParams(location.search);
   const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
@@ -49,13 +49,12 @@ function Categories({ permission }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   const pathName = useLocation().pathname;
   useEffect(() => {
     if (form) form.setFieldsValue(new Filters(params));
   }, [params]);
   useEffect(() => {
-    history.push({
+    history({
       pathname: pathName,
       search: new URLSearchParams(filters).toString(),
     });
@@ -169,9 +168,16 @@ function Categories({ permission }) {
               </Row>
             </Col>
             <Col xs={24} md={8}>
-              <Row gutter={16} style={{ justifyContent: isMobileScreen ? 'space-between' : 'end', flexDirection: isMobileScreen && 'row-reverse' , marginTop: isMobileScreen && '1rem' }}>
+              <Row
+                gutter={16}
+                style={{
+                  justifyContent: isMobileScreen ? 'space-between' : 'end',
+                  flexDirection: isMobileScreen && 'row-reverse',
+                  marginTop: isMobileScreen && '1rem',
+                }}
+              >
                 <Col md={24} xs={12}>
-                  <Row justify="end" >
+                  <Row justify="end">
                     <Link to="/categories/create">
                       <Button
                         disabled={!(actions.includes('admin') || actions.includes('create'))}

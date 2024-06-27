@@ -3,13 +3,14 @@ import PolicyEditForm from './components/PolicyForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { getPolicy, updatePolicy } from '../../actions/policies';
-import { useHistory } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditPolicy() {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ function EditPolicy() {
 
   const onUpdate = (values) => {
     dispatch(updatePolicy({ ...policy, ...values })).then(() =>
-      history.push(`/settings/members/policies/`),
+      history(`/settings/members/policies/`),
     );
   };
 

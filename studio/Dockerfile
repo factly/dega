@@ -1,7 +1,9 @@
 # pull official base image
-FROM node:16-alpine
+FROM node:18-alpine
 
 # set working directory
+ARG CACHEBUST=100
+
 WORKDIR /app
 
 # install app dependencies
@@ -11,6 +13,6 @@ RUN npm install --legacy-peer-deps
 
 # add app
 COPY . ./
-
+EXPOSE 3000
 # start app
 CMD ["npm", "start"]

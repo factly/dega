@@ -88,7 +88,9 @@ function Dashboard() {
                   <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Total">
                       <Link to="/fact-checks">
-                        <Statistic value={(~~factCheck.publish + ~~factCheck.draft + ~~factCheck.ready)} />
+                        <Statistic
+                          value={~~factCheck.publish + ~~factCheck.draft + ~~factCheck.ready}
+                        />
                       </Link>
                     </Card>
                   </Col>

@@ -13,7 +13,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ClaimList from './components/ClaimList';
 import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
@@ -30,7 +30,7 @@ function Claims({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
   const { search } = useLocation();
-  const history = useHistory();
+  const history = useNavigate();
   const query = new URLSearchParams(search);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
@@ -73,8 +73,8 @@ function Claims({ permission }) {
     if (node) {
       const list = node.data.map((element) => {
         let claim = state.claims.details[element];
-        claim.claimant = state.claimants.details[claim.claimant_id].name;
-        claim.rating = state.ratings.details[claim.rating_id].name;
+        claim.claimant = state.claimants.details[claim.claimant_id]?.name;
+        claim.rating = state.ratings.details[claim.rating_id]?.name;
         return claim;
       });
       return {
@@ -100,7 +100,7 @@ function Claims({ permission }) {
       }
     });
 
-    history.push({
+    history({
       pathName: '/claims',
       search: '?' + searchFilter.toString(),
     });
@@ -109,7 +109,7 @@ function Claims({ permission }) {
   const onPagination = (page, limit) => {
     query.set('limit', limit);
     query.set('page', page);
-    history.push({
+    history({
       pathName: '/claims',
       search: '?' + query.toString(),
     });

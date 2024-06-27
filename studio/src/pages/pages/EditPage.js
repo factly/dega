@@ -3,14 +3,15 @@ import PageEditForm from '../posts/components/PostForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updatePage, getPage } from '../../actions/pages';
-import { useHistory } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import getUserPermission from '../../utils/getUserPermission';
 import { Helmet } from 'react-helmet';
+import useNavigation from '../../utils/useNavigation';
 
 function EditPage({ formats }) {
-  const history = useHistory();
+  const history = useNavigation();
   const { id } = useParams();
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'pages', action: 'get', spaces });
@@ -37,7 +38,7 @@ function EditPage({ formats }) {
 
   const onUpdate = (values) => {
     dispatch(updatePage({ ...page, ...values })).then(() => {
-      history.push(`/pages/${id}/edit`);
+      history(`/pages/${id}/edit`);
     });
   };
   return (

@@ -14,7 +14,7 @@ import {
   ConfigProvider,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PostList from '../../components/List';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector, useDispatch } from 'react-redux';
@@ -82,7 +82,7 @@ function Posts({ formats }) {
       );
     return children;
   };
-  const history = useHistory();
+  const history = useNavigate();
 
   const keys = ['format', 'page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'status'];
   const params = getUrlParams(query, keys);
@@ -171,7 +171,7 @@ function Posts({ formats }) {
     if (formats && !formats.loading && formats.article) {
       searchFilter.set('format', formats.article.id);
     }
-    history.push({
+    history({
       pathName: pathname,
       search: '?' + searchFilter.toString(),
     });
@@ -180,7 +180,7 @@ function Posts({ formats }) {
   const onPagination = (page, limit) => {
     query.set('limit', limit);
     query.set('page', page);
-    history.push({
+    history({
       pathName: pathname,
       search: '?' + query.toString(),
     });
@@ -321,7 +321,7 @@ function Posts({ formats }) {
         onChange={(key) => {
           key === 'all' ? query.delete('status') : query.set('status', key);
           setStatus(key);
-          history.push({
+          history({
             pathName: pathname,
             search: '?' + query.toString(),
           });
@@ -343,7 +343,7 @@ function Posts({ formats }) {
         onPagination={onPagination}
         query={query.get('status')}
       />
-    </Space >
+    </Space>
   ) : (
     <FormatNotFound
       status="info"
@@ -354,4 +354,3 @@ function Posts({ formats }) {
 }
 
 export default Posts;
-
