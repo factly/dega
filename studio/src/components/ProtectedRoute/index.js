@@ -3,6 +3,8 @@ import { Link, Route } from 'react-router-dom';
 import { Result, Button } from 'antd';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
+import RecordNotFound from '../ErrorsAndImage/RecordNotFound';
+
 
 function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) {
   const spaces = useSelector((state) => {
@@ -27,6 +29,10 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
         }
       />
     );
+
+  if (!loading && !spaces.details[spaces.selected] && !permission.isSpace) {
+    return <RecordNotFound title={'No space found.'} link="admin/spaces" entity={'Space'} />;
+  }
 
   if (
     !loading &&
