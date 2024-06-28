@@ -31,7 +31,7 @@ const page1 = {
     { id: 22, name: 'Tag 22' },
   ],
   categories: [
-    { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' } },
+    { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' }, description: { "hello": "world" }, description_html: "<p>hello world</p>" },
     { id: 32, name: 'category 32' },
   ],
   format: { id: 41, name: 'Format 1' },
@@ -154,8 +154,18 @@ describe('pages actions', () => {
       {
         type: ADD_CATEGORIES,
         payload: [
-          { id: 31, name: 'category 31', medium: 311 },
-          { id: 32, name: 'category 32', medium: undefined },
+          {
+            id: 31, name: 'category 31', medium: 311, description: {
+              json: { "hello": "world" },
+              html: '<p>hello world</p>',
+            }
+          },
+          {
+            id: 32, name: 'category 32', medium: undefined, description: {
+              json: undefined,
+              html: undefined,
+            }
+          },
         ],
       },
       {
@@ -176,6 +186,10 @@ describe('pages actions', () => {
             authors: [11],
             tags: [21, 22],
             categories: [31, 32],
+            description: {
+              json: undefined,
+              html: undefined,
+            },
             format: 41,
             medium: 51,
           },
@@ -250,7 +264,22 @@ describe('pages actions', () => {
       format: [42],
       status: 'publish',
     };
-    const pages = [{ ...page1, status: 'publish' }];
+    const page = {
+      id: 1,
+      name: 'Page 1',
+      authors: [{ id: 11, name: 'Author 1' }],
+      tags: [
+        { id: 21, name: 'Tag 21' },
+        { id: 22, name: 'Tag 22' },
+      ],
+      categories: [
+        { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' }, description: { "hello": "world" }, description_html: "<p>hello world</p>" },
+        { id: 32, name: 'category 32' },
+      ],
+      format: { id: 41, name: 'Format 1' },
+      medium: { id: 51, name: 'Medium 1' },
+    };
+    const pages = [{ ...page, status: 'publish' }];
     const resp = { data: { nodes: pages, total: 1 } };
     axios.get.mockResolvedValue(resp);
 
@@ -277,8 +306,18 @@ describe('pages actions', () => {
       {
         type: ADD_CATEGORIES,
         payload: [
-          { id: 31, name: 'category 31', medium: 311 },
-          { id: 32, name: 'category 32', medium: undefined },
+          {
+            id: 31, name: 'category 31', medium: 311, description: {
+              json: { "hello": "world" },
+              html: '<p>hello world</p>',
+            }
+          },
+          {
+            id: 32, name: 'category 32', medium: undefined, description: {
+              json: undefined,
+              html: undefined,
+            }
+          },
         ],
       },
       {
@@ -300,6 +339,10 @@ describe('pages actions', () => {
             tags: [21, 22],
             categories: [31, 32],
             format: 41,
+            description: {
+              json: undefined,
+              html: undefined,
+            },
             medium: 51,
           },
         ],
@@ -382,6 +425,10 @@ describe('pages actions', () => {
             categories: [],
             format: 41,
             medium: undefined,
+            description: {
+              json: undefined,
+              html: undefined,
+            },
           },
         ],
       },
@@ -411,7 +458,24 @@ describe('pages actions', () => {
   });
   it('should create actions to get page by id success', () => {
     const id = 1;
-    const resp = { data: page1 };
+    const page = {
+      id: 1,
+      name: 'Page 1',
+      authors: [{ id: 11, name: 'Author 1' }],
+      tags: [
+        { id: 21, name: 'Tag 21' },
+        { id: 22, name: 'Tag 22' },
+      ],
+      categories: [
+        { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' }, description: { "hello": "world" }, description_html: "<p>hello world</p>" },
+        { id: 32, name: 'category 32' },
+      ],
+      description: { "hello": "world" },
+      description_html: "<p>hello world</p>",
+      format: { id: 41, name: 'Format 1' },
+      medium: { id: 51, name: 'Medium 1' },
+    };
+    const resp = { data: page };
     axios.get.mockResolvedValue(resp);
 
     const expectedActions = [
@@ -437,8 +501,13 @@ describe('pages actions', () => {
       {
         type: ADD_CATEGORIES,
         payload: [
-          { id: 31, name: 'category 31', medium: 311 },
-          { id: 32, name: 'category 32', medium: undefined },
+          {
+            id: 31, name: 'category 31', medium: 311, description: {
+              json: { "hello": "world" },
+              html: "<p>hello world</p>",
+            }
+          },
+          { id: 32, name: 'category 32', medium: undefined, description: { json: undefined, html: undefined } },
         ],
       },
       {
@@ -454,6 +523,10 @@ describe('pages actions', () => {
           tags: [21, 22],
           categories: [31, 32],
           format: { id: 41, name: 'Format 1' },
+          description: {
+            json: { "hello": 'world' },
+            html: '<p>hello world</p>',
+          },
           medium: 51,
         },
       },
@@ -549,6 +622,10 @@ describe('pages actions', () => {
           categories: [],
           format: { id: 41, name: 'Format 1' },
           medium: undefined,
+          description: {
+            json: undefined,
+            html: undefined,
+          },
         },
       },
       {
@@ -564,7 +641,25 @@ describe('pages actions', () => {
     expect(axios.get).toHaveBeenCalledWith(types.PAGES_API + '/' + id);
   });
   it('should create actions to create page success', () => {
-    const data2 = { ...page1 };
+    const page = {
+      id: 1,
+      name: 'Page 1',
+      authors: [{ id: 11, name: 'Author 1' }],
+      tags: [
+        { id: 21, name: 'Tag 21' },
+        { id: 22, name: 'Tag 22' },
+      ],
+      categories: [
+        { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' }, description: { "hello": "world" }, description_html: "<p>hello world</p>" },
+        { id: 32, name: 'category 32' },
+      ],
+      description: { "hello": "world" },
+      description_html: "<p>hello world</p>",
+      format: { id: 41, name: 'Format 1' },
+      medium: { id: 51, name: 'Medium 1' },
+    };
+
+    const data2 = { ...page };
     data2.status = 'publish';
     const resp = { data: data2 };
     axios.post.mockResolvedValue(resp);
@@ -588,8 +683,8 @@ describe('pages actions', () => {
       {
         type: ADD_CATEGORIES,
         payload: [
-          { id: 31, name: 'category 31', medium: 311 },
-          { id: 32, name: 'category 32', medium: undefined },
+          { id: 31, name: 'category 31', medium: 311, description: { json: { "hello": "world" }, html: "<p>hello world</p>" } },
+          { id: 32, name: 'category 32', medium: undefined, description: { json: undefined, html: undefined } },
         ],
       },
       {
@@ -751,6 +846,155 @@ describe('pages actions', () => {
     expect(axios.post).toHaveBeenCalledWith(types.PAGES_API, page);
   });
   it('should create actions to update page success', () => {
+    const data2 = { ...page1, description: { json: { "hello": "world" }, html: "<p>hello world</p>" } };
+    data2.status = 'draft';
+    const resp = { data: data2 };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311, description: { json: { "hello": 'world' }, html: "<p>hello world</p>" } },
+          { id: 32, name: 'category 32', medium: undefined, description: { json: undefined, html: undefined } },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 51, name: 'Medium 1' }],
+      },
+      {
+        type: types.ADD_PAGE,
+        payload: {
+          id: 1,
+          name: 'Page 1',
+          status: 'draft',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: { id: 41, name: 'Format 1' },
+          medium: 51,
+          description: {
+            json: { "hello": 'world' }, html: "<p>hello world</p>"
+          },
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Draft Saved',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updatePage(page1))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.PAGES_API + '/1', page1);
+  });
+  it('should create actions to update page success with description and html', () => {
+    const data2 = { ...page1, description: { "hello": "world" }, description_html: "<p>hello world</p>" };
+    data2.status = 'draft';
+    const resp = { data: data2 };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311, description: { json: { "hello": 'world' }, html: "<p>hello world</p>" } },
+          { id: 32, name: 'category 32', medium: undefined, description: { json: undefined, html: undefined } },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 51, name: 'Medium 1' }],
+      },
+      {
+        type: types.ADD_PAGE,
+        payload: {
+          id: 1,
+          name: 'Page 1',
+          status: 'draft',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: { id: 41, name: 'Format 1' },
+          medium: 51,
+          description: {
+            json: { "hello": 'world' }, html: "<p>hello world</p>"
+          },
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Draft Saved',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updatePage(page1))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.PAGES_API + '/1', page1);
+  });
+
+  it('should create actions to update page success with description and html', () => {
     const data2 = { ...page1 };
     data2.status = 'draft';
     const resp = { data: data2 };
@@ -775,8 +1019,8 @@ describe('pages actions', () => {
       {
         type: ADD_CATEGORIES,
         payload: [
-          { id: 31, name: 'category 31', medium: 311 },
-          { id: 32, name: 'category 32', medium: undefined },
+          { id: 31, name: 'category 31', medium: 311, description: { json: { "hello": 'world' }, html: "<p>hello world</p>" } },
+          { id: 32, name: 'category 32', medium: undefined, description: { json: undefined, html: undefined } },
         ],
       },
       {
@@ -798,6 +1042,9 @@ describe('pages actions', () => {
           categories: [31, 32],
           format: { id: 41, name: 'Format 1' },
           medium: 51,
+          description: {
+            json: undefined , html: undefined
+          },
         },
       },
       {
@@ -821,8 +1068,9 @@ describe('pages actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.PAGES_API + '/1', page1);
   });
+
   it('should create actions to update page success with ready status', () => {
-    const data2 = { ...page1 };
+    const data2 = { ...page1, description: { json: { "hello": "world" }, html: "<p>hello world</p>" } };
     data2.status = 'ready';
     const resp = { data: data2 };
     axios.put.mockResolvedValue(resp);
@@ -846,8 +1094,8 @@ describe('pages actions', () => {
       {
         type: ADD_CATEGORIES,
         payload: [
-          { id: 31, name: 'category 31', medium: 311 },
-          { id: 32, name: 'category 32', medium: undefined },
+          { id: 31, name: 'category 31', medium: 311, description: { json: { "hello": 'world' }, html: "<p>hello world</p>" } },
+          { id: 32, name: 'category 32', medium: undefined, description: { json: undefined, html: undefined } },
         ],
       },
       {
@@ -869,6 +1117,9 @@ describe('pages actions', () => {
           categories: [31, 32],
           format: { id: 41, name: 'Format 1' },
           medium: 51,
+          description: {
+            json: { "hello": 'world' }, html: "<p>hello world</p>"
+          },
         },
       },
       {
@@ -876,7 +1127,8 @@ describe('pages actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Draft saved & Ready to Publish',
+
+          message: "Draft saved & Ready to Publish",
           time: Date.now(),
         },
       },
@@ -929,6 +1181,7 @@ describe('pages actions', () => {
     page.tags = [];
     page.medium = undefined;
     page.status = 'publish';
+    page.description = { json: undefined, html: undefined}
 
     const resp = { data: page };
     axios.put.mockResolvedValue(resp);
@@ -965,6 +1218,10 @@ describe('pages actions', () => {
           format: { id: 41, name: 'Format 1' },
           medium: undefined,
           status: 'publish',
+          description: {
+            json: undefined,
+            html: undefined,
+          },
         },
       },
       {

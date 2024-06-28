@@ -20,6 +20,7 @@ const initialState = {
 };
 
 describe('categories actions', () => {
+  // set loading to true
   it('should create an action to set loading to true', () => {
     const startLoadingAction = {
       type: types.SET_CATEGORIES_LOADING,
@@ -27,6 +28,7 @@ describe('categories actions', () => {
     };
     expect(actions.loadingCategories()).toEqual(startLoadingAction);
   });
+  // set loading to false
   it('should create an action to set loading to false', () => {
     const stopLoadingAction = {
       type: types.SET_CATEGORIES_LOADING,
@@ -34,6 +36,7 @@ describe('categories actions', () => {
     };
     expect(actions.stopCategoriesLoading()).toEqual(stopLoadingAction);
   });
+  // add categories list
   it('should create an action to add categories list', () => {
     const data = [
       { id: 1, name: 'tester 1' },
@@ -46,6 +49,7 @@ describe('categories actions', () => {
     };
     expect(actions.addCategoriesList(data)).toEqual(addCategoriesAction);
   });
+  // to add categories request
   it('should create an action to add categories request', () => {
     const data = [{ query: 'query' }];
     const addCategoriesRequestAction = {
@@ -54,12 +58,14 @@ describe('categories actions', () => {
     };
     expect(actions.addCategoriesRequest(data)).toEqual(addCategoriesRequestAction);
   });
+
   it('should create an action to reset categories', () => {
     const resetCategoriesRequestAction = {
       type: types.RESET_CATEGORIES,
     };
     expect(actions.resetCategories()).toEqual(resetCategoriesRequestAction);
   });
+
   it('should create actions to fetch categories success', () => {
     const query = { page: 1, limit: 5 };
     const categories = [{ id: 1, name: 'Category' }];
@@ -77,7 +83,9 @@ describe('categories actions', () => {
       },
       {
         type: types.ADD_CATEGORIES,
-        payload: [{ id: 1, name: 'Category', medium: undefined }],
+        payload: [
+          { id: 1, name: 'Category', medium: undefined, description: { "html": undefined, "json": undefined, } }
+        ],
       },
       {
         type: types.ADD_CATEGORIES_REQUEST,
@@ -114,7 +122,7 @@ describe('categories actions', () => {
       },
       {
         type: types.ADD_CATEGORIES,
-        payload: [{ id: 1, name: 'Category', medium: undefined }],
+        payload: [{ id: 1, name: 'Category', medium: undefined, description: { "html": undefined, "json": undefined, }, }],
       },
       {
         type: types.ADD_CATEGORIES_REQUEST,
@@ -152,7 +160,7 @@ describe('categories actions', () => {
       },
       {
         type: types.ADD_CATEGORIES,
-        payload: [{ id: 1, name: 'Category', medium: 3 }],
+        payload: [{ id: 1, name: 'Category', medium: 3, description: { "html": undefined, "json": undefined, }, }],
       },
       {
         type: types.ADD_CATEGORIES_REQUEST,
@@ -260,7 +268,7 @@ describe('categories actions', () => {
       },
       {
         type: types.GET_CATEGORY,
-        payload: { id, name: 'Category', medium: undefined },
+        payload: { id, name: 'Category', medium: undefined, description: { "html": undefined, "json": undefined, } },
       },
       {
         type: types.SET_CATEGORIES_LOADING,
@@ -292,7 +300,7 @@ describe('categories actions', () => {
       },
       {
         type: types.GET_CATEGORY,
-        payload: { id, name: 'Category', medium: 1 },
+        payload: { id, name: 'Category', medium: 1, description: { "html": undefined, "json": undefined, } },
       },
       {
         type: types.SET_CATEGORIES_LOADING,
@@ -306,6 +314,7 @@ describe('categories actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.CATEGORIES_API + '/' + id);
   });
+
   it('should create actions to create category success', () => {
     const category = { name: 'Category' };
     const resp = { data: category };
@@ -336,6 +345,7 @@ describe('categories actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.CATEGORIES_API, category);
   });
+
   it('should create actions to create category failure', () => {
     const category = { name: 'Category' };
     const errorMessage = 'Failed to create category';
@@ -363,8 +373,8 @@ describe('categories actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.CATEGORIES_API, category);
   });
-  it('should create actions to update category without medium success', () => {
-    const category = { id: 1, name: 'Category' };
+  it('should create actions to update category without medium and description success', () => {
+    const category = { id: 1, name: 'Category', medium: undefined };
     const resp = { data: category };
     axios.put.mockResolvedValue(resp);
 
@@ -375,7 +385,7 @@ describe('categories actions', () => {
       },
       {
         type: types.UPDATE_CATEGORY,
-        payload: { id: 1, name: 'Category', medium: undefined },
+        payload: { id: 1, name: 'Category', medium: undefined, description: { html: undefined, json: undefined, } },
       },
       {
         type: ADD_NOTIFICATION,
@@ -400,7 +410,7 @@ describe('categories actions', () => {
   });
   it('should create actions to update category with medium success', () => {
     const medium = { id: 4, name: 'mediumm' };
-    const category = { id: 1, name: 'Category', medium: medium };
+    const category = { id: 1, name: 'Category', medium: medium, description: { html: undefined, json: undefined, } };
     const resp = { data: category };
     axios.put.mockResolvedValue(resp);
 
@@ -415,7 +425,7 @@ describe('categories actions', () => {
       },
       {
         type: types.UPDATE_CATEGORY,
-        payload: { id: 1, name: 'Category', medium: 4 },
+        payload: { id: 1, name: 'Category', medium: 4, description: { "html": undefined, "json": undefined, } },
       },
       {
         type: ADD_NOTIFICATION,
@@ -438,6 +448,91 @@ describe('categories actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.CATEGORIES_API + '/1', category);
   });
+  it('should create actions to update category with medium and description modified success', () => {
+    const medium = { id: 4, name: 'mediumm' };
+    const description = { json: { "hello": "world" }, html: "<p>hello world</p>" }
+    const category = { id: 1, name: 'Category', medium: medium, description };
+    const resp = { data: category };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [medium],
+      },
+      {
+        type: types.UPDATE_CATEGORY,
+        payload: { id: 1, name: 'Category', medium: 4, description },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Category updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateCategory(category))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.CATEGORIES_API + '/1', category);
+  });
+  it('should create actions to update category with medium and description not  modified success', () => {
+    const medium = { id: 4, name: 'mediumm' };
+    const description_modified = { json: { "hello": "world" }, html: "<p>hello world</p>" }
+    const description = description_modified.json
+    const description_html = description_modified.html
+    const category = { id: 1, name: 'Category', medium: medium, description, description_html };
+    const resp = { data: category };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [medium],
+      },
+      {
+        type: types.UPDATE_CATEGORY,
+        payload: { id: 1, name: 'Category', medium: 4, description: description_modified },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Category updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateCategory(category))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.CATEGORIES_API + '/1', category);
+  });
+
   it('should create actions to update category failure', () => {
     const category = { id: 1, name: 'Category' };
     const errorMessage = 'Failed to update category';
@@ -523,7 +618,7 @@ describe('categories actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.CATEGORIES_API + '/1');
   });
-  it('should create actions to add categories list with no medium in any of the categories', () => {
+  it('should create actions to add categories list with no medium and description in any of the categories', () => {
     const categories = [
       { id: 1, name: 'Category' },
       { id: 2, name: 'Category' },
@@ -537,8 +632,8 @@ describe('categories actions', () => {
       {
         type: types.ADD_CATEGORIES,
         payload: [
-          { id: 1, name: 'Category', medium: undefined },
-          { id: 2, name: 'Category', medium: undefined },
+          { id: 1, name: 'Category', medium: undefined, description: { "html": undefined, "json": undefined, } },
+          { id: 2, name: 'Category', medium: undefined, description: { "html": undefined, "json": undefined, } },
         ],
       },
     ];
@@ -547,10 +642,10 @@ describe('categories actions', () => {
     store.dispatch(actions.addCategories(categories));
     expect(store.getActions()).toEqual(expectedActions);
   });
-  it('should create actions to add categories list', () => {
+  it('should create actions to add categories list with some have medium and description in any of the categories', () => {
     const medium = { id: 4, name: 'mediumm' };
     const categories = [
-      { id: 1, name: 'Category' },
+      { id: 1, name: 'Category', description: { html: "<p>hello</p>", json: { "hello": "test" } } },
       { id: 2, name: 'Category', medium: medium },
     ];
 
@@ -562,8 +657,8 @@ describe('categories actions', () => {
       {
         type: types.ADD_CATEGORIES,
         payload: [
-          { id: 1, name: 'Category', medium: undefined },
-          { id: 2, name: 'Category', medium: 4 },
+          { id: 1, name: 'Category', medium: undefined, description: { html: "<p>hello</p>", json: { "hello": "test" } } },
+          { id: 2, name: 'Category', medium: 4, description: { "html": undefined, "json": undefined, } },
         ],
       },
     ];
@@ -572,6 +667,59 @@ describe('categories actions', () => {
     store.dispatch(actions.addCategories(categories));
     expect(store.getActions()).toEqual(expectedActions);
   });
+  it('should create actions to add categories list with all have description(modified) in any of the categories', () => {
+    const medium = { id: 4, name: 'mediumm' };
+    const categories = [
+      { id: 1, name: 'Category', description: { html: "<p>hello</p>", json: { "hello": "test" } } },
+      { id: 2, name: 'Category', medium: medium, description: { html: "<p>hello</p>", json: { "hello": "test" } } },
+    ];
+
+    const expectedActions = [
+      {
+        type: ADD_MEDIA,
+        payload: [medium],
+      },
+      {
+        type: types.ADD_CATEGORIES,
+        payload: [
+          { id: 1, name: 'Category', medium: undefined, description: { html: "<p>hello</p>", json: { "hello": "test" } } },
+          { id: 2, name: 'Category', medium: 4, description: { html: "<p>hello</p>", json: { "hello": "test" } } },
+        ],
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store.dispatch(actions.addCategories(categories));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('should create actions to add categories list with all have medium and description(unmodified) in any of the categories', () => {
+    const medium = { id: 4, name: 'medium1' };
+    const description =  { "hello": "test" }
+    const description_html = "<p>hello</p>"
+    const categories = [
+      { id: 1, name: 'Category',medium, description, description_html },
+      { id: 2, name: 'Category2', description, description_html },
+    ];
+
+    const expectedActions = [
+      {
+        type: ADD_MEDIA,
+        payload: [medium],
+      },
+      {
+        type: types.ADD_CATEGORIES,
+        payload: [
+          { id: 1, name: 'Category', medium: 4, description: { html: "<p>hello</p>", json: { "hello": "test" } } },
+          { id: 2, name: 'Category2', medium: undefined, description: { html: "<p>hello</p>", json: { "hello": "test" } } },
+        ],
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store.dispatch(actions.addCategories(categories));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
   it('should create actions to add empty categories list', () => {
     const categories = [];
 
