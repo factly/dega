@@ -12,6 +12,7 @@ import routes from '../config/routesConfig';
 import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
+import { permissionRequirements } from '../utils/getUserPermission';
 
 function BasicLayout(props) {
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
@@ -120,79 +121,18 @@ function BasicLayout(props) {
     );
   }
 
-  console.log('location.pathname', location.pathname);
-
   const hideSidebar =
     (location.pathname.includes('posts') ||
       location.pathname.includes('fact-checks') ||
       location.pathname.includes('pages')) &&
     (location.pathname.includes('edit') || location.pathname.includes('create'));
 
-  const permissionRequirements = {
-    '/posts': [
-      { resource: 'categories', action: 'get' },
-      { resource: 'tags', action: 'get' },
-      { resource: 'posts', action: ['get', 'create'] },
-    ],
-    '/posts/create': [
-      { resource: 'categories', action: 'get' },
-      { resource: 'media', action: 'get' },
-      { resource: 'tags', action: 'get' },
-      { resource: 'posts', action: ['get', 'create'] },
-    ],
-    '/pages': [
-      { resource: 'categories', action: 'get' },
-      { resource: 'tags', action: 'get' },
-      { resource: 'pages', action: ['get', 'create'] },
-    ],
-    '/pages/create': [
-      { resource: 'categories', action: 'get' },
-      { resource: 'media', action: 'get' },
-      { resource: 'tags', action: 'get' },
-      { resource: 'pages', action: ['get', 'create'] },
-    ],
-    '/fact-checks': [
-      { resource: 'categories', action: 'get' },
-      { resource: 'tags', action: 'get' },
-      { resource: 'fact-checks', action: ['get', 'create'] },
-    ],
-    '/fact-checks/create': [
-      { resource: 'categories', action: 'get' },
-      { resource: 'tags', action: 'get' },
-      { resource: 'media', action: 'get' },
-      { resource: 'claims', action: 'get' },
-      { resource: 'fact-checks', action: ['get', 'create'] },
-    ],
-    '/claims': [
-      { resource: 'claimants', action: 'get' },
-      { resource: 'ratings', action: 'get' },
-      { resource: 'claims', action: ['get', 'create'] },
-    ],
-    '/claims/create': [
-      { resource: 'claimants', action: 'get' },
-      { resource: 'ratings', action: 'get' },
-      { resource: 'claims', action: ['get', 'create'] },
-    ],
-    '/categories/create': [
-      { resource: 'media', action: 'get' },
-      { resource: 'categories', action: ['get', 'create'] },
-    ],
-    '/tags/create': [
-      { resource: 'media', action: 'get' },
-      { resource: 'tags', action: ['get', 'create'] },
-    ],
-    '/claimants/create': [
-      { resource: 'media', action: 'get' },
-      { resource: 'claimants', action: ['get', 'create'] },
-    ],
-    '/ratings/create': [
-      { resource: 'media', action: 'get' },
-      { resource: 'ratings', action: ['get', 'create'] },
-    ],
-  };
-
-  function checkPermissions(pathname, selected, orgs, userPermission) {
+  function checkPermissions(pathname, userPermission) {
     const requiredPermissions = permissionRequirements[pathname];
+
+    if (!requiredPermissions) {
+      return null;
+    }
 
     // Check if userPermission includes 'admin' for any resource
     const isAdmin = userPermission.some((perm) => perm.resource === 'admin');

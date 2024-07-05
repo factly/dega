@@ -23,34 +23,28 @@ func SetupVars() {
 		log.Fatal("please provide zitadel_domain config param")
 	}
 
-	if !Sqlite() {
-		if !viper.IsSet("database_host") {
-			log.Fatal("please provide database_host config param")
-		}
+	if !viper.IsSet("database_host") {
+		log.Fatal("please provide database_host config param")
+	}
 
-		if !viper.IsSet("database_user") {
-			log.Fatal("please provide database_user config param")
-		}
+	if !viper.IsSet("database_user") {
+		log.Fatal("please provide database_user config param")
+	}
 
-		if !viper.IsSet("database_name") {
-			log.Fatal("please provide database_name config param")
-		}
+	if !viper.IsSet("database_name") {
+		log.Fatal("please provide database_name config param")
+	}
 
-		if !viper.IsSet("database_password") {
-			log.Fatal("please provide database_password config param")
-		}
+	if !viper.IsSet("database_password") {
+		log.Fatal("please provide database_password config param")
+	}
 
-		if !viper.IsSet("database_port") {
-			log.Fatal("please provide database_port config param")
-		}
+	if !viper.IsSet("database_port") {
+		log.Fatal("please provide database_port config param")
+	}
 
-		if !viper.IsSet("database_ssl_mode") {
-			log.Fatal("please provide database_ssl_mode config param")
-		}
-	} else {
-		if !viper.IsSet("sqlite_db_path") {
-			log.Fatal("please provide sqlite_db_path config param")
-		}
+	if !viper.IsSet("database_ssl_mode") {
+		log.Fatal("please provide database_ssl_mode config param")
 	}
 
 	if !viper.IsSet("kavach_url") {
@@ -88,5 +82,5 @@ func SearchEnabled() bool {
 }
 
 func Sqlite() bool {
-	return viper.IsSet("use_sqlite") && viper.GetBool("use_sqlite")
+	return viper.IsSet("use_sqlite") && viper.GetBool("use_sqlite") && false
 }

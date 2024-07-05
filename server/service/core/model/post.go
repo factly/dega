@@ -124,5 +124,6 @@ func (pa *PostAuthor) BeforeCreate(tx *gorm.DB) error {
 
 	pa.CreatedByID = uID
 	pa.UpdatedByID = uID
+	pa.ID = uuid.New()
 	return nil
 }
