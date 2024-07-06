@@ -69,6 +69,38 @@ func (space *Space) BeforeCreate(tx *gorm.DB) error {
 	return nil
 }
 
+// BeforeCreate hook
+func (su *SpaceUser) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(spaceUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(string)
+
+	su.CreatedByID = uID
+	su.UpdatedByID = uID
+	su.ID = uuid.New()
+	return nil
+}
+
+// BeforeCreate hook
+func (st *SpaceToken) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(spaceUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(string)
+
+	st.CreatedByID = uID
+	st.UpdatedByID = uID
+	st.ID = uuid.New()
+	return nil
+}
+
 func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 	if space.LogoID != nil && *space.LogoID != uuid.Nil {
 

@@ -86,3 +86,18 @@ func (episode *Episode) BeforeCreate(tx *gorm.DB) error {
 	episode.ID = uuid.New()
 	return nil
 }
+
+func (ea *EpisodeAuthor) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(episodeUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(string)
+
+	ea.CreatedByID = uID
+	ea.UpdatedByID = uID
+	ea.ID = uuid.New()
+	return nil
+}
