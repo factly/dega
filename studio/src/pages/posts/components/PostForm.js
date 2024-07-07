@@ -432,11 +432,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                         id="is_featured"
                         style={{ marginBottom: '8px' }}
                       >
-                        <Switch defaultChecked onChange={() => console.log('checked')} />
+                        <Switch defaultChecked />
                         <label htmlFor="is_featured"> Mark as Featured </label>
                       </Form.Item>
                       <Form.Item name="is_exclude_from_homepage" id="is_exclude_from_homepage">
-                        <Switch defaultChecked onChange={() => console.log('checked')} />
+                        <Switch defaultChecked />
                         <label htmlFor="is_exclude_from_homepage"> Exclude from Homepage </label>
                       </Form.Item>
                     </Collapse.Panel>
@@ -662,7 +662,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 closable={true}
                 onClose={() => setSeoDrawerVisible(false)}
                 visible={seoDrawer}
-                //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
                 width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}

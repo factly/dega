@@ -3,7 +3,6 @@ import { Space, List, Card } from 'antd';
 import { Link } from 'react-router-dom';
 
 function MediumList({ data, filters, setFilters }) {
-  console.log('data', data);
   return (
     <Space direction={'vertical'}>
       <List

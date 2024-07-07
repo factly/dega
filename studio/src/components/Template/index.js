@@ -80,7 +80,6 @@ function Template({ format }) {
   };
 
   const handleChange = (nextkeys) => {
-    console.log(nextkeys);
     if (nextkeys.includes('1')) {
       setShow(true);
       return;

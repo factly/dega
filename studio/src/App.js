@@ -47,7 +47,6 @@ function App() {
   });
 
   useEffect(() => {
-    console.log('fetching formats');
     fetchFormats();
   }, [dispatch, selected, reloadFlag]);
 

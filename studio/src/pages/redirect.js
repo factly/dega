@@ -11,7 +11,6 @@ const Callback = ({ authenticated, setAuth, userManager, handleLogout }) => {
           if (user) {
             setAuth(true);
             setUserInfo(user);
-            console.log('user', user);
             setCookie(user.access_token, user.expires_at);
           } else {
             setAuth(false);
@@ -41,11 +40,7 @@ const Callback = ({ authenticated, setAuth, userManager, handleLogout }) => {
   const setCookie = (value, expiryTime) => {
     const date = new Date(expiryTime);
     const expires = `expires=${date.toUTCString()}`;
-
-    console.log('cookie', value, date, expires);
     document.cookie = `x-user-token=${value};${expires};path=/;HttpOnly`;
-
-    console.log('cookie', document.cookie);
   };
 
   if (authenticated === true && userInfo) {

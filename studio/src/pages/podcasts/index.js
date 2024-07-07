@@ -85,7 +85,6 @@ function Podcasts({ permission }) {
     const node = state.podcasts.req.find((item) => {
       return deepEqual(item.query, params);
     });
-    console.log('node', state.podcasts);
 
     if (node)
       return {
