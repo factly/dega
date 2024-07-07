@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Card, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ClipBoardCopy from '../../../utils/clipboardClick';
 import { addSpaceToken } from '../../../actions/tokens';
 
@@ -28,7 +28,7 @@ const CreateSpaceTokenForm = () => {
   };
 
   const handleOk = () => {
-    navigate('/settings/spaces/tokens');
+    navigate('/settings/advanced/tokens');
   };
 
   return (
@@ -39,10 +39,6 @@ const CreateSpaceTokenForm = () => {
         gap: '20px',
       }}
     >
-      <Link key="1" to={`/settings/advanced/tokens`}>
-        <Button type="primary">Back to Tokens</Button>
-      </Link>
-
       <Card
         title={`Create Space Token`}
         style={{

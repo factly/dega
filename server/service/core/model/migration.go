@@ -13,6 +13,7 @@ func Migration() {
 		&PostAuthor{},
 		&Space{},
 		&SpaceUser{},
+		&SpaceToken{},
 		&Menu{},
 		&Policy{},
 		&PolicyUser{},

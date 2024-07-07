@@ -63,15 +63,6 @@ export default function ViewPolicy() {
             {policy?.description}
           </Descriptions.Item>
           <br />
-          <Descriptions.Item label="Roles" span={span}>
-            {policy?.roles.map((role) => {
-              return (
-                <Tag key={role.id} color="blue">
-                  {role?.name}
-                </Tag>
-              );
-            })}
-          </Descriptions.Item>
         </Descriptions>
       )}
       <Divider />

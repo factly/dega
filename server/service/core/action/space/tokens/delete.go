@@ -1,6 +1,7 @@
 package tokens
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -15,14 +16,13 @@ import (
 )
 
 func delete(w http.ResponseWriter, r *http.Request) {
-	_, err := util.GetUser(r.Context())
+	userID, err := util.GetUser(r.Context())
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
-	sID := chi.URLParam(r, "space_id")
-	spaceID, err := uuid.Parse(sID)
+	spaceID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
@@ -64,13 +64,17 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, userID)).Begin()
+
 	//deleting the token
-	err = config.DB.Delete(&token).Error
+	err = tx.Delete(&token).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
+
+	tx.Commit()
 
 	renderx.JSON(w, http.StatusOK, nil)
 }

@@ -29,9 +29,6 @@ function EditPolicy() {
           (obj, item) => Object.assign(obj, { [item.resource]: item.actions }),
           {},
         ),
-        roles: state.policies.details[id].roles?.length
-          ? state.policies.details[id].roles.map((item) => item.id)
-          : [],
       },
       loading: state.policies.loading,
     };

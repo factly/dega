@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'antd/dist/reset.css';
 
 //Routes
-import routes, { extractV6RouteObject } from './config/routesConfig';
+import { extractV6RouteObject } from './config/routesConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
@@ -88,13 +88,11 @@ function App() {
   }, [authenticated]);
 
   const fetchFormats = () => {
-    console.log('fetching formats', selected);
     if (selected !== '') dispatch(getFormats({ space_id: selected }));
   };
 
   const router = createBrowserRouter(
     extractV6RouteObject(
-      routes,
       formats,
       setReloadFlag,
       reloadFlag,

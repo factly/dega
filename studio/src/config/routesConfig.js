@@ -72,10 +72,6 @@ import Policies from '../pages/policies';
 import CreatePolicy from '../pages/policies/CreatePolicy';
 import EditPolicy from '../pages/policies/EditPolicy';
 
-//Roles
-import Roles from '../pages/roles';
-import CreateRole from '../pages/roles/CreateRole';
-
 //Fact Checks
 import GoogleFactCheck from '../pages/fact-checks/GoogleFactCheck';
 import Factly from '../pages/fact-checks/Factly';
@@ -126,8 +122,6 @@ import Members from '../pages/members';
 //Reindex
 import Reindex from '../pages/spaces/Reindex';
 import ViewPolicy from '../pages/policies/components/ViewPolicy';
-import RoleUsers from '../pages/roles/users';
-import EditRole from '../pages/roles/EditRole';
 import BasicLayout from '../layouts/basic';
 import ProtectedRoute from '../components/ProtectedRoute';
 import AdminRoute from '../components/AdminRoute';
@@ -136,7 +130,6 @@ import Tokens from '../pages/tokens';
 import CreateSpaceTokenForm from '../pages/tokens/components/CreateToken';
 
 export function extractV6RouteObject(
-  routes,
   formats,
   setReloadFlag,
   reloadFlag,
@@ -391,24 +384,6 @@ const routes = {
     Component: Policies,
     title: 'Policies',
   },
-  roles: {
-    path: '/settings/members/roles',
-    menuKey: '/members',
-    Component: Roles,
-    title: 'Roles',
-  },
-  roleEdit: {
-    path: '/settings/members/roles/:id/edit',
-    Component: EditRole,
-    menuKey: '/members/roles/edit',
-    title: 'Edit Role',
-  },
-  roleUsers: {
-    path: '/settings/members/roles/:roleID/users',
-    menuKey: '/members',
-    Component: RoleUsers,
-    title: 'Role Users',
-  },
   createPolicy: {
     path: '/settings/members/policies/create',
     menuKey: '/members',
@@ -424,16 +399,6 @@ const routes = {
     menuKey: '/members',
     Component: ViewPolicy,
     title: 'Policy',
-  },
-  createRole: {
-    path: '/settings/members/roles/create',
-    menuKey: '/members',
-    Component: CreateRole,
-    title: 'New Role',
-    // permission: {
-    //   resource: 'policies',
-    //   action: 'create',
-    // },
   },
   editPolicy: {
     path: '/settings/members/policies/:id/edit',

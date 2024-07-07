@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/util/zitadel"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
 
@@ -39,6 +40,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	offset, limit := paginationx.Parse(r.URL.Query())
+
 	// Get organisation ID
 	spaceUsers := make([]model.SpaceUser, 0)
 
@@ -46,7 +49,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	err = config.DB.Model(&model.SpaceUser{}).Where(&model.SpaceUser{
 		SpaceID: sID,
-	}).Count(&result.Total).Find(&spaceUsers).Error
+	}).Count(&result.Total).Limit(limit).Offset(offset).Find(&spaceUsers).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -69,12 +72,17 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	users := make([]user, 0)
 
-	for _, u := range res {
-		users = append(users, user{
-			ID:          u.ID,
-			DisplayName: u.Human.Profile.DisplayName,
-			Email:       u.Human.Email.Email,
-		})
+	for _, id := range uIDs {
+		for _, u := range res {
+			if u.ID == id {
+				users = append(users, user{
+					ID:          u.ID,
+					DisplayName: u.Human.Profile.DisplayName,
+					Email:       u.Human.Email.Email,
+				})
+				break
+			}
+		}
 	}
 
 	result.Nodes = users

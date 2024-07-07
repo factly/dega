@@ -87,7 +87,6 @@ const settings = [
     name: 'Members',
     component: Members,
     children: [
-      // user policies and roles here
       {
         name: 'Users',
         keywords: ['members'],

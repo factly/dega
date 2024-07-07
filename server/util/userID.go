@@ -52,7 +52,7 @@ func CheckUser(zitadelInterceptor *zitadelMiddleware.Interceptor[*oauth.Introspe
 
 			space := model.Space{}
 
-			if !(tokens[1] == "spaces" && len(tokens) == 2 && (r.Method == http.MethodPost || r.Method == http.MethodGet)) {
+			if !((r.Method == http.MethodPost && tokens[1] == "spaces" && len(tokens) == 2) || (r.Method == http.MethodGet && tokens[1] == "spaces" && tokens[2] == "my")) {
 				spaceId := r.Header.Get("X-Space")
 				if spaceId == "" {
 					loggerx.Error(errors.New("space id not found"))

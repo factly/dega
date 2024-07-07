@@ -1,31 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Popconfirm, Button, Table } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { DeleteOutlined } from '@ant-design/icons';
 import { deleteSpaceToken, getSpaceTokens } from '../../../actions/tokens';
+import deepEqual from 'deep-equal';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Loader from '../../../components/Loader';
 
 export default function TokenList({ role = 'owner' }) {
   const dispatch = useDispatch();
-  const fetchTokens = () => {
-    dispatch(getSpaceTokens());
-  };
+  const query = new URLSearchParams(useLocation().search);
+  const pathname = useLocation().pathname;
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+  });
+  const navigate = useNavigate();
 
-  const onDelete = (id) => {
-    dispatch(deleteSpaceToken(id)).then(() => dispatch(getSpaceTokens()));
-  };
+  const { tokens, total, loading } = useSelector(({ tokens }) => {
+    const node = tokens.req.find((item) => {
+      return deepEqual(item.query, { page: query.get('page'), limit: query.get('limit') });
+    });
 
-  React.useEffect(() => {
+    if (node)
+      return {
+        tokens: node.data.map((element) => tokens.details[element]),
+        total: node.total,
+        loading: tokens.loading,
+      };
+    return { tokens: [], total: 0, loading: tokens.loading };
+  });
+
+  useEffect(() => {
+    navigate(pathname + '?' + new URLSearchParams(filters).toString());
+  }, [filters, pathname, navigate]);
+
+  useEffect(() => {
     fetchTokens();
     // eslint-disable-next-line
   }, [dispatch]);
 
-  const { tokens } = useSelector((state) => {
-    var tokens = [];
-    tokens = state.spaces.details[state.spaces.selected]?.tokens || [];
-    return {
-      tokens,
-    };
-  });
+  const onDelete = (id) => {
+    dispatch(deleteSpaceToken(id)).then(() => dispatch(getSpaceTokens(filters)));
+  };
+
+  const fetchTokens = () => {
+    dispatch(getSpaceTokens(filters));
+  };
 
   const columns = [
     {
@@ -59,7 +80,22 @@ export default function TokenList({ role = 'owner' }) {
     },
   ];
 
-  return (
-    <Table bordered columns={columns} dataSource={tokens} rowKey={'id'} style={{ width: '78vw' }} />
+  return loading ? (
+    <Loader />
+  ) : (
+    <Table
+      bordered
+      loading={loading}
+      columns={columns}
+      dataSource={tokens}
+      rowKey={'id'}
+      pagination={{
+        total: total,
+        current: filters.page,
+        pageSize: filters.limit,
+        onChange: (pageNumber, pageSize) =>
+          setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+      }}
+    />
   );
 }

@@ -1,6 +1,7 @@
 package tokens
 
 import (
+	"context"
 	"crypto/rand"
 	"encoding/json"
 	"errors"
@@ -9,31 +10,29 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/google/uuid"
 
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
-	"github.com/go-chi/chi"
 )
 
 func create(w http.ResponseWriter, r *http.Request) {
 	userID, err := util.GetUser(r.Context())
 	if err != nil {
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	sID := chi.URLParam(r, "space_id")
-	spaceID, err := uuid.Parse(sID)
+	spaceID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	spaceToken := &model.SpaceToken{}
+	spaceToken := &spaceToken{}
 	err = json.NewDecoder(r.Body).Decode(&spaceToken)
 	if err != nil {
 		loggerx.Error(err)
@@ -62,23 +61,29 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	spaceToken = &model.SpaceToken{}
-
-	spaceToken.SpaceID = spaceID
-	spaceToken.Token, err = GenerateSecretToken()
+	result := &model.SpaceToken{}
+	result.Name = spaceToken.Name
+	result.Description = spaceToken.Description
+	result.SpaceID = spaceID
+	result.Token, err = GenerateSecretToken()
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-	spaceToken.CreatedByID = userID
-	err = config.DB.Model(&model.SpaceToken{}).Create(&spaceToken).Error
+
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, userID)).Begin()
+
+	err = tx.Model(&model.SpaceToken{}).Create(&result).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
+
+	tx.Commit()
+
 	response := map[string]interface{}{
-		"token": spaceToken.Token,
+		"token": result.Token,
 	}
 	renderx.JSON(w, http.StatusOK, response)
 }

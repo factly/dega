@@ -30,8 +30,9 @@ import webhooks from './webhooksReducer';
 import profile from './profileReducer';
 import search from './searchReducer';
 import sachFactChecks from './sachFactChecksReducer';
-import roles from './rolesReducer';
 import webhooklogs from './webhooklogsReducer';
+import tokens from './tokensReducer';
+import spaceUsers from './spaceUsersReducer';
 
 const appReducer = combineReducers({
   info,
@@ -65,7 +66,8 @@ const appReducer = combineReducers({
   profile,
   search,
   sachFactChecks,
-  roles,
+  tokens,
+  spaceUsers,
 });
 
 const rootReducer = (state, action) => {

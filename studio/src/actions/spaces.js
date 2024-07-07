@@ -3,29 +3,28 @@ import {
   GET_SPACES_SUCCESS,
   ADD_SPACE_SUCCESS,
   LOADING_SPACES,
-  API_ADD_SPACE,
-  API_GET_SPACES,
-  API_DELETE_SPACE,
-  API_UPDATE_SPACE,
+  API_SPACES,
   SET_SELECTED_SPACE,
   DELETE_SPACE_SUCCESS,
   UPDATE_SPACE_SUCCESS,
-  ADD_SPACE_USERS,
 } from '../constants/spaces';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 
 export const getSpaces = () => {
   return (dispatch) => {
-    dispatch(loadingSpaces());
+    dispatch(loadingSpaces(true));
     return axios
-      .get(API_GET_SPACES)
+      .get(API_SPACES + '/my')
       .then((response) => {
         dispatch(getSpacesSuccess(response.data));
         return response.data;
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+      })
+      .finally(() => {
+        dispatch(loadingSpaces(false));
       });
   };
 };
@@ -42,81 +41,61 @@ export const setSelectedSpace = (space) => {
 
 export const addSpace = (data) => {
   return (dispatch) => {
-    dispatch(loadingSpaces());
+    dispatch(loadingSpaces(true));
     return axios
-      .post(API_ADD_SPACE, data)
+      .post(API_SPACES, data)
       .then((response) => {
         dispatch(addSpaceSuccess(response.data));
         dispatch(addSuccessNotification('Space added'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+      })
+      .finally(() => {
+        dispatch(loadingSpaces(false));
       });
   };
 };
 
 export const deleteSpace = (id) => {
   return (dispatch) => {
-    dispatch(loadingSpaces());
+    dispatch(loadingSpaces(true));
     return axios
-      .delete(API_DELETE_SPACE + '/' + id)
+      .delete(API_SPACES)
       .then(() => {
         dispatch(deleteSpaceSuccess(id));
         dispatch(addSuccessNotification('Space deleted'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+      })
+      .finally(() => {
+        dispatch(loadingSpaces(false));
       });
   };
 };
 
 export const updateSpace = (data) => {
   return (dispatch) => {
-    dispatch(loadingSpaces());
+    dispatch(loadingSpaces(true));
     return axios
-      .put(API_UPDATE_SPACE + '/' + data.id, data)
+      .put(API_SPACES, data)
       .then((response) => {
         dispatch(updateSpaceSuccess(response.data));
         dispatch(addSuccessNotification('Space updated'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
-      });
-  };
-};
-
-export const getSpaceUsers = () => {
-  return (dispatch, getState) => {
-    const currentSpaceID = getState().spaces?.selected;
-    dispatch(loadingSpaces());
-    return axios
-      .get(`/core/spaces/${currentSpaceID}/users`)
-      .then((response) => {
-        dispatch(addSpaceUsers(currentSpaceID, response.data.nodes));
       })
-      .catch((error) => {
-        dispatch(addErrorNotification(getError(error)));
+      .finally(() => {
+        dispatch(loadingSpaces(false));
       });
   };
 };
 
-export const updateSpaceUsers = (data) => {
-  return (dispatch, getState) => {
-    const currentSpaceID = getState().spaces?.selected;
-    dispatch(loadingSpaces());
-    return axios
-      .put(`/core/spaces/${currentSpaceID}/users`, data)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        dispatch(addErrorNotification(getError(error)));
-      });
-  };
-};
-
-export const loadingSpaces = () => ({
+export const loadingSpaces = (payload) => ({
   type: LOADING_SPACES,
+  payload,
 });
 
 export const getSpacesSuccess = (spaces) => ({
@@ -137,12 +116,4 @@ export const updateSpaceSuccess = (data) => ({
 export const deleteSpaceSuccess = (id) => ({
   type: DELETE_SPACE_SUCCESS,
   payload: id,
-});
-
-export const addSpaceUsers = (id, data) => ({
-  type: ADD_SPACE_USERS,
-  payload: {
-    id,
-    data,
-  },
 });

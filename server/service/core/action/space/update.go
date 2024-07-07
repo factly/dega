@@ -13,8 +13,6 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
-	"github.com/go-chi/chi"
-	"github.com/google/uuid"
 )
 
 // update - Update space
@@ -37,20 +35,18 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	id, err := util.GetSpace(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+
 	space := space{}
 	err = json.NewDecoder(r.Body).Decode(&space)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-		return
-	}
-
-	spaceId := chi.URLParam(r, "space_id")
-	id, err := uuid.Parse(spaceId)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 

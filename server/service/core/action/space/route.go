@@ -42,14 +42,12 @@ func Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.Post("/", create)
-	r.Get("/", my)
-	r.Route("/{space_id}", func(r chi.Router) {
-		r.Get("/", details)
-		r.Put("/", update)
-		r.Delete("/", delete)
-		r.Mount("/users", users.Router())
-		r.Mount("/tokens", tokens.Router())
-	})
+	r.Get("/my", my)
+	r.Mount("/tokens", tokens.Router())
+	r.Mount("/users", users.Router())
+	r.Get("/", Details)
+	r.Put("/", update)
+	r.Delete("/", delete)
 
 	return r
 }

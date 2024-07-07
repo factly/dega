@@ -1,40 +1,69 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Space, Typography, Table, Form, Button, Row, Col } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
-import { getSpaceUsers, updateSpaceUsers } from '../../actions/spaces';
+import { getSpaceUsers, updateSpaceUsers } from '../../actions/spaceUsers';
 import Selector from '../../components/Selector';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import deepEqual from 'deep-equal';
 
 function Users() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { spaceUsers, loading } = useSelector((state) => {
-    const spaceUsers = state.spaces?.details?.[state.spaces?.selected]?.users?.length
-      ? state.spaces?.details?.[state.spaces?.selected]?.users
-      : [];
-    return {
-      spaceUsers: spaceUsers,
-      loading: state.spaces?.loading,
-    };
+  const query = new URLSearchParams(useLocation().search);
+  const pathname = useLocation().pathname;
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
   });
-  React.useEffect(() => {
+
+  const { spaceUsers, total, loading } = useSelector(({ spaceUsers }) => {
+    console.log(spaceUsers);
+    const node = spaceUsers.req.find((item) => {
+      console.log(item.query, { page: query.get('page'), limit: query.get('limit') });
+      return deepEqual(item.query, { page: query.get('page'), limit: query.get('limit') });
+    });
+
+    if (node)
+      return {
+        spaceUsers: node.data.map((element) => spaceUsers.details[element]),
+        total: node.total,
+        loading: spaceUsers.loading,
+      };
+    return { spaceUsers: [], total: 0, loading: spaceUsers.loading };
+  });
+
+  useEffect(() => {
+    navigate(pathname + '?' + new URLSearchParams(filters).toString());
+  }, [filters, pathname, navigate]);
+
+  useEffect(() => {
     fetchUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUsers = () => {
-    dispatch(getSpaceUsers());
+    dispatch(getSpaceUsers(filters));
   };
 
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      width: '15%',
+      render: (record) => (
+        <Typography.Text style={{ fontSize: '1rem' }} strong>
+          {record}
+        </Typography.Text>
+      ),
+    },
+    {
       title: 'Name',
       dataIndex: 'display_name',
       key: 'name',
-      width: '50%',
+      width: '35%',
       render: (record) => (
         <Typography.Text style={{ fontSize: '1rem' }} strong>
           {record}
@@ -86,6 +115,13 @@ function Users() {
         dataSource={spaceUsers}
         loading={loading}
         rowKey={['record', 'user', 'id']}
+        pagination={{
+          total: total,
+          current: filters.page,
+          pageSize: filters.limit,
+          onChange: (pageNumber, pageSize) =>
+            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+        }}
       />
     </Space>
   );

@@ -5,8 +5,6 @@ import {
   LOADING_SPACES,
   DELETE_SPACE_SUCCESS,
   UPDATE_SPACE_SUCCESS,
-  ADD_SPACE_USERS,
-  ADD_SPACE_TOKENS,
 } from '../constants/spaces';
 
 const initialState = {
@@ -24,7 +22,7 @@ export default function spacesReducer(state = initialState, action = {}) {
     case LOADING_SPACES:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case GET_SPACES_SUCCESS:
       let space_details = {};
@@ -96,25 +94,6 @@ export default function spacesReducer(state = initialState, action = {}) {
       };
     case DELETE_SPACE_SUCCESS:
       return initialState;
-    case ADD_SPACE_USERS:
-      return {
-        ...state,
-        details: {
-          ...state.details,
-          [action.payload.id]: {
-            ...state.details[action.payload.id],
-            users: action.payload.data,
-          },
-        },
-      };
-    case ADD_SPACE_TOKENS:
-      return {
-        ...state,
-        details: {
-          ...state.details,
-          [action.payload.id]: { ...state.details[action.payload.id], ...action.payload },
-        },
-      };
     default:
       return state;
   }

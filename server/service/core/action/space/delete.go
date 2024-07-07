@@ -1,8 +1,6 @@
 package space
 
 import (
-	//	"encoding/json"
-
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -11,8 +9,6 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
-	"github.com/go-chi/chi"
-	"github.com/google/uuid"
 )
 
 // delete - Delete space
@@ -28,8 +24,7 @@ import (
 // @Success 200
 // @Router /core/spaces/{space_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
-	spaceID := chi.URLParam(r, "space_id")
-	sID, err := uuid.Parse(spaceID)
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
