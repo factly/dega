@@ -3,7 +3,6 @@ package claimant
 import (
 	"time"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -25,15 +24,13 @@ type claimant struct {
 	FooterCode  string         `json:"footer_code"`
 }
 
-var userContext config.ContextKey = "claimant_user"
-
 // Router - Group of claimant router
 func Router() chi.Router {
 	r := chi.NewRouter()
 
 	entity := "claimants"
 
-	r.With(util.CheckEntityAccess(entity, "get")).Get("/", list)
+	r.With(util.CheckEntityAccess(entity, "get")).Get("/", List)
 	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
 
 	r.Route("/{claimant_id}", func(r chi.Router) {

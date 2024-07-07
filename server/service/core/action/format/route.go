@@ -32,7 +32,7 @@ func Router() chi.Router {
 
 	entity := "formats"
 
-	r.With(util.CheckEntityAccess(entity, "get")).Get("/", list)
+	r.With(util.CheckEntityAccess(entity, "get")).Get("/", List)
 	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
 	r.With(util.CheckEntityAccess(entity, "create")).Post("/default", createDefaults)
 

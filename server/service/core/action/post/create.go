@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
@@ -37,26 +36,14 @@ import (
 // @Router /core/posts [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	post := post{}
 
@@ -84,7 +71,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		isAllowed, e := util.CheckSpaceEntityPermission(sID, uID, "posts", "publish", orgRole)
+		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "publish", orgRole)
 		if !isAllowed {
 
 			errorx.Render(w, errorx.Parser(e))
@@ -100,7 +87,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		status = "ready"
 	}
 
-	post.SpaceID = sID
+	post.SpaceID = authCtx.SpaceID
 
 	result, errMessage := createPost(r.Context(), post, status, r)
 
@@ -117,13 +104,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factCheckModel.Claim, 0)
 
-	sID, err := util.GetSpace(ctx)
-	if err != nil {
-		loggerx.Error(err)
-		return nil, errorx.Unauthorized()
-	}
-
-	uID, err := util.GetUser(ctx)
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.Unauthorized()
@@ -169,7 +150,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 			UpdatedAt: post.UpdatedAt,
 		},
 		Title:            post.Title,
-		Slug:             util.ApproveSlug(postSlug, sID, tableName),
+		Slug:             util.ApproveSlug(postSlug, authCtx.SpaceID, tableName),
 		Status:           status,
 		IsPage:           post.IsPage,
 		Subtitle:         post.Subtitle,
@@ -184,7 +165,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		HeaderCode:       post.HeaderCode,
 		FooterCode:       post.FooterCode,
 		MetaFields:       post.MetaFields,
-		SpaceID:          sID,
+		SpaceID:          authCtx.SpaceID,
 		DescriptionAMP:   post.DescriptionAMP,
 		MigratedHTML:     post.MigratedHTML,
 		Language:         post.Language,
@@ -212,7 +193,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, userContext, authCtx.UserID)).Begin()
 
 	err = tx.Model(&model.Post{}).Create(&result.Post).Error
 
@@ -253,9 +234,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		}
 	}
 
-	// Adding author
-	authors, err := author.All(ctx)
-
+	authors, err := util.GetAuthors(authCtx.OrganisationID, post.AuthorIDs)
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.InternalServerError()
@@ -279,7 +258,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Order("numeric_value asc").Find(&ratings)
 
 	postData := PostData{
@@ -369,7 +348,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("post.created", sID.String(), r) {
+		if util.CheckWebhookEvent("post.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("post.created", result); err != nil {
 				return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
 			}
@@ -377,7 +356,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		}
 
 		if result.Post.Status == "publish" {
-			if util.CheckWebhookEvent("post.published", sID.String(), r) {
+			if util.CheckWebhookEvent("post.published", authCtx.SpaceID.String(), r) {
 				if err = util.NC.Publish("post.published", result); err != nil {
 					return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
 				}

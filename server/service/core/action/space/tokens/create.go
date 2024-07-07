@@ -18,14 +18,7 @@ import (
 )
 
 func create(w http.ResponseWriter, r *http.Request) {
-	userID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	spaceID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -51,7 +44,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	//check if user is part of space or not
 	err = config.DB.Model(&model.Space{}).Where(&model.Space{
 		Base: config.Base{
-			ID: spaceID,
+			ID: authCtx.SpaceID,
 		},
 	}).First(&space).Error
 
@@ -64,14 +57,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.SpaceToken{}
 	result.Name = spaceToken.Name
 	result.Description = spaceToken.Description
-	result.SpaceID = spaceID
+	result.SpaceID = authCtx.SpaceID
 	result.Token, err = GenerateSecretToken()
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, userID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 
 	err = tx.Model(&model.SpaceToken{}).Create(&result).Error
 	if err != nil {

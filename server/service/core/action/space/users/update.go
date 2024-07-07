@@ -17,33 +17,14 @@ import (
 var userContext config.ContextKey = "space_user"
 
 func update(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	oID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	if orgRole != "admin" {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -58,7 +39,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), oID, req.IDs)
+	users, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, req.IDs)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -71,13 +52,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 
 	spaceUsers := make([]model.SpaceUser, 0)
 
 	for _, user := range users {
 		spaceUsers = append(spaceUsers, model.SpaceUser{
-			SpaceID: sID,
+			SpaceID: authCtx.SpaceID,
 			UserID:  user.ID,
 		})
 	}

@@ -34,7 +34,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -43,7 +43,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	ratingService := service.GetRatingService()
 
-	result, err := ratingService.GetById(sID, id)
+	result, err := ratingService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))

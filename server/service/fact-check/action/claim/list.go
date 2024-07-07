@@ -39,15 +39,14 @@ type paging struct {
 // @Param page query string false "page number"
 // @Success 200 {Object} paging
 // @Router /fact-check/claims [get]
-func list(w http.ResponseWriter, r *http.Request) {
+func List(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
-
 	// Filters
 	u, _ := url.Parse(r.URL.String())
 	queryMap := u.Query()
@@ -61,7 +60,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 	claimService := service.GetClaimService()
-	result, serviceErr := claimService.List(sID, offset, limit, searchQuery, sort, queryMap)
+	result, serviceErr := claimService.List(authCtx.SpaceID, offset, limit, searchQuery, sort, queryMap)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

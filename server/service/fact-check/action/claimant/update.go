@@ -35,14 +35,7 @@ import (
 // @Router /fact-check/claimants/{claimant_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -84,7 +77,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Base: config.Base{
 			ID: id,
 		},
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).First(&result).Error
 
 	if err != nil {
@@ -103,13 +96,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if result.Slug == claimant.Slug {
 		claimantSlug = result.Slug
 	} else if claimant.Slug != "" && util.CheckSlug(claimant.Slug) {
-		claimantSlug = util.ApproveSlug(claimant.Slug, sID, tableName)
+		claimantSlug = util.ApproveSlug(claimant.Slug, authCtx.SpaceID, tableName)
 	} else {
-		claimantSlug = util.ApproveSlug(util.MakeSlug(claimant.Name), sID, tableName)
+		claimantSlug = util.ApproveSlug(util.MakeSlug(claimant.Name), authCtx.SpaceID, tableName)
 	}
 
 	// Check if claimant with same name exist
-	if claimant.Name != result.Name && util.CheckName(sID, claimant.Name, tableName) {
+	if claimant.Name != result.Name && util.CheckName(authCtx.SpaceID, claimant.Name, tableName) {
 		loggerx.Error(errors.New(`claimant with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
@@ -137,7 +130,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	updateMap := map[string]interface{}{
 		"created_at":       claimant.CreatedAt,
 		"updated_at":       claimant.UpdatedAt,
-		"updated_by_id":    uID,
+		"updated_by_id":    authCtx.UserID,
 		"name":             claimant.Name,
 		"slug":             claimantSlug,
 		"description":      jsonDescription,
@@ -188,7 +181,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("claimant.updated", sID.String(), r) {
+		if util.CheckWebhookEvent("claimant.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("claimant.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

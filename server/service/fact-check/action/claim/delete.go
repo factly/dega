@@ -24,7 +24,7 @@ import (
 // @Router /fact-check/claims/{claim_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -42,13 +42,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	claimantService := service.GetClaimService()
 
-	result, serviceErr := claimantService.GetById(sID, id)
+	result, serviceErr := claimantService.GetById(authCtx.SpaceID, id)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
 	}
 
-	serviceErr = claimantService.Delete(sID, id)
+	serviceErr = claimantService.Delete(authCtx.SpaceID, id)
 
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
@@ -60,7 +60,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("claim.deleted", sID.String(), r) {
+		if util.CheckWebhookEvent("claim.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("claim.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

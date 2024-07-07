@@ -41,7 +41,7 @@ func Router() chi.Router {
 
 	entity := "claims"
 
-	r.With(util.CheckEntityAccess(entity, "get")).Get("/", list)
+	r.With(util.CheckEntityAccess(entity, "get")).Get("/", List)
 	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
 
 	r.Route("/{claim_id}", func(r chi.Router) {

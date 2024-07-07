@@ -2,7 +2,6 @@ package webhook
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/service/core/model"
@@ -33,24 +32,17 @@ type paging struct {
 // @Router /core/webhooks [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + fmt.Sprint(sID) + "/?tag=app:dega&tag=space:" + fmt.Sprint(sID) + "&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
+	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + authCtx.SpaceID.String() + "/?tag=app:dega&tag=space:" + authCtx.SpaceID.String() + "&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
 
 	resp, err := requestx.Request("GET", hukzURL, nil, map[string]string{
-		"X-User": fmt.Sprint(uID),
+		"X-User": authCtx.UserID,
 	})
 	if err != nil {
 		loggerx.Error(err)

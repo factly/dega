@@ -23,17 +23,17 @@ import (
 // @Success 200 {object} model.Space
 // @Router /core/spaces/{space_id} [get]
 func Details(w http.ResponseWriter, r *http.Request) {
-	spaceID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
 	result := model.Space{}
 	err = config.DB.Model(&model.Space{}).Where(&model.Space{
 		Base: config.Base{
-			ID: spaceID,
+			ID: authCtx.SpaceID,
 		},
 	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
 

@@ -35,7 +35,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -45,7 +45,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	hukzURL := viper.GetString("hukz_url") + "/webhooks/" + fmt.Sprint(id)
 
 	resp, err := requestx.Request("DELETE", hukzURL, nil, map[string]string{
-		"X-User": fmt.Sprint(uID),
+		"X-User": authCtx.UserID,
 	})
 	if err != nil {
 		loggerx.Error(err)

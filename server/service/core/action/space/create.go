@@ -28,7 +28,7 @@ import (
 // @Success 201 {object} model.Space
 // @Router /core/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -50,10 +50,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, validationError)
 		return
 	}
-
+	orgRole := authCtx.OrgRole
 	// check if user is admin of the organisation or not
-	orgRole := util.GetOrgRole(config.ZitadelInterceptor.Context(r.Context()).Claims, space.OrganisationID)
-
 	if orgRole != "admin" {
 		if orgRole == "member" {
 			loggerx.Error(errors.New("user is not admin of the organisation"))
@@ -97,7 +95,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		result.MobileIconID = space.MobileIconID
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 
 	err = tx.Model(&model.Space{}).Create(result).Error
 	if err != nil {

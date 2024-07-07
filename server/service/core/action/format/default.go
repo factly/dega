@@ -31,14 +31,7 @@ var DataFile = "./data/formats.json"
 // @Failure 400 {array} string
 // @Router /core/formats/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -64,9 +57,9 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 	for i := range formats {
-		formats[i].SpaceID = sID
+		formats[i].SpaceID = authCtx.SpaceID
 		err := tx.Model(&model.Format{}).FirstOrCreate(&formats[i], &formats[i]).Error
 		if err != nil {
 			loggerx.Error(err)

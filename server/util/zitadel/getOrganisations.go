@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 
@@ -42,11 +41,8 @@ type InUserIdsQuery struct {
 }
 
 func GetOrganisations(token string) []Result {
-
-	// TODO: Use the following endpoint to get organisations in project of a user only if there are any authorizations/grants in an organisation
-	// auth/v1/global/projectorgs/_search
 	// to get organisations in project of a user only if there are any authorizations/grants in an organisation
-	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/admin/v1/orgs/_search"
+	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/auth/v1/global/projectorgs/_search"
 	method := "POST"
 
 	payload := ZitadelQueryPayload{
@@ -66,8 +62,6 @@ func GetOrganisations(token string) []Result {
 		loggerx.Error(err)
 		return []Result{}
 	}
-
-	log.Println("Bearer Token", getBearerToken(token))
 
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Accept", "application/json")

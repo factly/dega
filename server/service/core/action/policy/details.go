@@ -35,30 +35,14 @@ func details(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
-
-	spaceID, err := util.GetSpace(r.Context())
-
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	organisationID, err := util.GetOrganisation(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	if orgRole != "admin" {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -70,7 +54,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = config.DB.Model(&model.Policy{}).Where(&model.Policy{
-		SpaceID: spaceID,
+		SpaceID: authCtx.SpaceID,
 	}).First(&policy).Error
 
 	if err != nil {
@@ -109,7 +93,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		uIDs = append(uIDs, policyUser.UserID)
 	}
 
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorisation"), organisationID, uIDs)
+	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorisation"), authCtx.OrganisationID, uIDs)
 
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

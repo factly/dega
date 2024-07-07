@@ -2,9 +2,7 @@ package webhook
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
@@ -13,6 +11,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/requestx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 	"github.com/spf13/viper"
 )
 
@@ -35,7 +34,7 @@ type logPaging struct {
 // @Router /core/webhooks/logs [get]
 func logs(w http.ResponseWriter, r *http.Request) {
 	webhookID := chi.URLParam(r, "webhook_id")
-	wID, err := strconv.Atoi(webhookID)
+	wID, err := uuid.Parse(webhookID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -43,24 +42,17 @@ func logs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + fmt.Sprint(sID) + "/webhook/" + fmt.Sprint(wID) + "/logs?tag=app:dega&tag=space:" + fmt.Sprint(sID) + "&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
+	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + authCtx.SpaceID.String() + "/webhook/" + wID.String() + "/logs?tag=app:dega&tag=space:" + authCtx.SpaceID.String() + "&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
 
 	resp, err := requestx.Request("GET", hukzURL, nil, map[string]string{
-		"X-User": fmt.Sprint(uID),
+		"X-User": authCtx.UserID,
 	})
 	if err != nil {
 		loggerx.Error(err)

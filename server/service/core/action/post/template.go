@@ -35,14 +35,7 @@ type templateData struct {
 // @Success 200 {object} model.Post
 // @Router /core/posts/templates [post]
 func createTemplate(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -70,7 +63,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 
 	// check of post exist
 	err = config.DB.Where(&model.Post{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
@@ -87,7 +80,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	template.Post.Base = config.Base{}
 	postClaims := make([]factCheckModel.PostClaim, 0)
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 	err = tx.Model(&model.Post{}).Create(&template.Post).Error
 
 	if err != nil {
@@ -176,7 +169,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("post.template.created", sID.String(), r) {
+		if util.CheckWebhookEvent("post.template.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("post.template.created", template); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

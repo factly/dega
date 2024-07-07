@@ -26,7 +26,7 @@ import (
 // @Router /core/formats/{format_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -48,7 +48,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Format{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).First(&result).Error
 
 	if err != nil {
@@ -79,7 +79,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("format.deleted", sID.String(), r) {
+		if util.CheckWebhookEvent("format.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("format.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

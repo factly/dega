@@ -80,6 +80,35 @@ func RegisterRoutes() http.Handler {
 	return r
 }
 
+func RegisterPublicRoutes() http.Handler {
+	r := chi.NewRouter()
+
+	r.Use(middleware.RequestID)
+	r.Use(loggerx.Init())
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.Heartbeat("/ping"))
+
+	sqlDB, _ := config.DB.DB()
+
+	healthx.RegisterRoutes(r, healthx.ReadyCheckers{
+		"database":    sqlDB.Ping,
+		"meilisearch": util.MeiliChecker,
+	})
+
+	r.Use(util.CheckAPIAcess)
+
+	if config.CacheEnabled() {
+		config.SetupCache()
+		r.Use(config.CachingMiddleware, config.RespMiddleware)
+	}
+
+	r.Mount("/core", core.PublicRouter())
+	r.Mount("/fact-check", factCheck.PublicRouter())
+
+	return r
+}
+
 func RegisterFeedsRoutes() http.Handler {
 	r := chi.NewRouter()
 

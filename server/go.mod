@@ -11,6 +11,7 @@ require (
 	github.com/gavv/httpexpect/v2 v2.1.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.2.1
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/google/uuid v1.5.0
 	github.com/gorilla/feeds v1.1.1
 	github.com/jinzhu/gorm v1.9.16

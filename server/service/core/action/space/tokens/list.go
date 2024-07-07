@@ -18,19 +18,14 @@ type paging struct {
 }
 
 func list(w http.ResponseWriter, r *http.Request) {
-	spaceID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot find role in context", http.StatusUnauthorized)))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	if orgRole != "admin" {
 		errorx.Render(w, errorx.Parser(errorx.GetMessage("user is not admin", http.StatusUnauthorized)))
@@ -42,7 +37,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	space := &model.Space{}
 	err = config.DB.Model(&model.Space{}).Where(&model.Space{
 		Base: config.Base{
-			ID: spaceID,
+			ID: authCtx.SpaceID,
 		},
 	}).Find(&space).Error
 
@@ -56,7 +51,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result.Nodes = make([]model.SpaceToken, 0)
 
 	err = config.DB.Model(&model.SpaceToken{}).Where(&model.SpaceToken{
-		SpaceID: spaceID,
+		SpaceID: authCtx.SpaceID,
 	}).Omit("token").Count(&result.Total).Offset(offset).Limit(limit).Order("created_at desc").Find(&result.Nodes).Error
 
 	if err != nil {

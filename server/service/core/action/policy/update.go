@@ -42,37 +42,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	spaceID, err := util.GetSpace(r.Context())
-
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	userID, err := util.GetUser(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	// organisationID, err := util.GetOrganisation(r.Context())
-
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-	// 	return
-	// }
-
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	policyReq := policyReq{}
 
@@ -94,7 +71,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = config.DB.Model(&model.Policy{}).Where(&model.Policy{
-		SpaceID: spaceID,
+		SpaceID: authCtx.SpaceID,
 	}).First(&policy).Error
 
 	if err != nil {
@@ -184,7 +161,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		policyUsersToAdd = append(policyUsersToAdd, policyUser)
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, userID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 
 	// update policy
 	err = tx.Model(&model.Policy{}).Where(&model.Policy{

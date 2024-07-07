@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -46,6 +47,7 @@ var userContext config.ContextKey = "tag_user"
 type ITagService interface {
 	GetById(sID, id uuid.UUID) (model.Tag, error)
 	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
+	PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder string, ids []uuid.UUID, isFeatured bool) (paging, []errorx.Message)
 	Create(ctx context.Context, sID uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message)
 	Update(sID, id uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
@@ -133,6 +135,44 @@ func (ts TagService) List(sID uuid.UUID, offset, limit int, searchQuery, sort st
 		}
 		return result, nil
 	}
+}
+
+func (ts TagService) PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder string, ids []uuid.UUID, isFeatured bool) (paging, []errorx.Message) {
+	result := paging{}
+	result.Nodes = make([]model.Tag, 0)
+
+	columns := []string{"created_at", "updated_at", "name", "slug"}
+	pageSortBy := "created_at"
+	pageSortOrder := "desc"
+
+	if sortOrder != "" && sortOrder == "asc" {
+		pageSortOrder = "asc"
+	}
+
+	if sortBy != "" && arrays.ColumnValidator(sortBy, columns) {
+		pageSortBy = sortBy
+	}
+
+	order := pageSortBy + " " + pageSortOrder
+
+	var tx *gorm.DB
+
+	if len(ids) > 0 {
+		tx = tx.Model(&model.Tag{}).Where(ids)
+	} else {
+		tx = tx.Model(&model.Tag{})
+	}
+
+	if searchQuery != "" {
+		tx = tx.Model(&model.Tag{}).Where("name ILIKE ?", "%"+searchQuery+"%")
+	}
+
+	tx.Where(&model.Tag{
+		SpaceID: sID,
+	}).Preload("Medium").Count(&result.Total).Order(order).Offset(offset).Limit(limit).Find(&result.Nodes)
+
+	return result, nil
+
 }
 
 func (ts TagService) Create(ctx context.Context, sID uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message) {

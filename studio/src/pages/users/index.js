@@ -19,9 +19,7 @@ function Users() {
   });
 
   const { spaceUsers, total, loading } = useSelector(({ spaceUsers }) => {
-    console.log(spaceUsers);
     const node = spaceUsers.req.find((item) => {
-      console.log(item.query, { page: query.get('page'), limit: query.get('limit') });
       return deepEqual(item.query, { page: query.get('page'), limit: query.get('limit') });
     });
 

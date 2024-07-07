@@ -32,14 +32,7 @@ import (
 // @Router /core/categories/{category_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -73,7 +66,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	// check record exists or not
 	categoryService := service.GetCategoryService()
-	_, err = categoryService.GetById(sID, id)
+	_, err = categoryService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -81,14 +74,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	if category.ParentID != uuid.Nil {
 		// Check if parent category exist or not
-		_, err = categoryService.GetById(sID, category.ParentID)
+		_, err = categoryService.GetById(authCtx.SpaceID, category.ParentID)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category does not exist", http.StatusUnprocessableEntity)))
 			return
 		}
 	}
-	result, serviceErr := categoryService.Update(sID, id, uID, category)
+	result, serviceErr := categoryService.Update(authCtx.SpaceID, id, authCtx.UserID, category)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -111,7 +104,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("category.updated", sID.String(), r) {
+		if util.CheckWebhookEvent("category.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("category.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

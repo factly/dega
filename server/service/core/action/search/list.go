@@ -29,7 +29,7 @@ import (
 // @Success 200
 // @Router /core/search [post]
 func list(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -52,7 +52,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	filters := []string{}
-	filters = append(filters, fmt.Sprint("space_id=", sID))
+	filters = append(filters, fmt.Sprint("space_id=", authCtx.SpaceID))
 
 	result, err := config.MeilisearchClient.Index("dega").Search(searchQuery.Query, &meilisearch.SearchRequest{
 		Filter: filters,

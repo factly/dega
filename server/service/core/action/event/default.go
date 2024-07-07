@@ -2,7 +2,6 @@ package event
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -33,7 +32,7 @@ var DataFile = "./data/events.json"
 // @Router /core/events/default [post]
 func defaults(w http.ResponseWriter, r *http.Request) {
 
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -70,7 +69,7 @@ func defaults(w http.ResponseWriter, r *http.Request) {
 		hukzURL := viper.GetString("hukz_url") + "/events"
 
 		resp, err := requestx.Request("POST", hukzURL, events[i], map[string]string{
-			"X-User": fmt.Sprint(uID),
+			"X-User": authCtx.UserID,
 		})
 
 		if err != nil {

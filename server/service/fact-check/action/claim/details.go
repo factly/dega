@@ -25,7 +25,7 @@ import (
 // @Route /fact-check/claims/{claim_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -43,7 +43,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	claimService := service.GetClaimService()
 
-	result, serviceErr := claimService.GetById(sID, id)
+	result, serviceErr := claimService.GetById(authCtx.SpaceID, id)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

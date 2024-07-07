@@ -38,13 +38,12 @@ type paging struct {
 // @Success 200 {array} pageData
 // @Router /core/pages [get]
 func list(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
-
 	// Filters
 	u, _ := url.Parse(r.URL.String())
 	queryMap := u.Query()
@@ -61,7 +60,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Where("is_page = ?", true).Order("de_posts.created_at " + sort)
 
 	formatIDs := make([]uint, 0)
@@ -79,7 +78,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 		if config.SearchEnabled() {
 			if filters != "" {
-				filters = fmt.Sprint(filters, " AND space_id=", sID)
+				filters = fmt.Sprint(filters, " AND space_id=", authCtx.SpaceID)
 			}
 			// Search pages with filter
 			var hits []interface{}

@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
@@ -29,7 +28,7 @@ import (
 // @Router /core/posts/{post_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -54,7 +53,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	result.ID = id
 
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Where("is_page = ?", false).First(&result.Post).Error
 
 	if err != nil {
@@ -73,8 +72,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		// appending all post claims
 		for _, postClaim := range postClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
-			//TODO : fix claim order
-			// result.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
+			result.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
 		}
 	}
 
@@ -83,12 +81,17 @@ func details(w http.ResponseWriter, r *http.Request) {
 		PostID: id,
 	}).Find(&postAuthors)
 
+	authorIDs := make([]string, 0)
+
+	for _, postAuthor := range postAuthors {
+		authorIDs = append(authorIDs, postAuthor.AuthorID)
+	}
+
 	// Adding author
-	authors, err := author.All(r.Context())
+	authors, err := util.GetAuthors(authCtx.OrganisationID, authorIDs)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
 	}
 	for _, postAuthor := range postAuthors {
 		aID := fmt.Sprint(postAuthor.AuthorID)

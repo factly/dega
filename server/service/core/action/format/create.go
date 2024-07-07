@@ -32,14 +32,7 @@ import (
 // @Router /core/formats [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -77,7 +70,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tableName := stmt.Schema.Table
 
 	// Check if format with same name exist
-	if util.CheckName(sID, format.Name, tableName) {
+	if util.CheckName(authCtx.SpaceID, format.Name, tableName) {
 		loggerx.Error(errors.New(`format with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
@@ -92,16 +85,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		},
 		Name:        format.Name,
 		Description: format.Description,
-		Slug:        util.ApproveSlug(formatSlug, sID, tableName),
+		Slug:        util.ApproveSlug(formatSlug, authCtx.SpaceID, tableName),
 		MetaFields:  format.MetaFields,
 		Meta:        format.Meta,
 		HeaderCode:  format.HeaderCode,
 		FooterCode:  format.FooterCode,
-		SpaceID:     sID,
+		SpaceID:     authCtx.SpaceID,
 		MediumID:    mediumID,
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 	err = tx.Model(&model.Format{}).Create(&result).Error
 
 	if err != nil {
@@ -120,7 +113,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("format.created", sID.String(), r) {
+		if util.CheckWebhookEvent("format.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("format.created", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

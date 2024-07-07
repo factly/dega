@@ -20,7 +20,7 @@ const AccountMenu = ({ signOut }) => {
 
   const handleLogout = () => {
     // clear all local storage and cookies
-    localStorage.clear();
+    window.localStorage.clear();
   };
 
   const accountMenu = (

@@ -31,14 +31,7 @@ var DataFile = "./data/ratings.json"
 // @Failure 400 {array} string
 // @Router /fact-check/ratings/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -65,7 +58,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ratingService := service.GetRatingService()
-	result, serviceErr := ratingService.Default(r.Context(), sID, uID, ratings)
+	result, serviceErr := ratingService.Default(r.Context(), authCtx.SpaceID, authCtx.UserID, ratings)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

@@ -28,14 +28,7 @@ import (
 // @Router /podcast/episodes [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -54,7 +47,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	episodeService := service.GetEpisodeService()
 
-	result, serviceErr := episodeService.Create(r.Context(), sID, uID, episode)
+	result, serviceErr := episodeService.Create(r.Context(), authCtx.SpaceID, authCtx.UserID, authCtx.OrganisationID, episode)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -87,7 +80,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("episode.created", sID.String(), r) {
+		if util.CheckWebhookEvent("episode.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("episode.created", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

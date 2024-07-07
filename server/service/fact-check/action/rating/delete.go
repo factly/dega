@@ -25,7 +25,7 @@ import (
 // @Router /fact-check/ratings/{rating_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -47,14 +47,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	ratingService := service.GetRatingService()
 
-	_, err = ratingService.GetById(sID, id)
+	_, err = ratingService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	serviceErr := ratingService.Delete(sID, id)
+	serviceErr := ratingService.Delete(authCtx.SpaceID, id)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -65,7 +65,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "rating")
 	// }
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("rating.deleted", sID.String(), r) {
+		if util.CheckWebhookEvent("rating.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("rating.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

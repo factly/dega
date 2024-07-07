@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
@@ -48,26 +47,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	post := &post{}
 	postAuthors := []model.PostAuthor{}
@@ -97,7 +84,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Claims = make([]factCheckModel.Claim, 0)
 
 	// fetch all authors
-	authors, err := author.All(r.Context())
+	authors, err := util.GetAuthors(authCtx.OrganisationID, post.AuthorIDs)
+
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -109,7 +97,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Base: config.Base{
 			ID: id,
 		},
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Where("is_page = ?", false).First(&result.Post).Error
 	if err != nil {
 		loggerx.Error(err)
@@ -128,9 +116,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if result.Slug == post.Slug {
 		postSlug = result.Slug
 	} else if post.Slug != "" && util.CheckSlug(post.Slug) {
-		postSlug = util.ApproveSlug(post.Slug, sID, tableName)
+		postSlug = util.ApproveSlug(post.Slug, authCtx.SpaceID, tableName)
 	} else {
-		postSlug = util.ApproveSlug(util.MakeSlug(post.Title), sID, tableName)
+		postSlug = util.ApproveSlug(util.MakeSlug(post.Title), authCtx.SpaceID, tableName)
 	}
 
 	var descriptionHTML string
@@ -151,7 +139,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 
 	newTags := make([]model.Tag, 0)
 	if len(post.TagIDs) > 0 {
@@ -182,7 +170,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	updateMap := map[string]interface{}{
 		"created_at":         post.CreatedAt,
 		"updated_at":         post.UpdatedAt,
-		"updated_by_id":      uID,
+		"updated_by_id":      authCtx.UserID,
 		"title":              post.Title,
 		"slug":               postSlug,
 		"subtitle":           post.Subtitle,
@@ -223,7 +211,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	oldStatus := result.Post.Status
 	// Check if post status is changed back to draft or ready from published
 	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready") {
-		isAllowed, e := util.CheckSpaceEntityPermission(sID, uID, "posts", "publish", orgRole)
+		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "publish", orgRole)
 		if !isAllowed {
 			tx.Rollback()
 			errorx.Render(w, errorx.Parser(e))
@@ -240,7 +228,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		isAllowed, e := util.CheckSpaceEntityPermission(sID, uID, "posts", "publish", orgRole)
+		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "publish", orgRole)
 		if !isAllowed {
 			tx.Rollback()
 			errorx.Render(w, errorx.Parser(e))
@@ -383,7 +371,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Order("numeric_value asc").Find(&ratings)
 
 	postData := PostData{
@@ -473,7 +461,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("post.updated", sID.String(), r) {
+		if util.CheckWebhookEvent("post.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("post.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -482,7 +470,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if result.Post.Status == "publish" {
-			if util.CheckWebhookEvent("post.published", sID.String(), r) {
+			if util.CheckWebhookEvent("post.published", authCtx.SpaceID.String(), r) {
 				if err = util.NC.Publish("post.published", result); err != nil {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -491,7 +479,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		if oldStatus == "publish" && (result.Post.Status == "draft" || result.Post.Status == "ready") {
-			if util.CheckWebhookEvent("post.unpublished", sID.String(), r) {
+			if util.CheckWebhookEvent("post.unpublished", authCtx.SpaceID.String(), r) {
 				if err = util.NC.Publish("post.unpublished", result); err != nil {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -500,7 +488,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		if (oldStatus == "publish" || oldStatus == "draft") && result.Post.Status == "ready" {
-			if util.CheckWebhookEvent("post.ready", sID.String(), r) {
+			if util.CheckWebhookEvent("post.ready", authCtx.SpaceID.String(), r) {
 				if err = util.NC.Publish("post.ready", result); err != nil {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

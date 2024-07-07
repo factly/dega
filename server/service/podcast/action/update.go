@@ -30,14 +30,7 @@ import (
 // @Router /podcast/{podcast_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -63,7 +56,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	podcastService := service.GetPodcastService()
 
-	result, serviceErr := podcastService.Update(sID, id, uID, podcast)
+	result, serviceErr := podcastService.Update(authCtx.SpaceID, id, authCtx.UserID, podcast)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -86,7 +79,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("podcast.updated", sID.String(), r) {
+		if util.CheckWebhookEvent("podcast.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("podcast.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

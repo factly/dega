@@ -75,6 +75,25 @@ func SetupVars() {
 		}
 	}
 
+	if CacheEnabled() {
+		if !viper.IsSet("redis_address") {
+			log.Fatal("please provide redis_address config param")
+		}
+
+		if !viper.IsSet("redis_password") {
+			log.Fatal("please provide redis_password config param")
+		}
+
+		if !viper.IsSet("redis_db") {
+			log.Fatal("please provide redis_db config param")
+		}
+
+		if !viper.IsSet("redis_cache_duration") {
+			log.Fatal("please provide redis_cache_duration config param")
+		}
+
+	}
+
 }
 
 func SearchEnabled() bool {
@@ -83,4 +102,8 @@ func SearchEnabled() bool {
 
 func Sqlite() bool {
 	return viper.IsSet("use_sqlite") && viper.GetBool("use_sqlite") && false
+}
+
+func CacheEnabled() bool {
+	return viper.IsSet("enable_cache") && viper.GetBool("enable_cache")
 }

@@ -17,26 +17,15 @@ func CheckEntityAccess(entity, action string) func(h http.Handler) http.Handler 
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()
 
-			sID, err := GetSpace(ctx)
+			authCtx, err := GetAuthCtx(ctx)
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
-			uID, err := GetUser(ctx)
-			if err != nil {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
+			orgRole := authCtx.OrgRole
 
-			orgRole, err := GetOrgRoleFromContext(ctx)
-
-			if err != nil {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			isAllowed, e := CheckSpaceEntityPermission(sID, uID, entity, action, orgRole)
+			isAllowed, e := CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, entity, action, orgRole)
 			if !isAllowed {
 				errorx.Render(w, []errorx.Message{e})
 				return

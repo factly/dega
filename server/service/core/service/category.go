@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/google/uuid"
 
@@ -46,6 +47,7 @@ type pagingCategory struct {
 type ICategoryService interface {
 	GetById(sID, id uuid.UUID) (model.Category, error)
 	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (pagingCategory, []errorx.Message)
+	PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder string, ids []uuid.UUID, isFeatured bool) (pagingCategory, []errorx.Message)
 	Create(ctx context.Context, sID uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message)
 	Update(sID, id uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
@@ -135,6 +137,44 @@ func (cs CategoryService) List(sID uuid.UUID, offset, limit int, searchQuery, so
 		}
 		return result, nil
 	}
+}
+
+func (cs CategoryService) PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder string, ids []uuid.UUID, isFeatured bool) (pagingCategory, []errorx.Message) {
+	result := pagingCategory{}
+	result.Nodes = make([]model.Category, 0)
+
+	columns := []string{"created_at", "updated_at", "name", "slug"}
+	pageSortBy := "created_at"
+	pageSortOrder := "desc"
+
+	if sortOrder != "" && sortOrder == "asc" {
+		pageSortOrder = "asc"
+	}
+
+	if sortBy != "" && arrays.ColumnValidator(sortBy, columns) {
+		pageSortBy = sortBy
+	}
+
+	order := pageSortBy + " " + pageSortOrder
+
+	var tx *gorm.DB
+
+	if len(ids) > 0 {
+		tx = tx.Model(&model.Category{}).Where(ids)
+	} else {
+		tx = tx.Model(&model.Category{})
+	}
+
+	if searchQuery != "" {
+		tx = tx.Model(&model.Category{}).Where("name ILIKE ?", "%"+searchQuery+"%")
+	}
+
+	tx.Where(&model.Category{
+		SpaceID: sID,
+	}).Preload("Medium").Count(&result.Total).Order(order).Offset(offset).Limit(limit).Find(&result.Nodes)
+
+	return result, nil
+
 }
 
 func (cs CategoryService) Create(ctx context.Context, sID uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message) {

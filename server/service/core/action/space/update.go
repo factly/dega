@@ -28,17 +28,10 @@ import (
 // @Success 200 {object} model.Space
 // @Router /core/spaces/{space_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	id, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
@@ -51,7 +44,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Space{
-		Base: config.Base{ID: id},
+		Base: config.Base{ID: authCtx.SpaceID},
 	}
 
 	err = config.DB.Model(&model.Space{}).First(&result).Error
@@ -101,7 +94,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		result.MobileIconID = space.MobileIconID
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.SpaceID)).Begin()
 
 	err = tx.Model(&model.Space{}).Updates(&result).Error
 	if err != nil {

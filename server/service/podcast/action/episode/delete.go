@@ -34,7 +34,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -43,17 +43,17 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	episodeService := service.GetEpisodeService()
 
-	result, serviceErr := episodeService.GetById(r.Context(), sID, id)
+	result, serviceErr := episodeService.GetById(r.Context(), authCtx.SpaceID, id, authCtx.OrganisationID)
 
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
 	}
 
-	_ = episodeService.Delete(sID, id)
+	_ = episodeService.Delete(authCtx.SpaceID, id)
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("episode.deleted", sID.String(), r) {
+		if util.CheckWebhookEvent("episode.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("episode.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

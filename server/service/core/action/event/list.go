@@ -2,7 +2,6 @@ package event
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/service/core/model"
@@ -32,7 +31,7 @@ type paging struct {
 // @Success 200 {object} paging
 // @Router /core/events [get]
 func list(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -42,7 +41,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	hukzURL := viper.GetString("hukz_url") + "/events?tag=app:dega&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
 
 	resp, err := requestx.Request("GET", hukzURL, nil, map[string]string{
-		"X-User": fmt.Sprint(uID),
+		"X-User": authCtx.UserID,
 	})
 	if err != nil {
 		loggerx.Error(err)

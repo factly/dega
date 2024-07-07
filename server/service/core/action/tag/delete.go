@@ -3,8 +3,10 @@ package tag
 import (
 	"net/http"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -34,7 +36,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -45,26 +47,26 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tagService := service.GetTagService()
 
 	// check record exists or not
-	result, err := tagService.GetById(sID, id)
+	result, err := tagService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	serviceErr := tagService.Delete(sID, id)
+	serviceErr := tagService.Delete(authCtx.SpaceID, id)
 	if serviceErr != nil {
 		loggerx.Error(err)
 		errorx.Render(w, serviceErr)
 		return
 	}
 
-	// if config.SearchEnabled() {
-	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "tag")
-	// }
+	if config.SearchEnabled() {
+		_ = meilisearch.DeleteDocument("dega", result.ID.String(), "tag")
+	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("tag.deleted", sID.String(), r) {
+		if util.CheckWebhookEvent("tag.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("tag.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

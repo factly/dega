@@ -3,7 +3,7 @@ package policy
 import (
 	"context"
 	"encoding/json"
-	"log"
+	"errors"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -30,42 +30,17 @@ import (
 // @Router /core/policies [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	log.Println("Checking policy for entity: ", "policies", " action: ", "create")
-
-	spaceID, err := util.GetSpace(r.Context())
-
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	userID, err := util.GetUser(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	organisationID, err := util.GetOrganisation(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
+	orgRole := authCtx.OrgRole
 	// check whether user is admin or not
 	if orgRole != "admin" {
+		loggerx.Error(errors.New("user is not admin"))
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
@@ -82,7 +57,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	policy := model.Policy{
 		Name:        policyReq.Name,
 		Description: policyReq.Description,
-		SpaceID:     spaceID,
+		SpaceID:     authCtx.SpaceID,
 	}
 
 	policyUsers := make([]model.PolicyUser, 0)
@@ -98,7 +73,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		uIDs = append(uIDs, userID)
 	}
 
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), organisationID, uIDs)
+	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, uIDs)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -111,7 +86,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, userID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 	err = tx.Model(&model.Policy{}).Create(&policy).Error
 
 	if err != nil {

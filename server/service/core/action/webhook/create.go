@@ -33,14 +33,7 @@ import (
 // @Failure 400 {array} string
 // @Router /core/webhooks [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -62,16 +55,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// append app and space tag even if not provided
-	if err = AddTags(webhook, sID); err != nil {
+	if err = AddTags(webhook, authCtx.SpaceID); err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + sID.String()
+	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + authCtx.SpaceID.String()
 
 	resp, err := requestx.Request("POST", hukzURL, webhook, map[string]string{
-		"X-User": fmt.Sprint(uID),
+		"X-User": fmt.Sprint(authCtx.UserID),
 	})
 
 	if err != nil {

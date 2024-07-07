@@ -1,7 +1,6 @@
 package reindex
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -11,29 +10,22 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
-	"github.com/go-chi/chi"
-	"github.com/google/uuid"
 	"github.com/meilisearch/meilisearch-go"
 )
 
 func space(w http.ResponseWriter, r *http.Request) {
-	spaceID := chi.URLParam(r, "space_id")
-	sID, err := uuid.Parse(spaceID)
+
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	space := model.Space{}
-	space.ID = sID
+	space.ID = authCtx.SpaceID
 
 	err = config.DB.Model(&model.Space{}).First(&space).Error
 	if err != nil {
@@ -49,7 +41,7 @@ func space(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res, err := config.MeilisearchClient.Index("dega").Search("", &meilisearch.SearchRequest{
-		Filter: "space_id=" + fmt.Sprint(sID),
+		Filter: "space_id=" + authCtx.SpaceID.String(),
 		Limit:  100000,
 	})
 
@@ -76,7 +68,7 @@ func space(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if err = util.ReindexAllEntities(sID); err != nil {
+	if err = util.ReindexAllEntities(authCtx.SpaceID); err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return

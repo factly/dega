@@ -22,3 +22,13 @@ func Router() http.Handler {
 
 	return r
 }
+
+func PublicRouter() http.Handler {
+	r := chi.NewRouter()
+
+	r.Get("/claimants", claimant.List)
+	r.Get("/ratings", rating.List)
+	r.Get("/claims", claim.List)
+
+	return r
+}

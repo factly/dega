@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Loader from '../components/Loader';
 
 const Callback = ({ authenticated, setAuth, userManager, handleLogout }) => {
   const [userInfo, setUserInfo] = useState(null);
@@ -46,7 +47,7 @@ const Callback = ({ authenticated, setAuth, userManager, handleLogout }) => {
   if (authenticated === true && userInfo) {
     window.location.href = window.localStorage.getItem('return_to') || window.PUBLIC_URL;
   }
-  return <div>Loading...</div>;
+  return <Loader />;
 };
 
 export default Callback;

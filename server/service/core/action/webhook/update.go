@@ -41,14 +41,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -70,7 +63,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// append app and space tag even if not provided
-	if err = AddTags(webhook, sID); err != nil {
+	if err = AddTags(webhook, authCtx.SpaceID); err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
@@ -79,7 +72,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	hukzURL := viper.GetString("hukz_url") + "/webhooks/" + fmt.Sprint(id)
 
 	resp, err := requestx.Request("PUT", hukzURL, webhook, map[string]string{
-		"X-User": fmt.Sprint(uID),
+		"X-User": authCtx.UserID,
 	})
 	if err != nil {
 		loggerx.Error(err)

@@ -34,14 +34,7 @@ import (
 // @Router /core/formats/{format_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -62,7 +55,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Format{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).First(&result).Error
 
 	if err != nil {
@@ -98,13 +91,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if result.Slug == format.Slug {
 		formatSlug = result.Slug
 	} else if format.Slug != "" && util.CheckSlug(format.Slug) {
-		formatSlug = util.ApproveSlug(format.Slug, sID, tableName)
+		formatSlug = util.ApproveSlug(format.Slug, authCtx.SpaceID, tableName)
 	} else {
-		formatSlug = util.ApproveSlug(util.MakeSlug(format.Name), sID, tableName)
+		formatSlug = util.ApproveSlug(util.MakeSlug(format.Name), authCtx.SpaceID, tableName)
 	}
 
 	// Check if format with same name exist
-	if format.Name != result.Name && util.CheckName(sID, format.Name, tableName) {
+	if format.Name != result.Name && util.CheckName(authCtx.SpaceID, format.Name, tableName) {
 		loggerx.Error(errors.New(`format with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
@@ -115,7 +108,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	updateMap := map[string]interface{}{
 		"created_at":    format.CreatedAt,
 		"updated_at":    format.UpdatedAt,
-		"updated_by_id": uID,
+		"updated_by_id": authCtx.UserID,
 		"name":          format.Name,
 		"slug":          formatSlug,
 		"description":   format.Description,
@@ -157,7 +150,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("format.updated", sID.String(), r) {
+		if util.CheckWebhookEvent("format.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("format.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

@@ -34,7 +34,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -42,14 +42,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	menuService := service.GetMenuService()
-	result, err := menuService.GetById(sID, id)
+	result, err := menuService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	serviceErr := menuService.Delete(sID, id)
+	serviceErr := menuService.Delete(authCtx.SpaceID, id)
 	if serviceErr != nil {
 		loggerx.Error(err)
 		errorx.Render(w, serviceErr)
@@ -61,7 +61,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("menu.deleted", sID.String(), r) {
+		if util.CheckWebhookEvent("menu.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("menu.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

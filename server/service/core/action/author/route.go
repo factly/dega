@@ -8,7 +8,7 @@ import (
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/", list)
+	r.Get("/", List)
 	return r
 
 }

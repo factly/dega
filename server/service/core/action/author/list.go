@@ -11,6 +11,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"github.com/spf13/viper"
 )
 
 // list response
@@ -31,16 +32,8 @@ type paging struct {
 // @Param page query string false "page number"
 // @Success 200 {object} paging
 // @Router /core/authors [get]
-func list(w http.ResponseWriter, r *http.Request) {
-
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	oID, err := util.GetOrganisation(r.Context())
+func List(w http.ResponseWriter, r *http.Request) {
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -58,7 +51,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	offset, limit := paginationx.Parse(r.URL.Query())
 
 	// get total authors
-	err = config.DB.Model(&model.SpaceUser{}).Where("space_id = ?", sID).Count(&result.Total).Limit(limit).Offset(offset).Find(&spaceUsers).Error
+	err = config.DB.Model(&model.SpaceUser{}).Where("space_id = ?", authCtx.SpaceID).Count(&result.Total).Limit(limit).Offset(offset).Find(&spaceUsers).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -73,7 +66,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get users details from zitadel
-	zitadelUsers, _ := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), oID, uIDs)
+	zitadelUsers, _ := zitadel.GetOrganisationUsers(viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN"), authCtx.OrganisationID, uIDs)
 
 	for _, zitadelUser := range zitadelUsers {
 		authors = append(authors, model.Author{

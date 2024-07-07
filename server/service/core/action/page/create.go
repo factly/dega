@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/meilisearch"
@@ -35,14 +34,7 @@ import (
 // @Success 201 {object} pageData
 // @Router /core/pages [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -109,7 +101,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			UpdatedAt: page.UpdatedAt,
 		},
 		Title:            page.Title,
-		Slug:             util.ApproveSlug(postSlug, sID, tableName),
+		Slug:             util.ApproveSlug(postSlug, authCtx.SpaceID, tableName),
 		Status:           page.Status,
 		IsPage:           true,
 		Subtitle:         page.Subtitle,
@@ -124,7 +116,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		MetaFields:       page.MetaFields,
 		HeaderCode:       page.HeaderCode,
 		FooterCode:       page.FooterCode,
-		SpaceID:          sID,
+		SpaceID:          authCtx.SpaceID,
 		DescriptionAMP:   page.DescriptionAMP,
 		MigratedHTML:     page.MigratedHTML,
 	}
@@ -140,7 +132,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		config.DB.Model(&model.Category{}).Where(page.CategoryIDs).Find(&result.Post.Categories)
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 	err = tx.Model(&model.Post{}).Create(&result.Post).Error
 
 	if err != nil {
@@ -152,8 +144,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post)
 
-	// Adding author
-	authors, err := author.All(r.Context())
+	// fetch all authors
+	authors, err := util.GetAuthors(authCtx.OrganisationID, page.AuthorIDs)
+
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -211,7 +204,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("page.created", sID.String(), r) {
+		if util.CheckWebhookEvent("page.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("page.created", result); err != nil {
 				errorx.Render(w, errorx.Parser(errorx.GetMessage("not able to publish event", http.StatusInternalServerError)))
 				return

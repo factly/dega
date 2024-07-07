@@ -24,7 +24,7 @@ import (
 // @Router /core/media/{medium_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -40,14 +40,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	mediumService := service.GetMediumService()
-	result, err := mediumService.GetById(sID, id)
+	result, err := mediumService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	serviceErr := mediumService.Delete(id, sID)
+	serviceErr := mediumService.Delete(id, authCtx.SpaceID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, serviceErr)
@@ -55,7 +55,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("media.deleted", sID.String(), r) {
+		if util.CheckWebhookEvent("media.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("media.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

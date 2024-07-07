@@ -39,7 +39,7 @@ type paging struct {
 // @Router /podcast/episodes [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -61,7 +61,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	episodeService := service.GetEpisodeService()
 
-	result, serviceErr := episodeService.List(r.Context(), sID, offset, limit, searchQuery, sort, queryMap)
+	result, serviceErr := episodeService.List(r.Context(), authCtx.SpaceID, offset, limit, searchQuery, sort, queryMap)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

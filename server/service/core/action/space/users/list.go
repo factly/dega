@@ -26,14 +26,7 @@ type user struct {
 }
 
 func list(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	oID, err := util.GetOrganisation(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -48,7 +41,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 
 	err = config.DB.Model(&model.SpaceUser{}).Where(&model.SpaceUser{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Count(&result.Total).Limit(limit).Offset(offset).Find(&spaceUsers).Error
 
 	if err != nil {
@@ -63,7 +56,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		uIDs = append(uIDs, user.UserID)
 	}
 
-	res, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), oID, uIDs)
+	res, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, uIDs)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))

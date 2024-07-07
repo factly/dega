@@ -11,7 +11,7 @@ func Router() chi.Router {
 
 	entity := "menus"
 
-	r.With(util.CheckEntityAccess(entity, "get")).Get("/", list)
+	r.With(util.CheckEntityAccess(entity, "get")).Get("/", List)
 	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
 
 	r.Route("/{menu_id}", func(r chi.Router) {

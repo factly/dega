@@ -27,7 +27,7 @@ import (
 // @Router /core/media [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -39,7 +39,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	offset, limit := paginationx.Parse(r.URL.Query())
 
 	mediumService := service.GetMediumService()
-	result, errMessages := mediumService.List(sID, offset, limit, searchQuery, sort)
+	result, errMessages := mediumService.List(authCtx.SpaceID, offset, limit, searchQuery, sort)
 	if errMessages != nil {
 		errorx.Render(w, errMessages)
 		return

@@ -30,14 +30,7 @@ import (
 // @Router /core/categories [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -58,7 +51,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	if category.ParentID != uuid.Nil {
 		// Check if parent category exist or not
-		_, err = categoryService.GetById(sID, category.ParentID)
+		_, err = categoryService.GetById(authCtx.SpaceID, category.ParentID)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category does not exist", http.StatusUnprocessableEntity)))
@@ -66,7 +59,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	result, serviceErr := categoryService.Create(r.Context(), sID, uID, category)
+	result, serviceErr := categoryService.Create(r.Context(), authCtx.SpaceID, authCtx.UserID, category)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -89,7 +82,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("category.created", sID.String(), r) {
+		if util.CheckWebhookEvent("category.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("category.created", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

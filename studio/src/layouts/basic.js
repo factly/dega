@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Layout, Card, notification, BackTop, ConfigProvider, Result } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation } from 'react-router-dom';
@@ -15,8 +15,8 @@ import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 import { permissionRequirements } from '../utils/getUserPermission';
 
 function BasicLayout(props) {
-  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
-  React.useEffect(() => {
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
+  useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 460) {
         setIsMobileScreen(true);
@@ -31,8 +31,8 @@ function BasicLayout(props) {
   const location = useLocation();
   const { Content } = Layout;
   const { children } = props;
-  const [enteredRoute, setRoute] = React.useState({ menuKey: '/' });
-  React.useEffect(() => {
+  const [enteredRoute, setRoute] = useState({ menuKey: '/' });
+  useEffect(() => {
     const pathSnippets = location.pathname.split('/').filter((i) => i);
     if (pathSnippets.length === 0) {
       setRoute({ menuKey: '/' });
@@ -58,42 +58,46 @@ function BasicLayout(props) {
 
   const dispatch = useDispatch();
 
-  const { permission, orgs, loading, selected, applications, services } = useSelector((state) => {
-    const { selected, orgs, loading } = state.spaces;
+  const { permission, orgs, loading, selected, applications, services, org_role } = useSelector(
+    (state) => {
+      const { selected, orgs, loading } = state.spaces;
 
-    if (selected > 0) {
-      const space = state.spaces.details[selected];
+      if (selected > 0) {
+        const space = state.spaces.details[selected];
 
-      const applications = orgs.find((org) => org.spaces.includes(space.id))?.applications || [];
+        const applications = orgs.find((org) => org.spaces.includes(space.id))?.applications || [];
 
+        return {
+          applications: applications,
+          permission: space.permissions || [],
+          orgs: orgs,
+          loading: loading,
+          selected: selected,
+          services: space.services,
+          org_role: space.org_role,
+        };
+      }
       return {
-        applications: applications,
-        permission: space.permissions || [],
         orgs: orgs,
         loading: loading,
+        permission: [],
         selected: selected,
-        services: space.services,
+        applications: [],
+        services: ['core'],
+        org_role: '',
       };
-    }
-    return {
-      orgs: orgs,
-      loading: loading,
-      permission: [],
-      selected: selected,
-      applications: [],
-      services: ['core'],
-    };
+    },
+  );
+
+  const { type, message, description, time } = useSelector((state) => {
+    return { ...state.notifications };
   });
 
-  const { type, message, description, time, redirect } = useSelector((state) => {
-    return { ...state.notifications, redirect: state.redirect };
-  });
-
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(getSpaces());
   }, [dispatch, selected]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (type && message && description && selected !== 0) {
       notification[type]({
         message: message,
@@ -102,13 +106,6 @@ function BasicLayout(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time, description]);
-
-  React.useEffect(() => {
-    if (redirect?.code === 307) {
-      window.location.href = window.REACT_APP_KAVACH_PUBLIC_URL;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [redirect]);
 
   const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
 
@@ -134,27 +131,13 @@ function BasicLayout(props) {
       return null;
     }
 
-    // Check if userPermission includes 'admin' for any resource
-    const isAdmin = userPermission.some((perm) => perm.resource === 'admin');
-
     // If user has 'admin' permission, allow access
-    if (isAdmin) {
+    if (org_role === 'admin') {
       return null;
     }
 
     // Otherwise, check if user has specific permissions for the current location
-    const missingPermissions = requiredPermissions.filter((reqPerm) => {
-      const matchingPerm = userPermission.find(
-        (perm) =>
-          perm.resource === reqPerm.resource &&
-          (Array.isArray(reqPerm.action)
-            ? reqPerm.action.every((action) => perm.actions.includes(action))
-            : perm.actions.includes(reqPerm.action)),
-      );
-      return !matchingPerm;
-    });
-
-    return missingPermissions.length > 0 ? missingPermissions : null;
+    return null;
   }
   // Render based on permission check
   const missingPermissions = checkPermissions(location.pathname, selected, orgs, permission);

@@ -14,14 +14,14 @@ type CheckEvent struct {
 }
 
 func CheckWebhookEvent(event string, spaceID string, r *http.Request) bool {
-	uID, err := GetUser(r.Context())
+	authCtx, err := GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		return false
 	}
 	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + spaceID + "/check"
 	req, err := http.NewRequest("GET", hukzURL, nil)
-	req.Header.Set("X-User", uID)
+	req.Header.Set("X-User", authCtx.UserID)
 	q := req.URL.Query()
 	q.Add("event", event)
 	req.URL.RawQuery = q.Encode()

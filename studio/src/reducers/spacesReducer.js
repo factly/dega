@@ -12,6 +12,7 @@ const initialState = {
   details: {},
   loading: true,
   selected: 0,
+  org_role: '',
 };
 
 export default function spacesReducer(state = initialState, action = {}) {
@@ -28,7 +29,7 @@ export default function spacesReducer(state = initialState, action = {}) {
       let space_details = {};
       action.payload.forEach((element) => {
         element.spaces.forEach((s) => {
-          space_details[s.id] = s;
+          space_details[s.id] = { ...s, org_role: element.role };
         });
       });
       const spaceID = localStorage.getItem('space') ? localStorage.getItem('space') : 0;
@@ -55,6 +56,7 @@ export default function spacesReducer(state = initialState, action = {}) {
         details: space_details,
         loading: false,
         selected: setSpaceID,
+        org_role: space_details[setSpaceID] ? space_details[setSpaceID].org_role : '',
       };
     case ADD_SPACE_SUCCESS:
       let org_index = state.orgs.findIndex(
@@ -83,6 +85,7 @@ export default function spacesReducer(state = initialState, action = {}) {
       return {
         ...state,
         selected: action.payload.id,
+        org_role: state.details[action.payload.id] ? state.details[action.payload.id].org_role : '',
       };
     case UPDATE_SPACE_SUCCESS:
       return {

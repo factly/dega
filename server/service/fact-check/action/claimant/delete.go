@@ -24,7 +24,7 @@ import (
 // @Router /fact-check/claimants/{claimant_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -43,13 +43,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	claimantService := service.GetClaimantService()
 
 	// check record exists or not
-	result, err := claimantService.GetById(sID, id)
+	result, err := claimantService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	serviceErr := claimantService.Delete(sID, id)
+	serviceErr := claimantService.Delete(authCtx.SpaceID, id)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -60,7 +60,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("claimant.deleted", sID.String(), r) {
+		if util.CheckWebhookEvent("claimant.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("claimant.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

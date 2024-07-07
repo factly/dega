@@ -51,3 +51,16 @@ func Router() http.Handler {
 
 	return r
 }
+
+func PublicRouter() http.Handler {
+	r := chi.NewRouter()
+
+	r.Get("/space", space.Details)
+	r.Get("/menus", menu.List)
+	r.Get("/categories", category.PublicList)
+	r.Get("/tags", tag.PublicList)
+	r.Get("/formats", format.List)
+	r.Get("/authors", author.List)
+
+	return r
+}

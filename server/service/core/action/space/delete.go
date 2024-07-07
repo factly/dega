@@ -24,16 +24,16 @@ import (
 // @Success 200
 // @Router /core/spaces/{space_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
 	result := &model.Space{}
 
-	result.ID = sID
+	result.ID = authCtx.SpaceID
 
 	// check record exists or not
 	err = config.DB.First(&result).Error

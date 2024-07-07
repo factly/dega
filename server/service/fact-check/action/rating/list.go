@@ -24,9 +24,8 @@ import (
 // @Param all query string false "all"
 // @Success 200 {object} paging
 // @Router /fact-check/ratings [get]
-func list(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
-
+func List(w http.ResponseWriter, r *http.Request) {
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -39,7 +38,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	ratingService := service.GetRatingService()
 
-	result, serviceErr := ratingService.List(sID, offset, limit, all, sort)
+	result, serviceErr := ratingService.List(authCtx.SpaceID, offset, limit, all, sort)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

@@ -26,7 +26,7 @@ import (
 // @Router /core/posts/{post_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -48,7 +48,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Where("is_page", false).Preload("Tags").Preload("Categories").First(&result).Error
 
 	if err != nil {
@@ -84,7 +84,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("post.deleted", sID.String(), r) {
+		if util.CheckWebhookEvent("post.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("post.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

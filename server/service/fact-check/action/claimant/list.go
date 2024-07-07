@@ -3,7 +3,6 @@ package claimant
 import (
 	"net/http"
 
-	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
@@ -11,12 +10,6 @@ import (
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
-
-// list response
-type paging struct {
-	Total int64            `json:"total"`
-	Nodes []model.Claimant `json:"nodes"`
-}
 
 // list - Get all claimants
 // @Summary Show all claimants
@@ -32,9 +25,9 @@ type paging struct {
 // @Param sort query string false "Sort"
 // @Success 200 {object} paging
 // @Router /fact-check/claimants [get]
-func list(w http.ResponseWriter, r *http.Request) {
+func List(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -52,7 +45,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	offset, limit := paginationx.Parse(r.URL.Query())
 
 	claimantService := service.GetClaimantService()
-	result, serviceErr := claimantService.List(sID, offset, limit, all, searchQuery, sort)
+	result, serviceErr := claimantService.List(authCtx.SpaceID, offset, limit, all, searchQuery, sort)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

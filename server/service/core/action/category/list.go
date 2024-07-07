@@ -3,20 +3,15 @@ package category
 import (
 	"net/http"
 
-	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"github.com/google/uuid"
 )
-
-// list response
-type paging struct {
-	Total int64            `json:"total"`
-	Nodes []model.Category `json:"nodes"`
-}
 
 // list - Get all categories
 // @Summary Show all categories
@@ -34,7 +29,7 @@ type paging struct {
 // @Router /core/categories [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -46,7 +41,49 @@ func list(w http.ResponseWriter, r *http.Request) {
 	offset, limit := paginationx.Parse(r.URL.Query())
 
 	categoryService := service.GetCategoryService()
-	result, errMessages := categoryService.List(sID, offset, limit, searchQuery, sort)
+	result, errMessages := categoryService.List(authCtx.SpaceID, offset, limit, searchQuery, sort)
+	if errMessages != nil {
+		errorx.Render(w, errMessages)
+		return
+	}
+
+	renderx.JSON(w, http.StatusOK, result)
+}
+
+func PublicList(w http.ResponseWriter, r *http.Request) {
+
+	authCtx, err := util.GetAuthCtx(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	searchQuery := r.URL.Query().Get("q")
+	sortBy := r.URL.Query().Get("sort_by")
+	sortOrder := r.URL.Query().Get("sort_order")
+	ids := r.URL.Query()["ids"]
+	isFeatured := r.URL.Query().Get("is_featured")
+	isFeaturedBool := false
+
+	if isFeatured == "true" {
+		isFeaturedBool = true
+	}
+
+	uuids := make([]uuid.UUID, 0)
+
+	if len(ids) > 0 {
+		uuids, err = arrays.StrToUUID(ids)
+		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+			return
+		}
+	}
+
+	offset, limit := paginationx.Parse(r.URL.Query())
+
+	categoryService := service.GetCategoryService()
+	result, errMessages := categoryService.PublicList(authCtx.SpaceID, offset, limit, searchQuery, sortBy, sortOrder, uuids, isFeaturedBool)
 	if errMessages != nil {
 		errorx.Render(w, errMessages)
 		return

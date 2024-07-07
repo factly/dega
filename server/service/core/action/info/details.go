@@ -1,7 +1,6 @@
 package info
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -26,23 +25,17 @@ import (
 // @Router /core/info [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-		return
-	}
-
 	result := &model.Info{}
 
 	err = config.DB.Model(&model.Category{}).Where(&model.Category{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Count(&result.Categories).Error
 
 	if err != nil {
@@ -52,7 +45,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = config.DB.Model(&model.Tag{}).Where(&model.Tag{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Count(&result.Tags).Error
 
 	if err != nil {
@@ -62,7 +55,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = config.DB.Model(&podcastModel.Podcast{}).Where(&podcastModel.Podcast{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Count(&result.Podcasts).Error
 
 	if err != nil {
@@ -72,7 +65,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = config.DB.Model(&podcastModel.Episode{}).Where(&podcastModel.Episode{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Count(&result.Episodes).Error
 
 	if err != nil {
@@ -83,8 +76,15 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	result.Posts = make([]model.PostCount, 0)
 
-	err = config.DB.Raw(fmt.Sprint("SELECT  de_formats.slug, de_posts.status, COUNT (*) FROM de_posts JOIN de_formats ON de_posts.format_id = de_formats.id WHERE is_page = false AND de_posts.deleted_at IS NULL AND de_posts.space_id = ", sID, " GROUP BY de_posts.status, de_formats.slug")).Scan(&result.Posts).Error
+	query := `SELECT de_format.slug, de_post.status, COUNT(*) 
+	FROM de_post 
+	JOIN de_format ON de_post.format_id = de_format.id 
+	WHERE is_page = false 
+	AND de_post.deleted_at IS NULL 
+	AND de_post.space_id = ? 
+	GROUP BY de_post.status, de_format.slug`
 
+	err = config.DB.Raw(query, authCtx.SpaceID).Scan(&result.Posts).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

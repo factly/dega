@@ -35,29 +35,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	spaceID, err := util.GetSpace(r.Context())
-
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	userID, err := util.GetUser(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	// check if the user is admin or not
 	if orgRole != "admin" {
@@ -65,13 +50,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, userID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 
 	policy := model.Policy{
 		Base: config.Base{
 			ID: pID,
 		},
-		SpaceID: spaceID,
+		SpaceID: authCtx.SpaceID,
 	}
 
 	// check record exists or not

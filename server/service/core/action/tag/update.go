@@ -38,14 +38,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -55,7 +48,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tagService := service.GetTagService()
 
 	// check record exists or not
-	_, err = tagService.GetById(sID, id)
+	_, err = tagService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -70,7 +63,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, serviceErr := tagService.Update(sID, id, uID, tag)
+	result, serviceErr := tagService.Update(authCtx.SpaceID, id, authCtx.UserID, tag)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -92,7 +85,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("tag.updated", sID.String(), r) {
+		if util.CheckWebhookEvent("tag.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("tag.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

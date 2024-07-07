@@ -24,8 +24,7 @@ import (
 // @Success 200 {object} model.Podcast
 // @Router /podcast/{podcast_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
-
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -43,7 +42,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	podcastService := service.GetPodcastService()
 
-	result, serviceErr := podcastService.GetById(sID, id)
+	result, serviceErr := podcastService.GetById(authCtx.SpaceID, id)
 
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)

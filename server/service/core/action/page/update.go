@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/meilisearch"
@@ -45,14 +44,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -86,7 +78,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Base: config.Base{
 			ID: id,
 		},
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 		IsPage:  true,
 	}).First(&result.Post).Error
 
@@ -97,7 +89,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all authors
-	authors, err := author.All(r.Context())
+	authors, err := util.GetAuthors(authCtx.OrganisationID, page.AuthorIDs)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -115,9 +107,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if result.Slug == page.Slug {
 		pageSlug = result.Slug
 	} else if page.Slug != "" && util.CheckSlug(page.Slug) {
-		pageSlug = util.ApproveSlug(page.Slug, sID, tableName)
+		pageSlug = util.ApproveSlug(page.Slug, authCtx.SpaceID, tableName)
 	} else {
-		pageSlug = util.ApproveSlug(util.MakeSlug(page.Title), sID, tableName)
+		pageSlug = util.ApproveSlug(util.MakeSlug(page.Title), authCtx.SpaceID, tableName)
 	}
 
 	// Store HTML description
@@ -139,7 +131,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
 
 	newTags := make([]model.Tag, 0)
 	if len(page.TagIDs) > 0 {
@@ -170,7 +162,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	updateMap := map[string]interface{}{
 		"created_at":         page.CreatedAt,
 		"updated_at":         page.UpdatedAt,
-		"updated_by_id":      uID,
+		"updated_by_id":      authCtx.UserID,
 		"title":              page.Title,
 		"slug":               pageSlug,
 		"subtitle":           page.Subtitle,
@@ -319,7 +311,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("page.updated", sID.String(), r) {
+		if util.CheckWebhookEvent("page.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("page.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

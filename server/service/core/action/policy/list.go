@@ -31,21 +31,14 @@ type paging struct {
 // @Router /core/policies [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	spaceID, err := util.GetSpace(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	if orgRole != "admin" {
 		loggerx.Error(errors.New("user is not an admin"))
@@ -59,7 +52,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result.Nodes = make([]model.Policy, 0)
 
 	err = config.DB.Model(&model.Policy{}).Where(&model.Policy{
-		SpaceID: spaceID,
+		SpaceID: authCtx.SpaceID,
 	}).Count(&result.Total).Limit(limit).Offset(offset).Find(&result.Nodes).Error
 
 	if err != nil {

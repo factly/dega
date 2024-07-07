@@ -36,19 +36,14 @@ type user struct {
 // @Router /core/users [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	oID, err := util.GetOrganisation(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	if orgRole != "admin" {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -57,7 +52,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	// Get organisation ID
 
-	res, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), oID, []string{})
+	res, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, []string{})
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))

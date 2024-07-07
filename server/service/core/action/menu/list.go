@@ -23,9 +23,9 @@ import (
 // @Param page query string false "page number"
 // @Success 200 {object} paging
 // @Router /core/menus [get]
-func list(w http.ResponseWriter, r *http.Request) {
+func List(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -33,7 +33,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 	offset, limit := paginationx.Parse(r.URL.Query())
 	menuService := service.GetMenuService()
-	result, errMessages := menuService.List(sID, offset, limit)
+	result, errMessages := menuService.List(authCtx.SpaceID, offset, limit)
 	if errMessages != nil {
 		errorx.Render(w, errMessages)
 		return

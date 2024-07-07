@@ -13,14 +13,7 @@ import (
 )
 
 func usersList(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -29,7 +22,7 @@ func usersList(w http.ResponseWriter, r *http.Request) {
 
 	// Get organisation ID
 	space := model.Space{}
-	space.ID = sID
+	space.ID = authCtx.SpaceID
 
 	err = config.DB.Model(&model.Space{}).First(&space).Error
 
@@ -41,6 +34,6 @@ func usersList(w http.ResponseWriter, r *http.Request) {
 
 	var users []model.SpaceUser
 
-	zitadel.GetOrganisationUsers(r.Header.Get("authorization"), space.OrganisationID, []string{uID})
+	zitadel.GetOrganisationUsers(r.Header.Get("authorization"), space.OrganisationID, []string{authCtx.UserID})
 	renderx.JSON(w, http.StatusOK, users)
 }

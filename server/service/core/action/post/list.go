@@ -7,10 +7,10 @@ import (
 	"strings"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -48,7 +48,7 @@ type paging struct {
 // @Router /core/posts [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -72,7 +72,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
-		SpaceID: sID,
+		SpaceID: authCtx.SpaceID,
 	}).Where("is_page = ?", false)
 	var statusTemplate bool = false
 	for _, status := range queryMap["status"] {
@@ -97,7 +97,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 		if config.SearchEnabled() {
 			if filters != "" {
-				filters = fmt.Sprint(filters, " AND space_id=", sID)
+				filters = fmt.Sprint(filters, " AND space_id=", authCtx.SpaceID)
 			}
 			// Search posts with filter
 			var hits []interface{}
@@ -166,17 +166,24 @@ func list(w http.ResponseWriter, r *http.Request) {
 		postClaimMap[pc.PostID] = append(postClaimMap[pc.PostID], pc)
 	}
 
+	// fetch all authors related to posts
+	postAuthors := []model.PostAuthor{}
+	config.DB.Model(&model.PostAuthor{}).Where("post_id in (?)", postIDs).Find(&postAuthors)
+
+	authorIDs := make([]string, 0)
+
+	for _, postAuthor := range postAuthors {
+		authorIDs = append(authorIDs, postAuthor.AuthorID)
+	}
+
 	// fetch all authors
-	authors, err := author.All(r.Context())
+	authors, err := util.GetAuthors(authCtx.OrganisationID, authorIDs)
+
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-
-	// fetch all authors related to posts
-	postAuthors := []model.PostAuthor{}
-	config.DB.Model(&model.PostAuthor{}).Where("post_id in (?)", postIDs).Find(&postAuthors)
 
 	postAuthorMap := make(map[uuid.UUID][]string)
 	for _, po := range postAuthors {
@@ -214,6 +221,152 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
+}
+
+func PublicList(w http.ResponseWriter, r *http.Request) {
+	authCtx, err := util.GetAuthCtx(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	sortBy := r.URL.Query().Get("sort_by")
+	sortOrder := r.URL.Query().Get("sort_order")
+	ids := r.URL.Query()["ids"]
+	isFeatured := r.URL.Query().Get("is_featured")
+	isFeaturedBool := false
+	formatIDs := r.URL.Query()["format_ids"]
+
+	formatUUIDs, err := arrays.StrToUUID(formatIDs)
+	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+	formatSlugs := r.URL.Query()["format_slugs"]
+	tagIds := r.URL.Query()["tag_ids"]
+
+	tagUUIDs, err := arrays.StrToUUID(tagIds)
+	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+	tagSlugs := r.URL.Query()["tag_slugs"]
+	categoryIds := r.URL.Query()["category_ids"]
+
+	categoryUUIDs, err := arrays.StrToUUID(categoryIds)
+	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+
+	categorySlugs := r.URL.Query()["category_slugs"]
+	authorIds := r.URL.Query()["author_ids"]
+	isPage := r.URL.Query().Get("is_page")
+	isPageBool := false
+	status := r.URL.Query().Get("status")
+
+	if isFeatured == "true" {
+		isFeaturedBool = true
+	}
+
+	if isPage == "true" {
+		isPageBool = true
+	}
+
+	uuids := make([]uuid.UUID, 0)
+
+	if len(ids) > 0 {
+		uuids, err = arrays.StrToUUID(ids)
+		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+			return
+		}
+	}
+
+	if len(tagSlugs) > 0 {
+		tags := make([]model.Tag, 0)
+		config.DB.Model(&model.Tag{}).Where("slug IN ? and space_id", tagSlugs, authCtx.SpaceID).Find(&tags)
+
+		tagUUIDs = make([]uuid.UUID, 0)
+		for _, tag := range tags {
+			tagUUIDs = append(tagUUIDs, tag.ID)
+		}
+	}
+
+	if len(categorySlugs) > 0 {
+		categories := make([]model.Category, 0)
+		config.DB.Model(&model.Category{}).Where("slug IN ? and space_id", categorySlugs, authCtx.SpaceID).Find(&categories)
+
+		for _, category := range categories {
+			categoryUUIDs = append(categoryUUIDs, category.ID)
+		}
+	}
+
+	if len(formatSlugs) > 0 {
+		formats := make([]model.Format, 0)
+		config.DB.Model(&model.Format{}).Where("slug IN ? and space_id", formatSlugs, authCtx.SpaceID).Find(&formats)
+
+		for _, format := range formats {
+			formatUUIDs = append(formatUUIDs, format.ID)
+		}
+	}
+
+	offset, limit := paginationx.Parse(r.URL.Query())
+
+	columns := []string{"created_at", "updated_at", "name", "slug"}
+	pageSortBy := "created_at"
+	pageSortOrder := "desc"
+
+	if sortOrder != "" && sortOrder == "asc" {
+		pageSortOrder = "asc"
+	}
+
+	if sortBy != "" && arrays.ColumnValidator(sortBy, columns) {
+		pageSortBy = sortBy
+	}
+
+	result := paging{
+		Total: 0,
+		Nodes: make([]postData, 0),
+	}
+
+	posts := make([]model.Post, 0)
+
+	order := "posts." + pageSortBy + " " + pageSortOrder
+
+	tx := config.DB.Model(&model.Post{})
+
+	tx.Preload("Tags").
+		Preload("Categories").
+		Preload("Medium").
+		Preload("Format").
+		Joins("JOIN post_tag ON post_tag.post_id = posts.id").
+		Joins("JOIN post_category ON post_category.post_id = posts.id").
+		Joins("JOIN post_author ON post_author.post_id = posts.id").
+		Where("posts.space_id = ?", authCtx.SpaceID).
+		Where("post_tag.tag_id IN ?", tagUUIDs).
+		Where("post_category.category_id IN ?", categoryUUIDs).
+		Where("post_author.author_id IN ?", authorIds).
+		Where("posts.format_id IN ?", formatUUIDs).
+		Where("posts.id IN ?", uuids).
+		Where("posts.is_page = ?", isPageBool).
+		Where("posts.status = ?", status).
+		Where("posts.is_featured = ?", isFeaturedBool).
+		Count(&result.Total).
+		Limit(limit).
+		Offset(offset).
+		Order(order).
+		Find(&posts)
+
+	for _, post := range posts {
+		postList := &postData{}
+		postList.Post = post
+		result.Nodes = append(result.Nodes, *postList)
+	}
+
+	tx.Commit()
+
 }
 
 func generateFilters(tagIDs, categoryIDs, authorIDs, status []string) string {

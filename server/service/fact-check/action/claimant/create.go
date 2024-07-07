@@ -29,14 +29,7 @@ import (
 // @Router /fact-check/claimants [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := util.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -54,7 +47,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	claimantService := service.GetClaimantService()
-	result, serviceErr := claimantService.Create(r.Context(), sID, uID, claimant)
+	result, serviceErr := claimantService.Create(r.Context(), authCtx.SpaceID, authCtx.UserID, claimant)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -75,7 +68,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("claimant.created", sID.String(), r) {
+		if util.CheckWebhookEvent("claimant.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("claimant.created", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

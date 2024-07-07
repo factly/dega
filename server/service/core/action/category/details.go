@@ -25,7 +25,7 @@ import (
 // @Router /core/categories/{category_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -42,7 +42,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	categoryService := service.GetCategoryService()
 
-	result, err := categoryService.GetById(sID, id)
+	result, err := categoryService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))

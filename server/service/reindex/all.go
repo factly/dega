@@ -12,12 +12,14 @@ import (
 )
 
 func all(w http.ResponseWriter, r *http.Request) {
-	orgRole, err := util.GetOrgRoleFromContext(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
+
+	orgRole := authCtx.OrgRole
 
 	if orgRole != "admin" {
 		loggerx.Error(err)
