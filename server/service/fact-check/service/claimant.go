@@ -41,8 +41,6 @@ type Claimant struct {
 	FooterCode  string         `json:"footer_code"`
 }
 
-var claimantContext config.ContextKey = "claimant_user"
-
 type IClaimantService interface {
 	GetById(sID, id uuid.UUID) (model.Claimant, error)
 	List(sID uuid.UUID, offset, limit int, all, searchQuery, sort string) (claimantPaging, []errorx.Message)
@@ -122,7 +120,7 @@ func (cs claimantService) Create(ctx context.Context, sID uuid.UUID, uID string,
 		FooterCode:      claimant.FooterCode,
 	}
 
-	tx := cs.model.WithContext(context.WithValue(ctx, claimantContext, uID)).Begin()
+	tx := cs.model.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err = tx.Model(&model.Claimant{}).Create(&result).Error
 
 	if err != nil {

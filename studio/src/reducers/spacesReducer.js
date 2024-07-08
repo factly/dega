@@ -32,14 +32,14 @@ export default function spacesReducer(state = initialState, action = {}) {
           space_details[s.id] = { ...s, org_role: element.role };
         });
       });
-      const spaceID = localStorage.getItem('space') ? localStorage.getItem('space') : 0;
+      const spaceID = localStorage.getItem('space') ? localStorage.getItem('space') : '';
 
       const defaultSpace =
         Object.keys(space_details).length > 0
           ? space_details[spaceID]
             ? space_details[spaceID].id
             : space_details[Object.keys(space_details)[0]].id
-          : 0;
+          : '';
 
       const setSpaceID = space_details[state.selected] ? state.selected : defaultSpace;
       localStorage.setItem('space', setSpaceID);

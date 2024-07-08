@@ -3,7 +3,6 @@ package episode
 import (
 	"time"
 
-	"github.com/factly/dega-server/config"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
@@ -33,8 +32,6 @@ type episodeData struct {
 	model.Episode
 	Authors []coreModel.Author `json:"authors"`
 }
-
-var episodeUser config.ContextKey = "episode_user"
 
 var meiliIndex = "episode"
 

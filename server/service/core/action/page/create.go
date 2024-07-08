@@ -132,7 +132,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		config.DB.Model(&model.Category{}).Where(page.CategoryIDs).Find(&result.Post.Categories)
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 	err = tx.Model(&model.Post{}).Create(&result.Post).Error
 
 	if err != nil {

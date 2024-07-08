@@ -161,7 +161,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		policyUsersToAdd = append(policyUsersToAdd, policyUser)
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 
 	// update policy
 	err = tx.Model(&model.Policy{}).Where(&model.Policy{

@@ -69,12 +69,10 @@ func (episode *Episode) BeforeSave(tx *gorm.DB) (e error) {
 	return nil
 }
 
-var episodeUser config.ContextKey = "episode_user"
-
 // BeforeCreate hook
 func (episode *Episode) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(episodeUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil
@@ -89,7 +87,7 @@ func (episode *Episode) BeforeCreate(tx *gorm.DB) error {
 
 func (ea *EpisodeAuthor) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(episodeUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

@@ -3,7 +3,6 @@ package page
 import (
 	"time"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
@@ -46,8 +45,6 @@ type pageData struct {
 	model.Post
 	Authors []model.Author `json:"authors"`
 }
-
-var userContext config.ContextKey = "post_user"
 
 func Router() chi.Router {
 	r := chi.NewRouter()

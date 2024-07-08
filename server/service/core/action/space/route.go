@@ -1,7 +1,6 @@
 package space
 
 import (
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/space/tokens"
 	"github.com/factly/dega-server/service/core/action/space/users"
 	"github.com/factly/dega-server/service/core/model"
@@ -9,8 +8,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
-
-var userContext config.ContextKey = "space_user"
 
 type space struct {
 	Name              string         `json:"name" validate:"required,min=3,max=50"`

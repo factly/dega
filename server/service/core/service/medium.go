@@ -37,8 +37,6 @@ type Medium struct {
 	SpaceID     uuid.UUID      `json:"space_id"`
 }
 
-var userMediumContext config.ContextKey = "medium_user"
-
 type pagingMedium struct {
 	Total int64          `json:"total"`
 	Nodes []model.Medium `json:"nodes"`
@@ -183,7 +181,7 @@ func (ms MediumService) Create(ctx context.Context, sID uuid.UUID, uID string, m
 		result.Nodes = append(result.Nodes, med)
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, userMediumContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err := tx.Model(&model.Medium{}).Create(&result.Nodes).Error
 
 	if err != nil {

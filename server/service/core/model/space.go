@@ -51,12 +51,10 @@ type SpaceToken struct {
 	Token       string    `gorm:"column:token" json:"token"`
 }
 
-var spaceUser config.ContextKey = "space_user"
-
 // BeforeCreate hook
 func (space *Space) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(spaceUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil
@@ -72,7 +70,7 @@ func (space *Space) BeforeCreate(tx *gorm.DB) error {
 // BeforeCreate hook
 func (su *SpaceUser) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(spaceUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil
@@ -88,7 +86,7 @@ func (su *SpaceUser) BeforeCreate(tx *gorm.DB) error {
 // BeforeCreate hook
 func (st *SpaceToken) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(spaceUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

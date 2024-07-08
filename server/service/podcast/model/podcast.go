@@ -67,12 +67,10 @@ func (podcast *Podcast) BeforeSave(tx *gorm.DB) (e error) {
 	return nil
 }
 
-var podcastUser config.ContextKey = "podcast_user"
-
 // BeforeCreate hook
 func (podcast *Podcast) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(podcastUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

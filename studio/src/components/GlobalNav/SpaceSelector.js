@@ -264,7 +264,7 @@ function SpaceSelector({ onClose }) {
           </Col>
           {isMobileScreen || renderSpaceSelector()}
           <Col>
-            <Link Link key="1" onClick={onClose} to="/admin/spaces/create">
+            <Link Link key="1" onClick={onClose} to="/spaces/create">
               <Button
                 icon={<PlusOutlined />}
                 size="large"

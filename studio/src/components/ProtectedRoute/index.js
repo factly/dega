@@ -23,28 +23,18 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
       />
     );
 
-  if (
-    !loading &&
-    permission.isSpace &&
-    selected === 0 &&
-    orgs.filter((each) => each.role === 'admin').length > 0
-  ) {
+  if (!loading && selected === '' && orgs.filter((each) => each.role === 'admin').length > 0) {
     return <Component {...rest} permission={{ actions }} />;
   }
   if (
     !loading &&
     isOwner &&
-    selected === 0 &&
+    selected === '' &&
     orgs.filter((each) => each.role === 'admin').length > 0
   )
     return <Component {...rest} permission={{ actions }} />;
 
-  if (
-    !loading &&
-    permission.isSpace &&
-    selected > 0 &&
-    orgs.filter((each) => each.role === 'admin').length > 0
-  ) {
+  if (!loading && selected !== '' && orgs.filter((each) => each.role === 'admin').length > 0) {
     return <Component {...rest} permission={{ actions }} />;
   }
   if (actions.length > 0) return <Component {...rest} permission={{ actions }} />;

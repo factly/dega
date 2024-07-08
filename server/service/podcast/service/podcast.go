@@ -57,8 +57,6 @@ type PodcastService struct {
 	model *gorm.DB
 }
 
-var podcastUser config.ContextKey = "podcast_user"
-
 // Create implements IPodcastService
 func (ps *PodcastService) Create(ctx context.Context, sID uuid.UUID, uID string, podcast *Podcast) (model.Podcast, []errorx.Message) {
 
@@ -137,7 +135,7 @@ func (ps *PodcastService) Create(ctx context.Context, sID uuid.UUID, uID string,
 		ps.model.Model(&coreModel.Category{}).Where(podcast.CategoryIDs).Find(&result.Categories)
 	}
 
-	tx := ps.model.WithContext(context.WithValue(ctx, podcastUser, uID)).Begin()
+	tx := ps.model.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err = tx.Model(&model.Podcast{}).Create(&result).Error
 
 	if err != nil {

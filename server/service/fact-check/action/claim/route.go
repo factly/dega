@@ -3,8 +3,6 @@ package claim
 import (
 	"time"
 
-	"github.com/factly/dega-server/config"
-
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -32,8 +30,6 @@ type claim struct {
 	MigrationID    *uint          `json:"migration_id"`
 	MigratedHTML   string         `json:"migrated_html"`
 }
-
-var userContext config.ContextKey = "claim_user"
 
 var meiliIndex = "claim"
 

@@ -1,7 +1,6 @@
 package policy
 
 import (
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/google/uuid"
@@ -31,8 +30,6 @@ type policyUser struct {
 	UserID      string `json:"user_id"`
 	DisplayName string `json:"display_name"`
 }
-
-var userContext config.ContextKey = "policy_user"
 
 // Router - Group of medium router
 func Router() chi.Router {

@@ -17,12 +17,10 @@ type Menu struct {
 	MetaFields postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 }
 
-var menuUser config.ContextKey = "menu_user"
-
 // BeforeCreate hook
 func (menu *Menu) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(menuUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

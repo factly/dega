@@ -8,7 +8,9 @@ import (
 )
 
 // ContextKey keys for contexts
-type ContextKey string
+type ContextKey int
+
+var UserContext ContextKey = 1
 
 // Base with id, created_at, updated_at & deleted_at
 type Base struct {

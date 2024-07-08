@@ -27,12 +27,10 @@ type PolicyUser struct {
 	UserID   string    `gorm:"column:user_id" json:"user_id"`
 }
 
-var policyContext config.ContextKey = "policy_user"
-
 // BeforeCreate hook
 func (permission *Permission) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(policyContext)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil
@@ -47,7 +45,7 @@ func (permission *Permission) BeforeCreate(tx *gorm.DB) error {
 
 func (policy *Policy) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(policyContext)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil
@@ -62,7 +60,7 @@ func (policy *Policy) BeforeCreate(tx *gorm.DB) error {
 
 func (pu *PolicyUser) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(policyContext)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

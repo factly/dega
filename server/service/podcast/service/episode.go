@@ -45,8 +45,6 @@ type Episode struct {
 	MetaFields    postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
-var episodeUser config.ContextKey = "episode_user"
-
 type episodePaging struct {
 	Total int64         `json:"total"`
 	Nodes []EpisodeData `json:"nodes"`
@@ -131,7 +129,7 @@ func (es *episodeService) Create(ctx context.Context, sID uuid.UUID, uID, oID, t
 		MetaFields:      episode.MetaFields,
 		SpaceID:         sID,
 	}
-	tx := es.model.WithContext(context.WithValue(ctx, episodeUser, uID)).Begin()
+	tx := es.model.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err = tx.Model(&model.Episode{}).Create(&result.Episode).Error
 
 	if err != nil {

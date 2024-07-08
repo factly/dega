@@ -37,23 +37,24 @@ func CheckEntityAccess(entity, action string) func(h http.Handler) http.Handler 
 }
 
 func CheckSpaceEntityPermission(sID uuid.UUID, uID, resource, action, orgRole string) (bool, errorx.Message) {
-	// Check if user is part of the space or not
-	spaceUser := model.SpaceUser{}
-	err := config.DB.Model(&model.SpaceUser{}).Where(&model.SpaceUser{
-		SpaceID: sID,
-		UserID:  uID,
-	}).First(&spaceUser).Error
-
-	if err != nil {
-		loggerx.Error(err)
-		if err == gorm.ErrRecordNotFound {
-			return false, errorx.Unauthorized()
-		}
-
-		return false, errorx.InternalServerError()
-	}
 
 	if orgRole != "admin" {
+		// Check if user is part of the space or not
+		spaceUser := model.SpaceUser{}
+		err := config.DB.Model(&model.SpaceUser{}).Where(&model.SpaceUser{
+			SpaceID: sID,
+			UserID:  uID,
+		}).First(&spaceUser).Error
+
+		if err != nil {
+			loggerx.Error(err)
+			if err == gorm.ErrRecordNotFound {
+				return false, errorx.Unauthorized()
+			}
+
+			return false, errorx.InternalServerError()
+		}
+
 		permission := model.Permission{
 			Resource: resource,
 			Action:   action,

@@ -25,8 +25,6 @@ type Menu struct {
 	MetaFields postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
-var userMenuContext config.ContextKey = "menu_user"
-
 type pagingMenu struct {
 	Total int64        `json:"total"`
 	Nodes []model.Menu `json:"nodes"`
@@ -113,7 +111,7 @@ func (ms MenuService) Create(ctx context.Context, sID uuid.UUID, uID string, men
 		MetaFields: menu.MetaFields,
 		SpaceID:    sID,
 	}
-	tx := config.DB.WithContext(context.WithValue(ctx, userMenuContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err := tx.Model(&model.Menu{}).Create(&result).Error
 
 	if err != nil {

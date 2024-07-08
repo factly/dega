@@ -42,8 +42,6 @@ type Tag struct {
 	MediumID         uuid.UUID      `json:"medium_id"`
 }
 
-var userContext config.ContextKey = "tag_user"
-
 type ITagService interface {
 	GetById(sID, id uuid.UUID) (model.Tag, error)
 	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
@@ -242,7 +240,7 @@ func (ts TagService) Create(ctx context.Context, sID uuid.UUID, uID string, tag 
 		FooterCode:       tag.FooterCode,
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err = tx.Model(&model.Tag{}).Create(&result).Error
 	if err != nil {
 		tx.Rollback()

@@ -48,12 +48,10 @@ func (rating *Rating) BeforeSave(tx *gorm.DB) (e error) {
 	return nil
 }
 
-var ratingUser config.ContextKey = "rating_user"
-
 // BeforeCreate hook
 func (rating *Rating) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(ratingUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

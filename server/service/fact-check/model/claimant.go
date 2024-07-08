@@ -47,12 +47,10 @@ func (claimant *Claimant) BeforeSave(tx *gorm.DB) (e error) {
 	return nil
 }
 
-var claimantUser config.ContextKey = "claimant_user"
-
 // BeforeCreate hook
 func (claimant *Claimant) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(claimantUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

@@ -14,8 +14,6 @@ import (
 	"github.com/factly/x/renderx"
 )
 
-var userContext config.ContextKey = "space_user"
-
 func update(w http.ResponseWriter, r *http.Request) {
 	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
@@ -52,7 +50,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 
 	spaceUsers := make([]model.SpaceUser, 0)
 

@@ -139,7 +139,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 
 	newTags := make([]model.Tag, 0)
 	if len(post.TagIDs) > 0 {

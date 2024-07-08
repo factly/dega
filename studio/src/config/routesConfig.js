@@ -230,7 +230,7 @@ const routes = {
     title: 'Spaces',
   },
   createSpace: {
-    path: '/admin/spaces/create',
+    path: '/spaces/create',
     menuKey: '/admin/spaces',
     Component: CreateSpace,
     title: 'New Space',

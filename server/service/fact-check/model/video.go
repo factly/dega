@@ -35,12 +35,10 @@ type VideoAuthor struct {
 	VideoID  uuid.UUID `gorm:"type:uuid;column:video_id" json:"video_id"`
 }
 
-var videoUser config.ContextKey = "video_user"
-
 // BeforeCreate hook
 func (video *Video) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(videoUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

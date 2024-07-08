@@ -61,12 +61,10 @@ func (category *Category) BeforeSave(tx *gorm.DB) (e error) {
 	return nil
 }
 
-var categoryUser config.ContextKey = "category_user"
-
 // BeforeCreate hook
 func (category *Category) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(categoryUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

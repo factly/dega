@@ -57,7 +57,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 	for i := range formats {
 		formats[i].SpaceID = authCtx.SpaceID
 		err := tx.Model(&model.Format{}).FirstOrCreate(&formats[i], &formats[i]).Error

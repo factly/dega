@@ -37,8 +37,6 @@ type Category struct {
 	FooterCode       string         `json:"footer_code"`
 }
 
-var userCategoryContext config.ContextKey = "category_user"
-
 type pagingCategory struct {
 	Total int64            `json:"total"`
 	Nodes []model.Category `json:"nodes"`
@@ -249,7 +247,7 @@ func (cs CategoryService) Create(ctx context.Context, sID uuid.UUID, uID string,
 		HeaderCode:       category.HeaderCode,
 		FooterCode:       category.FooterCode,
 	}
-	tx := config.DB.WithContext(context.WithValue(ctx, userCategoryContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err := tx.Model(&model.Category{}).Create(result).Error
 
 	if err != nil {

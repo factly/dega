@@ -22,12 +22,10 @@ type Format struct {
 	SpaceID     uuid.UUID      `gorm:"type:uuid;column:space_id" json:"space_id"`
 }
 
-var formatUser config.ContextKey = "format_user"
-
 // BeforeCreate hook
 func (format *Format) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(formatUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

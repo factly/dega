@@ -26,12 +26,10 @@ type Tag struct {
 	FooterCode       string         `gorm:"column:footer_code" json:"footer_code"`
 }
 
-var tagUser config.ContextKey = "tag_user"
-
 // BeforeCreate hook
 func (tag *Tag) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(tagUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

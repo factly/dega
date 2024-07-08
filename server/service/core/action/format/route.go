@@ -3,7 +3,6 @@ package format
 import (
 	"time"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/google/uuid"
@@ -23,8 +22,6 @@ type format struct {
 	FooterCode  string         `json:"footer_code"`
 	MediumID    uuid.UUID      `json:"medium_id"`
 }
-
-var userContext config.ContextKey = "format_user"
 
 var meiliIndex = "format"
 

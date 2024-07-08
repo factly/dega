@@ -85,12 +85,10 @@ func (claim *Claim) BeforeSave(tx *gorm.DB) (e error) {
 	return nil
 }
 
-var claimUser config.ContextKey = "claim_user"
-
 // BeforeCreate hook
 func (claim *Claim) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(claimUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil
@@ -103,12 +101,10 @@ func (claim *Claim) BeforeCreate(tx *gorm.DB) error {
 	return nil
 }
 
-var postUser config.ContextKey = "post_user"
-
 // BeforeCreate hook
 func (pc *PostClaim) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(postUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

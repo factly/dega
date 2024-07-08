@@ -33,12 +33,10 @@ func (Medium) TableName() string {
 	return "media"
 }
 
-var mediumUser config.ContextKey = "medium_user"
-
 // BeforeCreate hook
 func (media *Medium) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(mediumUser)
+	userID := ctx.Value(config.UserContext)
 
 	if userID == nil {
 		return nil

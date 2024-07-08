@@ -51,7 +51,7 @@ func SetupVars() {
 		log.Fatal("please provide zitadel_protocol config param")
 	}
 
-	if !viper.IsSet("zitadel_personal_access_token ") {
+	if !viper.IsSet("zitadel_personal_access_token") {
 		log.Fatal("please provide zitadel_personal_access_token config param")
 	}
 
@@ -95,7 +95,12 @@ func SetupVars() {
 		if !viper.IsSet("redis_cache_duration") {
 			log.Fatal("please provide redis_cache_duration config param")
 		}
+	}
 
+	if HukzEnabled() {
+		if !viper.IsSet("hukz_url") {
+			log.Fatal("please provide hukz_url config param")
+		}
 	}
 
 }
@@ -110,4 +115,8 @@ func Sqlite() bool {
 
 func CacheEnabled() bool {
 	return viper.IsSet("enable_cache") && viper.GetBool("enable_cache")
+}
+
+func HukzEnabled() bool {
+	return viper.IsSet("enable_hukz") && viper.GetBool("enable_hukz")
 }

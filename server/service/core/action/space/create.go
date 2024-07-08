@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/space/setup"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
@@ -95,13 +96,47 @@ func create(w http.ResponseWriter, r *http.Request) {
 		result.MobileIconID = space.MobileIconID
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 
 	err = tx.Model(&model.Space{}).Create(result).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
+	}
+
+	tx, e := setup.Ratings(tx, result.ID)
+	if e.Code != 0 {
+		tx.Rollback()
+		loggerx.Error(errors.New("rating setup error"))
+		errorx.Render(w, errorx.Parser(e))
+		return
+	}
+
+	tx, e = setup.Policies(tx, result.ID)
+	if e.Code != 0 {
+		tx.Rollback()
+		loggerx.Error(errors.New("policy setup error"))
+		errorx.Render(w, errorx.Parser(e))
+		return
+	}
+
+	tx, e = setup.Formats(tx, result.ID)
+	if e.Code != 0 {
+		tx.Rollback()
+		loggerx.Error(errors.New("format setup error"))
+		errorx.Render(w, errorx.Parser(e))
+		return
+	}
+
+	if config.HukzEnabled() {
+		tx, e = setup.Events(tx, authCtx.UserID)
+		if e.Code != 0 {
+			tx.Rollback()
+			loggerx.Error(errors.New("role setup error"))
+			errorx.Render(w, errorx.Parser(e))
+			return
+		}
 	}
 
 	tx.Commit()

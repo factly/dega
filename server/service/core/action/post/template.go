@@ -80,7 +80,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	template.Post.Base = config.Base{}
 	postClaims := make([]factCheckModel.PostClaim, 0)
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 	err = tx.Model(&model.Post{}).Create(&template.Post).Error
 
 	if err != nil {

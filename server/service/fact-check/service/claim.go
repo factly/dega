@@ -26,8 +26,6 @@ type claimPaging struct {
 	Nodes []model.Claim `json:"nodes"`
 }
 
-var claimContext config.ContextKey = "claim_user"
-
 type Claim struct {
 	CreatedAt      time.Time      `json:"created_at"`
 	UpdatedAt      time.Time      `json:"updated_at"`
@@ -138,7 +136,7 @@ func (cs *claimService) Create(ctx context.Context, sID uuid.UUID, uID string, c
 		MigratedHTML:    claim.MigratedHTML,
 	}
 
-	tx := cs.model.WithContext(context.WithValue(ctx, claimContext, uID)).Begin()
+	tx := cs.model.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err = tx.Model(&model.Claim{}).Create(&result).Error
 
 	if err != nil {

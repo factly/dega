@@ -94,7 +94,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		result.MobileIconID = space.MobileIconID
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.SpaceID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.SpaceID)).Begin()
 
 	err = tx.Model(&model.Space{}).Updates(&result).Error
 	if err != nil {

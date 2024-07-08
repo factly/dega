@@ -194,7 +194,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, userContext, authCtx.UserID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, config.UserContext, authCtx.UserID)).Begin()
 
 	err = tx.Model(&model.Post{}).Create(&result.Post).Error
 

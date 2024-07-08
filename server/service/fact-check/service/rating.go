@@ -50,8 +50,6 @@ type IRatingService interface {
 	Default(ctx context.Context, sID uuid.UUID, uID string, ratings []model.Rating) (ratingPaging, []errorx.Message)
 }
 
-var ratingContext config.ContextKey = "rating_user"
-
 type RatingService struct {
 	model *gorm.DB
 }
@@ -137,7 +135,7 @@ func (rs RatingService) Create(ctx context.Context, sID uuid.UUID, uID string, r
 		FooterCode:       rating.FooterCode,
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, ratingContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err = tx.Model(&model.Rating{}).Create(&result).Error
 
 	if err != nil {
@@ -326,7 +324,7 @@ func GetRatingService() IRatingService {
 }
 
 func (rs RatingService) Default(ctx context.Context, sID uuid.UUID, uID string, ratings []model.Rating) (ratingPaging, []errorx.Message) {
-	tx := rs.model.WithContext(context.WithValue(ctx, ratingContext, uID)).Begin()
+	tx := rs.model.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 
 	var err error
 	for i := range ratings {

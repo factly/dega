@@ -73,7 +73,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, authCtx.UserID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 	err = tx.Model(&model.Policy{}).Create(&policy).Error
 
 	if err != nil {

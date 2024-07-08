@@ -43,7 +43,7 @@ function Spaces() {
               </Link>
             </Col>
           ) : null}
-          <Link key="1" to="/admin/spaces/create">
+          <Link key="1" to="/spaces/create">
             <Button type="primary">New Space</Button>
           </Link>
         </Row>
