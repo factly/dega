@@ -43,7 +43,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	episodeService := service.GetEpisodeService()
 
-	result, serviceErr := episodeService.GetById(r.Context(), authCtx.SpaceID, id, authCtx.OrganisationID)
+	result, serviceErr := episodeService.GetById(r.Context(), authCtx.SpaceID, id, authCtx.OrganisationID, r.Header.Get("Authorization"))
 
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)

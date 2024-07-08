@@ -56,7 +56,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	episodeService := service.GetEpisodeService()
 
-	result, serviceErr := episodeService.Update(r.Context(), authCtx.SpaceID, id, authCtx.UserID, authCtx.OrganisationID, episode)
+	result, serviceErr := episodeService.Update(r.Context(), authCtx.SpaceID, id, authCtx.UserID, authCtx.OrganisationID, r.Header.Get("Authorization"), episode)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

@@ -53,10 +53,10 @@ type episodePaging struct {
 }
 
 type IEpisodeService interface {
-	GetById(ctx context.Context, sID, id uuid.UUID, oID string) (model.Episode, []errorx.Message)
+	GetById(ctx context.Context, sID, id uuid.UUID, oID, token string) (model.Episode, []errorx.Message)
 	List(ctx context.Context, sID uuid.UUID, offset, limit int, searchQuery, sort string, queryMap url.Values) (episodePaging, []errorx.Message)
-	Create(ctx context.Context, sID uuid.UUID, uID, oID string, episode *Episode) (EpisodeData, []errorx.Message)
-	Update(ctx context.Context, sID, id uuid.UUID, uID, oID string, episode *Episode) (EpisodeData, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID, oID, token string, episode *Episode) (EpisodeData, []errorx.Message)
+	Update(ctx context.Context, sID, id uuid.UUID, uID, oID, token string, episode *Episode) (EpisodeData, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
@@ -65,7 +65,7 @@ type episodeService struct {
 }
 
 // Create implements IEpisodeService
-func (es *episodeService) Create(ctx context.Context, sID uuid.UUID, uID, oID string, episode *Episode) (EpisodeData, []errorx.Message) {
+func (es *episodeService) Create(ctx context.Context, sID uuid.UUID, uID, oID, token string, episode *Episode) (EpisodeData, []errorx.Message) {
 
 	validationError := validationx.Check(episode)
 
@@ -141,7 +141,7 @@ func (es *episodeService) Create(ctx context.Context, sID uuid.UUID, uID, oID st
 	}
 
 	if len(episode.AuthorIDs) > 0 {
-		authorMap, err := util.GetAuthors(oID, episode.AuthorIDs)
+		authorMap, err := util.GetAuthors(token, oID, episode.AuthorIDs)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -195,7 +195,7 @@ func (es *episodeService) Delete(sID, id uuid.UUID) []errorx.Message {
 }
 
 // GetById implements IEpisodeService
-func (es *episodeService) GetById(ctx context.Context, sID, id uuid.UUID, oId string) (model.Episode, []errorx.Message) {
+func (es *episodeService) GetById(ctx context.Context, sID, id uuid.UUID, oId, token string) (model.Episode, []errorx.Message) {
 
 	result := EpisodeData{}
 
@@ -222,7 +222,7 @@ func (es *episodeService) GetById(ctx context.Context, sID, id uuid.UUID, oId st
 	}
 
 	// Adding authors in response
-	authorMap, err := util.GetAuthors(oId, authorIds)
+	authorMap, err := util.GetAuthors(token, oId, authorIds)
 	if err != nil {
 		loggerx.Error(err)
 		return result.Episode, errorx.Parser(errorx.DBError())
@@ -325,7 +325,7 @@ func (es *episodeService) List(ctx context.Context, sID uuid.UUID, offset, limit
 }
 
 // Update implements IEpisodeService
-func (es *episodeService) Update(ctx context.Context, sID, id uuid.UUID, uID, oID string, episode *Episode) (EpisodeData, []errorx.Message) {
+func (es *episodeService) Update(ctx context.Context, sID, id uuid.UUID, uID, oID, token string, episode *Episode) (EpisodeData, []errorx.Message) {
 
 	validationError := validationx.Check(episode)
 
@@ -444,7 +444,7 @@ func (es *episodeService) Update(ctx context.Context, sID, id uuid.UUID, uID, oI
 	}
 
 	// Fetch current authors
-	authorMap, err := util.GetAuthors(oID, episode.AuthorIDs)
+	authorMap, err := util.GetAuthors(token, oID, episode.AuthorIDs)
 	if err != nil {
 		loggerx.Error(err)
 		return EpisodeData{}, errorx.Parser(errorx.DBError())

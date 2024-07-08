@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func GetAuthors(orgID string, ids []string) (map[string]model.Author, error) {
+func GetAuthors(token, orgID string, ids []string) (map[string]model.Author, error) {
 	zitadelUsers, err := zitadel.GetOrganisationUsers(viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN"), orgID, ids)
 
 	if err != nil {

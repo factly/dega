@@ -172,6 +172,7 @@ services:
       - 7789:8000
       - 7788:8001
       - 7787:8002
+      - 7786:8004
     build:
       context: ./server
       dockerfile: Dockerfile.dev

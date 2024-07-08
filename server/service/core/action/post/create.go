@@ -169,6 +169,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		DescriptionAMP:   post.DescriptionAMP,
 		MigratedHTML:     post.MigratedHTML,
 		Language:         post.Language,
+		CustomFormat:     post.CustomFormat,
 	}
 
 	if post.MigrationID != nil {
@@ -234,7 +235,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		}
 	}
 
-	authors, err := util.GetAuthors(authCtx.OrganisationID, post.AuthorIDs)
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, post.AuthorIDs)
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.InternalServerError()

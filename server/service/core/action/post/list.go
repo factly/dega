@@ -177,7 +177,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all authors
-	authors, err := util.GetAuthors(authCtx.OrganisationID, authorIDs)
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, authorIDs)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -333,7 +333,7 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 
 	posts := make([]model.Post, 0)
 
-	order := "posts." + pageSortBy + " " + pageSortOrder
+	order := "de_post." + pageSortBy + " " + pageSortOrder
 
 	tx := config.DB.Model(&model.Post{})
 
@@ -341,18 +341,18 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 		Preload("Categories").
 		Preload("Medium").
 		Preload("Format").
-		Joins("JOIN post_tag ON post_tag.post_id = posts.id").
-		Joins("JOIN post_category ON post_category.post_id = posts.id").
-		Joins("JOIN post_author ON post_author.post_id = posts.id").
-		Where("posts.space_id = ?", authCtx.SpaceID).
-		Where("post_tag.tag_id IN ?", tagUUIDs).
-		Where("post_category.category_id IN ?", categoryUUIDs).
-		Where("post_author.author_id IN ?", authorIds).
-		Where("posts.format_id IN ?", formatUUIDs).
-		Where("posts.id IN ?", uuids).
-		Where("posts.is_page = ?", isPageBool).
-		Where("posts.status = ?", status).
-		Where("posts.is_featured = ?", isFeaturedBool).
+		Joins("JOIN de_post_tags ON de_post_tags.post_id = de_post.id").
+		Joins("JOIN de_post_categories ON de_post_categories.post_id = de_post.id").
+		Joins("JOIN de_post_author ON de_post_author.post_id = de_post.id").
+		Where("de_post.space_id = ?", authCtx.SpaceID).
+		Where("de_post_tags.tag_id IN ?", tagUUIDs).
+		Where("de_post_categories.category_id IN ?", categoryUUIDs).
+		Where("de_post_author.author_id IN ?", authorIds).
+		Where("de_post.format_id IN ?", formatUUIDs).
+		Where("de_post.id IN ?", uuids).
+		Where("de_post.is_page = ?", isPageBool).
+		Where("de_post.status = ?", status).
+		Where("de_post.is_featured = ?", isFeaturedBool).
 		Count(&result.Total).
 		Limit(limit).
 		Offset(offset).

@@ -139,7 +139,6 @@ type requestBody struct {
 
 func CachingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 		body := requestBody{}
 		spaceId := r.Header.Get("x-space")
 		bodyBytes, _ := io.ReadAll(r.Body)

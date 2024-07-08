@@ -84,7 +84,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Claims = make([]factCheckModel.Claim, 0)
 
 	// fetch all authors
-	authors, err := util.GetAuthors(authCtx.OrganisationID, post.AuthorIDs)
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, post.AuthorIDs)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -189,6 +189,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"description_amp":    post.DescriptionAMP,
 		"migrated_html":      post.MigratedHTML,
 		"language":           post.Language,
+		"custom_format":      post.CustomFormat,
 	}
 
 	if post.MigrationID != nil {

@@ -89,7 +89,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all authors
-	authors, err := util.GetAuthors(authCtx.OrganisationID, page.AuthorIDs)
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, page.AuthorIDs)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

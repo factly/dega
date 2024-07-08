@@ -155,7 +155,7 @@ func (ts TagService) PublicList(sID uuid.UUID, offset, limit int, searchQuery, s
 
 	order := pageSortBy + " " + pageSortOrder
 
-	var tx *gorm.DB
+	tx := config.DB.Model(&model.Tag{})
 
 	if len(ids) > 0 {
 		tx = tx.Model(&model.Tag{}).Where(ids)

@@ -42,6 +42,7 @@ type Post struct {
 	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`
+	CustomFormat     string         `gorm:"column:custom_format" json:"custom_format"`
 }
 
 // PostAuthor model

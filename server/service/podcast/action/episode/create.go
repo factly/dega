@@ -47,7 +47,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	episodeService := service.GetEpisodeService()
 
-	result, serviceErr := episodeService.Create(r.Context(), authCtx.SpaceID, authCtx.UserID, authCtx.OrganisationID, episode)
+	result, serviceErr := episodeService.Create(r.Context(), authCtx.SpaceID, authCtx.UserID, authCtx.OrganisationID, r.Header.Get("Authorization"), episode)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

@@ -44,6 +44,7 @@ type post struct {
 	TagIDs           []uuid.UUID    `json:"tag_ids"`
 	ClaimIDs         []uuid.UUID    `json:"claim_ids"`
 	AuthorIDs        []string       `json:"author_ids"`
+	CustomFormat     string         `json:"custom_format"`
 }
 
 type postData struct {

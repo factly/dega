@@ -65,6 +65,11 @@ var serveCmd = &cobra.Command{
 			}()
 		}
 
+		go func() {
+			r := service.RegisterPublicRoutes()
+			log.Fatal(http.ListenAndServe(":8004", r))
+		}()
+
 		if err := http.ListenAndServe(":8000", r); err != nil {
 			log.Fatal(err)
 		}

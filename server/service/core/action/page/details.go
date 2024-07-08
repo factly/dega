@@ -70,7 +70,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Adding author
-	authors, err := util.GetAuthors(authCtx.OrganisationID, authorIds)
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, authorIds)
 
 	if err != nil {
 		loggerx.Error(err)

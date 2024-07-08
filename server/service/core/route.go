@@ -59,6 +59,7 @@ func PublicRouter() http.Handler {
 	r.Get("/tags", tag.PublicList)
 	r.Get("/formats", format.List)
 	r.Get("/authors", author.PublicList)
+	r.Get("/posts", post.PublicList)
 
 	return r
 }

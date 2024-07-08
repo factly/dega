@@ -157,12 +157,10 @@ func (cs CategoryService) PublicList(sID uuid.UUID, offset, limit int, searchQue
 
 	order := pageSortBy + " " + pageSortOrder
 
-	var tx *gorm.DB
+	tx := config.DB.Model(&model.Category{})
 
 	if len(ids) > 0 {
 		tx = tx.Model(&model.Category{}).Where(ids)
-	} else {
-		tx = tx.Model(&model.Category{})
 	}
 
 	if searchQuery != "" {

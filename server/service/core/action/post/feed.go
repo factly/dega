@@ -8,7 +8,6 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
@@ -97,7 +96,7 @@ func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
 			authorIDs = append(authorIDs, po.AuthorID)
 		}
 	}
-	authorMap, _ := util.GetAuthors("", authorIDs)
+	authorMap := make(map[string]model.Author)
 
 	// generate post author map
 	postAuthorMap := make(map[uuid.UUID][]string)

@@ -98,16 +98,14 @@ func RegisterPublicRoutes() http.Handler {
 		"meilisearch": util.MeiliChecker,
 	})
 
-	r.Use(util.CheckAPIAcess)
-
 	if config.CacheEnabled() {
 		config.SetupCache()
 		r.Use(config.CachingMiddleware, config.RespMiddleware)
 	}
-
-	r.Mount("/core", core.PublicRouter())
-	r.Mount("/fact-check", factCheck.PublicRouter())
-
+	r.With(util.CheckAPIAcess).Group(func(r chi.Router) {
+		r.Mount("/core", core.PublicRouter())
+		r.Mount("/fact-check", factCheck.PublicRouter())
+	})
 	return r
 }
 
