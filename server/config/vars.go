@@ -19,10 +19,6 @@ func SetupVars() {
 		log.Println("config file not found...")
 	}
 
-	if !viper.IsSet("zitadel_domain") {
-		log.Fatal("please provide zitadel_domain config param")
-	}
-
 	if !viper.IsSet("database_host") {
 		log.Fatal("please provide database_host config param")
 	}
@@ -47,12 +43,20 @@ func SetupVars() {
 		log.Fatal("please provide database_ssl_mode config param")
 	}
 
-	if !viper.IsSet("kavach_url") {
-		log.Fatal("please provide kavach_url config param")
+	if !viper.IsSet("zitadel_domain") {
+		log.Fatal("please provide zitadel_domain config param")
 	}
 
-	if !viper.IsSet("keto_read_api_url") {
-		log.Fatal("please provide keto_read_api_url config param")
+	if !viper.IsSet("zitadel_protocol") {
+		log.Fatal("please provide zitadel_protocol config param")
+	}
+
+	if !viper.IsSet("zitadel_personal_access_token ") {
+		log.Fatal("please provide zitadel_personal_access_token config param")
+	}
+
+	if !viper.IsSet("zitadel_project_id") {
+		log.Fatal("please provide zitadel_project_id config param")
 	}
 
 	if viper.IsSet("google_fact_check_search_enabled") && viper.GetBool("google_fact_check_search_enabled") {

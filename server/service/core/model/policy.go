@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// KetoPolicy model
 type Permission struct {
 	config.Base
 	PolicyID uuid.UUID `gorm:"type:uuid;column:policy_id" json:"policy_id"`
@@ -14,7 +13,6 @@ type Permission struct {
 	Resource string    `gorm:"column:resource" json:"resource"`
 }
 
-// Permission model
 type Policy struct {
 	config.Base
 	Name        string       `gorm:"column:name" json:"name"`

@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// CheckEntityAccess returns middleware that checks the permissions of user from keto server
+// CheckEntityAccess returns middleware that checks the permissions of user
 func CheckEntityAccess(entity, action string) func(h http.Handler) http.Handler {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

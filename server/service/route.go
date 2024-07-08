@@ -61,9 +61,6 @@ func RegisterRoutes() http.Handler {
 
 	healthx.RegisterRoutes(r, healthx.ReadyCheckers{
 		"database":    sqlDB.Ping,
-		"keto":        util.KetoChecker,
-		"kavach":      util.KavachChecker,
-		"kratos":      util.KratosChecker,
 		"meilisearch": util.MeiliChecker,
 	})
 
