@@ -104,7 +104,7 @@ const DescriptionInput = ({
         onFileAdded={(file) => {
           const data = file.data;
           const url = data.thumbnail ? data.thumbnail : URL.createObjectURL(data);
-          const image = new Image();
+          const image = document.createElement('img');
           image.src = url;
           image.onload = () => {
             // uppy.setFileMeta(file.id, { width: image.width, height: image.height });
