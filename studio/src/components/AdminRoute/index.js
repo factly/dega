@@ -5,10 +5,9 @@ import { useSelector } from 'react-redux';
 
 function AdminRoute({ component: Component, ...rest }) {
   const { loading, org, isOwner } = useSelector(({ admin, spaces }) => {
-    let orgs = spaces.orgs.filter((each) => each.permission.role === 'owner');
+    let orgs = spaces.orgs.filter((each) => each.role === 'admin');
 
     return {
-      // loading: admin.loading,
       loading: false,
       org: admin.organisation,
       isOwner: orgs.length > 0,
@@ -23,12 +22,7 @@ function AdminRoute({ component: Component, ...rest }) {
     return (
       <Result
         title="You do not have any organisation."
-        subTitle="Sorry, you are not authorized to access this page."
-        extra={
-          <a href={`${window.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
-            <Button type="primary">Back to Kavach</Button>
-          </a>
-        }
+        subTitle="Sorry, you are not authorized to access this page. Please contact your organisation admin."
       />
     );
 

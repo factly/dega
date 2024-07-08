@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Result, Button } from 'antd';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
@@ -19,12 +19,7 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     return (
       <Result
         title="You do not have any organisation."
-        subTitle="Sorry, you are not authorized to access this page."
-        extra={
-          <a href={`${window.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
-            <Button type="primary">Back to Kavach</Button>
-          </a>
-        }
+        subTitle="Sorry, you are not authorized to access this page. Please contact your administrator."
       />
     );
 
@@ -32,7 +27,7 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     !loading &&
     permission.isSpace &&
     selected === 0 &&
-    orgs.filter((each) => each.permission.role === 'owner').length > 0
+    orgs.filter((each) => each.role === 'admin').length > 0
   ) {
     return <Component {...rest} permission={{ actions }} />;
   }
@@ -40,7 +35,7 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     !loading &&
     isOwner &&
     selected === 0 &&
-    orgs.filter((each) => each.permission.role === 'owner').length > 0
+    orgs.filter((each) => each.role === 'admin').length > 0
   )
     return <Component {...rest} permission={{ actions }} />;
 
@@ -48,7 +43,7 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     !loading &&
     permission.isSpace &&
     selected > 0 &&
-    orgs.filter((each) => each.permission.role === 'owner').length > 0
+    orgs.filter((each) => each.role === 'admin').length > 0
   ) {
     return <Component {...rest} permission={{ actions }} />;
   }

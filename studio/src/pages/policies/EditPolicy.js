@@ -25,7 +25,7 @@ function EditPolicy() {
     return {
       policy: {
         ...state.policies.details[id],
-        permissions: state.policies.details[id].permissions.reduce(
+        permissions: state.policies.details[id].permissions?.reduce(
           (obj, item) => Object.assign(obj, { [item.resource]: item.actions }),
           {},
         ),

@@ -16,8 +16,7 @@ function App() {
     client_id: window.REACT_APP_ZITADEL_CLIENT_ID,
     redirect_uri: window.REACT_APP_ZITADEL_REDIRECT_URI,
     post_logout_redirect_uri: window.REACT_APP_ZITADEL_POST_LOGOUT_REDIRECT_URI,
-    scope:
-      'openid profile email urn:zitadel:iam:user:metadata urn:zitadel:iam:user:resourceowner urn:zitadel:iam:org:project:id:zitadel:aud urn:zitadel:iam:org:project:268579264306114801:roles', // urn:zitadel:iam:org:project:268579264306114801:zitadel:aud
+    scope: `openid profile email urn:zitadel:iam:user:metadata urn:zitadel:iam:user:resourceowner urn:zitadel:iam:org:project:id:zitadel:aud urn:zitadel:iam:org:project:${window.REACT_APP_ZITADEL_PROJECT_ID}:roles`,
     response_type: 'code',
     response_mode: 'query',
     code_challenge_method: 'S256',
@@ -72,7 +71,31 @@ function App() {
 
   useEffect(() => {
     if (
-      (authenticated || !authenticated) &&
+      window.localStorage.getItem(
+        'oidc.user:' +
+          window.REACT_APP_ZITADEL_AUTHORITY +
+          ':' +
+          window.REACT_APP_ZITADEL_CLIENT_ID,
+      )
+    ) {
+      const userInfo = JSON.parse(
+        window.localStorage.getItem(
+          'oidc.user:' +
+            window.REACT_APP_ZITADEL_AUTHORITY +
+            ':' +
+            window.REACT_APP_ZITADEL_CLIENT_ID,
+        ),
+      );
+      if (userInfo.expires_at) {
+        const expiryTime = new Date(userInfo.expires_at * 1000);
+        if (expiryTime < Date.now()) {
+          window.localStorage.setItem('return_to', window.location.href);
+          login();
+        }
+      }
+    }
+    if (
+      !authenticated &&
       !window.location.href.includes('redirect') &&
       !window.localStorage.getItem(
         'oidc.user:' +

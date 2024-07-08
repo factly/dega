@@ -11,7 +11,7 @@ const initialState = {
   orgs: [],
   details: {},
   loading: true,
-  selected: 0,
+  selected: '',
   org_role: '',
 };
 
@@ -49,7 +49,6 @@ export default function spacesReducer(state = initialState, action = {}) {
         orgs: action.payload.map((each) => {
           return {
             ...each,
-            permission: { role: 'owner' },
             spaces: each.spaces.map((e) => e.id),
           };
         }),

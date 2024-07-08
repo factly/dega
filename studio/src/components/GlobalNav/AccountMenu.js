@@ -1,12 +1,11 @@
 import { UserOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, Button, Avatar } from 'antd';
 import React from 'react';
-import { LogoutOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { LogoutOutlined, DownOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile } from '../../actions/profile';
 
-const AccountMenu = ({ signOut }) => {
+const AccountMenu = () => {
   const dispatch = useDispatch();
   const { profile, loading } = useSelector((state) => {
     return {
@@ -21,15 +20,11 @@ const AccountMenu = ({ signOut }) => {
   const handleLogout = () => {
     // clear all local storage and cookies
     window.localStorage.clear();
+    window.location.reload();
   };
 
   const accountMenu = (
     <Menu>
-      <Menu.Item key="profile">
-        <Link to="/profile">
-          <EditOutlined /> Profile
-        </Link>
-      </Menu.Item>
       <Menu.Item key="logout">
         <Button onClick={handleLogout} icon={<LogoutOutlined />} danger>
           Logout

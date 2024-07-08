@@ -60,20 +60,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:     authCtx.SpaceID,
 	}
 
-	policyUsers := make([]model.PolicyUser, 0)
-	uIDs := make([]string, 0)
-
-	for _, userID := range policyReq.Users {
-		policyUser := model.PolicyUser{
-			PolicyID: policy.ID,
-			UserID:   userID,
-		}
-		policyUsers = append(policyUsers, policyUser)
-
-		uIDs = append(uIDs, userID)
-	}
-
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, uIDs)
+	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, policyReq.Users)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -81,7 +68,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if len(users) != len(uIDs) {
+	if len(users) != len(policyReq.Users) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
@@ -94,6 +81,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
+	}
+
+	policyUsers := make([]model.PolicyUser, 0)
+
+	for _, userID := range policyReq.Users {
+		policyUser := model.PolicyUser{
+			PolicyID: policy.ID,
+			UserID:   userID,
+		}
+		policyUsers = append(policyUsers, policyUser)
 	}
 
 	err = tx.Model(&model.PolicyUser{}).Create(&policyUsers).Error

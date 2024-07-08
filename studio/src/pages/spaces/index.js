@@ -7,13 +7,11 @@ import { Helmet } from 'react-helmet';
 
 function Spaces() {
   const { role } = useSelector((state) => {
-    const { selected, orgs } = state.spaces;
+    const { selected } = state.spaces;
 
-    if (selected > 0) {
+    if (selected !== '') {
       const space = state.spaces.details[selected];
-      const orgId = space.organisation_id;
-      const org = orgs.find((org) => org.id === orgId);
-      const role = org.permission.role;
+      const role = space.org_role;
       return {
         role: role,
       };
@@ -38,7 +36,7 @@ function Spaces() {
       <Space direction="vertical">
         <Helmet title={'Spaces'} />
         <Row gutter={16} justify="end">
-          {role === 'owner' ? (
+          {role === 'admin' ? (
             <Col>
               <Link key="2" to="/settings/advanced/reindex">
                 <Button>Reindex</Button>

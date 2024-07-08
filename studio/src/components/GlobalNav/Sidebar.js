@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Layout, Menu, Popover, List, Avatar, Button, Skeleton } from 'antd';
-import routes, { sidebarMenu } from '../../config/routesConfig';
+import { sidebarMenu } from '../../config/routesConfig';
 import _ from 'lodash';
 import { setCollapse } from './../../actions/sidebar';
 import { setSpaceSelectorPage } from './../../actions/spaceSelectorPage';
@@ -15,13 +15,12 @@ import {
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import Search from '../Search';
-import { maker } from '../../utils/sluger';
 import degaImg from '../../assets/dega.png';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar({ permission, orgs, loading, applications, services, menuKey, signOut }) {
+function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, org_role }) {
   const { collapsed } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
   const { details, selected } = useSelector((state) => state.spaces);
@@ -85,24 +84,26 @@ function Sidebar({ permission, orgs, loading, applications, services, menuKey, s
     borderRadius: '21px',
     padding: '0.25rem 0.5rem',
   };
-  permission.forEach((each) => {
-    if (each.resource === 'admin') {
-      resource = resource.concat(protectedResources);
-      if (!showCoreMenu) {
-        setCoreMenu(true);
-      }
-    } else {
+
+  if (org_role === 'admin') {
+    resource = resource.concat(protectedResources);
+    if (!showCoreMenu) {
+      setCoreMenu(true);
+    }
+  } else {
+    permission.forEach((each) => {
       if (!showCoreMenu && protectedResources.includes(each.resource)) {
         setCoreMenu(true);
       }
       resource.push(each.resource);
-    }
-  });
-  if (orgs[0]?.permission.role === 'owner') resource = resource.concat(protectedResources);
+    });
+  }
+
+  if (orgs[0]?.role === 'admin') resource = resource.concat(protectedResources);
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
-        ['Events', 'Permissions'].indexOf(route.title) !== -1 ? null : (
+        ['Events'].indexOf(route.title) !== -1 ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
               <span>{route.title}</span>
@@ -121,7 +122,7 @@ function Sidebar({ permission, orgs, loading, applications, services, menuKey, s
       {menu.submenu && menu.submenu.length > 0 ? (
         <>
           {menu.submenu.map((submenuItem, index) => {
-            return orgs[0]?.permission.role === 'owner' ? (
+            return orgs[0]?.role === 'admin' ? (
               <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
                 {getMenuItems(submenuItem.children, index, submenuItem.title)}
               </SubMenu>

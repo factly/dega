@@ -13,6 +13,7 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/action/category"
 	"github.com/factly/dega-server/service/core/action/format"
+	"github.com/factly/dega-server/service/core/action/info"
 	"github.com/factly/dega-server/service/core/action/meta"
 	"github.com/factly/dega-server/service/core/action/post"
 	"github.com/factly/dega-server/service/core/action/tag"
@@ -75,6 +76,7 @@ func RegisterRoutes() http.Handler {
 
 	r.With(config.ZitadelInterceptor.RequireAuthorization(), util.CheckUser(config.ZitadelInterceptor)).Group(func(r chi.Router) {
 		r.Mount("/user", user.Router())
+		r.Mount("/core/info", info.Router())
 	})
 
 	return r

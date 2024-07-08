@@ -63,17 +63,21 @@ export const permissionRequirements = {
 
 function getUserPermission({ resource, action, spaces }) {
   const { selected, details } = spaces;
+  const selectedSpace = details[selected];
   const userPermission =
-    details[selected] && details[selected].permissions ? details[selected].permissions : [];
+    selectedSpace && selectedSpace.permissions ? selectedSpace.permissions : [];
+  const org_role = selectedSpace && selectedSpace.org_role;
+
+  if (org_role === 'admin') {
+    return ['admin'];
+  }
 
   const node = userPermission.findIndex(
     (each) =>
       each.resource === 'admin' || (each.resource === resource && each.actions.includes(action)),
   );
 
-  // return node > -1 ? userPermission[node].actions : [];
-
-  return ['admin'];
+  return node > -1 ? userPermission[node].actions : [];
 }
 
 export default getUserPermission;

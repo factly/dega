@@ -50,7 +50,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, validationError)
 		return
 	}
-	orgRole := authCtx.OrgRole
+	orgRole := authCtx.OrgsRole[space.OrganisationID]
 	// check if user is admin of the organisation or not
 	if orgRole != "admin" {
 		if orgRole == "member" {

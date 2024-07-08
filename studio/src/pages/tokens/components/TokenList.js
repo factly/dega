@@ -7,7 +7,7 @@ import deepEqual from 'deep-equal';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../../../components/Loader';
 
-export default function TokenList({ role = 'owner' }) {
+export default function TokenList() {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
   const pathname = useLocation().pathname;
@@ -70,7 +70,7 @@ export default function TokenList({ role = 'owner' }) {
         return (
           <span>
             <Popconfirm title="Sure to Revoke?" onConfirm={() => onDelete(record?.id)}>
-              <Button danger disabled={role !== 'owner'} icon={<DeleteOutlined />}>
+              <Button danger icon={<DeleteOutlined />}>
                 Revoke
               </Button>
             </Popconfirm>

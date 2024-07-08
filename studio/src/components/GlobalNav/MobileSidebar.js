@@ -17,7 +17,7 @@ import { maker } from '../../utils/sluger';
 import MenuIcon from '../../assets/MenuIcon';
 import SearchIcon from '../../assets/SearchIcon';
 
-function MobileSidebar({ permission, orgs, applications, services, menuKey }) {
+function MobileSidebar({ permission, orgs, applications, services, menuKey, org_role }) {
   const { details, selected } = useSelector((state) => state.spaces);
   const { navTheme } = useSelector((state) => state.settings);
   const [open, setOpen] = React.useState(false);
@@ -68,24 +68,26 @@ function MobileSidebar({ permission, orgs, applications, services, menuKey }) {
     borderRadius: '21px',
     padding: '.5rem 0.5rem',
   };
-  permission.forEach((each) => {
-    if (each.resource === 'admin') {
-      resource = resource.concat(protectedResources);
-      if (!showCoreMenu) {
-        setCoreMenu(true);
-      }
-    } else {
+
+  if (org_role === 'admin') {
+    resource = resource.concat(protectedResources);
+    if (!showCoreMenu) {
+      setCoreMenu(true);
+    }
+  } else {
+    permission.forEach((each) => {
       if (!showCoreMenu && protectedResources.includes(each.resource)) {
         setCoreMenu(true);
       }
       resource.push(each.resource);
-    }
-  });
-  if (orgs[0]?.permission.role === 'owner') resource = resource.concat(protectedResources);
+    });
+  }
+
+  if (orgs[0]?.role === 'admin') resource = resource.concat(protectedResources);
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
-        ['Events', 'Permissions'].indexOf(route.title) !== -1 ? null : (
+        ['Events'].indexOf(route.title) !== -1 ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path} onClick={onClose}>
               <span>{route.title}</span>
@@ -105,7 +107,7 @@ function MobileSidebar({ permission, orgs, applications, services, menuKey }) {
       {menu.submenu && menu.submenu.length > 0 ? (
         <>
           {menu.submenu.map((submenuItem, index) => {
-            return orgs[0]?.permission.role === 'owner' ? (
+            return orgs[0]?.role === 'admin' ? (
               <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
                 {getMenuItems(submenuItem.children, index, submenuItem.title)}
               </SubMenu>
@@ -273,7 +275,7 @@ function MobileSidebar({ permission, orgs, applications, services, menuKey }) {
               : !menu.isService
               ? !menu.isAdmin
                 ? getSubMenuItems(menu, index, Icon)
-                : permission.filter((each) => each.resource === 'admin').length > 0
+                : org_role === 'admin'
                 ? getSubMenuItems(menu, index, Icon)
                 : null
               : services?.includes(maker(menu.title))

@@ -5,23 +5,18 @@ import {
   SET_MEDIA_LOADING,
   RESET_MEDIA,
   MEDIA_API,
-  KAVACH_MEDIA_API,
   GET_MEDIUM,
   UPDATE_MEDIUM,
 } from '../constants/media';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 
-const getApi = (profile) => {
-  return profile ? KAVACH_MEDIA_API : MEDIA_API;
-};
-
 // action to fetch media
 export const getMedia = (query, profile) => {
   return (dispatch) => {
     dispatch(loadingMedia());
     return axios
-      .get(getApi(profile), {
+      .get(MEDIA_API, {
         params: query,
       })
       .then((response) => {
@@ -46,7 +41,7 @@ export const getMedium = (id, profile) => {
   return (dispatch) => {
     dispatch(loadingMedia());
     return axios
-      .get(getApi(profile) + '/' + id)
+      .get(MEDIA_API + '/' + id)
       .then((response) => {
         dispatch({ type: GET_MEDIUM, payload: response.data });
       })
@@ -62,7 +57,7 @@ export const createMedium = (data, profile) => {
   return (dispatch) => {
     dispatch(loadingMedia());
     return axios
-      .post(getApi(profile), profile ? data[0] : data)
+      .post(MEDIA_API, profile ? data[0] : data)
       .then((response) => {
         dispatch(resetMedia());
         dispatch(addSuccessNotification('Medium created'));

@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 
-const Callback = ({ authenticated, setAuth, userManager, handleLogout }) => {
+const Callback = ({ authenticated, setAuth, userManager }) => {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    if (authenticated === null) {
+    if (!authenticated) {
       userManager
         .signinRedirectCallback()
         .then((user) => {
           if (user) {
             setAuth(true);
             setUserInfo(user);
-            setCookie(user.access_token, user.expires_at);
           } else {
             setAuth(false);
           }
@@ -36,13 +35,7 @@ const Callback = ({ authenticated, setAuth, userManager, handleLogout }) => {
           setAuth(false);
         });
     }
-  }, [authenticated, userManager, setAuth]);
-
-  const setCookie = (value, expiryTime) => {
-    const date = new Date(expiryTime);
-    const expires = `expires=${date.toUTCString()}`;
-    document.cookie = `x-user-token=${value};${expires};path=/;HttpOnly`;
-  };
+  }, [authenticated]);
 
   if (authenticated === true && userInfo) {
     window.location.href = window.localStorage.getItem('return_to') || window.PUBLIC_URL;

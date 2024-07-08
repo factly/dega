@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider, Result } from 'antd';
+import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -14,24 +14,61 @@ import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 import { permissionRequirements } from '../utils/getUserPermission';
 
+const styles = {
+  position: 'absolute',
+  padding: '2rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100vh',
+  width: '100%',
+};
+
 function BasicLayout(props) {
+  const dispatch = useDispatch();
   const [isMobileScreen, setIsMobileScreen] = useState(false);
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 460) {
-        setIsMobileScreen(true);
-      } else {
-        setIsMobileScreen(false);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    handleResize();
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
   const location = useLocation();
   const { Content } = Layout;
   const { children } = props;
   const [enteredRoute, setRoute] = useState({ menuKey: '/' });
+
+  const { permission, orgs, loading, selected, applications, services, org_role } = useSelector(
+    (state) => {
+      const { selected, orgs, loading, org_role } = state.spaces;
+
+      if (selected !== '') {
+        const space = state.spaces.details[selected];
+
+        const applications = orgs.find((org) => org.spaces.includes(space.id))?.applications || [];
+
+        return {
+          applications: applications,
+          permission: space.permissions || [],
+          orgs: orgs,
+          loading: loading,
+          selected: selected,
+          services: space.services,
+          org_role: space.org_role,
+        };
+      }
+      return {
+        orgs: orgs,
+        loading: loading,
+        permission: [],
+        selected: selected,
+        applications: [],
+        services: ['core'],
+        org_role,
+      };
+    },
+  );
+
+  const { type, message, description, time } = useSelector((state) => {
+    return { ...state.notifications };
+  });
+
+  const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
+
   useEffect(() => {
     const pathSnippets = location.pathname.split('/').filter((i) => i);
     if (pathSnippets.length === 0) {
@@ -56,42 +93,18 @@ function BasicLayout(props) {
     }
   }, [location]);
 
-  const dispatch = useDispatch();
-
-  const { permission, orgs, loading, selected, applications, services, org_role } = useSelector(
-    (state) => {
-      const { selected, orgs, loading } = state.spaces;
-
-      if (selected > 0) {
-        const space = state.spaces.details[selected];
-
-        const applications = orgs.find((org) => org.spaces.includes(space.id))?.applications || [];
-
-        return {
-          applications: applications,
-          permission: space.permissions || [],
-          orgs: orgs,
-          loading: loading,
-          selected: selected,
-          services: space.services,
-          org_role: space.org_role,
-        };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 460) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
       }
-      return {
-        orgs: orgs,
-        loading: loading,
-        permission: [],
-        selected: selected,
-        applications: [],
-        services: ['core'],
-        org_role: '',
-      };
-    },
-  );
-
-  const { type, message, description, time } = useSelector((state) => {
-    return { ...state.notifications };
-  });
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     dispatch(getSpaces());
@@ -106,8 +119,6 @@ function BasicLayout(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time, description]);
-
-  const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
 
   if (spaceSelectorVisible.visible) {
     return (
@@ -124,8 +135,8 @@ function BasicLayout(props) {
       location.pathname.includes('pages')) &&
     (location.pathname.includes('edit') || location.pathname.includes('create'));
 
-  function checkPermissions(pathname, userPermission) {
-    const requiredPermissions = permissionRequirements[pathname];
+  function checkPermissions() {
+    const requiredPermissions = permissionRequirements[location.pathname];
 
     if (!requiredPermissions) {
       return null;
@@ -137,25 +148,51 @@ function BasicLayout(props) {
     }
 
     // Otherwise, check if user has specific permissions for the current location
-    return null;
+    const missingPermissions = requiredPermissions.filter((reqPerm) => {
+      const matchingPerm = permission.find(
+        (perm) =>
+          perm.resource === reqPerm.resource &&
+          (Array.isArray(reqPerm.action)
+            ? reqPerm.action.every((action) => perm.actions.includes(action))
+            : perm.actions.includes(reqPerm.action)),
+      );
+      return !matchingPerm;
+    });
+
+    return missingPermissions.length > 0 ? missingPermissions : null;
   }
   // Render based on permission check
-  const missingPermissions = checkPermissions(location.pathname, selected, orgs, permission);
+  const missingPermissions = checkPermissions();
+
+  if (!loading && (!orgs.length || orgs.filter((o) => o.role === 'admin').length === 0)) {
+    return (
+      <div style={styles}>
+        <Result
+          status="401"
+          title="403 Forbidden"
+          subTitle="You don't have access. Please contact your administrator."
+        />
+      </div>
+    );
+  }
 
   if (missingPermissions) {
     return (
-      <Result
-        status="403"
-        title="403 Forbidden"
-        subTitle={`You don't have required permissions: ${missingPermissions
-          .map(
-            (perm) =>
-              `${perm.resource} (${
-                Array.isArray(perm.action) ? perm.action.join(', ') : perm.action
-              })`,
-          )
-          .join(', ')}`}
-      />
+      <div style={styles}>
+        <Result
+          status="403"
+          title="403 Forbidden"
+          subTitle={`You don't have required permissions: ${missingPermissions
+            .map(
+              (perm) =>
+                `${perm.resource} (${
+                  Array.isArray(perm.action) ? perm.action.join(', ') : perm.action
+                })`,
+            )
+            .join(', ')}`}
+          extra={<Button href="/">Back Home</Button>}
+        />
+      </div>
     );
   }
 
@@ -197,6 +234,7 @@ function BasicLayout(props) {
               loading={loading}
               applications={applications}
               services={services}
+              org_role={org_role}
             />
           </Layout>
         </>
@@ -212,6 +250,7 @@ function BasicLayout(props) {
             applications={applications}
             services={services}
             signOut={children.props.handleLogout}
+            org_role={org_role}
           />
         )}
         <Layout style={{ background: '#fff' }}>
