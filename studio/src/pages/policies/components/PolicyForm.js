@@ -214,7 +214,11 @@ function PolicyForm({ data = {}, onCreate }) {
             </Typography.Title>
             <Divider style={{ margin: '14 0' }} />
             {entities.map((entity, index) => (
-              <Form.Item key={'permissions-' + index} name={['permissions', entity.name]}>
+              <Form.Item
+                key={'permissions-' + index}
+                name={['permissions', entity.name]}
+                label={entity.label}
+              >
                 <Checkbox.Group
                   style={{ flexWrap: 'wrap', justifyContent: 'space-between' }}
                   value={checkedValues[entity.name] || []}
