@@ -3,8 +3,10 @@ package claim
 import (
 	"net/http"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -55,9 +57,9 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// if config.SearchEnabled() {
-	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "claim")
-	// }
+	if config.SearchEnabled() {
+		_ = meilisearch.DeleteDocument(meiliIndex, result.ID.String())
+	}
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("claim.deleted", authCtx.SpaceID.String(), r) {

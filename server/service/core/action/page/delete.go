@@ -6,6 +6,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -69,9 +70,9 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&model.Post{}).Delete(&result)
 
-	// if config.SearchEnabled() {
-	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "page")
-	// }
+	if config.SearchEnabled() {
+		_ = meilisearch.DeleteDocument(meiliIndex, result.ID.String())
+	}
 
 	tx.Commit()
 

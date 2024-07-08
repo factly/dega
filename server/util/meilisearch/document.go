@@ -12,18 +12,19 @@ import (
 
 // AddDocument addes object into meili search index
 func AddDocument(indexName string, data map[string]interface{}) error {
-	if data["kind"] == nil || data["kind"] == "" {
-		return errors.New("no kind field in meili document")
+	_, err := config.MeilisearchClient.GetIndex(indexName)
+	if err != nil {
+		config.SetupMeiliIndex(indexName)
 	}
 	if data["id"] == nil || data["id"] == "" {
 		return errors.New("no id field in meili document")
 	}
 
-	data["object_id"] = fmt.Sprint(data["kind"], "_", data["id"])
+	data["object_id"] = fmt.Sprint(data["id"])
 
 	arr := []map[string]interface{}{data}
 
-	_, err := config.MeilisearchClient.Index(indexName).UpdateDocuments(arr)
+	_, err = config.MeilisearchClient.Index(indexName).UpdateDocuments(arr)
 	if err != nil {
 		return err
 	}
@@ -32,8 +33,8 @@ func AddDocument(indexName string, data map[string]interface{}) error {
 }
 
 // DeleteDocument updates the document in meili index
-func DeleteDocument(indexName string, id string, kind string) error {
-	objectID := fmt.Sprint(kind, "_", id)
+func DeleteDocument(indexName, id string) error {
+	objectID := fmt.Sprint(id)
 	_, err := config.MeilisearchClient.Index(indexName).Delete(objectID)
 	if err != nil {
 		return err
@@ -44,14 +45,11 @@ func DeleteDocument(indexName string, id string, kind string) error {
 
 // UpdateDocument updates the document in meili index
 func UpdateDocument(indexName string, data map[string]interface{}) error {
-	if data["kind"] == nil || data["kind"] == "" {
-		return errors.New("no kind field in meili document")
-	}
 	if data["id"] == nil || data["id"] == "" {
 		return errors.New("no id field in meili document")
 	}
 
-	data["object_id"] = fmt.Sprint(data["kind"], "_", data["id"])
+	data["object_id"] = fmt.Sprint(data["id"])
 
 	arr := []map[string]interface{}{data}
 
@@ -64,12 +62,9 @@ func UpdateDocument(indexName string, data map[string]interface{}) error {
 }
 
 // SearchWithQuery calls meili with q
-func SearchWithQuery(indexName, q, filters, kind string) ([]interface{}, error) {
+func SearchWithQuery(indexName, q, filters string) ([]interface{}, error) {
 	filter := [][]string{}
 	filter = append(filter, []string{filters})
-	if kind != "" {
-		filter = append(filter, []string{fmt.Sprintf("kind=%s", kind)})
-	}
 	result, err := config.MeilisearchClient.Index(indexName).Search(q, &meilisearch.SearchRequest{
 		Filter: filter,
 		Limit:  1000000,
@@ -92,7 +87,6 @@ func GetIDArray(hits []interface{}) []uuid.UUID {
 	for _, hit := range hits {
 		hitMap := hit.(map[string]interface{})
 		id, _ := uuid.Parse(hitMap["id"].(string))
-
 		arr = append(arr, id)
 	}
 

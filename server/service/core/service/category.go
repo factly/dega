@@ -93,7 +93,7 @@ func (cs CategoryService) List(sID uuid.UUID, offset, limit int, searchQuery, so
 			filters := fmt.Sprint("space_id=", sID)
 			var hits []interface{}
 
-			hits, err := meilisearch.SearchWithQuery("dega", searchQuery, filters, "category")
+			hits, err := meilisearch.SearchWithQuery("category", searchQuery, filters)
 
 			if err != nil {
 				loggerx.Error(err)

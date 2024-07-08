@@ -82,7 +82,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			}
 			// Search pages with filter
 			var hits []interface{}
-			hits, err = meilisearch.SearchWithQuery("dega", searchQuery, filters, "page")
+			hits, err = meilisearch.SearchWithQuery(meiliIndex, searchQuery, filters)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))

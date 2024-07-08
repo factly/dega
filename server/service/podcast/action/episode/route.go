@@ -36,6 +36,8 @@ type episodeData struct {
 
 var episodeUser config.ContextKey = "episode_user"
 
+var meiliIndex = "episode"
+
 // Router - Group of episode router
 func Router() chi.Router {
 	r := chi.NewRouter()

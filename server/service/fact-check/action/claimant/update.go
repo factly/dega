@@ -168,14 +168,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		// Update into meili index
 		meiliObj := map[string]interface{}{
 			"id":          result.ID,
-			"kind":        "claimant",
 			"name":        result.Name,
 			"slug":        result.Slug,
 			"description": result.Description,
 			"tag_line":    result.TagLine,
 			"space_id":    result.SpaceID,
 		}
-		_ = meilisearch.UpdateDocument("dega", meiliObj)
+		_ = meilisearch.UpdateDocument(meiliIndex, meiliObj)
 	}
 
 	tx.Commit()

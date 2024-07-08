@@ -145,7 +145,6 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":             template.ID.String(),
-		"kind":           "post",
 		"title":          template.Title,
 		"subtitle":       template.Subtitle,
 		"slug":           template.Slug,
@@ -163,7 +162,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearch.AddDocument("dega", meiliObj)
+		_ = meilisearch.AddDocument(meiliIndex, meiliObj)
 	}
 
 	tx.Commit()

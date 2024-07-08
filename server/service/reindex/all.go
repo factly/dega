@@ -26,11 +26,13 @@ func all(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
-	_, err = config.MeilisearchClient.Index("dega").DeleteAllDocuments()
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	for _, meiliIndex := range config.Indexes {
+		_, err = config.MeilisearchClient.Index(meiliIndex).DeleteAllDocuments()
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	if err = util.ReindexAllEntities(uuid.Nil); err != nil {

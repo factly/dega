@@ -24,6 +24,8 @@ type claimant struct {
 	FooterCode  string         `json:"footer_code"`
 }
 
+var meiliIndex = "claimant"
+
 // Router - Group of claimant router
 func Router() chi.Router {
 	r := chi.NewRouter()

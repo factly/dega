@@ -26,6 +26,8 @@ type format struct {
 
 var userContext config.ContextKey = "format_user"
 
+var meiliIndex = "format"
+
 // Router - Group of tag router
 func Router() chi.Router {
 	r := chi.NewRouter()

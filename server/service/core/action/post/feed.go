@@ -8,6 +8,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
@@ -90,12 +91,13 @@ func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
 	postAuthors := make([]model.PostAuthor, 0)
 	config.DB.Model(&model.PostAuthor{}).Where("post_id IN (?)", postIDs).Find(&postAuthors)
 
-	//TODO: fetch all authors
-	// var userID string
-	// if len(postAuthors) > 0 {
-	// 	userID = postAuthors[0].AuthorID
-	// }
-	authorMap := map[string]model.Author{}
+	authorIDs := make([]string, 0)
+	if len(postAuthors) > 0 {
+		for _, po := range postAuthors {
+			authorIDs = append(authorIDs, po.AuthorID)
+		}
+	}
+	authorMap, _ := util.GetAuthors("", authorIDs)
 
 	// generate post author map
 	postAuthorMap := make(map[uuid.UUID][]string)

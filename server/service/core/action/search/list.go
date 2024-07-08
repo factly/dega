@@ -54,9 +54,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 	filters := []string{}
 	filters = append(filters, fmt.Sprint("space_id=", authCtx.SpaceID))
 
-	result, err := config.MeilisearchClient.Index("dega").Search(searchQuery.Query, &meilisearch.SearchRequest{
-		Filter: filters,
-		Limit:  searchQuery.Limit,
+	result, err := config.MeilisearchClient.MultiSearch(&meilisearch.MultiSearchRequest{
+		Queries: []meilisearch.SearchRequest{
+			{
+				Filter: filters,
+				Query:  searchQuery.Query,
+			},
+		},
 	})
 
 	if err != nil {
@@ -65,5 +69,5 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	renderx.JSON(w, http.StatusOK, result.Hits)
+	renderx.JSON(w, http.StatusOK, result.Results[0].Hits)
 }

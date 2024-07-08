@@ -62,7 +62,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearch.DeleteDocument("dega", result.ID.String(), "tag")
+		_ = meilisearch.DeleteDocument(meiliIndex, result.ID.String())
 	}
 
 	if util.CheckNats() {

@@ -39,31 +39,32 @@ func space(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
+	for _, meiliIndex := range config.Indexes {
+		res, err := config.MeilisearchClient.Index(meiliIndex).Search("", &meilisearch.SearchRequest{
+			Filter: "space_id=" + authCtx.SpaceID.String(),
+			Limit:  100000,
+		})
 
-	res, err := config.MeilisearchClient.Index("dega").Search("", &meilisearch.SearchRequest{
-		Filter: "space_id=" + authCtx.SpaceID.String(),
-		Limit:  100000,
-	})
+		if err != nil {
+			log.Println(err)
+		}
+		if res != nil {
+			hits := res.Hits
+			if len(hits) > 0 {
 
-	if err != nil {
-		log.Println(err)
-	}
-	if res != nil {
-		hits := res.Hits
-		if len(hits) > 0 {
+				objectIDs := make([]string, 0)
 
-			objectIDs := make([]string, 0)
+				for _, hit := range hits {
+					obj := hit.(map[string]interface{})
+					objectIDs = append(objectIDs, obj["object_id"].(string))
+				}
 
-			for _, hit := range hits {
-				obj := hit.(map[string]interface{})
-				objectIDs = append(objectIDs, obj["object_id"].(string))
-			}
-
-			_, err = config.MeilisearchClient.Index("dega").DeleteDocuments(objectIDs)
-			if err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-				return
+				_, err = config.MeilisearchClient.Index(meiliIndex).DeleteDocuments(objectIDs)
+				if err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+					return
+				}
 			}
 		}
 	}

@@ -92,7 +92,7 @@ func (ms MediumService) List(sID uuid.UUID, offset, limit int, searchQuery, sort
 
 			var hits []interface{}
 
-			hits, err := meilisearch.SearchWithQuery("dega", searchQuery, filters, "medium")
+			hits, err := meilisearch.SearchWithQuery("medium", searchQuery, filters)
 			if err != nil {
 				loggerx.Error(err)
 				return pagingMedium{}, errorx.Parser(errorx.NetworkError())

@@ -101,7 +101,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			}
 			// Search posts with filter
 			var hits []interface{}
-			hits, err = meilisearch.SearchWithQuery(viper.GetString("MEILISEARCH_INDEX"), searchQuery, filters, "post")
+			hits, err = meilisearch.SearchWithQuery(viper.GetString("MEILISEARCH_INDEX"), searchQuery, filters)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))

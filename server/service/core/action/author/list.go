@@ -1,6 +1,7 @@
 package author
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -32,7 +33,65 @@ type paging struct {
 // @Param page query string false "page number"
 // @Success 200 {object} paging
 // @Router /core/authors [get]
-func List(w http.ResponseWriter, r *http.Request) {
+func list(w http.ResponseWriter, r *http.Request) {
+	authCtx, err := util.GetAuthCtx(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	result := paging{}
+	result.Nodes = make([]model.Author, 0)
+
+	// get space users
+	authors := make([]model.Author, 0)
+
+	spaceUsers := make([]model.SpaceUser, 0)
+
+	offset, limit := paginationx.Parse(r.URL.Query())
+
+	// get total authors
+	err = config.DB.Model(&model.SpaceUser{}).Where("space_id = ?", authCtx.SpaceID).Count(&result.Total).Limit(limit).Offset(offset).Find(&spaceUsers).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	uIDs := make([]string, 0)
+
+	for _, spaceUser := range spaceUsers {
+		uIDs = append(uIDs, spaceUser.UserID)
+	}
+
+	// get users details from zitadel
+	zitadelUsers, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, uIDs)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	log.Println(zitadelUsers)
+
+	for _, zitadelUser := range zitadelUsers {
+		authors = append(authors, model.Author{
+			ID:          zitadelUser.ID,
+			DisplayName: zitadelUser.Human.Profile.DisplayName,
+			FirstName:   zitadelUser.Human.Profile.FirstName,
+			LastName:    zitadelUser.Human.Profile.LastName,
+		})
+	}
+
+	result.Nodes = authors
+
+	renderx.JSON(w, http.StatusOK, result)
+}
+
+func PublicList(w http.ResponseWriter, r *http.Request) {
 	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)

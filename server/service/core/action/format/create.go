@@ -129,12 +129,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 func insertIntoMeili(format model.Format) error {
 	meiliObj := map[string]interface{}{
 		"id":          format.ID.String(),
-		"kind":        "format",
 		"name":        format.Name,
 		"slug":        format.Slug,
 		"description": format.Description,
 		"space_id":    format.SpaceID,
 	}
 
-	return meilisearch.AddDocument("dega", meiliObj)
+	return meilisearch.AddDocument(meiliIndex, meiliObj)
 }

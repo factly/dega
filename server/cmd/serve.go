@@ -31,8 +31,7 @@ var serveCmd = &cobra.Command{
 		config.SetupZitadelInterceptor()
 
 		if config.SearchEnabled() {
-			meiliIndex := viper.GetString("MEILISEARCH_INDEX")
-			err := config.SetupMeiliSearch(meiliIndex, []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
+			err := config.SetupMeiliSearch([]string{"category", "format", "medium", "menu", "post", "tag", "claim", "claimant", "rating", "podcast", "episode"}, []string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"}, []string{}, []string{}, []string{})
 			if err != nil {
 				fmt.Println(err)
 			}

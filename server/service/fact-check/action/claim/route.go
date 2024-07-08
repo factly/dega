@@ -35,6 +35,8 @@ type claim struct {
 
 var userContext config.ContextKey = "claim_user"
 
+var meiliIndex = "claim"
+
 // Router - Group of claim router
 func Router() chi.Router {
 	r := chi.NewRouter()

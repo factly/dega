@@ -62,7 +62,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	meiliObj := map[string]interface{}{
 		"id":             result.Episode.ID.String(),
-		"kind":           "episode",
 		"title":          result.Title,
 		"slug":           result.Slug,
 		"season":         result.Season,
@@ -76,7 +75,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearch.AddDocument("dega", meiliObj)
+		_ = meilisearch.AddDocument(meiliIndex, meiliObj)
 	}
 
 	if util.CheckNats() {

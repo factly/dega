@@ -12,6 +12,8 @@ import (
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
+var meiliIndex = "post"
+
 // post request body
 type post struct {
 	CreatedAt        time.Time      `json:"created_at"`

@@ -5,6 +5,8 @@ import (
 	"github.com/go-chi/chi"
 )
 
+var meiliIndex = "podcast"
+
 // Router - Group of podcast router
 func Router() chi.Router {
 	r := chi.NewRouter()

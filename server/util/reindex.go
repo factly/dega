@@ -105,7 +105,6 @@ func AddPosts(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":      fmt.Sprint("post_", p.ID.String()),
 			"id":             p.ID.String(),
-			"kind":           "post",
 			"title":          p.Title,
 			"subtitle":       p.Subtitle,
 			"slug":           p.Slug,
@@ -127,7 +126,6 @@ func AddPosts(spaceID uuid.UUID) error {
 
 		if p.IsPage {
 			meiliObj["object_id"] = fmt.Sprint("page_", p.ID.String())
-			meiliObj["kind"] = "page"
 		}
 
 		if p.Format.Slug == "fact-check" {
@@ -136,7 +134,7 @@ func AddPosts(spaceID uuid.UUID) error {
 
 		meiliPostObjects = append(meiliPostObjects, meiliObj)
 	}
-	_, err = config.MeilisearchClient.Index("dega").UpdateDocuments(meiliPostObjects)
+	_, err = config.MeilisearchClient.Index("post").UpdateDocuments(meiliPostObjects)
 	tx.Commit()
 	return err
 }
@@ -154,7 +152,6 @@ func AddCategories(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":   fmt.Sprint("category_", c.ID.String()),
 			"id":          c.ID.String(),
-			"kind":        "category",
 			"name":        c.Name,
 			"slug":        c.Slug,
 			"description": c.Description,
@@ -164,7 +161,7 @@ func AddCategories(spaceID uuid.UUID) error {
 		meiliCategoryObjects = append(meiliCategoryObjects, meiliObj)
 	}
 
-	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliCategoryObjects)
+	_, err := config.MeilisearchClient.Index("category").UpdateDocuments(meiliCategoryObjects)
 
 	return err
 }
@@ -182,7 +179,6 @@ func AddTags(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":   fmt.Sprint("tag_", t.ID.String()),
 			"id":          t.ID.String(),
-			"kind":        "tag",
 			"name":        t.Name,
 			"slug":        t.Slug,
 			"description": t.Description,
@@ -191,7 +187,7 @@ func AddTags(spaceID uuid.UUID) error {
 		meiliTagObjects = append(meiliTagObjects, meiliObj)
 	}
 
-	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliTagObjects)
+	_, err := config.MeilisearchClient.Index("tag").UpdateDocuments(meiliTagObjects)
 
 	return err
 }
@@ -213,7 +209,6 @@ func AddMedium(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":   fmt.Sprint("medium_", m.ID.String()),
 			"id":          m.ID.String(),
-			"kind":        "medium",
 			"name":        m.Name,
 			"slug":        m.Slug,
 			"title":       m.Title,
@@ -224,7 +219,7 @@ func AddMedium(spaceID uuid.UUID) error {
 		meiliMediumObjects = append(meiliMediumObjects, meiliObj)
 	}
 
-	_, err = config.MeilisearchClient.Index("dega").UpdateDocuments(meiliMediumObjects)
+	_, err = config.MeilisearchClient.Index("medium").UpdateDocuments(meiliMediumObjects)
 	tx.Commit()
 	return err
 }
@@ -242,7 +237,6 @@ func AddMenu(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id": fmt.Sprint("menu_", m.ID.String()),
 			"id":        m.ID.String(),
-			"kind":      "menu",
 			"name":      m.Name,
 			"slug":      m.Slug,
 			"menu":      m.Menu,
@@ -251,7 +245,7 @@ func AddMenu(spaceID uuid.UUID) error {
 		meiliMenuObjects = append(meiliMenuObjects, meiliObj)
 	}
 
-	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliMenuObjects)
+	_, err := config.MeilisearchClient.Index("menu").UpdateDocuments(meiliMenuObjects)
 
 	return err
 }
@@ -269,7 +263,6 @@ func AddSpace(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":       fmt.Sprint("space_", s.ID.String()),
 			"id":              s.ID.String(),
-			"kind":            "space",
 			"name":            s.Name,
 			"slug":            s.Slug,
 			"description":     s.Description,
@@ -282,7 +275,7 @@ func AddSpace(spaceID uuid.UUID) error {
 		meiliSpaceObjects = append(meiliSpaceObjects, meiliObj)
 	}
 
-	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliSpaceObjects)
+	_, err := config.MeilisearchClient.Index("space").UpdateDocuments(meiliSpaceObjects)
 
 	return err
 }
@@ -309,7 +302,6 @@ func AddClaim(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":      fmt.Sprint("claim_", c.ID.String()),
 			"id":             c.ID.String(),
-			"kind":           "claim",
 			"claim":          c.Claim,
 			"slug":           c.Slug,
 			"description":    c.Description,
@@ -325,7 +317,7 @@ func AddClaim(spaceID uuid.UUID) error {
 		meiliClaimObjects = append(meiliClaimObjects, meiliObj)
 	}
 
-	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliClaimObjects)
+	_, err := config.MeilisearchClient.Index("claim").UpdateDocuments(meiliClaimObjects)
 
 	return err
 }
@@ -343,7 +335,6 @@ func AddClaimant(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":   fmt.Sprint("claimant_", c.ID.String()),
 			"id":          c.ID.String(),
-			"kind":        "claimant",
 			"name":        c.Name,
 			"slug":        c.Slug,
 			"description": c.Description,
@@ -353,7 +344,7 @@ func AddClaimant(spaceID uuid.UUID) error {
 		meiliClaimantObjects = append(meiliClaimantObjects, meiliObj)
 	}
 
-	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliClaimantObjects)
+	_, err := config.MeilisearchClient.Index("claimant").UpdateDocuments(meiliClaimantObjects)
 
 	return err
 }
@@ -371,7 +362,6 @@ func AddRating(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":         fmt.Sprint("rating_", r.ID.String()),
 			"id":                r.ID.String(),
-			"kind":              "rating",
 			"name":              r.Name,
 			"background_colour": r.BackgroundColour,
 			"text_colour":       r.TextColour,
@@ -383,7 +373,7 @@ func AddRating(spaceID uuid.UUID) error {
 		meiliRatingObjects = append(meiliRatingObjects, meiliObj)
 	}
 
-	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliRatingObjects)
+	_, err := config.MeilisearchClient.Index("rating").UpdateDocuments(meiliRatingObjects)
 
 	return err
 }
@@ -406,7 +396,6 @@ func AddPodcast(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":           fmt.Sprint("podcast_", p.ID.String()),
 			"id":                  p.ID.String(),
-			"kind":                "podcast",
 			"title":               p.Title,
 			"slug":                p.Slug,
 			"description":         p.Description,
@@ -419,7 +408,7 @@ func AddPodcast(spaceID uuid.UUID) error {
 		meiliPodcastObjects = append(meiliPodcastObjects, meiliObj)
 	}
 
-	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliPodcastObjects)
+	_, err := config.MeilisearchClient.Index("podcast").UpdateDocuments(meiliPodcastObjects)
 
 	return err
 }
@@ -444,7 +433,6 @@ func AddEpisode(spaceID uuid.UUID) error {
 		meiliObj := map[string]interface{}{
 			"object_id":      fmt.Sprint("episode_", e.ID.String()),
 			"id":             e.ID.String(),
-			"kind":           "episode",
 			"title":          e.Title,
 			"slug":           e.Slug,
 			"season":         e.Season,
@@ -459,7 +447,7 @@ func AddEpisode(spaceID uuid.UUID) error {
 		meiliEpisodeObjects = append(meiliEpisodeObjects, meiliObj)
 	}
 
-	_, err := config.MeilisearchClient.Index("dega").UpdateDocuments(meiliEpisodeObjects)
+	_, err := config.MeilisearchClient.Index("episode").UpdateDocuments(meiliEpisodeObjects)
 
 	return err
 }

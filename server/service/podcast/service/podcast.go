@@ -204,7 +204,7 @@ func (ps *PodcastService) List(sID uuid.UUID, offset, limit int, searchQuery, so
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
 			var hits []interface{}
-			hits, err = meilisearch.SearchWithQuery("dega", searchQuery, filters, "podcast")
+			hits, err = meilisearch.SearchWithQuery("podcast", searchQuery, filters)
 			if err != nil {
 				loggerx.Error(err)
 				return podcastPaging{}, errorx.Parser(errorx.NetworkError())

@@ -15,7 +15,7 @@ require (
 	github.com/google/uuid v1.5.0
 	github.com/gorilla/feeds v1.1.1
 	github.com/jinzhu/gorm v1.9.16
-	github.com/meilisearch/meilisearch-go v0.20.0
+	github.com/meilisearch/meilisearch-go v0.27.0
 	github.com/nats-io/gnatsd v1.4.1
 	github.com/nats-io/go-nats v1.7.2
 	github.com/nats-io/nats.go v1.10.0
@@ -50,7 +50,7 @@ require (
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator/v10 v10.6.1 // indirect
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
+	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gorilla/securecookie v1.1.2 // indirect

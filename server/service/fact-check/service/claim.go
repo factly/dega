@@ -217,7 +217,7 @@ func (cs *claimService) List(sID uuid.UUID, offset, limit int, searchQuery, sort
 			if filters != "" {
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
-			hits, err = meilisearch.SearchWithQuery("dega", searchQuery, filters, "claim")
+			hits, err = meilisearch.SearchWithQuery("claim", searchQuery, filters)
 			if err != nil {
 				loggerx.Error(err)
 				return claimPaging{}, errorx.Parser(errorx.NetworkError())

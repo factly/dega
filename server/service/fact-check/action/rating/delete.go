@@ -62,7 +62,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check if rating is associated with claims
 	// if config.SearchEnabled() {
-	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "rating")
+	// 	_ = meilisearch.DeleteDocument(meiliIndex, result.ID, "rating")
 	// }
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("rating.deleted", authCtx.SpaceID.String(), r) {

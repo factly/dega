@@ -51,7 +51,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	_ = podcastService.Delete(authCtx.SpaceID, id, result)
 
 	// if config.SearchEnabled() {
-	// 	_ = meilisearch.DeleteDocument("dega", result.ID, "podcast")
+	// 	_ = meilisearch.DeleteDocument(meiliIndex, result.ID, "podcast")
 	// }
 
 	if util.CheckNats() {
