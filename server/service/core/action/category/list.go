@@ -65,6 +65,8 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	ids := r.URL.Query()["ids"]
 	isFeatured := r.URL.Query().Get("is_featured")
 	isFeaturedBool := false
+	metafieldsKey := r.URL.Query().Get("meta_fields_key")
+	metafieldsValue := r.URL.Query().Get("meta_fields_value")
 
 	if isFeatured == "true" {
 		isFeaturedBool = true
@@ -83,7 +85,7 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	offset, limit := paginationx.Parse(r.URL.Query())
 
 	categoryService := service.GetCategoryService()
-	result, errMessages := categoryService.PublicList(authCtx.SpaceID, offset, limit, searchQuery, sortBy, sortOrder, uuids, isFeaturedBool)
+	result, errMessages := categoryService.PublicList(authCtx.SpaceID, offset, limit, searchQuery, sortBy, sortOrder, metafieldsKey, metafieldsValue, uuids, isFeaturedBool)
 	if errMessages != nil {
 		errorx.Render(w, errMessages)
 		return

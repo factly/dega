@@ -204,7 +204,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	oldStatus := result.Post.Status
 	// Check if post status is changed back to draft or ready from published
-	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready") {
+	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready" || post.Status == "future") {
 		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "publish", orgRole)
 		if !isAllowed {
 			tx.Rollback()
@@ -230,6 +230,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if post.Status == "ready" {
 		updateMap["status"] = "ready"
+	} else if post.Status == "future" {
+		updateMap["status"] = "future"
 	} else if oldStatus == "ready" && post.Status == "draft" {
 		updateMap["status"] = "draft"
 	}

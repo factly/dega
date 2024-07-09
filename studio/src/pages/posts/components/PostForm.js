@@ -11,7 +11,6 @@ import {
   Dropdown,
   Switch,
   Tag,
-  Menu,
   Modal,
   Typography,
   Collapse,
@@ -179,16 +178,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
       page ? navigate('/pages') : navigate('/posts');
     });
   };
-  const setReadyFlag = () => {
-    status === 'ready' ? setStatus('draft') : setStatus('ready');
-  };
-  const readyToPublish = (
-    <Menu>
-      <Menu.Item>
-        Ready to Publish <Switch onChange={setReadyFlag} checked={status === 'ready'}></Switch>
-      </Menu.Item>
-    </Menu>
-  );
+
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (shouldBlockNavigation) {
@@ -406,6 +396,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                           ) : status === 'ready' ? (
                             <Tag color="gold" icon={<ClockCircleOutlined />}>
                               Ready to Publish
+                            </Tag>
+                          ) : status === 'future' ? (
+                            <Tag color="gold" icon={<ClockCircleOutlined />}>
+                              Future Publish
                             </Tag>
                           ) : null}
                         </Col>

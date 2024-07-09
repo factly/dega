@@ -234,6 +234,8 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	sortBy := r.URL.Query().Get("sort_by")
 	sortOrder := r.URL.Query().Get("sort_order")
 	formatIDs := r.URL.Query()["format_ids"]
+	metafieldsKey := r.URL.Query().Get("meta_fields_key")
+	metafieldsValue := r.URL.Query().Get("meta_fields_value")
 
 	formatUUIDs, err := arrays.StrToUUID(formatIDs)
 	if err != nil {
@@ -354,6 +356,10 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 			tx.Joins("INNER JOIN de_format ON de_post.format_id = de_format.id")
 			filterStr = filterStr + fmt.Sprint("de_format.slug IN (", createFilters(formatSlugs), ") AND ")
 		}
+	}
+
+	if metafieldsKey != "" && metafieldsValue != "" {
+		tx.Model(&model.Post{}).Where("meta_fields @> ?", fmt.Sprintf(`{"%s": "%s"}`, metafieldsKey, metafieldsValue))
 	}
 
 	tx.Group("de_post.id")

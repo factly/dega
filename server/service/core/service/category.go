@@ -45,7 +45,7 @@ type pagingCategory struct {
 type ICategoryService interface {
 	GetById(sID, id uuid.UUID) (model.Category, error)
 	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (pagingCategory, []errorx.Message)
-	PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder string, ids []uuid.UUID, isFeatured bool) (pagingCategory, []errorx.Message)
+	PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder, metafieldsKey, metafieldsValue string, ids []uuid.UUID, isFeatured bool) (pagingCategory, []errorx.Message)
 	Create(ctx context.Context, sID uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message)
 	Update(sID, id uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
@@ -137,7 +137,7 @@ func (cs CategoryService) List(sID uuid.UUID, offset, limit int, searchQuery, so
 	}
 }
 
-func (cs CategoryService) PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder string, ids []uuid.UUID, isFeatured bool) (pagingCategory, []errorx.Message) {
+func (cs CategoryService) PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder, metafieldsKey, metafieldsValue string, ids []uuid.UUID, isFeatured bool) (pagingCategory, []errorx.Message) {
 	result := pagingCategory{}
 	result.Nodes = make([]model.Category, 0)
 
@@ -163,6 +163,10 @@ func (cs CategoryService) PublicList(sID uuid.UUID, offset, limit int, searchQue
 
 	if searchQuery != "" {
 		tx = tx.Model(&model.Category{}).Where("name ILIKE ?", "%"+searchQuery+"%")
+	}
+
+	if metafieldsKey != "" && metafieldsValue != "" {
+		tx.Model(&model.Post{}).Where("meta_fields @> ?", fmt.Sprintf(`{"%s": "%s"}`, metafieldsKey, metafieldsValue))
 	}
 
 	tx.Where(&model.Category{

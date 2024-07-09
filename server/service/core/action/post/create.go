@@ -87,6 +87,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		status = "ready"
 	}
 
+	if post.Status == "future" {
+		status = "future"
+	}
+
 	post.SpaceID = authCtx.SpaceID
 
 	result, errMessage := createPost(r.Context(), post, status, r)
