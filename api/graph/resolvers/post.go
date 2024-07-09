@@ -14,8 +14,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
-	"github.com/factly/x/requestx"
-	"github.com/spf13/viper"
+	"github.com/google/uuid"
 )
 
 type postResolver struct{ *Resolver }
@@ -23,11 +22,7 @@ type postResolver struct{ *Resolver }
 func (r *Resolver) Post() generated.PostResolver { return &postResolver{r} }
 
 func (r *postResolver) ID(ctx context.Context, obj *models.Post) (string, error) {
-	return fmt.Sprint(obj.ID), nil
-}
-
-func (r *postResolver) SpaceID(ctx context.Context, obj *models.Post) (int, error) {
-	return int(obj.SpaceID), nil
+	return obj.ID.String(), nil
 }
 
 func (r *postResolver) Description(ctx context.Context, obj *models.Post) (interface{}, error) {
@@ -50,6 +45,14 @@ func (r *postResolver) FooterCode(ctx context.Context, obj *models.Post) (*strin
 	return &obj.FooterCode, nil
 }
 
+func (r *postResolver) CustomFormat(ctx context.Context, obj *models.Post) (*string, error) {
+	return &obj.CustomFormat, nil
+}
+
+func (r *postResolver) Language(ctx context.Context, obj *models.Post) (*string, error) {
+	return &obj.Language, nil
+}
+
 func (r *postResolver) PublishedDate(ctx context.Context, obj *models.Post) (*time.Time, error) {
 	return obj.PublishedDate, nil
 }
@@ -63,7 +66,7 @@ func (r *postResolver) Format(ctx context.Context, obj *models.Post) (*models.Fo
 }
 
 func (r *postResolver) Medium(ctx context.Context, obj *models.Post) (*models.Medium, error) {
-	if obj.FeaturedMediumID == 0 {
+	if obj.FeaturedMediumID == uuid.Nil {
 		return nil, nil
 	}
 
@@ -121,8 +124,8 @@ func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.
 	return claims, nil
 }
 
-func (r *postResolver) ClaimOrder(ctx context.Context, obj *models.Post) ([]*int, error) {
-	var claimOrder []*int
+func (r *postResolver) ClaimOrder(ctx context.Context, obj *models.Post) ([]*string, error) {
+	var claimOrder []*string
 
 	format, err := loaders.GetFormatLoader(ctx).Load(fmt.Sprint(obj.FormatID))
 	if err != nil {
@@ -132,12 +135,12 @@ func (r *postResolver) ClaimOrder(ctx context.Context, obj *models.Post) ([]*int
 	if format.Slug == "fact-check" {
 		postClaims := make([]models.PostClaim, 0)
 		config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
-			PostID: uint(obj.ID),
+			PostID: obj.ID,
 		}).Find(&postClaims)
 
-		claimOrder = make([]*int, len(postClaims))
+		claimOrder = make([]*string, len(postClaims))
 		for _, pc := range postClaims {
-			claimID := int(pc.ClaimID)
+			claimID := pc.ClaimID.String()
 			claimOrder[pc.Position-1] = &claimID
 		}
 	}
@@ -170,7 +173,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 	return schema, nil
 }
 
-func (r *queryResolver) Post(ctx context.Context, id *int, slug *string, include_page *bool) (*models.Post, error) {
+func (r *queryResolver) Post(ctx context.Context, id *string, slug *string, include_page *bool) (*models.Post, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -180,11 +183,17 @@ func (r *queryResolver) Post(ctx context.Context, id *int, slug *string, include
 		return nil, errors.New("please provide either id or slug")
 	}
 
+	pID := uuid.UUID{}
+	if id != nil {
+		pID, err = uuid.Parse(*id)
+		return nil, errors.New("please provide valid id")
+	}
+
 	result := &models.Post{}
 	tx := config.DB.Model(&models.Post{})
 	if id != nil {
 		tx.Where(&models.Post{
-			ID:      uint(*id),
+			ID:      pID,
 			SpaceID: sID,
 		})
 	} else {
@@ -207,7 +216,7 @@ func (r *queryResolver) Post(ctx context.Context, id *int, slug *string, include
 	return result, nil
 }
 
-func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models.PostFilter, categories *models.PostFilter, tags *models.PostFilter, users *models.PostFilter, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+func (r *queryResolver) Posts(ctx context.Context, formats *models.PostFilter, categories *models.PostFilter, tags *models.PostFilter, users *models.PostFilter, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -240,90 +249,41 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 		tx.Where("status = ?", "publish")
 	}
 
-	userIDs := make([]int, 0)
+	userIDs := make([]string, 0)
 	// get user ids if slugs provided
-	if users != nil && len(users.Ids) == 0 && len(users.Slugs) > 0 {
-		// fetch all posts of current space
-		postList := make([]models.Post, 0)
-		config.DB.Model(&models.Post{}).Where(&models.Post{
-			SpaceID: uint(sID),
-		}).Find(&postList)
-
-		postIDs := make([]uint, 0)
-		for _, each := range postList {
-			postIDs = append(postIDs, each.ID)
-		}
-
-		postAuthors := make([]models.PostAuthor, 0)
-		config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).Find(&postAuthors)
-
-		userSlugMap := make(map[string]int)
-		spaceToken, err := validator.GetSpaceToken(ctx)
-		if err != nil {
-			return nil, errors.New("space token not there")
-		}
-		url := fmt.Sprint(viper.GetString("kavach_url"), "/users/space/", sID)
-		resp, err := requestx.Request("GET", url, nil, map[string]string{
-			"Content-Type":  "application/json",
-			"X-Space-Token": spaceToken,
-		})
-
-		if err != nil {
-			return nil, err
-		}
-		defer resp.Body.Close()
-
-		usersResp := models.UsersPaging{}
-		err = json.NewDecoder(resp.Body).Decode(&usersResp)
-		if err != nil {
-			return nil, nil
-		}
-
-		for _, u := range usersResp.Nodes {
-			userSlugMap[u.Slug] = int((*u).ID)
-		}
-
-		for _, each := range users.Slugs {
-			userIDs = append(userIDs, userSlugMap[each])
-		}
-	} else if users != nil && len(users.Ids) > 0 && len(users.Slugs) == 0 {
-		userIDs = users.Ids
-	} else if users != nil && len(users.Ids) > 0 && len(users.Slugs) > 0 {
-		userIDs = users.Ids
-	}
 
 	filterStr := ""
 	if categories != nil {
-		tx.Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id")
+		tx.Joins("INNER JOIN de_post_categories ON de_post_categories.post_id = posts.id")
 		if len(categories.Ids) > 0 {
-			filterStr = filterStr + fmt.Sprint("post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categories.Ids), " ", ",", -1), "[]"), ") AND ")
+			filterStr = filterStr + fmt.Sprint("de_post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categories.Ids), " ", ",", -1), "[]"), ") AND ")
 		} else if len(categories.Slugs) > 0 {
-			tx.Joins("INNER JOIN categories ON post_categories.category_id = categories.id")
-			filterStr = filterStr + fmt.Sprint("categories.slug IN (", createFilters(categories.Slugs), ") AND ")
+			tx.Joins("INNER JOIN de_category ON de_post_categories.category_id = categories.id")
+			filterStr = filterStr + fmt.Sprint("de_category.slug IN (", createFilters(categories.Slugs), ") AND ")
 		}
 	}
 
 	if len(userIDs) > 0 {
-		tx.Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id")
-		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(userIDs), " ", ",", -1), "[]"), ") AND ")
+		tx.Joins("INNER JOIN de_post_author ON de_post_author.post_id = de_post.id")
+		filterStr = filterStr + fmt.Sprint("de_post_author.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(userIDs), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	if tags != nil {
-		tx.Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id")
+		tx.Joins("INNER JOIN de_post_tags ON de_post_tags.post_id = posts.id")
 		if len(tags.Ids) > 0 {
-			filterStr = filterStr + fmt.Sprint("post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tags.Ids), " ", ",", -1), "[]"), ") AND ")
+			filterStr = filterStr + fmt.Sprint("de_post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tags.Ids), " ", ",", -1), "[]"), ") AND ")
 		} else if len(tags.Slugs) > 0 {
-			tx.Joins("INNER JOIN tags ON post_tags.tag_id = tags.id")
-			filterStr = filterStr + fmt.Sprint("tags.slug IN (", createFilters(tags.Slugs), ") AND ")
+			tx.Joins("INNER JOIN de_tags ON de_post_tags.tag_id = tags.id")
+			filterStr = filterStr + fmt.Sprint("de_tags.slug IN (", createFilters(tags.Slugs), ") AND ")
 		}
 	}
 
 	if formats != nil {
 		if len(formats.Ids) > 0 {
-			filterStr = filterStr + fmt.Sprint("posts.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formats.Ids), " ", ",", -1), "[]"), ") AND ")
+			filterStr = filterStr + fmt.Sprint("de_post.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formats.Ids), " ", ",", -1), "[]"), ") AND ")
 		} else if len(formats.Slugs) > 0 {
-			tx.Joins("INNER JOIN formats ON posts.format_id = formats.id")
-			filterStr = filterStr + fmt.Sprint("formats.slug IN (", createFilters(formats.Slugs), ") AND ")
+			tx.Joins("INNER JOIN de_format ON de_post.format_id = de_format.id")
+			filterStr = filterStr + fmt.Sprint("de_format.slug IN (", createFilters(formats.Slugs), ") AND ")
 		}
 	}
 
@@ -331,7 +291,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 	filterStr = strings.Trim(filterStr, " AND")
 	var total int64
 	tx.Where(&models.Post{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Where(filterStr).Count(&total).Offset(offset).Limit(pageLimit).Order(order).Select("posts.*").Find(&result.Nodes)
 
 	tx.Commit()

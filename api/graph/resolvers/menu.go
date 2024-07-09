@@ -3,7 +3,6 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -15,10 +14,6 @@ func (r *menuResolver) ID(ctx context.Context, obj *models.Menu) (string, error)
 	return fmt.Sprint(obj.ID), nil
 }
 
-func (r *menuResolver) SpaceID(ctx context.Context, obj *models.Menu) (int, error) {
-	return int(obj.SpaceID), nil
-}
-
 func (r *menuResolver) Menu(ctx context.Context, obj *models.Menu) (interface{}, error) {
 	return obj.Menu, nil
 }
@@ -28,8 +23,6 @@ func (r *menuResolver) MetaFields(ctx context.Context, obj *models.Menu) (interf
 }
 
 func (r *queryResolver) Menu(ctx context.Context) (*models.MenusPaging, error) {
-
-	log.Println(" Menu resolver entry")
 
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {

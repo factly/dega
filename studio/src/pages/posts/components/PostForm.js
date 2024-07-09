@@ -352,7 +352,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 closable={true}
                 onClose={onClose}
                 visible={drawerVisible}
-                //  //getContainer={false}
                 width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
@@ -432,11 +431,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                         id="is_featured"
                         style={{ marginBottom: '8px' }}
                       >
-                        <Switch defaultChecked />
+                        <Switch />
                         <label htmlFor="is_featured"> Mark as Featured </label>
                       </Form.Item>
                       <Form.Item name="is_exclude_from_homepage" id="is_exclude_from_homepage">
-                        <Switch defaultChecked />
+                        <Switch />
                         <label htmlFor="is_exclude_from_homepage"> Exclude from Homepage </label>
                       </Form.Item>
                     </Collapse.Panel>
@@ -473,6 +472,9 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                           placeholder="Excerpt"
                           style={{ fontSize: 'medium' }}
                         />
+                      </Form.Item>
+                      <Form.Item name="custom_format" label="Custom Format">
+                        <Input placeholder="Custom format" style={{ fontSize: 'medium' }} />
                       </Form.Item>
                     </Collapse.Panel>
                   </Collapse>

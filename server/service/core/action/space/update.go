@@ -96,7 +96,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.SpaceID)).Begin()
 
-	err = tx.Model(&model.Space{}).Updates(&result).Error
+	err = tx.Model(&model.Space{}).Where(result.ID).Updates(&result).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))

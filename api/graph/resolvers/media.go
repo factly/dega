@@ -14,10 +14,6 @@ func (r *mediumResolver) ID(ctx context.Context, obj *models.Medium) (string, er
 	return fmt.Sprint(obj.ID), nil
 }
 
-func (r *mediumResolver) SpaceID(ctx context.Context, obj *models.Medium) (int, error) {
-	return int(obj.SpaceID), nil
-}
-
 func (r *mediumResolver) URL(ctx context.Context, obj *models.Medium) (interface{}, error) {
 	return obj.URL, nil
 }

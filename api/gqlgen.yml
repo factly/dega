@@ -54,6 +54,9 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
+  UUID:
+    model:
+      - github.com/99designs/gqlgen/graphql.UUID
   Format:
     model: github.com/factly/dega-api/graph/models.Format
   FormatsPaging:
@@ -67,15 +70,15 @@ models:
   Category:
     model: github.com/factly/dega-api/graph/models.Category
     fields:
-        posts:
-          resolver: true
+      posts:
+        resolver: true
   CategoriesPaging:
     model: github.com/factly/dega-api/graph/models.CategoriesPaging
   Tag:
     model: github.com/factly/dega-api/graph/models.Tag
     fields:
-        posts:
-          resolver: true
+      posts:
+        resolver: true
   TagsPaging:
     model: github.com/factly/dega-api/graph/models.TagsPaging
   Author:
@@ -91,81 +94,80 @@ models:
   Post:
     model: github.com/factly/dega-api/graph/models.Post
     fields:
-        tags:
-          resolver: true
-        categories:
-          resolver: true
-        claims:
-          resolver: true
-        format:
-          resolver: true
-        medium:
-          resolver: true
-        users:
-          resolver: true
-        schema:
-          resolver: true
-        published_date:
-          resolver: true
+      tags:
+        resolver: true
+      categories:
+        resolver: true
+      claims:
+        resolver: true
+      format:
+        resolver: true
+      medium:
+        resolver: true
+      users:
+        resolver: true
+      schema:
+        resolver: true
+      published_date:
+        resolver: true
   PostsPaging:
     model: github.com/factly/dega-api/graph/models.PostsPaging
   Rating:
     model: github.com/factly/dega-api/graph/models.Rating
     fields:
-        medium:
-          resolver: true
+      medium:
+        resolver: true
   RatingsPaging:
     model: github.com/factly/dega-api/graph/models.RatingsPaging
   Claimant:
     model: github.com/factly/dega-api/graph/models.Claimant
     fields:
-        medium:
-          resolver: true
+      medium:
+        resolver: true
   ClaimantsPaging:
     model: github.com/factly/dega-api/graph/models.ClaimantsPaging
   Claim:
     model: github.com/factly/dega-api/graph/models.Claim
     fields:
-        claimant:
-          resolver: true
-        rating:
-          resolver: true
-        claim_date:
-          resolver: true
-        checked_date:
-          resolver: true
+      claimant:
+        resolver: true
+      rating:
+        resolver: true
+      claim_date:
+        resolver: true
+      checked_date:
+        resolver: true
   ClaimsPaging:
     model: github.com/factly/dega-api/graph/models.ClaimsPaging
   Space:
     model: github.com/factly/dega-api/graph/models.Space
     fields:
-        fav_icon:
-          resolver: true
-        mobile_icon:
-          resolver: true
-        logo_mobile:
-          resolver: true
-        logo:
-          resolver: true
+      fav_icon:
+        resolver: true
+      mobile_icon:
+        resolver: true
+      logo_mobile:
+        resolver: true
+      logo:
+        resolver: true
   Sitemap:
     model: github.com/factly/dega-api/graph/models.Sitemap
   Sitemaps:
     model: github.com/factly/dega-api/graph/models.Sitemaps
     fields:
-        categories:
-          resolver: true
-        tags:
-          resolver: true
-        users:
-          resolver: true
-        formats:
-          resolver: true
-        posts:
-          resolver: true
-        claims:
-          resolver: true
-        claimants:
-          resolver: true
-        ratings:
-          resolver: true
-        
+      categories:
+        resolver: true
+      tags:
+        resolver: true
+      users:
+        resolver: true
+      formats:
+        resolver: true
+      posts:
+        resolver: true
+      claims:
+        resolver: true
+      claimants:
+        resolver: true
+      ratings:
+        resolver: true
