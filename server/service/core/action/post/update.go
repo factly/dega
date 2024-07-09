@@ -84,13 +84,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Claims = make([]factCheckModel.Claim, 0)
 
 	// fetch all authors
-	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, post.AuthorIDs)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
@@ -358,6 +351,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: id,
 	}).Find(&updatedPostAuthors)
+
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, toCreateIDs)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	// appending previous post authors to result
 	for _, postAuthor := range updatedPostAuthors {

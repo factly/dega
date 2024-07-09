@@ -56,8 +56,9 @@ func CheckSpace() func(http.Handler) http.Handler {
 
 			spaceToken := &models.SpaceToken{}
 
-			err = config.DB.Model(&models.SpaceToken{}).Where(&models.Space{
-				ID: sID,
+			err = config.DB.Model(&models.SpaceToken{}).Where(&models.SpaceToken{
+				SpaceID: sID,
+				Token:   authHeader,
 			}).First(&spaceToken).Error
 
 			if err != nil {

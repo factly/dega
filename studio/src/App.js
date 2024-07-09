@@ -71,30 +71,6 @@ function App() {
 
   useEffect(() => {
     if (
-      window.localStorage.getItem(
-        'oidc.user:' +
-          window.REACT_APP_ZITADEL_AUTHORITY +
-          ':' +
-          window.REACT_APP_ZITADEL_CLIENT_ID,
-      )
-    ) {
-      const userInfo = JSON.parse(
-        window.localStorage.getItem(
-          'oidc.user:' +
-            window.REACT_APP_ZITADEL_AUTHORITY +
-            ':' +
-            window.REACT_APP_ZITADEL_CLIENT_ID,
-        ),
-      );
-      if (userInfo.expires_at) {
-        const expiryTime = new Date(userInfo.expires_at * 1000);
-        if (expiryTime < Date.now()) {
-          window.localStorage.setItem('return_to', window.location.href);
-          login();
-        }
-      }
-    }
-    if (
       !authenticated &&
       !window.location.href.includes('redirect') &&
       !window.localStorage.getItem(

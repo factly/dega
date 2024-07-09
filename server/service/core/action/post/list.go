@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/test/models"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/meilisearch"
@@ -17,7 +18,6 @@ import (
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 	"github.com/google/uuid"
-	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
@@ -233,9 +233,6 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 
 	sortBy := r.URL.Query().Get("sort_by")
 	sortOrder := r.URL.Query().Get("sort_order")
-	ids := r.URL.Query()["ids"]
-	isFeatured := r.URL.Query().Get("is_featured")
-	isFeaturedBool := false
 	formatIDs := r.URL.Query()["format_ids"]
 
 	formatUUIDs, err := arrays.StrToUUID(formatIDs)
@@ -261,28 +258,8 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	categorySlugs := r.URL.Query()["category_slugs"]
-	authorIds := r.URL.Query()["author_ids"]
-	isPage := r.URL.Query().Get("is_page")
-	isPageBool := false
+
 	status := r.URL.Query().Get("status")
-
-	if isFeatured == "true" {
-		isFeaturedBool = true
-	}
-
-	if isPage == "true" {
-		isPageBool = true
-	}
-
-	uuids := make([]uuid.UUID, 0)
-
-	if len(ids) > 0 {
-		uuids, err = arrays.StrToUUID(ids)
-		if err != nil {
-			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-			return
-		}
-	}
 
 	if len(tagSlugs) > 0 {
 		tags := make([]model.Tag, 0)
@@ -331,42 +308,70 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 		Nodes: make([]postData, 0),
 	}
 
-	posts := make([]model.Post, 0)
-
 	order := "de_post." + pageSortBy + " " + pageSortOrder
 
-	tx := config.DB.Model(&model.Post{})
+	tx := config.DB.Model(&models.Post{}).Where("is_page = ?", false)
 
-	tx.Preload("Tags").
-		Preload("Categories").
-		Preload("Medium").
-		Preload("Format").
-		Joins("JOIN de_post_tags ON de_post_tags.post_id = de_post.id").
-		Joins("JOIN de_post_categories ON de_post_categories.post_id = de_post.id").
-		Joins("JOIN de_post_author ON de_post_author.post_id = de_post.id").
-		Where("de_post.space_id = ?", authCtx.SpaceID).
-		Where("de_post_tags.tag_id IN ?", tagUUIDs).
-		Where("de_post_categories.category_id IN ?", categoryUUIDs).
-		Where("de_post_author.author_id IN ?", authorIds).
-		Where("de_post.format_id IN ?", formatUUIDs).
-		Where("de_post.id IN ?", uuids).
-		Where("de_post.is_page = ?", isPageBool).
-		Where("de_post.status = ?", status).
-		Where("de_post.is_featured = ?", isFeaturedBool).
-		Count(&result.Total).
-		Limit(limit).
-		Offset(offset).
-		Order(order).
-		Find(&posts)
-
-	for _, post := range posts {
-		postList := &postData{}
-		postList.Post = post
-		result.Nodes = append(result.Nodes, *postList)
+	if status != "" {
+		tx.Where("status = ?", status)
+	} else {
+		tx.Where("status = ?", "publish")
 	}
+
+	userIDs := make([]string, 0)
+	// get user ids if slugs provided
+
+	filterStr := ""
+	if len(categoryIds) > 0 || len(categorySlugs) > 0 {
+		tx.Joins("INNER JOIN de_post_categories ON de_post_categories.post_id = posts.id")
+		if len(categoryIds) > 0 {
+			filterStr = filterStr + fmt.Sprint("de_post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categoryIds), " ", ",", -1), "[]"), ") AND ")
+		} else if len(categorySlugs) > 0 {
+			tx.Joins("INNER JOIN de_category ON de_post_categories.category_id = categories.id")
+			filterStr = filterStr + fmt.Sprint("de_category.slug IN (", createFilters(categorySlugs), ") AND ")
+		}
+	}
+
+	if len(userIDs) > 0 {
+		tx.Joins("INNER JOIN de_post_author ON de_post_author.post_id = de_post.id")
+		filterStr = filterStr + fmt.Sprint("de_post_author.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(userIDs), " ", ",", -1), "[]"), ") AND ")
+	}
+
+	if len(tagIds) > 0 || len(tagSlugs) > 0 {
+		tx.Joins("INNER JOIN de_post_tags ON de_post_tags.post_id = posts.id")
+		if len(tagIds) > 0 {
+			filterStr = filterStr + fmt.Sprint("de_post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tagIds), " ", ",", -1), "[]"), ") AND ")
+		} else if len(tagSlugs) > 0 {
+			tx.Joins("INNER JOIN de_tags ON de_post_tags.tag_id = tags.id")
+			filterStr = filterStr + fmt.Sprint("de_tags.slug IN (", createFilters(tagSlugs), ") AND ")
+		}
+	}
+
+	if len(formatIDs) > 0 || len(formatSlugs) > 0 {
+		if len(formatIDs) > 0 {
+			filterStr = filterStr + fmt.Sprint("de_post.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formatIDs), " ", ",", -1), "[]"), ") AND ")
+		} else if len(formatSlugs) > 0 {
+			tx.Joins("INNER JOIN de_format ON de_post.format_id = de_format.id")
+			filterStr = filterStr + fmt.Sprint("de_format.slug IN (", createFilters(formatSlugs), ") AND ")
+		}
+	}
+
+	tx.Group("de_post.id")
+	filterStr = strings.Trim(filterStr, " AND")
+	tx.Where(&model.Post{
+		SpaceID: authCtx.SpaceID,
+	}).Where(filterStr).Count(&result.Total).Offset(offset).Limit(limit).Order(order).Select("de_post.*").Find(&result.Nodes)
 
 	tx.Commit()
 
+	renderx.JSON(w, http.StatusOK, result)
+
+}
+
+func createFilters(arr []string) string {
+	filter := strings.Trim(strings.Replace(fmt.Sprint(arr), " ", "','", -1), "[]")
+	filter = "'" + filter + "'"
+	return filter
 }
 
 func generateFilters(tagIDs, categoryIDs, authorIDs, status []string) string {

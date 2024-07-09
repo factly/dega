@@ -234,7 +234,7 @@ func (r *queryResolver) Posts(ctx context.Context, formats *models.PostFilter, c
 		pageSortBy = *sortBy
 	}
 
-	order := "posts." + pageSortBy + " " + pageSortOrder
+	order := "de_post." + pageSortBy + " " + pageSortOrder
 
 	result := &models.PostsPaging{}
 	result.Nodes = make([]*models.Post, 0)
@@ -287,12 +287,12 @@ func (r *queryResolver) Posts(ctx context.Context, formats *models.PostFilter, c
 		}
 	}
 
-	tx.Group("posts.id")
+	tx.Group("de_post.id")
 	filterStr = strings.Trim(filterStr, " AND")
 	var total int64
 	tx.Where(&models.Post{
 		SpaceID: sID,
-	}).Where(filterStr).Count(&total).Offset(offset).Limit(pageLimit).Order(order).Select("posts.*").Find(&result.Nodes)
+	}).Where(filterStr).Count(&total).Offset(offset).Limit(pageLimit).Order(order).Select("de_post.*").Find(&result.Nodes)
 
 	tx.Commit()
 
