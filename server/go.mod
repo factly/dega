@@ -20,6 +20,7 @@ require (
 	github.com/nats-io/go-nats v1.7.2
 	github.com/nats-io/nats.go v1.10.0
 	github.com/prometheus/client_golang v1.9.0
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.8.1
 	github.com/swaggo/http-swagger v1.0.0

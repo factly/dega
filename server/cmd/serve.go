@@ -8,10 +8,12 @@ import (
 	"github.com/dlmiddlecote/sqlstats"
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
+	"github.com/factly/dega-server/service/core/action/post"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/robfig/cron/v3"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -43,6 +45,20 @@ var serveCmd = &cobra.Command{
 		}
 
 		r := service.RegisterRoutes()
+
+		// Initialize a new cron manager
+		c := cron.New()
+
+		// Run cron job on every 15 minutes
+		_, err := c.AddFunc("*/15 * * * *", func() {
+			post.Publish()
+		})
+		if err != nil {
+			log.Println("Error scheduling cron job: ", err)
+		}
+
+		c.Start()
+		defer c.Stop()
 
 		go func() {
 			promRouter := chi.NewRouter()
