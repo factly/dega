@@ -14,7 +14,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_MULTIPLE_DATABASES=dega,zitadel
+      - POSTGRES_MULTIPLE_DATABASES=dega,zitadel,hukz
     healthcheck:
       interval: 10s
       retries: 10
@@ -177,7 +177,7 @@ services:
       context: ./server
       dockerfile: Dockerfile.dev
     environment:
-      - WAIT_HOSTS=postgres:5432, zitadel:4455
+      - WAIT_HOSTS=postgres:5432
     volumes:
       - type: bind
         source: ./server
@@ -194,7 +194,7 @@ services:
       context: ./server
       dockerfile: Dockerfile.migrate
     environment:
-      - WAIT_HOSTS=postgres:5432, zitadel:4455
+      - WAIT_HOSTS=postgres:5432
     volumes:
       - type: bind
         source: ./server
@@ -207,7 +207,7 @@ services:
       - dega-server
     ports:
       - 7790:8000
-    image: factly/hukz
+    image: factly/hukz:0.8.1
     environment:
       - WAIT_HOSTS=postgres:5432, dega-server:8000
       - HUKZ_DATABASE_HOST=postgres
@@ -230,7 +230,7 @@ services:
   hukz-migrate:
     depends_on:
       - dega-server
-    image: factly/hukz
+    image: factly/hukz:0.8.1
     environment:
       - WAIT_HOSTS=postgres:5432, dega-server:8000
       - HUKZ_DATABASE_HOST=postgres
@@ -271,8 +271,7 @@ services:
       args:
         - CACHEBUST
     environment:
-      - PUBLIC_URL=http://127.0.0.1:4455/.factly/dega/studio
-      - REACT_APP_KAVACH_PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
+      - PUBLIC_URL=http://127.0.0.1:3000
       - REACT_APP_SACH_API_URL=https://sach-server.factly.in
       - WDS_SOCKET_HOST=127.0.0.1
       - CHOKIDAR_USEPOLLING=true
@@ -293,7 +292,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - 9001:8000
+      - 8070:8000
     build:
       context: ./api
       dockerfile: Dockerfile
