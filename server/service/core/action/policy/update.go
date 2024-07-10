@@ -177,24 +177,28 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Add new permissions
 
-	err = tx.Model(&model.Permission{}).Create(&policiesToAdd).Error
+	if len(policiesToAdd) > 0 {
+		err = tx.Model(&model.Permission{}).Create(&policiesToAdd).Error
 
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	// Delete old permissions
 
-	err = tx.Model(&model.Permission{}).Delete(&model.Permission{}, policiesToDelete).Error
+	if len(policiesToDelete) > 0 {
+		err = tx.Model(&model.Permission{}).Delete(&model.Permission{}, policiesToDelete).Error
 
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	// Add new users
