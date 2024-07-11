@@ -199,6 +199,8 @@ export const addPost = (data) => {
         dispatch(resetPosts());
         post.status === 'publish'
           ? dispatch(addSuccessNotification(`${post.format.name} Published`))
+          : post.status === 'future'
+          ? dispatch(addSuccessNotification('Post added & Scheduled for future publish'))
           : post.status === 'draft'
           ? dispatch(addSuccessNotification('Post added'))
           : dispatch(addSuccessNotification('Post added & Ready to Publish'));
@@ -343,6 +345,8 @@ export const updatePost = (data) => {
         );
         data.status === 'publish'
           ? dispatch(addSuccessNotification(`${post.format.name} Published`))
+          : post.status === 'future'
+          ? dispatch(addSuccessNotification('Post saved & Scheduled for future publish'))
           : data.status === 'draft'
           ? dispatch(addSuccessNotification('Draft Saved'))
           : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));

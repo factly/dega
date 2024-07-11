@@ -176,6 +176,8 @@ export const addPage = (data) => {
         dispatch(resetPages());
         page.status === 'publish'
           ? dispatch(addSuccessNotification(`Page Published`))
+          : page.status === 'future'
+          ? dispatch(addSuccessNotification('Page added & Scheduled for future publish'))
           : page.status === 'draft'
           ? dispatch(addSuccessNotification('Page added'))
           : dispatch(addSuccessNotification('Page added & Ready to Publish'));
@@ -211,6 +213,8 @@ export const updatePage = (data) => {
         );
         page.status === 'publish'
           ? dispatch(addSuccessNotification(`Page Published`))
+          : page.status === 'future'
+          ? dispatch(addSuccessNotification('Page saved & Scheduled for future publish'))
           : page.status === 'draft'
           ? dispatch(addSuccessNotification('Draft Saved'))
           : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));

@@ -230,6 +230,18 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
         form.submit();
       },
     },
+    {
+      key: 'future',
+      label: (
+        <Button type="future" disabled={!valueChange}>
+          Future Publish
+        </Button>
+      ),
+      onClick: () => {
+        setStatus('future');
+        form.submit();
+      },
+    },
   ];
 
   return (
