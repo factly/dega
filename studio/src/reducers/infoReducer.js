@@ -1,4 +1,4 @@
-import { ADD_INFO } from '../constants/info';
+import { ADD_INFO, SET_INFO_LOADING } from '../constants/info';
 
 const initialState = {
   categories: 0,
@@ -14,6 +14,7 @@ const initialState = {
     publish: 0,
   },
   podcasts: 0,
+  loading: true,
 };
 
 export default function infoReducer(state = initialState, action = {}) {
@@ -21,6 +22,11 @@ export default function infoReducer(state = initialState, action = {}) {
     return state;
   }
   switch (action.type) {
+    case SET_INFO_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
     case ADD_INFO:
       const posts = action.payload.posts;
       let article = {
@@ -49,6 +55,7 @@ export default function infoReducer(state = initialState, action = {}) {
         article,
         factCheck,
       };
+
     default:
       return state;
   }

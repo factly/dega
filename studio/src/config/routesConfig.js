@@ -129,15 +129,7 @@ import Callback from '../pages/redirect';
 import Tokens from '../pages/tokens';
 import CreateSpaceTokenForm from '../pages/tokens/components/CreateToken';
 
-export function extractV6RouteObject(
-  formats,
-  setReloadFlag,
-  reloadFlag,
-  authenticated,
-  setAuth,
-  userManager,
-  handleLogout,
-) {
+export function extractV6RouteObject(formats, setReloadFlag, reloadFlag) {
   const extractedRoutes = [];
 
   // Loop through the original routes object and convert each route to v6 format
@@ -172,13 +164,7 @@ export function extractV6RouteObject(
     } else {
       v6RouteElement = (
         <BasicLayout>
-          <Component
-            formats={formats}
-            authenticated={authenticated}
-            setAuth={setAuth}
-            userManager={userManager}
-            handleLogout={handleLogout}
-          />
+          <Component formats={formats} />
         </BasicLayout>
       );
     }

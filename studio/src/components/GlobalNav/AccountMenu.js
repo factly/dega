@@ -13,9 +13,16 @@ const AccountMenu = () => {
   });
 
   const handleLogout = () => {
-    // clear all local storage and cookies
+    const logoutUrl =
+      `${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/end_session?` +
+      `id_token_hint=${localStorage.getItem('x-zitadel-id-token')}&` +
+      `post_logout_redirect_uri=${encodeURIComponent(
+        window.REACT_APP_ZITADEL_POST_LOGOUT_REDIRECT_URI,
+      )}`;
+
     window.localStorage.clear();
     window.location.reload();
+    window.location.href = logoutUrl;
   };
 
   const accountMenu = (

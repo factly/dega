@@ -33,6 +33,7 @@ import sachFactChecks from './sachFactChecksReducer';
 import webhooklogs from './webhooklogsReducer';
 import tokens from './tokensReducer';
 import spaceUsers from './spaceUsersReducer';
+import session from './sessionReducer';
 
 const appReducer = combineReducers({
   info,
@@ -68,6 +69,7 @@ const appReducer = combineReducers({
   sachFactChecks,
   tokens,
   spaceUsers,
+  session,
 });
 
 const rootReducer = (state, action) => {

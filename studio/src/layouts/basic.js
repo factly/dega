@@ -32,36 +32,45 @@ function BasicLayout(props) {
   const { children } = props;
   const [enteredRoute, setRoute] = useState({ menuKey: '/' });
 
-  const { permission, orgs, loading, selected, applications, services, org_role } = useSelector(
-    (state) => {
-      const { selected, orgs, loading, org_role } = state.spaces;
+  const {
+    permission,
+    orgs,
+    loading,
+    selected,
+    applications,
+    services,
+    org_role,
+    session,
+  } = useSelector((state) => {
+    const { selected, orgs, loading, org_role } = state.spaces;
 
-      if (selected !== '') {
-        const space = state.spaces.details[selected];
+    if (selected !== '') {
+      const space = state.spaces.details[selected];
 
-        const applications = orgs.find((org) => org.spaces.includes(space.id))?.applications || [];
+      const applications = orgs.find((org) => org.spaces.includes(space.id))?.applications || [];
 
-        return {
-          applications: applications,
-          permission: space.permissions || [],
-          orgs: orgs,
-          loading: loading,
-          selected: selected,
-          services: space.services,
-          org_role: space.org_role,
-        };
-      }
       return {
+        applications: applications,
+        permission: space.permissions || [],
         orgs: orgs,
         loading: loading,
-        permission: [],
         selected: selected,
-        applications: [],
-        services: ['core'],
-        org_role,
+        services: space.services,
+        org_role: space.org_role,
+        session: state.session,
       };
-    },
-  );
+    }
+    return {
+      orgs: orgs,
+      loading: loading,
+      permission: [],
+      selected: selected,
+      applications: [],
+      services: ['core'],
+      org_role,
+      session: state.session,
+    };
+  });
 
   const { type, message, description, time } = useSelector((state) => {
     return { ...state.notifications };
@@ -107,7 +116,7 @@ function BasicLayout(props) {
   }, []);
 
   useEffect(() => {
-    dispatch(getSpaces());
+    if (session.details && !session.loading) dispatch(getSpaces());
   }, [dispatch, selected]);
 
   useEffect(() => {

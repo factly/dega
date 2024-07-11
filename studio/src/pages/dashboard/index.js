@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row, Space, Statistic, Typography, Card } from 'antd';
 
-import Features from './components/Features';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInfo } from '../../actions/info';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import Loader from '../../components/Loader';
 
 function Dashboard() {
   const { Title } = Typography;
@@ -14,23 +14,26 @@ function Dashboard() {
     info,
   }));
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchInfo();
+    if (spaces.selected !== '') fetchInfo();
   }, []);
 
   const fetchInfo = () => {
-    dispatch(getInfo()).then(() => setLoading(false));
+    dispatch(getInfo());
   };
 
-  const { article = {}, factCheck = {} } = info;
+  const { article = {}, factCheck = {}, loading } = info;
   const articlePublish = Number(article.publish) || 0;
   const articleDraft = Number(article.draft) || 0;
   const articleReady = Number(article.ready) || 0;
   const factCheckPublish = Number(factCheck.publish) || 0;
   const factCheckDraft = Number(factCheck.draft) || 0;
   const factCheckReady = Number(factCheck.ready) || 0;
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Space direction="vertical">
       <Helmet title={'Dashboard'} />
@@ -129,8 +132,6 @@ function Dashboard() {
           </Card>
         </Col>
       </Row>
-
-      {!spaces.loading && spaces.org_role === 'admin' ? <Features /> : null}
     </Space>
   );
 }
