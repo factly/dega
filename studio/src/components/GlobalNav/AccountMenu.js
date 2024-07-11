@@ -14,7 +14,9 @@ const AccountMenu = () => {
     };
   });
   React.useEffect(() => {
-    dispatch(getUserProfile());
+    if(Object.keys(profile).length === 0){
+      dispatch(getUserProfile());
+    }
   }, [dispatch]);
 
   const handleLogout = () => {
