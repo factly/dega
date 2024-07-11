@@ -117,7 +117,7 @@ function BasicLayout(props) {
 
   useEffect(() => {
     if (session.details && !session.loading) dispatch(getSpaces());
-  }, [dispatch, selected]);
+  }, [dispatch, selected, session]);
 
   useEffect(() => {
     if (type && message && description && selected !== 0) {
