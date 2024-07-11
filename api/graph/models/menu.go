@@ -3,13 +3,14 @@ package models
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
 // Menu model
 type Menu struct {
-	ID         uint            `gorm:"primary_key" json:"id"`
+	ID         uuid.UUID       `gorm:"primary_key" json:"id"`
 	CreatedAt  time.Time       `json:"created_at"`
 	UpdatedAt  time.Time       `json:"updated_at"`
 	DeletedAt  *gorm.DeletedAt `sql:"index" json:"deleted_at"`
@@ -17,7 +18,7 @@ type Menu struct {
 	Slug       string          `gorm:"column:slug" json:"slug"`
 	Menu       postgres.Jsonb  `gorm:"column:menu" json:"menu"`
 	MetaFields postgres.Jsonb  `gorm:"column:meta_fields" json:"meta_fields"`
-	SpaceID    uint            `gorm:"column:space_id" json:"space_id"`
+	SpaceID    uuid.UUID       `gorm:"column:space_id" json:"space_id"`
 }
 
 // MenusPaging model

@@ -2,22 +2,22 @@ import { UserOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, Button, Avatar } from 'antd';
 import React from 'react';
 import { LogoutOutlined, DownOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserProfile } from '../../actions/profile';
+import { useSelector } from 'react-redux';
 
 const AccountMenu = () => {
-  const dispatch = useDispatch();
   const { profile, loading } = useSelector((state) => {
     return {
       profile: state.profile.details ? state.profile.details : null,
       loading: state.profile.loading,
     };
   });
+
   React.useEffect(() => {
     if(Object.keys(profile).length === 0){
       dispatch(getUserProfile());
     }
   }, [dispatch]);
+
 
   const handleLogout = () => {
     // clear all local storage and cookies

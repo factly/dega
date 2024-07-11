@@ -70,6 +70,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 			spaceWithPermission := SpaceWithPermission{
 				Space: space,
 			}
+
 			// check if user is member then fetch his permissions
 			if authCtx.OrgsRole[org.ID] != "admin" {
 				// check if the user is member of the space
@@ -79,61 +80,62 @@ func my(w http.ResponseWriter, r *http.Request) {
 					UserID:  authCtx.UserID,
 				}).First(&spaceMember).Error
 
-				if err != nil {
-					if err == gorm.ErrRecordNotFound {
-						break
-					}
+				if err != nil && !(err == gorm.ErrRecordNotFound) {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 					return
 				}
 
-				// check for space policies
-				var spacePolicies []model.Policy
-				config.DB.Model(&model.Policy{}).Where(&model.Policy{
-					SpaceID: space.ID,
-				}).Find(&spacePolicies)
+				if err != gorm.ErrRecordNotFound {
+					// check for space policies
+					var spacePolicies []model.Policy
+					config.DB.Model(&model.Policy{}).Where(&model.Policy{
+						SpaceID: space.ID,
+					}).Find(&spacePolicies)
 
-				policyIds := make([]uuid.UUID, 0)
-				for _, policy := range spacePolicies {
-					policyIds = append(policyIds, policy.ID)
-				}
-
-				// check for user policies
-				var userPolicies []model.PolicyUser
-				config.DB.Model(&model.PolicyUser{}).Where("policy_id IN (?)", policyIds).Where(&model.PolicyUser{
-					UserID: authCtx.UserID,
-				}).Find(&userPolicies)
-
-				userAccessPolicies := make([]uuid.UUID, 0)
-				for _, policy := range userPolicies {
-					userAccessPolicies = append(userAccessPolicies, policy.PolicyID)
-				}
-
-				permissions := make([]premission, 0)
-
-				spacePermission := make([]model.Permission, 0)
-
-				config.DB.Model(&model.Permission{}).Where("policy_id IN ?", userAccessPolicies).Find(&spacePermission)
-
-				resourceMap := make(map[string][]string)
-
-				for _, permission := range spacePermission {
-					if _, found := resourceMap[permission.Resource]; !found {
-						resourceMap[permission.Resource] = make([]string, 0)
+					policyIds := make([]uuid.UUID, 0)
+					for _, policy := range spacePolicies {
+						policyIds = append(policyIds, policy.ID)
 					}
-					resourceMap[permission.Resource] = append(resourceMap[permission.Resource], permission.Action)
-				}
 
-				for key, value := range resourceMap {
-					permissions = append(permissions, premission{
-						Resource: key,
-						Actions:  value,
-					})
+					// check for user policies
+					var userPolicies []model.PolicyUser
+					config.DB.Model(&model.PolicyUser{}).Where("policy_id IN (?)", policyIds).Where(&model.PolicyUser{
+						UserID: authCtx.UserID,
+					}).Find(&userPolicies)
+
+					userAccessPolicies := make([]uuid.UUID, 0)
+					for _, policy := range userPolicies {
+						userAccessPolicies = append(userAccessPolicies, policy.PolicyID)
+					}
+
+					permissions := make([]premission, 0)
+
+					spacePermission := make([]model.Permission, 0)
+
+					config.DB.Model(&model.Permission{}).Where("policy_id IN ?", userAccessPolicies).Find(&spacePermission)
+
+					resourceMap := make(map[string][]string)
+
+					for _, permission := range spacePermission {
+						if _, found := resourceMap[permission.Resource]; !found {
+							resourceMap[permission.Resource] = make([]string, 0)
+						}
+						resourceMap[permission.Resource] = append(resourceMap[permission.Resource], permission.Action)
+					}
+
+					for key, value := range resourceMap {
+						permissions = append(permissions, premission{
+							Resource: key,
+							Actions:  value,
+						})
+					}
+					spaceWithPermission.Permissions = permissions
+
+					organisation.Spaces = append(organisation.Spaces, spaceWithPermission)
 				}
-				spaceWithPermission.Permissions = permissions
 			}
-			organisation.Spaces = append(organisation.Spaces, spaceWithPermission)
+
 		}
 
 		allOrg = append(allOrg, organisation)

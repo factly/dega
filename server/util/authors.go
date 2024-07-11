@@ -7,7 +7,10 @@ import (
 )
 
 func GetAuthors(token, orgID string, ids []string) (map[string]model.Author, error) {
-	zitadelUsers, err := zitadel.GetOrganisationUsers(viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN"), orgID, ids)
+	if token == "" {
+		token = viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN")
+	}
+	zitadelUsers, err := zitadel.GetOrganisationUsers(token, orgID, ids)
 
 	if err != nil {
 		return nil, err

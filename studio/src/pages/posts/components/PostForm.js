@@ -11,7 +11,6 @@ import {
   Dropdown,
   Switch,
   Tag,
-  Menu,
   Modal,
   Typography,
   Collapse,
@@ -179,16 +178,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
       page ? navigate('/pages') : navigate('/posts');
     });
   };
-  const setReadyFlag = () => {
-    status === 'ready' ? setStatus('draft') : setStatus('ready');
-  };
-  const readyToPublish = (
-    <Menu>
-      <Menu.Item>
-        Ready to Publish <Switch onChange={setReadyFlag} checked={status === 'ready'}></Switch>
-      </Menu.Item>
-    </Menu>
-  );
+
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (shouldBlockNavigation) {
@@ -352,7 +342,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 closable={true}
                 onClose={onClose}
                 visible={drawerVisible}
-                //  //getContainer={false}
                 width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
@@ -408,6 +397,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                             <Tag color="gold" icon={<ClockCircleOutlined />}>
                               Ready to Publish
                             </Tag>
+                          ) : status === 'future' ? (
+                            <Tag color="gold" icon={<ClockCircleOutlined />}>
+                              Future Publish
+                            </Tag>
                           ) : null}
                         </Col>
                       </Row>
@@ -432,11 +425,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                         id="is_featured"
                         style={{ marginBottom: '8px' }}
                       >
-                        <Switch defaultChecked />
+                        <Switch />
                         <label htmlFor="is_featured"> Mark as Featured </label>
                       </Form.Item>
                       <Form.Item name="is_exclude_from_homepage" id="is_exclude_from_homepage">
-                        <Switch defaultChecked />
+                        <Switch />
                         <label htmlFor="is_exclude_from_homepage"> Exclude from Homepage </label>
                       </Form.Item>
                     </Collapse.Panel>
@@ -473,6 +466,9 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                           placeholder="Excerpt"
                           style={{ fontSize: 'medium' }}
                         />
+                      </Form.Item>
+                      <Form.Item name="custom_format" label="Custom Format">
+                        <Input placeholder="Custom format" style={{ fontSize: 'medium' }} />
                       </Form.Item>
                     </Collapse.Panel>
                   </Collapse>

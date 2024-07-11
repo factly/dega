@@ -3,16 +3,19 @@
 package models
 
 type PostFilter struct {
-	Slugs []string `json:"slugs"`
-	Ids   []int    `json:"ids"`
+	Slugs []string `json:"slugs,omitempty"`
+	Ids   []string `json:"ids,omitempty"`
+}
+
+type Query struct {
 }
 
 type SearchResult struct {
-	Posts      []*Post     `json:"posts"`
-	Categories []*Category `json:"categories"`
-	Tags       []*Tag      `json:"tags"`
-	Claims     []*Claim    `json:"claims"`
-	Claimants  []*Claimant `json:"claimants"`
-	Ratings    []*Rating   `json:"ratings"`
-	Media      []*Medium   `json:"media"`
+	Posts      []*Post     `json:"posts,omitempty"`
+	Categories []*Category `json:"categories,omitempty"`
+	Tags       []*Tag      `json:"tags,omitempty"`
+	Claims     []*Claim    `json:"claims,omitempty"`
+	Claimants  []*Claimant `json:"claimants,omitempty"`
+	Ratings    []*Rating   `json:"ratings,omitempty"`
+	Media      []*Medium   `json:"media,omitempty"`
 }

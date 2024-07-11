@@ -84,13 +84,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Claims = make([]factCheckModel.Claim, 0)
 
 	// fetch all authors
-	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, post.AuthorIDs)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
@@ -211,7 +204,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	oldStatus := result.Post.Status
 	// Check if post status is changed back to draft or ready from published
-	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready") {
+	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready" || post.Status == "future") {
 		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "publish", orgRole)
 		if !isAllowed {
 			tx.Rollback()
@@ -237,6 +230,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if post.Status == "ready" {
 		updateMap["status"] = "ready"
+	} else if post.Status == "future" {
+		updateMap["status"] = "future"
 	} else if oldStatus == "ready" && post.Status == "draft" {
 		updateMap["status"] = "draft"
 	}
@@ -358,6 +353,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: id,
 	}).Find(&updatedPostAuthors)
+
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, toCreateIDs)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	// appending previous post authors to result
 	for _, postAuthor := range updatedPostAuthors {
