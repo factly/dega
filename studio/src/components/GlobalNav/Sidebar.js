@@ -137,9 +137,9 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
       {getMenuItems(menu.children, index, menu.title)}
     </SubMenu>
   );
-
-  return (
+  return ( 
     <>
+    {!loading && (
       <Sider
         breakpoint="xl"
         className="main-sidebar"
@@ -194,6 +194,9 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
                 }
               />
             ) : (
+              <>{
+                details&&
+              
               <Button
                 style={{
                   background: '#DCE4E7',
@@ -223,7 +226,8 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
                   {details[selected]?.name}
                 </div>
                 <DownOutlined />
-              </Button>
+              </Button>}
+              </>
             )}
           </div>
           <Search collapsed={collapsed} />
@@ -355,6 +359,7 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
           </div>
         )}
       </Sider>
+      )}
     </>
   );
 }

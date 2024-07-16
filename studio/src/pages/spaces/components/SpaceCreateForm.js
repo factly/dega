@@ -52,8 +52,6 @@ const SpaceCreateForm = ({ onCreate }) => {
           paddingTop: '24px',
         }}
       >
-        <Row justify="space-between">
-          <Col md={8} xs={24}>
             <Form.Item label="Name">
               <Input.Group compact>
                 <Form.Item
@@ -62,7 +60,7 @@ const SpaceCreateForm = ({ onCreate }) => {
                   rules={[{ required: true, message: 'organisation is required' }]}
                 >
                   <Select style={{ width: '40%' }} placeholder="Select organisation">
-                    {orgs.map((org) => (
+                    {orgs.filter(o => o.role === 'admin').map((org) => (
                       <Option key={org.id} value={org.id}>
                         {org.title}
                       </Option>
@@ -107,8 +105,6 @@ const SpaceCreateForm = ({ onCreate }) => {
                 Submit
               </Button>
             </Form.Item>
-          </Col>
-        </Row>
       </Form>
     </ConfigProvider>
   );
