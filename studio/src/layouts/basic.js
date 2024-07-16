@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button } from 'antd';
+import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button, Row, Col } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -13,6 +13,8 @@ import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 import { permissionRequirements } from '../utils/getUserPermission';
+import CreateSpace from '../pages/spaces/CreateSpace';
+
 
 const styles = {
   position: 'absolute',
@@ -204,6 +206,30 @@ function BasicLayout(props) {
       </div>
     );
   }
+
+  if (!loading && (!orgs.length || orgs.filter((o) => o.role === 'admin').length === 0)) {
+    return (
+      <div style={styles}>
+        <Result
+          status="403"
+          title="403 Forbidden"
+          subTitle="You don't have access. Please contact your administrator."
+        />
+      </div>
+    );
+  }
+
+  const existingSpaces = orgs[0]?.spaces;
+
+    if (!loading && existingSpaces?.length === 0) {
+        return ( 
+            <Row justify={"center"}>
+              <Col>
+              <CreateSpace />
+              </Col>
+            </Row>
+        );
+    }
 
   return (
     <ConfigProvider
