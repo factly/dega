@@ -16,6 +16,7 @@ import {
 } from '@ant-design/icons';
 import Search from '../Search';
 import degaImg from '../../assets/dega.png';
+import getUserPermission from '../../utils/getUserPermission';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -100,9 +101,18 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
   }
 
   if (orgs[0]?.role === 'admin') resource = resource.concat(protectedResources);
+  const hasPermission = (route) => {
+    const permissionRequirement = permissionRequirements[route.path];
+    if (!permissionRequirement) return true;
+
+    return permissionRequirement.every(({ resource, action }) =>
+      getUserPermission({ resource, action, spaces: { selected, details } }).includes(action),
+    );
+  };
+
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
-      return resource.includes(route.title.toLowerCase()) ? (
+      return resource.includes(route.title.toLowerCase() && hasPermission(route)) ? (
         ['Events'].indexOf(route.title) !== -1 ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
@@ -127,9 +137,11 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
                 {getMenuItems(submenuItem.children, index, submenuItem.title)}
               </SubMenu>
             ) : (
-              <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
-                {getMenuItems(submenuItem.children, index, submenuItem.title)}
-              </SubMenu>
+              hasPermission(submenuItem) && (
+                <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
+                  {getMenuItems(submenuItem.children, index, submenuItem.title)}
+                </SubMenu>
+              )
             );
           })}
         </>
