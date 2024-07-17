@@ -12,6 +12,13 @@ const AccountMenu = () => {
     };
   });
 
+  React.useEffect(() => {
+    if(Object.keys(profile).length === 0){
+      dispatch(getUserProfile());
+    }
+  }, [dispatch]);
+
+
   const handleLogout = () => {
     const logoutUrl =
       `${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/end_session?` +
