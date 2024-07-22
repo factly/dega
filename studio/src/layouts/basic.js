@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button, Row, Col } from 'antd';
+import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button} from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,6 @@ import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 import { permissionRequirements } from '../utils/getUserPermission';
-import CreateSpace from '../pages/spaces/CreateSpace';
 import '../components/PreviewSocialCard/style.css';
 
 
@@ -81,6 +80,8 @@ function BasicLayout(props) {
   });
 
   const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
+  const navigate = useNavigate();
+
 
 
   useEffect(() => {
@@ -223,6 +224,9 @@ function BasicLayout(props) {
   }
 
   const existingSpaces = orgs[0]?.spaces;
+  const handleClick = () => {
+    navigate('/spaces/create');
+  }
 
     if (!loading && existingSpaces?.length === 0) {
         return ( 
@@ -231,12 +235,8 @@ function BasicLayout(props) {
               status="403"
               title="You do not have any space created."
               subTitle="Please create one to explore more of Dega."
+              extra={<Button type="primary" onClick={handleClick}>Create Space</Button>}
           />
-            <Row justify={"center"}>
-              <Col>
-              <CreateSpace />
-              </Col>
-            </Row>
           </>  
         );
     }
