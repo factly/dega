@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button} from 'antd';
+import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button, Row} from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -13,7 +13,7 @@ import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 import { permissionRequirements } from '../utils/getUserPermission';
-import '../components/PreviewSocialCard/style.css';
+import CreateSpace from '../pages/spaces/CreateSpace';
 
 
 
@@ -227,6 +227,22 @@ function BasicLayout(props) {
   const handleClick = () => {
     navigate('/spaces/create');
   }
+
+
+
+    if (location.pathname === '/spaces/create' && !loading) {
+      return (
+        <>
+      <h1 style={{ textAlign: 'center', fontSize: '2em', fontWeight: 'bold', marginBottom: '20px' }}>Space</h1>
+      <div class="form-container">
+        <Row justify="center">
+        <CreateSpace />
+        </Row>
+        </div>
+        </>
+      );
+    }
+
 
     if (!loading && existingSpaces?.length === 0) {
         return ( 
