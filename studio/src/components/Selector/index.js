@@ -119,7 +119,9 @@ function Selector({
         }
       }}
       notFoundContent={
-        actions.includes('admin') || actions.includes('create') ? (
+        searchValue === '' ? (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No results found" />
+        ) : actions.includes('admin') || actions.includes('create') ? (
           <Button
             block
             type="dashed"
@@ -139,10 +141,7 @@ function Selector({
             Create a {createEntity} '{query.q}'
           </Button>
         ) : (
-          <Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description="No results found"
-          />
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No results found" />
         )
       }
       getPopupContainer={(trigger) => trigger.parentNode}
