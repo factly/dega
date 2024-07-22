@@ -14,6 +14,8 @@ import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 import { permissionRequirements } from '../utils/getUserPermission';
 import CreateSpace from '../pages/spaces/CreateSpace';
+import '../components/PreviewSocialCard/style.css';
+
 
 
 const styles = {
@@ -225,6 +227,8 @@ function BasicLayout(props) {
         return ( 
             <Row justify={"center"}>
               <Col>
+              <h1 className="custom-heading">You do not have any space created,</h1>
+              <h2 className="custom-heading">Please create a space to continue further.</h2>
               <CreateSpace />
               </Col>
             </Row>
