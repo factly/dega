@@ -82,6 +82,7 @@ function BasicLayout(props) {
 
   const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
 
+
   useEffect(() => {
     const pathSnippets = location.pathname.split('/').filter((i) => i);
     if (pathSnippets.length === 0) {
@@ -225,13 +226,18 @@ function BasicLayout(props) {
 
     if (!loading && existingSpaces?.length === 0) {
         return ( 
+          <>  
+            <Result
+              status="403"
+              title="You do not have any space created."
+              subTitle="Please create one to explore more of Dega."
+          />
             <Row justify={"center"}>
               <Col>
-              <h1 className="custom-heading">You do not have any space created,</h1>
-              <h2 className="custom-heading">Please create a space to continue further.</h2>
               <CreateSpace />
               </Col>
             </Row>
+          </>  
         );
     }
 
