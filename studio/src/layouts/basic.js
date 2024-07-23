@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button, Row} from 'antd';
+import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button, Row } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -14,8 +14,6 @@ import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 import { permissionRequirements } from '../utils/getUserPermission';
 import CreateSpace from '../pages/spaces/CreateSpace';
-
-
 
 const styles = {
   position: 'absolute',
@@ -81,8 +79,6 @@ function BasicLayout(props) {
 
   const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
   const navigate = useNavigate();
-
-
 
   useEffect(() => {
     const pathSnippets = location.pathname.split('/').filter((i) => i);
@@ -226,36 +222,41 @@ function BasicLayout(props) {
   const existingSpaces = orgs[0]?.spaces;
   const handleClick = () => {
     navigate('/spaces/create');
+  };
+
+  if (location.pathname === '/spaces/create' && !loading) {
+    return (
+      <>
+        <h1
+          style={{ textAlign: 'center', fontSize: '2em', fontWeight: 'bold', marginBottom: '20px' }}
+        >
+          Space
+        </h1>
+        <div class="form-container">
+          <Row justify="center">
+            <CreateSpace />
+          </Row>
+        </div>
+      </>
+    );
   }
 
-
-
-    if (location.pathname === '/spaces/create' && !loading) {
-      return (
-        <>
-      <h1 style={{ textAlign: 'center', fontSize: '2em', fontWeight: 'bold', marginBottom: '20px' }}>Space</h1>
-      <div class="form-container">
-        <Row justify="center">
-        <CreateSpace />
-        </Row>
-        </div>
-        </>
-      );
-    }
-
-
-    if (!loading && existingSpaces?.length === 0) {
-        return ( 
-          <>  
-            <Result
-              status="403"
-              title="You do not have any space created."
-              subTitle="Please create one to explore more of Dega."
-              extra={<Button type="primary" onClick={handleClick}>Create Space</Button>}
-          />
-          </>  
-        );
-    }
+  if (!loading && existingSpaces?.length === 0) {
+    return (
+      <>
+        <Result
+          status="403"
+          title="You do not have any space created."
+          subTitle="Please create one to explore more of Dega."
+          extra={
+            <Button type="primary" onClick={handleClick}>
+              Create Space
+            </Button>
+          }
+        />
+      </>
+    );
+  }
 
   return (
     <ConfigProvider

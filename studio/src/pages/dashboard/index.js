@@ -7,11 +7,6 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Loader from '../../components/Loader';
 
-
-const styles = {
-  justifyContent: 'center',
-};
-
 function Dashboard() {
   const { Title } = Typography;
   const { spaces, info } = useSelector(({ spaces, info }) => ({
@@ -28,8 +23,6 @@ function Dashboard() {
     dispatch(getInfo());
   };
 
-
-
   const { article = {}, factCheck = {}, loading } = info;
   const articlePublish = Number(article.publish) || 0;
   const articleDraft = Number(article.draft) || 0;
@@ -38,9 +31,9 @@ function Dashboard() {
   const factCheckDraft = Number(factCheck.draft) || 0;
   const factCheckReady = Number(factCheck.ready) || 0;
 
-if (loading) {
-    return  <Loader /> ;
-}
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Space direction="vertical">
