@@ -2,7 +2,8 @@ import { UserOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, Button, Avatar } from 'antd';
 import React from 'react';
 import { LogoutOutlined, DownOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserProfile } from '../../actions/profile';
 
 const AccountMenu = () => {
   const { profile, loading } = useSelector((state) => {
@@ -11,13 +12,13 @@ const AccountMenu = () => {
       loading: state.profile.loading,
     };
   });
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if(Object.keys(profile).length === 0){
+    if (Object.keys(profile).length === 0) {
       dispatch(getUserProfile());
     }
   }, [dispatch]);
-
 
   const handleLogout = () => {
     const logoutUrl =
