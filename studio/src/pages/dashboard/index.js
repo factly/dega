@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Loader from '../../components/Loader';
 
+const styles = {
+  justifyContent: 'center',
+};
+
 function Dashboard() {
   const { Title } = Typography;
   const { spaces, info } = useSelector(({ spaces, info }) => ({
@@ -34,6 +38,7 @@ function Dashboard() {
   if (loading) {
     return <Loader />;
   }
+
   return (
     <Space direction="vertical">
       <Helmet title={'Dashboard'} />

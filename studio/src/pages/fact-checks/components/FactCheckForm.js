@@ -1,39 +1,52 @@
-import React, { useState, useEffect } from 'react';
 import {
-  Row,
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  ExceptionOutlined,
+  FileSearchOutlined,
+  LeftOutlined,
+  MenuFoldOutlined,
+  ProfileOutlined,
+  SettingFilled,
+} from '@ant-design/icons';
+import {
+  Button,
   Col,
+  Collapse,
+  DatePicker,
+  Divider,
+  Drawer,
+  Dropdown,
   Form,
   Input,
-  Button,
-  Space,
-  Drawer,
-  DatePicker,
-  Dropdown,
   Menu,
-  Switch,
   Modal,
+  Row,
+  Space,
+  Switch,
+  Tag,
   Typography,
 } from 'antd';
-import Selector from '../../../components/Selector';
-import { maker } from '../../../utils/sluger';
-import MediaSelector from '../../../components/MediaSelector';
+import dayjs from 'dayjs';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { createClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
-import { Prompt } from 'react-router-dom';
-import { SettingFilled, LeftOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
-import ClaimList from './ClaimList';
-import MonacoEditor from '../../../components/MonacoEditor';
-import getJsonValue from '../../../utils/getJsonValue';
+import ThreeDotIcon from '../../../assets/ThreeDotIcon';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
-import { getDatefromStringWithoutDay } from '../../../utils/date';
+import MediaSelector from '../../../components/MediaSelector';
+import MonacoEditor from '../../../components/MonacoEditor';
+import Selector from '../../../components/Selector';
 import { extractClaimIdsAndOrder, hasClaims } from '../../../utils/claims';
+import { formatDate, getDatefromStringWithoutDay } from '../../../utils/date';
+import getJsonValue from '../../../utils/getJsonValue';
+import { maker } from '../../../utils/sluger';
 import useNavigation from '../../../utils/useNavigation';
+import ClaimCreateForm from '../../claims/components/ClaimForm';
+import ClaimList from './ClaimList';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useNavigation();
+  const formRef = useRef(null);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -45,6 +58,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [codeDrawer, setCodeDrawerVisible] = useState(false);
   const [metaFieldsDrawer, setMetaFieldsDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
   const showSchemaModal = () => {
     setIsModalVisible(true);
   };
@@ -215,6 +229,38 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     };
   }, [shouldBlockNavigation]);
 
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const formProps = {
+    form: form,
+    ref: formRef,
+    initialValues: { ...data },
+    style: { maxWidth: '100%', width: '100%' },
+    onFinish: (values) => onSave(values),
+    onValuesChange: (changedValues) => {
+      setShouldBlockNavigation(true);
+      setValueChange(true);
+      if (changedValues.claims) {
+        if (claimOrder.length < changedValues.claims.length) {
+          setClaimOrder(
+            claimOrder.concat(changedValues.claims.filter((x) => !claimOrder.includes(x))),
+          );
+        } else setClaimOrder(claimOrder.filter((x) => changedValues.claims.includes(x)));
+      }
+    },
+    layout: 'vertical',
+  };
   return (
     <>
       {/* <Prompt
@@ -233,6 +279,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
       )}
       <Form
         form={form}
+        ref={formRef}
         initialValues={{ ...data }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
@@ -248,6 +295,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
           }
         }}
         layout="vertical"
+        className="edit-form"
       >
         <Space direction="vertical">
           <div style={{ float: 'right' }}>
@@ -327,107 +375,239 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 initialValue={data.description_html}
               />
               <Drawer
+                className="edit-drawer"
                 title={<h4 style={{ fontWeight: 'bold' }}>Post Settings</h4>}
                 placement="right"
                 closable={true}
                 onClose={onClose}
                 open={drawerVisible}
-                width={366}
+                width={isMobileScreen ? '80vw' : 480}
                 headerStyle={{ fontWeight: 'bold' }}
               >
-                <Form.Item name="featured_medium_id" label="Featured Image">
-                  <MediaSelector />
-                </Form.Item>
-                <Form.Item name="claims" label="Claims" key={!visible}>
-                  <Selector mode="multiple" display={'claim'} action="Claims" />
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" onClick={showModal}>
-                    Add Claim
-                  </Button>
-                </Form.Item>
-                <Form.Item
-                  name="excerpt"
-                  label="Excerpt"
-                  rules={[{ max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' }]}
-                >
-                  <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
-                </Form.Item>
-                <Form.Item name="subtitle" label="Subtitle">
-                  <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
-                </Form.Item>
-                <SlugInput />
-                <Form.Item name="published_date" label="Published Date">
-                  <DatePicker />
-                </Form.Item>
-                <Form.Item name="categories" label="Categories">
-                  <Selector mode="multiple" action="Categories" createEntity="Category" />
-                </Form.Item>
-                <Form.Item name="tags" label="Tags">
-                  <Selector mode="multiple" action="Tags" createEntity="Tag" />
-                </Form.Item>
-                <Form.Item name="authors" label="Authors">
-                  <Selector mode="multiple" display={'display_name'} action="Authors" />
-                </Form.Item>
-                <Form.Item>
-                  <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
-                    Add Meta Data
-                  </Button>
-                </Form.Item>
-                <Form.Item>
-                  <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
-                    Code Injection
-                  </Button>
-                </Form.Item>
-                <Form.Item>
-                  <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
-                    View Schemas
-                  </Button>
-                </Form.Item>
-                <Form.Item>
-                  <Button
-                    style={{ width: '100%' }}
-                    onClick={() => setMetaFieldsDrawerVisible(true)}
+                <Form {...formProps}>
+                  <Collapse
+                    ghost
+                    bordered={false}
+                    accordion={true}
+                    defaultActiveKey={['1']}
+                    expandIcon={({ isActive }) => (
+                      <div className="collapse-icon-background">
+                        <MenuFoldOutlined
+                          style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
+                        />
+                      </div>
+                    )}
                   >
-                    Add Meta Fields
-                  </Button>
-                </Form.Item>
-                <Modal
-                  title="View Schemas"
-                  open={isModalVisible}
-                  onOk={handleSchemaModalOk}
-                  onCancel={handleSchemaModalCancel}
-                  footer={[
-                    <Button
-                      onClick={() => {
-                        const copyText = data.schemas.map(
-                          (schema) =>
-                            `<script type="application/ld+json">${JSON.stringify(schema)}</script>`,
-                        );
-                        copySchema(copyText);
-                      }}
-                    >
-                      Copy
-                    </Button>,
-                    <a
-                      href="https://search.google.com/test/rich-results"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="ant-btn ant-btn-secondary"
-                    >
-                      Test in Google Rich Results Text
-                    </a>,
-                  ]}
-                >
-                  <div id="schema-container">
-                    {data.schemas &&
-                      data.schemas.map((schema) => (
-                        <Typography.Text code>
-                          {`<script type="application/ld+json">${JSON.stringify(schema)}</script>`}
-                        </Typography.Text>
-                      ))}
+                    <Collapse.Panel header="Details" key="1">
+                      <Row justify="space-between" style={{ margin: '16px 0', marginTop: 0 }}>
+                        {data?.updated_at ? (
+                          <Col span={16}>
+                            <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
+                              <span style={{ color: '#000000E0', fontWeight: 400 }}>
+                                Last updated:{' '}
+                              </span>
+                              {formatDate(data.updated_at)}
+                            </Typography.Text>
+                          </Col>
+                        ) : null}
+                        <Col span={6}>
+                          {status === 'publish' ? (
+                            <Tag icon={<CheckCircleOutlined />} color="green">
+                              Published
+                            </Tag>
+                          ) : status === 'draft' ? (
+                            <Tag color="red" icon={<ExceptionOutlined />}>
+                              Draft
+                            </Tag>
+                          ) : status === 'ready' ? (
+                            <Tag color="gold" icon={<ClockCircleOutlined />}>
+                              Ready to Publish
+                            </Tag>
+                          ) : null}
+                        </Col>
+                      </Row>
+                      <Form.Item name="published_date" label="Published Date">
+                        <DatePicker />
+                      </Form.Item>
+                      <Form.Item name="authors" label="Authors">
+                        <Selector mode="multiple" display={'display_name'} action="Authors" />
+                      </Form.Item>
+                      <Form.Item name="featured_medium_id" label="Featured Image">
+                        <MediaSelector />
+                      </Form.Item>
+                      <Form.Item name="claims" label="Claims" key={!visible}>
+                        <Selector mode="multiple" display={'claim'} action="Claims" />
+                      </Form.Item>
+                      <Form.Item>
+                        <Button type="primary" onClick={showModal}>
+                          Add Claim
+                        </Button>
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Divider style={{ margin: 0 }} />
+                  <Collapse
+                    ghost
+                    bordered={false}
+                    accordion={true}
+                    expandIcon={({ isActive }) => (
+                      <div className="collapse-icon-background">
+                        <ProfileOutlined
+                          style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
+                        />
+                      </div>
+                    )}
+                  >
+                    <Collapse.Panel header="Other Details" key="1">
+                      <Form.Item
+                        name="excerpt"
+                        label="Excerpt"
+                        rules={[
+                          { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
+                        ]}
+                      >
+                        <Input.TextArea
+                          rows={4}
+                          placeholder="Excerpt"
+                          style={{ fontSize: 'medium' }}
+                        />
+                      </Form.Item>
+                      <Form.Item name="subtitle" label="Subtitle">
+                        <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Divider style={{ margin: 0 }} />
+                  <Collapse
+                    ghost
+                    bordered={false}
+                    accordion={true}
+                    expandIcon={({ isActive }) => (
+                      <div className="collapse-icon-background">
+                        <ProfileOutlined
+                          style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
+                        />
+                      </div>
+                    )}
+                  >
+                    <Collapse.Panel header="Categories" key="1">
+                      <Form.Item name="categories" label="Categories">
+                        <Selector mode="multiple" action="Categories" createEntity="Category" />
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Divider style={{ margin: 0 }} />
+                  <Collapse
+                    ghost
+                    bordered={false}
+                    accordion={true}
+                    expandIcon={({ isActive }) => (
+                      <div className="collapse-icon-background">
+                        <ProfileOutlined
+                          style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
+                        />
+                      </div>
+                    )}
+                  >
+                    <Collapse.Panel header="Tags" key="1">
+                      <Form.Item name="tags" label="Tags">
+                        <Selector mode="multiple" action="Tags" createEntity="Tag" />
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Divider style={{ margin: 0 }} />
+                  <div
+                    style={{ display: 'flex', gap: '10px', cursor: 'pointer', padding: '1rem 0' }}
+                    onClick={() => setMetaDrawer(true)}
+                  >
+                    <div className="collapse-icon-background">
+                      <FileSearchOutlined
+                        style={{ fontSize: '14px', color: metaDrawer ? '#3473ED' : '#000000E0' }}
+                      />
+                    </div>
+                    <Typography.Text strong>SEO</Typography.Text>
                   </div>
-                </Modal>
+                  <Divider style={{ margin: '0 10px' }} />
+                  <Collapse
+                    ghost
+                    bordered={false}
+                    accordion={true}
+                    expandIcon={({ isActive }) => (
+                      <div className="collapse-icon-background">
+                        <ThreeDotIcon color={isActive ? '#3473ED' : '#000000E0'} />
+                      </div>
+                    )}
+                  >
+                    <Collapse.Panel header="Others" key="1">
+                      <Form.Item>
+                        <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
+                          Add Meta Data
+                        </Button>
+                      </Form.Item>
+                      <Form.Item>
+                        <Button
+                          style={{ width: '100%' }}
+                          onClick={() => setCodeDrawerVisible(true)}
+                        >
+                          Code Injection
+                        </Button>
+                      </Form.Item>
+                      <Form.Item>
+                        <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
+                          View Schemas
+                        </Button>
+                      </Form.Item>
+                      <Form.Item>
+                        <Button
+                          style={{ width: '100%' }}
+                          onClick={() => setMetaFieldsDrawerVisible(true)}
+                        >
+                          Add Meta Fields
+                        </Button>
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Modal
+                    title="View Schemas"
+                    open={isModalVisible}
+                    onOk={handleSchemaModalOk}
+                    onCancel={handleSchemaModalCancel}
+                    footer={[
+                      <Button
+                        onClick={() => {
+                          const copyText = data.schemas.map(
+                            (schema) =>
+                              `<script type="application/ld+json">${JSON.stringify(
+                                schema,
+                              )}</script>`,
+                          );
+                          copySchema(copyText);
+                        }}
+                      >
+                        Copy
+                      </Button>,
+                      <a
+                        href="https://search.google.com/test/rich-results"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="ant-btn ant-btn-secondary"
+                      >
+                        Test in Google Rich Results Text
+                      </a>,
+                    ]}
+                  >
+                    <div id="schema-container">
+                      {data.schemas &&
+                        data.schemas.map((schema) => (
+                          <Typography.Text code>
+                            {`<script type="application/ld+json">${JSON.stringify(
+                              schema,
+                            )}</script>`}
+                          </Typography.Text>
+                        ))}
+                    </div>
+                  </Modal>
+                </Form>
               </Drawer>
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Post Meta data</h4>}
@@ -435,25 +615,28 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 closable={true}
                 onClose={onClose}
                 open={metaDrawer}
-                width={480}
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
-                <Form.Item style={{ marginLeft: '-20px' }}>
-                  <Button type="text" onClick={() => setMetaDrawer(false)}>
-                    <LeftOutlined />
-                    Back
-                  </Button>
-                </Form.Item>
-                <Form.Item name={['meta', 'title']} label="Meta Title">
-                  <Input />
-                </Form.Item>
-                <Form.Item name={['meta', 'description']} label="Meta Description">
-                  <Input.TextArea />
-                </Form.Item>
-                <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                  <Input />
-                </Form.Item>
+                <Form {...formProps}>
+                  <Form.Item style={{ marginLeft: '-20px' }}>
+                    <Button type="text" onClick={() => setMetaDrawer(false)}>
+                      <LeftOutlined />
+                      Back
+                    </Button>
+                  </Form.Item>
+                  <SlugInput />
+                  <Form.Item name={['meta', 'title']} label="Meta Title">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item name={['meta', 'description']} label="Meta Description">
+                    <Input.TextArea />
+                  </Form.Item>
+                  <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
+                    <Input />
+                  </Form.Item>
+                </Form>
               </Drawer>
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Code Injection</h4>}
@@ -461,22 +644,24 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 closable={true}
                 onClose={onClose}
                 open={codeDrawer}
-                width={710}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
+                width={isMobileScreen ? '80vw' : 480}
               >
-                <Form.Item style={{ marginLeft: '-20px' }}>
-                  <Button type="text" onClick={() => setCodeDrawerVisible(false)}>
-                    <LeftOutlined />
-                    Back
-                  </Button>
-                </Form.Item>
-                <Form.Item name="header_code" label="Header Code">
-                  <MonacoEditor language="html" width={650} />
-                </Form.Item>
-                <Form.Item name="footer_code" label="Footer Code">
-                  <MonacoEditor language="html" width={650} />
-                </Form.Item>
+                <Form {...formProps}>
+                  <Form.Item style={{ marginLeft: '-20px' }}>
+                    <Button type="text" onClick={() => setCodeDrawerVisible(false)}>
+                      <LeftOutlined />
+                      Back
+                    </Button>
+                  </Form.Item>
+                  <Form.Item name="header_code" label="Header Code">
+                    <MonacoEditor language="html" width={650} />
+                  </Form.Item>
+                  <Form.Item name="footer_code" label="Footer Code">
+                    <MonacoEditor language="html" width={650} />
+                  </Form.Item>
+                </Form>
               </Drawer>
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Meta Fields</h4>}
@@ -484,23 +669,25 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 closable={true}
                 onClose={onClose}
                 open={metaFieldsDrawer}
-                width={480}
+                width={isMobileScreen ? '80vw' : 480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
-                <Form.Item style={{ marginLeft: '-20px' }}>
-                  <Button type="text" onClick={() => setMetaFieldsDrawerVisible(false)}>
-                    <LeftOutlined />
-                    Back
-                  </Button>
-                </Form.Item>
-                <Form.Item
-                  name="meta_fields"
-                  label="Meta Fields"
-                  extra="add JSON if you have to pass any extra data"
-                >
-                  <MonacoEditor language="json" />
-                </Form.Item>
+                <Form {...formProps}>
+                  <Form.Item style={{ marginLeft: '-20px' }}>
+                    <Button type="text" onClick={() => setMetaFieldsDrawerVisible(false)}>
+                      <LeftOutlined />
+                      Back
+                    </Button>
+                  </Form.Item>
+                  <Form.Item
+                    name="meta_fields"
+                    label="Meta Fields"
+                    extra="add JSON if you have to pass any extra data"
+                  >
+                    <MonacoEditor language="json" />
+                  </Form.Item>
+                </Form>
               </Drawer>
             </Col>
           </Row>
