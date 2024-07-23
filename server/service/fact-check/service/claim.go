@@ -108,6 +108,9 @@ func (cs *claimService) Create(ctx context.Context, sID uuid.UUID, uID string, c
 	}
 
 	mediumID := &claim.MediumID
+	if claim.MediumID == uuid.Nil {
+		mediumID = nil
+	}
 
 	result := &model.Claim{
 		Base: config.Base{
