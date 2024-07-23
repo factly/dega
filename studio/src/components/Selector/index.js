@@ -139,10 +139,7 @@ function Selector({
             Create a {createEntity} '{query.q}'
           </Button>
         ) : (
-          <Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description="No results found"
-          />
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No results found" />
         )
       }
       getPopupContainer={(trigger) => trigger.parentNode}

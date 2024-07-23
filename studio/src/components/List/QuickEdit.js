@@ -96,9 +96,9 @@ function QuickEdit({ data, setID, slug, page = false, createdAt, onQuickEditUpda
         <DatePicker />
       </Form.Item>
       <Form.Item label="Created Date">
-      <Typography.Text>
+        <Typography.Text>
           {createdAt ? dayjs(createdAt).format('YYYY-MM-DD') : 'N/A'}
-  </Typography.Text>
+        </Typography.Text>
       </Form.Item>
 
       {slug === 'fact-check' ? (

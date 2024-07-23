@@ -52,59 +52,61 @@ const SpaceCreateForm = ({ onCreate }) => {
           paddingTop: '24px',
         }}
       >
-            <Form.Item label="Name">
-              <Input.Group compact>
-                <Form.Item
-                  name="organisation_id"
-                  noStyle
-                  rules={[{ required: true, message: 'organisation is required' }]}
-                >
-                  <Select style={{ width: '40%' }} placeholder="Select organisation">
-                    {orgs.filter(o => o.role === 'admin').map((org) => (
-                      <Option key={org.id} value={org.id}>
-                        {org.title}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  name="name"
-                  noStyle
-                  rules={[
-                    { required: true, message: 'Name is required' },
-                    { min: 3, message: 'Name must be minimum 3 characters.' },
-                    { max: 50, message: 'Name must be maximum 50 characters.' },
-                  ]}
-                >
-                  <Input
-                    style={{ width: '60%' }}
-                    placeholder="Input name"
-                    onChange={(e) => onTitleChange(e.target.value)}
-                  />
-                </Form.Item>
-              </Input.Group>
+        <Form.Item label="Name">
+          <Input.Group compact>
+            <Form.Item
+              name="organisation_id"
+              noStyle
+              rules={[{ required: true, message: 'organisation is required' }]}
+            >
+              <Select style={{ width: '40%' }} placeholder="Select organisation">
+                {orgs
+                  .filter((o) => o.role === 'admin')
+                  .map((org) => (
+                    <Option key={org.id} value={org.id}>
+                      {org.title}
+                    </Option>
+                  ))}
+              </Select>
             </Form.Item>
-            <SlugInput />
-            <Form.Item name="site_title" label="Title">
-              <Input />
+            <Form.Item
+              name="name"
+              noStyle
+              rules={[
+                { required: true, message: 'Name is required' },
+                { min: 3, message: 'Name must be minimum 3 characters.' },
+                { max: 50, message: 'Name must be maximum 50 characters.' },
+              ]}
+            >
+              <Input
+                style={{ width: '60%' }}
+                placeholder="Input name"
+                onChange={(e) => onTitleChange(e.target.value)}
+              />
             </Form.Item>
-            <Form.Item name="tag_line" label="Tag line">
-              <Input />
-            </Form.Item>
-            <Form.Item name="site_address" label="Website">
-              <Input />
-            </Form.Item>
-            <Form.Item name="description" label="Description">
-              <TextArea placeholder="Enter Description..." />
-            </Form.Item>
-            <Form.Item name="meta_fields" label="Metafields">
-              <MonacoEditor width="100%" language="json" />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
+          </Input.Group>
+        </Form.Item>
+        <SlugInput />
+        <Form.Item name="site_title" label="Title">
+          <Input />
+        </Form.Item>
+        <Form.Item name="tag_line" label="Tag line">
+          <Input />
+        </Form.Item>
+        <Form.Item name="site_address" label="Website">
+          <Input />
+        </Form.Item>
+        <Form.Item name="description" label="Description">
+          <TextArea placeholder="Enter Description..." />
+        </Form.Item>
+        <Form.Item name="meta_fields" label="Metafields">
+          <MonacoEditor width="100%" language="json" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
     </ConfigProvider>
   );
