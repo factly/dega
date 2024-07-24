@@ -36,7 +36,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if categoryID != "" {
+	if categoryID == "" {
 		loggerx.Error(errors.New("category id is required"))
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
