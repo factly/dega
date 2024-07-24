@@ -26,7 +26,6 @@ import (
 // @Failure 400 {array} string
 // @Router  /core/tags/{tag_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
-
 	tagID := chi.URLParam(r, "tag_id")
 	id, err := uuid.Parse(tagID)
 

@@ -11,7 +11,6 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
   const [deleteItemID, setDeleteItemID] = React.useState(null);
 
   const dispatch = useDispatch();
-
   const history = useNavigation();
   const columns = [
     {

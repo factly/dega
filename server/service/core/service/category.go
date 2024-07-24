@@ -392,5 +392,6 @@ func (cs CategoryService) Delete(sID, id uuid.UUID) []errorx.Message {
 		loggerx.Error(err)
 		return errorx.Parser(errorx.DBError())
 	}
+	tx.Commit()
 	return nil
 }
