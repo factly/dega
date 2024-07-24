@@ -33,7 +33,7 @@ function Categories({ permission }) {
   const [filters, setFilters] = React.useState({
     ...params,
   });
-  
+
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
 
   React.useEffect(() => {
