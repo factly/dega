@@ -56,7 +56,7 @@ function Dashboard() {
               </Col>
               <Col span={24}>
                 <Row gutter={[16, 16]} justify="space-around">
-                  <Col md={{ span: 5 }}>
+                  <Col md={{ span: 4 }}>
                     <Card size="small" hoverable={true} title="Total">
                       <Link to="/posts">
                         <Statistic
@@ -66,28 +66,28 @@ function Dashboard() {
                       </Link>
                     </Card>
                   </Col>
-                  <Col md={{ span: 6 }}>
+                  <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Published">
                       <Link to="/posts?status=publish">
                         <Statistic value={articlePublish} loading={loading} />
                       </Link>
                     </Card>
                   </Col>
-                  <Col md={{ span: 7 }}>
+                  <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Future publish">
                       <Link to="/posts?status=future">
                         <Statistic value={articleFuture} loading={loading} />
                       </Link>
                     </Card>
                   </Col>
-                  <Col md={{ span: 5 }}>
+                  <Col md={{ span: 4 }}>
                     <Card size="small" hoverable={true} title="Draft">
                       <Link to="/posts?status=draft">
                         <Statistic value={articleDraft} loading={loading} />
                       </Link>
                     </Card>
                   </Col>
-                  <Col md={{ span: 8 }}>
+                  <Col md={{ span: 6 }}>
                     <Card size="small" hoverable={true} title="Ready to publish">
                       <Link to="/posts?status=ready">
                         <Statistic value={articleReady} loading={loading} />
@@ -109,7 +109,7 @@ function Dashboard() {
               </Col>
               <Col span={24}>
                 <Row gutter={[16, 16]} justify="space-around">
-                  <Col md={{ span: 5 }}>
+                  <Col md={{ span: 4 }}>
                     <Card size="small" hoverable={true} title="Total">
                       <Link to="/fact-checks">
                         <Statistic
@@ -119,28 +119,28 @@ function Dashboard() {
                       </Link>
                     </Card>
                   </Col>
-                  <Col md={{ span: 6 }}>
+                  <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Published">
                       <Link to="/fact-checks?status=publish">
                         <Statistic value={factCheckPublish} loading={loading} />
                       </Link>
                     </Card>
                   </Col>
-                  <Col md={{ span: 7 }}>
+                  <Col md={{ span: 5 }}>
                     <Card size="small" hoverable={true} title="Future publish">
                       <Link to="/fact-checks?status=future">
                         <Statistic value={factCheckFuture} loading={loading} />
                       </Link>
                     </Card>
                   </Col>
-                  <Col md={{ span: 5 }}>
+                  <Col md={{ span: 4 }}>
                     <Card size="small" hoverable={true} title="Draft">
                       <Link to="/fact-checks?status=draft">
                         <Statistic value={factCheckDraft} loading={loading} />
                       </Link>
                     </Card>
                   </Col>
-                  <Col md={{ span: 8 }}>
+                  <Col md={{ span: 6 }}>
                     <Card size="small" hoverable={true} title="Ready to publish">
                       <Link to="/fact-checks?status=ready">
                         <Statistic value={factCheckReady} loading={loading} />
