@@ -88,8 +88,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if post.Status == "future" {
-
-		fmt.Println("------------------------", post.PublishedDate)
 		if len(post.AuthorIDs) == 0 {
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish post without author", http.StatusUnprocessableEntity)))
 			return
