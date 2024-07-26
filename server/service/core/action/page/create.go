@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -56,6 +57,31 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var status string = "draft"
+
+	// Author and date validation
+	if page.Status == "publish" {
+		if len(page.AuthorIDs) == 0 {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish page without author", http.StatusUnprocessableEntity)))
+			return
+		}
+		status = "publish"
+	}
+
+	if page.Status == "future" {
+		if len(page.AuthorIDs) == 0 {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish page without author", http.StatusUnprocessableEntity)))
+			return
+		} else if page.PublishedDate == nil {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish page without date", http.StatusUnprocessableEntity)))
+			return
+		} else if !page.PublishedDate.After(time.Now()) {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("select a future date only", http.StatusUnprocessableEntity)))
+			return
+		}
+		status = "future"
+	}
+
 	result := &pageData{}
 	result.Authors = make([]model.Author, 0)
 
@@ -102,7 +128,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		},
 		Title:            page.Title,
 		Slug:             util.ApproveSlug(postSlug, authCtx.SpaceID, tableName),
-		Status:           page.Status,
+		Status:           status,
 		IsPage:           true,
 		Subtitle:         page.Subtitle,
 		Excerpt:          page.Excerpt,
