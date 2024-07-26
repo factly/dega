@@ -22,6 +22,7 @@ import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
+import { addErrorNotification } from '../../../actions/notifications';
 import {
   SettingFilled,
   LeftOutlined,
@@ -150,6 +151,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     finalData.format_id = format.id;
     finalData.author_ids = finalData.authors || [];
     finalData.status = status;
+    if (status === 'future' && !finalData.published_date) {
+      dispatch(addErrorNotification('Published date is required for future publishing.'));
+      return;
+    }
     finalData.status === 'publish'
       ? (finalData.published_date = finalData.published_date
           ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
