@@ -156,6 +156,10 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
       values.claim_order = claimOrder;
     }
     values.status = status;
+    if (status === 'publish' && values.author_ids.length === 0) {
+      dispatch(addErrorNotification('At least one author must be assigned before publishing.'));
+      return;
+    }
     if (status === 'future' && !values.published_date) {
       dispatch(addErrorNotification('Published date is required for future publishing.'));
       return;

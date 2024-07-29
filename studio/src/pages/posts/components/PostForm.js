@@ -151,6 +151,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     finalData.format_id = format.id;
     finalData.author_ids = finalData.authors || [];
     finalData.status = status;
+    if (status === 'publish' && finalData.author_ids.length === 0) {
+      dispatch(addErrorNotification('At least one author must be assigned before publishing.'));
+      return;
+    }
     if (status === 'future' && !finalData.published_date) {
       dispatch(addErrorNotification('Published date is required for future publishing.'));
       return;
