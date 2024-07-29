@@ -151,14 +151,15 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     finalData.format_id = format.id;
     finalData.author_ids = finalData.authors || [];
     finalData.status = status;
-    if (status === 'publish' && finalData.author_ids.length === 0) {
-      dispatch(addErrorNotification('At least one author must be assigned before publishing.'));
+    if ((status ==='publish' || status === 'future') && finalData.author_ids.length === 0) {
+      dispatch(addErrorNotification('At least one author must be assigned.'));
       return;
     }
-    if (status === 'future' && !finalData.published_date) {
+    if (status === 'future' ) {
+      if (!finalData.published_date) {
       dispatch(addErrorNotification('Published date is required for future publishing.'));
       return;
-    }
+    } }
     finalData.status === 'publish'
       ? (finalData.published_date = finalData.published_date
           ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
