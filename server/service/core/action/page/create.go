@@ -57,15 +57,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var status string = "draft"
-
 	// Author and date validation
 	if page.Status == "publish" {
 		if len(page.AuthorIDs) == 0 {
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish page without author", http.StatusUnprocessableEntity)))
 			return
 		}
-		status = "publish"
 	}
 
 	if page.Status == "future" {
@@ -79,7 +76,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("select a future date only", http.StatusUnprocessableEntity)))
 			return
 		}
-		status = "future"
 	}
 
 	result := &pageData{}
@@ -128,7 +124,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		},
 		Title:            page.Title,
 		Slug:             util.ApproveSlug(postSlug, authCtx.SpaceID, tableName),
-		Status:           status,
+		Status:           page.Status,
 		IsPage:           true,
 		Subtitle:         page.Subtitle,
 		Excerpt:          page.Excerpt,

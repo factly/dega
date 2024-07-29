@@ -101,7 +101,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "future", orgRole)
+		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "publish", orgRole)
 		if !isAllowed {
 
 			errorx.Render(w, errorx.Parser(e))
