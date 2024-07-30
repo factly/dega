@@ -43,6 +43,7 @@ import { maker } from '../../../utils/sluger';
 import useNavigation from '../../../utils/useNavigation';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import ClaimList from './ClaimList';
+import { addErrorNotification } from '../../../actions/notifications';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useNavigation();
@@ -155,6 +156,15 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
       values.claim_order = claimOrder;
     }
     values.status = status;
+    if ((status ==='publish' || status === 'future') && values.author_ids.length === 0) {
+      dispatch(addErrorNotification('At least one author must be assigned before publishing.'));
+      return;
+    }
+    if (status === 'future' ) {
+      if (!values.published_date) {
+      dispatch(addErrorNotification('Published date is required for future publishing.'));
+      return;
+    }}
     values.status === 'publish'
       ? (values.published_date = values.published_date
           ? dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
