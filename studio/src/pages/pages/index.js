@@ -132,6 +132,10 @@ function Pages({ formats }) {
       label: 'Published',
     },
     {
+      key: 'future',
+      label: 'Future Publish',
+    },
+    {
       key: 'ready',
       label: 'Ready to Pubish',
     },

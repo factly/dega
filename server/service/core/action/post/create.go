@@ -88,7 +88,30 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if post.Status == "future" {
-		status = "future"
+		if len(post.AuthorIDs) == 0 {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish post without author", http.StatusUnprocessableEntity)))
+			return
+
+		} else if post.PublishedDate == nil {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish post without date", http.StatusUnprocessableEntity)))
+			return
+
+		} else if !post.PublishedDate.After(time.Now()) {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("select a future date only", http.StatusUnprocessableEntity)))
+			return
+		}
+
+		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "publish", orgRole)
+		if !isAllowed {
+
+			errorx.Render(w, errorx.Parser(e))
+			return
+		}
+
+		if isAllowed {
+			status = "future"
+		}
+
 	}
 
 	post.SpaceID = authCtx.SpaceID
@@ -320,6 +343,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	if result.Post.Status == "publish" {
 		meiliPublishDate = result.Post.PublishedDate.Unix()
 	}
+
 	meiliObj := map[string]interface{}{
 		"id":             result.ID.String(),
 		"title":          result.Title,

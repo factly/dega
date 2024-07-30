@@ -141,8 +141,12 @@ function FactCheck({ formats }) {
       label: 'Published',
     },
     {
+      key: 'future',
+      label: 'Future Publish',
+    },
+    {
       key: 'ready',
-      label: 'Ready to Pubish',
+      label: 'Ready to Publish',
     },
     {
       key: 'draft',
