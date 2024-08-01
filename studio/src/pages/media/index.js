@@ -11,8 +11,9 @@ import {
   ConfigProvider,
   Typography,
   Tooltip,
+  DatePicker
 } from 'antd';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { PlusOutlined,SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MediumList from './components/MediumList';
 import { getMedia } from '../../actions/media';
@@ -33,7 +34,6 @@ function Media({ permission }) {
     ...params,
   });
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
-
   const pathName = useLocation().pathname;
 
   useEffect(() => {
@@ -50,7 +50,6 @@ function Media({ permission }) {
     const node = state.media.req.find((item) => {
       return deepEqual(item.query, params);
     });
-
     if (node)
       return {
         media: node.data.map((element) => state.media.details[element]),
@@ -59,9 +58,11 @@ function Media({ permission }) {
       };
     return { media: [], total: 0, loading: state.media.loading };
   });
+
   useEffect(() => {
     if (form) form.setFieldsValue(new Filters(params));
   }, [params]);
+
   React.useEffect(() => {
     fetchMedia();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,6 +71,15 @@ function Media({ permission }) {
   const fetchMedia = () => {
     dispatch(getMedia(filters));
   };
+
+  const onDateChange = (date, dateString) => {
+    //console.log(date, dateString);
+    const updatedFilters = {
+      ...filters,
+      year_month: dateString,
+    };
+    setFilters(updatedFilters);
+  }
 
   return loading ? (
     <Loader />
@@ -177,6 +187,13 @@ function Media({ permission }) {
                           </Option>
                         </Select>
                       </Form.Item>
+                    </Col>
+                    <Col>
+                      <Row>
+                      <Form.Item name="year_month" label="Filter by Date">
+                        <DatePicker onChange={onDateChange} picker='month' />
+                      </Form.Item>
+                      </Row>
                     </Col>
                   </Row>
                 </Col>

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
@@ -40,6 +41,7 @@ type Medium struct {
 type pagingMedium struct {
 	Total int64          `json:"total"`
 	Nodes []model.Medium `json:"nodes"`
+	Date  time.Time      `json:"date"`
 }
 
 type MediumService struct {
@@ -47,7 +49,7 @@ type MediumService struct {
 }
 type IMediumService interface {
 	GetById(sID, id uuid.UUID) (model.Medium, error)
-	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (pagingMedium, []errorx.Message)
+	List(sID uuid.UUID, offset, limit int, searchQuery, sort string, year int, month time.Month, yearMonthProvided bool) (pagingMedium, []errorx.Message)
 	Create(ctx context.Context, sID uuid.UUID, uID string, mediumList []Medium) (pagingMedium, []errorx.Message)
 	Update(sID, id uuid.UUID, uID string, medium *Medium) (model.Medium, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
@@ -71,17 +73,36 @@ func (ms MediumService) GetById(sID, id uuid.UUID) (model.Medium, error) {
 	return *result, err
 }
 
-func (ms MediumService) List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (pagingMedium, []errorx.Message) {
+func (ms MediumService) List(sID uuid.UUID, offset, limit int, searchQuery, sort string, year int, month time.Month, yearMonthProvided bool) (pagingMedium, []errorx.Message) {
 	result := pagingMedium{}
 	result.Nodes = make([]model.Medium, 0)
+
+	tx := config.DB.Model(&model.Medium{}).Where(&model.Medium{
+		SpaceID: sID,
+	})
+
+	if yearMonthProvided {
+		// Validate year and month inputs
+		if year < 1 || (month < 1 || month > 12) {
+			return pagingMedium{}, []errorx.Message{errorx.GetMessage("Invalid year or month", http.StatusBadRequest)}
+		}
+
+		// Add year filter
+		if year > 0 {
+			tx = tx.Where("EXTRACT(YEAR FROM created_at) = ?", year)
+		}
+
+		// Add month filter
+		if month > 0 && month <= 12 {
+			tx = tx.Where("EXTRACT(MONTH FROM created_at) = ?", int(month))
+		}
+
+	}
 
 	if sort != "asc" {
 		sort = "desc"
 	}
-
-	tx := config.DB.Model(&model.Medium{}).Where(&model.Medium{
-		SpaceID: sID,
-	}).Order("created_at " + sort)
+	tx = tx.Order("created_at " + sort)
 
 	if searchQuery != "" {
 
