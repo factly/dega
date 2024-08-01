@@ -44,7 +44,8 @@ import { formatDate } from '../../../utils/date';
 import languages from '../../../utils/languages.json';
 import useNavigation from '../../../utils/useNavigation';
 
-function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
+function PostForm({ onCreate,data = {}, actions = {}, format, page = false }) {
+  
   const navigate = useNavigation();
   const formRef = useRef(null);
   const [form] = Form.useForm();
@@ -386,6 +387,16 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   >
                     <Collapse.Panel header="Details" key="1">
                       <Row justify="space-between" style={{ margin: '16px 0', marginTop: 0 }}>
+                      {data?.created_at ? (
+ <Col span={16}>
+ <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
+   <span style={{ color: '#000000E0', fontWeight: 400 }}>
+   Created Date:{' '}
+    </span>
+      {formatDate(data.created_at)}
+    </Typography.Text>
+ </Col>
+) : null}
                         {data?.updated_at ? (
                           <Col span={16}>
                             <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
@@ -396,6 +407,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                             </Typography.Text>
                           </Col>
                         ) : null}
+
                         <Col span={6}>
                           {status === 'publish' ? (
                             <Tag icon={<CheckCircleOutlined />} color="green">
@@ -416,9 +428,13 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                           ) : null}
                         </Col>
                       </Row>
+                      
                       <Form.Item name="published_date" label="Published Date">
                         <DatePicker style={{ width: '100%' }} />
-                      </Form.Item>
+                         </Form.Item> 
+                         
+
+                      
                       <Form.Item name="authors" label="Authors">
                         <Selector mode="multiple" display={'display_name'} action="Authors" />
                       </Form.Item>
