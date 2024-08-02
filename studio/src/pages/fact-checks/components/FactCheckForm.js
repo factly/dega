@@ -410,6 +410,16 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   >
                     <Collapse.Panel header="Details" key="1">
                       <Row justify="space-between" style={{ margin: '16px 0', marginTop: 0 }}>
+                      {data?.created_at ? (
+ <Col span={16}>
+ <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
+   <span style={{ color: '#000000E0', fontWeight: 400 }}>
+   Created Date:{' '}
+    </span>
+      {formatDate(data.created_at)}
+    </Typography.Text>
+ </Col>
+) : null}
                         {data?.updated_at ? (
                           <Col span={16}>
                             <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
