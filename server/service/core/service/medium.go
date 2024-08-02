@@ -49,7 +49,7 @@ type MediumService struct {
 }
 type IMediumService interface {
 	GetById(sID, id uuid.UUID) (model.Medium, error)
-	List(sID uuid.UUID, offset, limit int, searchQuery, sort string, year int, month time.Month, yearMonthProvided bool) (pagingMedium, []errorx.Message)
+	List(sID uuid.UUID, offset, limit int, searchQuery, sort string, year int, month time.Month, yearMonthProvided bool, dateStr string) (pagingMedium, []errorx.Message)
 	Create(ctx context.Context, sID uuid.UUID, uID string, mediumList []Medium) (pagingMedium, []errorx.Message)
 	Update(sID, id uuid.UUID, uID string, medium *Medium) (model.Medium, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
@@ -73,7 +73,7 @@ func (ms MediumService) GetById(sID, id uuid.UUID) (model.Medium, error) {
 	return *result, err
 }
 
-func (ms MediumService) List(sID uuid.UUID, offset, limit int, searchQuery, sort string, year int, month time.Month, yearMonthProvided bool) (pagingMedium, []errorx.Message) {
+func (ms MediumService) List(sID uuid.UUID, offset, limit int, searchQuery, sort string, year int, month time.Month, yearMonthProvided bool, dateStr string) (pagingMedium, []errorx.Message) {
 	result := pagingMedium{}
 	result.Nodes = make([]model.Medium, 0)
 
