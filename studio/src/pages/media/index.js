@@ -1,5 +1,4 @@
-import React, {useState ,useEffect } from 'react';
-import dayjs from 'dayjs';  
+import React, { useState, useEffect } from 'react';
 import {
   Space,
   Button,
@@ -37,10 +36,7 @@ function Media({ permission }) {
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
   const pathName = useLocation().pathname;
 
-
-  const monthFormat = 'YYYY-MM';
   const [date, setDate] = useState(new Date());
-
 
   useEffect(() => {
     history({
@@ -103,7 +99,6 @@ function Media({ permission }) {
           },
         }}
       >
-
         <Form
           initialValues={{ ...filters, date }}
           form={form}
@@ -134,7 +129,6 @@ function Media({ permission }) {
             console.log(allValues);
           }}
         >
-
           <Row justify="space-between" gutter={16}>
             <Col>
               <Row gutter={16}>
@@ -203,10 +197,7 @@ function Media({ permission }) {
                     <Col>
                       <Row>
                         <Form.Item name="date" label="Filter by Date">
-                          <DatePicker
-                            onChange={onDateChange}
-                            defaultValue={dayjs('2015/01', monthFormat)} format={monthFormat} picker="month"
-                          />
+                          <DatePicker onChange={onDateChange} picker="month" />
                         </Form.Item>
                       </Row>
                     </Col>
@@ -223,7 +214,6 @@ function Media({ permission }) {
         filters={filters}
         setFilters={setFilters}
       />
-
     </Space>
   );
 }
