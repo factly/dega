@@ -81,7 +81,7 @@ function SpaceList() {
       },
     },
     {
-      title: 'Requested Date',
+      title: 'Created At',
       dataIndex: 'created_at',
       key: 'created_at',
       width: 200,
