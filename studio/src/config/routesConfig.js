@@ -276,12 +276,6 @@ const routes = {
       action: 'update',
     },
   },
-  reindex: {
-    path: '/settings/advanced/reindex',
-    menuKey: '/advanced',
-    Component: Reindex,
-    title: 'Reindex',
-  },
   episodes: {
     path: '/episodes',
     menuKey: '/episodes',
