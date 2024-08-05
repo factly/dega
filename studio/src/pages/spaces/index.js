@@ -1,12 +1,15 @@
 import React from 'react';
 import { Space, Button, Row, Col, ConfigProvider } from 'antd';
+
 import { Link } from 'react-router-dom';
 import SpaceList from './components/SpaceList';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { reindexSpace } from '../../actions/meiliReindex';
 
 function Spaces() {
-  const { role } = useSelector((state) => {
+  const dispatch = useDispatch();
+  const { role , selectedSpaceId} = useSelector((state) => {
     const { selected } = state.spaces;
 
     if (selected !== '') {
@@ -14,10 +17,18 @@ function Spaces() {
       const role = space.org_role;
       return {
         role: role,
+        selectedSpaceId: selected,
       };
     }
-    return { role: 'member' };
+    return { role: 'member', selectedSpaceId: null  };
   });
+  const handleSpaceReindex = () => {
+    if (selectedSpaceId) {
+      dispatch(reindexSpace(selectedSpaceId));
+    } else {
+      console.error('No space selected for reindexing');
+    }
+  };
 
   return (
     <ConfigProvider
@@ -38,9 +49,7 @@ function Spaces() {
         <Row gutter={16} justify="end">
           {role === 'admin' ? (
             <Col>
-              <Link key="2" to="/settings/advanced/reindex">
-                <Button>Reindex</Button>
-              </Link>
+              <Button onClick={handleSpaceReindex}>Reindex</Button>
             </Col>
           ) : null}
           <Link key="1" to="/spaces/create">
