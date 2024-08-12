@@ -42,7 +42,7 @@ function App() {
   }, [dispatch, selected, reloadFlag]);
 
   useEffect(() => {
-    checkAuthenticated();
+   // checkAuthenticated();
   }, []);
 
   const checkAuthenticated = () => {

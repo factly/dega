@@ -129,6 +129,10 @@ import Callback from '../pages/redirect';
 import Tokens from '../pages/tokens';
 import CreateSpaceTokenForm from '../pages/tokens/components/CreateToken';
 
+import RegistrationForm from '../utils/zitadel/registration.js';
+import LoginEmail from '../utils/zitadel/login';
+import LoginPassword from '../utils/zitadel/password';
+
 export function extractV6RouteObject(formats, setReloadFlag, reloadFlag) {
   const extractedRoutes = [];
 
@@ -800,6 +804,24 @@ const routes = {
     menuKey: '/advanced',
     Component: Advanced,
     title: 'Advanced',
+  },
+  registration: {
+    path: '/registration/email',
+    menuKey: '/registration/email',
+    Component: RegistrationForm,
+    title: 'Registration Email', 
+  },
+  loginEmail: {
+    path: '/login/email',
+    menuKey: '/login/email',
+    Component: LoginEmail,
+    title: 'Login Email',
+  },
+  loginPassword: {
+    path: '/login/password',
+    menuKey: '/login/password',
+    Component: LoginPassword,
+    title: 'Login Password',
   },
   redirect: {
     path: '/redirect',
