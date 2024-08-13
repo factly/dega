@@ -139,8 +139,14 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   setModalOpen(true);
                   setDeleteItemID(item.id);
                 }}
-                icon={<DeleteOutlined style={{ color: '#858585' }} />}
+                icon={<DeleteOutlined style={{ color: '#fff' }} />}
+               
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                style={{
+                  backgroundColor: 'red',
+                  borderColor: 'red',
+                  color: '#fff',
+                }}
               />
               {/* <Button
                 size="large"
