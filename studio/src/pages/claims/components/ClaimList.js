@@ -142,7 +142,12 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
             {' '}
             <Button
               size="large"
-              icon={<DeleteOutlined style={{ color: '#858585' }} />}
+              icon={<DeleteOutlined style={{ color: '#fff' }} />}
+              style={{
+                backgroundColor: 'red',
+                borderColor: 'red',
+                color: '#fff',
+              }}
               onClick={(e) => {
                 e.stopPropagation();
                 setModalOpen(true);

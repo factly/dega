@@ -55,12 +55,17 @@ function MenuList({ actions, data, filters, setFilters, fetchMenus }) {
           >
             <Button
               size="large"
+              style={{
+                backgroundColor: 'red',
+                borderColor: 'red',
+                color: '#fff',
+              }}
               onClick={(e) => {
                 e.stopPropagation();
                 setModalOpen(true);
                 setDeleteItemId(record.id);
               }}
-              icon={<DeleteOutlined style={{ color: '#858585' }} />}
+              icon={<DeleteOutlined style={{ color: '#fff' }} />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
             />
           </ConfigProvider>
