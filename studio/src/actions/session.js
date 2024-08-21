@@ -3,23 +3,30 @@ import { getUserInfo } from '../utils/zitadel';
 
 export const getSession = () => {
   return (dispatch) => {
-    dispatch(setLoading);
+    dispatch(setLoading(true));
 
-    return getUserInfo().then((res) => {
-      if (res.error) {
+    return getUserInfo()
+      .then((res) => {
+        if (res.error) {
+          return { success: false };
+        }
+        dispatch(addSession(res.data));
+        return { success: true };
+      })
+      .catch((error) => {
+        console.error('Error in getSession:', error);
         return { success: false };
-      }
-      dispatch(addSession(res.data));
-      dispatch(setLoading(false));
-
-      return { success: true };
-    });
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
   };
 };
 
 const addSession = (session) => {
   return { type: ADD_SESSION, payload: session };
 };
+
 const setLoading = (loading) => {
   return { type: SET_SESSIONS_LOADING, payload: loading };
 };

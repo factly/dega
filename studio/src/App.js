@@ -1,16 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'antd/dist/reset.css';
-
-//Routes
-import { extractV6RouteObject } from './config/routesConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
-import { login } from './utils/zitadel';
-import { addErrorNotification } from './actions/notifications';
+import { extractV6RouteObject } from './config/routesConfig';
+
 import { getSession } from './actions/session';
 
 function App() {
@@ -42,26 +38,19 @@ function App() {
   }, [dispatch, selected, reloadFlag]);
 
   useEffect(() => {
-   // checkAuthenticated();
+    checkAuthenticated();
   }, []);
 
   const checkAuthenticated = () => {
-    dispatch(getSession()).then((res) => {
-      if (!res.success) {
-        window.localStorage.setItem('return_to', window.location.href);
-        login().then((d) => {
-          if (d.error) {
-            dispatch(
-              addErrorNotification({
-                message: d.error,
-              }),
-            );
-            return;
-          }
-          window.location.href = d.authorizeURL;
-        });
-      }
-    });
+    const currentPath = window.location.pathname;
+    if (currentPath !== '/auth/login' && currentPath !== '/auth/login/registration') {
+      dispatch(getSession()).then((res) => {
+        if (!res.success) {
+          window.localStorage.setItem('return_to', window.location.href);
+          window.location.href = '/auth/login';
+        }
+      });
+    }
   };
 
   const fetchFormats = () => {
@@ -71,6 +60,7 @@ function App() {
   const router = createBrowserRouter(
     extractV6RouteObject(formats, setReloadFlag, reloadFlag, session),
   );
+
   return (
     <div className="App">
       <RouterProvider router={router} />

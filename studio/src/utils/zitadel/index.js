@@ -40,7 +40,7 @@ export const login = async () => {
 };
 
 export const getToken = (code) =>
-  fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oauth/v2/token`, {
+  fetch('https://develop-xtjn2g.zitadel.cloud/oauth/v2/token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -66,29 +66,31 @@ export const getToken = (code) =>
       };
     });
 
-export const getUserInfo = () =>
-  fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
+export const getUserInfo = () => {
+  const sessionID = localStorage.getItem('sessionID');
+  return fetch(`https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionID}`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('x-zitadel-access-token')}`,
+      Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
     },
-    credentials: 'include',
+  credentials: 'include',
+})
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      return Promise.reject('Unauthorized');
+    }
   })
-    .then((response) => {
-      if (response.status === 200) {
-        return response.json();
-      } else {
-        return Promise.reject('Unauthorized');
-      }
-    })
-    .then((data) => {
-      return { data };
-    })
-    .catch(() => {
-      return {
-        error: 'Error fetching user info',
-      };
-    });
+  .then((data) => {
+    return { data };
+  })
+  .catch(() => {
+    return {
+      error: 'Error fetching user info',
+    };
+  });
+};
 
 const generateCodeChallenge = (codeVerifier) => {
   const encoder = new TextEncoder();
