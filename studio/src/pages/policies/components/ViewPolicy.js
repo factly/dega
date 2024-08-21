@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState ,useEffect } from 'react';
 import { Descriptions, Tag, Table, Skeleton, Button, Divider } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 export default function ViewPolicy() {
   const { policyID } = useParams();
   const span = 2;
+  const [policyData, setPolicyData] = useState(null);
+  const [apiLoading, setApiLoading] = useState(true);
   const nestedTableColumns = [
     {
       title: 'Resource',
@@ -35,7 +38,21 @@ export default function ViewPolicy() {
       loading: state.policies.loading,
     };
   });
-
+  useEffect(() => {
+    if (policy?.id) {
+      axios
+        .get(`http://127.0.0.1:7789/core/policies/${policy.id}`)
+        .then((response) => {
+         
+          setPolicyData(response.data);
+          setApiLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching policy data:', error);
+          setApiLoading(false);
+        });
+    }
+  }, [policy?.id]);
   return (
     <div
       style={{
@@ -70,7 +87,7 @@ export default function ViewPolicy() {
       <Table
         bordered={true}
         columns={nestedTableColumns}
-        dataSource={policy?.permissions}
+        dataSource={policyData?.permissions}
         rowKey={'id'}
         pagination={true}
       />
