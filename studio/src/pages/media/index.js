@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Space,
   Button,
@@ -11,6 +10,7 @@ import {
   ConfigProvider,
   Typography,
   Tooltip,
+  DatePicker,
 } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,13 +28,15 @@ function Media({ permission }) {
   const dispatch = useDispatch();
   const history = useNavigate();
   const query = new URLSearchParams(useLocation().search);
+
   const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
     ...params,
   });
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
-
   const pathName = useLocation().pathname;
+
+  const [date, setDate] = useState(new Date());
 
   useEffect(() => {
     history({
@@ -50,7 +52,6 @@ function Media({ permission }) {
     const node = state.media.req.find((item) => {
       return deepEqual(item.query, params);
     });
-
     if (node)
       return {
         media: node.data.map((element) => state.media.details[element]),
@@ -59,9 +60,14 @@ function Media({ permission }) {
       };
     return { media: [], total: 0, loading: state.media.loading };
   });
+
   useEffect(() => {
-    if (form) form.setFieldsValue(new Filters(params));
-  }, [params]);
+    if (form) {
+      const initialFilters = new Filters(params);
+      form.setFieldsValue(initialFilters);
+    }
+  }, [params, form]);
+
   React.useEffect(() => {
     fetchMedia();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,6 +75,14 @@ function Media({ permission }) {
 
   const fetchMedia = () => {
     dispatch(getMedia(filters));
+  };
+
+  const onDateChange = (date, dateString) => {
+    const updatedFilters = {
+      ...filters,
+      date: dateString,
+    };
+    setFilters(updatedFilters);
   };
 
   return loading ? (
@@ -86,7 +100,7 @@ function Media({ permission }) {
         }}
       >
         <Form
-          initialValues={filters}
+          initialValues={{ ...filters, date }}
           form={form}
           name="filters"
           onFinish={(values) => {
@@ -111,6 +125,8 @@ function Media({ permission }) {
               }
               setFilters({ ...filters, ...changedValues });
             }
+
+            console.log(allValues);
           }}
         >
           <Row justify="space-between" gutter={16}>
@@ -177,6 +193,13 @@ function Media({ permission }) {
                           </Option>
                         </Select>
                       </Form.Item>
+                    </Col>
+                    <Col>
+                      <Row>
+                        <Form.Item name="date" label="Filter by Date">
+                          <DatePicker onChange={onDateChange} picker="month" />
+                        </Form.Item>
+                      </Row>
                     </Col>
                   </Row>
                 </Col>

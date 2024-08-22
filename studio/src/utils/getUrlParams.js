@@ -1,5 +1,5 @@
 function getUrlParams(query, filters) {
-  const keys = filters ? filters : ['page', 'limit', 'q', 'sort'];
+  const keys = filters ? filters : ['page', 'limit', 'q', 'sort','date'];
   const params = {
     sort: 'desc',
     limit: 10,
@@ -18,7 +18,7 @@ function getUrlParams(query, filters) {
       ) {
         const val = query.getAll(key).map((v) => parseInt(v));
         params[key] = val;
-      } else if (key === 'sort' || key === 'q' || key === 'status' || key === 'language') {
+      } else if (key === 'sort' || key === 'q' || key === 'status' || key === 'language' || key === 'date') {
         params[key] = query.get(key);
       } else {
         params[key] = parseInt(query.get(key));

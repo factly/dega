@@ -1,7 +1,9 @@
 package medium
 
 import (
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
@@ -37,9 +39,26 @@ func list(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 	offset, limit := paginationx.Parse(r.URL.Query())
+	dateStr := r.URL.Query().Get("date")
+
+	var year int
+	var month time.Month
+	var yearMonthProvided bool
+
+	if dateStr != "" {
+		layout := "2006-01"
+		dateInt, err := time.Parse(layout, dateStr)
+		if err != nil {
+			fmt.Println("Error parsing date:", err)
+			return
+		}
+		year = dateInt.Year()
+		month = dateInt.Month()
+		yearMonthProvided = true
+	}
 
 	mediumService := service.GetMediumService()
-	result, errMessages := mediumService.List(authCtx.SpaceID, offset, limit, searchQuery, sort)
+	result, errMessages := mediumService.List(authCtx.SpaceID, offset, limit, searchQuery, sort, year, month, yearMonthProvided, dateStr)
 	if errMessages != nil {
 		errorx.Render(w, errMessages)
 		return
