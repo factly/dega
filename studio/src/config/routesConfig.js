@@ -120,7 +120,6 @@ import Advanced from '../pages/advanced';
 import Members from '../pages/members';
 
 //Reindex
-import Reindex from '../pages/spaces/Reindex';
 import ViewPolicy from '../pages/policies/components/ViewPolicy';
 import BasicLayout from '../layouts/basic';
 import ProtectedRoute from '../components/ProtectedRoute';
