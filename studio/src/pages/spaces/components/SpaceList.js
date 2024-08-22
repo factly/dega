@@ -156,12 +156,17 @@ function SpaceList() {
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <Button
                 size="large"
+                style={{
+                  backgroundColor: 'red',
+                  borderColor: 'red',
+                  color: '#fff',
+                }}
                 onClick={(e) => {
                   e.stopPropagation();
                   setModalOpen(true);
                   setDeleteItemId(record.id);
                 }}
-                icon={<DeleteOutlined style={{ color: '#858585' }} />}
+                icon={<DeleteOutlined style={{ color: '#fff' }} />}
               />
             </div>
           </ConfigProvider>

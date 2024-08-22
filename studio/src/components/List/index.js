@@ -167,7 +167,13 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               />
               <Button
                 size="large"
-                icon={<DeleteOutlined style={{ color: '#858585' }} />}
+                icon={<DeleteOutlined style={{ color: '#fff',backgroundColor: 'red', borderColor: 'red' }}
+                 />}
+                 style={{
+                  backgroundColor: 'red',
+                  borderColor: 'red',
+                  color: '#fff',
+                }}
                 onClick={(e) => {
                   e.stopPropagation();
                   setModalOpen(true);

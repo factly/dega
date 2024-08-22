@@ -89,11 +89,16 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
             {' '}
             <Button
               size="large"
+              style={{
+                backgroundColor: 'red',
+                borderColor: 'red',
+                color: '#fff',
+              }}
               onClick={(e) => {
                 e.stopPropagation();
                 setModalOpen(true);
               }}
-              icon={<DeleteOutlined style={{ color: '#858585' }} />}
+              icon={<DeleteOutlined style={{ color: '#fff' }} />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
             />
             <Modal

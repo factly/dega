@@ -68,7 +68,12 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
             {' '}
             <Button
               size="large"
-              icon={<DeleteOutlined style={{ color: '#858585' }} />}
+              style={{
+                backgroundColor: 'red',
+                borderColor: 'red',
+                color: '#fff',
+              }}
+              icon={<DeleteOutlined style={{ color: '#fff' }} />}
               onClick={(e) => {
                 e.stopPropagation();
                 setModalOpen(true);
