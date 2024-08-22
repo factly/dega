@@ -141,6 +141,7 @@ function SpaceSelector({ onClose }) {
                     }
                   />
                 }
+                title={"ID : "  + details[item].id}
                 description={
                   searchquery &&
                   details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
