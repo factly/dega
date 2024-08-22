@@ -194,40 +194,36 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
                   }
                 />
               ) : (
-                <>
-                  {details && (
-                    <Button
-                      style={{
-                        background: '#DCE4E7',
-                        width: '100%',
-                        color: '#1E1E1E',
-                        border: 'none',
-                        fontWeight: '600',
-                        fontSize: '1rem',
-                        display: 'flex',
-                        marginTop: '0.8rem',
-                        height: '43px',
-                        padding: '9px, 6px, 9px, 6px',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}
-                      type="primary"
-                      onClick={() => dispatch(setSpaceSelectorPage(true))}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <Avatar
-                          src={
-                            details[selected]?.fav_icon?.url?.[
-                              window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
-                            ] || degaImg
-                          }
-                        />
-                        {details[selected]?.name}
-                      </div>
-                      <DownOutlined />
-                    </Button>
-                  )}
-                </>
+                <Button
+                  style={{
+                    background: '#DCE4E7',
+                    width: '100%',
+                    color: '#1E1E1E',
+                    border: 'none',
+                    fontWeight: '600',
+                    fontSize: '1rem',
+                    display: 'flex',
+                    marginTop: '0.8rem',
+                    height: '43px',
+                    padding: '9px, 6px, 9px, 6px',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                  type="primary"
+                  onClick={() => dispatch(setSpaceSelectorPage(true))}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <Avatar
+                      src={
+                        details[selected]?.fav_icon?.url?.[
+                          window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                        ] || degaImg
+                      }
+                    />
+                    {details[selected]?.name}
+                  </div>
+                  <DownOutlined />
+                </Button>
               )}
             </div>
             <Search collapsed={collapsed} />
