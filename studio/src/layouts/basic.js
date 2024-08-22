@@ -39,7 +39,6 @@ function BasicLayout(props) {
     loading,
     selected,
     applications,
-    services,
     org_role,
     session,
   } = useSelector((state) => {
@@ -56,7 +55,6 @@ function BasicLayout(props) {
         orgs: orgs,
         loading: loading,
         selected: selected,
-        services: space.services,
         org_role: space.org_role,
         session: state.session,
       };
@@ -67,7 +65,6 @@ function BasicLayout(props) {
       permission: [],
       selected: selected,
       applications: [],
-      services: ['core'],
       org_role,
       session: state.session,
     };
@@ -146,7 +143,7 @@ function BasicLayout(props) {
       location.pathname.includes('pages')) &&
     (location.pathname.includes('edit') || location.pathname.includes('create'));
 
-  function checkPermissions() {
+   /* function checkPermissions() {
     const requiredPermissions = permissionRequirements[location.pathname];
 
     if (!requiredPermissions) {
@@ -205,7 +202,7 @@ function BasicLayout(props) {
         />
       </div>
     );
-  }
+  } */
 
   if (!loading && (!orgs.length || orgs.filter((o) => o.role === 'admin').length === 0)) {
     return (
@@ -295,7 +292,6 @@ function BasicLayout(props) {
               orgs={orgs}
               loading={loading}
               applications={applications}
-              services={services}
               org_role={org_role}
             />
           </Layout>
@@ -310,7 +306,6 @@ function BasicLayout(props) {
             orgs={orgs}
             loading={loading}
             applications={applications}
-            services={services}
             signOut={children.props.handleLogout}
             org_role={org_role}
           />
