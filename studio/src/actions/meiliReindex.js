@@ -15,15 +15,3 @@ export const reindexSpace = (id) => {
       });
   };
 };
-export const reindex = () => {
-  return (dispatch) => {
-    return axios
-      .post(MEILI_REINDEX_API + '/all')
-      .then((response) => {
-        if (response.status === 200) dispatch(addSuccessNotification('Successfully Reindexed'));
-      })
-      .catch((error) => {
-        dispatch(addErrorNotification(getError(error)));
-      });
-  };
-};
