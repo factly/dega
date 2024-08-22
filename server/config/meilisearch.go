@@ -1,9 +1,11 @@
 package config
 
 import (
+	"fmt"
 	"time"
 
 	meilisearch "github.com/meilisearch/meilisearch-go"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
@@ -15,7 +17,34 @@ var sortable_attributes []string
 var ranking_attributes []string
 var stop_words []string
 
-var Indexes = []string{"category", "format", "space", "medium", "menu", "post", "tag", "claim", "claimant", "rating", "podcast", "episode"}
+var Indexes = []string{"category", "medium", "post", "tag", "claim", "claimant", "podcast", "episode"}
+
+var rootCmd = &cobra.Command{
+	Use: "meilisearch",
+}
+
+func init() {
+	rootCmd.AddCommand(setupCmd)
+}
+
+var setupCmd = &cobra.Command{
+	Use:   "setup",
+	Short: "Sets up MeiliSearch for the application.",
+	Run: func(cmd *cobra.Command, args []string) {
+		// setup MeiliSearch
+		err := SetupMeiliSearch(
+			[]string{"category", "medium", "post", "tag", "claim", "claimant", "podcast", "episode"},
+			[]string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"},
+			[]string{"space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"},
+			[]string{},
+			[]string{},
+			[]string{},
+		)
+		if err != nil {
+			fmt.Println(err)
+		}
+	},
+}
 
 // SetupMeiliSearch setups the meili search server index
 func SetupMeiliSearch(indexes, searchableAttributes, filterableAttributes, sortableAttributes, rankingAttritubes, stopWords []string) error {
@@ -86,7 +115,7 @@ func SetupMeiliIndex(indexName string) error {
 		return err
 	}
 
-	// Add sortable attributes in index
+	// Add Stop Words in index
 	_, err = MeilisearchClient.Index(indexName).UpdateStopWords(&stop_words)
 	if err != nil {
 		return err

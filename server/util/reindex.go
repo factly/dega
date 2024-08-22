@@ -24,19 +24,10 @@ func ReindexAllEntities(spaceID uuid.UUID) error {
 	if err = AddMedium(spaceID); err != nil {
 		return err
 	}
-	if err = AddMenu(spaceID); err != nil {
-		return err
-	}
-	if err = AddSpace(spaceID); err != nil {
-		return err
-	}
 	if err = AddClaim(spaceID); err != nil {
 		return err
 	}
 	if err = AddClaimant(spaceID); err != nil {
-		return err
-	}
-	if err = AddRating(spaceID); err != nil {
 		return err
 	}
 	if err = AddPodcast(spaceID); err != nil {
@@ -224,62 +215,6 @@ func AddMedium(spaceID uuid.UUID) error {
 	return err
 }
 
-func AddMenu(spaceID uuid.UUID) error {
-	menus := make([]model.Menu, 0)
-	tx := config.DB.Model(&model.Menu{})
-	if spaceID != uuid.Nil {
-		tx.Where("space_id IN (?)", spaceID)
-	}
-	tx.Find(&menus)
-
-	meiliMenuObjects := make([]map[string]interface{}, 0)
-	for _, m := range menus {
-		meiliObj := map[string]interface{}{
-			"object_id": fmt.Sprint("menu_", m.ID.String()),
-			"id":        m.ID.String(),
-			"name":      m.Name,
-			"slug":      m.Slug,
-			"menu":      m.Menu,
-			"space_id":  m.SpaceID.String(),
-		}
-		meiliMenuObjects = append(meiliMenuObjects, meiliObj)
-	}
-
-	_, err := config.MeilisearchClient.Index("menu").UpdateDocuments(meiliMenuObjects)
-
-	return err
-}
-
-func AddSpace(spaceID uuid.UUID) error {
-	spaces := make([]model.Space, 0)
-	tx := config.DB.Model(&model.Space{})
-	if spaceID != uuid.Nil {
-		tx.Where("id IN (?)", spaceID)
-	}
-	tx.First(&spaces)
-
-	meiliSpaceObjects := make([]map[string]interface{}, 0)
-	for _, s := range spaces {
-		meiliObj := map[string]interface{}{
-			"object_id":       fmt.Sprint("space_", s.ID.String()),
-			"id":              s.ID.String(),
-			"name":            s.Name,
-			"slug":            s.Slug,
-			"description":     s.Description,
-			"site_title":      s.SiteTitle,
-			"site_address":    s.SiteAddress,
-			"tag_line":        s.TagLine,
-			"organisation_id": s.OrganisationID,
-			"analytics":       s.Analytics,
-		}
-		meiliSpaceObjects = append(meiliSpaceObjects, meiliObj)
-	}
-
-	_, err := config.MeilisearchClient.Index("space").UpdateDocuments(meiliSpaceObjects)
-
-	return err
-}
-
 func AddClaim(spaceID uuid.UUID) error {
 	claims := make([]factCheckModel.Claim, 0)
 	tx := config.DB.Model(&factCheckModel.Claim{})
@@ -345,35 +280,6 @@ func AddClaimant(spaceID uuid.UUID) error {
 	}
 
 	_, err := config.MeilisearchClient.Index("claimant").UpdateDocuments(meiliClaimantObjects)
-
-	return err
-}
-
-func AddRating(spaceID uuid.UUID) error {
-	ratings := make([]factCheckModel.Rating, 0)
-	tx := config.DB.Model(&factCheckModel.Rating{})
-	if spaceID != uuid.Nil {
-		tx.Where("space_id IN (?)", spaceID)
-	}
-	tx.Find(&ratings)
-
-	meiliRatingObjects := make([]map[string]interface{}, 0)
-	for _, r := range ratings {
-		meiliObj := map[string]interface{}{
-			"object_id":         fmt.Sprint("rating_", r.ID.String()),
-			"id":                r.ID.String(),
-			"name":              r.Name,
-			"background_colour": r.BackgroundColour,
-			"text_colour":       r.TextColour,
-			"slug":              r.Slug,
-			"description":       r.Description,
-			"numeric_value":     r.NumericValue,
-			"space_id":          r.SpaceID.String(),
-		}
-		meiliRatingObjects = append(meiliRatingObjects, meiliObj)
-	}
-
-	_, err := config.MeilisearchClient.Index("rating").UpdateDocuments(meiliRatingObjects)
 
 	return err
 }
