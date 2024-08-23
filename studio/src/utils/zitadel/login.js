@@ -25,17 +25,21 @@ const Login = () => {
 
   const getProviderInformation = async (intentId, token) => {
     try {
-      const response = await fetch(`https://develop-xtjn2g.zitadel.cloud/v2/idp_intents/${intentId}`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+      const response = await fetch(
+        `https://develop-xtjn2g.zitadel.cloud/v2/idp_intents/${intentId}`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization:
+              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+          },
+          body: JSON.stringify({
+            idpIntentToken: token,
+          }),
         },
-        body: JSON.stringify({
-          idpIntentToken: token
-        }),
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -60,21 +64,25 @@ const Login = () => {
     e.preventDefault();
     setError('');
     try {
-      const createSessionResponse = await fetch('https://develop-xtjn2g.zitadel.cloud/v2/sessions', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
-        },
-        body: JSON.stringify({
-          checks: {
-            user: {
-              loginName: email,
-            },
+      const createSessionResponse = await fetch(
+        'https://develop-xtjn2g.zitadel.cloud/v2/sessions',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization:
+              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
           },
-        }),
-      });
+          body: JSON.stringify({
+            checks: {
+              user: {
+                loginName: email,
+              },
+            },
+          }),
+        },
+      );
 
       if (createSessionResponse.ok) {
         const sessionData = await createSessionResponse.json();
@@ -82,11 +90,11 @@ const Login = () => {
         setSessionId(sessionData.sessionId);
         localStorage.setItem('sessionToken', sessionData.sessionToken);
         setStep('password');
-        // Update URL without navigating
-        window.history.pushState({}, '', `/auth/login?session=${sessionData.sessionId}`);
       } else {
         const errorData = await createSessionResponse.json();
-        const errorMessage = errorData.message ? errorData.message.split('(')[0].trim() : 'Failed to create session';
+        const errorMessage = errorData.message
+          ? errorData.message.split('(')[0].trim()
+          : 'Failed to create session';
         console.error('Failed to create session:', errorMessage);
         setError(errorMessage || 'Failed to create session. Please try again.');
       }
@@ -110,7 +118,8 @@ const Login = () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: 'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+            Authorization:
+              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
           },
           body: JSON.stringify({
             sessionToken: sessionData.token,
@@ -120,28 +129,32 @@ const Login = () => {
               },
             },
           }),
-        }
+        },
       );
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('sessionToken', data.sessionToken);
-        
-        const sessionResponse = await fetch(`https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionId}`, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            Authorization: 'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+
+        const sessionResponse = await fetch(
+          `https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionId}`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              Authorization:
+                'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+            },
           },
-        });
+        );
 
         if (sessionResponse.ok) {
           const sessionData = await sessionResponse.json();
           localStorage.setItem('currentSessionData', JSON.stringify(sessionData));
-          
+
           const userVerified = sessionData.session.factors.user.verifiedAt;
           const passwordVerified = sessionData.session.factors.password.verifiedAt;
           if (userVerified && passwordVerified) {
-            navigate('/dashboard');
+            navigate('/');
           } else {
             setError('User or password verification failed.');
           }
@@ -166,14 +179,15 @@ const Login = () => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: 'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+          Authorization:
+            'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
         },
         body: JSON.stringify({
-          idpId: '32716844543-jc9oc9g7s83o7n47npu8q99aoge5jn0a.apps.googleusercontent.com', 
+          idpId: '32716844543-jc9oc9g7s83o7n47npu8q99aoge5jn0a.apps.googleusercontent.com',
           urls: {
             successUrl: 'http://localhost:3000/auth/login',
-            failureUrl: 'http://localhost:3000/auth/login'
-          }
+            failureUrl: 'http://localhost:3000/auth/login',
+          },
         }),
       });
 
@@ -191,25 +205,30 @@ const Login = () => {
   };
 
   return (
-    <div style={{
-      position: 'relative',
-      width: '100%',
-      height: '100vh',
-      overflow: 'hidden',
-      display: 'flex'
-    }}>
-      <div style={{
-        width: '50%',
-        height: '100%',
-        backgroundColor: '#f0f0f0',
+    <div
+      style={{
         position: 'relative',
+        width: '100%',
+        height: '100vh',
+        overflow: 'hidden',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <img 
+      }}
+    >
+      <div
+        style={{
+          width: '50%',
+          height: '100%',
+          backgroundColor: '#f0f0f0',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <img
           src={degaImage}
-          alt="Dega logo" 
+          alt="DEGA"
           style={{
             width: '40%',
             height: '40%',
@@ -219,39 +238,72 @@ const Login = () => {
             transform: 'translateY(-50%)'
           }}
         />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '5%',
+            left: '45%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <h1
+            style={{
+              fontSize: '38px',
+              fontWeight: 'bold',
+              color: '#333',
+            }}
+          >
+            DEGA
+          </h1>
+        </div>
       </div>
 
-      <div style={{
-        width: '50%',
-        height: '100%',
-        backgroundColor: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: '400px',
-          padding: '0 32px'
-        }}>
-          <h2 style={{
-            fontSize: '24px',
-            fontWeight: 'bold',
-            marginBottom: '24px',
-            textAlign: 'center',
-            color: '#333'
-          }}>Login</h2>
-          {error && <p style={{color: 'red', textAlign: 'center', marginBottom: '16px'}}>{error}</p>}
+      <div
+        style={{
+          width: '50%',
+          height: '100%',
+          backgroundColor: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '400px',
+            padding: '0 32px',
+          }}
+        >
+          <h2
+            style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              marginBottom: '24px',
+              textAlign: 'center',
+              color: '#333',
+            }}
+          >
+            Login
+          </h2>
+          {error && (
+            <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
+          )}
           {step === 'email' ? (
-            <form onSubmit={handleEmailSubmit} style={{marginBottom: '16px'}}>
-              <div style={{marginBottom: '16px'}}>
-                <label htmlFor="email" style={{
-                  display: 'block',
-                  color: '#333',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '8px'
-                }}>
+            <form onSubmit={handleEmailSubmit} style={{ marginBottom: '16px' }}>
+              <div style={{ marginBottom: '16px' }}>
+                <label
+                  htmlFor="email"
+                  style={{
+                    display: 'block',
+                    color: '#333',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    marginBottom: '8px',
+                  }}
+                >
                   Email
                 </label>
                 <input
@@ -264,7 +316,7 @@ const Login = () => {
                     padding: '8px 12px',
                     border: '1px solid #ccc',
                     borderRadius: '4px',
-                    fontSize: '16px'
+                    fontSize: '16px',
                   }}
                   required
                 />
@@ -282,7 +334,7 @@ const Login = () => {
                     borderRadius: '4px',
                     fontSize: '16px',
                     cursor: 'pointer',
-                    marginBottom: '16px'
+                    marginBottom: '16px',
                   }}
                 >
                   Next
@@ -290,15 +342,18 @@ const Login = () => {
               </div>
             </form>
           ) : (
-            <form onSubmit={handlePasswordSubmit} style={{marginBottom: '16px'}}>
-              <div style={{marginBottom: '16px'}}>
-                <label htmlFor="password" style={{
-                  display: 'block',
-                  color: '#333',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '8px'
-                }}>
+            <form onSubmit={handlePasswordSubmit} style={{ marginBottom: '16px' }}>
+              <div style={{ marginBottom: '16px' }}>
+                <label
+                  htmlFor="password"
+                  style={{
+                    display: 'block',
+                    color: '#333',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    marginBottom: '8px',
+                  }}
+                >
                   Password
                 </label>
                 <input
@@ -311,7 +366,7 @@ const Login = () => {
                     padding: '8px 12px',
                     border: '1px solid #ccc',
                     borderRadius: '4px',
-                    fontSize: '16px'
+                    fontSize: '16px',
                   }}
                   required
                 />
@@ -328,7 +383,7 @@ const Login = () => {
                     border: 'none',
                     borderRadius: '4px',
                     fontSize: '16px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
                   }}
                 >
                   Log In
@@ -337,7 +392,7 @@ const Login = () => {
             </form>
           )}
           {step === 'email' && (
-            <div style={{marginBottom: '16px'}}>
+            <div style={{ marginBottom: '16px' }}>
               <button
                 onClick={handleGoogleSignIn}
                 style={{
@@ -352,25 +407,25 @@ const Login = () => {
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}
               >
-                <img 
-                  src="https://developers.google.com/identity/images/g-logo.png" 
-                  alt="Google logo" 
-                  style={{width: '18px', height: '18px', marginRight: '10px'}}
+                <img
+                  src="https://developers.google.com/identity/images/g-logo.png"
+                  alt="Google logo"
+                  style={{ width: '18px', height: '18px', marginRight: '10px' }}
                 />
                 Sign in with Google
               </button>
             </div>
           )}
-          <div style={{textAlign: 'center'}}>
+          <div style={{ textAlign: 'center' }}>
             {step === 'email' ? (
-              <Link to="/auth/login/registration" style={{color: '#D53F8C', textDecoration: 'none'}}>
+              <Link to="/auth/registration" style={{ color: '#D53F8C', textDecoration: 'none' }}>
                 Don't have an account? Sign up
               </Link>
             ) : (
-              <Link to="/login/forgotpassword" style={{color: '#D53F8C', textDecoration: 'none'}}>
+              <Link to="/login/forgotpassword" style={{ color: '#D53F8C', textDecoration: 'none' }}>
                 Forgot Password?
               </Link>
             )}

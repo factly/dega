@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import degaImage from './dega.png';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -22,20 +21,25 @@ const ForgotPassword = () => {
     e.preventDefault();
     setError('');
     try {
-      const response = await fetch(`https://develop-xtjn2g.zitadel.cloud/v2/users/${userId}/password_reset`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+      const response = await fetch(
+        `https://develop-xtjn2g.zitadel.cloud/v2/users/${userId}/password_reset`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization:
+              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+          },
+          body: JSON.stringify({
+            sendLink: {
+              notificationType: 'NOTIFICATION_TYPE_Email',
+              urlTemplate:
+                'https://example.com/password/change?userID={{.UserID}}&code={{.Code}}&orgID={{.OrgID}}',
+            },
+          }),
         },
-        body: JSON.stringify({
-          sendLink: {
-            notificationType: "NOTIFICATION_TYPE_Email",
-            urlTemplate: "https://example.com/password/change?userID={{.UserID}}&code={{.Code}}&orgID={{.OrgID}}"
-          }
-        }),
-      });
+      );
 
       if (response.ok) {
         setStep('verify');
@@ -51,21 +55,25 @@ const ForgotPassword = () => {
     e.preventDefault();
     setError('');
     try {
-      const response = await fetch(`https://develop-xtjn2g.zitadel.cloud/v2/users/${userId}/password`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
-        },
-        body: JSON.stringify({
-          newPassword: {
-            password: newPassword,
-            changeRequired: false
+      const response = await fetch(
+        `https://develop-xtjn2g.zitadel.cloud/v2/users/${userId}/password`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization:
+              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
           },
-          verificationCode: verificationCode
-        }),
-      });
+          body: JSON.stringify({
+            newPassword: {
+              password: newPassword,
+              changeRequired: false,
+            },
+            verificationCode: verificationCode,
+          }),
+        },
+      );
 
       if (response.ok) {
         navigate('/login/email');
@@ -78,67 +86,82 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div style={{
-      position: 'relative',
-      width: '100%',
-      height: '100vh',
-      overflow: 'hidden',
-      display: 'flex'
-    }}>
-      <div style={{
-        width: '50%',
-        height: '100%',
-        backgroundColor: '#f0f0f0',
+    <div
+      style={{
         position: 'relative',
+        width: '100%',
+        height: '100vh',
+        overflow: 'hidden',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <img 
-          src={degaImage}
-          alt="Dega logo" 
+      }}
+    >
+      <div
+        style={{
+          width: '50%',
+          height: '100%',
+          backgroundColor: '#f0f0f0',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <h1
           style={{
-            width: '40%',
-            height: '40%',
-            objectFit: 'contain',
-            position: 'absolute',
-            top: '35%', 
-            transform: 'translateY(-50%)'
+            fontSize: '88px',
+            fontWeight: 'bold',
+            color: '#333',
+            textAlign: 'center',
           }}
-        />
+        >
+          DEGA
+        </h1>
       </div>
 
-      <div style={{
-        width: '50%',
-        height: '100%',
-        backgroundColor: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: '400px',
-          padding: '0 32px'
-        }}>
-          <h2 style={{
-            fontSize: '24px',
-            fontWeight: 'bold',
-            marginBottom: '24px',
-            textAlign: 'center',
-            color: '#333'
-          }}>Forgot Password</h2>
-          {error && <p style={{color: 'red', textAlign: 'center', marginBottom: '16px'}}>{error}</p>}
+      <div
+        style={{
+          width: '50%',
+          height: '100%',
+          backgroundColor: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '400px',
+            padding: '0 32px',
+          }}
+        >
+          <h2
+            style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              marginBottom: '24px',
+              textAlign: 'center',
+              color: '#333',
+            }}
+          >
+            Forgot Password
+          </h2>
+          {error && (
+            <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
+          )}
           {step === 'request' ? (
-            <form onSubmit={handleRequestReset} style={{marginBottom: '16px'}}>
-              <div style={{marginBottom: '16px'}}>
-                <label htmlFor="email" style={{
-                  display: 'block',
-                  color: '#333',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '8px'
-                }}>
+            <form onSubmit={handleRequestReset} style={{ marginBottom: '16px' }}>
+              <div style={{ marginBottom: '16px' }}>
+                <label
+                  htmlFor="email"
+                  style={{
+                    display: 'block',
+                    color: '#333',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    marginBottom: '8px',
+                  }}
+                >
                   Email
                 </label>
                 <input
@@ -151,7 +174,7 @@ const ForgotPassword = () => {
                     padding: '8px 12px',
                     border: '1px solid #ccc',
                     borderRadius: '4px',
-                    fontSize: '16px'
+                    fontSize: '16px',
                   }}
                   required
                 />
@@ -168,7 +191,7 @@ const ForgotPassword = () => {
                     border: 'none',
                     borderRadius: '4px',
                     fontSize: '16px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
                   }}
                 >
                   Request Password Reset
@@ -176,15 +199,18 @@ const ForgotPassword = () => {
               </div>
             </form>
           ) : (
-            <form onSubmit={handleResetPassword} style={{marginBottom: '16px'}}>
-              <div style={{marginBottom: '16px'}}>
-                <label htmlFor="verificationCode" style={{
-                  display: 'block',
-                  color: '#333',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '8px'
-                }}>
+            <form onSubmit={handleResetPassword} style={{ marginBottom: '16px' }}>
+              <div style={{ marginBottom: '16px' }}>
+                <label
+                  htmlFor="verificationCode"
+                  style={{
+                    display: 'block',
+                    color: '#333',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    marginBottom: '8px',
+                  }}
+                >
                   Verification Code
                 </label>
                 <input
@@ -197,19 +223,22 @@ const ForgotPassword = () => {
                     padding: '8px 12px',
                     border: '1px solid #ccc',
                     borderRadius: '4px',
-                    fontSize: '16px'
+                    fontSize: '16px',
                   }}
                   required
                 />
               </div>
-              <div style={{marginBottom: '16px'}}>
-                <label htmlFor="newPassword" style={{
-                  display: 'block',
-                  color: '#333',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginBottom: '8px'
-                }}>
+              <div style={{ marginBottom: '16px' }}>
+                <label
+                  htmlFor="newPassword"
+                  style={{
+                    display: 'block',
+                    color: '#333',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    marginBottom: '8px',
+                  }}
+                >
                   New Password
                 </label>
                 <input
@@ -222,7 +251,7 @@ const ForgotPassword = () => {
                     padding: '8px 12px',
                     border: '1px solid #ccc',
                     borderRadius: '4px',
-                    fontSize: '16px'
+                    fontSize: '16px',
                   }}
                   required
                 />
@@ -239,7 +268,7 @@ const ForgotPassword = () => {
                     border: 'none',
                     borderRadius: '4px',
                     fontSize: '16px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
                   }}
                 >
                   Reset Password
@@ -247,8 +276,8 @@ const ForgotPassword = () => {
               </div>
             </form>
           )}
-          <div style={{textAlign: 'center'}}>
-            <Link to="/auth/login" style={{color: '#D53F8C', textDecoration: 'none'}}>
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/auth/login" style={{ color: '#D53F8C', textDecoration: 'none' }}>
               Back to Login
             </Link>
           </div>

@@ -806,8 +806,8 @@ const routes = {
     title: 'Advanced',
   },
   registration: {
-    path: 'auth/login/registration',
-    menuKey: 'auth/login/registration',
+    path: 'auth/registration',
+    menuKey: 'auth/registration',
     Component: RegistrationForm,
     title: 'Registration Form', 
   },
