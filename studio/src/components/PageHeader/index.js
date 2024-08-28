@@ -126,7 +126,7 @@ function Pageheader() {
       )
     );
   };
-c
+
   if (
     (state[entity] && !state[entity].loading) ||
     ['members', 'advanced', 'website', 'admin'].includes(entity) ||
