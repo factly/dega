@@ -1,6 +1,6 @@
   const proxyAuthRequest = async (searchParams) => {
     const userId = '280097580581453326';
-    const baseUrl = 'https://develop-xtjn2g.zitadel.cloud//oauth/v2/authorize';
+    const baseUrl = `${window.REACT_APP_ZITADEL_AUTHORITY}//oauth/v2/authorize`;
     const queryParams = new URLSearchParams(searchParams);
   
     const authUrl = `${baseUrl}?${queryParams.toString()}`;

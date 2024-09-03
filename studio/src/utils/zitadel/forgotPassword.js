@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     setError('');
     try {
       const response = await fetch(
-        `https://develop-xtjn2g.zitadel.cloud/v2/users/${userId}/password_reset`,
+        `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/password_reset`,
         {
           method: 'POST',
           headers: {
@@ -57,7 +57,7 @@ const ForgotPassword = () => {
     setError('');
     try {
       const response = await fetch(
-        `https://develop-xtjn2g.zitadel.cloud/v2/users/${userId}/password`,
+        `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/password`,
         {
           method: 'POST',
           headers: {

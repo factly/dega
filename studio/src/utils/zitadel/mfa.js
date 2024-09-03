@@ -4,7 +4,7 @@ import QRCode from 'qrcode.react';
 // Registration functions
 export const startTOTPRegistration = async (userId, token, data = {}) => {
   try {
-    const response = await fetch(`https://develop-xtjn2g.zitadel.cloud/v2/users/${userId}/totp`, {
+    const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/totp`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -27,7 +27,7 @@ export const startTOTPRegistration = async (userId, token, data = {}) => {
 
 export const verifyTOTPRegistration = async (userId, token, code) => {
   try {
-    const response = await fetch(`https://develop-xtjn2g.zitadel.cloud/v2/users/${userId}/totp/verify`, {
+    const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/totp/verify`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -52,7 +52,7 @@ export const verifyTOTPRegistration = async (userId, token, code) => {
 // Login function
 export const checkTOTP = async (sessionId, sessionToken, code) => {
   try {
-    const response = await fetch(`https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionId}`, {
+    const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',

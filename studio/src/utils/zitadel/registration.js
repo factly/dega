@@ -44,7 +44,7 @@ const RegistrationForm = () => {
 
     try {
       // First, attempt to register the user
-      const registerResponse = await fetch('https://develop-xtjn2g.zitadel.cloud/v2/users/human', {
+      const registerResponse = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/human`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -61,7 +61,7 @@ const RegistrationForm = () => {
         localStorage.setItem('userId', registerData.userId);
 
         // Create a session for the new user
-        const sessionResponse = await fetch('https://develop-xtjn2g.zitadel.cloud/v2/sessions', {
+        const sessionResponse = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -85,7 +85,7 @@ const RegistrationForm = () => {
 
           // Verify the password
           const passwordVerificationResponse = await fetch(
-            `https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionData.sessionId}`,
+            `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionData.sessionId}`,
             {
               method: 'PATCH',
               headers: {

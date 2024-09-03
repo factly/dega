@@ -19,7 +19,7 @@ export const useGoogleSignIn = () => {
   const getProviderInformation = async (intentId, token) => {
     try {
       const response = await fetch(
-        `https://develop-xtjn2g.zitadel.cloud/v2/idp_intents/${intentId}`,
+        `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/idp_intents/${intentId}`,
         {
           method: 'POST',
           headers: {
@@ -60,7 +60,7 @@ export const useGoogleSignIn = () => {
 
   const loginUser = async (userId, intentId, token) => {
     try {
-      const response = await fetch('https://develop-xtjn2g.zitadel.cloud/v2/sessions', {
+      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -97,7 +97,7 @@ export const useGoogleSignIn = () => {
 
   const registerUser = async (userData, intentId, token) => {
     try {
-      const response = await fetch('https://develop-xtjn2g.zitadel.cloud/v2/users/human', {
+      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/human`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -139,7 +139,7 @@ export const useGoogleSignIn = () => {
 
   const initiateGoogleSignIn = async () => {
     try {
-      const response = await fetch('https://develop-xtjn2g.zitadel.cloud/v2/idp_intents', {
+      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/idp_intents`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

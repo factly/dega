@@ -39,7 +39,7 @@ const Login = () => {
     setError('');
     try {
       const createSessionResponse = await fetch(
-        'https://develop-xtjn2g.zitadel.cloud/v2/sessions',
+        `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions`,
         {
           method: 'POST',
           headers: {
@@ -66,7 +66,7 @@ const Login = () => {
 
         // Fetch user details using the session ID
         const userDetailsResponse = await fetch(
-          `https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionData.sessionId}`,
+          `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionData.sessionId}`,
           {
             method: 'GET',
             headers: {
@@ -108,7 +108,7 @@ const Login = () => {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
 
       const response = await fetch(
-        `https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionId}`,
+        `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`,
         {
           method: 'PATCH',
           headers: {
