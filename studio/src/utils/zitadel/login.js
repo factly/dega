@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
-import degaImage from './dega.png';
+import { useNavigate, Link, useLocation} from 'react-router-dom';
+import { checkTOTP } from './mfa';
+import { useGoogleSignIn } from './idp';
+import proxyAuthRequest from './proxyAuthRequest';
+import degaImage from '../../assets/dega.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -8,57 +11,28 @@ const Login = () => {
   const [error, setError] = useState('');
   const [step, setStep] = useState('email');
   const [sessionId, setSessionId] = useState('');
+  const [userId, setUserId] = useState('');
+  const [totpCode, setTotpCode] = useState('');
+  const { initiateGoogleSignIn } = useGoogleSignIn();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // Check if we're on the success route and have an intent ID and token
-    if (location.pathname === '/auth/login' && location.search.includes('intent_id')) {
-      const params = new URLSearchParams(location.search);
-      const intentId = params.get('intent_id');
-      const token = params.get('token');
-      if (intentId && token) {
-        getProviderInformation(intentId, token);
-      }
+    const searchParams = new URLSearchParams(location.search);
+    const authRequest = searchParams.get('authRequest');
+    const id = searchParams.get('id');
+
+    if (authRequest) {
+      localStorage.setItem('authRequest', authRequest);
+    } else if (id) {
+    } else {
+      const fullSearchParams = location.search.substring(1);
+      proxyAuthRequest(fullSearchParams).catch(error => {
+        console.error('Error in proxyAuthRequest:', error);
+        setError('An error occurred while initializing the login process. Please try again.');
+      });
     }
   }, [location]);
-
-  const getProviderInformation = async (intentId, token) => {
-    try {
-      const response = await fetch(
-        `https://develop-xtjn2g.zitadel.cloud/v2/idp_intents/${intentId}`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization:
-              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
-          },
-          body: JSON.stringify({
-            idpIntentToken: token,
-          }),
-        },
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        handleSuccessfulLogin(data);
-      } else {
-        console.error('Failed to get provider information');
-        setError('Failed to complete login. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setError('An error occurred. Please try again later.');
-    }
-  };
-
-  const handleSuccessfulLogin = (providerData) => {
-    const userInfo = providerData.idpInformation.rawInformation.User;
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    navigate('/dashboard');
-  };
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -89,6 +63,28 @@ const Login = () => {
         localStorage.setItem('sessionData', JSON.stringify(sessionData));
         setSessionId(sessionData.sessionId);
         localStorage.setItem('sessionToken', sessionData.sessionToken);
+
+        // Fetch user details using the session ID
+        const userDetailsResponse = await fetch(
+          `https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionData.sessionId}`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              Authorization:
+                'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+            },
+          },
+        );
+
+        if (userDetailsResponse.ok) {
+          const userDetails = await userDetailsResponse.json();
+          setUserId(userDetails.session.factors.user.id);
+          localStorage.setItem('userId', userDetails.session.factors.user.id);
+        } else {
+          console.error('Failed to fetch user details');
+        }
+
         setStep('password');
       } else {
         const errorData = await createSessionResponse.json();
@@ -134,33 +130,7 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('sessionToken', data.sessionToken);
-
-        const sessionResponse = await fetch(
-          `https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionId}`,
-          {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              Authorization:
-                'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
-            },
-          },
-        );
-
-        if (sessionResponse.ok) {
-          const sessionData = await sessionResponse.json();
-          localStorage.setItem('currentSessionData', JSON.stringify(sessionData));
-
-          const userVerified = sessionData.session.factors.user.verifiedAt;
-          const passwordVerified = sessionData.session.factors.password.verifiedAt;
-          if (userVerified && passwordVerified) {
-            navigate('/');
-          } else {
-            setError('User or password verification failed.');
-          }
-        } else {
-          setError('Failed to fetch current session state');
-        }
+        setStep('mfa');
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.message.split('(')[0].trim();
@@ -172,35 +142,29 @@ const Login = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const response = await fetch('https://develop-xtjn2g.zitadel.cloud/v2/idp_intents', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization:
-            'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
-        },
-        body: JSON.stringify({
-          idpId: '32716844543-jc9oc9g7s83o7n47npu8q99aoge5jn0a.apps.googleusercontent.com',
-          urls: {
-            successUrl: 'http://localhost:3000/auth/login',
-            failureUrl: 'http://localhost:3000/auth/login',
-          },
-        }),
-      });
+  const handleMfaSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
 
-      if (response.ok) {
-        const data = await response.json();
-        window.location.href = data.authUrl;
+    try {
+      const sessionData = JSON.parse(localStorage.getItem('sessionData'));
+      const result = await checkTOTP(sessionId, sessionData.token, totpCode);
+      if (result.sessionToken) {
+        localStorage.setItem('sessionToken', result.sessionToken);
+        navigate('/');
       } else {
-        console.error('Failed to initiate Google Sign-In');
-        setError('Failed to initiate Google Sign-In. Please try again.');
+        setError('Invalid MFA code. Please try again.');
       }
     } catch (error) {
       console.error('Error:', error);
-      setError('An error occurred. Please try again later.');
+      setError('An unexpected error occurred during MFA verification');
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const result = await initiateGoogleSignIn();
+    if (result && result.error) {
+      setError(result.error);
     }
   };
 
@@ -234,8 +198,8 @@ const Login = () => {
             height: '40%',
             objectFit: 'contain',
             position: 'absolute',
-            top: '35%', 
-            transform: 'translateY(-50%)'
+            top: '35%',
+            transform: 'translateY(-50%)',
           }}
         />
         <div
@@ -259,7 +223,6 @@ const Login = () => {
           </h1>
         </div>
       </div>
-
       <div
         style={{
           width: '50%',
@@ -286,12 +249,16 @@ const Login = () => {
               color: '#333',
             }}
           >
-            Login
+            {step === 'email'
+              ? 'Login'
+              : step === 'password'
+              ? 'Enter Password'
+              : 'MFA Verification'}
           </h2>
           {error && (
             <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
           )}
-          {step === 'email' ? (
+          {step === 'email' && (
             <form onSubmit={handleEmailSubmit} style={{ marginBottom: '16px' }}>
               <div style={{ marginBottom: '16px' }}>
                 <label
@@ -327,21 +294,21 @@ const Login = () => {
                   style={{
                     width: '100%',
                     padding: '10px',
-                    backgroundColor: '#D53F8C',
+                    backgroundColor: '#1E1E1E',
                     color: 'white',
                     fontWeight: 'bold',
                     border: 'none',
                     borderRadius: '4px',
                     fontSize: '16px',
                     cursor: 'pointer',
-                    marginBottom: '16px',
                   }}
                 >
                   Next
                 </button>
               </div>
             </form>
-          ) : (
+          )}
+          {step === 'password' && (
             <form onSubmit={handlePasswordSubmit} style={{ marginBottom: '16px' }}>
               <div style={{ marginBottom: '16px' }}>
                 <label
@@ -377,7 +344,7 @@ const Login = () => {
                   style={{
                     width: '100%',
                     padding: '10px',
-                    backgroundColor: '#D53F8C',
+                    backgroundColor: '#1E1E1E',
                     color: 'white',
                     fontWeight: 'bold',
                     border: 'none',
@@ -387,6 +354,56 @@ const Login = () => {
                   }}
                 >
                   Log In
+                </button>
+              </div>
+            </form>
+          )}
+          {step === 'mfa' && (
+            <form onSubmit={handleMfaSubmit} style={{ marginBottom: '16px' }}>
+              <div style={{ marginBottom: '16px' }}>
+                <label
+                  htmlFor="totpCode"
+                  style={{
+                    display: 'block',
+                    color: '#333',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Enter MFA Code
+                </label>
+                <input
+                  type="text"
+                  id="totpCode"
+                  value={totpCode}
+                  onChange={(e) => setTotpCode(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                  }}
+                  required
+                />
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    backgroundColor: '#1E1E1E',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Verify MFA
                 </button>
               </div>
             </form>
@@ -421,14 +438,14 @@ const Login = () => {
           )}
           <div style={{ textAlign: 'center' }}>
             {step === 'email' ? (
-              <Link to="/auth/registration" style={{ color: '#D53F8C', textDecoration: 'none' }}>
+              <Link to="/auth/registration" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
                 Don't have an account? Sign up
               </Link>
-            ) : (
-              <Link to="/login/forgotpassword" style={{ color: '#D53F8C', textDecoration: 'none' }}>
+            ) : step === 'password' ? (
+              <Link to="/login/forgotpassword" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
                 Forgot Password?
               </Link>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

@@ -6,7 +6,6 @@ export const login = async () => {
     if (d.error) {
       return { error: d.error };
     }
-
     const config = d.data;
 
     const codeVerifier = generateCodeVerifier();
@@ -18,7 +17,7 @@ export const login = async () => {
     localStorage.setItem('auth_state', state);
 
     const authorizeURL =
-      `${config.authorization_endpoint}?` +
+      'http://localhost:3000/auth/login?' +
       `client_id=${encodeURIComponent(window.REACT_APP_ZITADEL_CLIENT_ID)}` +
       `&response_type=code` +
       `&response_mode=query` +
@@ -39,8 +38,9 @@ export const login = async () => {
   });
 };
 
+
 export const getToken = (code) =>
-  fetch('https://develop-xtjn2g.zitadel.cloud/oauth/v2/token', {
+  fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oauth/v2/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -66,31 +66,29 @@ export const getToken = (code) =>
       };
     });
 
-export const getUserInfo = () => {
-  const sessionID = localStorage.getItem('sessionID');
-  return fetch(`https://develop-xtjn2g.zitadel.cloud/v2/sessions/${sessionID}`, {
+export const getUserInfo = () =>
+  fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+      Authorization: `Bearer ${localStorage.getItem('x-zitadel-access-token')}`,
     },
-  credentials: 'include',
-})
-  .then((response) => {
-    if (response.status === 200) {
-      return response.json();
-    } else {
-      return Promise.reject('Unauthorized');
-    }
+    credentials: 'include',
   })
-  .then((data) => {
-    return { data };
-  })
-  .catch(() => {
-    return {
-      error: 'Error fetching user info',
-    };
-  });
-};
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        return Promise.reject('Unauthorized');
+      }
+    })
+    .then((data) => {
+      return { data };
+    })
+    .catch(() => {
+      return {
+        error: 'Error fetching user info',
+      };
+    });
 
 const generateCodeChallenge = (codeVerifier) => {
   const encoder = new TextEncoder();

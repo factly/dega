@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import degaImage from './dega.png';
+import degaImage from '../../assets/dega.png';
+import { startTOTPRegistration, verifyTOTPRegistration, TOTPSetupComponent } from './mfa';
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
@@ -11,6 +12,12 @@ const RegistrationForm = () => {
     password: '',
   });
   const [error, setError] = useState('');
+  const [step, setStep] = useState('registration');
+  const [userId, setUserId] = useState('');
+  const [sessionId, setSessionId] = useState('');
+  const [sessionToken, setSessionToken] = useState('');
+  const [totpUri, setTotpUri] = useState('');
+  const [totpSecret, setTotpSecret] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -50,9 +57,10 @@ const RegistrationForm = () => {
 
       if (registerResponse.ok) {
         const registerData = await registerResponse.json();
+        setUserId(registerData.userId);
         localStorage.setItem('userId', registerData.userId);
 
-        // Now, create a session and verify the password
+        // Create a session for the new user
         const sessionResponse = await fetch('https://develop-xtjn2g.zitadel.cloud/v2/sessions', {
           method: 'POST',
           headers: {
@@ -72,6 +80,8 @@ const RegistrationForm = () => {
 
         if (sessionResponse.ok) {
           const sessionData = await sessionResponse.json();
+          setSessionId(sessionData.sessionId);
+          setSessionToken(sessionData.sessionToken);
 
           // Verify the password
           const passwordVerificationResponse = await fetch(
@@ -97,29 +107,18 @@ const RegistrationForm = () => {
 
           if (passwordVerificationResponse.ok) {
             const verificationData = await passwordVerificationResponse.json();
-            localStorage.setItem(
-              'sessionData',
-              JSON.stringify({
-                id: sessionData.sessionId,
-                token: verificationData.sessionToken,
-                creationDate: sessionData.creationDate,
-                changeDate: sessionData.changeDate,
-                sequence: sessionData.sequence,
-                factors: {
-                  user: {
-                    verifiedAt: sessionData.factors?.user.verifiedAt,
-                    id: sessionData.factors?.user.id,
-                    loginName: sessionData.factors?.user.loginName,
-                  },
-                  password: {
-                    verifiedAt: new Date().toISOString(),
-                  },
-                },
-              }),
-            );
+            setSessionToken(verificationData.sessionToken);
+
+            // Store user ID, session ID, and session token in local storage
+            localStorage.setItem('userId', registerData.userId);
             localStorage.setItem('sessionId', sessionData.sessionId);
             localStorage.setItem('sessionToken', verificationData.sessionToken);
-            navigate('/');
+
+            // Start TOTP registration
+            const totpData = await startTOTPRegistration(registerData.userId, verificationData.sessionToken);
+            setTotpUri(totpData.uri);
+            setTotpSecret(totpData.secret);
+            setStep('mfa-setup');
           } else {
             const errorData = await passwordVerificationResponse.json();
             setError(errorData.message || 'Failed to verify password');
@@ -135,6 +134,16 @@ const RegistrationForm = () => {
     } catch (error) {
       console.error('Error:', error);
       setError('An unexpected error occurred');
+    }
+  };
+
+  const handleMfaVerify = async (code) => {
+    try {
+      await verifyTOTPRegistration(userId, sessionToken, code);
+      navigate('/');
+    } catch (error) {
+      console.error('Error verifying MFA:', error);
+      setError('Failed to verify MFA. Please try again.');
     }
   };
 
@@ -203,7 +212,6 @@ const RegistrationForm = () => {
           justifyContent: 'center',
         }}
       >
-        {' '}
         <div
           style={{
             width: '100%',
@@ -220,65 +228,69 @@ const RegistrationForm = () => {
               color: '#333',
             }}
           >
-            Registration
+            {step === 'registration' ? 'Registration' : 'MFA Setup'}
           </h2>
           {error && (
             <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
           )}
-          <form onSubmit={handleSubmit} style={{ marginBottom: '16px' }}>
-            {['firstName', 'lastName', 'email', 'password'].map((field) => (
-              <div key={field} style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor={field}
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  {field.charAt(0).toUpperCase() + field.slice(1)}
-                </label>
-                <input
-                  type={field === 'password' ? 'password' : 'text'}
-                  id={field}
-                  name={field}
-                  value={formData[field]}
-                  onChange={handleChange}
+          {step === 'registration' ? (
+            <form onSubmit={handleSubmit} style={{ marginBottom: '16px' }}>
+              {['firstName', 'lastName', 'email', 'password'].map((field) => (
+                <div key={field} style={{ marginBottom: '16px' }}>
+                  <label
+                    htmlFor={field}
+                    style={{
+                      display: 'block',
+                      color: '#333',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    {field.charAt(0).toUpperCase() + field.slice(1)}
+                  </label>
+                  <input
+                    type={field === 'password' ? 'password' : 'text'}
+                    id={field}
+                    name={field}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      border: '1px solid #ccc',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                    }}
+                    required
+                  />
+                </div>
+              ))}
+              <div>
+                <button
+                  type="submit"
                   style={{
                     width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
+                    padding: '10px',
+                    backgroundColor: '#1E1E1E',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    border: 'none',
                     borderRadius: '4px',
                     fontSize: '16px',
+                    cursor: 'pointer',
+                    marginBottom: '16px',
                   }}
-                  required
-                />
+                >
+                  Sign Up
+                </button>
               </div>
-            ))}
-            <div>
-              <button
-                type="submit"
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  backgroundColor: '#D53F8C',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  border: 'none',
-                  borderRadius: '4px',
-                  fontSize: '16px',
-                  cursor: 'pointer',
-                  marginBottom: '16px',
-                }}
-              >
-                Sign Up
-              </button>
-            </div>
-          </form>
+            </form>
+          ) : (
+            <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaVerify} />
+          )}
           <div style={{ textAlign: 'center' }}>
-            <Link to="/login/forgotpassword" style={{ color: '#D53F8C', textDecoration: 'none' }}>
+            <Link to="/login/forgotpassword" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
               Forgot Password?
             </Link>
           </div>

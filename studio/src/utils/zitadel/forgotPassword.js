@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import degaImage from '../../assets/dega.png';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -102,22 +103,44 @@ const ForgotPassword = () => {
           backgroundColor: '#f0f0f0',
           position: 'relative',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <h1
+        <img
+          src={degaImage}
+          alt="DEGA"
           style={{
-            fontSize: '88px',
-            fontWeight: 'bold',
-            color: '#333',
-            textAlign: 'center',
+            width: '40%',
+            height: '40%',
+            objectFit: 'contain',
+            position: 'absolute',
+            top: '35%',
+            transform: 'translateY(-50%)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '5%',
+            left: '45%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          DEGA
-        </h1>
+          <h1
+            style={{
+              fontSize: '38px',
+              fontWeight: 'bold',
+              color: '#333',
+            }}
+          >
+            DEGA
+          </h1>
+        </div>
       </div>
-
       <div
         style={{
           width: '50%',
@@ -144,7 +167,7 @@ const ForgotPassword = () => {
               color: '#333',
             }}
           >
-            Forgot Password
+            {step === 'request' ? 'Forgot Password' : 'Reset Password'}
           </h2>
           {error && (
             <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
@@ -185,7 +208,7 @@ const ForgotPassword = () => {
                   style={{
                     width: '100%',
                     padding: '10px',
-                    backgroundColor: '#D53F8C',
+                    backgroundColor: '#1E1E1E',
                     color: 'white',
                     fontWeight: 'bold',
                     border: 'none',
@@ -262,7 +285,7 @@ const ForgotPassword = () => {
                   style={{
                     width: '100%',
                     padding: '10px',
-                    backgroundColor: '#D53F8C',
+                    backgroundColor: '#1E1E1E',
                     color: 'white',
                     fontWeight: 'bold',
                     border: 'none',
@@ -277,7 +300,7 @@ const ForgotPassword = () => {
             </form>
           )}
           <div style={{ textAlign: 'center' }}>
-            <Link to="/auth/login" style={{ color: '#D53F8C', textDecoration: 'none' }}>
+            <Link to="/auth/login" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
               Back to Login
             </Link>
           </div>
