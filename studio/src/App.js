@@ -8,6 +8,7 @@ import deepEqual from 'deep-equal';
 import { extractV6RouteObject } from './config/routesConfig';
 import { addErrorNotification } from './actions/notifications';
 import { login } from './utils/zitadel';
+import { getSession } from './actions/session';
 
 function App() {
   const [reloadFlag, setReloadFlag] = useState(false);
@@ -42,24 +43,28 @@ function App() {
   }, []);
 
   const checkAuthenticated = () => {
-    const currentPath = window.location.pathname;
-    if (currentPath !== '/auth/login' && currentPath !== '/auth/registration') {
-    const sessionToken = localStorage.getItem('sessionToken');
-      if (!sessionToken) {
-        window.localStorage.setItem('return_to', window.location.href);
-        login().then((d) => {
-          if (d.error) {
-            dispatch(
-              addErrorNotification({
-                message: d.error,
-              }),
-            );
-            return;
+    dispatch(getSession()).then((res) => {
+      if (!res.success) {
+        const currentPath = window.location.pathname;
+        if (currentPath !== '/auth/login' && currentPath !== '/auth/registration') {
+          const sessionToken = localStorage.getItem('sessionToken');
+          if (!sessionToken) {
+            window.localStorage.setItem('return_to', window.location.href);
+            login().then((d) => {
+              if (d.error) {
+                dispatch(
+                  addErrorNotification({
+                    message: d.error,
+                  }),
+                );
+                return;
+              }
+              window.location.href = d.authorizeURL;
+            });
           }
-          window.location.href = d.authorizeURL;
-        });
+        }
       }
-    }
+    });
   };
 
   const fetchFormats = () => {

@@ -56,7 +56,7 @@ export const getToken = (code) =>
   })
     .then((response) => response.json())
     .then((data) => {
-      localStorage.setItem('x-zitadel-access-token', data.access_token);
+      localStorage.setItem('sessionToken', data.access_token);
       localStorage.setItem('x-zitadel-id-token', data.id_token);
       return {};
     })
@@ -70,7 +70,7 @@ export const getUserInfo = () =>
   fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('x-zitadel-access-token')}`,
+      Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
     },
     credentials: 'include',
   })

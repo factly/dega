@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link, useLocation} from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { checkTOTP } from './mfa';
 import { useGoogleSignIn } from './idp';
 import proxyAuthRequest from './proxyAuthRequest';
 import degaImage from '../../assets/dega.png';
+import { TOTPSetupComponent } from './mfa';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,9 +14,19 @@ const Login = () => {
   const [sessionId, setSessionId] = useState('');
   const [userId, setUserId] = useState('');
   const [totpCode, setTotpCode] = useState('');
-  const { initiateGoogleSignIn } = useGoogleSignIn();
+  const [mfaCode, setMfaCode] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { 
+    initiateGoogleSignIn, 
+    error: googleError, 
+    step: googleStep, 
+    totpUri, 
+    totpSecret, 
+    handleMfaSetup, 
+    handleMfaVerify 
+  } = useGoogleSignIn();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -24,7 +35,6 @@ const Login = () => {
 
     if (authRequest) {
       localStorage.setItem('authRequest', authRequest);
-    } else if (id) {
     } else {
       const fullSearchParams = location.search.substring(1);
       proxyAuthRequest(fullSearchParams).catch(error => {
@@ -33,6 +43,18 @@ const Login = () => {
       });
     }
   }, [location]);
+
+  useEffect(() => {
+    if (googleError) {
+      setError(googleError);
+    }
+  }, [googleError]);
+
+  useEffect(() => {
+    if (googleStep === 'mfa-setup' || googleStep === 'mfa-verify') {
+      setStep(googleStep);
+    }
+  }, [googleStep]);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -45,8 +67,7 @@ const Login = () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization:
-              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+            Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
           },
           body: JSON.stringify({
             checks: {
@@ -71,8 +92,7 @@ const Login = () => {
             method: 'GET',
             headers: {
               Accept: 'application/json',
-              Authorization:
-                'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+              Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
             },
           },
         );
@@ -114,8 +134,7 @@ const Login = () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization:
-              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+            Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
           },
           body: JSON.stringify({
             sessionToken: sessionData.token,
@@ -253,7 +272,11 @@ const Login = () => {
               ? 'Login'
               : step === 'password'
               ? 'Enter Password'
-              : 'MFA Verification'}
+              : step === 'mfa'
+              ? 'MFA Verification'
+              : step === 'mfa-setup'
+              ? 'Set up Two-Factor Authentication'
+              : 'Verify Two-Factor Authentication'}
           </h2>
           {error && (
             <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
@@ -382,6 +405,79 @@ const Login = () => {
                     width: '100%',
                     padding: '8px 12px',
                     border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                  }}
+                  required
+                />
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    backgroundColor: '#1E1E1E',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Verify MFA
+                </button>
+              </div>
+            </form>
+          )}
+          {step === 'mfa-setup' && (
+            <TOTPSetupComponent 
+              uri={totpUri} 
+              secret={totpSecret} 
+              onVerify={handleMfaSetup} 
+            />
+          )}
+          {step === 'mfa-verify' && (
+            <form onSubmit={(e) => { e.preventDefault(); handleMfaVerify(mfaCode); }} style={{ marginBottom: '16px' }}>
+              <div style={{ marginBottom: '16px' }}>
+                <label
+                  htmlFor="mfaCode"
+                  style={{
+                    display: 'block',
+                    color: '#333',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Enter MFA Code
+                </label>
+                <input
+                  type="text"
+                  id="mfaCode"
+                  value={mfaCode}
+                  onChange={(e) => setMfaCode(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                  }}
+                  required
+                />
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    backgroundColor: '#1E1E1E',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    border: 'none',
                     borderRadius: '4px',
                     fontSize: '16px',
                   }}

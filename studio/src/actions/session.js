@@ -11,6 +11,7 @@ export const getSession = () => {
           return { success: false };
         }
         dispatch(addSession(res.data));
+        localStorage.setItem('sessionToken', res.data.sessionToken);
         return { success: true };
       })
       .catch((error) => {

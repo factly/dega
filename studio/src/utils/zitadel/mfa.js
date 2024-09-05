@@ -57,7 +57,7 @@ export const checkTOTP = async (sessionId, sessionToken, code) => {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+        'Authorization': `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
       },
       body: JSON.stringify({
         sessionToken,

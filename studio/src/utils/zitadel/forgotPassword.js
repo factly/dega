@@ -30,7 +30,7 @@ const ForgotPassword = () => {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization:
-              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+              `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
           },
           body: JSON.stringify({
             sendLink: {
@@ -64,7 +64,7 @@ const ForgotPassword = () => {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization:
-              'Bearer 7XWp1rpWcgZkgJJdo_km9cbzMVdkIAfNfEGrjjZTZAy0Ehf9ShS3gt1cKBLvLW3akUNw5JI',
+              `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
           },
           body: JSON.stringify({
             newPassword: {
