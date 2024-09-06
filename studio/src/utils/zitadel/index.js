@@ -70,7 +70,7 @@ export const getUserInfo = () =>
   fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
     },
     credentials: 'include',
   })

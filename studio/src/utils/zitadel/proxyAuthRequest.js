@@ -10,6 +10,8 @@
         method: 'GET',
         headers: {
           'x-zitadel-login-client': userId,
+          'x-zitadel-public-host': 'localhost:3000',
+          'x-zitadel-instance-host': 'develop-xtjn2g.zitadel.cloud'
         },
       });
   

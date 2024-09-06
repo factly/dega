@@ -20,17 +20,46 @@ const AccountMenu = () => {
     }
   }, [dispatch]);
 
-  const handleLogout = () => {
-    const logoutUrl =
-      `${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/end_session?` +
-      `id_token_hint=${localStorage.getItem('x-zitadel-id-token')}&` +
-      `post_logout_redirect_uri=${encodeURIComponent(
-        window.REACT_APP_ZITADEL_POST_LOGOUT_REDIRECT_URI,
-      )}`;
+  const handleLogout = async () => {
+    const sessionId = localStorage.getItem('sessionId');
+    const sessionToken = localStorage.getItem('sessionToken');
 
+    if (!sessionId || !sessionToken) {
+      console.error('Session ID or token not found');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`,
+        },
+        body: JSON.stringify({
+          sessionToken: sessionToken,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Logout successful');
+      } else {
+        console.error('Logout failed:', await response.text());
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+
+    // Clear local storage and reload the page
     window.localStorage.clear();
     window.location.reload();
-    window.location.href = logoutUrl;
+
+    // Redirect to the post-logout URL
+    const postLogoutRedirectUri = window.REACT_APP_ZITADEL_POST_LOGOUT_REDIRECT_URI;
+    if (postLogoutRedirectUri) {
+      window.location.href = postLogoutRedirectUri;
+    }
   };
 
   const accountMenu = (

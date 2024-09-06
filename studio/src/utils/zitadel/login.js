@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { checkTOTP } from './mfa';
 import { useGoogleSignIn } from './idp';
-import proxyAuthRequest from './proxyAuthRequest';
 import degaImage from '../../assets/dega.png';
 import { TOTPSetupComponent } from './mfa';
 
@@ -37,10 +36,7 @@ const Login = () => {
       localStorage.setItem('authRequest', authRequest);
     } else {
       const fullSearchParams = location.search.substring(1);
-      proxyAuthRequest(fullSearchParams).catch(error => {
-        console.error('Error in proxyAuthRequest:', error);
-        setError('An error occurred while initializing the login process. Please try again.');
-      });
+      handleProxyAuthRequest(fullSearchParams);
     }
   }, [location]);
 
@@ -55,6 +51,23 @@ const Login = () => {
       setStep(googleStep);
     }
   }, [googleStep]);
+
+  const handleProxyAuthRequest = async (searchParams) => {
+    try {
+      const response = await fetch(`/test/authorize?${searchParams}`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok.');
+      }
+
+      // The proxy should handle the redirect, so we don't need to do anything here
+    } catch (error) {
+      console.error('Error in handleProxyAuthRequest:', error);
+      setError('An error occurred while initializing the login process. Please try again.');
+    }
+  };
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -186,6 +199,7 @@ const Login = () => {
       setError(result.error);
     }
   };
+
 
   return (
     <div

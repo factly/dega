@@ -2,7 +2,10 @@ package service
 
 import (
 	"fmt"
+	"io"
+	"log"
 	"net/http"
+	"net/url"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
@@ -63,6 +66,8 @@ func RegisterRoutes() http.Handler {
 		"database":    sqlDB.Ping,
 		"meilisearch": util.MeiliChecker,
 	})
+
+	r.Get("/test/authorize", GetAuthorizationProxyHandler(viper.GetString("ZITADEL_ISSUER"), viper.GetString("ZITADEL_CLIENT_ID")))
 
 	r.With(config.ZitadelInterceptor.RequireAuthorization(), util.CheckUser(config.ZitadelInterceptor)).Group(func(r chi.Router) {
 		r.Mount("/core", core.Router())
@@ -132,4 +137,78 @@ func RegisterFeedsRoutes() http.Handler {
 	})
 
 	return r
+}
+
+func GetAuthorizationProxyHandler(zitadelIssuer string, svcUserID string) http.HandlerFunc {
+	targetURL := zitadelIssuer + "/oauth/v2/authorize"
+	return func(w http.ResponseWriter, r *http.Request) {
+		proxyURL, err := buildProxyURL(r, targetURL)
+		if err != nil {
+			http.Error(w, "Failed to build proxy URL", http.StatusInternalServerError)
+			return
+		}
+		resp, err := performProxyRequest("GET", proxyURL, nil, svcUserID)
+		if err != nil {
+			http.Error(w, "Failed to perform request", http.StatusInternalServerError)
+			return
+		}
+		defer resp.Body.Close()
+		handleAuthorizationResponse(w, r, resp)
+	}
+}
+
+// buildProxyURL builds a proxy URL with query parameters.
+func buildProxyURL(r *http.Request, targetURL string) (string, error) {
+	params := url.Values{}
+	for key, value := range r.URL.Query() {
+		for _, v := range value {
+			params.Add(key, v)
+		}
+	}
+	return fmt.Sprintf("%s?%s", targetURL, params.Encode()), nil
+}
+
+// performProxyRequest performs an HTTP request to the proxy URL with optional headers.
+func performProxyRequest(method, proxyURL string, body io.Reader, svcUserID string) (*http.Response, error) {
+	req, err := http.NewRequest(method, proxyURL, body)
+	if err != nil {
+		return nil, err
+	}
+	if svcUserID != "" {
+		req.Header.Set("X-Zitadel-Login-Client", svcUserID)
+	}
+	client := &http.Client{
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
+	}
+	return client.Do(req)
+}
+
+// handleAuthorizationResponse handles the response for the authorization request.
+func handleAuthorizationResponse(w http.ResponseWriter, r *http.Request, resp *http.Response) {
+	location := resp.Header.Get("Location")
+	if location == "" {
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			http.Error(w, "Failed to decode callback URL: "+err.Error(), http.StatusBadRequest)
+			return
+		}
+		http.Error(w, "Failed to get location header: err: "+string(body), http.StatusInternalServerError)
+		return
+	}
+	parsedURL, err := url.Parse(location)
+	if err != nil {
+		http.Error(w, "Failed to parse location URL: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	authRequestID := parsedURL.Query().Get("authRequest")
+	if authRequestID == "" {
+		http.Error(w, "authRequest parameter is required", http.StatusInternalServerError)
+		return
+	}
+
+	log.Printf("Authorization request ID: %s", authRequestID)
+
+	http.Redirect(w, r, location, http.StatusSeeOther)
 }
