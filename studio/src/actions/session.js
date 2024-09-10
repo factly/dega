@@ -5,18 +5,24 @@ export const getSession = () => {
   return (dispatch) => {
     dispatch(setLoading(true));
 
+    const sessionToken = localStorage.getItem('sessionToken');
+    if (!sessionToken) {
+      dispatch(setLoading(false));
+      return Promise.resolve({ success: false, noToken: true });
+    }
+
     return getUserInfo()
       .then((res) => {
         if (res.error) {
-          return { success: false };
+          return { success: false, noToken: false };
         }
         dispatch(addSession(res.data));
         localStorage.setItem('sessionToken', res.data.sessionToken);
-        return { success: true };
+        return { success: true, noToken: false };
       })
       .catch((error) => {
         console.error('Error in getSession:', error);
-        return { success: false };
+        return { success: false, noToken: false };
       })
       .finally(() => {
         dispatch(setLoading(false));

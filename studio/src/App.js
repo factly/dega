@@ -1,13 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'antd/dist/reset.css';
+import { extractV6RouteObject } from './config/routesConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
-import { extractV6RouteObject } from './config/routesConfig';
-import { addErrorNotification } from './actions/notifications';
 import { login } from './utils/zitadel';
+import { addErrorNotification } from './actions/notifications';
 import { getSession } from './actions/session';
 
 function App() {
@@ -42,27 +43,28 @@ function App() {
     checkAuthenticated();
   }, []);
 
+
   const checkAuthenticated = () => {
+    const currentURL = window.location.href;
+    if (currentURL.includes('/auth/login' || currentURL.includes('/auth/registration'))) {
+      return;
+    }
     dispatch(getSession()).then((res) => {
       if (!res.success) {
-        const currentPath = window.location.pathname;
-        if (currentPath !== '/auth/login' && currentPath !== '/auth/registration') {
-          const sessionToken = localStorage.getItem('sessionToken');
-          if (!sessionToken) {
-            window.localStorage.setItem('return_to', window.location.href);
-            login().then((d) => {
-              if (d.error) {
-                dispatch(
-                  addErrorNotification({
-                    message: d.error,
-                  }),
-                );
-                return;
-              }
-              window.location.href = d.authorizeURL;
-            });
-          }
-        }
+        if (res.noToken) {
+          window.localStorage.setItem('return_to', window.location.href);
+          login().then((d) => {
+            if (d.error) {
+              dispatch(
+                addErrorNotification({
+                  message: d.error,
+                }),
+              );
+              return;
+            }
+            window.location.href = d.authorizeURL;
+          });
+        } 
       }
     });
   };
@@ -74,7 +76,6 @@ function App() {
   const router = createBrowserRouter(
     extractV6RouteObject(formats, setReloadFlag, reloadFlag, session),
   );
-
   return (
     <div className="App">
       <RouterProvider router={router} />

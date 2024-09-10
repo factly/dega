@@ -14,6 +14,7 @@ const Login = () => {
   const [userId, setUserId] = useState('');
   const [totpCode, setTotpCode] = useState('');
   const [mfaCode, setMfaCode] = useState('');
+  const [authRequestId, setAuthRequestId] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,13 +31,10 @@ const Login = () => {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const authRequest = searchParams.get('authRequest');
-    const id = searchParams.get('id');
-
+    console.log('Auth Request ID:', authRequest);  
     if (authRequest) {
-      localStorage.setItem('authRequest', authRequest);
-    } else {
-      const fullSearchParams = location.search.substring(1);
-      handleProxyAuthRequest(fullSearchParams);
+      setAuthRequestId(authRequest);
+      getAuthRequestDetails(authRequest);
     }
   }, [location]);
 
@@ -52,20 +50,56 @@ const Login = () => {
     }
   }, [googleStep]);
 
-  const handleProxyAuthRequest = async (searchParams) => {
+  const getAuthRequestDetails = async (authRequestId) => {
     try {
-      const response = await fetch(`/test/authorize?${searchParams}`, {
+      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
         method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+          'Accept': 'application/json'
+        }
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok.');
+      if (response.ok) {
+        const data = await response.json();
+      } else {
+        console.error('Failed to get auth request details');
       }
-
-      // The proxy should handle the redirect, so we don't need to do anything here
     } catch (error) {
-      console.error('Error in handleProxyAuthRequest:', error);
-      setError('An error occurred while initializing the login process. Please try again.');
+      console.error('Error getting auth request details:', error);
+    }
+  };
+
+  const finalizeAuthRequest = async (sessionId, sessionToken) => {
+    console.log('Finalizing auth request.....................');
+    try {
+      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          session: {
+            sessionId: sessionId,
+            sessionToken: sessionToken
+          }
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.callbackUrl) {
+          window.location.href = data.callbackUrl;
+        } else {
+          console.error('No callback URL in the response');
+        }
+      } else {
+        console.error('Failed to finalize auth request');
+      }
+    } catch (error) {
+      console.error('Error finalizing auth request:', error);
     }
   };
 
@@ -181,9 +215,11 @@ const Login = () => {
     try {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
       const result = await checkTOTP(sessionId, sessionData.token, totpCode);
+      console.log('MFA Result:..................', result.sessionToken);
       if (result.sessionToken) {
         localStorage.setItem('sessionToken', result.sessionToken);
-        navigate('/');
+        await finalizeAuthRequest(sessionId, result.sessionToken);
+        // The redirect will be handled by finalizeAuthRequest
       } else {
         setError('Invalid MFA code. Please try again.');
       }

@@ -3,7 +3,6 @@ package service
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 
@@ -67,7 +66,10 @@ func RegisterRoutes() http.Handler {
 		"meilisearch": util.MeiliChecker,
 	})
 
-	r.Get("/test/authorize", GetAuthorizationProxyHandler(viper.GetString("ZITADEL_ISSUER"), viper.GetString("ZITADEL_CLIENT_ID")))
+	zitadelIssuer := "https://develop-xtjn2g.zitadel.cloud"
+	svcUserID := "274895832157825159"
+
+	r.Get("/test/authorize", GetAuthorizationProxyHandler(zitadelIssuer, svcUserID))
 
 	r.With(config.ZitadelInterceptor.RequireAuthorization(), util.CheckUser(config.ZitadelInterceptor)).Group(func(r chi.Router) {
 		r.Mount("/core", core.Router())
@@ -208,7 +210,6 @@ func handleAuthorizationResponse(w http.ResponseWriter, r *http.Request, resp *h
 		return
 	}
 
-	log.Printf("Authorization request ID: %s", authRequestID)
-
-	http.Redirect(w, r, location, http.StatusSeeOther)
+	redirectURL := fmt.Sprintf("http://localhost:3000/auth/login?authRequest=%s", authRequestID)
+	http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 }
