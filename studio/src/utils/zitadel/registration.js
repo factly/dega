@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import degaImage from '../../assets/dega.png';
-import { startTOTPRegistration, verifyTOTPRegistration, TOTPSetupComponent } from './mfa';
+import { TOTPSetupComponent } from './mfa';
+import { startTOTPRegistration, verifyTOTPRegistration } from '../../actions/mfa';
+import { registerUser, createSession, verifyPassword } from '../../actions/registration';
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
@@ -43,97 +45,40 @@ const RegistrationForm = () => {
     };
 
     try {
-      // First, attempt to register the user
-      const registerResponse = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/human`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization:
-            `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-        },
-        body: JSON.stringify(registrationData),
-      });
+      // Register the user
+      const registerData = await registerUser(registrationData);
+      setUserId(registerData.userId);
+      localStorage.setItem('userId', registerData.userId);
 
-      if (registerResponse.ok) {
-        const registerData = await registerResponse.json();
-        setUserId(registerData.userId);
-        localStorage.setItem('userId', registerData.userId);
+      // Create a session for the new user
+      const sessionData = await createSession(formData.email);
+      setSessionId(sessionData.sessionId);
+      setSessionToken(sessionData.sessionToken);
 
-        // Create a session for the new user
-        const sessionResponse = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions`, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization:
-              `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-          },
-          body: JSON.stringify({
-            checks: {
-              user: {
-                loginName: formData.email,
-              },
-            },
-          }),
-        });
+      // Verify the password
+      const verificationData = await verifyPassword(
+        sessionData.sessionId,
+        sessionData.sessionToken,
+        formData.password,
+      );
+      setSessionToken(verificationData.sessionToken);
 
-        if (sessionResponse.ok) {
-          const sessionData = await sessionResponse.json();
-          setSessionId(sessionData.sessionId);
-          setSessionToken(sessionData.sessionToken);
+      // Store user ID, session ID, and session token in local storage
+      localStorage.setItem('userId', registerData.userId);
+      localStorage.setItem('sessionId', sessionData.sessionId);
+      localStorage.setItem('sessionToken', verificationData.sessionToken);
 
-          // Verify the password
-          const passwordVerificationResponse = await fetch(
-            `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionData.sessionId}`,
-            {
-              method: 'PATCH',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization:
-                  `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-              },
-              body: JSON.stringify({
-                sessionToken: sessionData.sessionToken,
-                checks: {
-                  password: {
-                    password: formData.password,
-                  },
-                },
-              }),
-            },
-          );
-
-          if (passwordVerificationResponse.ok) {
-            const verificationData = await passwordVerificationResponse.json();
-            setSessionToken(verificationData.sessionToken);
-
-            // Store user ID, session ID, and session token in local storage
-            localStorage.setItem('userId', registerData.userId);
-            localStorage.setItem('sessionId', sessionData.sessionId);
-            localStorage.setItem('sessionToken', verificationData.sessionToken);
-
-            // Start TOTP registration
-            const totpData = await startTOTPRegistration(registerData.userId, verificationData.sessionToken);
-            setTotpUri(totpData.uri);
-            setTotpSecret(totpData.secret);
-            setStep('mfa-setup');
-          } else {
-            const errorData = await passwordVerificationResponse.json();
-            setError(errorData.message || 'Failed to verify password');
-          }
-        } else {
-          setError('Failed to create session');
-        }
-      } else {
-        const errorData = await registerResponse.json();
-        const errorMessage = errorData.message.split('(')[0].trim();
-        setError(errorMessage || 'Failed to register user');
-      }
+      // Start TOTP registration
+      const totpData = await startTOTPRegistration(
+        registerData.userId,
+        verificationData.sessionToken,
+      );
+      setTotpUri(totpData.uri);
+      setTotpSecret(totpData.secret);
+      setStep('mfa-setup');
     } catch (error) {
       console.error('Error:', error);
-      setError('An unexpected error occurred');
+      setError(error.message || 'An unexpected error occurred');
     }
   };
 

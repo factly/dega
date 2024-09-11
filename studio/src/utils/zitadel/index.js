@@ -38,9 +38,6 @@ export const login = async () => {
   });
 };
 
-
-
-
 export const getToken = (code) =>
   fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oauth/v2/token`, {
     method: 'POST',
@@ -51,7 +48,7 @@ export const getToken = (code) =>
       code,
       client_id: window.REACT_APP_ZITADEL_CLIENT_ID,
       redirect_uri: window.REACT_APP_ZITADEL_REDIRECT_URI,
-      code_verifier: localStorage.getItem('code_verifier'),
+      code_verifier: localStorage.getItem('code_verifier'),   
       grant_type: 'authorization_code',
     }).toString(),
     credentials: 'include',

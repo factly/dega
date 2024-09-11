@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { checkTOTP } from './mfa';
+import { checkTOTP } from '../../actions/mfa';
 import { useGoogleSignIn } from './idp';
 import degaImage from '../../assets/dega.png';
 import { TOTPSetupComponent } from './mfa';
+import {
+  createSession,
+  getUserDetails,
+  verifyPassword,
+  getAuthRequestDetails,
+  finalizeAuthRequest,
+} from '../../actions/login';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,14 +25,14 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { 
-    initiateGoogleSignIn, 
-    error: googleError, 
-    step: googleStep, 
-    totpUri, 
-    totpSecret, 
-    handleMfaSetup, 
-    handleMfaVerify 
+  const {
+    initiateGoogleSignIn,
+    error: googleError,
+    step: googleStep,
+    totpUri,
+    totpSecret,
+    handleMfaSetup,
+    handleMfaVerify,
   } = useGoogleSignIn();
 
   useEffect(() => {
@@ -49,119 +56,23 @@ const Login = () => {
     }
   }, [googleStep]);
 
-  const getAuthRequestDetails = async (authRequestId) => {
-    try {
-      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-          'Accept': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-      } else {
-        console.error('Failed to get auth request details');
-      }
-    } catch (error) {
-      console.error('Error getting auth request details:', error);
-    }
-  };
-
-  const finalizeAuthRequest = async (sessionId, sessionToken) => {
-    try {
-      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          session: {
-            sessionId: sessionId,
-            sessionToken: sessionToken
-          }
-        })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.callbackUrl) {
-          window.location.href = data.callbackUrl;
-        } else {
-          console.error('No callback URL in the response');
-        }
-      } else {
-        console.error('Failed to finalize auth request');
-      }
-    } catch (error) {
-      console.error('Error finalizing auth request:', error);
-    }
-  };
-
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      const createSessionResponse = await fetch(
-        `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-          },
-          body: JSON.stringify({
-            checks: {
-              user: {
-                loginName: email,
-              },
-            },
-          }),
-        },
-      );
+      const sessionData = await createSession(email);
+      localStorage.setItem('sessionData', JSON.stringify(sessionData));
+      setSessionId(sessionData.sessionId);
+      localStorage.setItem('sessionToken', sessionData.sessionToken);
 
-      if (createSessionResponse.ok) {
-        const sessionData = await createSessionResponse.json();
-        localStorage.setItem('sessionData', JSON.stringify(sessionData));
-        setSessionId(sessionData.sessionId);
-        localStorage.setItem('sessionToken', sessionData.sessionToken);
+      const userDetails = await getUserDetails(sessionData.sessionId);
+      setUserId(userDetails.session.factors.user.id);
+      localStorage.setItem('userId', userDetails.session.factors.user.id);
 
-        // Fetch user details using the session ID
-        const userDetailsResponse = await fetch(
-          `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionData.sessionId}`,
-          {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-            },
-          },
-        );
-
-        if (userDetailsResponse.ok) {
-          const userDetails = await userDetailsResponse.json();
-          setUserId(userDetails.session.factors.user.id);
-          localStorage.setItem('userId', userDetails.session.factors.user.id);
-        } else {
-          console.error('Failed to fetch user details');
-        }
-
-        setStep('password');
-      } else {
-        const errorData = await createSessionResponse.json();
-        const errorMessage = errorData.message
-          ? errorData.message.split('(')[0].trim()
-          : 'Failed to create session';
-        console.error('Failed to create session:', errorMessage);
-        setError(errorMessage || 'Failed to create session. Please try again.');
-      }
+      setStep('password');
     } catch (error) {
       console.error('Error:', error);
-      setError('An unexpected error occurred. Please try again later.');
+      setError(error.message || 'An unexpected error occurred. Please try again later.');
     }
   };
 
@@ -171,38 +82,12 @@ const Login = () => {
 
     try {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
-
-      const response = await fetch(
-        `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`,
-        {
-          method: 'PATCH',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-          },
-          body: JSON.stringify({
-            sessionToken: sessionData.token,
-            checks: {
-              password: {
-                password: password,
-              },
-            },
-          }),
-        },
-      );
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('sessionToken', data.sessionToken);
-        setStep('mfa');
-      } else {
-        const errorData = await response.json();
-        const errorMessage = errorData.message.split('(')[0].trim();
-        setError(errorMessage || 'Invalid password');
-      }
+      const result = await verifyPassword(sessionId, sessionData.token, password);
+      localStorage.setItem('sessionToken', result.sessionToken);
+      setStep('mfa');
     } catch (error) {
       console.error('Error:', error);
-      setError('An unexpected error occurred');
+      setError(error.message || 'An unexpected error occurred');
     }
   };
 
@@ -215,8 +100,12 @@ const Login = () => {
       const result = await checkTOTP(sessionId, sessionData.token, totpCode);
       if (result.sessionToken) {
         localStorage.setItem('sessionToken', result.sessionToken);
-        await finalizeAuthRequest(sessionId, result.sessionToken);
-        // The redirect will be handled by finalizeAuthRequest
+        const finalizeResult = await finalizeAuthRequest(authRequestId, sessionId, result.sessionToken);
+        if (finalizeResult.callbackUrl) {
+          window.location.href = finalizeResult.callbackUrl;
+        } else {
+          console.error('No callback URL in the response');
+        }
       } else {
         setError('Invalid MFA code. Please try again.');
       }
@@ -232,7 +121,6 @@ const Login = () => {
       setError(result.error);
     }
   };
-
 
   return (
     <div
@@ -479,14 +367,16 @@ const Login = () => {
             </form>
           )}
           {step === 'mfa-setup' && (
-            <TOTPSetupComponent 
-              uri={totpUri} 
-              secret={totpSecret} 
-              onVerify={handleMfaSetup} 
-            />
+            <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />
           )}
           {step === 'mfa-verify' && (
-            <form onSubmit={(e) => { e.preventDefault(); handleMfaVerify(mfaCode); }} style={{ marginBottom: '16px' }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleMfaVerify(mfaCode);
+              }}
+              style={{ marginBottom: '16px' }}
+            >
               <div style={{ marginBottom: '16px' }}>
                 <label
                   htmlFor="mfaCode"
