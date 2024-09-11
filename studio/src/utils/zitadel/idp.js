@@ -345,8 +345,8 @@ export const useGoogleSignIn = () => {
         body: JSON.stringify({
           idpId: `${window.REACT_APP_ZITADEL_IDP_ID}`,
           urls: {
-            successUrl: 'http://localhost:3000/auth/login',
-            failureUrl: 'http://localhost:3000',
+            successUrl: `${window.PUBLIC_URL}/auth/login`,
+            failureUrl: `${window.PUBLIC_URL}`,
           },
         }),
       });

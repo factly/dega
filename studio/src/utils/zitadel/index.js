@@ -17,7 +17,7 @@ export const login = async () => {
     localStorage.setItem('auth_state', state);
 
     const authorizeURL =
-      `http://localhost:7789/test/authorize?` +
+      `${window.DEGA_PUBLIC_URL}/test/authorize?` +
       `client_id=${encodeURIComponent(window.REACT_APP_ZITADEL_CLIENT_ID)}` +
       `&response_type=code` +
       `&response_mode=query` +

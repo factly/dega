@@ -31,7 +31,6 @@ const Login = () => {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const authRequest = searchParams.get('authRequest');
-    console.log('Auth Request ID:', authRequest);  
     if (authRequest) {
       setAuthRequestId(authRequest);
       getAuthRequestDetails(authRequest);
@@ -71,7 +70,6 @@ const Login = () => {
   };
 
   const finalizeAuthRequest = async (sessionId, sessionToken) => {
-    console.log('Finalizing auth request.....................');
     try {
       const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
         method: 'POST',
@@ -215,7 +213,6 @@ const Login = () => {
     try {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
       const result = await checkTOTP(sessionId, sessionData.token, totpCode);
-      console.log('MFA Result:..................', result.sessionToken);
       if (result.sessionToken) {
         localStorage.setItem('sessionToken', result.sessionToken);
         await finalizeAuthRequest(sessionId, result.sessionToken);
