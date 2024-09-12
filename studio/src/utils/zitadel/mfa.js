@@ -70,7 +70,7 @@ export const TOTPSetupComponent = ({ uri, secret, onVerify }) => {
           style={{
             width: '100%',
             padding: '10px',
-            backgroundColor: '#D53F8C',
+            backgroundColor: '#1E1E1E',
             color: 'white',
             fontWeight: 'bold',
             border: 'none',

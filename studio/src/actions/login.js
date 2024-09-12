@@ -17,7 +17,8 @@ export const createSession = async (email) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to create session');
+    const errorMessage = errorData.message.split('(')[0].trim();
+    throw new Error(errorMessage || 'Failed to create session');
   }
 
   return response.json();
@@ -59,7 +60,8 @@ export const verifyPassword = async (sessionId, sessionToken, password) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Invalid password');
+    const errorMessage = errorData.message.split('(')[0].trim();
+    throw new Error(errorMessage || 'Invalid password');
   }
 
   return response.json();

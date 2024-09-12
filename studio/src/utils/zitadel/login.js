@@ -40,6 +40,7 @@ const Login = () => {
     const authRequest = searchParams.get('authRequest');
     if (authRequest) {
       setAuthRequestId(authRequest);
+      localStorage.setItem('authRequestId', authRequest);
       getAuthRequestDetails(authRequest);
     }
   }, [location]);
@@ -114,6 +115,40 @@ const Login = () => {
       setError('An unexpected error occurred during MFA verification');
     }
   };
+
+
+  const handleSkipMfa = async () => {
+    try {
+      const sessionToken = localStorage.getItem('sessionToken');
+      if (!sessionToken) {
+        throw new Error('No session token found');
+      }
+      await finalizeLogin(sessionToken);
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An unexpected error occurred while skipping MFA');
+    }
+  };
+
+  const finalizeLogin = async (sessionToken) => {
+    try {
+      if (!sessionToken) {
+        throw new Error('No session token provided');
+      }
+      const finalizeResult = await finalizeAuthRequest(authRequestId, sessionId, sessionToken);
+      if (finalizeResult.callbackUrl) {
+        window.location.href = finalizeResult.callbackUrl;
+      } else {
+        console.error('No callback URL in the response');
+        setError('Login successful, but redirect failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError(`An unexpected error occurred during login finalization: ${error.message}`);
+    }
+  };
+
+
 
   const handleGoogleSignIn = async () => {
     const result = await initiateGoogleSignIn();
@@ -317,54 +352,75 @@ const Login = () => {
             </form>
           )}
           {step === 'mfa' && (
-            <form onSubmit={handleMfaSubmit} style={{ marginBottom: '16px' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor="totpCode"
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Enter MFA Code
-                </label>
-                <input
-                  type="text"
-                  id="totpCode"
-                  value={totpCode}
-                  onChange={(e) => setTotpCode(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
+            <>
+              <form onSubmit={handleMfaSubmit} style={{ marginBottom: '16px' }}>
+                <div style={{ marginBottom: '16px' }}>
+                  <label
+                    htmlFor="totpCode"
+                    style={{
+                      display: 'block',
+                      color: '#333',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    Enter MFA Code
+                  </label>
+                  <input
+                    type="text"
+                    id="totpCode"
+                    value={totpCode}
+                    onChange={(e) => setTotpCode(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      border: '1px solid #ccc',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                    }}
+                    required
+                  />
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#1E1E1E',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Verify MFA
+                  </button>
+                </div>
+              </form>
               <div>
                 <button
-                  type="submit"
+                  onClick={handleSkipMfa}
                   style={{
                     width: '100%',
                     padding: '10px',
-                    backgroundColor: '#1E1E1E',
+                    backgroundColor: '#6B7280',
                     color: 'white',
                     fontWeight: 'bold',
                     border: 'none',
                     borderRadius: '4px',
                     fontSize: '16px',
                     cursor: 'pointer',
+                    marginTop: '8px',
                   }}
                 >
-                  Verify MFA
+                  Skip Two-Factor Authentication
                 </button>
               </div>
-            </form>
+            </>
           )}
           {step === 'mfa-setup' && (
             <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />
@@ -399,22 +455,6 @@ const Login = () => {
                     width: '100%',
                     padding: '8px 12px',
                     border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
                     borderRadius: '4px',
                     fontSize: '16px',
                   }}

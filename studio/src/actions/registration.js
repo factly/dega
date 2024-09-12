@@ -12,7 +12,8 @@ export const registerUser = async (registrationData) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to register user');
+      const errorMessage = errorData.message.split('(')[0].trim();
+      throw new Error(errorMessage || 'Failed to register user');
     }
 
     return await response.json();
@@ -75,7 +76,8 @@ export const verifyPassword = async (sessionId, sessionToken, password) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to verify password');
+      const errorMessage = errorData.message.split('(')[0].trim();
+      throw new Error(errorMessage || 'Failed to verify password');
     }
 
     return await response.json();
@@ -83,4 +85,43 @@ export const verifyPassword = async (sessionId, sessionToken, password) => {
     console.error('Error verifying password:', error);
     throw error;
   }
+};
+
+export const getAuthRequestDetails = async (authRequestId) => {
+  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      Accept: 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to get auth request details');
+  }
+
+  return response.json();
+};
+
+export const finalizeAuthRequest = async (authRequestId, sessionId, sessionToken) => {
+  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      session: {
+        sessionId: sessionId,
+        sessionToken: sessionToken,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to finalize auth request');
+  }
+
+  return response.json();
 };

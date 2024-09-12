@@ -10,13 +10,6 @@ function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) 
     return state.spaces;
   });
 
-  const isAuthenticated = !!localStorage.getItem('token');
-    
-  if (!isAuthenticated) {
-    window.localStorage.setItem('return_to', window.location.href);
-    window.location.href = '/login/email';
-    return null;
-  }
   const actions = getUserPermission({ ...permission, spaces });
   const { loading, orgs, selected } = spaces;
 

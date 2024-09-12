@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import degaImage from '../../assets/dega.png';
 import { TOTPSetupComponent } from './mfa';
 import { startTOTPRegistration, verifyTOTPRegistration } from '../../actions/mfa';
-import { registerUser, createSession, verifyPassword } from '../../actions/registration';
+import {
+  registerUser,
+  createSession,
+  verifyPassword,
+  getAuthRequestDetails,
+  finalizeAuthRequest,
+} from '../../actions/registration';
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -20,6 +27,16 @@ const RegistrationForm = () => {
   const [sessionToken, setSessionToken] = useState('');
   const [totpUri, setTotpUri] = useState('');
   const [totpSecret, setTotpSecret] = useState('');
+  const [authRequestId, setAuthRequestId] = useState('');
+
+
+  useEffect(() => {
+    const storedAuthRequestId = localStorage.getItem('authRequestId');
+    if (storedAuthRequestId) {
+      setAuthRequestId(storedAuthRequestId);
+    }
+  }, []);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -82,16 +99,39 @@ const RegistrationForm = () => {
     }
   };
 
+  const handleSkipMfa = () => {
+    completeRegistration();
+  };
+
+  const completeRegistration = async () => {
+    try {
+      if (authRequestId) {
+        const finalizeResult = await finalizeAuthRequest(authRequestId, sessionId, sessionToken);
+        if (finalizeResult.callbackUrl) {
+          window.location.href = finalizeResult.callbackUrl;
+        } else {
+          console.error('No callback URL in the response');
+          setError('Registration successful, but redirect failed. Please try again.');
+        }
+      } else {
+        console.log('Registration completed successfully');
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Error finalizing registration:', error);
+      setError('An unexpected error occurred during registration finalization');
+    }
+  };
+
   const handleMfaVerify = async (code) => {
     try {
       await verifyTOTPRegistration(userId, sessionToken, code);
-      navigate('/');
+      completeRegistration();
     } catch (error) {
       console.error('Error verifying MFA:', error);
       setError('Failed to verify MFA. Please try again.');
     }
   };
-
   return (
     <div
       style={{
@@ -232,13 +272,28 @@ const RegistrationForm = () => {
               </div>
             </form>
           ) : (
-            <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaVerify} />
+            <>
+              <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaVerify} />
+              <div style={{ marginTop: '16px' }}>
+                <button
+                  onClick={handleSkipMfa}
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    backgroundColor: '#6B7280',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Skip Two-Factor Authentication
+                </button>
+              </div>
+            </>
           )}
-          <div style={{ textAlign: 'center' }}>
-            <Link to="/login/forgotpassword" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
-              Forgot Password?
-            </Link>
-          </div>
         </div>
       </div>
     </div>

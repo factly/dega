@@ -24,31 +24,28 @@ const AccountMenu = () => {
     const sessionId = localStorage.getItem('sessionId');
     const sessionToken = localStorage.getItem('sessionToken');
 
-    if (!sessionId || !sessionToken) {
-      console.error('Session ID or token not found');
-      return;
-    }
+    if (sessionId && sessionToken) {
+      try {
+        const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`,
+          },
+          body: JSON.stringify({
+            sessionToken: sessionToken,
+          }),
+        });
 
-    try {
-      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`,
-        },
-        body: JSON.stringify({
-          sessionToken: sessionToken,
-        }),
-      });
-
-      if (response.ok) {
-        console.log('Logout successful');
-      } else {
-        console.error('Logout failed:', await response.text());
+        if (response.ok) {
+          console.log('Logout successful');
+        } else {
+          console.error('Logout failed:', await response.text());
+        }
+      } catch (error) {
+        console.error('Error during logout:', error);
       }
-    } catch (error) {
-      console.error('Error during logout:', error);
     }
 
     // Clear local storage and reload the page
