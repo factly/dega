@@ -1,3 +1,5 @@
+const publicUrl = `${window.PUBLIC_URL}`
+
 export const getProviderInformation = async (intentId, token) => {
   const response = await fetch(
     `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/idp_intents/${intentId}`,

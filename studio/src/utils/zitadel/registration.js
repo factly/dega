@@ -10,6 +10,7 @@ import {
   getAuthRequestDetails,
   finalizeAuthRequest,
 } from '../../actions/registration';
+import { useGoogleSignIn } from './idp';
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
@@ -28,15 +29,41 @@ const RegistrationForm = () => {
   const [totpUri, setTotpUri] = useState('');
   const [totpSecret, setTotpSecret] = useState('');
   const [authRequestId, setAuthRequestId] = useState('');
+  const [mfaCode, setMfaCode] = useState('');
 
+  const {
+    initiateGoogleSignIn,
+    error: googleError,
+    step: googleStep,
+    totpUri: googleTotpUri,
+    totpSecret: googleTotpSecret,
+    handleGoogleSkipMfa,
+    handleMfaSetup: handleGoogleMfaSetup,
+    handleMfaVerify: handleGoogleMfaVerify,
+  } = useGoogleSignIn();
 
   useEffect(() => {
-    const storedAuthRequestId = localStorage.getItem('authRequestId');
-    if (storedAuthRequestId) {
-      setAuthRequestId(storedAuthRequestId);
+    const searchParams = new URLSearchParams(location.search);
+    const authRequest = searchParams.get('authRequest');
+    if (authRequest) {
+      setAuthRequestId(authRequest);
+      localStorage.setItem('authRequestId', authRequest);
     }
-  }, []);
+  }, [location]);
 
+  useEffect(() => {
+    if (googleError) {
+      setError(googleError);
+    }
+  }, [googleError]);
+
+  useEffect(() => {
+    if (googleStep === 'mfa-setup' || googleStep === 'mfa-verify') {
+      setStep(googleStep);
+      setTotpUri(googleTotpUri);
+      setTotpSecret(googleTotpSecret);
+    }
+  }, [googleStep, googleTotpUri, googleTotpSecret]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,17 +89,14 @@ const RegistrationForm = () => {
     };
 
     try {
-      // Register the user
       const registerData = await registerUser(registrationData);
       setUserId(registerData.userId);
       localStorage.setItem('userId', registerData.userId);
 
-      // Create a session for the new user
       const sessionData = await createSession(formData.email);
       setSessionId(sessionData.sessionId);
       setSessionToken(sessionData.sessionToken);
 
-      // Verify the password
       const verificationData = await verifyPassword(
         sessionData.sessionId,
         sessionData.sessionToken,
@@ -80,12 +104,9 @@ const RegistrationForm = () => {
       );
       setSessionToken(verificationData.sessionToken);
 
-      // Store user ID, session ID, and session token in local storage
-      localStorage.setItem('userId', registerData.userId);
       localStorage.setItem('sessionId', sessionData.sessionId);
       localStorage.setItem('sessionToken', verificationData.sessionToken);
 
-      // Start TOTP registration
       const totpData = await startTOTPRegistration(
         registerData.userId,
         verificationData.sessionToken,
@@ -125,113 +146,47 @@ const RegistrationForm = () => {
 
   const handleMfaVerify = async (code) => {
     try {
-      await verifyTOTPRegistration(userId, sessionToken, code);
+      if (step === 'mfa-verify') {
+        await handleGoogleMfaVerify(code);
+      } else {
+        await verifyTOTPRegistration(userId, sessionToken, code);
+      }
       completeRegistration();
     } catch (error) {
       console.error('Error verifying MFA:', error);
       setError('Failed to verify MFA. Please try again.');
     }
   };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await initiateGoogleSignIn();
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred during Google Sign-In. Please try again.');
+    }
+  };
+
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '100vh',
-        overflow: 'hidden',
-        display: 'flex',
-      }}
-    >
-      <div
-        style={{
-          width: '50%',
-          height: '100%',
-          backgroundColor: '#f0f0f0',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <img
-          src={degaImage}
-          alt="DEGA"
-          style={{
-            width: '40%',
-            height: '40%',
-            objectFit: 'contain',
-            position: 'absolute',
-            top: '35%',
-            transform: 'translateY(-50%)',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '5%',
-            left: '45%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <h1
-            style={{
-              fontSize: '38px',
-              fontWeight: 'bold',
-              color: '#333',
-            }}
-          >
-            DEGA
-          </h1>
-        </div>
+    <div style={{ display: 'flex', height: '100vh' }}>
+      <div style={{ width: '50%', backgroundColor: '#f0f0f0', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <img src={degaImage} alt="DEGA" style={{ width: '40%', height: '40%', objectFit: 'contain', position: 'absolute', top: '35%', transform: 'translateY(-50%)' }} />
+        <h1 style={{ position: 'absolute', bottom: '5%', fontSize: '38px', fontWeight: 'bold', color: '#333' }}>DEGA</h1>
       </div>
-      <div
-        style={{
-          width: '50%',
-          height: '100%',
-          backgroundColor: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <div
-          style={{
-            width: '100%',
-            maxWidth: '400px',
-            padding: '0 32px',
-          }}
-        >
-          <h2
-            style={{
-              fontSize: '24px',
-              fontWeight: 'bold',
-              marginBottom: '24px',
-              textAlign: 'center',
-              color: '#333',
-            }}
-          >
-            {step === 'registration' ? 'Registration' : 'MFA Setup'}
+
+      <div style={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: '100%', maxWidth: '400px', padding: '0 32px' }}>
+          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '24px', textAlign: 'center', color: '#333' }}>
+            {step === 'registration' ? 'Registration' : step === 'mfa-setup' ? 'Set up Two-Factor Authentication' : 'Verify Two-Factor Authentication'}
           </h2>
-          {error && (
-            <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
-          )}
-          {step === 'registration' ? (
-            <form onSubmit={handleSubmit} style={{ marginBottom: '16px' }}>
+
+          {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>}
+
+          {step === 'registration' && (
+            <form onSubmit={handleSubmit}>
               {['firstName', 'lastName', 'email', 'password'].map((field) => (
                 <div key={field} style={{ marginBottom: '16px' }}>
-                  <label
-                    htmlFor={field}
-                    style={{
-                      display: 'block',
-                      color: '#333',
-                      fontSize: '14px',
-                      fontWeight: 'bold',
-                      marginBottom: '8px',
-                    }}
-                  >
+                  <label htmlFor={field} style={{ display: 'block', color: '#333', fontSize: '14px', fontWeight: 'bold', marginBottom: '8px' }}>
                     {field.charAt(0).toUpperCase() + field.slice(1)}
                   </label>
                   <input
@@ -240,60 +195,50 @@ const RegistrationForm = () => {
                     name={field}
                     value={formData[field]}
                     onChange={handleChange}
-                    style={{
-                      width: '100%',
-                      padding: '8px 12px',
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      fontSize: '16px',
-                    }}
+                    style={{ width: '100%', padding: '8px 12px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '16px' }}
                     required
                   />
                 </div>
               ))}
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                    marginBottom: '16px',
-                  }}
-                >
-                  Sign Up
-                </button>
-              </div>
+              <button type="submit" style={{ width: '100%', padding: '10px', backgroundColor: '#1E1E1E', color: 'white', fontWeight: 'bold', border: 'none', borderRadius: '4px', fontSize: '16px', cursor: 'pointer', marginBottom: '16px' }}>
+                Sign Up
+              </button>
             </form>
-          ) : (
+          )}
+
+          {(step === 'mfa-setup' || step === 'mfa-verify') && (
             <>
               <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaVerify} />
               <div style={{ marginTop: '16px' }}>
-                <button
-                  onClick={handleSkipMfa}
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#6B7280',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                  }}
-                >
+                <button onClick={handleSkipMfa} style={{ width: '100%', padding: '10px', backgroundColor: '#6B7280', color: 'white', fontWeight: 'bold', border: 'none', borderRadius: '4px', fontSize: '16px', cursor: 'pointer' }}>
                   Skip Two-Factor Authentication
                 </button>
               </div>
             </>
           )}
+
+          {step === 'registration' && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '16px 0' }}>
+                <div style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }} />
+                <span style={{ margin: '0 10px', color: '#666', fontSize: '14px' }}>or</span>
+                <div style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }} />
+              </div>
+              <button onClick={handleGoogleSignIn} style={{ width: '100%', padding: '10px', backgroundColor: '#4285F4', color: 'white', fontWeight: 'bold', border: 'none', borderRadius: '4px', fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style={{ width: '18px', height: '18px', marginRight: '10px' }} />
+                Sign up with Google
+              </button>
+            </>
+          )}
+
+          <div style={{ textAlign: 'center', marginTop: '16px' }}>
+            <span>
+              Already have an account?{' '}
+              <Link to="/auth/login" style={{ color: '#1E1E1E', textDecoration: 'none' }} onMouseEnter={(e) => { e.target.style.color = 'blue'; e.target.style.textDecoration = 'underline'; }} onMouseLeave={(e) => { e.target.style.color = '#1E1E1E'; e.target.style.textDecoration = 'none'; }}>
+                Log in
+              </Link>
+            </span>
+          </div>
         </div>
       </div>
     </div>

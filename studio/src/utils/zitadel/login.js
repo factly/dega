@@ -11,6 +11,7 @@ import {
   getAuthRequestDetails,
   finalizeAuthRequest,
 } from '../../actions/login';
+import { requestPasswordReset, resetPassword } from '../../actions/forgotPassword';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,6 +23,8 @@ const Login = () => {
   const [totpCode, setTotpCode] = useState('');
   const [mfaCode, setMfaCode] = useState('');
   const [authRequestId, setAuthRequestId] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,6 +36,7 @@ const Login = () => {
     totpSecret,
     handleMfaSetup,
     handleMfaVerify,
+    handleGoogleSkipMfa,
   } = useGoogleSignIn();
 
   useEffect(() => {
@@ -40,7 +44,6 @@ const Login = () => {
     const authRequest = searchParams.get('authRequest');
     if (authRequest) {
       setAuthRequestId(authRequest);
-      localStorage.setItem('authRequestId', authRequest);
       getAuthRequestDetails(authRequest);
     }
   }, [location]);
@@ -69,6 +72,7 @@ const Login = () => {
       const userDetails = await getUserDetails(sessionData.sessionId);
       setUserId(userDetails.session.factors.user.id);
       localStorage.setItem('userId', userDetails.session.factors.user.id);
+      localStorage.setItem('userEmail', email);
 
       setStep('password');
     } catch (error) {
@@ -101,7 +105,11 @@ const Login = () => {
       const result = await checkTOTP(sessionId, sessionData.token, totpCode);
       if (result.sessionToken) {
         localStorage.setItem('sessionToken', result.sessionToken);
-        const finalizeResult = await finalizeAuthRequest(authRequestId, sessionId, result.sessionToken);
+        const finalizeResult = await finalizeAuthRequest(
+          authRequestId,
+          sessionId,
+          result.sessionToken,
+        );
         if (finalizeResult.callbackUrl) {
           window.location.href = finalizeResult.callbackUrl;
         } else {
@@ -115,7 +123,6 @@ const Login = () => {
       setError('An unexpected error occurred during MFA verification');
     }
   };
-
 
   const handleSkipMfa = async () => {
     try {
@@ -148,14 +155,77 @@ const Login = () => {
     }
   };
 
-
-
   const handleGoogleSignIn = async () => {
     const result = await initiateGoogleSignIn();
     if (result && result.error) {
       setError(result.error);
     }
   };
+
+  const handleRequestReset = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      await requestPasswordReset(userId);
+      setStep('reset-verify');
+    } catch (error) {
+      setError(`An error occurred: ${error.message}`);
+    }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      await resetPassword(userId, newPassword, verificationCode);
+      setStep('email');
+      setError('Password reset successful. Please log in with your new password.');
+    } catch (error) {
+      setError(`An error occurred: ${error.message}`);
+    }
+  };
+
+  const resetLoginProcess = () => {
+    setEmail('');
+    setPassword('');
+    setError('');
+    setStep('email');
+    setSessionId('');
+    setUserId('');
+    setTotpCode('');
+    setMfaCode('');
+    setVerificationCode('');
+    setNewPassword('');
+    localStorage.removeItem('sessionData');
+    localStorage.removeItem('sessionToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userEmail');
+  };
+
+  const backToLoginButton = (
+    <button
+      onClick={resetLoginProcess}
+      style={{
+        background: 'none',
+        border: 'none',
+        color: '#1E1E1E',
+        textDecoration: 'none',
+        cursor: 'pointer',
+        fontSize: '14px',
+        marginTop: '16px',
+      }}
+      onMouseEnter={(e) => {
+        e.target.style.color = 'blue';
+        e.target.style.textDecoration = 'underline';
+      }}
+      onMouseLeave={(e) => {
+        e.target.style.color = '#1E1E1E';
+        e.target.style.textDecoration = 'none';
+      }}
+    >
+      Back to Login
+    </button>
+  );
 
   return (
     <div
@@ -246,7 +316,13 @@ const Login = () => {
               ? 'MFA Verification'
               : step === 'mfa-setup'
               ? 'Set up Two-Factor Authentication'
-              : 'Verify Two-Factor Authentication'}
+              : step === 'mfa-verify'
+              ? 'Verify Two-Factor Authentication'
+              : step === 'reset-request'
+              ? 'Reset Password'
+              : step === 'reset-verify'
+              ? 'Enter Verification Code'
+              : 'Login'}
           </h2>
           {error && (
             <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
@@ -302,54 +378,57 @@ const Login = () => {
             </form>
           )}
           {step === 'password' && (
-            <form onSubmit={handlePasswordSubmit} style={{ marginBottom: '16px' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor="password"
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Log In
-                </button>
-              </div>
-            </form>
+            <>
+              <form onSubmit={handlePasswordSubmit} style={{ marginBottom: '16px' }}>
+                <div style={{ marginBottom: '16px' }}>
+                  <label
+                    htmlFor="password"
+                    style={{
+                      display: 'block',
+                      color: '#333',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      border: '1px solid #ccc',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                    }}
+                    required
+                  />
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#1E1E1E',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Log In
+                  </button>
+                </div>
+              </form>
+              {backToLoginButton}
+            </>
           )}
           {step === 'mfa' && (
             <>
@@ -400,7 +479,6 @@ const Login = () => {
                     Verify MFA
                   </button>
                 </div>
-              </form>
               <div>
                 <button
                   onClick={handleSkipMfa}
@@ -420,69 +498,219 @@ const Login = () => {
                   Skip Two-Factor Authentication
                 </button>
               </div>
+              </form>
+              {backToLoginButton}
             </>
           )}
           {step === 'mfa-setup' && (
-            <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />
+            <>
+              <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />
+              {backToLoginButton}
+            </>
           )}
           {step === 'mfa-verify' && (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleMfaVerify(mfaCode);
-              }}
-              style={{ marginBottom: '16px' }}
-            >
-              <div style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor="mfaCode"
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Enter MFA Code
-                </label>
-                <input
-                  type="text"
-                  id="mfaCode"
-                  value={mfaCode}
-                  onChange={(e) => setMfaCode(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div>
+            <>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleMfaVerify(mfaCode);
+                }}
+                style={{ marginBottom: '16px' }}
+              >
+                <div style={{ marginBottom: '16px' }}>
+                  <label
+                    htmlFor="mfaCode"
+                    style={{
+                      display: 'block',
+                      color: '#333',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    Enter MFA Code
+                  </label>
+                  <input
+                    type="text"
+                    id="mfaCode"
+                    value={mfaCode}
+                    onChange={(e) => setMfaCode(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      border: '1px solid #ccc',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                    }}
+                    required
+                  />
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#1E1E1E',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Verify MFA
+                  </button>
+                </div>
+                <div>
                 <button
-                  type="submit"
+                  onClick={handleGoogleSkipMfa}
                   style={{
                     width: '100%',
                     padding: '10px',
-                    backgroundColor: '#1E1E1E',
+                    backgroundColor: '#6B7280',
                     color: 'white',
                     fontWeight: 'bold',
                     border: 'none',
                     borderRadius: '4px',
                     fontSize: '16px',
                     cursor: 'pointer',
+                    marginTop: '8px',
                   }}
                 >
-                  Verify MFA
+                  Skip Two-Factor Authentication
                 </button>
               </div>
-            </form>
+              </form>
+              {backToLoginButton}
+            </>
+          )}
+          {step === 'reset-request' && (
+            <>
+              <form onSubmit={handleRequestReset} style={{ marginBottom: '16px' }}>
+                <div style={{ marginBottom: '16px' }}>
+                  <p style={{ color: '#333', fontSize: '14px', marginBottom: '8px' }}>
+                    A verification code will be sent to: <strong>{email}</strong>
+                  </p>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#1E1E1E',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Send Verification Code
+                  </button>
+                </div>
+              </form>
+              {backToLoginButton}
+            </>
+          )}
+          {step === 'reset-verify' && (
+            <>
+              <form onSubmit={handleResetPassword} style={{ marginBottom: '16px' }}>
+                <div style={{ marginBottom: '16px' }}>
+                  <label
+                    htmlFor="verificationCode"
+                    style={{
+                      display: 'block',
+                      color: '#333',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    Verification Code
+                  </label>
+                  <input
+                    type="text"
+                    id="verificationCode"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      border: '1px solid #ccc',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                    }}
+                    required
+                  />
+                </div>
+                <div style={{ marginBottom: '16px' }}>
+                  <label
+                    htmlFor="newPassword"
+                    style={{
+                      display: 'block',
+                      color: '#333',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    New Password
+                  </label>
+                  <input
+                    type="password"
+                    id="newPassword"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      border: '1px solid #ccc',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                    }}
+                    required
+                  />
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#1E1E1E',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Reset Password
+                  </button>
+                </div>
+              </form>
+              {backToLoginButton}
+            </>
           )}
           {step === 'email' && (
             <div style={{ marginBottom: '16px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '16px 0',
+                }}
+              >
+                <div style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }} />
+                <span style={{ margin: '0 10px', color: '#666', fontSize: '14px' }}>or</span>
+                <div style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }} />
+              </div>
               <button
                 onClick={handleGoogleSignIn}
                 style={{
@@ -510,20 +738,55 @@ const Login = () => {
             </div>
           )}
           <div style={{ textAlign: 'center' }}>
-            {step === 'email' ? (
-              <Link to="/auth/registration" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
-                Don't have an account? Sign up
-              </Link>
-            ) : step === 'password' ? (
-              <Link to="/login/forgotpassword" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
-                Forgot Password?
-              </Link>
-            ) : null}
+            {step === 'email' && (
+              <span>
+                Don't have an account?{' '}
+                <Link
+                  to={`/auth/registration?authRequest=${authRequestId}`}
+                  style={{
+                    color: '#1E1E1E',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.color = 'blue';
+                    e.target.style.textDecoration = 'underline';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.color = '#1E1E1E';
+                    e.target.style.textDecoration = 'none';
+                  }}
+                >
+                  Sign up
+                </Link>
+              </span>
+            )}
+            {(step === 'email' || step === 'password') && (
+              <div style={{ marginTop: '10px' }}>
+                <span
+                  onClick={() => setStep('reset-request')}
+                  style={{
+                    color: '#1E1E1E',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.color = 'blue';
+                    e.target.style.textDecoration = 'underline';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.color = '#1E1E1E';
+                    e.target.style.textDecoration = 'none';
+                  }}
+                >
+                  Forgot Password?
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 };
-
 export default Login;
+

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button, Row } from 'antd';
+import { Layout, Card, notification, FloatButton, ConfigProvider, Result, Button, Row } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -336,7 +336,7 @@ function BasicLayout(props) {
               {children}
             </Card>
           </Content>
-          <BackTop style={{ right: 50 }} />
+          <FloatButton.BackTop style={{ right: 50 }} />
         </Layout>
       </Layout>
     </ConfigProvider>
