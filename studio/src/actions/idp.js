@@ -177,3 +177,45 @@ export const initiateGoogleSignIn = async (publicUrl) => {
 
   return response.json();
 };
+
+export const getAuthRequestDetails = async (authRequestId) => {
+  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      Accept: 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to get auth request details');
+  }
+
+  return response.json();
+};
+
+export const finalizeAuthRequest = async (authRequestId, sessionId, sessionToken) => {
+  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      session: {
+        sessionId: sessionId,
+        sessionToken: sessionToken,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error('Error finalizing auth request:', errorData);
+    throw new Error('Failed to finalize auth request: ' + (errorData.message || response.statusText));
+  }
+  
+  return response.json();
+};
+

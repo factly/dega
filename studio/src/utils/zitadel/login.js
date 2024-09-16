@@ -36,7 +36,7 @@ const Login = () => {
     totpSecret,
     handleMfaSetup,
     handleMfaVerify,
-    handleGoogleSkipMfa,
+    handleskipGoogleMfa,
   } = useGoogleSignIn();
 
   useEffect(() => {
@@ -202,31 +202,40 @@ const Login = () => {
     localStorage.removeItem('userEmail');
   };
 
-  const backToLoginButton = (
+  const BackArrowIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M19 12H5M12 19L5 12L12 5" stroke="#1E1E1E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+  
+
+
+  const BackArrowButton = ({ onClick }) => (
     <button
-      onClick={resetLoginProcess}
+      onClick={onClick}
       style={{
         background: 'none',
         border: 'none',
-        color: '#1E1E1E',
-        textDecoration: 'none',
         cursor: 'pointer',
-        fontSize: '14px',
-        marginTop: '16px',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '8px',
+        borderRadius: '50%',
+        transition: 'background-color 0.3s ease',
+        position: 'absolute',
+        top: '250px',
+        left: '20px',
       }}
       onMouseEnter={(e) => {
-        e.target.style.color = 'blue';
-        e.target.style.textDecoration = 'underline';
+        e.target.style.backgroundColor = '#f0f0f0';
       }}
       onMouseLeave={(e) => {
-        e.target.style.color = '#1E1E1E';
-        e.target.style.textDecoration = 'none';
+        e.target.style.backgroundColor = 'transparent';
       }}
     >
-      Back to Login
+      <BackArrowIcon />
     </button>
   );
-
   return (
     <div
       style={{
@@ -290,8 +299,10 @@ const Login = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          position: 'relative',
         }}
       >
+        {step !== 'email' && <BackArrowButton onClick={resetLoginProcess} />}
         <div
           style={{
             width: '100%',
@@ -427,7 +438,6 @@ const Login = () => {
                   </button>
                 </div>
               </form>
-              {backToLoginButton}
             </>
           )}
           {step === 'mfa' && (
@@ -499,13 +509,11 @@ const Login = () => {
                 </button>
               </div>
               </form>
-              {backToLoginButton}
             </>
           )}
           {step === 'mfa-setup' && (
             <>
               <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />
-              {backToLoginButton}
             </>
           )}
           {step === 'mfa-verify' && (
@@ -565,7 +573,7 @@ const Login = () => {
                 </div>
                 <div>
                 <button
-                  onClick={handleGoogleSkipMfa}
+                  onClick={handleskipGoogleMfa}
                   style={{
                     width: '100%',
                     padding: '10px',
@@ -583,7 +591,6 @@ const Login = () => {
                 </button>
               </div>
               </form>
-              {backToLoginButton}
             </>
           )}
           {step === 'reset-request' && (
@@ -613,7 +620,6 @@ const Login = () => {
                   </button>
                 </div>
               </form>
-              {backToLoginButton}
             </>
           )}
           {step === 'reset-verify' && (
@@ -694,7 +700,6 @@ const Login = () => {
                   </button>
                 </div>
               </form>
-              {backToLoginButton}
             </>
           )}
           {step === 'email' && (

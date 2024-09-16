@@ -21,7 +21,7 @@ export const createSession = async (email) => {
     throw new Error(errorMessage || 'Failed to create session');
   }
 
-  return response.json();
+  return response.json(); 
 };
 
 export const getUserDetails = async (sessionId) => {
@@ -102,6 +102,6 @@ export const finalizeAuthRequest = async (authRequestId, sessionId, sessionToken
   if (!response.ok) {
     throw new Error('Failed to finalize auth request');
   }
-
+  
   return response.json();
 };

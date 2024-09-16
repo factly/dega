@@ -17,7 +17,7 @@ export const login = async () => {
     localStorage.setItem('auth_state', state);
 
     const authorizeURL =
-      `${window.DEGA_PUBLIC_URL}/test/authorize?` +
+      `${window.DEGA_PUBLIC_URL}/auth/request?` +
       `client_id=${encodeURIComponent(window.REACT_APP_ZITADEL_CLIENT_ID)}` +
       `&response_type=code` +
       `&response_mode=query` +
@@ -65,8 +65,9 @@ export const getToken = (code) =>
       };
     });
 
-export const getUserInfo = () =>
-  fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
+export const getUserInfo = () => {
+console.log("--> session token ",localStorage.getItem('sessionToken'));
+  return fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
@@ -89,6 +90,7 @@ export const getUserInfo = () =>
       };
     });
 
+}
 const generateCodeChallenge = (codeVerifier) => {
   const encoder = new TextEncoder();
   const data = encoder.encode(codeVerifier);

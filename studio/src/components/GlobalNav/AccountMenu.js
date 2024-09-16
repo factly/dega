@@ -41,9 +41,7 @@ const AccountMenu = () => {
         if (response.ok) {
           console.log('Logout successful');
 
-        // Clear local storage and reload the page
-        window.localStorage.clear();
-        window.location.reload();
+
         
         } else {
           console.error('Logout failed:', await response.text());
@@ -54,7 +52,11 @@ const AccountMenu = () => {
     }
 
 
-    // Redirect to the post-logout URL
+    // Clear local storage and reload the page
+    window.localStorage.clear();
+    window.location.reload();// Redirect to the post-logout URL
+
+
     const postLogoutRedirectUri = window.REACT_APP_ZITADEL_POST_LOGOUT_REDIRECT_URI;
     if (postLogoutRedirectUri) {
       window.location.href = postLogoutRedirectUri;

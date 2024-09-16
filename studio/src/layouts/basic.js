@@ -118,7 +118,8 @@ function BasicLayout(props) {
   }, []);
 
   useEffect(() => {
-    if (session.details && !session.loading) dispatch(getSpaces());
+    if (session.details && !session.loading && Object.keys(session.details).length > 0) {
+      dispatch(getSpaces());}
   }, [dispatch, selected, session]);
 
   useEffect(() => {
