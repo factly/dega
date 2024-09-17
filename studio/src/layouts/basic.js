@@ -179,7 +179,7 @@ function BasicLayout(props) {
     return (
       <div style={styles}>
         <Result
-          status="401"
+          status="403"
           title="403 Forbidden"
           subTitle="You don't have access. Please contact your administrator."
         />

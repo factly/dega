@@ -51,7 +51,7 @@ type PostClaim struct {
 	ClaimID  uuid.UUID `gorm:"type:uuid;column:claim_id" json:"claim_id"`
 	Claim    Claim     `gorm:"foreignKey:claim_id" json:"claim"`
 	PostID   uuid.UUID `gorm:"type:uuid;column:post_id" json:"post_id"`
-	Position int       `gorm:"type:uuid;column:position" json:"position"`
+	Position int       `gorm:"column:position" json:"position"`
 }
 
 // BeforeSave - validation for rating & claimant
