@@ -53,7 +53,13 @@ export const checkUserExists = async (email) => {
   }
 
   const data = await response.json();
-  return data.result && data.result.length > 0 ? data.result[0] : null;
+  if (data.result && data.result.length > 0) {
+    const userId = data.result[0].userId;
+    localStorage.setItem('userId', userId);
+    return data.result[0];
+  } else {
+    return null;
+  }
 };
 
 export const linkExistingUser = async (userId, providerData) => {

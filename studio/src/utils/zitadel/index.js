@@ -66,7 +66,6 @@ export const getToken = (code) =>
     });
 
 export const getUserInfo = () => {
-console.log("--> session token ",localStorage.getItem('sessionToken'));
   return fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
     method: 'GET',
     headers: {

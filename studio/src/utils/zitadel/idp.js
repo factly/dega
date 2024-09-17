@@ -28,13 +28,15 @@ export const useGoogleSignIn = () => {
   const token = params.get('token');
   const userId = params.get('user');
 
+  const setAndStoreSessionToken = (token) => {
+    setSessionToken(token);
+    localStorage.setItem('sessionToken', token);
+  };
+
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const authRequest = searchParams.get('authRequest');
     if (authRequest) {
-      setAuthRequestId(authRequest);
-      localStorage.setItem('authRequestId', authRequest);
-      getAuthRequestDetails(authRequest);
     } else {
       const storedAuthRequestId = localStorage.getItem('authRequestId');
       if (storedAuthRequestId) {
@@ -48,16 +50,6 @@ export const useGoogleSignIn = () => {
       handleProviderInformation(intentId, token);
     }
   }, [intentId, token]);
-
-
-  const handleAuthRequestDetails = async (authRequestId) => {
-    try {
-      const details = await getAuthRequestDetails(authRequestId);
-    } catch (error) {
-      console.error('Error fetching auth request details:', error);
-      setError('An error occurred while fetching auth request details.');
-    }
-  };
 
   const handleProviderInformation = async (intentId, token) => {
     try {
@@ -96,7 +88,7 @@ export const useGoogleSignIn = () => {
       await linkExistingUser(existingUser.userId, providerData);
       const sessionData = await createSession(existingUser.userId);
       setSessionId(sessionData.sessionId);
-      setSessionToken(sessionData.sessionToken);
+      setAndStoreSessionToken(sessionData.sessionToken);
       setStep('mfa-verify');
     } catch (error) {
       console.error('Error handling existing user:', error);
@@ -108,7 +100,7 @@ export const useGoogleSignIn = () => {
     try {
       const sessionData = await createSession(userId, intentId, token);
       setSessionId(sessionData.sessionId);
-      setSessionToken(sessionData.sessionToken);
+      setAndStoreSessionToken(sessionData.sessionToken);
       setStep('mfa-verify');
     } catch (error) {
       console.error('Error:', error);
@@ -123,7 +115,7 @@ export const useGoogleSignIn = () => {
 
       const sessionData = await createSession(newUserData.userId, intentId, token);
       setSessionId(sessionData.sessionId);
-      setSessionToken(sessionData.sessionToken);
+      setAndStoreSessionToken(sessionData.sessionToken);
 
       const totpData = await startTOTPRegistration(
         newUserData.userId,
@@ -153,9 +145,7 @@ export const useGoogleSignIn = () => {
     try {
       const result = await checkTOTP(sessionId, sessionToken, code);
       if (result.sessionToken) {
-        localStorage.setItem('sessionToken', sessionToken);
-        // Update the state with the new sessionToken
-        setSessionToken(result.sessionToken);
+        setAndStoreSessionToken(result.sessionToken);
         await completeAuthentication(sessionId, result.sessionToken);
       } else {
         setError('Invalid MFA code. Please try again.');
@@ -168,10 +158,11 @@ export const useGoogleSignIn = () => {
 
   const handleskipGoogleMfa = async () => {
     try {
-      if (!sessionId || !sessionToken) {
-        throw new Error('Session information is missing');
+      const currentSessionToken = localStorage.getItem('sessionToken');
+      if (!currentSessionToken) {
+        throw new Error('No session token found');
       }
-      await completeAuthentication(sessionId, sessionToken);
+      await completeAuthentication(sessionId, currentSessionToken);
     } catch (error) {
       console.error('Error:', error);
       setError('An unexpected error occurred while skipping MFA');
@@ -201,8 +192,6 @@ export const useGoogleSignIn = () => {
       setError('An error occurred while completing authentication. Please try again.');
     }
   };
-
-
 
   const handleGoogleSignIn = async () => {
     try {

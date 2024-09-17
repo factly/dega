@@ -1,3 +1,4 @@
+const userId = localStorage.getItem('userId');
 export const requestPasswordReset = async (userId) => {
   const response = await fetch(
     `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/password_reset`,

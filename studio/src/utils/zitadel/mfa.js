@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import QRCode from 'qrcode.react';
+  import QRCode from 'qrcode.react';
+  const QRCode = require('qrcode.react');
 
-// Registration functions
 export { startTOTPRegistration, verifyTOTPRegistration } from '../../actions/mfa';
-
-// Login function
 export { checkTOTP } from '../../actions/mfa';
 
 export const TOTPSetupComponent = ({ uri, secret, onVerify }) => {

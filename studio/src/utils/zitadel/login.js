@@ -12,12 +12,15 @@ import {
   finalizeAuthRequest,
 } from '../../actions/login';
 import { requestPasswordReset, resetPassword } from '../../actions/forgotPassword';
+import { checkUserExists } from '../../actions/idp';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [step, setStep] = useState('email');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [sessionId, setSessionId] = useState('');
   const [userId, setUserId] = useState('');
   const [totpCode, setTotpCode] = useState('');
@@ -162,6 +165,20 @@ const Login = () => {
     }
   };
 
+  const handleRequestResetEmail = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      await checkUserExists(email);
+      const userId = localStorage.getItem('userId');
+      console.log('userId', userId);
+      await requestPasswordReset(userId);
+      setStep('reset-verify');
+    } catch (error) {
+      setError(`An error occurred: ${error.message}`);
+    }
+  };
+
   const handleRequestReset = async (e) => {
     e.preventDefault();
     setError('');
@@ -177,6 +194,7 @@ const Login = () => {
     e.preventDefault();
     setError('');
     try {
+      const userId = localStorage.getItem('userId');
       await resetPassword(userId, newPassword, verificationCode);
       setStep('email');
       setError('Password reset successful. Please log in with your new password.');
@@ -204,11 +222,15 @@ const Login = () => {
 
   const BackArrowIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M19 12H5M12 19L5 12L12 5" stroke="#1E1E1E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path
+        d="M19 12H5M12 19L5 12L12 5"
+        stroke="#1E1E1E"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
-  
-
 
   const BackArrowButton = ({ onClick }) => (
     <button
@@ -217,14 +239,9 @@ const Login = () => {
         background: 'none',
         border: 'none',
         cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '8px',
         borderRadius: '50%',
         transition: 'background-color 0.3s ease',
-        position: 'absolute',
-        top: '250px',
-        left: '20px',
+        position: 'static',
       }}
       onMouseEnter={(e) => {
         e.target.style.backgroundColor = '#f0f0f0';
@@ -297,12 +314,12 @@ const Login = () => {
           height: '100%',
           backgroundColor: 'white',
           display: 'flex',
+          flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
         }}
       >
-        {step !== 'email' && <BackArrowButton onClick={resetLoginProcess} />}
         <div
           style={{
             width: '100%',
@@ -310,6 +327,8 @@ const Login = () => {
             padding: '0 32px',
           }}
         >
+          {step !== 'email' && <BackArrowButton onClick={resetLoginProcess} />}
+
           <h2
             style={{
               fontSize: '24px',
@@ -489,25 +508,25 @@ const Login = () => {
                     Verify MFA
                   </button>
                 </div>
-              <div>
-                <button
-                  onClick={handleSkipMfa}
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#6B7280',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                    marginTop: '8px',
-                  }}
-                >
-                  Skip Two-Factor Authentication
-                </button>
-              </div>
+                <div>
+                  <button
+                    onClick={handleSkipMfa}
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#6B7280',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                      marginTop: '8px',
+                    }}
+                  >
+                    Skip Two-Factor Authentication
+                  </button>
+                </div>
               </form>
             </>
           )}
@@ -572,24 +591,24 @@ const Login = () => {
                   </button>
                 </div>
                 <div>
-                <button
-                  onClick={handleskipGoogleMfa}
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#6B7280',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                    marginTop: '8px',
-                  }}
-                >
-                  Skip Two-Factor Authentication
-                </button>
-              </div>
+                  <button
+                    onClick={handleskipGoogleMfa}
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#6B7280',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                      marginTop: '8px',
+                    }}
+                  >
+                    Skip Two-Factor Authentication
+                  </button>
+                </div>
               </form>
             </>
           )}
@@ -617,6 +636,50 @@ const Login = () => {
                     }}
                   >
                     Send Verification Code
+                  </button>
+                </div>
+              </form>
+            </>
+          )}
+          {step === 'reset-request2' && (
+            <>
+              <form onSubmit={handleRequestResetEmail} style={{ marginBottom: '16px' }}>
+                <div style={{ marginBottom: '16px' }}>
+                  <p style={{ color: '#333', fontSize: '14px', marginBottom: '8px' }}>
+                    A verification code will be sent to:
+                  </p>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      fontSize: '16px',
+                      borderRadius: '4px',
+                      border: '1px solid #ccc',
+                    }}
+                  />
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#1E1E1E',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send Verification Code'}
                   </button>
                 </div>
               </form>
@@ -765,7 +828,29 @@ const Login = () => {
                 </Link>
               </span>
             )}
-            {(step === 'email' || step === 'password') && (
+            {(step === 'email') && (
+              <div style={{ marginTop: '10px' }}>
+                <span
+                  onClick={() => setStep('reset-request2')}
+                  style={{
+                    color: '#1E1E1E',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.color = 'blue';
+                    e.target.style.textDecoration = 'underline';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.color = '#1E1E1E';
+                    e.target.style.textDecoration = 'none';
+                  }}
+                >
+                  Forgot Password?
+                </span>
+              </div>
+            )}
+            {(step === 'password') && (
               <div style={{ marginTop: '10px' }}>
                 <span
                   onClick={() => setStep('reset-request')}
@@ -794,4 +879,3 @@ const Login = () => {
   );
 };
 export default Login;
-
