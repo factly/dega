@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
@@ -226,7 +225,6 @@ func (cs claimantService) List(sID uuid.UUID, offset, limit int, all, searchQuer
 		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 		if err != nil {
 			loggerx.Error(err)
-			log.Println("*****", err)
 			return result, errorx.Parser(errorx.DBError())
 		}
 	}

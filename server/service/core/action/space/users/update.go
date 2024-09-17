@@ -57,7 +57,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	for _, user := range users {
 		spaceUsers = append(spaceUsers, model.SpaceUser{
 			SpaceID: authCtx.SpaceID,
-			UserID:  user.ID,
+			UserID:  user.UserId,
 		})
 	}
 

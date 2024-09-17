@@ -18,8 +18,8 @@ type Query struct {
 }
 
 type ZitadelQueryPayload struct {
-	Query   Query     `json:"query"`
-	Queries []Queries `json:"queries"`
+	Query   Query                    `json:"query"`
+	Queries []map[string]interface{} `json:"queries"`
 }
 
 type Result struct {
@@ -34,10 +34,15 @@ type Organisations struct {
 
 type Queries struct {
 	InUserIdsQuery InUserIdsQuery `json:"inUserIdsQuery"`
+	TypeQuery      TypeQuery      `json:"typeQuery"`
 }
 
 type InUserIdsQuery struct {
 	UserIds []string `json:"userIds"`
+}
+
+type TypeQuery struct {
+	Type string `json:"type"`
 }
 
 func GetOrganisations(token string) []Result {

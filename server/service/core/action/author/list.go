@@ -1,7 +1,6 @@
 package author
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -75,11 +74,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println(zitadelUsers)
-
 	for _, zitadelUser := range zitadelUsers {
 		authors = append(authors, model.Author{
-			ID:          zitadelUser.ID,
+			ID:          zitadelUser.UserId,
 			DisplayName: zitadelUser.Human.Profile.DisplayName,
 			FirstName:   zitadelUser.Human.Profile.FirstName,
 			LastName:    zitadelUser.Human.Profile.LastName,
@@ -129,7 +126,7 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 
 	for _, zitadelUser := range zitadelUsers {
 		authors = append(authors, model.Author{
-			ID:          zitadelUser.ID,
+			ID:          zitadelUser.UserId,
 			DisplayName: zitadelUser.Human.Profile.DisplayName,
 			FirstName:   zitadelUser.Human.Profile.FirstName,
 			LastName:    zitadelUser.Human.Profile.LastName,

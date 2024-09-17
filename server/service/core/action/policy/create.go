@@ -136,7 +136,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	for _, user := range users {
 		policyUser := policyUser{
-			UserID:      user.ID,
+			UserID:      user.UserId,
 			DisplayName: user.Human.Profile.DisplayName,
 		}
 		result.Users = append(result.Users, policyUser)

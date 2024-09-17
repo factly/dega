@@ -20,12 +20,12 @@ func GetAuthors(token, orgID string, ids []string) (map[string]model.Author, err
 	authors := make(map[string]model.Author)
 	for _, zitadelUser := range zitadelUsers {
 		author := model.Author{
-			ID:          zitadelUser.ID,
+			ID:          zitadelUser.UserId,
 			DisplayName: zitadelUser.Human.Profile.DisplayName,
 			FirstName:   zitadelUser.Human.Profile.FirstName,
 			LastName:    zitadelUser.Human.Profile.LastName,
 		}
-		authors[zitadelUser.ID] = author
+		authors[zitadelUser.UserId] = author
 	}
 
 	return authors, nil

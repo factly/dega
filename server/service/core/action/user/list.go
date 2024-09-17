@@ -67,7 +67,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	for _, u := range res {
 		users = append(users, user{
-			ID:          u.ID,
+			ID:          u.UserId,
 			DisplayName: u.Human.Profile.DisplayName,
 			Email:       u.Human.Email.Email,
 		})

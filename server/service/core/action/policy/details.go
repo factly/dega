@@ -133,7 +133,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	for _, user := range users {
 		result.Users = append(result.Users, policyUser{
-			UserID:      user.ID,
+			UserID:      user.UserId,
 			DisplayName: user.Human.Profile.DisplayName,
 		})
 	}

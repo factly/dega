@@ -3,7 +3,6 @@ package zitadel
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 
@@ -16,7 +15,7 @@ type OrganisationUsers struct {
 }
 
 type OrganisationUserResult struct {
-	ID            string `json:"id"`
+	UserId        string `json:"userId"`
 	Name          string `json:"name"`
 	PrimaryDomain string `json:"primaryDomain"`
 	Human         Human  `json:"human"`
@@ -27,7 +26,7 @@ type OrganisationUsersQuery struct {
 
 func GetOrganisationUsers(token, orgID string, userIDs []string) ([]OrganisationUserResult, error) {
 
-	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/management/v1/users/_search"
+	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/v2/users"
 	method := "POST"
 
 	payload := ZitadelQueryPayload{
@@ -37,14 +36,13 @@ func GetOrganisationUsers(token, orgID string, userIDs []string) ([]Organisation
 		},
 	}
 
+	payload.Queries = make([]map[string]interface{}, 0)
+	payload.Queries = append(payload.Queries, map[string]interface{}{"typeQuery": TypeQuery{Type: "TYPE_HUMAN"}})
+
 	if len((userIDs)) != 0 {
-		payload.Queries = []Queries{
-			{
-				InUserIdsQuery: InUserIdsQuery{
-					UserIds: userIDs,
-				},
-			},
-		}
+		payload.Queries = append(payload.Queries, map[string]interface{}{"inUserIdsQuery": InUserIdsQuery{
+			UserIds: userIDs,
+		}})
 	}
 
 	buf := new(bytes.Buffer)
@@ -70,7 +68,7 @@ func GetOrganisationUsers(token, orgID string, userIDs []string) ([]Organisation
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println(err)
+		loggerx.Error(err)
 		return []OrganisationUserResult{}, err
 	}
 
@@ -81,8 +79,6 @@ func GetOrganisationUsers(token, orgID string, userIDs []string) ([]Organisation
 		loggerx.Error(err)
 		return []OrganisationUserResult{}, err
 	}
-
-	fmt.Println(string(body))
 
 	return allOrgs.Result, nil
 }
