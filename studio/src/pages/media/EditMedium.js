@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -16,7 +16,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { getMedium, updateMedium, deleteMedium } from '../../actions/media';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
-import { ArrowLeftOutlined } from '@ant-design/icons';
 import getUserPermission from '../../utils/getUserPermission';
 
 import MonacoEditor from '../../components/MonacoEditor';

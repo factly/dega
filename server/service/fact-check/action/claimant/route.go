@@ -5,6 +5,7 @@ import (
 
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -17,7 +18,7 @@ type claimant struct {
 	IsFeatured  bool           `json:"is_featured"`
 	Description postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	TagLine     string         `json:"tag_line"`
-	MediumID    uint           `json:"medium_id"`
+	MediumID    uuid.UUID      `json:"medium_id"`
 	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 	Meta        postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
 	HeaderCode  string         `json:"header_code"`

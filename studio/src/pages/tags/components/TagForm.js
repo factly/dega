@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Form, Space, Switch, Row, Col, ConfigProvider, Collapse } from 'antd';
 import { maker } from '../../../utils/sluger';
 import getJsonValue from '../../../utils/getJsonValue';
-import MediaSelector from '../../../components/MediaSelector';
 import { SketchPicker } from 'react-color';
 import { DescriptionInput, MetaForm, SlugInput, TitleInput } from '../../../components/FormItems';
 
@@ -30,9 +29,9 @@ const TagForm = ({ onCreate, data = {} }) => {
     form.resetFields();
   };
 
-  const onTitleChange = (string) => {
+  const onTitleChange = (title) => {
     form.setFieldsValue({
-      slug: maker(string),
+      slug: maker(title),
     });
   };
 
@@ -76,7 +75,7 @@ const TagForm = ({ onCreate, data = {} }) => {
               <Form.Item>
                 <Space>
                   <Button disabled={!valueChange} type="primary" htmlType="submit">
-                    {data && data.id ? 'Update' : 'Save'}
+                    {data && data.id ? 'Update' : 'Submit'}
                   </Button>
                 </Space>
               </Form.Item>
@@ -88,8 +87,9 @@ const TagForm = ({ onCreate, data = {} }) => {
                 expandIconPosition="right"
                 expandIcon={({ isActive }) => <Button>{isActive ? 'Collapse' : 'Expand'}</Button>}
                 style={{ width: '100%', background: '#f0f2f5', border: 0 }}
+                defaultActiveKey={['general']}
               >
-                <Collapse.Panel header="General">
+                <Collapse.Panel header="General" key={'general'}>
                   <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
                     <Col xs={24} md={10}>
                       <TitleInput
@@ -104,9 +104,10 @@ const TagForm = ({ onCreate, data = {} }) => {
                             <Col> Featured </Col>
                             <Col>
                               <Switch
-                                onChange={(checked) =>
-                                  form.setFieldsValue({ is_featured: checked })
-                                }
+                                onChange={(checked) => {
+                                  form.setFieldsValue({ is_featured: checked });
+                                  setValueChange(true);
+                                }}
                                 defaultChecked={data.is_featured}
                               />
                             </Col>
@@ -175,14 +176,6 @@ const TagForm = ({ onCreate, data = {} }) => {
                         rows={5}
                         initialValue={data.description_html}
                       />
-                    </Col>
-                    <Col xs={24} md={6}>
-                      <Form.Item label="Featured Image" name="medium_id">
-                        <MediaSelector
-                          maxWidth={'350px'}
-                          containerStyles={{ justifyContent: 'start' }}
-                        />
-                      </Form.Item>
                     </Col>
                   </Row>
                 </Collapse.Panel>

@@ -76,8 +76,9 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
                 expandIconPosition="right"
                 expandIcon={({ isActive }) => <Button>{isActive ? 'Collapse' : 'Expand'}</Button>}
                 style={{ width: '100%', background: '#f0f2f5', border: 0, marginBottom: 16 }}
+                defaultActiveKey={['general']}
               >
-                <Collapse.Panel header="General">
+                <Collapse.Panel header="General" key="general">
                   <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
                     <Col xs={24} md={10}>
                       <TitleInput

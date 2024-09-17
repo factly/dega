@@ -34,7 +34,7 @@ type IMenuService interface {
 	GetById(sID, id uuid.UUID) (model.Menu, error)
 	List(sID uuid.UUID, offset, limit int) (pagingMenu, []errorx.Message)
 	Create(ctx context.Context, sID uuid.UUID, uID string, menu *Menu) (model.Menu, []errorx.Message)
-	Update(sID, id uuid.UUID, uID string, menu *Menu) (model.Menu, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, m model.Menu, menu *Menu) (model.Menu, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
@@ -124,7 +124,7 @@ func (ms MenuService) Create(ctx context.Context, sID uuid.UUID, uID string, men
 	return *result, nil
 }
 
-func (ms MenuService) Update(sID, id uuid.UUID, uID string, menu *Menu) (model.Menu, []errorx.Message) {
+func (ms MenuService) Update(sID, id uuid.UUID, uID string, m model.Menu, menu *Menu) (model.Menu, []errorx.Message) {
 	validationError := validationx.Check(menu)
 
 	if validationError != nil {
@@ -141,16 +141,12 @@ func (ms MenuService) Update(sID, id uuid.UUID, uID string, menu *Menu) (model.M
 	_ = stmt.Parse(&model.Menu{})
 	tableName := stmt.Schema.Table
 
-	if result.Slug == menu.Slug {
-		menuSlug = result.Slug
-	} else if menu.Slug != "" && util.CheckSlug(menu.Slug) {
+	if menu.Slug != m.Slug {
 		menuSlug = util.ApproveSlug(menu.Slug, sID, tableName)
-	} else {
-		menuSlug = util.ApproveSlug(util.MakeSlug(menu.Name), sID, tableName)
 	}
 
 	// Check if menu with same name exist
-	if menu.Name != result.Name && util.CheckName(sID, menu.Name, tableName) {
+	if menu.Name != m.Name && util.CheckName(sID, menu.Name, tableName) {
 		loggerx.Error(errors.New(`menu with same name exist`))
 		return model.Menu{}, errorx.Parser(errorx.SameNameExist())
 	}

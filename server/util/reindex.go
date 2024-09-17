@@ -202,7 +202,6 @@ func AddMedium(spaceID uuid.UUID) error {
 			"id":          m.ID.String(),
 			"name":        m.Name,
 			"slug":        m.Slug,
-			"title":       m.Title,
 			"type":        m.Type,
 			"description": m.Description,
 			"space_id":    m.SpaceID.String(),

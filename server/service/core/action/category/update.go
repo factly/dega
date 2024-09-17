@@ -66,7 +66,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	// check record exists or not
 	categoryService := service.GetCategoryService()
-	_, err = categoryService.GetById(authCtx.SpaceID, id)
+	c, err := categoryService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -81,7 +81,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	result, serviceErr := categoryService.Update(authCtx.SpaceID, id, authCtx.UserID, category)
+	result, serviceErr := categoryService.Update(authCtx.SpaceID, id, authCtx.UserID, c, category)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -89,8 +89,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id": result.ID,
-
+		"id":                result.ID,
 		"name":              result.Name,
 		"slug":              result.Slug,
 		"description":       result.Description,

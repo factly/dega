@@ -57,14 +57,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	menuService := service.GetMenuService()
-	_, err = menuService.GetById(authCtx.SpaceID, id)
+	m, err := menuService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	result, serviceErr := menuService.Update(authCtx.SpaceID, id, authCtx.UserID, menu)
+	result, serviceErr := menuService.Update(authCtx.SpaceID, id, authCtx.UserID, m, menu)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

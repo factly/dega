@@ -93,12 +93,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	_ = stmt.Parse(&model.Claimant{})
 	tableName := stmt.Schema.Table
 
-	if result.Slug == claimant.Slug {
-		claimantSlug = result.Slug
-	} else if claimant.Slug != "" && util.CheckSlug(claimant.Slug) {
+	if claimant.Slug != result.Slug {
 		claimantSlug = util.ApproveSlug(claimant.Slug, authCtx.SpaceID, tableName)
-	} else {
-		claimantSlug = util.ApproveSlug(util.MakeSlug(claimant.Name), authCtx.SpaceID, tableName)
 	}
 
 	// Check if claimant with same name exist
@@ -143,7 +139,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"header_code":      claimant.HeaderCode,
 		"footer_code":      claimant.FooterCode,
 	}
-	if claimant.MediumID == 0 {
+	if claimant.MediumID == uuid.Nil {
 		updateMap["medium_id"] = nil
 	}
 

@@ -47,7 +47,7 @@ type ICategoryService interface {
 	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (pagingCategory, []errorx.Message)
 	PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder, metafieldsKey, metafieldsValue string, ids []uuid.UUID, isFeatured bool) (pagingCategory, []errorx.Message)
 	Create(ctx context.Context, sID uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message)
-	Update(sID, id uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, c model.Category, category *Category) (model.Category, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
@@ -171,7 +171,7 @@ func (cs CategoryService) PublicList(sID uuid.UUID, offset, limit int, searchQue
 
 	tx.Where(&model.Category{
 		SpaceID: sID,
-	}).Preload("Medium").Count(&result.Total).Order(order).Offset(offset).Limit(limit).Find(&result.Nodes)
+	}).Preload("Medium").Preload("ParentCategory").Count(&result.Total).Order(order).Offset(offset).Limit(limit).Find(&result.Nodes)
 
 	return result, nil
 
@@ -265,7 +265,7 @@ func (cs CategoryService) Create(ctx context.Context, sID uuid.UUID, uID string,
 	return *result, nil
 }
 
-func (cs CategoryService) Update(sID, id uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message) {
+func (cs CategoryService) Update(sID, id uuid.UUID, uID string, c model.Category, category *Category) (model.Category, []errorx.Message) {
 	result := model.Category{}
 	result.ID = id
 
@@ -280,16 +280,13 @@ func (cs CategoryService) Update(sID, id uuid.UUID, uID string, category *Catego
 	_ = stmt.Parse(&model.Category{})
 	tableName := stmt.Schema.Table
 
-	if result.Slug == category.Slug {
-		categorySlug = result.Slug
-	} else if category.Slug != "" && util.CheckSlug(category.Slug) {
+	// check if slug is updated or not
+	if c.Slug != category.Slug {
 		categorySlug = util.ApproveSlug(category.Slug, sID, tableName)
-	} else {
-		categorySlug = util.ApproveSlug(util.MakeSlug(category.Name), sID, tableName)
 	}
 
 	// Check if category with same name exist
-	if category.Name != result.Name && util.CheckName(sID, category.Name, tableName) {
+	if category.Name != c.Name && util.CheckName(sID, category.Name, tableName) {
 		loggerx.Error(errors.New(`category with same name exist`))
 		return model.Category{}, errorx.Parser(errorx.SameNameExist())
 	}

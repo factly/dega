@@ -26,7 +26,6 @@ type Medium struct {
 	Name        string         `json:"name" validate:"required"`
 	Slug        string         `json:"slug"`
 	Type        string         `json:"type" validate:"required"`
-	Title       string         `json:"title"`
 	Description string         `json:"description"`
 	Caption     string         `json:"caption"`
 	AltText     string         `json:"alt_text"`
@@ -166,7 +165,6 @@ func (ms MediumService) Create(ctx context.Context, sID uuid.UUID, uID string, m
 			},
 			Name:        medium.Name,
 			Slug:        util.ApproveSlug(mediumSlug, sID, tableName),
-			Title:       medium.Title,
 			Type:        medium.Type,
 			Description: medium.Description,
 			Caption:     medium.Caption,
@@ -298,7 +296,6 @@ func (m MediumService) Update(sID, id uuid.UUID, uID string, medium *Medium) (mo
 		"updated_by_id": uID,
 		"name":          medium.Name,
 		"slug":          mediumSlug,
-		"title":         medium.Title,
 		"type":          medium.Type,
 		"alt_text":      medium.AltText,
 		"caption":       medium.Caption,

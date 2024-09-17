@@ -35,26 +35,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   };
 
   const onTitleChange = (title) => {
-    const slug = maker(title);
-    const values = {
-      slug: slug,
-      meta: {
-        canonical_URL: slug,
-        facebook: {
-          title: title,
-          canonical_URL: slug,
-        },
-        twitter: {
-          title: title,
-          canonical_URL: slug,
-        },
-        google: {
-          title: title,
-          canonical_URL: slug,
-        },
-      },
-    };
-    form.setFieldsValue(values);
+    form.setFieldsValue({
+      slug: maker(title),
+    });
     setFormData(form.getFieldValue());
   };
 
@@ -99,7 +82,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
               <Form.Item>
                 <Space>
                   <Button disabled={!valueChange} type="primary" htmlType="submit">
-                    {data && data.id ? 'Update' : 'Save'}
+                    {data && data.id ? 'Update' : 'Submit'}
                   </Button>
                 </Space>
               </Form.Item>
@@ -111,8 +94,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                 expandIconPosition="right"
                 expandIcon={({ isActive }) => <Button>{isActive ? 'Collapse' : 'Expand'}</Button>}
                 style={{ width: '100%', background: '#f0f2f5', border: 0 }}
+                defaultActiveKey={['general']}
               >
-                <Collapse.Panel header="General">
+                <Collapse.Panel key={'general'} header="General">
                   <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '3rem' }}>
                     <Col xs={24} md={10}>
                       <TitleInput
@@ -135,9 +119,10 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                             <Col> Featured </Col>
                             <Col>
                               <Switch
-                                onChange={(checked) =>
-                                  form.setFieldsValue({ is_featured: checked })
-                                }
+                                onChange={(checked) => {
+                                  form.setFieldsValue({ is_featured: checked });
+                                  setValueChange(true);
+                                }}
                                 defaultChecked={data.is_featured}
                               />
                             </Col>

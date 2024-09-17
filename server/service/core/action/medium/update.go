@@ -72,7 +72,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"id":          result.ID,
 		"name":        result.Name,
 		"slug":        result.Slug,
-		"title":       result.Title,
 		"type":        result.Type,
 		"description": result.Description,
 		"space_id":    result.SpaceID,

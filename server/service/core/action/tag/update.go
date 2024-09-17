@@ -48,7 +48,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tagService := service.GetTagService()
 
 	// check record exists or not
-	_, err = tagService.GetById(authCtx.SpaceID, id)
+	t, err := tagService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -63,7 +63,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, serviceErr := tagService.Update(authCtx.SpaceID, id, authCtx.UserID, tag)
+	result, serviceErr := tagService.Update(authCtx.SpaceID, id, authCtx.UserID, t, tag)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

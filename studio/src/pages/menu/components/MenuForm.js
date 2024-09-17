@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Input, Button, Space, Row, Col, ConfigProvider } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Row, Col, ConfigProvider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import MenuField from './MenuField';
 import Submenu from './Submenu';
 import MonacoEditor from '../../../components/MonacoEditor';
@@ -76,7 +76,7 @@ function MenuForm({ onCreate, data = {} }) {
               disabled={!valueChange}
               htmlType="submit"
             >
-              {data && data.id ? 'Update' : 'Save'}
+              {data && data.id ? 'Update' : 'Submit'}
             </Button>
           </Form.Item>
         </Row>

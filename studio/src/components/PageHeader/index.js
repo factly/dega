@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LeftOutlined } from '@ant-design/icons';
 import { PageHeader as AntPageHeader } from '@ant-design/pro-layout';
 import routes from '../../config/routesConfig';
@@ -15,11 +15,14 @@ function Pageheader() {
   const entity =
     pathSnippets[0] === 'fact-checks'
       ? 'posts'
-      : (pathSnippets[0] === 'website' && pathSnippets[1] === 'menus') ||
-        (pathSnippets[0] === 'advanced' && pathSnippets[1] === 'formats') ||
+      : (pathSnippets[0] === 'advanced' && pathSnippets[1] === 'formats') ||
         (pathSnippets[0] === 'admin' && pathSnippets[1] === 'events') ||
         (pathSnippets[0] === 'advanced' && pathSnippets[1] === 'webhooks')
       ? pathSnippets[1]
+      : pathSnippets[0] === 'settings' &&
+        pathSnippets[1] === 'website' &&
+        pathSnippets[2] === 'menus'
+      ? 'menus'
       : pathSnippets[0];
 
   const isBreadCrumbsHidden =

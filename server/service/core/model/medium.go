@@ -18,7 +18,6 @@ type Medium struct {
 	Name        string         `gorm:"column:name" json:"name"`
 	Slug        string         `gorm:"column:slug" json:"slug"`
 	Type        string         `gorm:"column:type" json:"type"`
-	Title       string         `gorm:"column:title" json:"title"`
 	Description string         `gorm:"column:description" json:"description"`
 	Caption     string         `gorm:"column:caption" json:"caption"`
 	AltText     string         `gorm:"column:alt_text" json:"alt_text"`

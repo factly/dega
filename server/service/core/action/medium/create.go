@@ -61,7 +61,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 			"id":          result.Nodes[i].ID.String(),
 			"name":        result.Nodes[i].Name,
 			"slug":        result.Nodes[i].Slug,
-			"title":       result.Nodes[i].Title,
 			"type":        result.Nodes[i].Type,
 			"description": result.Nodes[i].Description,
 			"space_id":    result.Nodes[i].SpaceID,

@@ -45,7 +45,7 @@ type IRatingService interface {
 	GetById(sID, id uuid.UUID) (model.Rating, error)
 	List(sID uuid.UUID, offset, limit int, all string, sort string) (ratingPaging, []errorx.Message)
 	Create(ctx context.Context, sID uuid.UUID, uID string, rating *Rating) (model.Rating, []errorx.Message)
-	Update(sID, id uuid.UUID, uID string, rating *Rating) (model.Rating, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, r model.Rating, rating *Rating) (model.Rating, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
 	Default(ctx context.Context, sID uuid.UUID, uID string, ratings []model.Rating) (ratingPaging, []errorx.Message)
 }
@@ -207,7 +207,7 @@ func (rs RatingService) List(sID uuid.UUID, offset, limit int, all, sort string)
 }
 
 // Update implements IRatingService
-func (rs RatingService) Update(sID, id uuid.UUID, uID string, rating *Rating) (model.Rating, []errorx.Message) {
+func (rs RatingService) Update(sID, id uuid.UUID, uID string, r model.Rating, rating *Rating) (model.Rating, []errorx.Message) {
 	result := &model.Rating{}
 	result.ID = id
 
@@ -236,13 +236,9 @@ func (rs RatingService) Update(sID, id uuid.UUID, uID string, rating *Rating) (m
 	_ = stmt.Parse(&model.Rating{})
 	tableName := stmt.Schema.Table
 
-	// if result.Slug == rating.Slug {
-	// 	ratingSlug = result.Slug
-	// } else if rating.Slug != "" && util.CheckSlug(rating.Slug) {
-	// 	ratingSlug = util.ApproveSlug( rating.Slug, sID, tableName)
-	// } else {
-	// 	ratingSlug = util.ApproveSlug( util.MakeSlug(rating.Name), sID, tableName)
-	// }
+	if rating.Slug != r.Slug {
+		ratingSlug = util.ApproveSlug(rating.Slug, sID, tableName)
+	}
 
 	// Check if rating with same name exist
 	if rating.Name != result.Name && util.CheckName(sID, rating.Name, tableName) {

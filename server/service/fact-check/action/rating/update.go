@@ -48,7 +48,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	ratingService := service.GetRatingService()
 
-	_, err = ratingService.GetById(authCtx.SpaceID, id)
+	rt, err := ratingService.GetById(authCtx.SpaceID, id)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -64,7 +64,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, serviceErr := ratingService.Update(authCtx.SpaceID, id, authCtx.UserID, rating)
+	result, serviceErr := ratingService.Update(authCtx.SpaceID, id, authCtx.UserID, rt, rating)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

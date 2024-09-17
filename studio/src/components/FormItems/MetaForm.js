@@ -1,13 +1,8 @@
 import React from 'react';
 import { Collapse, Form, Button, Input } from 'antd';
 import MonacoEditor from '../MonacoEditor/index';
-import { useSelector } from 'react-redux';
-import SocialCardPreview from '../PreviewSocialCard/index';
 
-const MetaForm = ({ form, formData, style }) => {
-  const siteAddress = useSelector(
-    ({ spaces: { details, selected } }) => details[selected].site_address,
-  );
+const MetaForm = ({ style }) => {
   return (
     <>
       <Collapse

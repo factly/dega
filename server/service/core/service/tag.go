@@ -47,7 +47,7 @@ type ITagService interface {
 	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
 	PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder string, ids []uuid.UUID, isFeatured bool) (paging, []errorx.Message)
 	Create(ctx context.Context, sID uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message)
-	Update(sID, id uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, t model.Tag, tag *Tag) (model.Tag, []errorx.Message)
 	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
@@ -165,6 +165,10 @@ func (ts TagService) PublicList(sID uuid.UUID, offset, limit int, searchQuery, s
 		tx = tx.Model(&model.Tag{}).Where("name ILIKE ?", "%"+searchQuery+"%")
 	}
 
+	if isFeatured {
+		tx = tx.Model(&model.Tag{}).Where("is_featured = ?", true)
+	}
+
 	tx.Where(&model.Tag{
 		SpaceID: sID,
 	}).Preload("Medium").Count(&result.Total).Order(order).Offset(offset).Limit(limit).Find(&result.Nodes)
@@ -255,7 +259,7 @@ func (ts TagService) Create(ctx context.Context, sID uuid.UUID, uID string, tag 
 	return *result, nil
 }
 
-func (ts TagService) Update(sID, id uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message) {
+func (ts TagService) Update(sID, id uuid.UUID, uID string, t model.Tag, tag *Tag) (model.Tag, []errorx.Message) {
 	validationError := validationx.Check(tag)
 	if validationError != nil {
 		loggerx.Error(errors.New("validation error"))
@@ -272,14 +276,14 @@ func (ts TagService) Update(sID, id uuid.UUID, uID string, tag *Tag) (model.Tag,
 	result := &model.Tag{}
 	result.ID = id
 
-	if tag.Slug != "" && util.CheckSlug(tag.Slug) {
+	tagSlug = tag.Slug
+
+	if t.Slug != tag.Slug {
 		tagSlug = util.ApproveSlug(tag.Slug, sID, tableName)
-	} else {
-		tagSlug = util.ApproveSlug(util.MakeSlug(tag.Name), sID, tableName)
 	}
 
 	// Check if tag with same name exist
-	if tag.Name != result.Name && util.CheckName(sID, tag.Name, tableName) {
+	if tag.Name != t.Name && util.CheckName(sID, tag.Name, tableName) {
 		loggerx.Error(errors.New(`tag with same name exist`))
 		return model.Tag{}, errorx.Parser(errorx.SameNameExist())
 	}

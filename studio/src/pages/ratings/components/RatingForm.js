@@ -90,7 +90,7 @@ const RatingForm = ({ onCreate, data = {} }) => {
               <Form.Item>
                 <Space>
                   <Button disabled={!valueChange} type="primary" htmlType="submit">
-                    {data && data.id ? 'Update' : 'Save'}
+                    {data && data.id ? 'Update' : 'Submit'}
                   </Button>
                 </Space>
               </Form.Item>
@@ -102,8 +102,9 @@ const RatingForm = ({ onCreate, data = {} }) => {
                 expandIconPosition="right"
                 expandIcon={({ isActive }) => <Button>{isActive ? 'Collapse' : 'Expand'}</Button>}
                 style={{ width: '100%', background: '#f0f2f5', border: 0 }}
+                defaultActiveKey={['general']}
               >
-                <Collapse.Panel header="Basic" key="1">
+                <Collapse.Panel header="General" key="general">
                   <Row
                     style={{ background: '#F9FAFB', marginBottom: '1rem' }}
                     gutter={{ xs: 16, md: 70 }}
@@ -127,9 +128,7 @@ const RatingForm = ({ onCreate, data = {} }) => {
                       >
                         <InputNumber min={1} style={{ width: '100%' }} />
                       </Form.Item>
-                      {/* <Form.Item label="Featured" name="is_featured" valuePropName="checked">
-                <Switch />
-              </Form.Item> */}
+
                       <Form.Item name="background_colour" label="Background Colour">
                         <div style={{ position: 'relative' }}>
                           <div

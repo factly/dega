@@ -12,7 +12,7 @@ import {
   Typography,
   Tooltip,
 } from 'antd';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MediumList from './components/MediumList';
 import { getMedia } from '../../actions/media';
