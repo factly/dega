@@ -14,12 +14,6 @@ const layout = {
     span: 24,
   },
 };
-const tailLayout = {
-  wrapperCol: {
-    offset: 10,
-    span: 14,
-  },
-};
 
 const { Option } = Select;
 

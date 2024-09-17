@@ -1,13 +1,11 @@
 import React from 'react';
-import { Card, Avatar, Row, Col } from 'antd';
-import { InteractionTwoTone, FileTextTwoTone, ApiTwoTone } from '@ant-design/icons';
+import { Card, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+
 const Advanced = (children) => {
   const { Meta } = Card;
-  const gridStyle = {
-    textAlign: 'left',
-  };
+
   return (
     <div>
       <Helmet title={'Advanced'} />

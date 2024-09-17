@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Button, Space, Tag, Table, Typography, ConfigProvider } from 'antd';
+import { Modal, Button, Space, Table, Typography, ConfigProvider } from 'antd';
 import QuickEditIcon from '../../assets/QuickEditIcon';
-import ThreeDotIcon from '../../assets/ThreeDotIcon';
 import { EditOutlined, DeleteOutlined, CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost } from '../../actions/posts';
@@ -17,35 +16,6 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
   const [deleteItemID, setDeleteItemID] = useState(null);
   const history = useNavigate();
 
-  const getTagList = (tagids) => {
-    return tagids?.map((id) => (
-      <Link
-        to={
-          format.slug === 'article'
-            ? `/posts?tag=${id}&format=${format.id}`
-            : `/fact-checks?tag=${id}&format=${format.id}`
-        }
-      >
-        <Tag key={id}>{data.tags[id].name}</Tag>
-      </Link>
-    ));
-  };
-  const getCategoryList = (catIds) => {
-    return catIds?.map((id) => (
-      <Link
-        to={
-          format.slug === 'article'
-            ? `/posts?category=${id}&format=${format.id}`
-            : `/fact-checks?category=${id}&format=${format.id}`
-        }
-      >
-        <Tag key={id}>{data.categories[id].name}</Tag>
-      </Link>
-    ));
-  };
-  // const getAuthorsList = (ids) => {
-  //   return ids?.map((id) => <span>{data.authors[id].display_name}</span>);
-  // };
   const authors = useSelector((state) => state.authors.details);
   const columns = [
     {
@@ -57,7 +27,6 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
         <Link
           to={format.slug === 'article' ? `/posts/${item.id}/edit` : `/fact-checks/${item.id}/edit`}
         >
-          {/* <p style={{ fontSize: '1rem', fontWeight: 500 }}></p> */}
           <Typography.Text
             style={{
               fontSize: '1rem',
@@ -76,14 +45,6 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
           ) : item.status === 'ready' ? (
             <CheckOutlined style={{ color: '#101828', marginLeft: '10px', fontSize: '14px' }} />
           ) : null}
-          {/*
-          {item.published_date && (
-            <p style={{ color: 'CaptionText' }}>
-              Published on {dayjs(item.published_date).format('MMMM Do YYYY')}
-            </p>
-          )}
-          <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p>
-          */}
         </Link>
       ),
     },
@@ -132,7 +93,6 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
     {
       title: 'Actions',
       dataIndex: 'actions',
-      // fixed: 'right',
       width: 200,
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
@@ -167,9 +127,12 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               />
               <Button
                 size="large"
-                icon={<DeleteOutlined style={{ color: '#fff',backgroundColor: 'red', borderColor: 'red' }}
-                 />}
-                 style={{
+                icon={
+                  <DeleteOutlined
+                    style={{ color: '#fff', backgroundColor: 'red', borderColor: 'red' }}
+                  />
+                }
+                style={{
                   backgroundColor: 'red',
                   borderColor: 'red',
                   color: '#fff',
@@ -181,14 +144,6 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 }}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               />
-              {/* <Button
-                size="large"
-                icon={<ThreeDotIcon style={{ color: '#858585' }} />}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  alert('this do nothing');
-                }}
-              /> */}
             </div>
           </ConfigProvider>
         );
@@ -212,24 +167,23 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
           columns={columns}
           rowKey={(record) => record.id}
           loading={data.loading}
-          onRow={(record, rowIndex) => {
+          onRow={(record) => {
             return {
-              onClick: (event) => {
+              onClick: () => {
                 history(
                   format.slug === 'article'
                     ? `/posts/${record.id}/edit`
                     : `/fact-checks/${record.id}/edit`,
                 );
               },
-              onMouseEnter: (event) => {
+              onMouseEnter: () => {
                 document.body.style.cursor = 'pointer';
               },
-              onMouseLeave: (event) => {
+              onMouseLeave: () => {
                 document.body.style.cursor = 'default';
               },
             };
           }}
-          // style={{ maxWidth: '100vw', overflowX: 'auto' }}
           scroll={{
             x: '1000',
           }}
