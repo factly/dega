@@ -1,13 +1,11 @@
 import React from 'react';
-import { Card, Avatar, Row, Col } from 'antd';
-import { UserOutlined, EyeTwoTone, UsergroupAddOutlined } from '@ant-design/icons';
+import { Card, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+
 const Members = (children) => {
   const { Meta } = Card;
-  const gridStyle = {
-    textAlign: 'left',
-  };
+
   return (
     <div>
       <Row gutter={[16, 24]}>

@@ -1,16 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Form,
-  Input,
-  InputNumber,
-  Space,
-  Radio,
-  Row,
-  Col,
-  ConfigProvider,
-  Collapse,
-} from 'antd';
+import { Button, Form, InputNumber, Space, Radio, Row, Col, ConfigProvider, Collapse } from 'antd';
 import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Audio from './Audio';
@@ -24,12 +13,6 @@ const layout = {
   },
   wrapperCol: {
     span: 24,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 10,
-    span: 14,
   },
 };
 

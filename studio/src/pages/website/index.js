@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Avatar, Row, Col } from 'antd';
+import { Card, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 

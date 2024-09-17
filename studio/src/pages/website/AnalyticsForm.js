@@ -28,9 +28,6 @@ function AnalyticsForm() {
     return <RecordNotFound />;
   }
 
-  const onReset = () => {
-    form.resetFields();
-  };
   return (
     <ConfigProvider
       theme={{
@@ -49,7 +46,6 @@ function AnalyticsForm() {
         name="create-space"
         onFinish={(values) => {
           onCreate(values);
-          //  onReset();
         }}
         scrollToFirstError={true}
         onFinishFailed={(errors) => {}}

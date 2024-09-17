@@ -1,32 +1,11 @@
 import React from 'react';
-import { Button, Form, Input, Space, Switch, Checkbox, Row, Col, ConfigProvider } from 'antd';
+import { Button, Form, Input, Switch, Checkbox, Row, Col, ConfigProvider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEvents } from '../../../actions/events';
 import deepEqual from 'deep-equal';
 import { getEventName } from '../../../utils/event';
 
-const tailLayout = {
-  wrapperCol: {
-    offset: 10,
-    span: 14,
-  },
-};
-
 const WebhookForm = ({ onCreate, data = {} }) => {
-  const layout = {
-    labelCol: {
-      span: data?.id ? 5 : 8,
-    },
-    wrapperCol: {
-      span: 10,
-    },
-  };
-  const buttonLayout = {
-    wrapperCol: {
-      offset: data?.id ? 1 : 2,
-      span: 10,
-    },
-  };
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
   const dispatch = useDispatch();
@@ -38,7 +17,7 @@ const WebhookForm = ({ onCreate, data = {} }) => {
     let details = [];
     let ids = [];
 
-    for (var i = 1; i <= filters.page; i++) {
+    for (let i = 1; i <= filters.page; i++) {
       let j = state.events.req.findIndex((item) => deepEqual(item.query, { ...filters, page: i }));
       if (j > -1) {
         ids = ids.concat(state.events.req[j].data);

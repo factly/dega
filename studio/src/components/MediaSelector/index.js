@@ -3,7 +3,7 @@ import { Modal, Button, Radio, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import MediaUploader from './UploadMedium';
 import MediaList from './MediaList';
-import { getMedium, getMedia } from '../../actions/media';
+import { getMedium } from '../../actions/media';
 import ImagePlaceholder from '../ErrorsAndImage/PlaceholderImage';
 import { DeleteOutlined } from '@ant-design/icons';
 
@@ -22,9 +22,7 @@ function MediaSelector({
   const medium = useSelector((state) => {
     return state.media.details[value] || null;
   });
-  const { media, loading } = useSelector((state) => {
-    return { media: state.media, loading: state.media.loading };
-  });
+
   const setValue = () => {
     value = null;
   };

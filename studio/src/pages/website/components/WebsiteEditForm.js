@@ -17,9 +17,6 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const orgs = useSelector((state) => state.spaces.orgs);
   const currentSpaceID = useSelector((state) => state.spaces.selected);
-  const onReset = () => {
-    form.resetFields();
-  };
 
   const [valueChange, setValueChange] = React.useState(false);
   const { Panel } = Collapse;
@@ -45,14 +42,8 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
             values.meta_fields = getJsonValue(values.meta_fields);
           }
           onCreate(values);
-          // onReset();
         }}
         scrollToFirstError={true}
-        onFinishFailed={(errors) => {
-          //let name = errors.errorFields[0].name[0];
-          // if (['name', 'slug'].includes(name)) {
-          // }
-        }}
         onValuesChange={() => {
           setValueChange(true);
         }}
