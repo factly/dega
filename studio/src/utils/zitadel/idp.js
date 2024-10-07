@@ -8,7 +8,6 @@ import {
   createSession,
   registerUser,
   initiateGoogleSignIn,
-  getAuthRequestDetails,
   finalizeAuthRequest,
 } from '../../actions/idp';
 

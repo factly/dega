@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-  import QRCode from 'qrcode.react';
-  const QRCode = require('qrcode.react');
+import { QRCodeCanvas } from 'qrcode.react';
 
 export { startTOTPRegistration, verifyTOTPRegistration } from '../../actions/mfa';
 export { checkTOTP } from '../../actions/mfa';
@@ -29,7 +28,7 @@ export const TOTPSetupComponent = ({ uri, secret, onVerify }) => {
         Scan this QR code with your authenticator app:
       </p>
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-        <QRCode value={uri} />
+        <QRCodeCanvas value={uri} />
       </div>
       <p style={{ marginBottom: '16px', textAlign: 'center' }}>
         Or enter this secret manually: <strong>{secret}</strong>

@@ -107,23 +107,33 @@ const RegistrationForm = () => {
       localStorage.setItem('sessionId', sessionData.sessionId);
       localStorage.setItem('sessionToken', verificationData.sessionToken);
 
-      const totpData = await startTOTPRegistration(
-        registerData.userId,
-        verificationData.sessionToken,
-      );
-      setTotpUri(totpData.uri);
-      setTotpSecret(totpData.secret);
-      setStep('mfa-setup');
+      setStep('mfa-choice');
     } catch (error) {
       console.error('Error:', error);
       setError(error.message || 'An unexpected error occurred');
     }
   };
 
+  const handleMfaChoice = async (choice) => {
+    if (choice === 'proceed') {
+      try {
+        const totpData = await startTOTPRegistration(userId, sessionToken);
+        setTotpUri(totpData.uri);
+        setTotpSecret(totpData.secret);
+        setStep('mfa-setup');
+      } catch (error) {
+        console.error('Error starting TOTP registration:', error);
+        setError('Failed to start MFA setup. Please try again.');
+      }
+    } else {
+      completeRegistration();
+    }
+  };
+
   const handleSkipMfa = () => {
     completeRegistration();
   };
-
+  
   const completeRegistration = async () => {
     try {
       if (authRequestId) {
@@ -177,7 +187,7 @@ const RegistrationForm = () => {
       <div style={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ width: '100%', maxWidth: '400px', padding: '0 32px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '24px', textAlign: 'center', color: '#333' }}>
-            {step === 'registration' ? 'Registration' : step === 'mfa-setup' ? 'Set up Two-Factor Authentication' : 'Verify Two-Factor Authentication'}
+            {step === 'registration' ? 'Registration' : step === 'mfa-choice' ? 'Two-Factor Authentication' : step === 'mfa-setup' ? 'Set up Two-Factor Authentication' : 'Verify Two-Factor Authentication'}
           </h2>
 
           {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>}
@@ -206,14 +216,51 @@ const RegistrationForm = () => {
             </form>
           )}
 
+          {step === 'mfa-choice' && (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <p style={{ marginBottom: '16px', textAlign: 'center' }}>
+                Would you like to set up Two-Factor Authentication?
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                <button
+                  onClick={() => handleMfaChoice('proceed')}
+                  style={{
+                    width: '48%',
+                    padding: '10px',
+                    backgroundColor: '#1E1E1E',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Set up MFA
+                </button>
+                <button
+                  onClick={() => handleMfaChoice('skip')}
+                  style={{
+                    width: '48%',
+                    padding: '10px',
+                    backgroundColor: '#6B7280',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Skip
+                </button>
+              </div>
+            </div>
+          )}
+
           {(step === 'mfa-setup' || step === 'mfa-verify') && (
             <>
               <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaVerify} />
-              <div style={{ marginTop: '16px' }}>
-                <button onClick={handleSkipMfa} style={{ width: '100%', padding: '10px', backgroundColor: '#6B7280', color: 'white', fontWeight: 'bold', border: 'none', borderRadius: '4px', fontSize: '16px', cursor: 'pointer' }}>
-                  Skip Two-Factor Authentication
-                </button>
-              </div>
             </>
           )}
 

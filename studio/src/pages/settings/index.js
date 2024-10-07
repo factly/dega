@@ -10,6 +10,7 @@ import {
   EyeTwoTone,
   InteractionTwoTone,
   FileTextTwoTone,
+  SafetyCertificateTwoTone,
 } from '@ant-design/icons';
 
 import Website from '../website/index.js';
@@ -77,6 +78,18 @@ const settings = [
         avatar: () => (
           <Avatar
             icon={<FundTwoTone twoToneColor="#fb2d8d" />}
+            style={{ backgroundColor: '#E8EFF2' }}
+          />
+        ),
+      },
+      {
+        name: 'Password and Authentication',
+        keywords: ['site', 'code', 'injection', 'custom', 'javascript', 'css', 'html'],
+        description: 'Enable Two Factor Authentication',
+        url: '/website/authentication',
+        avatar: () => (
+          <Avatar
+            icon={<SafetyCertificateTwoTone twoToneColor="#ff0000" />}
             style={{ backgroundColor: '#E8EFF2' }}
           />
         ),
