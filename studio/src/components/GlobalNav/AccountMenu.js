@@ -4,6 +4,8 @@ import React from 'react';
 import { LogoutOutlined, DownOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserProfile } from '../../actions/profile';
+import { Link } from 'react-router-dom';
+import { EditOutlined } from '@ant-design/icons';
 
 const AccountMenu = () => {
   const { profile, loading } = useSelector((state) => {
@@ -42,7 +44,7 @@ const AccountMenu = () => {
           console.log('Logout successful');
 
 
-        
+
         } else {
           console.error('Logout failed:', await response.text());
         }
@@ -65,6 +67,11 @@ const AccountMenu = () => {
 
   const accountMenu = (
     <Menu>
+      <Menu.Item key="profile">
+        <Link to="/profile">
+          <EditOutlined /> Profile
+        </Link>
+      </Menu.Item>
       <Menu.Item key="logout">
         <Button onClick={handleLogout} icon={<LogoutOutlined />} danger>
           Logout
