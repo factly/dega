@@ -114,7 +114,8 @@ import EditWebsite from '../pages/website/EditWebsite';
 import CodeInjection from '../pages/website/CodeInjection';
 import Branding from '../pages/website/Branding';
 import AnalyticsForm from '../pages/website/AnalyticsForm';
-import TwoFactorAuthManagement from '../pages/website/TwoFactorAuthManagement';
+import SecuritySettings from '../pages/website/TwoFactorAuthManagement';
+
 // Advanced
 import Advanced from '../pages/advanced';
 // Members
@@ -261,15 +262,11 @@ const routes = {
       action: 'update',
     },
   },
-  TwoFactorAuthManagement: {
+  SecuritySettings: {
     path: '/settings/website/authentication',
     menuKey: '/website',
-    Component: TwoFactorAuthManagement,
+    Component: SecuritySettings,
     title: 'Authentication',
-    // permission: {
-    //   resource: 'spaces',
-    //   action: 'update',
-    // },
   },
   branding: {
     path: '/settings/website/branding',

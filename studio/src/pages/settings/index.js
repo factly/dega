@@ -85,7 +85,7 @@ const settings = [
       {
         name: 'Password and Authentication',
         keywords: ['site', 'code', 'injection', 'custom', 'javascript', 'css', 'html'],
-        description: 'Enable Two Factor Authentication',
+        description: 'Reset Password. Enable/Disable 2FA',
         url: '/website/authentication',
         avatar: () => (
           <Avatar
