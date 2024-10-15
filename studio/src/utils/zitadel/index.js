@@ -17,7 +17,7 @@ export const login = async () => {
     localStorage.setItem('auth_state', state);
 
     const authorizeURL =
-      `${window.DEGA_PUBLIC_URL}/test/authorize?` +
+      `${window.DEGA_PUBLIC_URL}/auth/request?` +
       `client_id=${encodeURIComponent(window.REACT_APP_ZITADEL_CLIENT_ID)}` +
       `&response_type=code` +
       `&response_mode=query` +
@@ -48,7 +48,7 @@ export const getToken = (code) =>
       code,
       client_id: window.REACT_APP_ZITADEL_CLIENT_ID,
       redirect_uri: window.REACT_APP_ZITADEL_REDIRECT_URI,
-      code_verifier: localStorage.getItem('code_verifier'),   
+      code_verifier: localStorage.getItem('code_verifier'),
       grant_type: 'authorization_code',
     }).toString(),
     credentials: 'include',
@@ -65,11 +65,11 @@ export const getToken = (code) =>
       };
     });
 
-export const getUserInfo = () =>
-  fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
+export const getUserInfo = () => {
+  return fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
     },
     credentials: 'include',
   })
@@ -88,7 +88,7 @@ export const getUserInfo = () =>
         error: 'Error fetching user info',
       };
     });
-
+};
 const generateCodeChallenge = (codeVerifier) => {
   const encoder = new TextEncoder();
   const data = encoder.encode(codeVerifier);

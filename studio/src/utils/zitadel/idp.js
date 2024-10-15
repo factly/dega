@@ -8,6 +8,7 @@ import {
   createSession,
   registerUser,
   initiateGoogleSignIn,
+  finalizeAuthRequest,
 } from '../../actions/idp';
 
 export const useGoogleSignIn = () => {
@@ -19,17 +20,35 @@ export const useGoogleSignIn = () => {
   const [totpSecret, setTotpSecret] = useState('');
   const [sessionId, setSessionId] = useState('');
   const [sessionToken, setSessionToken] = useState('');
+  const [authRequestId, setAuthRequestId] = useState('');
 
   const params = new URLSearchParams(location.search);
   const intentId = params.get('id');
   const token = params.get('token');
   const userId = params.get('user');
 
+  const setAndStoreSessionToken = (token) => {
+    setSessionToken(token);
+    localStorage.setItem('sessionToken', token);
+  };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const authRequest = searchParams.get('authRequest');
+    if (authRequest) {
+    } else {
+      const storedAuthRequestId = localStorage.getItem('authRequestId');
+      if (storedAuthRequestId) {
+        setAuthRequestId(storedAuthRequestId);
+      }
+    }
+  }, [location]);
+
   useEffect(() => {
     if (intentId && token) {
       handleProviderInformation(intentId, token);
     }
-  }, [location]);
+  }, [intentId, token]);
 
   const handleProviderInformation = async (intentId, token) => {
     try {
@@ -68,7 +87,7 @@ export const useGoogleSignIn = () => {
       await linkExistingUser(existingUser.userId, providerData);
       const sessionData = await createSession(existingUser.userId);
       setSessionId(sessionData.sessionId);
-      setSessionToken(sessionData.sessionToken);
+      setAndStoreSessionToken(sessionData.sessionToken);
       setStep('mfa-verify');
     } catch (error) {
       console.error('Error handling existing user:', error);
@@ -80,7 +99,7 @@ export const useGoogleSignIn = () => {
     try {
       const sessionData = await createSession(userId, intentId, token);
       setSessionId(sessionData.sessionId);
-      setSessionToken(sessionData.sessionToken);
+      setAndStoreSessionToken(sessionData.sessionToken);
       setStep('mfa-verify');
     } catch (error) {
       console.error('Error:', error);
@@ -95,12 +114,9 @@ export const useGoogleSignIn = () => {
 
       const sessionData = await createSession(newUserData.userId, intentId, token);
       setSessionId(sessionData.sessionId);
-      setSessionToken(sessionData.sessionToken);
+      setAndStoreSessionToken(sessionData.sessionToken);
 
-      const totpData = await startTOTPRegistration(
-        newUserData.userId,
-        window.REACT_APP_ZITADEL_PAT,
-      );
+      const totpData = await startTOTPRegistration(newUserData.userId, sessionData.sessionToken);
       setTotpUri(totpData.uri);
       setTotpSecret(totpData.secret);
       setStep('mfa-setup');
@@ -114,7 +130,7 @@ export const useGoogleSignIn = () => {
     try {
       const userId = localStorage.getItem('userId');
       await verifyTOTPRegistration(userId, sessionToken, code);
-      navigate('/');
+      await completeAuthentication();
     } catch (error) {
       console.error('Error verifying MFA:', error);
       setError('Failed to verify MFA. Please try again.');
@@ -125,8 +141,8 @@ export const useGoogleSignIn = () => {
     try {
       const result = await checkTOTP(sessionId, sessionToken, code);
       if (result.sessionToken) {
-        localStorage.setItem('sessionToken', result.sessionToken);
-        navigate('/');
+        setAndStoreSessionToken(result.sessionToken);
+        await completeAuthentication(sessionId, result.sessionToken);
       } else {
         setError('Invalid MFA code. Please try again.');
       }
@@ -136,9 +152,53 @@ export const useGoogleSignIn = () => {
     }
   };
 
+  const handleskipGoogleMfa = async () => {
+    try {
+      const currentSessionToken = localStorage.getItem('sessionToken');
+      if (!currentSessionToken) {
+        throw new Error('No session token found');
+      }
+      await completeAuthentication(sessionId, currentSessionToken);
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An unexpected error occurred while skipping MFA');
+    }
+  };
+
+  const completeAuthentication = async (currentSessionId, currentSessionToken) => {
+    try {
+      if (!currentSessionToken) {
+        throw new Error('Session information is missing');
+      }
+
+      const storedAuthRequestId = authRequestId || localStorage.getItem('authRequestId');
+      if (storedAuthRequestId) {
+        const finalizeResult = await finalizeAuthRequest(
+          storedAuthRequestId,
+          currentSessionId,
+          currentSessionToken,
+        );
+        if (finalizeResult.callbackUrl) {
+          localStorage.removeItem('authRequestId');
+          window.location.href = finalizeResult.callbackUrl;
+        } else {
+          console.error('No callback URL in the response');
+          setError('Authentication successful, but redirect failed. Please try again.');
+        }
+      }
+    } catch (error) {
+      console.error('Error completing authentication:', error);
+      setError('An error occurred while completing authentication. Please try again.');
+    }
+  };
+
   const handleGoogleSignIn = async () => {
     try {
       const data = await initiateGoogleSignIn(window.PUBLIC_URL);
+      const storedAuthRequestId = localStorage.getItem('authRequestId');
+      if (storedAuthRequestId) {
+        data.authUrl += `&authRequest=${storedAuthRequestId}`;
+      }
       window.location.href = data.authUrl;
     } catch (error) {
       console.error('Error:', error);
@@ -154,5 +214,6 @@ export const useGoogleSignIn = () => {
     totpSecret,
     handleMfaSetup,
     handleMfaVerify,
+    handleskipGoogleMfa,
   };
 };

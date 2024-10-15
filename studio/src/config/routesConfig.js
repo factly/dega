@@ -114,6 +114,8 @@ import EditWebsite from '../pages/website/EditWebsite';
 import CodeInjection from '../pages/website/CodeInjection';
 import Branding from '../pages/website/Branding';
 import AnalyticsForm from '../pages/website/AnalyticsForm';
+import SecuritySettings from '../pages/website/TwoFactorAuthManagement';
+
 // Advanced
 import Advanced from '../pages/advanced';
 // Members
@@ -129,9 +131,9 @@ import Callback from '../pages/redirect';
 import Tokens from '../pages/tokens';
 import CreateSpaceTokenForm from '../pages/tokens/components/CreateToken';
 
+//Login
 import RegistrationForm from '../utils/zitadel/registration.js';
 import LoginEmail from '../utils/zitadel/login';
-import ForgotPassword from '../utils/zitadel/forgotPassword';
 
 export function extractV6RouteObject(formats, setReloadFlag, reloadFlag) {
   const extractedRoutes = [];
@@ -259,6 +261,12 @@ const routes = {
       resource: 'spaces',
       action: 'update',
     },
+  },
+  SecuritySettings: {
+    path: '/settings/website/authentication',
+    menuKey: '/website',
+    Component: SecuritySettings,
+    title: 'Authentication',
   },
   branding: {
     path: '/settings/website/branding',
@@ -809,19 +817,13 @@ const routes = {
     path: 'auth/registration',
     menuKey: 'auth/registration',
     Component: RegistrationForm,
-    title: 'Registration Form', 
+    title: 'Registration Form',
   },
   login: {
     path: '/auth/login',
     menuKey: '/auth/login',
     Component: LoginEmail,
     title: 'Login Email',
-  },
-  forgotPassword: {
-    path: '/login/forgotpassword',
-    menuKey: '/login/forgotpassword',
-    Component: ForgotPassword,
-    title: 'Forgot Password',
   },
   redirect: {
     path: '/redirect',

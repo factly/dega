@@ -36,6 +36,7 @@
     "jest-sonar-reporter": "^2.0.0",
     "monaco-editor": "^0.25.2",
     "playwright": "^1.44.1",
+    "qrcode.react": "^4.0.1",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",

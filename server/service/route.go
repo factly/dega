@@ -69,7 +69,7 @@ func RegisterRoutes() http.Handler {
 	zitadelIssuer := "https://develop-xtjn2g.zitadel.cloud"
 	svcUserID := "274895832157825159"
 
-	r.Get("/test/authorize", GetAuthorizationProxyHandler(zitadelIssuer, svcUserID))
+	r.Get("/auth/request", GetAuthorizationProxyHandler(zitadelIssuer, svcUserID))
 
 	r.With(config.ZitadelInterceptor.RequireAuthorization(), util.CheckUser(config.ZitadelInterceptor)).Group(func(r chi.Router) {
 		r.Mount("/core", core.Router())

@@ -1,3 +1,4 @@
+const userId = localStorage.getItem('userId');
 export const requestPasswordReset = async (userId) => {
   const response = await fetch(
     `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/password_reset`,
@@ -13,7 +14,7 @@ export const requestPasswordReset = async (userId) => {
           notificationType: 'NOTIFICATION_TYPE_Email',
         },
       }),
-    }
+    },
   );
 
   if (!response.ok) {
@@ -40,7 +41,7 @@ export const resetPassword = async (userId, newPassword, verificationCode) => {
         },
         verificationCode: verificationCode,
       }),
-    }
+    },
   );
 
   if (!response.ok) {
