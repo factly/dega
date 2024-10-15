@@ -1,0 +1,136 @@
+.security-container {
+  width: 100%;
+  height: 100vh;
+  padding: 64px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.security-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.success-message,
+.error-message {
+  border: 1px solid;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.success-message {
+  background-color: #d1fae5;
+  color: #059669;
+  border-color: #059669;
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+.security-sections {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  margin-top: 16px;
+}
+
+.security-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.toggle-password-btn {
+  font-size: 14px;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.toggle-password-btn:hover {
+  color: #1f2937;
+}
+
+.section-divider {
+  height: 1px;
+  width: 100%;
+  background-color: #d1d5db;
+  border: 0;
+  margin: 16px 0;
+}
+
+.password-change-form {
+  width: 33.333%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.password-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.change-password-btn,
+.enable-2fa-btn {
+  width: 33.333%;
+  background-color: #1e1e1e;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.disable-2fa-btn {
+  width: 33.333%;
+  background-color: #dc2626;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.status-enabled {
+  background-color: #d1fae5;
+  color: #059669;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #059669;
+}
+
+@media (max-width: 768px) {
+  .security-container {
+    padding: 32px 16px;
+  }
+
+  .password-change-form,
+  .change-password-btn,
+  .enable-2fa-btn,
+  .disable-2fa-btn {
+    width: 100%;
+  }
+}

@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card, Form, Input, Button, DatePicker, Radio, Row, Col, message } from 'antd';
 import dayjs from 'dayjs';
 import MediaSelector from '../../components/MediaSelector';
 import { maker } from '../../utils/sluger';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserProfile } from '../../actions/profile';
+import { useSelector } from 'react-redux';
 import { SlugInput } from '../../components/FormItems';
 import { Helmet } from 'react-helmet';
 
 function Profile() {
   const [form] = Form.useForm();
-  const dispatch = useDispatch();
   const [valueChange, setValueChange] = useState(false);
 
   const { profile, loading } = useSelector((state) => ({
     profile: state.profile.details || null,
     loading: state.profile.loading,
   }));
-
 
   const updateZitadelProfile = async (values) => {
     try {
@@ -43,16 +40,18 @@ function Profile() {
       const response = await fetch(apiUrl, {
         method: 'PUT',
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+          Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
         },
         body: JSON.stringify(zitadelData),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        const errorMessage = errorData.message ? errorData.message.split('(')[0].trim() : 'Failed to update profile';
+        const errorMessage = errorData.message
+          ? errorData.message.split('(')[0].trim()
+          : 'Failed to update profile';
         throw new Error(errorMessage);
       }
 
@@ -103,25 +102,29 @@ function Profile() {
               <Form.Item
                 label="First Name"
                 name="first_name"
-                rules={[{ required: true, message: 'Please input your first name!' }]}
+                rules={[{ required: false, message: 'Please input your first name!' }]}
               >
                 <Input placeholder="First Name" />
               </Form.Item>
               <Form.Item
                 label="Last Name"
                 name="last_name"
-                rules={[{ required: true, message: 'Please input your last name!' }]}
+                rules={[{ required: false, message: 'Please input your last name!' }]}
               >
                 <Input placeholder="Last name" />
               </Form.Item>
-              <Form.Item name="display_name" label="Display Name">
+              <Form.Item
+                name="display_name"
+                label="Display Name"
+                rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
+              >
                 <Input placeholder="Display name" onChange={(e) => onNameChange(e.target.value)} />
               </Form.Item>
               <SlugInput inputProps={{ placeholder: 'slug' }} />
               <Form.Item
                 label="Birthdate"
                 name="birth_date"
-                rules={[{ type: 'object', required: true, message: 'Please select time!' }]}
+                rules={[{ type: 'object', required: false, message: 'Please select time!' }]}
               >
                 <DatePicker />
               </Form.Item>

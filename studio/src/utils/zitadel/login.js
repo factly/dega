@@ -70,12 +70,15 @@ const Login = () => {
   }, [googleStep]);
 
   const getAuthMethods = async (userId) => {
-    const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/authentication_methods`, {
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`,
+    const response = await fetch(
+      `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/authentication_methods`,
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+        },
       },
-    });
+    );
     if (!response.ok) {
       throw new Error('Failed to fetch authentication methods');
     }
@@ -108,14 +111,16 @@ const Login = () => {
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     setError('');
-  
+
     try {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
       const result = await verifyPassword(sessionId, sessionData.token, password);
       localStorage.setItem('sessionToken', result.sessionToken);
-  
       const authMethods = await getAuthMethods(userId);
-      if (authMethods.authMethodTypes && authMethods.authMethodTypes.includes('AUTHENTICATION_METHOD_TYPE_TOTP')) {
+      if (
+        authMethods.authMethodTypes &&
+        authMethods.authMethodTypes.includes('AUTHENTICATION_METHOD_TYPE_TOTP')
+      ) {
         setStep('mfa');
       } else {
         await finalizeLogin(result.sessionToken);
@@ -199,7 +204,6 @@ const Login = () => {
     try {
       await checkUserExists(email);
       const userId = localStorage.getItem('userId');
-      console.log('userId', userId);
       await requestPasswordReset(userId);
       setStep('reset-verify');
     } catch (error) {
@@ -283,70 +287,171 @@ const Login = () => {
   );
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden', display: 'flex' }}>
-      <div style={{ width: '50%', height: '100%', backgroundColor: '#f0f0f0', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100vh',
+        overflow: 'hidden',
+        display: 'flex',
+      }}
+    >
+      <div
+        style={{
+          width: '50%',
+          height: '100%',
+          backgroundColor: '#f0f0f0',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         <img
           src={degaImage}
           alt="DEGA"
-          style={{ width: '40%', height: '40%', objectFit: 'contain', position: 'absolute', top: '35%', transform: 'translateY(-50%)' }}
+          style={{
+            width: '40%',
+            height: '40%',
+            objectFit: 'contain',
+            position: 'absolute',
+            top: '35%',
+            transform: 'translateY(-50%)',
+          }}
         />
-        <div style={{ position: 'absolute', bottom: '5%', left: '45%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '5%',
+            left: '45%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           <h1 style={{ fontSize: '38px', fontWeight: 'bold', color: '#333' }}>DEGA</h1>
         </div>
       </div>
-      <div style={{ width: '50%', height: '100%', backgroundColor: 'white', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+      <div
+        style={{
+          width: '50%',
+          height: '100%',
+          backgroundColor: 'white',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+        }}
+      >
         <div style={{ width: '100%', maxWidth: '400px', padding: '0 32px' }}>
           {step !== 'email' && <BackArrowButton onClick={resetLoginProcess} />}
-          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '24px', textAlign: 'center', color: '#333' }}>
+          <h2
+            style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              marginBottom: '24px',
+              textAlign: 'center',
+              color: '#333',
+            }}
+          >
             {step === 'email'
               ? 'Login'
               : step === 'password'
-                ? 'Enter Password'
-                : step === 'mfa'
-                  ? 'MFA Verification'
-                  : step === 'mfa-setup'
-                    ? 'Set up Two-Factor Authentication'
-                    : step === 'mfa-verify'
-                      ? 'Verify Two-Factor Authentication'
-                      : step === 'reset-request'
-                        ? 'Reset Password'
-                        : step === 'reset-verify'
-                          ? 'Enter Verification Code'
-                          : 'Login'}
+              ? 'Enter Password'
+              : step === 'mfa'
+              ? 'MFA Verification'
+              : step === 'mfa-setup'
+              ? 'Set up Two-Factor Authentication'
+              : step === 'mfa-verify'
+              ? 'Verify Two-Factor Authentication'
+              : step === 'reset-request'
+              ? 'Reset Password'
+              : step === 'reset-verify'
+              ? 'Enter Verification Code'
+              : 'Login'}
           </h2>
-          {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>}
-          {step === 'email' && <EmailStep email={email} setEmail={setEmail} handleEmailSubmit={handleEmailSubmit} handleGoogleSignIn={handleGoogleSignIn} />}
-          {step === 'password' && <PasswordStep password={password} setPassword={setPassword} handlePasswordSubmit={handlePasswordSubmit} />}
+          {error && (
+            <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
+          )}
+          {step === 'email' && (
+            <EmailStep
+              email={email}
+              setEmail={setEmail}
+              handleEmailSubmit={handleEmailSubmit}
+              handleGoogleSignIn={handleGoogleSignIn}
+            />
+          )}
+          {step === 'password' && (
+            <PasswordStep
+              password={password}
+              setPassword={setPassword}
+              handlePasswordSubmit={handlePasswordSubmit}
+            />
+          )}
           {step === 'mfa' && (
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              gap: '20px'
-            }}>
-              <MfaStep totpCode={totpCode} setTotpCode={setTotpCode} handleMfaSubmit={handleMfaSubmit} />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                gap: '20px',
+              }}
+            >
+              <MfaStep
+                totpCode={totpCode}
+                setTotpCode={setTotpCode}
+                handleMfaSubmit={handleMfaSubmit}
+              />
               <button onClick={handleSkipMfa}>Skip</button>
             </div>
           )}
-          {step === 'mfa-setup' && <MfaSetupStep uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />}
-          {step === 'mfa-verify' && <MfaVerifyStep mfaCode={mfaCode} setMfaCode={setMfaCode} handleMfaVerify={handleMfaVerify} />}
-          {step === 'reset-request' && <ResetRequestStep email={email} handleRequestReset={handleRequestReset} />}
-          {step === 'reset-request2' && <ResetRequestStep2 email={email} handleRequestReset={handleRequestResetEmail} />}
-          {step === 'reset-verify' && <ResetVerifyStep verificationCode={verificationCode} setVerificationCode={setVerificationCode} newPassword={newPassword} setNewPassword={setNewPassword} handleResetPassword={handleResetPassword} />}
+          {step === 'mfa-setup' && (
+            <MfaSetupStep uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />
+          )}
+          {step === 'mfa-verify' && (
+            <MfaVerifyStep
+              mfaCode={mfaCode}
+              setMfaCode={setMfaCode}
+              handleMfaVerify={handleMfaVerify}
+            />
+          )}
+          {step === 'reset-request' && (
+            <ResetRequestStep email={email} handleRequestReset={handleRequestReset} />
+          )}
+          {step === 'reset-request2' && (
+            <ResetRequestStep2 email={email} handleRequestReset={handleRequestResetEmail} />
+          )}
+          {step === 'reset-verify' && (
+            <ResetVerifyStep
+              verificationCode={verificationCode}
+              setVerificationCode={setVerificationCode}
+              newPassword={newPassword}
+              setNewPassword={setNewPassword}
+              handleResetPassword={handleResetPassword}
+            />
+          )}
 
           <div style={{ textAlign: 'center' }}>
             {step === 'email' && (
               <>
                 <span>
                   Don't have an account?{' '}
-                  <Link to={`/auth/registration?authRequest=${authRequestId}`} style={{ color: '#1E1E1E', textDecoration: 'none' }}>
+                  <Link
+                    to={`/auth/registration?authRequest=${authRequestId}`}
+                    style={{ color: '#1E1E1E', textDecoration: 'none' }}
+                  >
                     Sign up
                   </Link>
                 </span>
                 <div style={{ marginTop: '10px' }}>
-                  <span onClick={() => setStep('reset-request')} style={{ color: '#1E1E1E', textDecoration: 'none', cursor: 'pointer' }}>
+                  <span
+                    onClick={() => setStep('reset-request')}
+                    style={{ color: '#1E1E1E', textDecoration: 'none', cursor: 'pointer' }}
+                  >
                     Forgot Password?
                   </span>
                 </div>
@@ -354,7 +459,10 @@ const Login = () => {
             )}
             {step === 'password' && (
               <div style={{ marginTop: '10px' }}>
-                <span onClick={() => setStep('reset-request')} style={{ color: '#1E1E1E', textDecoration: 'none', cursor: 'pointer' }}>
+                <span
+                  onClick={() => setStep('reset-request')}
+                  style={{ color: '#1E1E1E', textDecoration: 'none', cursor: 'pointer' }}
+                >
                   Forgot Password?
                 </span>
               </div>
