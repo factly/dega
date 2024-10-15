@@ -48,7 +48,7 @@ export const getToken = (code) =>
       code,
       client_id: window.REACT_APP_ZITADEL_CLIENT_ID,
       redirect_uri: window.REACT_APP_ZITADEL_REDIRECT_URI,
-      code_verifier: localStorage.getItem('code_verifier'),   
+      code_verifier: localStorage.getItem('code_verifier'),
       grant_type: 'authorization_code',
     }).toString(),
     credentials: 'include',
@@ -88,8 +88,7 @@ export const getUserInfo = () => {
         error: 'Error fetching user info',
       };
     });
-
-}
+};
 const generateCodeChallenge = (codeVerifier) => {
   const encoder = new TextEncoder();
   const data = encoder.encode(codeVerifier);

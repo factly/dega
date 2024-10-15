@@ -116,10 +116,7 @@ export const useGoogleSignIn = () => {
       setSessionId(sessionData.sessionId);
       setAndStoreSessionToken(sessionData.sessionToken);
 
-      const totpData = await startTOTPRegistration(
-        newUserData.userId,
-        sessionData.sessionToken
-      );
+      const totpData = await startTOTPRegistration(newUserData.userId, sessionData.sessionToken);
       setTotpUri(totpData.uri);
       setTotpSecret(totpData.secret);
       setStep('mfa-setup');
@@ -176,7 +173,11 @@ export const useGoogleSignIn = () => {
 
       const storedAuthRequestId = authRequestId || localStorage.getItem('authRequestId');
       if (storedAuthRequestId) {
-        const finalizeResult = await finalizeAuthRequest(storedAuthRequestId, currentSessionId, currentSessionToken);
+        const finalizeResult = await finalizeAuthRequest(
+          storedAuthRequestId,
+          currentSessionId,
+          currentSessionToken,
+        );
         if (finalizeResult.callbackUrl) {
           localStorage.removeItem('authRequestId');
           window.location.href = finalizeResult.callbackUrl;
@@ -185,7 +186,6 @@ export const useGoogleSignIn = () => {
           setError('Authentication successful, but redirect failed. Please try again.');
         }
       }
-        
     } catch (error) {
       console.error('Error completing authentication:', error);
       setError('An error occurred while completing authentication. Please try again.');

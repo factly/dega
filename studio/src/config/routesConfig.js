@@ -817,7 +817,7 @@ const routes = {
     path: 'auth/registration',
     menuKey: 'auth/registration',
     Component: RegistrationForm,
-    title: 'Registration Form', 
+    title: 'Registration Form',
   },
   login: {
     path: '/auth/login',

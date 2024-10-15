@@ -28,23 +28,23 @@ const AccountMenu = () => {
 
     if (sessionId && sessionToken) {
       try {
-        const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`, {
-          method: 'DELETE',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`,
+        const response = await fetch(
+          `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`,
+          {
+            method: 'DELETE',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+            },
+            body: JSON.stringify({
+              sessionToken: sessionToken,
+            }),
           },
-          body: JSON.stringify({
-            sessionToken: sessionToken,
-          }),
-        });
+        );
 
         if (response.ok) {
           console.log('Logout successful');
-
-
-
         } else {
           console.error('Logout failed:', await response.text());
         }
@@ -53,11 +53,9 @@ const AccountMenu = () => {
       }
     }
 
-
     // Clear local storage and reload the page
     window.localStorage.clear();
-    window.location.reload();// Redirect to the post-logout URL
-
+    window.location.reload(); // Redirect to the post-logout URL
 
     const postLogoutRedirectUri = window.REACT_APP_ZITADEL_POST_LOGOUT_REDIRECT_URI;
     if (postLogoutRedirectUri) {

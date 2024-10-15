@@ -119,7 +119,8 @@ function BasicLayout(props) {
 
   useEffect(() => {
     if (session.details && !session.loading && Object.keys(session.details).length > 0) {
-      dispatch(getSpaces());}
+      dispatch(getSpaces());
+    }
   }, [dispatch, selected, session]);
 
   useEffect(() => {
@@ -175,7 +176,6 @@ function BasicLayout(props) {
   }
   // Render based on permission check
   const missingPermissions = checkPermissions();
-
 
   if (!loading && (!orgs.length || orgs.filter((o) => o.role === 'admin').length === 0)) {
     return (

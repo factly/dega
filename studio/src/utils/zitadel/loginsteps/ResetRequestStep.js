@@ -9,7 +9,20 @@ const ResetRequestStep = ({ email, handleRequestReset }) => {
         </p>
       </div>
       <div>
-        <button type="submit" style={{ width: '100%', padding: '10px', backgroundColor: '#1E1E1E', color: 'white', fontWeight: 'bold', border: 'none', borderRadius: '4px', fontSize: '16px', cursor: 'pointer' }}>
+        <button
+          type="submit"
+          style={{
+            width: '100%',
+            padding: '10px',
+            backgroundColor: '#1E1E1E',
+            color: 'white',
+            fontWeight: 'bold',
+            border: 'none',
+            borderRadius: '4px',
+            fontSize: '16px',
+            cursor: 'pointer',
+          }}
+        >
           Send Verification Code
         </button>
       </div>
