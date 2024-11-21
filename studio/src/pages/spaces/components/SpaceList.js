@@ -20,6 +20,18 @@ function SpaceList() {
     dispatch(getSpaces());
   };
 
+  const formatDate = (dateString) => {
+    const options = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const columns = [
     {
       title: 'ID',
@@ -30,7 +42,7 @@ function SpaceList() {
         return (
           <Link
             style={{
-              marginRight: 8,
+              marginRight: 90,
             }}
             to={`/admin/spaces/${record.id}/edit`}
           >
@@ -42,7 +54,7 @@ function SpaceList() {
       },
     },
     {
-      title: 'Name',
+      title: 'Space name',
       dataIndex: 'name',
       key: 'name',
       width: 200,
@@ -68,6 +80,27 @@ function SpaceList() {
         );
       },
     },
+    {
+      title: 'Created At',
+      dataIndex: 'created_at',
+      key: 'created_at',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
+      render: (_, record) => {
+        return (
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {formatDate(record.created_at)}
+          </Typography.Text>
+        );
+      },
+    },
+
     {
       title: 'Site Address',
       dataIndex: 'site_address',
