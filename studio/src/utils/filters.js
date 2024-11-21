@@ -1,6 +1,6 @@
 class Filters {
   constructor(
-    { q, sort, tag, category, author, status, claimant, rating, podcast, language } = {
+    { q, sort, tag, category, author, status, claimant, rating, podcast, language, year, month } = {
       q: null,
       sort: 'asc',
       tag: [],
@@ -11,6 +11,8 @@ class Filters {
       status: 'all',
       podcast: [],
       language: 'all',
+      year: null,
+      month: null,
     },
   ) {
     this.q = q;
@@ -23,6 +25,8 @@ class Filters {
     this.podcast = podcast;
     this.language = language;
     this.rating = rating;
+    this.year = year; 
+    this.month = month;
   }
 }
 

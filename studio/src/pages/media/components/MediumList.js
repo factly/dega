@@ -15,7 +15,7 @@ function MediumList({ data, filters, setFilters }) {
           xl: 4,
           xxl: 5,
         }}
-        pagination={{
+        pagination={data.total > 0 ? {
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
           current: filters.page,
@@ -24,7 +24,7 @@ function MediumList({ data, filters, setFilters }) {
             setFilters({ ...filters, page: pageNumber || 1, limit: pageSize });
           },
           pageSizeOptions: ['10', '15', '20'],
-        }}
+        } : false}
         dataSource={data.media}
         renderItem={(item) => (
           <List.Item style={{ borderRadius: '8px', margin: 0 }}>
@@ -32,7 +32,6 @@ function MediumList({ data, filters, setFilters }) {
               <Card
                 size="default"
                 key={item.url}
-                // title={item.name}
                 hoverable
                 bodyStyle={{ padding: 0 }}
                 cover={
@@ -43,6 +42,7 @@ function MediumList({ data, filters, setFilters }) {
                         item.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
                       }?gravity:sm/resize:fill:220:220` || ''
                       // 'https://source.unsplash.com/random/?city,night'
+
                     }
                     style={{
                       maxWidth: '100%',

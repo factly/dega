@@ -20,12 +20,13 @@ export const getMedia = (query, profile) => {
         params: query,
       })
       .then((response) => {
-        dispatch(addMedia(response.data.nodes));
+        if (response.data === "") return [];
+        dispatch(addMedia(response?.data?.nodes));
         dispatch(
           addMediaRequest({
-            data: response.data.nodes.map((item) => item.id),
+            data: response?.data?.nodes.map((item) => item.id),
             query: query,
-            total: response.data.total,
+            total: response?.data?.total,
           }),
         );
       })
@@ -59,7 +60,6 @@ export const createMedium = (data, profile) => {
     return axios
       .post(MEDIA_API, profile ? data[0] : data)
       .then((response) => {
-        dispatch(resetMedia());
         dispatch(addSuccessNotification('Medium created'));
         return profile ? response.data : response.data.nodes[0];
       })
