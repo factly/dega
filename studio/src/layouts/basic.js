@@ -241,23 +241,6 @@ function BasicLayout(props) {
     );
   }
 
-  if (!loading && existingSpaces?.length === 0) {
-    return (
-      <>
-        <Result
-          status="403"
-          title="You do not have any space created."
-          subTitle="Please create one to explore more of Dega."
-          extra={
-            <Button type="primary" onClick={handleClick}>
-              Create Space
-            </Button>
-          }
-        />
-      </>
-    );
-  }
-
   return (
     <ConfigProvider
       theme={{

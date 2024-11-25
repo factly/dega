@@ -91,6 +91,21 @@ function Selector({
     dispatch(selectorType['get' + action](query));
   };
 
+  // Helper function to safely get display value
+  const getDisplayValue = (item) => {
+    if (!item) return '';
+    if (item[display]) return item[display];
+    if (item['email']) return item['email'];
+    return '';
+  };
+
+  // Updated filterOption function with null checks
+  const handleFilterOption = (input, option) => {
+    if (!input || !option?.props?.children) return false;
+    const childText = String(option.props.children);
+    return childText.toLowerCase().includes(input.toLowerCase());
+  };
+
   return (
     <Select
       allowClear={true}
@@ -105,9 +120,7 @@ function Selector({
       placeholder={placeholder}
       onChange={(values) => onChange(values)}
       onSearch={(value) => onSearch(value)}
-      filterOption={(input, option) =>
-        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-      }
+      filterOption={handleFilterOption}
       onPopupScroll={(e) => {
         if (
           e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight ||
@@ -131,9 +144,13 @@ function Selector({
             onClick={() =>
               dispatch(
                 selectorType['create' + createEntity]({
-                  name: query.q.trim(),
+                  name: query.q?.trim() || '',
                 }),
-              ).then(() => setQuery({ page: 1 }), setEntityCreatedFlag(true), setSearchValue(''))
+              ).then(() => {
+                setQuery({ page: 1 });
+                setEntityCreatedFlag(true);
+                setSearchValue('');
+              })
             }
           >
             Create a {createEntity} '{query.q}'
@@ -149,7 +166,7 @@ function Selector({
         .filter((item) => !invalidOptions.includes(item?.id))
         .map((item) => (
           <Select.Option value={item?.id} key={entity + item?.id}>
-            {item?.[display] ? item?.[display] : item?.['email'] ? item?.['email'] : null}
+            {getDisplayValue(item)}
           </Select.Option>
         ))}
     </Select>

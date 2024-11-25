@@ -25,11 +25,6 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
   const dispatch = useDispatch();
   const { details, selected } = useSelector((state) => state.spaces);
   const { navTheme } = useSelector((state) => state.settings);
-  const [showCoreMenu, setCoreMenu] = useState(false);
-  const onCollapse = (collapsed) => {
-    collapsed ? dispatch(setCollapse(true)) : dispatch(setCollapse(false));
-  };
-
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
 
   React.useEffect(() => {
@@ -45,38 +40,6 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  let resource = [
-    'home',
-    'dashboard',
-    'analytics',
-    'google',
-    'factly',
-    'policies',
-    'users',
-    'spaces',
-    'sach',
-  ];
-  let protectedResources = [
-    'posts',
-    'pages',
-    'categories',
-    'tags',
-    'media',
-    'formats',
-    'claims',
-    'claimants',
-    'ratings',
-    'menus',
-    'fact-checks',
-    'episodes',
-    'podcasts',
-    'events',
-    'webhooks',
-    'website',
-    'advanced',
-    'members',
-    'code-injection',
-  ];
   let buttonStyle = {
     width: '40px',
     height: '40px',
@@ -85,33 +48,18 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
     padding: '0.25rem 0.5rem',
   };
 
-  if (org_role === 'admin') {
-    resource = resource.concat(protectedResources);
-    if (!showCoreMenu) {
-      setCoreMenu(true);
-    }
-  } else {
-    permission.forEach((each) => {
-      if (!showCoreMenu && protectedResources.includes(each.resource)) {
-        setCoreMenu(true);
-      }
-      resource.push(each.resource);
-    });
-  }
+  const onCollapse = (collapsed) => {
+    collapsed ? dispatch(setCollapse(true)) : dispatch(setCollapse(false));
+  };
 
-  if (orgs[0]?.role === 'admin') resource = resource.concat(protectedResources);
   const getMenuItems = (children, index, title) =>
-    children.map((route, childIndex) => {
-      return resource.includes(route.title.toLowerCase()) ? (
-        ['Events'].indexOf(route.title) !== -1 ? null : (
-          <Menu.Item key={route.menuKey}>
-            <Link to={route.path}>
-              <span>{route.title}</span>
-            </Link>
-          </Menu.Item>
-        )
-      ) : null;
-    });
+    children.map((route, childIndex) => (
+      <Menu.Item key={route.menuKey}>
+        <Link to={route.path}>
+          <span>{route.title}</span>
+        </Link>
+      </Menu.Item>
+    ));
 
   const getSubMenuItems = (menu, index, Icon) => (
     <SubMenu
@@ -121,17 +69,11 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
     >
       {menu.submenu && menu.submenu.length > 0 ? (
         <>
-          {menu.submenu.map((submenuItem, index) => {
-            return orgs[0]?.role === 'admin' ? (
-              <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
-                {getMenuItems(submenuItem.children, index, submenuItem.title)}
-              </SubMenu>
-            ) : (
-              <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
-                {getMenuItems(submenuItem.children, index, submenuItem.title)}
-              </SubMenu>
-            );
-          })}
+          {menu.submenu.map((submenuItem, index) => (
+            <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
+              {getMenuItems(submenuItem.children, index, submenuItem.title)}
+            </SubMenu>
+          ))}
         </>
       ) : null}
       {getMenuItems(menu.children, index, menu.title)}
@@ -254,13 +196,7 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
                   />
                 );
               }
-              return menu.title === 'CORE' && !showCoreMenu
-                ? null
-                : !menu.isAdmin
-                ? getSubMenuItems(menu, index, Icon)
-                : permission.filter((each) => each.resource === 'admin').length > 0
-                ? getSubMenuItems(menu, index, Icon)
-                : null;
+              return getSubMenuItems(menu, index, Icon);
             })}
           </Menu>
           {!collapsed ? (

@@ -93,6 +93,10 @@ import Events from '../pages/events';
 import CreateEvent from '../pages/events/CreateEvent';
 import EditEvent from '../pages/events/EditEvent';
 
+//Organisations
+import Organisations from '../pages/organisations/index';
+import AddUsers from '../pages/organisations/AddUsers';
+
 //Pages
 import Pages from '../pages/pages';
 import CreatePage from '../pages/pages/CreatePage';
@@ -129,7 +133,7 @@ import Callback from '../pages/redirect';
 import Tokens from '../pages/tokens';
 import CreateSpaceTokenForm from '../pages/tokens/components/CreateToken';
 
-import RegistrationForm from '../utils/zitadel/registration.js';
+import RegistrationForm from '../utils/zitadel/registration';
 import LoginEmail from '../utils/zitadel/login';
 import ForgotPassword from '../utils/zitadel/forgotPassword';
 
@@ -660,6 +664,18 @@ const routes = {
       action: 'get',
     },
   },
+  organisations: {
+    path: '/settings/organisations',
+    menuKey: '/organisations',
+    Component: Organisations,
+    title: 'Organisations',
+  },
+  addusers: {
+    path: '/settings/organisations/addusers',
+    menuKey: '/organisations',
+    Component: AddUsers,
+    title: 'Add Users',
+  },
   menu: {
     path: '/settings/website/menus',
     menuKey: '/website',
@@ -809,7 +825,7 @@ const routes = {
     path: 'auth/registration',
     menuKey: 'auth/registration',
     Component: RegistrationForm,
-    title: 'Registration Form', 
+    title: 'Registration Form',
   },
   login: {
     path: '/auth/login',
@@ -876,7 +892,7 @@ export const sidebarMenu = [
   {
     title: 'Administration',
     Icon: (props) => <GlobalOutlined {...props} />,
-    children: [routes.spaces, routes.events],
+    children: [routes.spaces, routes.events, routes.organisations],
     isService: false,
   },
 ];

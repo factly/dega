@@ -48,7 +48,7 @@ export const getToken = (code) =>
       code,
       client_id: window.REACT_APP_ZITADEL_CLIENT_ID,
       redirect_uri: window.REACT_APP_ZITADEL_REDIRECT_URI,
-      code_verifier: localStorage.getItem('code_verifier'),   
+      code_verifier: localStorage.getItem('code_verifier'),
       grant_type: 'authorization_code',
     }).toString(),
     credentials: 'include',
@@ -69,7 +69,7 @@ export const getUserInfo = () =>
   fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/oidc/v1/userinfo`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
     },
     credentials: 'include',
   })

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { checkTOTP } from '../../actions/mfa';
 import { useGoogleSignIn } from './idp';
 import degaImage from '../../assets/dega.png';
@@ -22,7 +22,7 @@ const Login = () => {
   const [totpCode, setTotpCode] = useState('');
   const [mfaCode, setMfaCode] = useState('');
   const [authRequestId, setAuthRequestId] = useState('');
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
 
   const {
@@ -34,6 +34,44 @@ const Login = () => {
     handleMfaSetup,
     handleMfaVerify,
   } = useGoogleSignIn();
+
+  const getAuthMethods = async (userId) => {
+    try {
+      const response = await fetch(
+        `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/authentication_methods`,
+        {
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+          },
+        },
+      );
+      if (!response.ok) {
+        throw new Error('Failed to fetch authentication methods');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching auth methods:', error);
+      throw error;
+    }
+  };
+
+  const finalizeLogin = async (sessionToken) => {
+    try {
+      if (!sessionToken) {
+        throw new Error('No session token provided');
+      }
+      const finalizeResult = await finalizeAuthRequest(authRequestId, sessionId, sessionToken);
+      if (finalizeResult.callbackUrl) {
+        window.location.href = finalizeResult.callbackUrl;
+      } else {
+        setError('Login successful, but redirect failed. Please try again.');
+      }
+    } catch (error) {
+      setError(`An unexpected error occurred during login finalization: ${error.message}`);
+    }
+  };
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -59,6 +97,7 @@ const Login = () => {
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
     try {
       const sessionData = await createSession(email);
       localStorage.setItem('sessionData', JSON.stringify(sessionData));
@@ -73,45 +112,59 @@ const Login = () => {
     } catch (error) {
       console.error('Error:', error);
       setError(error.message || 'An unexpected error occurred. Please try again later.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
       const result = await verifyPassword(sessionId, sessionData.token, password);
       localStorage.setItem('sessionToken', result.sessionToken);
-      setStep('mfa');
+
+      // Check if MFA is enabled for the user
+      const authMethods = await getAuthMethods(userId);
+      if (
+        authMethods.authMethodTypes &&
+        authMethods.authMethodTypes.includes('AUTHENTICATION_METHOD_TYPE_TOTP')
+      ) {
+        setStep('mfa');
+      } else {
+        // If MFA is not enabled, proceed with login finalization
+        await finalizeLogin(result.sessionToken);
+      }
     } catch (error) {
       console.error('Error:', error);
-      setError(error.message || 'An unexpected error occurred');
+      setError(error.message || 'Invalid password');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleMfaSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
       const result = await checkTOTP(sessionId, sessionData.token, totpCode);
       if (result.sessionToken) {
         localStorage.setItem('sessionToken', result.sessionToken);
-        const finalizeResult = await finalizeAuthRequest(authRequestId, sessionId, result.sessionToken);
-        if (finalizeResult.callbackUrl) {
-          window.location.href = finalizeResult.callbackUrl;
-        } else {
-          console.error('No callback URL in the response');
-        }
+        await finalizeLogin(result.sessionToken);
       } else {
         setError('Invalid MFA code. Please try again.');
       }
     } catch (error) {
       console.error('Error:', error);
       setError('An unexpected error occurred during MFA verification');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -125,11 +178,10 @@ const Login = () => {
   return (
     <div
       style={{
-        position: 'relative',
+        display: 'flex',
         width: '100%',
         height: '100vh',
         overflow: 'hidden',
-        display: 'flex',
       }}
     >
       <div
@@ -149,11 +201,10 @@ const Login = () => {
           alt="DEGA"
           style={{
             width: '40%',
-            height: '40%',
-            objectFit: 'contain',
             position: 'absolute',
             top: '35%',
             transform: 'translateY(-50%)',
+            objectFit: 'contain',
           }}
         />
         <div
@@ -185,13 +236,14 @@ const Login = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          padding: '0 20px',
+          boxSizing: 'border-box',
         }}
       >
         <div
           style={{
             width: '100%',
             maxWidth: '400px',
-            padding: '0 32px',
           }}
         >
           <h2
@@ -246,24 +298,22 @@ const Login = () => {
                   required
                 />
               </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Next
-                </button>
-              </div>
+              <button
+                type="submit"
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  backgroundColor: '#1E1E1E',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  border: 'none',
+                  borderRadius: '4px',
+                  fontSize: '16px',
+                  cursor: 'pointer',
+                }}
+              >
+                Next
+              </button>
             </form>
           )}
           {step === 'password' && (

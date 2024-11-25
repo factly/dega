@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Form, Input, Select, Row, Col, ConfigProvider } from 'antd';
+import { Button, Form, Input, Select, ConfigProvider } from 'antd';
 import { maker } from './../../../utils/sluger';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
@@ -8,10 +8,6 @@ import { SlugInput } from '../../../components/FormItems';
 
 const { Option } = Select;
 const { TextArea } = Input;
-
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 
 const SpaceCreateForm = ({ onCreate }) => {
   const [form] = Form.useForm();

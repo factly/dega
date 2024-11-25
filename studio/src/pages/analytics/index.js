@@ -12,7 +12,8 @@ function Analytics() {
   });
 
   if (loading) return <Skeleton />;
-  if (!space) return <RecordNotFound title={'No space found.'} link="/spaces" entity={'Space'} />;
+  if (!space)
+    return <RecordNotFound title={'No space found.'} link="/spaces/create" entity={'Space'} />;
 
   return (
     <Space direction="vertical">
