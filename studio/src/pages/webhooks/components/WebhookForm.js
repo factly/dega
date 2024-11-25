@@ -108,12 +108,6 @@ const WebhookForm = ({ onCreate, data = {} }) => {
                   <Switch />
                 </Row>
               </Form.Item>
-              <Form.Item name="podcast" valuePropName="checked">
-                <Row justify={'space-between'}>
-                  <span>Podcast</span>
-                  <Switch />
-                </Row>
-              </Form.Item>
               <Form.Item name="events" label="Events">
                 <Checkbox.Group>
                   <Row gutter={[4, 12]} justify={'start'}>

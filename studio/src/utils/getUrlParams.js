@@ -13,8 +13,7 @@ function getUrlParams(query, filters) {
         key === 'format' ||
         key === 'tag' ||
         key === 'category' ||
-        key === 'author' ||
-        key === 'podcast'
+        key === 'author'
       ) {
         const val = query.getAll(key).map((v) => parseInt(v));
         params[key] = val;

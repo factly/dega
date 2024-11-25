@@ -20,8 +20,6 @@ import { SET_SELECTED_SPACE } from '../constants/spaces';
 import menus from './menuReducer';
 import sidebar from './sidebarReducer';
 import spaceSelectorPage from './spaceSelectorPage';
-import episodes from './episodesReducer';
-import podcasts from './podcastReducer';
 import redirect from './redirectReducer';
 import events from './eventsReducer';
 import info from './infoReducer';
@@ -41,8 +39,6 @@ const appReducer = combineReducers({
   spaces,
   organisations,
   redirect,
-  episodes,
-  podcasts,
   categories,
   tags,
   formats,
