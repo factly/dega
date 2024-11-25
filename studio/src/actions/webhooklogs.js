@@ -5,8 +5,7 @@ import {
   SET_WEBHOOKLOGS_LOADING,
   RESET_WEBHOOKLOGS,
 } from '../constants/webhooklogs';
-import { addErrorNotification, addSuccessNotification } from './notifications';
-import { addEvents } from './events';
+import { addErrorNotification } from './notifications';
 import getError from '../utils/getError';
 import { WEBHOOKS_API } from '../constants/webhooks';
 

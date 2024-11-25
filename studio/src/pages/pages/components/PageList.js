@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import { ConfigProvider, Button, Space, Tag, Table, Typography, Modal } from 'antd';
 import {
-  EditOutlined,
   DeleteOutlined,
   CheckCircleOutlined,
   ExceptionOutlined,
   ClockCircleOutlined,
   CloseOutlined,
-  FormOutlined,
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { deletePage } from '../../../actions/pages';
 import { Link } from 'react-router-dom';
 import QuickEdit from '../../../components/List/QuickEdit';
 import QuickEditIcon from '../../../assets/QuickEditIcon';
-import ThreeDotIcon from '../../../assets/ThreeDotIcon';
 import useNavigation from '../../../utils/useNavigation';
 
-function PageList({ actions, format, status, data, filters, setFilters, fetchPages }) {
+function PageList({ actions, format, data, filters, setFilters, fetchPages }) {
   const dispatch = useDispatch();
   const [id, setID] = useState(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
@@ -26,27 +23,6 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
 
   const history = useNavigation();
 
-  const getTagList = (tagids) => {
-    return tagids.map((id) => (
-      <Link to={`/pages?tag=${id}`}>
-        <Tag>{data.tags[id].name}</Tag>
-      </Link>
-    ));
-  };
-  const getCategoryList = (catIds) => {
-    return catIds.map((id) => (
-      <Link to={`/pages?category=${id}`}>
-        <Tag>{data.categories[id].name}</Tag>
-      </Link>
-    ));
-  };
-  // const getAuthorsList = (ids) => {
-  //   return ids?.map((id) => (
-  //     <Link>
-  //       <Tag>{data.authors[id].display_name}</Tag>
-  //     </Link>
-  //   ));
-  // };
   const columns = [
     {
       title: 'Title',
@@ -65,14 +41,6 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
           <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
             {item.title}
           </Typography.Text>
-          {/*
-          {item.published_date && (
-            <p style={{ color: 'CaptionText' }}>
-              Published on {dayjs(item.published_date).format('MMMM Do YYYY')}
-            </p>
-          )}
-          <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p>
-          */}
         </Link>
       ),
     },
@@ -80,7 +48,6 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      // width: 200,
       render: (status) => {
         return status === 'publish' ? (
           <Tag icon={<CheckCircleOutlined />} color="green">
@@ -101,7 +68,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       title: 'Actions',
       dataIndex: 'actions',
       width: 240,
-      render: (_, item, idx) => {
+      render: (_, item) => {
         const isOpen = item.id === expandedRowKeys[0];
         return (
           <ConfigProvider
@@ -139,27 +106,9 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   setModalOpen(true);
                   setDeleteItemID(item.id);
                 }}
-                icon={<DeleteOutlined style={{ color: '#858585' }} />}
+                icon={<DeleteOutlined style={{ color: '#fff' }} />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               />
-              {/* <Button
-                size="large"
-                icon={<ThreeDotIcon style={{ color: '#858585' }} />}
-                onClick={() => {
-                  alert('this do nothing');
-                }}
-              /> */}
-              {/* <Button
-                  icon={<EditOutlined />}
-                  disabled={!(actions.includes('admin') || actions.includes('update'))}
-                  style={{
-                    margin: '0.5rem',
-                    padding: '4px 22px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                /> */}
             </div>
           </ConfigProvider>
         );
@@ -194,7 +143,6 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
               },
             };
           }}
-          // style={{ maxWidth: '100vw', overflowX: 'auto' }}
           scroll={{
             x: '1000',
           }}

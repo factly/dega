@@ -1,4 +1,4 @@
-import { CaretRightOutlined, EditOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';
+import { EditOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';
 import { Button, Card, Collapse, Tree } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';

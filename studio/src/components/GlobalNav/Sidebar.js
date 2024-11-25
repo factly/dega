@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Menu, Popover, List, Avatar, Button, Skeleton } from 'antd';
 import { sidebarMenu } from '../../config/routesConfig';
-import _ from 'lodash';
 import { setCollapse } from './../../actions/sidebar';
 import { setSpaceSelectorPage } from './../../actions/spaceSelectorPage';
 import AccountMenu from './AccountMenu';

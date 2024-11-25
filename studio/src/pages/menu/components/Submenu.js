@@ -1,7 +1,8 @@
 import React from 'react';
 import { Form, Button, Row, Col } from 'antd';
 import MenuField from './MenuField';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
+
 function Submenu({ fieldKey, isMobileScreen }) {
   return (
     <>

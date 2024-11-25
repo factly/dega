@@ -6,7 +6,6 @@ import { getWebhooklogs } from '../../../actions/webhooklogs';
 import WebhookLogsList from './components/WebhookLogsList';
 
 function Webhooklogs({ WebhookId }) {
-  const spaces = useSelector(({ spaces }) => spaces);
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,

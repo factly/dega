@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Avatar, Button, Row, Col, Modal, Layout, Input, List, Typography, Empty } from 'antd';
@@ -8,15 +8,6 @@ import { Link } from 'react-router-dom';
 import { deleteSpace } from '../../actions/spaces';
 import degaImg from '../../assets/dega.png';
 import './SpaceSelector.css';
-
-const ListsStyle = {
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  backgroundColor: '#F9FAFB',
-  color: '#1E1E1E',
-};
 
 function SpaceSelector({ onClose }) {
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
@@ -49,7 +40,7 @@ function SpaceSelector({ onClose }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const dispatch = useDispatch();
-  const { Header, Content } = Layout;
+  const { Content } = Layout;
 
   const onSearch = (e) => {
     setSearchQuery(e.target.value);

@@ -25,9 +25,6 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
   }
   const [form] = Form.useForm();
   const orgs = useSelector((state) => state.spaces.orgs);
-  const onReset = () => {
-    form.resetFields();
-  };
 
   const [valueChange, setValueChange] = React.useState(false);
 
@@ -43,14 +40,8 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             values.meta_fields = getJsonValue(values.meta_fields);
           }
           onCreate(values);
-          //  onReset();
         }}
         scrollToFirstError={true}
-        onFinishFailed={(errors) => {
-          // let name = errors.errorFields[0].name[0];
-          // if (['name', 'slug'].includes(name)) {
-          // }
-        }}
         onValuesChange={() => {
           setValueChange(true);
         }}

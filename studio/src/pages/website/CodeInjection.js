@@ -29,10 +29,6 @@ function CodeInjection() {
     return <RecordNotFound />;
   }
 
-  const onReset = () => {
-    form.resetFields();
-  };
-
   return (
     <div>
       <Helmet title={'Code Injection'} />
@@ -43,7 +39,6 @@ function CodeInjection() {
         name="code-injection"
         onFinish={(values) => {
           onCreate(values);
-          // onReset();
         }}
         scrollToFirstError={true}
         onFinishFailed={(errors) => {}}
