@@ -1,18 +1,15 @@
 export const getProviderInformation = async (intentId, token) => {
-  const response = await fetch(
-    `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/idp_intents/${intentId}`,
-    {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-      },
-      body: JSON.stringify({
-        idpIntentToken: token,
-      }),
+  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/idp_intents/${intentId}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
     },
-  );
+    body: JSON.stringify({
+      idpIntentToken: token,
+    }),
+  });
 
   if (!response.ok) {
     throw new Error('Failed to get provider information');
@@ -55,24 +52,21 @@ export const checkUserExists = async (email) => {
 };
 
 export const linkExistingUser = async (userId, providerData) => {
-  const response = await fetch(
-    `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/links`,
-    {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-      },
-      body: JSON.stringify({
-        idpLink: {
-          idpId: window.REACT_APP_ZITADEL_IDP_ID,
-          userId: providerData.idpInformation?.rawInformation?.User?.sub,
-          userName: providerData.idpInformation?.rawInformation?.User?.name,
-        },
-      }),
+  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/links`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
     },
-  );
+    body: JSON.stringify({
+      idpLink: {
+        idpId: window.REACT_APP_ZITADEL_IDP_ID,
+        userId: providerData.idpInformation?.rawInformation?.User?.sub,
+        userName: providerData.idpInformation?.rawInformation?.User?.name,
+      },
+    }),
+  });
 
   if (!response.ok) {
     throw new Error('Failed to link user to IDP');

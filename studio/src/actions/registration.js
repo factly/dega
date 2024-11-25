@@ -53,25 +53,22 @@ export const createSession = async (loginName) => {
 
 export const verifyPassword = async (sessionId, sessionToken, password) => {
   try {
-    const response = await fetch(
-      `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`,
-      {
-        method: 'PATCH',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-        },
-        body: JSON.stringify({
-          sessionToken: sessionToken,
-          checks: {
-            password: {
-              password: password,
-            },
+    const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`, {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      },
+      body: JSON.stringify({
+        sessionToken: sessionToken,
+        checks: {
+          password: {
+            password: password,
           },
-        }),
-      }
-    );
+        },
+      }),
+    });
 
     if (!response.ok) {
       const errorData = await response.json();

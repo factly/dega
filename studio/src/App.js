@@ -43,7 +43,6 @@ function App() {
     checkAuthenticated();
   }, []);
 
-
   const checkAuthenticated = () => {
     const currentURL = window.location.href;
     if (currentURL.includes('/auth/login' || currentURL.includes('/auth/registration'))) {
@@ -64,7 +63,7 @@ function App() {
             }
             window.location.href = d.authorizeURL;
           });
-        } 
+        }
       }
     });
   };

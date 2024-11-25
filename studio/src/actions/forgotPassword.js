@@ -13,7 +13,7 @@ export const requestPasswordReset = async (userId) => {
           notificationType: 'NOTIFICATION_TYPE_Email',
         },
       }),
-    }
+    },
   );
 
   if (!response.ok) {
@@ -40,7 +40,7 @@ export const resetPassword = async (userId, newPassword, verificationCode) => {
         },
         verificationCode: verificationCode,
       }),
-    }
+    },
   );
 
   if (!response.ok) {

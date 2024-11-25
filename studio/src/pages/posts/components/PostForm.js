@@ -45,8 +45,7 @@ import { formatDate } from '../../../utils/date';
 import languages from '../../../utils/languages.json';
 import useNavigation from '../../../utils/useNavigation';
 
-function PostForm({ onCreate,data = {}, actions = {}, format, page = false }) {
-  
+function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const navigate = useNavigation();
   const formRef = useRef(null);
   const [form] = Form.useForm();
@@ -152,15 +151,16 @@ function PostForm({ onCreate,data = {}, actions = {}, format, page = false }) {
     finalData.format_id = format.id;
     finalData.author_ids = finalData.authors || [];
     finalData.status = status;
-    if ((status ==='publish' || status === 'future') && finalData.author_ids.length === 0) {
+    if ((status === 'publish' || status === 'future') && finalData.author_ids.length === 0) {
       dispatch(addErrorNotification('At least one author must be assigned.'));
       return;
     }
-    if (status === 'future' ) {
+    if (status === 'future') {
       if (!finalData.published_date) {
-      dispatch(addErrorNotification('Published date is required for future publishing.'));
-      return;
-    } }
+        dispatch(addErrorNotification('Published date is required for future publishing.'));
+        return;
+      }
+    }
     finalData.status === 'publish'
       ? (finalData.published_date = finalData.published_date
           ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
@@ -397,16 +397,16 @@ function PostForm({ onCreate,data = {}, actions = {}, format, page = false }) {
                   >
                     <Collapse.Panel header="Details" key="1">
                       <Row justify="space-between" style={{ margin: '16px 0', marginTop: 0 }}>
-                      {data?.created_at ? (
- <Col span={16}>
- <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
-   <span style={{ color: '#000000E0', fontWeight: 400 }}>
-   Created Date:{' '}
-    </span>
-      {formatDate(data.created_at)}
-    </Typography.Text>
- </Col>
-) : null}
+                        {data?.created_at ? (
+                          <Col span={16}>
+                            <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
+                              <span style={{ color: '#000000E0', fontWeight: 400 }}>
+                                Created Date:{' '}
+                              </span>
+                              {formatDate(data.created_at)}
+                            </Typography.Text>
+                          </Col>
+                        ) : null}
                         {data?.updated_at ? (
                           <Col span={16}>
                             <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
@@ -438,13 +438,11 @@ function PostForm({ onCreate,data = {}, actions = {}, format, page = false }) {
                           ) : null}
                         </Col>
                       </Row>
-                      
+
                       <Form.Item name="published_date" label="Published Date">
                         <DatePicker style={{ width: '100%' }} />
-                         </Form.Item> 
-                         
+                      </Form.Item>
 
-                      
                       <Form.Item name="authors" label="Authors">
                         <Selector mode="multiple" display={'display_name'} action="Authors" />
                       </Form.Item>

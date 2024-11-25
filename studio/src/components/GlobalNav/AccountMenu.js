@@ -30,17 +30,20 @@ const AccountMenu = () => {
     }
 
     try {
-      const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`,
+      const response = await fetch(
+        `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+          },
+          body: JSON.stringify({
+            sessionToken: sessionToken,
+          }),
         },
-        body: JSON.stringify({
-          sessionToken: sessionToken,
-        }),
-      });
+      );
 
       if (response.ok) {
         console.log('Logout successful');
