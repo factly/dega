@@ -42,7 +42,8 @@ const ClaimForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
   const { Panel } = Collapse;
-  const [activeKey, setActiveKey] = React.useState(['1', '2']);
+  const [basicActiveKey, setBasicActiveKey] = React.useState(['1']);
+  const [sourcesActiveKey, setSourcesActiveKey] = React.useState(['1']);
 
   const onReset = () => {
     form.resetFields();
@@ -82,9 +83,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     data.checked_date = data.checked_date ? dayjs(data.checked_date) : null;
   }
 
-  const handleCollapse = (props) => {
-    setActiveKey(props);
-  };
+ 
 
   return (
     <ConfigProvider
@@ -114,9 +113,9 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         onFinishFailed={(errors) => {
           let name = errors.errorFields[0].name[0];
           if (['claim', 'slug', 'claimant', 'rating'].includes(name)) {
-            setActiveKey(['1']);
+            setBasicActiveKey(['1']);
           } else {
-            setActiveKey(['2']);
+            setSourcesActiveKey(['1']);
           }
           if (errors.errorFields[0].name[0] !== 'review_sources') {
           }
@@ -142,8 +141,8 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         <Collapse
           style={{ width: '100%', marginBottom: 16, background: '#f0f2f5', border: 0 }}
           defaultActiveKey={['1']}
-          activeKey={activeKey && activeKey}
-          onChange={(props) => handleCollapse(props)}
+          activeKey={basicActiveKey}
+          onChange={(keys) => setBasicActiveKey(keys)}
           expandIconPosition="right"
           expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
         >
@@ -239,8 +238,8 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         <Collapse
           style={{ width: '100%', marginBottom: 16, background: '#f0f2f5', border: 0 }}
           defaultActiveKey={['1']}
-          activeKey={activeKey && activeKey}
-          onChange={(props) => handleCollapse(props)}
+          activeKey={sourcesActiveKey}
+          onChange={(keys) => setSourcesActiveKey(keys)}
           expandIconPosition="right"
           expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
         >
