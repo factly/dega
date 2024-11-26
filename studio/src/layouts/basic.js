@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button, Row } from 'antd';
+import { Layout, Card, notification, FloatButton, ConfigProvider, Result, Button, Row } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -118,7 +118,9 @@ function BasicLayout(props) {
   }, []);
 
   useEffect(() => {
-    if (session.details && !session.loading) dispatch(getSpaces());
+    if (session.details && !session.loading && Object.keys(session.details).length > 0) {
+      dispatch(getSpaces());
+    }
   }, [dispatch, selected, session]);
 
   useEffect(() => {
@@ -241,6 +243,23 @@ function BasicLayout(props) {
     );
   }
 
+  if (!loading && existingSpaces?.length === 0) {
+    return (
+      <>
+        <Result
+          status="403"
+          title="You do not have any space created."
+          subTitle="Please create one to explore more of Dega."
+          extra={
+            <Button type="primary" onClick={handleClick}>
+              Create Space
+            </Button>
+          }
+        />
+      </>
+    );
+  }
+
   return (
     <ConfigProvider
       theme={{
@@ -318,7 +337,7 @@ function BasicLayout(props) {
               {children}
             </Card>
           </Content>
-          <BackTop style={{ right: 50 }} />
+          <FloatButton.BackTop style={{ right: 50 }} />
         </Layout>
       </Layout>
     </ConfigProvider>

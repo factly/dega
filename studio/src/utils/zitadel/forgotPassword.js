@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import degaImage from '../../assets/dega.png';
 import { requestPasswordReset, resetPassword } from '../../actions/forgotPassword';
+import RequestReset from './login/requestreset';
+import ResetPassword from './login/resetpassword';
 
 const ForgotPassword = () => {
   const [verificationCode, setVerificationCode] = useState('');
@@ -55,6 +57,7 @@ const ForgotPassword = () => {
         display: 'flex',
       }}
     >
+      {/* Left side with logo */}
       <div
         style={{
           width: '50%',
@@ -92,6 +95,8 @@ const ForgotPassword = () => {
           <h1 style={{ fontSize: '38px', fontWeight: 'bold', color: '#333' }}>DEGA</h1>
         </div>
       </div>
+
+      {/* Right side with form */}
       <div
         style={{
           width: '50%',
@@ -114,118 +119,22 @@ const ForgotPassword = () => {
           >
             {step === 'request' ? 'Reset Password' : 'Enter Verification Code'}
           </h2>
+
           {error && (
             <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
           )}
+
           {step === 'request' ? (
-            <form onSubmit={handleRequestReset} style={{ marginBottom: '16px' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <p style={{ color: '#333', fontSize: '14px', marginBottom: '8px' }}>
-                  A verification code will be sent to: <strong>{userEmail}</strong>
-                </p>
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Send Verification Code
-                </button>
-              </div>
-            </form>
+            <RequestReset userEmail={userEmail} onSubmit={handleRequestReset} />
           ) : (
-            <form onSubmit={handleResetPassword} style={{ marginBottom: '16px' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor="verificationCode"
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Verification Code
-                </label>
-                <input
-                  type="text"
-                  id="verificationCode"
-                  value={verificationCode}
-                  onChange={(e) => setVerificationCode(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor="newPassword"
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  id="newPassword"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Reset Password
-                </button>
-              </div>
-            </form>
+            <ResetPassword
+              verificationCode={verificationCode}
+              setVerificationCode={setVerificationCode}
+              newPassword={newPassword}
+              setNewPassword={setNewPassword}
+              onSubmit={handleResetPassword}
+            />
           )}
-          <div style={{ textAlign: 'center' }}>
-            <Link to="/auth/login" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
-              Back to Login
-            </Link>
-          </div>
         </div>
       </div>
     </div>

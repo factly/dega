@@ -108,6 +108,8 @@ import EditWebsite from '../pages/website/EditWebsite';
 import CodeInjection from '../pages/website/CodeInjection';
 import Branding from '../pages/website/Branding';
 import AnalyticsForm from '../pages/website/AnalyticsForm';
+import SecuritySettings from '../pages/website/TwoFactorAuthManagement';
+
 // Advanced
 import Advanced from '../pages/advanced';
 // Members
@@ -253,6 +255,12 @@ const routes = {
       resource: 'spaces',
       action: 'update',
     },
+  },
+  SecuritySettings: {
+    path: '/settings/website/authentication',
+    menuKey: '/website',
+    Component: SecuritySettings,
+    title: 'Authentication',
   },
   branding: {
     path: '/settings/website/branding',
