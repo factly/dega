@@ -26,8 +26,8 @@ function Pageheader() {
       : pathSnippets[0];
 
   const isBreadCrumbsHidden =
-    (pathSnippets.includes('edit') || pathSnippets.includes('create')) &&
-    (entity === 'posts' || entity === 'pages' || entity === 'fact-checks'); // redundant entity check for fact-checks?
+  (pathSnippets.includes('edit') || pathSnippets.includes('create')) &&
+  ['posts', 'pages', 'fact-checks'].includes(entity);
   const breadcrumbItems = useMemo(() => {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
@@ -81,8 +81,8 @@ function Pageheader() {
       }
     });
     return _.filter(urlBreadcrumbItems);
+   
   }, [pathSnippets, location.pathname]);
-
   const handleOnBack = () => {
     if (isBreadCrumbsHidden) {
       if (
@@ -109,11 +109,13 @@ function Pageheader() {
     }
   };
   const itemRender = (route, params, routes, paths) => {
+   
+    const breadcrumbItem = breadcrumbItems.find(item => item.path === route.path);
     const last = routes.indexOf(route) === routes.length - 1;
-    if (last && routes.length > 1) {
+    if (last) {
       return (
         !isBreadCrumbsHidden && (
-          <h2 style={{ display: 'inline', color: '#000000d9' }}>{route.breadcrumbName}</h2>
+          <h2 style={{ display: 'inline', color: '#000000d9' }}>{breadcrumbItem?.breadcrumbName}</h2>
         )
       );
     }
@@ -121,7 +123,7 @@ function Pageheader() {
       !isBreadCrumbsHidden && (
         <h2 style={{ display: 'inline' }}>
           <Link style={routes.length === 1 ? { color: '#000000d9' } : null} to={route.path}>
-            {route.breadcrumbName}
+            {breadcrumbItem?.breadcrumbName}
           </Link>
         </h2>
       )
@@ -133,6 +135,7 @@ function Pageheader() {
     ['members', 'advanced', 'website', 'admin'].includes(entity) ||
     location.pathname.split('/').pop() === 'create'
   )
+  
     return (
       <AntPageHeader
         backIcon={isBreadCrumbsHidden ? <LeftOutlined /> : null}
