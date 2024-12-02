@@ -17,7 +17,7 @@ const EmailInput = ({ email, setEmail, onSubmit, handleGoogleSignIn }) => {
           name="email"
           labelCol={{ span: 24 }}
           rules={[
-            { required: true, message: 'Please input your email!' },
+            { message: 'Please input your email!' },
             { type: 'email', message: 'Please enter a valid email!' },
           ]}
         >

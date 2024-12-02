@@ -15,25 +15,19 @@ const ResetPassword = ({
         <Form.Item
           label="Verification Code"
           name="verificationCode"
-          rules={[{ required: true, message: 'Please input verification code!' }]}
+          rules={[{ message: 'Please input verification code!' }]}
           initialValue={verificationCode}
         >
-          <Input
-            size="large"
-            onChange={(e) => setVerificationCode(e.target.value)}
-          />
+          <Input size="large" onChange={(e) => setVerificationCode(e.target.value)} />
         </Form.Item>
 
         <Form.Item
           label="New Password"
           name="newPassword"
-          rules={[{ required: true, message: 'Please input new password!' }]}
+          rules={[{ message: 'Please input new password!' }]}
           initialValue={newPassword}
         >
-          <Input.Password
-            size="large"
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
+          <Input.Password size="large" onChange={(e) => setNewPassword(e.target.value)} />
         </Form.Item>
 
         <Form.Item>

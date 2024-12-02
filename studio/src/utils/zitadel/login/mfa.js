@@ -11,13 +11,9 @@ const Mfa = ({ totpCode, setTotpCode, onSubmit }) => {
       <Form.Item
         label="Enter MFA Code"
         name="totpCode"
-        rules={[{ required: true, message: 'Please input your MFA code!' }]}
+        rules={[{ message: 'Please input your MFA code!' }]}
       >
-        <Input
-          value={totpCode}
-          onChange={(e) => setTotpCode(e.target.value)}
-          size="large"
-        />
+        <Input value={totpCode} onChange={(e) => setTotpCode(e.target.value)} size="large" />
       </Form.Item>
 
       <Form.Item>

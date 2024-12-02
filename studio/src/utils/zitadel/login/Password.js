@@ -14,7 +14,7 @@ const Password = ({ password, setPassword, onSubmit, onForgotPassword }) => {
           name="password"
           labelCol={{ span: 24 }}
           rules={[
-            { required: true, message: 'Please input your password!' },
+            { message: 'Please input your password!' },
             { min: 8, message: 'Password must be at least 8 characters' },
           ]}
           style={{ marginBottom: 32 }}

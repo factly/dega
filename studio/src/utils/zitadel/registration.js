@@ -249,7 +249,7 @@ const RegistrationForm = () => {
               <Form.Item
                 label="First Name"
                 name="firstName"
-                rules={[{ required: true, message: 'Please input your first name!' }]}
+                rules={[{ message: 'Please input your first name!' }]}
               >
                 <Input
                   size="large"
@@ -263,7 +263,7 @@ const RegistrationForm = () => {
               <Form.Item
                 label="Last Name"
                 name="lastName"
-                rules={[{ required: true, message: 'Please input your last name!' }]}
+                rules={[{ message: 'Please input your last name!' }]}
               >
                 <Input
                   size="large"
@@ -278,7 +278,7 @@ const RegistrationForm = () => {
                 label="Email"
                 name="email"
                 rules={[
-                  { required: true, message: 'Please input your email!' },
+                  { message: 'Please input your email!' },
                   { type: 'email', message: 'Please enter a valid email!' },
                 ]}
               >
@@ -294,7 +294,7 @@ const RegistrationForm = () => {
               <Form.Item
                 label="Password"
                 name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
+                rules={[{ message: 'Please input your password!' }]}
               >
                 <Input.Password
                   size="large"

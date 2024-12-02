@@ -11,13 +11,9 @@ const MfaVerify = ({ mfaCode, setMfaCode, onSubmit }) => {
       <Form.Item
         label="Enter MFA Code"
         name="mfaCode"
-        rules={[{ required: true, message: 'Please input your MFA code!' }]}
+        rules={[{ message: 'Please input your MFA code!' }]}
       >
-        <Input
-          value={mfaCode}
-          onChange={(e) => setMfaCode(e.target.value)}
-          size="large"
-        />
+        <Input value={mfaCode} onChange={(e) => setMfaCode(e.target.value)} size="large" />
       </Form.Item>
 
       <Form.Item>
