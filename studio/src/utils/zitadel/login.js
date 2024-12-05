@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { checkTOTP } from '../../actions/mfa';
 import { useGoogleSignIn } from './idp';
@@ -19,6 +19,7 @@ import Mfa from './login/mfa.js';
 import MfaVerify from './login/mfaverify.js';
 import RequestReset from './login/requestreset';
 import ResetPassword from './login/resetpassword';
+import AuthLayout from './Authlayout';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -150,7 +151,7 @@ const Login = () => {
     try {
       await resetPassword(userId, values.newPassword, values.verificationCode);
       setStep('email');
-      setSuccessMessage('Password reset successful. Please log in with your new password.');  // Set success message instead of error
+      setSuccessMessage('Password reset successful. Please log in with your new password.');
     } catch (error) {
       setError(`An error occurred: ${error.message}`);
     }
@@ -159,7 +160,7 @@ const Login = () => {
   const handleMfaSubmit = async (values) => {
     setError('');
     setIsLoading(true);
-  
+
     try {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
       const result = await checkTOTP(sessionId, sessionData.token, values.totpCode);
@@ -176,7 +177,7 @@ const Login = () => {
       setIsLoading(false);
     }
   };
-  
+
   const handleMfaVerifySubmit = (values) => {
     handleMfaVerify(values.mfaCode);
   };
@@ -262,148 +263,83 @@ const Login = () => {
     </button>
   );
 
+  const getTitle = () => {
+    switch (step) {
+      case 'email':
+        return 'Login';
+      case 'password':
+        return 'Enter Password';
+      case 'mfa':
+        return 'MFA Verification';
+      case 'mfa-setup':
+        return 'Set up Two-Factor Authentication';
+      case 'mfa-verify':
+        return 'Verify Two-Factor Authentication';
+      case 'reset-request':
+        return 'Reset Password';
+      case 'reset-verify':
+        return 'Enter Verification Code';
+      default:
+        return 'Login';
+    }
+  };
+
+  const renderForm = () => {
+    switch (step) {
+      case 'email':
+        return (
+          <EmailInput
+            email={email}
+            setEmail={setEmail}
+            onSubmit={handleEmailSubmit}
+            error={error}
+            handleGoogleSignIn={handleGoogleSignIn}
+          />
+        );
+      case 'password':
+        return (
+          <Password
+            password={password}
+            setPassword={setPassword}
+            onSubmit={handlePasswordSubmit}
+            onForgotPassword={() => setStep('reset-request')}
+          />
+        );
+      case 'reset-request':
+        return <RequestReset userEmail={email} onSubmit={handleRequestReset} />;
+      case 'reset-verify':
+        return (
+          <ResetPassword
+            verificationCode={verificationCode}
+            setVerificationCode={setVerificationCode}
+            newPassword={newPassword}
+            setNewPassword={setNewPassword}
+            onSubmit={handleResetPassword}
+          />
+        );
+      case 'mfa':
+        return <Mfa totpCode={totpCode} setTotpCode={setTotpCode} onSubmit={handleMfaSubmit} />;
+      case 'mfa-setup':
+        return <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />;
+      case 'mfa-verify':
+        return (
+          <MfaVerify mfaCode={mfaCode} setMfaCode={setMfaCode} onSubmit={handleMfaVerifySubmit} />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div style={{ display: 'flex', width: '100%', height: '100vh', overflow: 'hidden' }}>
-      {/* Left side with logo */}
-      <div
-        style={{
-          width: '50%',
-          height: '100%',
-          backgroundColor: '#f0f0f0',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <img
-          src={degaImage}
-          alt="DEGA"
-          style={{
-            width: '40%',
-            position: 'absolute',
-            top: '35%',
-            transform: 'translateY(-50%)',
-            objectFit: 'contain',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '5%',
-            left: '45%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <h1 style={{ fontSize: '38px', fontWeight: 'bold', color: '#333' }}>DEGA</h1>
-        </div>
-      </div>
-
-      {/* Right side with login form */}
-      <div
-        style={{
-          width: '50%',
-          height: '100%',
-          backgroundColor: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '0 20px',
-          boxSizing: 'border-box',
-        }}
-      >
-        <div style={{ width: '100%', maxWidth: '400px' }}>
-          {step !== 'email' && <BackArrowButton onClick={resetLoginProcess} />}
-          <h2
-            style={{
-              fontSize: '24px',
-              fontWeight: 'bold',
-              marginBottom: '24px',
-              textAlign: 'center',
-              color: '#333',
-            }}
-          >
-            {step === 'email'
-              ? 'Login'
-              : step === 'password'
-              ? 'Enter Password'
-              : step === 'mfa'
-              ? 'MFA Verification'
-              : step === 'mfa-setup'
-              ? 'Set up Two-Factor Authentication'
-              : step === 'mfa-verify'
-              ? 'Verify Two-Factor Authentication'
-              : step === 'reset-request'
-              ? 'Reset Password'
-              : step === 'reset-verify'
-              ? 'Enter Verification Code'
-              : 'Login'}
-          </h2>
-
-          {error && (
-            <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
-          )}
-
-          {step === 'email' && (
-            <>
-              <EmailInput
-                email={email}
-                setEmail={setEmail}
-                onSubmit={handleEmailSubmit}
-                error={error}
-                handleGoogleSignIn={handleGoogleSignIn}
-              />
-              {/* <div style={{ textAlign: 'center', marginTop: '16px' }}>
-                <span
-                  onClick={() => setStep('reset-request')}
-                  style={{ color: '#1E1E1E', textDecoration: 'none', cursor: 'pointer' }}
-                >
-                  Forgot Password?
-                </span>
-              </div> */}
-            </>
-          )}
-
-          {step === 'password' && (
-            <Password
-              password={password}
-              setPassword={setPassword}
-              onSubmit={handlePasswordSubmit}
-              onForgotPassword={() => setStep('reset-request')}
-            />
-          )}
-
-          {step === 'reset-request' && (
-            <RequestReset userEmail={email} onSubmit={handleRequestReset} />
-          )}
-
-          {step === 'reset-verify' && (
-            <ResetPassword
-              verificationCode={verificationCode}
-              setVerificationCode={setVerificationCode}
-              newPassword={newPassword}
-              setNewPassword={setNewPassword}
-              onSubmit={handleResetPassword}
-            />
-          )}
-
-          {step === 'mfa' && (
-            <Mfa totpCode={totpCode} setTotpCode={setTotpCode} onSubmit={handleMfaSubmit} />
-          )}
-
-          {step === 'mfa-setup' && (
-            <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />
-          )}
-
-          {step === 'mfa-verify' && (
-            <MfaVerify mfaCode={mfaCode} setMfaCode={setMfaCode} onSubmit={handleMfaVerifySubmit} />
-          )}
-        </div>
-      </div>
-    </div>
+    <AuthLayout
+      title={getTitle()}
+      error={error}
+      showBackButton={step !== 'email'}
+      onBackClick={resetLoginProcess}
+      logoSrc={degaImage}
+    >
+      {renderForm()}
+    </AuthLayout>
   );
 };
 

@@ -177,18 +177,23 @@ function Organisations() {
         </Col>
       </Row>
 
-      <Table
-        columns={columns}
-        dataSource={filteredMembers}
-        loading={loading}
-        rowKey="userId"
-        pagination={{
-          total: filteredMembers.length,
-          current: filters.page,
-          pageSize: filters.limit,
-          onChange: (page, pageSize) => setFilters({ ...filters, page, limit: pageSize }),
-        }}
-      />
+      <div style={{ width: '100%', overflow: 'auto' }}>
+        <Table
+          columns={columns}
+          dataSource={filteredMembers}
+          loading={loading}
+          rowKey="userId"
+          scroll={{
+            x: 1150,
+          }}
+          pagination={{
+            total: filteredMembers.length,
+            current: filters.page,
+            pageSize: filters.limit,
+            onChange: (page, pageSize) => setFilters({ ...filters, page, limit: pageSize }),
+          }}
+        />
+      </div>
     </Space>
   );
 }

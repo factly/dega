@@ -32,6 +32,14 @@ function BasicLayout(props) {
   const { children } = props;
   const [enteredRoute, setRoute] = useState({ menuKey: '/' });
 
+  // Paths where mobile sidebar should be hidden
+  const hiddenSidebarPaths = ['/auth/login', '/auth/registration', '/redirect', '/callback'];
+
+  // Check if current path should hide mobile sidebar
+  const shouldHideMobileSidebar = hiddenSidebarPaths.some((path) =>
+    location.pathname.startsWith(path),
+  );
+
   const {
     permission,
     orgs,
@@ -245,7 +253,7 @@ function BasicLayout(props) {
         },
       }}
     >
-      {isMobileScreen && !hideSidebar && (
+      {isMobileScreen && !hideSidebar && !shouldHideMobileSidebar && (
         <>
           <Layout style={{ padding: '48px 28px 17px 28px', background: '#F2F5F9' }}>
             <MobileSidebar
@@ -262,7 +270,7 @@ function BasicLayout(props) {
       )}
       <Layout hasSider={true}>
         <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
-        {!isMobileScreen && !hideSidebar && (
+        {!isMobileScreen && !hideSidebar && !shouldHideMobileSidebar && (
           <Sidebar
             permission={permission}
             menuKey={enteredRoute?.menuKey}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { Form, Input, Button, Space, Typography, Row, Col, Divider, Card } from 'antd';
+import { Form, Input, Button, Space, Typography, Divider } from 'antd';
 import { GoogleOutlined } from '@ant-design/icons';
 import degaImage from '../../assets/dega.png';
 import { TOTPSetupComponent } from './mfa';
@@ -13,18 +13,13 @@ import {
   finalizeAuthRequest,
 } from '../../actions/registration';
 import { useGoogleSignIn } from './idp';
+import AuthLayout from './Authlayout';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  });
   const [error, setError] = useState('');
   const [step, setStep] = useState('registration');
   const [userId, setUserId] = useState('');
@@ -68,25 +63,20 @@ const RegistrationForm = () => {
     }
   }, [googleStep, googleTotpUri, googleTotpSecret]);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (values) => {
     setError('');
 
     const registrationData = {
       profile: {
-        givenName: formData.firstName,
-        familyName: formData.lastName,
+        givenName: values.firstName,
+        familyName: values.lastName,
       },
       email: {
-        email: formData.email,
+        email: values.email,
         isVerified: true,
       },
       password: {
-        password: formData.password,
+        password: values.password,
         changeRequired: false,
       },
     };
@@ -96,14 +86,14 @@ const RegistrationForm = () => {
       setUserId(registerData.userId);
       localStorage.setItem('userId', registerData.userId);
 
-      const sessionData = await createSession(formData.email);
+      const sessionData = await createSession(values.email);
       setSessionId(sessionData.sessionId);
       setSessionToken(sessionData.sessionToken);
 
       const verificationData = await verifyPassword(
         sessionData.sessionId,
         sessionData.sessionToken,
-        formData.password,
+        values.password,
       );
       setSessionToken(verificationData.sessionToken);
 
@@ -180,84 +170,33 @@ const RegistrationForm = () => {
     }
   };
 
-  return (
-    <Row style={{ minHeight: '100vh' }}>
-      <Col span={12} style={{ background: '#f0f0f0', position: 'relative' }}>
-        <div
-          style={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <img
-            src={degaImage}
-            alt="DEGA"
-            style={{
-              width: '40%',
-              objectFit: 'contain',
-              position: 'absolute',
-              top: '35%',
-              transform: 'translateY(-50%)',
-            }}
-          />
-          <Title
-            style={{
-              position: 'absolute',
-              bottom: '5%',
-              fontSize: '38px',
-              fontWeight: 'bold',
-            }}
-          >
-            DEGA
-          </Title>
-        </div>
-      </Col>
+  const getTitle = () => {
+    switch (step) {
+      case 'registration':
+        return 'Registration';
+      case 'mfa-choice':
+        return 'Two-Factor Authentication';
+      case 'mfa-setup':
+        return 'Set up Two-Factor Authentication';
+      case 'mfa-verify':
+        return 'Verify Two-Factor Authentication';
+      default:
+        return 'Registration';
+    }
+  };
 
-      <Col span={12}>
-        <div
-          style={{
-            padding: '32px',
-            maxWidth: '400px',
-            margin: '0 auto',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            minHeight: '100%',
-          }}
-        >
-          <Title level={2} style={{ textAlign: 'center', marginBottom: '24px' }}>
-            {step === 'registration'
-              ? 'Registration'
-              : step === 'mfa-choice'
-              ? 'Two-Factor Authentication'
-              : step === 'mfa-setup'
-              ? 'Set up Two-Factor Authentication'
-              : 'Verify Two-Factor Authentication'}
-          </Title>
-
-          {error && (
-            <Text type="danger" style={{ textAlign: 'center', marginBottom: '16px' }}>
-              {error}
-            </Text>
-          )}
-
-          {step === 'registration' && (
+  const renderForm = () => {
+    switch (step) {
+      case 'registration':
+        return (
+          <>
             <Form onFinish={handleSubmit} layout="vertical">
               <Form.Item
                 label="First Name"
                 name="firstName"
                 rules={[{ message: 'Please input your first name!' }]}
               >
-                <Input
-                  size="large"
-                  value={formData.firstName}
-                  onChange={(e) =>
-                    handleChange({ target: { name: 'firstName', value: e.target.value } })
-                  }
-                />
+                <Input size="large" />
               </Form.Item>
 
               <Form.Item
@@ -265,13 +204,7 @@ const RegistrationForm = () => {
                 name="lastName"
                 rules={[{ message: 'Please input your last name!' }]}
               >
-                <Input
-                  size="large"
-                  value={formData.lastName}
-                  onChange={(e) =>
-                    handleChange({ target: { name: 'lastName', value: e.target.value } })
-                  }
-                />
+                <Input size="large" />
               </Form.Item>
 
               <Form.Item
@@ -282,13 +215,7 @@ const RegistrationForm = () => {
                   { type: 'email', message: 'Please enter a valid email!' },
                 ]}
               >
-                <Input
-                  size="large"
-                  value={formData.email}
-                  onChange={(e) =>
-                    handleChange({ target: { name: 'email', value: e.target.value } })
-                  }
-                />
+                <Input size="large" />
               </Form.Item>
 
               <Form.Item
@@ -296,16 +223,10 @@ const RegistrationForm = () => {
                 name="password"
                 rules={[{ message: 'Please input your password!' }]}
               >
-                <Input.Password
-                  size="large"
-                  value={formData.password}
-                  onChange={(e) =>
-                    handleChange({ target: { name: 'password', value: e.target.value } })
-                  }
-                />
+                <Input.Password size="large" />
               </Form.Item>
 
-              <Form.Item style={{ marginBottom: '8px' }}>
+              <Form.Item>
                 <Button
                   type="primary"
                   htmlType="submit"
@@ -317,88 +238,67 @@ const RegistrationForm = () => {
                 </Button>
               </Form.Item>
             </Form>
-          )}
 
-          {step === 'mfa-choice' && (
-            <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-              <Text style={{ textAlign: 'center' }}>
-                Would you like to set up Two-Factor Authentication?
+            <Divider>or</Divider>
+
+            <Button
+              icon={<GoogleOutlined />}
+              size="large"
+              block
+              onClick={handleGoogleSignIn}
+              style={{
+                backgroundColor: '#4285F4',
+                color: 'white',
+              }}
+            >
+              Sign up with Google
+            </Button>
+
+            <div style={{ textAlign: 'center', marginTop: '16px' }}>
+              <Text>
+                Already have an account? <Link to="/auth/login">Log in</Link>
               </Text>
-              <Row gutter={16}>
-                <Col span={12}>
-                  <Button
-                    type="primary"
-                    size="large"
-                    block
-                    onClick={() => handleMfaChoice('proceed')}
-                    style={{ backgroundColor: '#1E1E1E' }}
-                  >
-                    Set up MFA
-                  </Button>
-                </Col>
-                <Col span={12}>
-                  <Button
-                    size="large"
-                    block
-                    onClick={() => handleMfaChoice('skip')}
-                    style={{ backgroundColor: '#6B7280', color: 'white' }}
-                  >
-                    Skip
-                  </Button>
-                </Col>
-              </Row>
-            </Space>
-          )}
+            </div>
+          </>
+        );
 
-          {(step === 'mfa-setup' || step === 'mfa-verify') && (
-            <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaVerify} />
-          )}
-
-          {step === 'registration' && (
-            <>
-              <Divider style={{ margin: '8px 0' }}>or</Divider>
+      case 'mfa-choice':
+        return (
+          <Space direction="vertical" size="middle" style={{ width: '100%', textAlign: 'center' }}>
+            <Text>Would you like to set up Two-Factor Authentication?</Text>
+            <div style={{ display: 'flex', gap: '16px' }}>
               <Button
-                icon={<GoogleOutlined />}
+                type="primary"
                 size="large"
-                block
-                onClick={handleGoogleSignIn}
-                style={{
-                  backgroundColor: '#4285F4',
-                  color: 'white',
-                }}
+                onClick={() => handleMfaChoice('proceed')}
+                style={{ flex: 1, backgroundColor: '#1E1E1E' }}
               >
-                Sign up with Google
+                Set up MFA
               </Button>
-            </>
-          )}
-
-          <div className="ant-row" style={{ justifyContent: 'center', marginTop: '16px' }}>
-            <Text style={{ color: '#15171a' }}>
-              Already have an account?{' '}
-              <Link
-                to="/auth/login"
-                style={{
-                  color: '#1E1E1E',
-                  textDecoration: 'none',
-                  fontWeight: 500,
-                  transition: 'all 0.3s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#1890ff';
-                  e.currentTarget.style.textDecoration = 'underline';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = '#1E1E1E';
-                  e.currentTarget.style.textDecoration = 'none';
-                }}
+              <Button
+                size="large"
+                onClick={() => handleMfaChoice('skip')}
+                style={{ flex: 1, backgroundColor: '#6B7280', color: 'white' }}
               >
-                Log in
-              </Link>
-            </Text>
-          </div>
-        </div>
-      </Col>
-    </Row>
+                Skip
+              </Button>
+            </div>
+          </Space>
+        );
+
+      case 'mfa-setup':
+      case 'mfa-verify':
+        return <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaVerify} />;
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <AuthLayout title={getTitle()} error={error} logoSrc={degaImage}>
+      {renderForm()}
+    </AuthLayout>
   );
 };
 
