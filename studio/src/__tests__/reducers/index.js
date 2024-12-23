@@ -54,16 +54,6 @@ const initialState = {
     loading: true,
     req: [],
   },
-  episodes: {
-    req: [],
-    details: {},
-    loading: true,
-  },
-  podcasts: {
-    req: [],
-    details: {},
-    loading: true,
-  },
   roles: {
     details: {},
     loading: true,

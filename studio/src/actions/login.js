@@ -17,7 +17,8 @@ export const createSession = async (email) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to create session');
+    const errorMessage = errorData.message.split('(')[0].trim();
+    throw new Error(errorMessage || 'Failed to create session');
   }
 
   return response.json();
@@ -59,20 +60,24 @@ export const verifyPassword = async (sessionId, sessionToken, password) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Invalid password');
+    const errorMessage = errorData.message.split('(')[0].trim();
+    throw new Error(errorMessage || 'Invalid password');
   }
 
   return response.json();
 };
 
 export const getAuthRequestDetails = async (authRequestId) => {
-  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-      Accept: 'application/json',
+  const response = await fetch(
+    `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+        Accept: 'application/json',
+      },
     },
-  });
+  );
 
   if (!response.ok) {
     throw new Error('Failed to get auth request details');
@@ -82,20 +87,23 @@ export const getAuthRequestDetails = async (authRequestId) => {
 };
 
 export const finalizeAuthRequest = async (authRequestId, sessionId, sessionToken) => {
-  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      session: {
-        sessionId: sessionId,
-        sessionToken: sessionToken,
+  const response = await fetch(
+    `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-    }),
-  });
+      body: JSON.stringify({
+        session: {
+          sessionId: sessionId,
+          sessionToken: sessionToken,
+        },
+      }),
+    },
+  );
 
   if (!response.ok) {
     throw new Error('Failed to finalize auth request');

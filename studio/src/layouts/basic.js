@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Card, notification, BackTop, ConfigProvider, Result, Button, Row } from 'antd';
+import { Layout, Card, notification, FloatButton, ConfigProvider, Result, Button, Row } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -13,7 +13,6 @@ import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
 import { permissionRequirements } from '../utils/getUserPermission';
-import CreateSpace from '../pages/spaces/CreateSpace';
 
 const styles = {
   position: 'absolute',
@@ -32,6 +31,14 @@ function BasicLayout(props) {
   const { Content } = Layout;
   const { children } = props;
   const [enteredRoute, setRoute] = useState({ menuKey: '/' });
+
+  // Paths where mobile sidebar should be hidden
+  const hiddenSidebarPaths = ['/auth/login', '/auth/registration', '/redirect', '/callback'];
+
+  // Check if current path should hide mobile sidebar
+  const shouldHideMobileSidebar = hiddenSidebarPaths.some((path) =>
+    location.pathname.startsWith(path),
+  );
 
   const {
     permission,
@@ -118,7 +125,9 @@ function BasicLayout(props) {
   }, []);
 
   useEffect(() => {
-    if (session.details && !session.loading) dispatch(getSpaces());
+    if (session.details && !session.loading && Object.keys(session.details).length > 0) {
+      dispatch(getSpaces());
+    }
   }, [dispatch, selected, session]);
 
   useEffect(() => {
@@ -147,8 +156,28 @@ function BasicLayout(props) {
     (location.pathname.includes('edit') || location.pathname.includes('create'));
 
   function checkPermissions() {
-    const requiredPermissions = permissionRequirements[location.pathname];
+    // Special handling for /spaces/create
+    if (location.pathname === '/spaces/create') {
+      // Check if user has the specific org ID and admin role
+      const hasRequiredAccess = orgs.some(
+        (org) => org.id === '268579051923402993' && org_role === 'admin',
+      );
 
+      if (!hasRequiredAccess) {
+        <div style={styles}>
+          <Result
+            status="403"
+            title="403 Forbidden"
+            subTitle={`You don't have required permissions to create a space`}
+            extra={<Button href="/">Back Home</Button>}
+          />
+        </div>;
+      }
+      return null;
+    }
+
+    // Handle other routes with existing permission logic
+    const requiredPermissions = permissionRequirements[location.pathname];
     if (!requiredPermissions) {
       return null;
     }
@@ -158,7 +187,7 @@ function BasicLayout(props) {
       return null;
     }
 
-    // Otherwise, check if user has specific permissions for the current location
+    // Check specific permissions for other routes
     const missingPermissions = requiredPermissions.filter((reqPerm) => {
       const matchingPerm = permission.find(
         (perm) =>
@@ -172,20 +201,9 @@ function BasicLayout(props) {
 
     return missingPermissions.length > 0 ? missingPermissions : null;
   }
+
   // Render based on permission check
   const missingPermissions = checkPermissions();
-
-  if (!loading && (!orgs.length || orgs.filter((o) => o.role === 'admin').length === 0)) {
-    return (
-      <div style={styles}>
-        <Result
-          status="403"
-          title="403 Forbidden"
-          subTitle="You don't have access. Please contact your administrator."
-        />
-      </div>
-    );
-  }
 
   if (missingPermissions) {
     return (
@@ -204,57 +222,6 @@ function BasicLayout(props) {
           extra={<Button href="/">Back Home</Button>}
         />
       </div>
-    );
-  }
-
-  if (!loading && (!orgs.length || orgs.filter((o) => o.role === 'admin').length === 0)) {
-    return (
-      <div style={styles}>
-        <Result
-          status="403"
-          title="403 Forbidden"
-          subTitle="You don't have access. Please contact your administrator."
-        />
-      </div>
-    );
-  }
-
-  const existingSpaces = orgs[0]?.spaces;
-  const handleClick = () => {
-    navigate('/spaces/create');
-  };
-
-  if (location.pathname === '/spaces/create' && !loading) {
-    return (
-      <>
-        <h1
-          style={{ textAlign: 'center', fontSize: '2em', fontWeight: 'bold', marginBottom: '20px' }}
-        >
-          Space
-        </h1>
-        <div class="form-container">
-          <Row justify="center">
-            <CreateSpace />
-          </Row>
-        </div>
-      </>
-    );
-  }
-
-  if (!loading && existingSpaces?.length === 0) {
-    return (
-      <>
-        <Result
-          status="403"
-          title="You do not have any space created."
-          subTitle="Please create one to explore more of Dega."
-          extra={
-            <Button type="primary" onClick={handleClick}>
-              Create Space
-            </Button>
-          }
-        />
-      </>
     );
   }
 
@@ -286,7 +253,7 @@ function BasicLayout(props) {
         },
       }}
     >
-      {isMobileScreen && !hideSidebar && (
+      {isMobileScreen && !hideSidebar && !shouldHideMobileSidebar && (
         <>
           <Layout style={{ padding: '48px 28px 17px 28px', background: '#F2F5F9' }}>
             <MobileSidebar
@@ -303,7 +270,7 @@ function BasicLayout(props) {
       )}
       <Layout hasSider={true}>
         <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
-        {!isMobileScreen && !hideSidebar && (
+        {!isMobileScreen && !hideSidebar && !shouldHideMobileSidebar && (
           <Sidebar
             permission={permission}
             menuKey={enteredRoute?.menuKey}
@@ -335,7 +302,7 @@ function BasicLayout(props) {
               {children}
             </Card>
           </Content>
-          <BackTop style={{ right: 50 }} />
+          <FloatButton.BackTop style={{ right: 50 }} />
         </Layout>
       </Layout>
     </ConfigProvider>

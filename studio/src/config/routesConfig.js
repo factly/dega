@@ -32,16 +32,6 @@ import Tags from '../pages/tags';
 import CreateTag from '../pages/tags/CreateTag';
 import EditTag from '../pages/tags/EditTag';
 
-//Episodes
-import Episodes from '../pages/episodes';
-import CreateEpisode from '../pages/episodes/CreateEpisode';
-import EditEpisode from '../pages/episodes/EditEpisode';
-
-//Podcasts
-import Podcasts from '../pages/podcasts';
-import CreatePodcast from '../pages/podcasts/CreatePodcast';
-import EditPodcast from '../pages/podcasts/EditPodcast';
-
 //Formats
 import Formats from '../pages/formats';
 import CreateFormat from '../pages/formats/CreateFormat';
@@ -93,6 +83,10 @@ import Events from '../pages/events';
 import CreateEvent from '../pages/events/CreateEvent';
 import EditEvent from '../pages/events/EditEvent';
 
+//Organisations
+import Organisations from '../pages/organisations/index';
+import AddUsers from '../pages/organisations/AddUsers';
+
 //Pages
 import Pages from '../pages/pages';
 import CreatePage from '../pages/pages/CreatePage';
@@ -114,6 +108,8 @@ import EditWebsite from '../pages/website/EditWebsite';
 import CodeInjection from '../pages/website/CodeInjection';
 import Branding from '../pages/website/Branding';
 import AnalyticsForm from '../pages/website/AnalyticsForm';
+import SecuritySettings from '../pages/website/TwoFactorAuthManagement';
+
 // Advanced
 import Advanced from '../pages/advanced';
 // Members
@@ -129,9 +125,8 @@ import Callback from '../pages/redirect';
 import Tokens from '../pages/tokens';
 import CreateSpaceTokenForm from '../pages/tokens/components/CreateToken';
 
-import RegistrationForm from '../utils/zitadel/registration.js';
+import RegistrationForm from '../utils/zitadel/registration';
 import LoginEmail from '../utils/zitadel/login';
-import ForgotPassword from '../utils/zitadel/forgotPassword';
 
 export function extractV6RouteObject(formats, setReloadFlag, reloadFlag) {
   const extractedRoutes = [];
@@ -260,6 +255,12 @@ const routes = {
       action: 'update',
     },
   },
+  SecuritySettings: {
+    path: '/settings/website/authentication',
+    menuKey: '/website',
+    Component: SecuritySettings,
+    title: 'Authentication',
+  },
   branding: {
     path: '/settings/website/branding',
     menuKey: '/website',
@@ -285,58 +286,6 @@ const routes = {
     menuKey: '/advanced',
     Component: Reindex,
     title: 'Reindex',
-  },
-  episodes: {
-    path: '/episodes',
-    menuKey: '/episodes',
-    Component: Episodes,
-    title: 'Episodes',
-  },
-  createEpisode: {
-    path: '/episodes/create',
-    menuKey: '/episodes',
-    Component: CreateEpisode,
-    title: 'New Episode',
-    permission: {
-      resource: 'episodes',
-      action: 'create',
-    },
-  },
-  editEpisode: {
-    path: '/episodes/:id/edit',
-    menuKey: '/episodes',
-    Component: EditEpisode,
-    title: 'Edit',
-    permission: {
-      resource: 'episodes',
-      action: 'update',
-    },
-  },
-  podcasts: {
-    path: '/podcasts',
-    menuKey: '/podcasts',
-    Component: Podcasts,
-    title: 'Podcasts',
-  },
-  createPodcast: {
-    path: '/podcasts/create',
-    menuKey: '/podcasts',
-    Component: CreatePodcast,
-    title: 'New Podcast',
-    permission: {
-      resource: 'podcasts',
-      action: 'create',
-    },
-  },
-  editPodcast: {
-    path: '/podcasts/:id/edit',
-    menuKey: '/podcasts',
-    Component: EditPodcast,
-    title: 'Edit',
-    permission: {
-      resource: 'podcasts',
-      action: 'update',
-    },
   },
   categories: {
     path: '/categories',
@@ -660,6 +609,18 @@ const routes = {
       action: 'get',
     },
   },
+  organisations: {
+    path: '/settings/organisations',
+    menuKey: '/organisations',
+    Component: Organisations,
+    title: 'Organisations',
+  },
+  addusers: {
+    path: '/settings/organisations/addusers',
+    menuKey: '/organisations',
+    Component: AddUsers,
+    title: 'Add Users',
+  },
   menu: {
     path: '/settings/website/menus',
     menuKey: '/website',
@@ -809,19 +770,13 @@ const routes = {
     path: 'auth/registration',
     menuKey: 'auth/registration',
     Component: RegistrationForm,
-    title: 'Registration Form', 
+    title: 'Registration Form',
   },
   login: {
     path: '/auth/login',
     menuKey: '/auth/login',
     Component: LoginEmail,
     title: 'Login Email',
-  },
-  forgotPassword: {
-    path: '/login/forgotpassword',
-    menuKey: '/login/forgotpassword',
-    Component: ForgotPassword,
-    title: 'Forgot Password',
   },
   redirect: {
     path: '/redirect',
@@ -869,14 +824,9 @@ export const sidebarMenu = [
     ],
   },
   {
-    title: 'Podcast',
-    Icon: (props) => <AudioOutlined {...props} />,
-    children: [routes.episodes, routes.podcasts],
-  },
-  {
     title: 'Administration',
     Icon: (props) => <GlobalOutlined {...props} />,
-    children: [routes.spaces, routes.events],
+    children: [routes.spaces, routes.events, routes.organisations],
     isService: false,
   },
 ];

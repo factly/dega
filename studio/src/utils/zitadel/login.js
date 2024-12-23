@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { checkTOTP } from '../../actions/mfa';
 import { useGoogleSignIn } from './idp';
 import degaImage from '../../assets/dega.png';
@@ -11,18 +12,29 @@ import {
   getAuthRequestDetails,
   finalizeAuthRequest,
 } from '../../actions/login';
+import { requestPasswordReset, resetPassword } from '../../actions/forgotPassword';
+import EmailInput from './login/emailInput';
+import Password from './login/Password.js';
+import Mfa from './login/mfa.js';
+import MfaVerify from './login/mfaverify.js';
+import RequestReset from './login/requestreset';
+import ResetPassword from './login/resetpassword';
+import AuthLayout from './Authlayout';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [step, setStep] = useState('email');
   const [sessionId, setSessionId] = useState('');
   const [userId, setUserId] = useState('');
   const [totpCode, setTotpCode] = useState('');
   const [mfaCode, setMfaCode] = useState('');
   const [authRequestId, setAuthRequestId] = useState('');
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const location = useLocation();
 
   const {
@@ -40,6 +52,7 @@ const Login = () => {
     const authRequest = searchParams.get('authRequest');
     if (authRequest) {
       setAuthRequestId(authRequest);
+      localStorage.setItem('authRequestId', authRequest);
       getAuthRequestDetails(authRequest);
     }
   }, [location]);
@@ -56,11 +69,29 @@ const Login = () => {
     }
   }, [googleStep]);
 
-  const handleEmailSubmit = async (e) => {
-    e.preventDefault();
+  const getAuthMethods = async (userId) => {
+    const response = await fetch(
+      `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/authentication_methods`,
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+        },
+      },
+    );
+    if (!response.ok) {
+      throw new Error('Failed to fetch authentication methods');
+    }
+    const data = await response.json();
+    console.log('Auth methods response:', data);
+    return data;
+  };
+
+  const handleEmailSubmit = async (values) => {
     setError('');
+    setIsLoading(true);
     try {
-      const sessionData = await createSession(email);
+      const sessionData = await createSession(values.email);
       localStorage.setItem('sessionData', JSON.stringify(sessionData));
       setSessionId(sessionData.sessionId);
       localStorage.setItem('sessionToken', sessionData.sessionToken);
@@ -68,50 +99,118 @@ const Login = () => {
       const userDetails = await getUserDetails(sessionData.sessionId);
       setUserId(userDetails.session.factors.user.id);
       localStorage.setItem('userId', userDetails.session.factors.user.id);
+      localStorage.setItem('userEmail', values.email);
 
       setStep('password');
     } catch (error) {
       console.error('Error:', error);
       setError(error.message || 'An unexpected error occurred. Please try again later.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handlePasswordSubmit = async (e) => {
-    e.preventDefault();
+  const handlePasswordSubmit = async (values) => {
     setError('');
-
+    setIsLoading(true);
     try {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
-      const result = await verifyPassword(sessionId, sessionData.token, password);
+      const result = await verifyPassword(sessionId, sessionData.token, values.password);
       localStorage.setItem('sessionToken', result.sessionToken);
-      setStep('mfa');
+
+      const authMethods = await getAuthMethods(userId);
+      if (
+        authMethods.authMethodTypes &&
+        authMethods.authMethodTypes.includes('AUTHENTICATION_METHOD_TYPE_TOTP')
+      ) {
+        setStep('mfa');
+      } else {
+        await finalizeLogin(result.sessionToken);
+      }
     } catch (error) {
       console.error('Error:', error);
-      setError(error.message || 'An unexpected error occurred');
+      setError(error.message || 'Invalid password');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleMfaSubmit = async (e) => {
-    e.preventDefault();
+  const handleRequestReset = async () => {
     setError('');
+    try {
+      await requestPasswordReset(userId);
+      setStep('reset-verify');
+    } catch (error) {
+      setError(`An error occurred: ${error.message}`);
+    }
+  };
+
+  const handleResetPassword = async (values) => {
+    setError('');
+    setSuccessMessage('');
+    try {
+      await resetPassword(userId, values.newPassword, values.verificationCode);
+      setStep('email');
+      setSuccessMessage('Password reset successful. Please log in with your new password.');
+    } catch (error) {
+      setError(`An error occurred: ${error.message}`);
+    }
+  };
+
+  const handleMfaSubmit = async (values) => {
+    setError('');
+    setIsLoading(true);
 
     try {
       const sessionData = JSON.parse(localStorage.getItem('sessionData'));
-      const result = await checkTOTP(sessionId, sessionData.token, totpCode);
+      const result = await checkTOTP(sessionId, sessionData.token, values.totpCode);
       if (result.sessionToken) {
         localStorage.setItem('sessionToken', result.sessionToken);
-        const finalizeResult = await finalizeAuthRequest(authRequestId, sessionId, result.sessionToken);
-        if (finalizeResult.callbackUrl) {
-          window.location.href = finalizeResult.callbackUrl;
-        } else {
-          console.error('No callback URL in the response');
-        }
+        await finalizeLogin(result.sessionToken);
       } else {
         setError('Invalid MFA code. Please try again.');
       }
     } catch (error) {
       console.error('Error:', error);
       setError('An unexpected error occurred during MFA verification');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleMfaVerifySubmit = (values) => {
+    handleMfaVerify(values.mfaCode);
+  };
+
+  const handleSkipMfa = async () => {
+    try {
+      const sessionToken = localStorage.getItem('sessionToken');
+      if (!sessionToken) {
+        throw new Error('No session token found');
+      }
+      await finalizeLogin(sessionToken);
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An unexpected error occurred while skipping MFA');
+    }
+  };
+
+  const finalizeLogin = async (sessionToken) => {
+    try {
+      if (!sessionToken) {
+        throw new Error('No session token provided');
+      }
+      const authRequestId = localStorage.getItem('authRequestId');
+      const finalizeResult = await finalizeAuthRequest(authRequestId, sessionId, sessionToken);
+      if (finalizeResult.callbackUrl) {
+        window.location.href = finalizeResult.callbackUrl;
+      } else {
+        console.error('No callback URL in the response');
+        setError('Login successful, but redirect failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError(`An unexpected error occurred during login finalization: ${error.message}`);
     }
   };
 
@@ -122,367 +221,125 @@ const Login = () => {
     }
   };
 
-  return (
-    <div
+  const resetLoginProcess = () => {
+    setEmail('');
+    setPassword('');
+    setError('');
+    setStep('email');
+    setSessionId('');
+    setUserId('');
+    setTotpCode('');
+    setMfaCode('');
+    setVerificationCode('');
+    setNewPassword('');
+    localStorage.removeItem('sessionData');
+    localStorage.removeItem('sessionToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userEmail');
+  };
+
+  const BackArrowButton = ({ onClick }) => (
+    <button
+      onClick={onClick}
       style={{
-        position: 'relative',
-        width: '100%',
-        height: '100vh',
-        overflow: 'hidden',
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        padding: '8px',
+        borderRadius: '50%',
+        transition: 'background-color 0.3s ease',
+        marginBottom: '16px',
         display: 'flex',
+        alignItems: 'center',
+      }}
+      onMouseEnter={(e) => {
+        e.target.style.backgroundColor = '#f0f0f0';
+      }}
+      onMouseLeave={(e) => {
+        e.target.style.backgroundColor = 'transparent';
       }}
     >
-      <div
-        style={{
-          width: '50%',
-          height: '100%',
-          backgroundColor: '#f0f0f0',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <img
-          src={degaImage}
-          alt="DEGA"
-          style={{
-            width: '40%',
-            height: '40%',
-            objectFit: 'contain',
-            position: 'absolute',
-            top: '35%',
-            transform: 'translateY(-50%)',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '5%',
-            left: '45%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <h1
-            style={{
-              fontSize: '38px',
-              fontWeight: 'bold',
-              color: '#333',
-            }}
-          >
-            DEGA
-          </h1>
-        </div>
-      </div>
-      <div
-        style={{
-          width: '50%',
-          height: '100%',
-          backgroundColor: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <div
-          style={{
-            width: '100%',
-            maxWidth: '400px',
-            padding: '0 32px',
-          }}
-        >
-          <h2
-            style={{
-              fontSize: '24px',
-              fontWeight: 'bold',
-              marginBottom: '24px',
-              textAlign: 'center',
-              color: '#333',
-            }}
-          >
-            {step === 'email'
-              ? 'Login'
-              : step === 'password'
-              ? 'Enter Password'
-              : step === 'mfa'
-              ? 'MFA Verification'
-              : step === 'mfa-setup'
-              ? 'Set up Two-Factor Authentication'
-              : 'Verify Two-Factor Authentication'}
-          </h2>
-          {error && (
-            <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>
-          )}
-          {step === 'email' && (
-            <form onSubmit={handleEmailSubmit} style={{ marginBottom: '16px' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor="email"
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Next
-                </button>
-              </div>
-            </form>
-          )}
-          {step === 'password' && (
-            <form onSubmit={handlePasswordSubmit} style={{ marginBottom: '16px' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor="password"
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Log In
-                </button>
-              </div>
-            </form>
-          )}
-          {step === 'mfa' && (
-            <form onSubmit={handleMfaSubmit} style={{ marginBottom: '16px' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor="totpCode"
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Enter MFA Code
-                </label>
-                <input
-                  type="text"
-                  id="totpCode"
-                  value={totpCode}
-                  onChange={(e) => setTotpCode(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Verify MFA
-                </button>
-              </div>
-            </form>
-          )}
-          {step === 'mfa-setup' && (
-            <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />
-          )}
-          {step === 'mfa-verify' && (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleMfaVerify(mfaCode);
-              }}
-              style={{ marginBottom: '16px' }}
-            >
-              <div style={{ marginBottom: '16px' }}>
-                <label
-                  htmlFor="mfaCode"
-                  style={{
-                    display: 'block',
-                    color: '#333',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Enter MFA Code
-                </label>
-                <input
-                  type="text"
-                  id="mfaCode"
-                  value={mfaCode}
-                  onChange={(e) => setMfaCode(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                  required
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    backgroundColor: '#1E1E1E',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Verify MFA
-                </button>
-              </div>
-            </form>
-          )}
-          {step === 'email' && (
-            <div style={{ marginBottom: '16px' }}>
-              <button
-                onClick={handleGoogleSignIn}
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  backgroundColor: '#4285F4',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  border: 'none',
-                  borderRadius: '4px',
-                  fontSize: '16px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <img
-                  src="https://developers.google.com/identity/images/g-logo.png"
-                  alt="Google logo"
-                  style={{ width: '18px', height: '18px', marginRight: '10px' }}
-                />
-                Sign in with Google
-              </button>
-            </div>
-          )}
-          <div style={{ textAlign: 'center' }}>
-            {step === 'email' ? (
-              <Link to="/auth/registration" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
-                Don't have an account? Sign up
-              </Link>
-            ) : step === 'password' ? (
-              <Link to="/login/forgotpassword" style={{ color: '#1E1E1E', textDecoration: 'none' }}>
-                Forgot Password?
-              </Link>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    </div>
+      <ArrowLeftOutlined style={{ fontSize: '20px', color: '#1E1E1E' }} />
+    </button>
+  );
+
+  const getTitle = () => {
+    switch (step) {
+      case 'email':
+        return 'Login';
+      case 'password':
+        return 'Enter Password';
+      case 'mfa':
+        return 'MFA Verification';
+      case 'mfa-setup':
+        return 'Set up Two-Factor Authentication';
+      case 'mfa-verify':
+        return 'Verify Two-Factor Authentication';
+      case 'reset-request':
+        return 'Reset Password';
+      case 'reset-verify':
+        return 'Enter Verification Code';
+      default:
+        return 'Login';
+    }
+  };
+
+  const renderForm = () => {
+    switch (step) {
+      case 'email':
+        return (
+          <EmailInput
+            email={email}
+            setEmail={setEmail}
+            onSubmit={handleEmailSubmit}
+            error={error}
+            handleGoogleSignIn={handleGoogleSignIn}
+          />
+        );
+      case 'password':
+        return (
+          <Password
+            password={password}
+            setPassword={setPassword}
+            onSubmit={handlePasswordSubmit}
+            onForgotPassword={() => setStep('reset-request')}
+          />
+        );
+      case 'reset-request':
+        return <RequestReset userEmail={email} onSubmit={handleRequestReset} />;
+      case 'reset-verify':
+        return (
+          <ResetPassword
+            verificationCode={verificationCode}
+            setVerificationCode={setVerificationCode}
+            newPassword={newPassword}
+            setNewPassword={setNewPassword}
+            onSubmit={handleResetPassword}
+          />
+        );
+      case 'mfa':
+        return <Mfa totpCode={totpCode} setTotpCode={setTotpCode} onSubmit={handleMfaSubmit} />;
+      case 'mfa-setup':
+        return <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaSetup} />;
+      case 'mfa-verify':
+        return (
+          <MfaVerify mfaCode={mfaCode} setMfaCode={setMfaCode} onSubmit={handleMfaVerifySubmit} />
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <AuthLayout
+      title={getTitle()}
+      error={error}
+      showBackButton={step !== 'email'}
+      onBackClick={resetLoginProcess}
+      logoSrc={degaImage}
+    >
+      {renderForm()}
+    </AuthLayout>
   );
 };
 

@@ -13,54 +13,23 @@ import AccountMenu from './AccountMenu';
 import { Link } from 'react-router-dom';
 import Search from '../Search';
 import { setSpaceSelectorPage } from './../../actions/spaceSelectorPage';
-import { maker } from '../../utils/sluger';
 import MenuIcon from '../../assets/MenuIcon';
 import SearchIcon from '../../assets/SearchIcon';
 
-function MobileSidebar({ permission, orgs, applications, services, menuKey, org_role }) {
+function MobileSidebar({ applications, menuKey }) {
   const { details, selected } = useSelector((state) => state.spaces);
   const { navTheme } = useSelector((state) => state.settings);
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+
   const showDrawer = () => {
     setOpen(true);
   };
-  const dispatch = useDispatch();
-  const [showCoreMenu, setCoreMenu] = React.useState(false);
+
   const onClose = () => {
     setOpen(false);
   };
-  let resource = [
-    'home',
-    'dashboard',
-    'analytics',
-    'google',
-    'factly',
-    'policies',
-    'users',
-    'spaces',
-    'sach',
-  ];
-  let protectedResources = [
-    'posts',
-    'pages',
-    'categories',
-    'tags',
-    'media',
-    'formats',
-    'claims',
-    'claimants',
-    'ratings',
-    'menus',
-    'fact-checks',
-    'episodes',
-    'podcasts',
-    'events',
-    'webhooks',
-    'website',
-    'advanced',
-    'members',
-    'code-injection',
-  ];
+
   let buttonStyle = {
     width: '40px',
     height: '40px',
@@ -69,33 +38,14 @@ function MobileSidebar({ permission, orgs, applications, services, menuKey, org_
     padding: '.5rem 0.5rem',
   };
 
-  if (org_role === 'admin') {
-    resource = resource.concat(protectedResources);
-    if (!showCoreMenu) {
-      setCoreMenu(true);
-    }
-  } else {
-    permission.forEach((each) => {
-      if (!showCoreMenu && protectedResources.includes(each.resource)) {
-        setCoreMenu(true);
-      }
-      resource.push(each.resource);
-    });
-  }
-
-  if (orgs[0]?.role === 'admin') resource = resource.concat(protectedResources);
-  const getMenuItems = (children, index, title) =>
-    children.map((route, childIndex) => {
-      return resource.includes(route.title.toLowerCase()) ? (
-        ['Events'].indexOf(route.title) !== -1 ? null : (
-          <Menu.Item key={route.menuKey}>
-            <Link to={route.path} onClick={onClose}>
-              <span>{route.title}</span>
-            </Link>
-          </Menu.Item>
-        )
-      ) : null;
-    });
+  const getMenuItems = (children) =>
+    children.map((route) => (
+      <Menu.Item key={route.menuKey}>
+        <Link to={route.path} onClick={onClose}>
+          <span>{route.title}</span>
+        </Link>
+      </Menu.Item>
+    ));
 
   const { SubMenu } = Menu;
   const getSubMenuItems = (menu, index, Icon) => (
@@ -106,20 +56,14 @@ function MobileSidebar({ permission, orgs, applications, services, menuKey, org_
     >
       {menu.submenu && menu.submenu.length > 0 ? (
         <>
-          {menu.submenu.map((submenuItem, index) => {
-            return orgs[0]?.role === 'admin' ? (
-              <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
-                {getMenuItems(submenuItem.children, index, submenuItem.title)}
-              </SubMenu>
-            ) : (
-              <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
-                {getMenuItems(submenuItem.children, index, submenuItem.title)}
-              </SubMenu>
-            );
-          })}
+          {menu.submenu.map((submenuItem, index) => (
+            <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
+              {getMenuItems(submenuItem.children)}
+            </SubMenu>
+          ))}
         </>
       ) : null}
-      {getMenuItems(menu.children, index, menu.title)}
+      {getMenuItems(menu.children)}
     </SubMenu>
   );
 
@@ -270,17 +214,7 @@ function MobileSidebar({ permission, orgs, applications, services, menuKey, org_
         >
           {sidebarMenu.map((menu, index) => {
             const { Icon } = menu;
-            return menu.title === 'CORE' && !showCoreMenu
-              ? null
-              : !menu.isService
-              ? !menu.isAdmin
-                ? getSubMenuItems(menu, index, Icon)
-                : org_role === 'admin'
-                ? getSubMenuItems(menu, index, Icon)
-                : null
-              : services?.includes(maker(menu.title))
-              ? getSubMenuItems(menu, index, Icon)
-              : null;
+            return getSubMenuItems(menu, index, Icon);
           })}
         </Menu>
       </Drawer>

@@ -56,17 +56,6 @@ const entities = [
     label: 'Ratings',
     options: options,
   },
-
-  {
-    name: 'podcasts',
-    label: 'Podcasts',
-    options: options,
-  },
-  {
-    name: 'episodes',
-    label: 'Episodes',
-    options: options,
-  },
   {
     name: 'menus',
     label: 'Menus',
@@ -92,11 +81,8 @@ const dependencies = {
   claims: ['claimants', 'ratings'],
   claimants: ['media'],
   ratings: ['media'],
-  podcasts: ['categories', 'media'],
-  episodes: ['podcasts', 'media'],
   menus: [],
   pages: ['categories', 'tags', 'media'],
-  webhooks: ['podcasts'],
 };
 
 function PolicyForm({ data = {}, onCreate }) {

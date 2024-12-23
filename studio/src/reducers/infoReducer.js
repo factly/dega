@@ -13,7 +13,6 @@ const initialState = {
     template: 0,
     publish: 0,
   },
-  podcasts: 0,
   loading: true,
 };
 

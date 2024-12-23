@@ -156,15 +156,16 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
       values.claim_order = claimOrder;
     }
     values.status = status;
-    if ((status ==='publish' || status === 'future') && values.author_ids.length === 0) {
+    if ((status === 'publish' || status === 'future') && values.author_ids.length === 0) {
       dispatch(addErrorNotification('At least one author must be assigned before publishing.'));
       return;
     }
-    if (status === 'future' ) {
+    if (status === 'future') {
       if (!values.published_date) {
-      dispatch(addErrorNotification('Published date is required for future publishing.'));
-      return;
-    }}
+        dispatch(addErrorNotification('Published date is required for future publishing.'));
+        return;
+      }
+    }
     values.status === 'publish'
       ? (values.published_date = values.published_date
           ? dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
@@ -410,16 +411,16 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   >
                     <Collapse.Panel header="Details" key="1">
                       <Row justify="space-between" style={{ margin: '16px 0', marginTop: 0 }}>
-                      {data?.created_at ? (
- <Col span={16}>
- <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
-   <span style={{ color: '#000000E0', fontWeight: 400 }}>
-   Created Date:{' '}
-    </span>
-      {formatDate(data.created_at)}
-    </Typography.Text>
- </Col>
-) : null}
+                        {data?.created_at ? (
+                          <Col span={16}>
+                            <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
+                              <span style={{ color: '#000000E0', fontWeight: 400 }}>
+                                Created Date:{' '}
+                              </span>
+                              {formatDate(data.created_at)}
+                            </Typography.Text>
+                          </Col>
+                        ) : null}
                         {data?.updated_at ? (
                           <Col span={16}>
                             <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>

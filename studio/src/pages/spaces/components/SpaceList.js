@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfigProvider, Modal, Button, Table, Typography } from 'antd';
+import { ConfigProvider, Modal, Button, Table, Typography, Space } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteSpace, getSpaces } from './../../../actions/spaces';
@@ -25,123 +25,82 @@ function SpaceList() {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      width: 200,
-      render: (_, record) => {
-        return (
-          <Link
+      width: 250,
+      ellipsis: false,
+      render: (_, record) => (
+        <Link to={`/admin/spaces/${record.id}/edit`}>
+          <Typography.Text
             style={{
-              marginRight: 8,
+              fontSize: '1rem',
+              color: '#101828',
+              whiteSpace: 'normal',
+              wordBreak: 'break-all',
             }}
-            to={`/admin/spaces/${record.id}/edit`}
+            strong
           >
-            <Typography.Text style={{ fontSize: '1rem', color: '#101828' }}>
-              {record.id}
-            </Typography.Text>
-          </Link>
-        );
-      },
+            {record.id}
+          </Typography.Text>
+        </Link>
+      ),
     },
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
       width: 200,
-      onCell: () => {
-        return {
-          style: {
-            minWidth: '200px',
-          },
-        };
-      },
-      render: (_, record) => {
-        return (
-          <Link
-            style={{
-              marginRight: 8,
-            }}
-            to={`/admin/spaces/${record.id}/edit`}
-          >
-            <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-              {record.name}
-            </Typography.Text>
-          </Link>
-        );
-      },
+      ellipsis: true,
+      render: (_, record) => (
+        <Link to={`/admin/spaces/${record.id}/edit`}>
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+            {record.name}
+          </Typography.Text>
+        </Link>
+      ),
     },
     {
       title: 'Site Address',
       dataIndex: 'site_address',
       key: 'site_address',
       width: 200,
-      onCell: () => {
-        return {
-          style: {
-            minWidth: '200px',
-          },
-        };
-      },
-      render: (_, record) => {
-        return (
-          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-            {record.site_address}
-          </Typography.Text>
-        );
-      },
+      ellipsis: true,
+      render: (_, record) => (
+        <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+          {record.site_address}
+        </Typography.Text>
+      ),
     },
     {
       title: 'Site Title',
       dataIndex: 'site_title',
       key: 'site_title',
       width: 200,
-      onCell: () => {
-        return {
-          style: {
-            minWidth: '200px',
-          },
-        };
-      },
-      render: (_, record) => {
-        return (
-          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-            {record.site_title}
-          </Typography.Text>
-        );
-      },
+      ellipsis: true,
+      render: (_, record) => (
+        <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+          {record.site_title}
+        </Typography.Text>
+      ),
     },
     {
       title: 'Tag line',
       dataIndex: 'tag_line',
       key: 'tag_line',
       width: 200,
-      onCell: () => {
-        return {
-          style: {
-            minWidth: '200px',
-          },
-        };
-      },
-      render: (_, record) => {
-        return (
-          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
-            {record.tag_line}
-          </Typography.Text>
-        );
-      },
+      ellipsis: true,
+      render: (_, record) => (
+        <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+          {record.tag_line}
+        </Typography.Text>
+      ),
     },
     {
-      title: 'Action',
+      title: 'Actions',
       dataIndex: 'operation',
-      align: 'center',
+      key: 'operation',
       width: 150,
-      onCell: () => {
-        return {
-          style: {
-            minWidth: '150px',
-          },
-        };
-      },
-      render: (_, record) => {
-        return (
+      ellipsis: true,
+      render: (_, record) => (
+        <Space direction="horizontal">
           <ConfigProvider
             theme={{
               components: {
@@ -153,20 +112,18 @@ function SpaceList() {
               },
             }}
           >
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <Button
-                size="large"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setModalOpen(true);
-                  setDeleteItemId(record.id);
-                }}
-                icon={<DeleteOutlined style={{ color: '#858585' }} />}
-              />
-            </div>
+            <Button
+              size="large"
+              onClick={(e) => {
+                e.stopPropagation();
+                setModalOpen(true);
+                setDeleteItemId(record.id);
+              }}
+              icon={<DeleteOutlined style={{ color: '#858585' }} />}
+            />
           </ConfigProvider>
-        );
-      },
+        </Space>
+      ),
     },
   ];
 
@@ -177,32 +134,36 @@ function SpaceList() {
           Typography: {
             colorText: '#101828',
           },
+          Table: {
+            headerBg: '#ffffff',
+            headerColor: '#101828',
+            borderColor: '#f0f0f0',
+            rowHoverBg: '#fafafa',
+          },
         },
       }}
     >
-      <Table
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              history(`/admin/spaces/${record.id}/edit`);
-            },
-            onMouseEnter: (event) => {
+      <div style={{ width: '100%', overflow: 'auto' }}>
+        <Table
+          onRow={(record) => ({
+            onClick: () => history(`/admin/spaces/${record.id}/edit`),
+            onMouseEnter: () => {
               document.body.style.cursor = 'pointer';
             },
-            onMouseLeave: (event) => {
+            onMouseLeave: () => {
               document.body.style.cursor = 'default';
             },
-          };
-        }}
-        // style={{ maxWidth: '100vw', overflowX: 'auto' }}
-        scroll={{
-          x: '1000',
-        }}
-        rowKey={'id'}
-        dataSource={spaces}
-        columns={columns}
-        loading={loading}
-      />
+          })}
+          scroll={{
+            x: 1150,
+          }}
+          rowKey="id"
+          dataSource={spaces}
+          columns={columns}
+          loading={loading}
+        />
+      </div>
+
       <Modal
         open={modalOpen}
         closable={false}

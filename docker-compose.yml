@@ -81,7 +81,7 @@ services:
   #######                            NGINX                            #######
   ###########################################################################
   nginx:
-    image: nginx:1.19.0-alpine
+    image: nginx:1.26.0-alpine
     ports:
       - 7001:80
     volumes:
