@@ -28,6 +28,7 @@
     "@testing-library/user-event": "^7.2.1",
     "@uppy/google-drive": "^3.5.0",
     "@uppy/image-editor": "^2.4.0",
+    "ajv": "^8.17.1",
     "antd": "^5.0.4",
     "axios": "^0.21.1",
     "dayjs": "^1.11.6",
