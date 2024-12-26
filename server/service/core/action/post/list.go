@@ -9,7 +9,6 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test/models"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/meilisearch"
@@ -130,7 +129,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 				tx.Where("status != ?", "template")
 			}
 			filters = generateSQLFilters(tx, searchQuery, queryMap["tag"], queryMap["category"], queryMap["author"], queryMap["status"])
-			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Select("posts.*").Find(&posts).Error
+			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Select("de_post.*").Find(&posts).Error
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.DBError()))
@@ -237,45 +236,68 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	metafieldsKey := r.URL.Query().Get("meta_fields_key")
 	metafieldsValue := r.URL.Query().Get("meta_fields_value")
 
-	formatUUIDs, err := arrays.StrToUUID(formatIDs)
-	if err != nil {
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-		return
+	formatUUIDs := make([]uuid.UUID, 0)
+	if len(formatIDs) > 0 {
+		formatUUIDs, err = arrays.StrToUUID(formatIDs)
+		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+			return
+		}
 	}
+
 	formatSlugs := r.URL.Query()["format_slugs"]
 	tagIds := r.URL.Query()["tag_ids"]
 
-	tagUUIDs, err := arrays.StrToUUID(tagIds)
-	if err != nil {
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-		return
+	tagUUIDs := make([]uuid.UUID, 0)
+	if len(tagIds) > 0 {
+		tagUUIDs, err = arrays.StrToUUID(tagIds)
+		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+			return
+		}
 	}
+
 	tagSlugs := r.URL.Query()["tag_slugs"]
 	categoryIds := r.URL.Query()["category_ids"]
 
-	categoryUUIDs, err := arrays.StrToUUID(categoryIds)
-	if err != nil {
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-		return
+	categoryUUIDs := make([]uuid.UUID, 0)
+	if len(categoryIds) > 0 {
+		categoryUUIDs, err = arrays.StrToUUID(categoryIds)
+		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+			return
+		}
 	}
 
 	categorySlugs := r.URL.Query()["category_slugs"]
-
 	status := r.URL.Query().Get("status")
 
 	if len(tagSlugs) > 0 {
-		tags := make([]model.Tag, 0)
-		config.DB.Model(&model.Tag{}).Where("slug IN ? and space_id", tagSlugs, authCtx.SpaceID).Find(&tags)
+		var tags []model.Tag
+		err := config.DB.Model(&model.Tag{}).
+			Where("slug IN ? AND space_id = ?", tagSlugs, authCtx.SpaceID).
+			Find(&tags).Error
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 
-		tagUUIDs = make([]uuid.UUID, 0)
 		for _, tag := range tags {
 			tagUUIDs = append(tagUUIDs, tag.ID)
 		}
 	}
 
 	if len(categorySlugs) > 0 {
-		categories := make([]model.Category, 0)
-		config.DB.Model(&model.Category{}).Where("slug IN ? and space_id", categorySlugs, authCtx.SpaceID).Find(&categories)
+		var categories []model.Category
+		err := config.DB.Model(&model.Category{}).
+			Where("slug IN ? AND space_id = ?", categorySlugs, authCtx.SpaceID).
+			Find(&categories).Error
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 
 		for _, category := range categories {
 			categoryUUIDs = append(categoryUUIDs, category.ID)
@@ -283,8 +305,15 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(formatSlugs) > 0 {
-		formats := make([]model.Format, 0)
-		config.DB.Model(&model.Format{}).Where("slug IN ? and space_id", formatSlugs, authCtx.SpaceID).Find(&formats)
+		var formats []model.Format
+		err := config.DB.Model(&model.Format{}).
+			Where("slug IN ? AND space_id = ?", formatSlugs, authCtx.SpaceID).
+			Find(&formats).Error
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 
 		for _, format := range formats {
 			formatUUIDs = append(formatUUIDs, format.ID)
@@ -312,72 +341,84 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 
 	order := "de_post." + pageSortBy + " " + pageSortOrder
 
-	tx := config.DB.Model(&models.Post{}).Where("is_page = ?", false)
+	tx := config.DB.Model(&model.Post{}).Where("is_page = ?", false)
 
 	if status != "" {
-		tx.Where("status = ?", status)
+		tx = tx.Where("status = ?", status)
 	} else {
-		tx.Where("status = ?", "publish")
+		tx = tx.Where("status = ?", "publish")
 	}
 
-	userIDs := make([]string, 0)
-	// get user ids if slugs provided
-
-	filterStr := ""
-	if len(categoryIds) > 0 || len(categorySlugs) > 0 {
-		tx.Joins("INNER JOIN de_post_categories ON de_post_categories.post_id = posts.id")
-		if len(categoryIds) > 0 {
-			filterStr = filterStr + fmt.Sprint("de_post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categoryIds), " ", ",", -1), "[]"), ") AND ")
+	if len(categoryUUIDs) > 0 || len(categorySlugs) > 0 {
+		tx = tx.Joins("INNER JOIN de_post_categories ON de_post_categories.post_id = de_post.id")
+		if len(categoryUUIDs) > 0 {
+			tx = tx.Where("de_post_categories.category_id IN ?", categoryUUIDs)
 		} else if len(categorySlugs) > 0 {
-			tx.Joins("INNER JOIN de_category ON de_post_categories.category_id = categories.id")
-			filterStr = filterStr + fmt.Sprint("de_category.slug IN (", createFilters(categorySlugs), ") AND ")
+			tx = tx.Joins("INNER JOIN de_category ON de_post_categories.category_id = de_category.id").
+				Where("de_category.slug IN ?", categorySlugs)
 		}
 	}
 
-	if len(userIDs) > 0 {
-		tx.Joins("INNER JOIN de_post_author ON de_post_author.post_id = de_post.id")
-		filterStr = filterStr + fmt.Sprint("de_post_author.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(userIDs), " ", ",", -1), "[]"), ") AND ")
-	}
-
-	if len(tagIds) > 0 || len(tagSlugs) > 0 {
-		tx.Joins("INNER JOIN de_post_tags ON de_post_tags.post_id = posts.id")
-		if len(tagIds) > 0 {
-			filterStr = filterStr + fmt.Sprint("de_post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tagIds), " ", ",", -1), "[]"), ") AND ")
+	if len(tagUUIDs) > 0 || len(tagSlugs) > 0 {
+		tx = tx.Joins("INNER JOIN de_post_tags ON de_post_tags.post_id = de_post.id")
+		if len(tagUUIDs) > 0 {
+			tx = tx.Where("de_post_tags.tag_id IN ?", tagUUIDs)
 		} else if len(tagSlugs) > 0 {
-			tx.Joins("INNER JOIN de_tags ON de_post_tags.tag_id = tags.id")
-			filterStr = filterStr + fmt.Sprint("de_tags.slug IN (", createFilters(tagSlugs), ") AND ")
+			tx = tx.Joins("INNER JOIN de_tag ON de_post_tags.tag_id = de_tag.id").
+				Where("de_tag.slug IN ?", tagSlugs)
 		}
 	}
 
-	if len(formatIDs) > 0 || len(formatSlugs) > 0 {
-		if len(formatIDs) > 0 {
-			filterStr = filterStr + fmt.Sprint("de_post.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formatIDs), " ", ",", -1), "[]"), ") AND ")
+	if len(formatUUIDs) > 0 || len(formatSlugs) > 0 {
+		if len(formatUUIDs) > 0 {
+			tx = tx.Where("de_post.format_id IN ?", formatUUIDs)
 		} else if len(formatSlugs) > 0 {
-			tx.Joins("INNER JOIN de_format ON de_post.format_id = de_format.id")
-			filterStr = filterStr + fmt.Sprint("de_format.slug IN (", createFilters(formatSlugs), ") AND ")
+			tx = tx.Joins("INNER JOIN de_format ON de_post.format_id = de_format.id").
+				Where("de_format.slug IN ?", formatSlugs)
 		}
 	}
 
 	if metafieldsKey != "" && metafieldsValue != "" {
-		tx.Model(&model.Post{}).Where("meta_fields @> ?", fmt.Sprintf(`{"%s": "%s"}`, metafieldsKey, metafieldsValue))
+		tx = tx.Where("meta_fields @> ?", fmt.Sprintf(`{"%s": "%s"}`, metafieldsKey, metafieldsValue))
 	}
 
-	tx.Group("de_post.id")
-	filterStr = strings.Trim(filterStr, " AND")
-	tx.Where(&model.Post{
-		SpaceID: authCtx.SpaceID,
-	}).Where(filterStr).Count(&result.Total).Offset(offset).Limit(limit).Order(order).Select("de_post.*").Find(&result.Nodes)
+	tx = tx.Where("de_post.space_id = ?", authCtx.SpaceID)
 
-	tx.Commit()
+	// Count total results
+	var total int64
+	err = tx.Count(&total).Error
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	result.Total = total
+
+	// Get paginated results with preloaded relations
+	var posts []model.Post
+	err = tx.Group("de_post.id").
+		Preload("Categories").
+		Preload("Tags").
+		Preload("Medium").
+		Offset(offset).
+		Limit(limit).
+		Order(order).
+		Find(&posts).Error
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	// Transform posts into response format
+	for _, post := range posts {
+		postList := &postData{
+			Post: post,
+		}
+		result.Nodes = append(result.Nodes, *postList)
+	}
 
 	renderx.JSON(w, http.StatusOK, result)
-
-}
-
-func createFilters(arr []string) string {
-	filter := strings.Trim(strings.Replace(fmt.Sprint(arr), " ", "','", -1), "[]")
-	filter = "'" + filter + "'"
-	return filter
 }
 
 func generateFilters(tagIDs, categoryIDs, authorIDs, status []string) string {
@@ -422,7 +463,7 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	}
 
 	if len(categoryIDs) > 0 {
-		tx.Joins("INNER JOIN de_post_categories ON de_posts.id = de_post_categories.post_id")
+		tx.Joins("INNER JOIN de_post_categories ON de_post.id = de_post_categories.post_id")
 		filters = filters + " de_post_categories.category_id IN ("
 		for _, id := range categoryIDs {
 			filters = fmt.Sprint(filters, id, ", ")
@@ -431,7 +472,7 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	}
 
 	if len(tagIDs) > 0 {
-		tx.Joins("INNER JOIN de_post_tags ON de_posts.id = de_post_tags.post_id")
+		tx.Joins("INNER JOIN de_post_tags ON de_post.id = de_post_tags.post_id")
 		filters = filters + " de_post_tags.tag_id IN ("
 		for _, id := range tagIDs {
 			filters = fmt.Sprint(filters, id, ", ")
@@ -440,7 +481,7 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	}
 
 	if len(authorIDs) > 0 {
-		tx.Joins("INNER JOIN de_post_authors ON de_posts.id = de_post_authors.post_id")
+		tx.Joins("INNER JOIN de_post_authors ON de_post.id = de_post_authors.post_id")
 		filters = filters + " de_post_authors.author_id IN ("
 		for _, id := range authorIDs {
 			filters = fmt.Sprint(filters, id, ", ")
@@ -449,7 +490,7 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	}
 
 	if len(status) > 0 {
-		filters = filters + " de_posts.status IN ("
+		filters = filters + " de_post.status IN ("
 		for _, sts := range status {
 			filters = fmt.Sprint(filters, "'", sts, "'", ", ")
 		}
@@ -459,7 +500,7 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]
 	}
-	tx.Group("de_posts.id")
+	tx.Group("de_post.id")
 
 	return filters
 }
