@@ -1,4 +1,36 @@
-export const createSession = async (email) => {
+export const checkUser = async (emailAddress) => {
+  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+    },
+    body: JSON.stringify({
+      query: {
+        limit: 1,
+      },
+      queries: [
+        {
+          emailQuery: {
+            emailAddress,
+            method: 'TEXT_QUERY_METHOD_EQUALS',
+          },
+        },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    const errorMessage = errorData.message.split('(')[0].trim();
+    throw new Error(errorMessage || 'User not found');
+  }
+
+  return response.json();
+};
+
+export const createSession = async (userId) => {
   const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/sessions`, {
     method: 'POST',
     headers: {
@@ -9,7 +41,7 @@ export const createSession = async (email) => {
     body: JSON.stringify({
       checks: {
         user: {
-          loginName: email,
+          userId,
         },
       },
     }),

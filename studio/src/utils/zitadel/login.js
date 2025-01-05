@@ -11,6 +11,7 @@ import {
   verifyPassword,
   getAuthRequestDetails,
   finalizeAuthRequest,
+  checkUser,
 } from '../../actions/login';
 import { requestPasswordReset, resetPassword } from '../../actions/forgotPassword';
 import EmailInput from './login/emailInput';
@@ -91,17 +92,20 @@ const Login = () => {
     setError('');
     setIsLoading(true);
     try {
-      const sessionData = await createSession(values.email);
-      localStorage.setItem('sessionData', JSON.stringify(sessionData));
-      setSessionId(sessionData.sessionId);
-      localStorage.setItem('sessionToken', sessionData.sessionToken);
+      const users = await checkUser(values.email);
+      if (users.result && users.result.length > 0) {
+        const sessionData = await createSession(users.result[0].userId);
+        localStorage.setItem('sessionData', JSON.stringify(sessionData));
+        setSessionId(sessionData.sessionId);
+        localStorage.setItem('sessionToken', sessionData.sessionToken);
 
-      const userDetails = await getUserDetails(sessionData.sessionId);
-      setUserId(userDetails.session.factors.user.id);
-      localStorage.setItem('userId', userDetails.session.factors.user.id);
-      localStorage.setItem('userEmail', values.email);
+        const userDetails = await getUserDetails(sessionData.sessionId);
+        setUserId(userDetails.session.factors.user.id);
+        localStorage.setItem('userId', userDetails.session.factors.user.id);
+        localStorage.setItem('userEmail', values.email);
 
-      setStep('password');
+        setStep('password');
+      }
     } catch (error) {
       console.error('Error:', error);
       setError(error.message || 'An unexpected error occurred. Please try again later.');
