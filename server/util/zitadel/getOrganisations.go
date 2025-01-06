@@ -34,10 +34,19 @@ type Organisations struct {
 
 type Queries struct {
 	InUserIdsQuery InUserIdsQuery `json:"inUserIdsQuery"`
+	OrQuery        OrQuery        `json:"orQuery"`
 }
 
 type InUserIdsQuery struct {
 	UserIds []string `json:"userIds"`
+}
+
+type UserNamesQuery struct {
+	UserName string `json:"userName"`
+}
+
+type OrQuery struct {
+	Queries []map[string]interface{} `json:"queries"`
 }
 
 func GetOrganisations(token string) []Result {

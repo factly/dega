@@ -354,7 +354,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		PostID: id,
 	}).Find(&updatedPostAuthors)
 
-	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, toCreateIDs)
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, toCreateIDs, nil)
 
 	if err != nil {
 		loggerx.Error(err)

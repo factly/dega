@@ -34,6 +34,6 @@ func usersList(w http.ResponseWriter, r *http.Request) {
 
 	var users []model.SpaceUser
 
-	zitadel.GetOrganisationUsers(r.Header.Get("authorization"), space.OrganisationID, []string{authCtx.UserID})
+	zitadel.GetOrganisationUsers(r.Header.Get("authorization"), space.OrganisationID, []string{authCtx.UserID}, nil)
 	renderx.JSON(w, http.StatusOK, users)
 }

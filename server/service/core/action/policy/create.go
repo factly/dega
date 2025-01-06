@@ -60,7 +60,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:     authCtx.SpaceID,
 	}
 
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, policyReq.Users)
+	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, policyReq.Users, nil)
 
 	if err != nil {
 		loggerx.Error(err)

@@ -66,10 +66,7 @@ func RegisterRoutes() http.Handler {
 		"meilisearch": util.MeiliChecker,
 	})
 
-	zitadelIssuer := "https://develop-xtjn2g.zitadel.cloud"
-	svcUserID := "274895832157825159"
-
-	r.Get("/auth/request", GetAuthorizationProxyHandler(zitadelIssuer, svcUserID))
+	r.Get("/auth/request", GetAuthorizationProxyHandler())
 
 	r.With(config.ZitadelInterceptor.RequireAuthorization(), util.CheckUser(config.ZitadelInterceptor)).Group(func(r chi.Router) {
 		r.Mount("/core", core.Router())
@@ -141,15 +138,15 @@ func RegisterFeedsRoutes() http.Handler {
 	return r
 }
 
-func GetAuthorizationProxyHandler(zitadelIssuer string, svcUserID string) http.HandlerFunc {
-	targetURL := zitadelIssuer + "/oauth/v2/authorize"
+func GetAuthorizationProxyHandler() http.HandlerFunc {
+	targetURL := "https://" + viper.GetString("zitadel_domain") + "/oauth/v2/authorize"
 	return func(w http.ResponseWriter, r *http.Request) {
 		proxyURL, err := buildProxyURL(r, targetURL)
 		if err != nil {
 			http.Error(w, "Failed to build proxy URL", http.StatusInternalServerError)
 			return
 		}
-		resp, err := performProxyRequest("GET", proxyURL, nil, svcUserID)
+		resp, err := performProxyRequest("GET", proxyURL, nil)
 		if err != nil {
 			http.Error(w, "Failed to perform request", http.StatusInternalServerError)
 			return
@@ -171,14 +168,12 @@ func buildProxyURL(r *http.Request, targetURL string) (string, error) {
 }
 
 // performProxyRequest performs an HTTP request to the proxy URL with optional headers.
-func performProxyRequest(method, proxyURL string, body io.Reader, svcUserID string) (*http.Response, error) {
+func performProxyRequest(method, proxyURL string, body io.Reader) (*http.Response, error) {
 	req, err := http.NewRequest(method, proxyURL, body)
 	if err != nil {
 		return nil, err
 	}
-	if svcUserID != "" {
-		req.Header.Set("X-Zitadel-Login-Client", svcUserID)
-	}
+	req.Header.Set("X-Zitadel-Login-Client", viper.GetString("zitadel_service_user_id"))
 	client := &http.Client{
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			return http.ErrUseLastResponse

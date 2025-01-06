@@ -52,7 +52,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	// Get organisation ID
 
-	res, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, []string{})
+	res, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, []string{}, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))

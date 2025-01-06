@@ -176,7 +176,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all authors
-	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, authorIDs)
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, authorIDs, nil)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -222,7 +222,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusOK, result)
 }
 
-func PublicList(w http.ResponseWriter, r *http.Request) {
+func publicList(w http.ResponseWriter, r *http.Request) {
 	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -235,6 +235,8 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	formatIDs := r.URL.Query()["format_ids"]
 	metafieldsKey := r.URL.Query().Get("meta_fields_key")
 	metafieldsValue := r.URL.Query().Get("meta_fields_value")
+	authorIDs := r.URL.Query()["author_ids"]
+	authorSlugs := r.URL.Query()["author_slugs"]
 
 	formatUUIDs := make([]uuid.UUID, 0)
 	if len(formatIDs) > 0 {
@@ -242,6 +244,21 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 			return
+		}
+	}
+
+	// If author slugs are provided, fetch author IDs
+	if len(authorSlugs) > 0 {
+		// Make external API call to fetch authors by slugs
+		authors, err := util.GetAuthors("", "", nil, authorSlugs)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+
+		for id := range authors {
+			authorIDs = append(authorIDs, id)
 		}
 	}
 
@@ -378,6 +395,11 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if len(authorIDs) > 0 {
+		tx = tx.Joins("INNER JOIN de_post_authors ON de_post_authors.post_id = de_post.id").
+			Where("de_post_authors.author_id IN ?", authorIDs)
+	}
+
 	if metafieldsKey != "" && metafieldsValue != "" {
 		tx = tx.Where("meta_fields @> ?", fmt.Sprintf(`{"%s": "%s"}`, metafieldsKey, metafieldsValue))
 	}
@@ -410,11 +432,64 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Transform posts into response format
+	// Get all post IDs
+	postIDs := make([]uuid.UUID, len(posts))
+	for i, post := range posts {
+		postIDs[i] = post.ID
+	}
+
+	// Fetch author IDs for all posts
+	var postAuthors []model.PostAuthor
+	if len(postIDs) > 0 {
+		err = config.DB.Where("post_id IN ?", postIDs).Find(&postAuthors).Error
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+	}
+
+	// Create map of post ID to author IDs
+	postAuthorMap := make(map[uuid.UUID][]string)
+	authorIDSet := make(map[string]bool)
+	for _, pa := range postAuthors {
+		postAuthorMap[pa.PostID] = append(postAuthorMap[pa.PostID], pa.AuthorID)
+		authorIDSet[pa.AuthorID] = true
+	}
+
+	// Get unique author IDs
+	uniqueAuthorIDs := make([]string, 0, len(authorIDSet))
+	for authorID := range authorIDSet {
+		uniqueAuthorIDs = append(uniqueAuthorIDs, authorID)
+	}
+
+	// Fetch author details from external service
+	authors := make(map[string]model.Author)
+	if len(uniqueAuthorIDs) > 0 {
+		authors, err = util.GetAuthors("", "", uniqueAuthorIDs, nil)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+	}
+
+	// Transform posts into response format and include authors
 	for _, post := range posts {
 		postList := &postData{
 			Post: post,
 		}
+
+		// Add authors to post
+		authorIDs := postAuthorMap[post.ID]
+		postAuthors := make([]model.Author, 0, len(authorIDs))
+		for _, authorID := range authorIDs {
+			if author, ok := authors[authorID]; ok {
+				postAuthors = append(postAuthors, author)
+			}
+		}
+		postList.Authors = postAuthors
+
 		result.Nodes = append(result.Nodes, *postList)
 	}
 

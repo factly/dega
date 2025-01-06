@@ -88,7 +88,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Adding author
-	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, authorIDs)
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, authorIDs, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -96,6 +96,69 @@ func details(w http.ResponseWriter, r *http.Request) {
 	for _, postAuthor := range postAuthors {
 		aID := fmt.Sprint(postAuthor.AuthorID)
 		if author, found := authors[aID]; found {
+			result.Authors = append(result.Authors, author)
+		}
+	}
+
+	renderx.JSON(w, http.StatusOK, result)
+}
+
+func publicDetails(w http.ResponseWriter, r *http.Request) {
+	authCtx, err := util.GetAuthCtx(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	result := postData{}
+
+	err = config.DB.Model(&model.Post{}).
+		Where("status = ? AND de_post.space_id = ?", "publish", authCtx.SpaceID).
+		Preload("Categories").
+		Preload("Tags").
+		Preload("Medium").
+		First(&result.Post).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	// Fetch author IDs for all posts
+	postAuthors := make([]model.PostAuthor, 0)
+
+	err = config.DB.
+		Where("post_id = ?", result.ID).
+		Find(&postAuthors).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	authorIDs := make([]string, 0)
+	for _, pa := range postAuthors {
+		authorIDs = append(authorIDs, pa.AuthorID)
+	}
+
+	// Fetch author details from external service
+	authors := make(map[string]model.Author)
+	if len(authorIDs) > 0 {
+		authors, err = util.GetAuthors("", "", authorIDs, nil)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+	}
+
+	// Add authors to post
+
+	for _, authorID := range authorIDs {
+		if author, ok := authors[authorID]; ok {
 			result.Authors = append(result.Authors, author)
 		}
 	}

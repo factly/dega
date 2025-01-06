@@ -262,7 +262,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		}
 	}
 
-	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, post.AuthorIDs)
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, post.AuthorIDs, nil)
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.InternalServerError()

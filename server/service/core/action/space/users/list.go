@@ -56,7 +56,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		uIDs = append(uIDs, user.UserID)
 	}
 
-	res, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, uIDs)
+	res, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, uIDs, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))

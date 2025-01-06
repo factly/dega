@@ -71,3 +71,13 @@ func Router() chi.Router {
 
 	return r
 }
+
+// PublicRouter - Group of post router for public access
+func PublicRouter() chi.Router {
+	r := chi.NewRouter()
+
+	r.Get("/", publicList)
+	r.Get("/post/{post_id}", publicDetails)
+
+	return r
+}

@@ -67,7 +67,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get users details from zitadel
-	zitadelUsers, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, uIDs)
+	zitadelUsers, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, uIDs, nil)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -125,7 +125,7 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get users details from zitadel
-	zitadelUsers, _ := zitadel.GetOrganisationUsers(viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN"), authCtx.OrganisationID, uIDs)
+	zitadelUsers, _ := zitadel.GetOrganisationUsers(viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN"), authCtx.OrganisationID, uIDs, nil)
 
 	for _, zitadelUser := range zitadelUsers {
 		authors = append(authors, model.Author{

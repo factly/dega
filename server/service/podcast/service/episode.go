@@ -139,7 +139,7 @@ func (es *episodeService) Create(ctx context.Context, sID uuid.UUID, uID, oID, t
 	}
 
 	if len(episode.AuthorIDs) > 0 {
-		authorMap, err := util.GetAuthors(token, oID, episode.AuthorIDs)
+		authorMap, err := util.GetAuthors(token, oID, episode.AuthorIDs, nil)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -220,7 +220,7 @@ func (es *episodeService) GetById(ctx context.Context, sID, id uuid.UUID, oId, t
 	}
 
 	// Adding authors in response
-	authorMap, err := util.GetAuthors(token, oId, authorIds)
+	authorMap, err := util.GetAuthors(token, oId, authorIds, nil)
 	if err != nil {
 		loggerx.Error(err)
 		return result.Episode, errorx.Parser(errorx.DBError())
@@ -442,7 +442,7 @@ func (es *episodeService) Update(ctx context.Context, sID, id uuid.UUID, uID, oI
 	}
 
 	// Fetch current authors
-	authorMap, err := util.GetAuthors(token, oID, episode.AuthorIDs)
+	authorMap, err := util.GetAuthors(token, oID, episode.AuthorIDs, nil)
 	if err != nil {
 		loggerx.Error(err)
 		return EpisodeData{}, errorx.Parser(errorx.DBError())

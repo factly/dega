@@ -93,7 +93,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		uIDs = append(uIDs, policyUser.UserID)
 	}
 
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorisation"), authCtx.OrganisationID, uIDs)
+	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorisation"), authCtx.OrganisationID, uIDs, nil)
 
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

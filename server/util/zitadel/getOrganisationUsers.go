@@ -25,9 +25,9 @@ type OrganisationUserResult struct {
 type OrganisationUsersQuery struct {
 }
 
-func GetOrganisationUsers(token, orgID string, userIDs []string) ([]OrganisationUserResult, error) {
+func GetOrganisationUsers(token, orgID string, userIDs, userNames []string) ([]OrganisationUserResult, error) {
 
-	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/management/v1/users/_search"
+	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/v2/users"
 	method := "POST"
 
 	payload := ZitadelQueryPayload{
@@ -42,6 +42,24 @@ func GetOrganisationUsers(token, orgID string, userIDs []string) ([]Organisation
 			{
 				InUserIdsQuery: InUserIdsQuery{
 					UserIds: userIDs,
+				},
+			},
+		}
+	}
+
+	if len((userNames)) != 0 {
+		userNamesQuery := make([]map[string]interface{}, len(userNames))
+		for i, userName := range userNames {
+			userNamesQuery[i] = map[string]interface{}{
+				"userNameQuery": map[string]interface{}{
+					"UserName": userName,
+				},
+			}
+		}
+		payload.Queries = []Queries{
+			{
+				OrQuery: OrQuery{
+					Queries: userNamesQuery,
 				},
 			},
 		}

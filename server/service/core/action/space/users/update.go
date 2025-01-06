@@ -37,7 +37,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, req.IDs)
+	users, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, req.IDs, nil)
 
 	if err != nil {
 		loggerx.Error(err)
