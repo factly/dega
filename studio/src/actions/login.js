@@ -99,6 +99,74 @@ export const verifyPassword = async (sessionId, sessionToken, password) => {
   return response.json();
 };
 
+export const verifyUserEmail = async (userId, verificationCode) => {
+  const response = await fetch(
+    `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/email/verify`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      },
+      body: JSON.stringify({
+        verificationCode: verificationCode,
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    const errorMessage = errorData.message?.split('(')[0].trim();
+    throw new Error(errorMessage || 'Failed to verify email');
+  }
+
+  return response.json();
+};
+
+export const checkEmailVerification = async (userId) => {
+  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to check email verification status');
+  }
+
+  const userData = await response.json();
+  return userData.user.human.email.isVerified;
+};
+
+export const resendVerificationEmail = async (userId, sessionToken) => {
+  if (!userId || !sessionToken) {
+    throw new Error('User ID and session token are required');
+  }
+
+  const response = await fetch(
+    `${window.REACT_APP_ZITADEL_AUTHORITY}/auth/v1/users/me/email/_resend_verification`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${sessionToken}`,
+      },
+      body: JSON.stringify({}),
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to resend verification email');
+  }
+
+  return response.json();
+};
+
 export const getAuthRequestDetails = async (authRequestId) => {
   const response = await fetch(
     `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`,

@@ -51,7 +51,11 @@ function App() {
           const searchParams = new URLSearchParams(window.location.search);
           const authRequest = searchParams.get('authRequest');
           if (
-            (currentURL.includes('/auth/login') || currentURL.includes('/auth/registration')) &&
+            (currentURL.includes('/auth/login') ||
+              currentURL.includes('/auth/registration') ||
+              currentURL.includes('/redirect') ||
+              currentURL.includes('/auth/verify') ||
+              currentURL.includes('/auth/login/recovery')) &&
             authRequest
           ) {
             return;
