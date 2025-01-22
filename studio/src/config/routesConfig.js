@@ -128,6 +128,8 @@ import CreateSpaceTokenForm from '../pages/tokens/components/CreateToken';
 import RegistrationForm from '../utils/zitadel/registration';
 import LoginEmail from '../utils/zitadel/login';
 
+import AuthWrapper from '../components/Authwrapper';
+
 export function extractV6RouteObject(formats, setReloadFlag, reloadFlag) {
   const extractedRoutes = [];
 
@@ -142,28 +144,34 @@ export function extractV6RouteObject(formats, setReloadFlag, reloadFlag) {
     if (permission) {
       v6RouteElement = (
         <BasicLayout>
-          <ProtectedRoute
-            key={path}
-            permission={permission}
-            exact
-            path={path}
-            component={Component}
-            formats={formats}
-            setReloadFlag={setReloadFlag}
-            reloadFlag={reloadFlag}
-          />
+          <AuthWrapper>
+            <ProtectedRoute
+              key={path}
+              permission={permission}
+              exact
+              path={path}
+              component={Component}
+              formats={formats}
+              setReloadFlag={setReloadFlag}
+              reloadFlag={reloadFlag}
+            />
+          </AuthWrapper>
         </BasicLayout>
       );
     } else if (isAdmin) {
       v6RouteElement = (
         <BasicLayout>
-          <AdminRoute key={path} exact path={path} component={Component} formats={formats} />
+          <AuthWrapper>
+            <AdminRoute key={path} exact path={path} component={Component} formats={formats} />
+          </AuthWrapper>
         </BasicLayout>
       );
     } else {
       v6RouteElement = (
         <BasicLayout>
-          <Component formats={formats} />
+          <AuthWrapper>
+            <Component formats={formats} />
+          </AuthWrapper>
         </BasicLayout>
       );
     }

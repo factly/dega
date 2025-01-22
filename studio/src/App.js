@@ -7,9 +7,6 @@ import { extractV6RouteObject } from './config/routesConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
-import { login } from './utils/zitadel';
-import { addErrorNotification } from './actions/notifications';
-import { getSession } from './actions/session';
 
 function App() {
   const [reloadFlag, setReloadFlag] = useState(false);
@@ -39,6 +36,7 @@ function App() {
     fetchFormats();
   }, [dispatch, selected, reloadFlag]);
 
+<<<<<<< Updated upstream
   useEffect(() => {
     checkAuthenticated();
   }, []);
@@ -74,6 +72,8 @@ function App() {
     });
   };
 
+=======
+>>>>>>> Stashed changes
   const fetchFormats = () => {
     if (selected !== '') dispatch(getFormats({ space_id: selected }));
   };

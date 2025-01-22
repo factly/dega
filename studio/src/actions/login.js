@@ -99,6 +99,85 @@ export const verifyPassword = async (sessionId, sessionToken, password) => {
   return response.json();
 };
 
+<<<<<<< Updated upstream
+=======
+export const verifyUserEmail = async (userId, verificationCode) => {
+  const response = await fetch(
+    `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/email/verify`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      },
+      body: JSON.stringify({
+        verificationCode: verificationCode,
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    const errorMessage = errorData.message?.split('(')[0].trim();
+    throw new Error(errorMessage || 'Failed to verify email');
+  }
+
+  return response.json();
+};
+
+export const checkEmailVerification = async (userId) => {
+  if (!userId) {
+    throw new Error('User ID is required');
+  }
+
+  const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to check email verification status');
+  }
+
+  const userData = await response.json();
+  return userData.user.human.email.isVerified;
+};
+
+export const resendVerificationEmail = async (userId, sessionToken) => {
+  if (!userId || !sessionToken) {
+    throw new Error('User ID and session token are required');
+  }
+
+  const response = await fetch(
+    `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/email/send`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
+      },
+      body: JSON.stringify({
+        sendCode: {
+          urlTemplate: `${window.PUBLIC_URL}/auth/verify?userID={{.UserID}}&code={{.Code}}&orgID={{.OrgID}}`,
+        },
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to resend verification email');
+  }
+
+  return response.json();
+};
+
+>>>>>>> Stashed changes
 export const getAuthRequestDetails = async (authRequestId) => {
   const response = await fetch(
     `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`,
