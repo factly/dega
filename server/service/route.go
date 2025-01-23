@@ -205,6 +205,6 @@ func handleAuthorizationResponse(w http.ResponseWriter, r *http.Request, resp *h
 		return
 	}
 
-	redirectURL := fmt.Sprintf("http://localhost:3000/auth/login?authRequest=%s", authRequestID)
+	redirectURL := fmt.Sprintf(viper.GetString("APP_LOGIN_URL")+"?authRequest=%s", authRequestID)
 	http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 }
