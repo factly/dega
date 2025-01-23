@@ -9,9 +9,10 @@ import {
   createSession,
   getUserDetails,
   verifyPassword,
-  getAuthRequestDetails,
   finalizeAuthRequest,
   checkUser,
+  checkEmailVerification,
+  resendVerificationEmail,
 } from '../../actions/login';
 import { requestPasswordReset } from '../../actions/forgotPassword';
 import EmailInput from './login/emailInput';
@@ -20,6 +21,8 @@ import Mfa from './login/mfa.js';
 import MfaVerify from './login/mfaverify.js';
 import RequestReset from './login/requestreset';
 import AuthLayout from './Authlayout';
+import EmailVerification from './login/EmailVerification.js';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -80,7 +83,6 @@ const Login = () => {
       throw new Error('Failed to fetch authentication methods');
     }
     const data = await response.json();
-    console.log('Auth methods response:', data);
     return data;
   };
 
@@ -96,15 +98,36 @@ const Login = () => {
         localStorage.setItem('sessionToken', sessionData.sessionToken);
 
         const userDetails = await getUserDetails(sessionData.sessionId);
-        setUserId(userDetails.session.factors.user.id);
-        localStorage.setItem('userId', userDetails.session.factors.user.id);
+        const userId = userDetails.session.factors.user.id;
+        setUserId(userId);
+        localStorage.setItem('userId', userId);
         localStorage.setItem('userEmail', values.email);
+
+        // Check email verification status
+        const isEmailVerified = await checkEmailVerification(userId);
+        if (!isEmailVerified) {
+          setStep('verify-email');
+          return;
+        }
 
         setStep('password');
       }
     } catch (error) {
       console.error('Error:', error);
       setError(error.message || 'An unexpected error occurred. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    setError('');
+    setIsLoading(true);
+    try {
+      await resendVerificationEmail(userId);
+      setError('Verification email has been resent. Please check your inbox.');
+    } catch (error) {
+      setError(error.message || 'Failed to resend verification email. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -231,30 +254,6 @@ const Login = () => {
     localStorage.removeItem('userEmail');
   };
 
-  const BackArrowButton = ({ onClick }) => (
-    <button
-      onClick={onClick}
-      style={{
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        padding: '8px',
-        borderRadius: '50%',
-        transition: 'background-color 0.3s ease',
-        marginBottom: '16px',
-        display: 'flex',
-        alignItems: 'center',
-      }}
-      onMouseEnter={(e) => {
-        e.target.style.backgroundColor = '#f0f0f0';
-      }}
-      onMouseLeave={(e) => {
-        e.target.style.backgroundColor = 'transparent';
-      }}
-    >
-      <ArrowLeftOutlined style={{ fontSize: '20px', color: '#1E1E1E' }} />
-    </button>
-  );
 
   const getTitle = () => {
     switch (step) {
@@ -287,6 +286,15 @@ const Login = () => {
             onSubmit={handleEmailSubmit}
             error={error}
             handleGoogleSignIn={handleGoogleSignIn}
+          />
+        );
+      case 'verify-email':
+        return (
+          <EmailVerification
+            userEmail={localStorage.getItem('userEmail')}
+            userId={userId}
+            onResendVerification={handleResendVerification}
+            error={error}
           />
         );
       case 'password':

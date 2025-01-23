@@ -86,7 +86,7 @@ const EmailInput = ({ email, setEmail, onSubmit, handleGoogleSignIn }) => {
         <Text style={{ color: '#15171a' }}>
           Don't have an account?{' '}
           <Link
-            to="/auth/registration"
+            to={`/auth/registration${localStorage.getItem('authRequestId') ? `?authRequest=${localStorage.getItem('authRequestId')}` : ''}`}
             style={{
               color: '#1E1E1E',
               textDecoration: 'none',

@@ -279,7 +279,6 @@ const RegistrationForm = () => {
               type="info"
               showIcon
             />
-            <Button onClick={handleResendVerification}>Resend Verification Email</Button>
             <div style={{ marginTop: '16px' }}>
               <Link to="/auth/login">Return to Login</Link>
             </div>

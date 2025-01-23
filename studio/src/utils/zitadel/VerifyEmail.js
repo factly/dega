@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Typography, Spin, Result, Button } from 'antd';
 
@@ -9,9 +9,13 @@ const VerifyEmail = () => {
   const location = useLocation();
   const [status, setStatus] = useState('verifying');
   const [error, setError] = useState('');
+  const verificationAttempted = useRef(false);
 
   useEffect(() => {
     const verifyEmail = async () => {
+      // Return early if verification was already attempted
+      if (verificationAttempted.current) return;
+
       try {
         const params = new URLSearchParams(location.search);
         const userId = params.get('userID');
@@ -23,7 +27,9 @@ const VerifyEmail = () => {
           return;
         }
 
-        // Add error handling for the API call
+        // Set the flag before making the API call
+        verificationAttempted.current = true;
+
         const response = await fetch(
           `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/email/verify`,
           {

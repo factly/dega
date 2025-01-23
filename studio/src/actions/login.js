@@ -125,6 +125,10 @@ export const verifyUserEmail = async (userId, verificationCode) => {
 };
 
 export const checkEmailVerification = async (userId) => {
+  if (!userId) {
+    throw new Error('User ID is required');
+  }
+
   const response = await fetch(`${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}`, {
     method: 'GET',
     headers: {
@@ -147,15 +151,19 @@ export const resendVerificationEmail = async (userId, sessionToken) => {
   }
 
   const response = await fetch(
-    `${window.REACT_APP_ZITADEL_AUTHORITY}/auth/v1/users/me/email/_resend_verification`,
+    `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/email/send`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${sessionToken}`,
+        Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify({
+        sendCode: {
+          urlTemplate: `${window.PUBLIC_URL}/auth/verify?userID={{.UserID}}&code={{.Code}}&orgID={{.OrgID}}`,
+        },
+      }),
     },
   );
 

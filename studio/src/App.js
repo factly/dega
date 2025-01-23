@@ -7,9 +7,6 @@ import { extractV6RouteObject } from './config/routesConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
-import { login } from './utils/zitadel';
-import { addErrorNotification } from './actions/notifications';
-import { getSession } from './actions/session';
 
 function App() {
   const [reloadFlag, setReloadFlag] = useState(false);
@@ -38,45 +35,6 @@ function App() {
   useEffect(() => {
     fetchFormats();
   }, [dispatch, selected, reloadFlag]);
-
-  useEffect(() => {
-    checkAuthenticated();
-  }, []);
-
-  const checkAuthenticated = () => {
-    dispatch(getSession()).then((res) => {
-      if (!res.success) {
-        if (res.noToken) {
-          const currentURL = window.location.href;
-          const searchParams = new URLSearchParams(window.location.search);
-          const authRequest = searchParams.get('authRequest');
-          if (
-            (currentURL.includes('/auth/login') ||
-              currentURL.includes('/auth/registration') ||
-              currentURL.includes('/redirect') ||
-              currentURL.includes('/auth/verify') ||
-              currentURL.includes('/auth/login/recovery')) &&
-            authRequest
-          ) {
-            return;
-          }
-
-          window.localStorage.setItem('return_to', window.location.href);
-          login().then((d) => {
-            if (d.error) {
-              dispatch(
-                addErrorNotification({
-                  message: d.error,
-                }),
-              );
-              return;
-            }
-            window.location.href = d.authorizeURL;
-          });
-        }
-      }
-    });
-  };
 
   const fetchFormats = () => {
     if (selected !== '') dispatch(getFormats({ space_id: selected }));
