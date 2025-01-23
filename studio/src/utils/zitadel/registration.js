@@ -262,6 +262,29 @@ const RegistrationForm = () => {
       case 'mfa-verify':
         return <TOTPSetupComponent uri={totpUri} secret={totpSecret} onVerify={handleMfaVerify} />;
 
+      case 'verification-pending':
+        return (
+          <Space direction="vertical" size="middle" style={{ width: '100%', textAlign: 'center' }}>
+            <Alert
+              message="Verify Your Email"
+              description={
+                <>
+                  <p>We've sent you a verification email</p>
+                  <p>
+                    Please check your inbox and click the verification link to complete your
+                    registration.
+                  </p>
+                </>
+              }
+              type="info"
+              showIcon
+            />
+            <div style={{ marginTop: '16px' }}>
+              <Link to="/auth/login">Return to Login</Link>
+            </div>
+          </Space>
+        );
+
       default:
         return null;
     }
