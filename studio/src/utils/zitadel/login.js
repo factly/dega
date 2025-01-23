@@ -14,13 +14,12 @@ import {
   checkEmailVerification,
   resendVerificationEmail,
 } from '../../actions/login';
-import { requestPasswordReset, resetPassword } from '../../actions/forgotPassword';
+import { requestPasswordReset } from '../../actions/forgotPassword';
 import EmailInput from './login/emailInput';
 import Password from './login/Password.js';
 import Mfa from './login/mfa.js';
 import MfaVerify from './login/mfaverify.js';
 import RequestReset from './login/requestreset';
-import ResetPassword from './login/resetpassword';
 import AuthLayout from './Authlayout';
 import EmailVerification from './login/EmailVerification.js';
 
@@ -29,7 +28,6 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [step, setStep] = useState('email');
   const [sessionId, setSessionId] = useState('');
   const [userId, setUserId] = useState('');
@@ -37,8 +35,6 @@ const Login = () => {
   const [mfaCode, setMfaCode] = useState('');
   const [authRequestId, setAuthRequestId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [verificationCode, setVerificationCode] = useState('');
-  const [newPassword, setNewPassword] = useState('');
   const location = useLocation();
 
   const {
@@ -57,10 +53,7 @@ const Login = () => {
     if (authRequest) {
       setAuthRequestId(authRequest);
       localStorage.setItem('authRequestId', authRequest);
-<<<<<<< Updated upstream
-      getAuthRequestDetails(authRequest);
-=======
->>>>>>> Stashed changes
+      // getAuthRequestDetails(authRequest);
     }
   }, [location]);
 
@@ -169,19 +162,7 @@ const Login = () => {
     setError('');
     try {
       await requestPasswordReset(userId);
-      setStep('reset-verify');
-    } catch (error) {
-      setError(`An error occurred: ${error.message}`);
-    }
-  };
-
-  const handleResetPassword = async (values) => {
-    setError('');
-    setSuccessMessage('');
-    try {
-      await resetPassword(userId, values.newPassword, values.verificationCode);
-      setStep('email');
-      setSuccessMessage('Password reset successful. Please log in with your new password.');
+      setStep('reset-message');
     } catch (error) {
       setError(`An error occurred: ${error.message}`);
     }
@@ -230,6 +211,7 @@ const Login = () => {
       if (!sessionToken) {
         throw new Error('No session token provided');
       }
+      // Commented out auth request finalization
       const authRequestId = localStorage.getItem('authRequestId');
       const finalizeResult = await finalizeAuthRequest(authRequestId, sessionId, sessionToken);
       if (finalizeResult.callbackUrl) {
@@ -238,6 +220,12 @@ const Login = () => {
         console.error('No callback URL in the response');
         setError('Login successful, but redirect failed. Please try again.');
       }
+
+      // Instead, just set the session token and consider login successful
+      // localStorage.setItem('sessionToken', sessionToken);
+      // console.log('Login successful');
+      // Redirect to home page after successful login
+      // window.location.href = '/';
     } catch (error) {
       console.error('Error:', error);
       setError(`An unexpected error occurred during login finalization: ${error.message}`);
@@ -260,8 +248,6 @@ const Login = () => {
     setUserId('');
     setTotpCode('');
     setMfaCode('');
-    setVerificationCode('');
-    setNewPassword('');
     localStorage.removeItem('sessionData');
     localStorage.removeItem('sessionToken');
     localStorage.removeItem('userId');
@@ -283,8 +269,8 @@ const Login = () => {
         return 'Verify Two-Factor Authentication';
       case 'reset-request':
         return 'Reset Password';
-      case 'reset-verify':
-        return 'Enter Verification Code';
+      case 'reset-message':
+        return 'Reset Request Sent';
       default:
         return 'Login';
     }
@@ -322,15 +308,15 @@ const Login = () => {
         );
       case 'reset-request':
         return <RequestReset userEmail={email} onSubmit={handleRequestReset} />;
-      case 'reset-verify':
+      case 'reset-message':
         return (
-          <ResetPassword
-            verificationCode={verificationCode}
-            setVerificationCode={setVerificationCode}
-            newPassword={newPassword}
-            setNewPassword={setNewPassword}
-            onSubmit={handleResetPassword}
-          />
+          <div className="text-center p-6 space-y-4">
+            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center"></div>
+            <p className="text-gray-600">
+              We've sent password reset instructions to your email address. Please check your inbox
+              and follow the link to reset your password.
+            </p>
+          </div>
         );
       case 'mfa':
         return <Mfa totpCode={totpCode} setTotpCode={setTotpCode} onSubmit={handleMfaSubmit} />;

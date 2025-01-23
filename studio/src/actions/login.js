@@ -99,8 +99,6 @@ export const verifyPassword = async (sessionId, sessionToken, password) => {
   return response.json();
 };
 
-<<<<<<< Updated upstream
-=======
 export const verifyUserEmail = async (userId, verificationCode) => {
   const response = await fetch(
     `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/users/${userId}/email/verify`,
@@ -177,7 +175,6 @@ export const resendVerificationEmail = async (userId, sessionToken) => {
   return response.json();
 };
 
->>>>>>> Stashed changes
 export const getAuthRequestDetails = async (authRequestId) => {
   const response = await fetch(
     `${window.REACT_APP_ZITADEL_AUTHORITY}/v2/oidc/auth_requests/${authRequestId}`,

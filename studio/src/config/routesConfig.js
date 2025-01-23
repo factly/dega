@@ -2,7 +2,6 @@ import React from 'react';
 import {
   HomeOutlined,
   InfoCircleOutlined,
-  AudioOutlined,
   GlobalOutlined,
   SecurityScanOutlined,
 } from '@ant-design/icons';
@@ -127,6 +126,8 @@ import CreateSpaceTokenForm from '../pages/tokens/components/CreateToken';
 
 import RegistrationForm from '../utils/zitadel/registration';
 import LoginEmail from '../utils/zitadel/login';
+import VerifyEmail from '../utils/zitadel/VerifyEmail';
+import RecoveryPage from '../utils/zitadel/recovery';
 
 import AuthWrapper from '../components/Authwrapper';
 
@@ -785,6 +786,18 @@ const routes = {
     menuKey: '/auth/login',
     Component: LoginEmail,
     title: 'Login Email',
+  },
+  emailverification: {
+    path: '/auth/verify',
+    menuKey: '/auth/verify',
+    Component: VerifyEmail,
+    title: 'Verify Email',
+  },
+  recovery: {
+    path: '/auth/login/recovery',
+    menuKey: '/auth/login/recovery',
+    Component: RecoveryPage,
+    title: 'Recovery Page',
   },
   redirect: {
     path: '/redirect',

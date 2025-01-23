@@ -36,44 +36,6 @@ function App() {
     fetchFormats();
   }, [dispatch, selected, reloadFlag]);
 
-<<<<<<< Updated upstream
-  useEffect(() => {
-    checkAuthenticated();
-  }, []);
-
-  const checkAuthenticated = () => {
-    dispatch(getSession()).then((res) => {
-      if (!res.success) {
-        if (res.noToken) {
-          const currentURL = window.location.href;
-          const searchParams = new URLSearchParams(window.location.search);
-          const authRequest = searchParams.get('authRequest');
-          if (
-            (currentURL.includes('/auth/login') || currentURL.includes('/auth/registration')) &&
-            authRequest
-          ) {
-            return;
-          }
-
-          window.localStorage.setItem('return_to', window.location.href);
-          login().then((d) => {
-            if (d.error) {
-              dispatch(
-                addErrorNotification({
-                  message: d.error,
-                }),
-              );
-              return;
-            }
-            window.location.href = d.authorizeURL;
-          });
-        }
-      }
-    });
-  };
-
-=======
->>>>>>> Stashed changes
   const fetchFormats = () => {
     if (selected !== '') dispatch(getFormats({ space_id: selected }));
   };

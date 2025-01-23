@@ -7,7 +7,15 @@ export const registerUser = async (registrationData) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${window.REACT_APP_ZITADEL_PAT}`,
       },
-      body: JSON.stringify(registrationData),
+      body: JSON.stringify({
+        ...registrationData,
+        email: {
+          ...registrationData.email,
+          sendCode: {
+            urlTemplate: `${window.PUBLIC_URL}/auth/verify?userID={{.UserID}}&code={{.Code}}&orgID={{.OrgID}}`,
+          },
+        },
+      }),
     });
 
     if (!response.ok) {
