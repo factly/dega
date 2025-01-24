@@ -144,8 +144,8 @@ export function extractV6RouteObject(formats, setReloadFlag, reloadFlag) {
 
     if (permission) {
       v6RouteElement = (
-        <BasicLayout>
-          <AuthWrapper>
+        <AuthWrapper>
+          <BasicLayout>
             <ProtectedRoute
               key={path}
               permission={permission}
@@ -156,24 +156,24 @@ export function extractV6RouteObject(formats, setReloadFlag, reloadFlag) {
               setReloadFlag={setReloadFlag}
               reloadFlag={reloadFlag}
             />
-          </AuthWrapper>
-        </BasicLayout>
+          </BasicLayout>
+        </AuthWrapper>
       );
     } else if (isAdmin) {
       v6RouteElement = (
-        <BasicLayout>
-          <AuthWrapper>
+        <AuthWrapper>
+          <BasicLayout>
             <AdminRoute key={path} exact path={path} component={Component} formats={formats} />
-          </AuthWrapper>
-        </BasicLayout>
+          </BasicLayout>
+        </AuthWrapper>
       );
     } else {
       v6RouteElement = (
-        <BasicLayout>
-          <AuthWrapper>
+        <AuthWrapper>
+          <BasicLayout>
             <Component formats={formats} />
-          </AuthWrapper>
-        </BasicLayout>
+          </BasicLayout>
+        </AuthWrapper>
       );
     }
 
