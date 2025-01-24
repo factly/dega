@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Form, Input, Button, Space, Typography, Divider, Alert } from 'antd';
 import { GoogleOutlined } from '@ant-design/icons';
-import degaImage from '../../assets/dega.png';
+import degaImage from '../../assets/dega-1.png';
 import { TOTPSetupComponent } from './mfa';
 import { startTOTPRegistration, verifyTOTPRegistration } from '../../actions/mfa';
 import { registerUser, createSession, verifyPassword } from '../../actions/registration';
 import { useGoogleSignIn } from './idp';
 import AuthLayout from './Authlayout';
-import { resendVerificationEmail } from '../../actions/login';
 
 const { Text } = Typography;
 
 const RegistrationForm = () => {
-  const location = useLocation();
   const [error, setError] = useState('');
   const [step, setStep] = useState('registration');
   const [userId, setUserId] = useState('');
@@ -89,15 +87,6 @@ const RegistrationForm = () => {
     }
   };
 
-  const handleResendVerification = async () => {
-    try {
-      await resendVerificationEmail(userId, sessionToken);
-      setError('');
-      alert('Verification email has been resent. Please check your inbox.');
-    } catch (error) {
-      setError('Failed to resend verification email. Please try again.');
-    }
-  };
 
   const handleMfaChoice = async (choice) => {
     if (choice === 'proceed') {
