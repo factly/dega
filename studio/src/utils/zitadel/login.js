@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ArrowLeftOutlined } from '@ant-design/icons';
 import { checkTOTP } from '../../actions/mfa';
 import { useGoogleSignIn } from './idp';
-import degaImage from '../../assets/dega.png';
+import degaImage from '../../assets/dega-1.png';
 import { TOTPSetupComponent } from './mfa';
 import {
   createSession,

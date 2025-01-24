@@ -7,9 +7,6 @@ const AuthLayout = ({ children, title, error, showBackButton = false, onBackClic
       {/* Left side with logo */}
       <div className="auth-logo-section">
         <img src={logoSrc} alt="Logo" className="auth-logo" />
-        <div className="auth-brand">
-          <h1>DEGA</h1>
-        </div>
       </div>
 
       {/* Right side with form */}
@@ -51,39 +48,14 @@ const AuthLayout = ({ children, title, error, showBackButton = false, onBackClic
           width: 50%;
           height: 100%;
           background-color: #f0f0f0;
-          position: relative;
           display: flex;
-          flex-direction: column;
           align-items: center;
           justify-content: center;
         }
 
         .auth-logo {
           width: 40%;
-          position: absolute;
-          top: 35%;
-          left: 50%;
-          transform: translate(-50%, -50%);
           object-fit: contain;
-        }
-
-        .auth-brand {
-          position: absolute;
-          bottom: 5%;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .auth-brand h1 {
-          font-size: 48px;
-          font-weight: bold;
-          color: #333;
-          margin: 0;
-          transform: translateX(-40px);
         }
 
         .auth-form-section {
@@ -151,7 +123,7 @@ const AuthLayout = ({ children, title, error, showBackButton = false, onBackClic
           }
         }
 
-        /* Tablet/Medium Screen Styles */
+        /* Tablet/Medium Screen Styles */st
         @media (min-width: 769px) and (max-width: 1024px) {
           .auth-logo {
             width: 50%;
