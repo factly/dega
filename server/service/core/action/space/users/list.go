@@ -66,7 +66,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	users := make([]user, 0)
 
 	for _, id := range uIDs {
-		for _, u := range res {
+		for _, u := range res.Result {
 			if u.ID == id {
 				users = append(users, user{
 					ID:          u.ID,

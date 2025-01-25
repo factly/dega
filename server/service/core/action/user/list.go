@@ -52,7 +52,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	// Get organisation ID
 
-	res, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, []string{}, nil)
+	res, err := zitadel.GetOrganisationGrants(r.Header.Get("authorization"), authCtx.OrganisationID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
@@ -60,16 +60,16 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := paging{
-		Total: int64(len(res)),
+		Total: res.Total,
 	}
 
 	users := make([]user, 0)
 
-	for _, u := range res {
+	for _, u := range res.Result {
 		users = append(users, user{
-			ID:          u.ID,
-			DisplayName: u.Human.Profile.DisplayName,
-			Email:       u.Human.Email.Email,
+			ID:          u.UserID,
+			DisplayName: u.DisplayName,
+			Email:       u.Email,
 		})
 	}
 

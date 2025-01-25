@@ -6,26 +6,33 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 )
 
-type OrganisationUsers struct {
-	Result []OrganisationUserResult `json:"result"`
+type OrganisationUsersResponse struct {
+	Result  []OrganisationUserResult `json:"result"`
+	Details Details                  `json:"details"`
 }
 
 type OrganisationUserResult struct {
-	ID            string `json:"id"`
+	ID            string `json:"userId"`
 	Name          string `json:"name"`
 	PrimaryDomain string `json:"primaryDomain"`
 	Human         Human  `json:"human"`
 }
 
+type OrganisationUsers struct {
+	Result []OrganisationUserResult `json:"result"`
+	Total  int64                    `json:"total"`
+}
+
 type OrganisationUsersQuery struct {
 }
 
-func GetOrganisationUsers(token, orgID string, userIDs, userNames []string) ([]OrganisationUserResult, error) {
+func GetOrganisationUsers(token, orgID string, userIDs, userNames []string) (OrganisationUsers, error) {
 
 	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/v2/users"
 	method := "POST"
@@ -37,14 +44,17 @@ func GetOrganisationUsers(token, orgID string, userIDs, userNames []string) ([]O
 		},
 	}
 
+	payload.Queries = make([]interface{}, 0)
+	payload.Queries = append(payload.Queries, map[string]interface{}{
+		"typeQuery": UserTypeQuery{
+			Type: "TYPE_HUMAN",
+		}})
+
 	if len((userIDs)) != 0 {
-		payload.Queries = []Queries{
-			{
-				InUserIdsQuery: InUserIdsQuery{
-					UserIds: userIDs,
-				},
-			},
-		}
+		payload.Queries = append(payload.Queries, map[string]interface{}{
+			"inUserIdsQuery": InUserIdsQuery{
+				UserIds: userIDs,
+			}})
 	}
 
 	if len((userNames)) != 0 {
@@ -56,14 +66,15 @@ func GetOrganisationUsers(token, orgID string, userIDs, userNames []string) ([]O
 				},
 			}
 		}
-		payload.Queries = []Queries{
-			{
-				OrQuery: OrQuery{
-					Queries: userNamesQuery,
-				},
+		payload.Queries = append(payload.Queries, map[string]interface{}{"orQuery": Queries{
+			OrQuery: OrQuery{
+				Queries: userNamesQuery,
 			},
-		}
+		}})
 	}
+
+	allOrgs := OrganisationUsers{}
+	resp := OrganisationUsersResponse{}
 
 	buf := new(bytes.Buffer)
 	json.NewEncoder(buf).Encode(payload)
@@ -73,34 +84,41 @@ func GetOrganisationUsers(token, orgID string, userIDs, userNames []string) ([]O
 
 	if err != nil {
 		loggerx.Error(err)
-		return []OrganisationUserResult{}, err
+		return allOrgs, err
 	}
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Authorization", "Bearer "+getBearerToken(token))
+	req.Header.Add("Authorization", "Bearer "+viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN"))
 
 	res, err := client.Do(req)
 	if err != nil {
 		loggerx.Error(err)
-		return []OrganisationUserResult{}, err
+		return allOrgs, err
 	}
 	defer res.Body.Close()
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		fmt.Println(err)
-		return []OrganisationUserResult{}, err
+		return allOrgs, err
 	}
 
-	allOrgs := OrganisationUsers{}
-
-	err = json.Unmarshal(body, &allOrgs)
+	err = json.Unmarshal(body, &resp)
 	if err != nil {
 		loggerx.Error(err)
-		return []OrganisationUserResult{}, err
+		return allOrgs, err
 	}
 
-	fmt.Println(string(body))
+	// covert string to int64
+	if resp.Details.TotalResult == "" {
+		return allOrgs, nil
+	}
 
-	return allOrgs.Result, nil
+	total, err := strconv.ParseInt(resp.Details.TotalResult, 10, 64)
+	if err != nil {
+		return allOrgs, err
+	}
+	allOrgs.Result = resp.Result
+	allOrgs.Total = int64(total)
+	return allOrgs, nil
 }

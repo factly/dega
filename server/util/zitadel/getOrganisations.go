@@ -18,8 +18,8 @@ type Query struct {
 }
 
 type ZitadelQueryPayload struct {
-	Query   Query     `json:"query"`
-	Queries []Queries `json:"queries"`
+	Query   Query         `json:"query"`
+	Queries []interface{} `json:"queries"`
 }
 
 type Result struct {
@@ -33,8 +33,9 @@ type Organisations struct {
 }
 
 type Queries struct {
-	InUserIdsQuery InUserIdsQuery `json:"inUserIdsQuery"`
-	OrQuery        OrQuery        `json:"orQuery"`
+	InUsersIdsQuery InUserIdsQuery `json:"inUsersIdsQuery"`
+	UserTypeQuery   UserTypeQuery  `json:"userTypeQuery"`
+	OrQuery         OrQuery        `json:"orQuery"`
 }
 
 type InUserIdsQuery struct {
@@ -43,6 +44,10 @@ type InUserIdsQuery struct {
 
 type UserNamesQuery struct {
 	UserName string `json:"userName"`
+}
+
+type UserTypeQuery struct {
+	Type string `json:"type"`
 }
 
 type OrQuery struct {

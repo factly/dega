@@ -37,7 +37,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, req.IDs, nil)
+	orgsResult, err := zitadel.GetOrganisationUsers(r.Header.Get("authorization"), authCtx.OrganisationID, req.IDs, nil)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -45,7 +45,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if len(users) != len(req.IDs) {
+	if int(orgsResult.Total) != len(req.IDs) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
@@ -54,7 +54,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	spaceUsers := make([]model.SpaceUser, 0)
 
-	for _, user := range users {
+	for _, user := range orgsResult.Result {
 		spaceUsers = append(spaceUsers, model.SpaceUser{
 			SpaceID: authCtx.SpaceID,
 			UserID:  user.ID,

@@ -1,7 +1,6 @@
 package author
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -67,7 +66,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get users details from zitadel
-	zitadelUsers, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, uIDs, nil)
+	res, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, uIDs, nil)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -75,9 +74,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println(zitadelUsers)
-
-	for _, zitadelUser := range zitadelUsers {
+	for _, zitadelUser := range res.Result {
 		authors = append(authors, model.Author{
 			ID:          zitadelUser.ID,
 			DisplayName: zitadelUser.Human.Profile.DisplayName,
@@ -87,6 +84,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result.Nodes = authors
+	result.Total = res.Total
 
 	renderx.JSON(w, http.StatusOK, result)
 }
@@ -125,9 +123,9 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get users details from zitadel
-	zitadelUsers, _ := zitadel.GetOrganisationUsers(viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN"), authCtx.OrganisationID, uIDs, nil)
+	res, _ := zitadel.GetOrganisationUsers(viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN"), authCtx.OrganisationID, uIDs, nil)
 
-	for _, zitadelUser := range zitadelUsers {
+	for _, zitadelUser := range res.Result {
 		authors = append(authors, model.Author{
 			ID:          zitadelUser.ID,
 			DisplayName: zitadelUser.Human.Profile.DisplayName,
@@ -137,6 +135,7 @@ func PublicList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result.Nodes = authors
+	result.Total = res.Total
 
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -10,7 +10,7 @@ func GetAuthors(token, orgID string, ids, userNames []string) (map[string]model.
 	if token == "" {
 		token = viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN")
 	}
-	zitadelUsers, err := zitadel.GetOrganisationUsers(token, orgID, ids, userNames)
+	res, err := zitadel.GetOrganisationUsers(token, orgID, ids, userNames)
 
 	if err != nil {
 		return nil, err
@@ -18,7 +18,7 @@ func GetAuthors(token, orgID string, ids, userNames []string) (map[string]model.
 
 	// Adding author
 	authors := make(map[string]model.Author)
-	for _, zitadelUser := range zitadelUsers {
+	for _, zitadelUser := range res.Result {
 		author := model.Author{
 			ID:          zitadelUser.ID,
 			DisplayName: zitadelUser.Human.Profile.DisplayName,

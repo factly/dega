@@ -60,7 +60,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:     authCtx.SpaceID,
 	}
 
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, policyReq.Users, nil)
+	res, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, policyReq.Users, nil)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -68,7 +68,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if len(users) != len(policyReq.Users) {
+	if int(res.Total) != len(policyReq.Users) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
@@ -134,7 +134,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Users:       []policyUser{},
 	}
 
-	for _, user := range users {
+	for _, user := range res.Result {
 		policyUser := policyUser{
 			UserID:      user.ID,
 			DisplayName: user.Human.Profile.DisplayName,

@@ -93,14 +93,14 @@ func details(w http.ResponseWriter, r *http.Request) {
 		uIDs = append(uIDs, policyUser.UserID)
 	}
 
-	users, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorisation"), authCtx.OrganisationID, uIDs, nil)
+	res, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorisation"), authCtx.OrganisationID, uIDs, nil)
 
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	if len(users) != len(uIDs) {
+	if int(res.Total) != len(uIDs) {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -131,7 +131,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		Users:       []policyUser{},
 	}
 
-	for _, user := range users {
+	for _, user := range res.Result {
 		result.Users = append(result.Users, policyUser{
 			UserID:      user.ID,
 			DisplayName: user.Human.Profile.DisplayName,
