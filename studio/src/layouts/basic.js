@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Layout, Card, notification, FloatButton, ConfigProvider, Result, Button, Row } from 'antd';
+import { Layout, Card, notification, FloatButton, ConfigProvider } from 'antd';
 import SpaceSelector from '../components/GlobalNav/SpaceSelector';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,17 +12,7 @@ import routes from '../config/routesConfig';
 import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
-import { permissionRequirements } from '../utils/getUserPermission';
-
-const styles = {
-  position: 'absolute',
-  padding: '2rem',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '100vh',
-  width: '100%',
-};
+import Loader from '../components/Loader';
 
 function BasicLayout(props) {
   const dispatch = useDispatch();
@@ -85,7 +75,6 @@ function BasicLayout(props) {
   });
 
   const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const pathSnippets = location.pathname.split('/').filter((i) => i);
@@ -154,76 +143,6 @@ function BasicLayout(props) {
       location.pathname.includes('fact-checks') ||
       location.pathname.includes('pages')) &&
     (location.pathname.includes('edit') || location.pathname.includes('create'));
-
-  function checkPermissions() {
-    // Special handling for /spaces/create
-    if (location.pathname === '/spaces/create') {
-      // Check if user has the specific org ID and admin role
-      const hasRequiredAccess = orgs.some(
-        (org) => org.id === '268579051923402993' && org_role === 'admin',
-      );
-
-      if (!hasRequiredAccess) {
-        <div style={styles}>
-          <Result
-            status="403"
-            title="403 Forbidden"
-            subTitle={`You don't have required permissions to create a space`}
-            extra={<Button href="/">Back Home</Button>}
-          />
-        </div>;
-      }
-      return null;
-    }
-
-    // Handle other routes with existing permission logic
-    const requiredPermissions = permissionRequirements[location.pathname];
-    if (!requiredPermissions) {
-      return null;
-    }
-
-    // If user has 'admin' permission, allow access
-    if (org_role === 'admin') {
-      return null;
-    }
-
-    // Check specific permissions for other routes
-    const missingPermissions = requiredPermissions.filter((reqPerm) => {
-      const matchingPerm = permission.find(
-        (perm) =>
-          perm.resource === reqPerm.resource &&
-          (Array.isArray(reqPerm.action)
-            ? reqPerm.action.every((action) => perm.actions.includes(action))
-            : perm.actions.includes(reqPerm.action)),
-      );
-      return !matchingPerm;
-    });
-
-    return missingPermissions.length > 0 ? missingPermissions : null;
-  }
-
-  // Render based on permission check
-  const missingPermissions = checkPermissions();
-
-  if (missingPermissions) {
-    return (
-      <div style={styles}>
-        <Result
-          status="403"
-          title="403 Forbidden"
-          subTitle={`You don't have required permissions: ${missingPermissions
-            .map(
-              (perm) =>
-                `${perm.resource} (${
-                  Array.isArray(perm.action) ? perm.action.join(', ') : perm.action
-                })`,
-            )
-            .join(', ')}`}
-          extra={<Button href="/">Back Home</Button>}
-        />
-      </div>
-    );
-  }
 
   return (
     <ConfigProvider
@@ -299,7 +218,7 @@ function BasicLayout(props) {
               '/settings',
             ].includes(location.pathname) || <Pageheader location={location} />}
             <Card key={selected.toString()} className="wrap-children-content">
-              {children}
+              {!session.loading && !loading ? children : <Loader />}
             </Card>
           </Content>
           <FloatButton.BackTop style={{ right: 50 }} />

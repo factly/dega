@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Layout, Menu, Popover, List, Avatar, Button, Skeleton } from 'antd';
+import { Layout, Menu, Popover, List, Avatar, Button } from 'antd';
 import { sidebarMenu } from '../../config/routesConfig';
 import { setCollapse } from './../../actions/sidebar';
 import { setSpaceSelectorPage } from './../../actions/spaceSelectorPage';
@@ -19,10 +19,10 @@ import degaImg from '../../assets/dega.png';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, org_role }) {
+function Sidebar({ applications, menuKey, signOut }) {
   const { collapsed } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
-  const { details, selected } = useSelector((state) => state.spaces);
+  const { details, selected, loading } = useSelector((state) => state.spaces);
   const { navTheme } = useSelector((state) => state.settings);
   const [isMobileScreen, setIsMobileScreen] = React.useState(false);
 
@@ -80,221 +80,209 @@ function Sidebar({ permission, orgs, loading, applications, menuKey, signOut, or
   );
   return (
     <>
-      {!loading && (
-        <Sider
-          breakpoint="xl"
-          className="main-sidebar"
-          width="264px"
-          collapsible
-          collapsed={collapsed}
-          onCollapse={onCollapse}
-          theme={navTheme}
-          collapsedWidth={isMobileScreen ? 0 : 80}
-          trigger={null}
+      (
+      <Sider
+        breakpoint="xl"
+        className="main-sidebar"
+        width="264px"
+        collapsible
+        collapsed={collapsed}
+        onCollapse={onCollapse}
+        theme={navTheme}
+        collapsedWidth={isMobileScreen ? 0 : 80}
+        trigger={null}
+        style={{
+          position: 'sticky',
+          background: '#f0f2f5',
+          left: 0,
+          top: 0,
+          overflow: 'auto',
+          height: '100vh',
+        }}
+      >
+        <div
           style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: collapsed ? '0 0.5rem' : '0 24px',
             position: 'sticky',
-            background: '#f0f2f5',
-            left: 0,
             top: 0,
-            overflow: 'auto',
-            height: '100vh',
+            gap: '8px',
+            height: collapsed && '100px',
+            zIndex: 100,
+            background: '#F1F1F1',
           }}
         >
           <div
+            className="menu-header"
             style={{
+              width: '100%',
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
               alignItems: 'center',
-              padding: collapsed ? '0 0.5rem' : '0 24px',
-              position: 'sticky',
-              top: 0,
-              gap: '8px',
-              height: collapsed && '100px',
-              zIndex: 100,
-              background: '#F1F1F1',
+              justifyContent: 'center',
             }}
           >
-            <div
-              className="menu-header"
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              {collapsed ? (
-                <img
-                  alt="logo"
-                  className="menu-logo"
-                  src={
-                    details[selected]?.fav_icon?.url?.[
-                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
-                    ] || degaImg
-                  }
-                />
-              ) : (
-                <>
-                  {details && (
-                    <Button
-                      style={{
-                        background: '#DCE4E7',
-                        width: '100%',
-                        color: '#1E1E1E',
-                        border: 'none',
-                        fontWeight: '600',
-                        fontSize: '1rem',
-                        display: 'flex',
-                        marginTop: '0.8rem',
-                        height: '43px',
-                        padding: '9px, 6px, 9px, 6px',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}
-                      type="primary"
-                      onClick={() => dispatch(setSpaceSelectorPage(true))}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <Avatar
-                          src={
-                            details[selected]?.fav_icon?.url?.[
-                              window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
-                            ] || degaImg
-                          }
-                        />
-                        {details[selected]?.name}
-                      </div>
-                      <DownOutlined />
-                    </Button>
-                  )}
-                </>
-              )}
-            </div>
-            <Search collapsed={collapsed} />
-          </div>
-          <Menu
-            theme={navTheme}
-            mode="inline"
-            className="slider-menu"
-            defaultOpenKeys={['0', '1']}
-            style={{ background: '#F1F1F1', padding: '8px' }}
-            selectedKeys={menuKey}
-          >
-            {sidebarMenu.map((menu, index) => {
-              const { Icon } = menu;
-              if (loading) {
-                return (
-                  <Skeleton
-                    paragraph={false}
-                    loading={loading}
-                    style={{ padding: '12px' }}
-                    active
-                    round
-                    avatar={{ shape: 'circle' }}
-                  />
-                );
-              }
-              return getSubMenuItems(menu, index, Icon);
-            })}
-          </Menu>
-          {!collapsed ? (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '12px 24px',
-                lineHeight: '40px',
-                alignItems: 'center',
-                width: '100%',
-                position: 'absolute',
-                bottom: '0',
-                background: '#f0f2f5',
-              }}
-            >
-              <AccountMenu signOut={signOut} />
-              <div>
-                <Link to="/settings">
-                  <Button style={{ ...buttonStyle }}>
-                    <SettingOutlined />
+            {collapsed ? (
+              <img
+                alt="logo"
+                className="menu-logo"
+                src={
+                  details[selected]?.fav_icon?.url?.[
+                    window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                  ] || degaImg
+                }
+              />
+            ) : (
+              <>
+                {!loading && details && (
+                  <Button
+                    style={{
+                      background: '#DCE4E7',
+                      width: '100%',
+                      color: '#1E1E1E',
+                      border: 'none',
+                      fontWeight: '600',
+                      fontSize: '1rem',
+                      display: 'flex',
+                      marginTop: '0.8rem',
+                      height: '43px',
+                      padding: '9px, 6px, 9px, 6px',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                    type="primary"
+                    onClick={() => dispatch(setSpaceSelectorPage(true))}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <Avatar
+                        src={
+                          details[selected]?.fav_icon?.url?.[
+                            window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                          ] || degaImg
+                        }
+                      />
+                      {details[selected]?.name}
+                    </div>
+                    <DownOutlined />
                   </Button>
-                </Link>
-                {applications.length > 0 ? (
-                  <>
-                    <Popover
-                      placement="top"
-                      overlayInnerStyle={{ paddingBottom: 0 }}
-                      content={
-                        <List
-                          grid={{
-                            gutter: 16,
-                            column: 3,
-                          }}
-                          dataSource={applications}
-                          renderItem={(item) => (
-                            <List.Item>
-                              <a
-                                href={item.url}
-                                style={{
-                                  margin: '8px',
-                                  textDecoration: 'none',
-                                  color: 'inherit',
-                                  display: 'flex',
-                                  flexDirection: 'column',
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                }}
-                              >
-                                {item.medium && item.medium.url ? (
-                                  <img alt="logo" className="menu-logo" src={item.medium.url.raw} />
-                                ) : (
-                                  <Avatar shape="square" size={35}>
-                                    {item.name.charAt(0)}
-                                  </Avatar>
-                                )}
-                                <span>{item.name}</span>
-                              </a>
-                            </List.Item>
-                          )}
-                        />
-                      }
-                      trigger="click"
-                    >
-                      <Button style={{ ...buttonStyle, marginLeft: '0.25rem' }}>
-                        <AppstoreOutlined />
-                      </Button>
-                    </Popover>
-                  </>
-                ) : null}
-                <Button
-                  style={{ ...buttonStyle, marginLeft: '0.25rem' }}
-                  onClick={() => onCollapse(true)}
-                >
-                  <MenuFoldOutlined />
+                )}
+              </>
+            )}
+          </div>
+          <Search collapsed={collapsed} />
+        </div>
+        <Menu
+          theme={navTheme}
+          mode="inline"
+          className="slider-menu"
+          defaultOpenKeys={['0', '1']}
+          style={{ background: '#F1F1F1', padding: '8px' }}
+          selectedKeys={menuKey}
+        >
+          {sidebarMenu.map((menu, index) => {
+            const { Icon } = menu;
+            return getSubMenuItems(menu, index, Icon);
+          })}
+        </Menu>
+        {!collapsed ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: '12px 24px',
+              lineHeight: '40px',
+              alignItems: 'center',
+              width: '100%',
+              position: 'absolute',
+              bottom: '0',
+              background: '#f0f2f5',
+            }}
+          >
+            <AccountMenu signOut={signOut} />
+            <div>
+              <Link to="/settings">
+                <Button style={{ ...buttonStyle }}>
+                  <SettingOutlined />
                 </Button>
-              </div>
-            </div>
-          ) : (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '12px 8px',
-                lineHeight: '40px',
-                alignItems: 'center',
-                width: '100%',
-                position: 'absolute',
-                bottom: '0',
-                background: '#f0f2f5',
-              }}
-            >
-              <Button style={{ ...buttonStyle, margin: 'auto' }} onClick={() => onCollapse(false)}>
-                <MenuUnfoldOutlined />
+              </Link>
+              {applications.length > 0 ? (
+                <>
+                  <Popover
+                    placement="top"
+                    overlayInnerStyle={{ paddingBottom: 0 }}
+                    content={
+                      <List
+                        grid={{
+                          gutter: 16,
+                          column: 3,
+                        }}
+                        dataSource={applications}
+                        renderItem={(item) => (
+                          <List.Item>
+                            <a
+                              href={item.url}
+                              style={{
+                                margin: '8px',
+                                textDecoration: 'none',
+                                color: 'inherit',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              }}
+                            >
+                              {item.medium && item.medium.url ? (
+                                <img alt="logo" className="menu-logo" src={item.medium.url.raw} />
+                              ) : (
+                                <Avatar shape="square" size={35}>
+                                  {item.name.charAt(0)}
+                                </Avatar>
+                              )}
+                              <span>{item.name}</span>
+                            </a>
+                          </List.Item>
+                        )}
+                      />
+                    }
+                    trigger="click"
+                  >
+                    <Button style={{ ...buttonStyle, marginLeft: '0.25rem' }}>
+                      <AppstoreOutlined />
+                    </Button>
+                  </Popover>
+                </>
+              ) : null}
+              <Button
+                style={{ ...buttonStyle, marginLeft: '0.25rem' }}
+                onClick={() => onCollapse(true)}
+              >
+                <MenuFoldOutlined />
               </Button>
             </div>
-          )}
-        </Sider>
-      )}
+          </div>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: '12px 8px',
+              lineHeight: '40px',
+              alignItems: 'center',
+              width: '100%',
+              position: 'absolute',
+              bottom: '0',
+              background: '#f0f2f5',
+            }}
+          >
+            <Button style={{ ...buttonStyle, margin: 'auto' }} onClick={() => onCollapse(false)}>
+              <MenuUnfoldOutlined />
+            </Button>
+          </div>
+        )}
+      </Sider>
+      )
     </>
   );
 }

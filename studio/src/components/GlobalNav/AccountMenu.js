@@ -7,16 +7,17 @@ import { getUserProfile } from '../../actions/profile';
 import { Link } from 'react-router-dom';
 
 const AccountMenu = () => {
-  const { profile, loading } = useSelector((state) => {
+  const { profile, loading, session } = useSelector((state) => {
     return {
       profile: state.profile.details ? state.profile.details : null,
       loading: state.profile.loading,
+      session: state.session,
     };
   });
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (Object.keys(profile).length === 0) {
+    if (!session.loading && Object.keys(session).length > 0) {
       dispatch(getUserProfile());
     }
   }, [dispatch]);
