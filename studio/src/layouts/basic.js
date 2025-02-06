@@ -12,7 +12,6 @@ import routes from '../config/routesConfig';
 import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
-import Loader from '../components/Loader';
 
 function BasicLayout(props) {
   const dispatch = useDispatch();
@@ -218,7 +217,7 @@ function BasicLayout(props) {
               '/settings',
             ].includes(location.pathname) || <Pageheader location={location} />}
             <Card key={selected.toString()} className="wrap-children-content">
-              {!session.loading && !loading ? children : <Loader />}
+              {children}
             </Card>
           </Content>
           <FloatButton.BackTop style={{ right: 50 }} />
