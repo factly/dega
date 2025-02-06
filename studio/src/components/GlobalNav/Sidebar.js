@@ -80,7 +80,6 @@ function Sidebar({ applications, menuKey, signOut }) {
   );
   return (
     <>
-      (
       <Sider
         breakpoint="xl"
         className="main-sidebar"
@@ -282,7 +281,6 @@ function Sidebar({ applications, menuKey, signOut }) {
           </div>
         )}
       </Sider>
-      )
     </>
   );
 }
