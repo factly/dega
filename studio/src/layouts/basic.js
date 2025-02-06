@@ -12,6 +12,7 @@ import routes from '../config/routesConfig';
 import _ from 'lodash';
 import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 import MobileSidebar from '../components/GlobalNav/MobileSidebar';
+import Loader from '../components/Loader';
 
 function BasicLayout(props) {
   const dispatch = useDispatch();
@@ -23,6 +24,16 @@ function BasicLayout(props) {
 
   // Paths where mobile sidebar should be hidden
   const hiddenSidebarPaths = ['/auth/login', '/auth/registration', '/redirect', '/callback'];
+
+  // Paths that should render children regardless of loading state
+  const publicPaths = [
+    '/auth/login',
+    '/auth/registration',
+    '/auth/login/recovery',
+    '/auth/login/google',
+    '/redirect',
+    '/auth/verify',
+  ];
 
   // Check if current path should hide mobile sidebar
   const shouldHideMobileSidebar = hiddenSidebarPaths.some((path) =>
@@ -217,7 +228,13 @@ function BasicLayout(props) {
               '/settings',
             ].includes(location.pathname) || <Pageheader location={location} />}
             <Card key={selected.toString()} className="wrap-children-content">
-              {children}
+              {publicPaths.includes(location.pathname) ? (
+                children
+              ) : !session.loading && !loading ? (
+                children
+              ) : (
+                <Loader />
+              )}
             </Card>
           </Content>
           <FloatButton.BackTop style={{ right: 50 }} />
