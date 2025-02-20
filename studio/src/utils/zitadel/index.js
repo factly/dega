@@ -6,7 +6,6 @@ export const login = async () => {
     if (d.error) {
       return { error: d.error };
     }
-    const config = d.data;
 
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = await generateCodeChallenge(codeVerifier);
@@ -57,7 +56,7 @@ export const getToken = (code) =>
     .then((data) => {
       localStorage.setItem('sessionToken', data.access_token);
       localStorage.setItem('x-zitadel-id-token', data.id_token);
-      return {};
+      return { data };
     })
     .catch(() => {
       return {

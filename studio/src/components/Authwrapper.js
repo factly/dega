@@ -36,7 +36,7 @@ const AuthWrapper = ({ children }) => {
           const authRequest = searchParams.get('authRequest');
 
           // If current path is public and has authRequest, allow access
-          if (isPublicPath(currentURL) && authRequest) {
+          if (isPublicPath(currentURL) && (currentURL.includes('/redirect') || authRequest)) {
             return;
           }
 

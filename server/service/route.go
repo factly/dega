@@ -139,7 +139,8 @@ func RegisterFeedsRoutes() http.Handler {
 }
 
 func GetAuthorizationProxyHandler() http.HandlerFunc {
-	targetURL := "https://" + viper.GetString("zitadel_domain") + "/oauth/v2/authorize"
+	targetURL := viper.GetString("zitadel_protocol") + "://" + config.GetZitadelDomain() + "/oauth/v2/authorize"
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		proxyURL, err := buildProxyURL(r, targetURL)
 		if err != nil {
@@ -148,6 +149,7 @@ func GetAuthorizationProxyHandler() http.HandlerFunc {
 		}
 		resp, err := performProxyRequest("GET", proxyURL, nil)
 		if err != nil {
+			loggerx.Error(err)
 			http.Error(w, "Failed to perform request", http.StatusInternalServerError)
 			return
 		}
