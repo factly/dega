@@ -237,6 +237,13 @@ func publicList(w http.ResponseWriter, r *http.Request) {
 	metafieldsValue := r.URL.Query().Get("meta_fields_value")
 	authorIDs := r.URL.Query()["author_ids"]
 	authorSlugs := r.URL.Query()["author_slugs"]
+	isFeatured := r.URL.Query().Get("is_featured")
+
+	isFeaturedPost := false
+
+	if isFeatured == "true" {
+		isFeaturedPost = true
+	}
 
 	formatUUIDs := make([]uuid.UUID, 0)
 	if len(formatIDs) > 0 {
@@ -287,7 +294,6 @@ func publicList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	categorySlugs := r.URL.Query()["category_slugs"]
-	status := r.URL.Query().Get("status")
 
 	if len(tagSlugs) > 0 {
 		var tags []model.Tag
@@ -358,12 +364,10 @@ func publicList(w http.ResponseWriter, r *http.Request) {
 
 	order := "de_post." + pageSortBy + " " + pageSortOrder
 
-	tx := config.DB.Model(&model.Post{}).Where("is_page = ?", false)
+	tx := config.DB.Model(&model.Post{}).Where("is_page = ?", false).Where("status = ?", "publish")
 
-	if status != "" {
-		tx = tx.Where("status = ?", status)
-	} else {
-		tx = tx.Where("status = ?", "publish")
+	if isFeaturedPost {
+		tx = tx.Where("is_featured = ?", isFeaturedPost)
 	}
 
 	if len(categoryUUIDs) > 0 || len(categorySlugs) > 0 {
