@@ -197,6 +197,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		MigratedHTML:     post.MigratedHTML,
 		Language:         post.Language,
 		CustomFormat:     post.CustomFormat,
+		IsFeatured:       post.IsFeatured,
 	}
 
 	if post.MigrationID != nil {

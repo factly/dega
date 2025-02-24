@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 )
@@ -37,7 +38,7 @@ type Email struct {
 
 func GetUserProfile(token string) User {
 
-	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/auth/v1/users/me"
+	url := viper.GetString("zitadel_protocol") + "://" + config.GetZitadelDomain() + "/auth/v1/users/me"
 	method := "GET"
 
 	user := ZiatdelUser{}

@@ -190,6 +190,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     });
   };
 
+  useEffect(() => {}, [form]);
+
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (shouldBlockNavigation) {
@@ -265,7 +267,9 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
       <Form
         form={form}
         ref={formRef}
-        initialValues={{ ...data }}
+        initialValues={{
+          ...data,
+        }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
         onValuesChange={() => {
@@ -458,14 +462,29 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                       </Form.Item>
                       <Form.Item
                         name="is_featured"
+                        valuePropName="checked"
                         id="is_featured"
                         style={{ marginBottom: '8px' }}
                       >
-                        <Switch />
+                        <Switch
+                          onChange={(checked) => {
+                            form.setFieldsValue({ is_featured: checked });
+                          }}
+                          defaultValue={data.is_featured}
+                        />
                         <label htmlFor="is_featured"> Mark as Featured </label>
                       </Form.Item>
-                      <Form.Item name="is_exclude_from_homepage" id="is_exclude_from_homepage">
-                        <Switch />
+                      <Form.Item
+                        name="is_exclude_from_homepage"
+                        id="is_exclude_from_homepage"
+                        valuePropName="checked"
+                      >
+                        <Switch
+                          onChange={(checked) => {
+                            form.setFieldsValue({ is_exclude_from_homepage: checked });
+                          }}
+                          defaultValue={data.is_exclude_from_homepage}
+                        />
                         <label htmlFor="is_exclude_from_homepage"> Exclude from Homepage </label>
                       </Form.Item>
                     </Collapse.Panel>

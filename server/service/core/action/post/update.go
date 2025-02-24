@@ -134,30 +134,83 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 
-	newTags := make([]model.Tag, 0)
-	if len(post.TagIDs) > 0 {
-		config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&newTags)
-		if err = tx.Model(&result.Post).Association("Tags").Replace(&newTags); err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	} else {
-		_ = config.DB.Model(&result.Post).Association("Tags").Clear()
+	// Handle Tags
+	if err = tx.Exec("DELETE FROM de_post_tags WHERE post_id = ?", result.Post.ID).Error; err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
 	}
 
-	newCategories := make([]model.Category, 0)
-	if len(post.CategoryIDs) > 0 {
-		config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&newCategories)
-		if err = tx.Model(&result.Post).Association("Categories").Replace(&newCategories); err != nil {
+	if len(post.TagIDs) > 0 {
+		// Fetch tags to validate they exist
+		newTags := make([]model.Tag, 0)
+		if err = tx.Model(&model.Tag{}).Where("id IN ? AND space_id = ?",
+			post.TagIDs, result.Post.SpaceID).
+			Find(&newTags).Error; err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-	} else {
-		_ = config.DB.Model(&result.Post).Association("Categories").Clear()
+
+		// Check if we found all requested tags
+		if len(newTags) != len(post.TagIDs) {
+			tx.Rollback()
+			loggerx.Error(errors.New("some tags were not found"))
+			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+			return
+		}
+
+		// Insert associations directly into join table
+		for _, cat := range newTags {
+			if err = tx.Exec("INSERT INTO de_post_tags (post_id, tag_id) VALUES (?, ?)",
+				result.Post.ID, cat.ID).Error; err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
+	}
+
+	if err = tx.Exec("DELETE FROM de_post_categories WHERE post_id = ?", result.Post.ID).Error; err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	if len(post.CategoryIDs) > 0 {
+		// Fetch categories to validate they exist
+		newCategories := make([]model.Category, 0)
+		if err = tx.Model(&model.Category{}).Where("id IN ? AND space_id = ?",
+			post.CategoryIDs, result.Post.SpaceID).
+			Find(&newCategories).Error; err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+
+		// Check if we found all requested categories
+		if len(newCategories) != len(post.CategoryIDs) {
+			tx.Rollback()
+			loggerx.Error(errors.New("some categories were not found"))
+			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+			return
+		}
+
+		// Insert associations directly into join table
+		for _, cat := range newCategories {
+			if err = tx.Exec("INSERT INTO de_post_categories (post_id, category_id) VALUES (?, ?)",
+				result.Post.ID, cat.ID).Error; err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
 	}
 
 	updateMap := map[string]interface{}{

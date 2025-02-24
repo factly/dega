@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 )
@@ -56,7 +57,7 @@ type OrQuery struct {
 
 func GetOrganisations(token string) []Result {
 	// to get organisations in project of a user only if there are any authorizations/grants in an organisation
-	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/auth/v1/global/projectorgs/_search"
+	url := viper.GetString("zitadel_protocol") + "://" + config.GetZitadelDomain() + "/auth/v1/global/projectorgs/_search"
 	method := "POST"
 
 	payload := ZitadelQueryPayload{

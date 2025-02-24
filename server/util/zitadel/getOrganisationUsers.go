@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 )
@@ -34,7 +35,7 @@ type OrganisationUsersQuery struct {
 
 func GetOrganisationUsers(token, orgID string, userIDs, userNames []string) (OrganisationUsers, error) {
 
-	url := viper.GetString("zitadel_protocol") + "://" + viper.GetString("zitadel_domain") + "/v2/users"
+	url := viper.GetString("zitadel_protocol") + "://" + config.GetZitadelDomain() + "/v2/users"
 	method := "POST"
 
 	payload := ZitadelQueryPayload{

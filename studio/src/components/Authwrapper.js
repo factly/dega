@@ -4,33 +4,47 @@ import { getSession } from '../actions/session';
 import { login } from '../utils/zitadel';
 import { addErrorNotification } from '../actions/notifications';
 import { useLocation } from 'react-router-dom';
+
 const AuthWrapper = ({ children }) => {
   const dispatch = useDispatch();
   const location = useLocation();
+
+  // List of public paths that don't require authentication
+  const publicPaths = [
+    '/auth/login',
+    '/auth/registration',
+    '/auth/login/recovery',
+    '/redirect',
+    '/auth/verify',
+  ];
 
   useEffect(() => {
     checkAuthenticated();
   }, [location.pathname]);
 
+  const isPublicPath = (path) => {
+    return publicPaths.some((publicPath) => path.includes(publicPath));
+  };
+
   const checkAuthenticated = () => {
     dispatch(getSession()).then((res) => {
       if (!res.success) {
-        if (res.noToken) {
+        // If there's no token or authentication failed
+        if (!res.noToken) {
           const currentURL = window.location.href;
           const searchParams = new URLSearchParams(window.location.search);
           const authRequest = searchParams.get('authRequest');
-          if (
-            (currentURL.includes('/auth/login') ||
-              currentURL.includes('/auth/registration') ||
-              currentURL.includes('/redirect') ||
-              currentURL.includes('/auth/verify') ||
-              currentURL.includes('/auth/login/recovery')) &&
-            authRequest
-          ) {
+
+          // If current path is public and has authRequest, allow access
+          if (isPublicPath(currentURL) && (currentURL.includes('/redirect') || authRequest)) {
             return;
           }
 
-          window.localStorage.setItem('return_to', window.location.href);
+          // Store the return URL for post-login redirect
+          if (!isPublicPath(location.pathname)) {
+            window.localStorage.setItem('return_to', window.location.href);
+          }
+
           login().then((d) => {
             if (d.error) {
               dispatch(
@@ -46,8 +60,6 @@ const AuthWrapper = ({ children }) => {
       }
     });
   };
-
   return <>{children}</>;
 };
-
 export default AuthWrapper;
