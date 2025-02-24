@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { Dispatch } from 'redux';
+import axios from "axios";
+import { Dispatch } from "redux";
 import {
   ADD_MEDIA,
   ADD_MEDIA_REQUEST,
@@ -8,69 +8,21 @@ import {
   MEDIA_API,
   GET_MEDIUM,
   UPDATE_MEDIUM,
-} from '../constants/media';
-import { addErrorNotification, addSuccessNotification } from './notifications';
-import getError from '../utils/getError';
+} from "../constants/media";
+import { addErrorNotification, addSuccessNotification } from "./notifications";
+import getError from "../utils/getError";
+import {
+  Medium,
+  MediaResponse,
+  ExtendedQueryParams,
+  MediaActionTypes,
+  SetMediaLoadingAction,
+  AddMediaAction,
+  AddMediaRequestAction,
+  ResetMediaAction,
+} from "./types";
 
-// Types
-interface Medium {
-  id: number;
-  [key: string]: any; // Add specific medium properties here
-}
-
-interface MediaResponse {
-  nodes: Medium[];
-  total: number;
-}
-
-interface QueryParams {
-  [key: string]: string | number | boolean;
-}
-
-// Action Types
-interface SetMediaLoadingAction {
-  type: typeof SET_MEDIA_LOADING;
-  payload: boolean;
-}
-
-interface AddMediaAction {
-  type: typeof ADD_MEDIA;
-  payload: Medium[];
-}
-
-interface AddMediaRequestAction {
-  type: typeof ADD_MEDIA_REQUEST;
-  payload: {
-    data: number[];
-    query: QueryParams;
-    total: number;
-  };
-}
-
-interface GetMediumAction {
-  type: typeof GET_MEDIUM;
-  payload: Medium;
-}
-
-interface UpdateMediumAction {
-  type: typeof UPDATE_MEDIUM;
-  payload: Medium;
-}
-
-interface ResetMediaAction {
-  type: typeof RESET_MEDIA;
-}
-
-type MediaActionTypes = 
-  | SetMediaLoadingAction 
-  | AddMediaAction 
-  | AddMediaRequestAction 
-  | GetMediumAction 
-  | UpdateMediumAction 
-  | ResetMediaAction;
-
-// Action Creators
-export const getMedia = (query: QueryParams, profile?: boolean) => {
+export const getMedia = (query: ExtendedQueryParams, profile?: boolean) => {
   return (dispatch: Dispatch<MediaActionTypes>) => {
     dispatch(loadingMedia());
     return axios
@@ -84,7 +36,7 @@ export const getMedia = (query: QueryParams, profile?: boolean) => {
             data: response.data.nodes.map((item) => item.id),
             query: query,
             total: response.data.total,
-          }),
+          })
         );
       })
       .catch((error) => {
@@ -113,15 +65,21 @@ export const createMedium = (data: Medium | Medium[], profile?: boolean) => {
   return (dispatch: Dispatch<MediaActionTypes>) => {
     dispatch(loadingMedia());
     return axios
-      .post<profile ? Medium : MediaResponse>(MEDIA_API, profile ? (data as Medium[])[0] : data)
+      .post<profile extends true ? Medium : MediaResponse>(
+        MEDIA_API,
+        profile ? (data as Medium[])[0] : data
+      )
       .then((response) => {
         dispatch(resetMedia());
-        dispatch(addSuccessNotification('Medium created'));
-        return profile ? response.data : (response.data as MediaResponse).nodes[0];
+        dispatch(addSuccessNotification("Medium created"));
+        return profile
+          ? response.data
+          : (response.data as MediaResponse).nodes[0];
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
-      });
+      })
+      .finally(() => dispatch(stopMediaLoading()));
   };
 };
 
@@ -132,7 +90,7 @@ export const updateMedium = (data: Medium) => {
       .put<Medium>(`${MEDIA_API}/${data.id}`, data)
       .then((response) => {
         dispatch({ type: UPDATE_MEDIUM, payload: response.data });
-        dispatch(addSuccessNotification('Medium updated'));
+        dispatch(addSuccessNotification("Medium updated"));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -148,11 +106,12 @@ export const deleteMedium = (id: number) => {
       .delete(`${MEDIA_API}/${id}`)
       .then(() => {
         dispatch(resetMedia());
-        dispatch(addSuccessNotification('Medium deleted'));
+        dispatch(addSuccessNotification("Medium deleted"));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
-      });
+      })
+      .finally(() => dispatch(stopMediaLoading()));
   };
 };
 
@@ -173,7 +132,7 @@ export const addMedia = (data: Medium[]): AddMediaAction => ({
 
 export const addMediaRequest = (data: {
   data: number[];
-  query: QueryParams;
+  query: ExtendedQueryParams;
   total: number;
 }): AddMediaRequestAction => ({
   type: ADD_MEDIA_REQUEST,

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { Dispatch } from 'redux';
+import axios from "axios";
+import { Dispatch } from "redux";
 import {
   ADD_RATINGS,
   ADD_RATINGS_REQUEST,
@@ -8,40 +8,11 @@ import {
   RATINGS_API,
   GET_RATING,
   UPDATE_RATING,
-} from '../constants/ratings';
-import { addErrorNotification, addSuccessNotification } from './notifications';
-import { addMedia } from './media';
-import getError from '../utils/getError';
-
-// Types
-interface Description {
-  json: any;
-  html: string;
-}
-
-interface Medium {
-  id: number;
-  [key: string]: any;
-}
-
-interface Rating {
-  id: number;
-  description: Description;
-  description_html?: string;
-  medium?: Medium;
-  [key: string]: any;
-}
-
-interface RatingsRequest {
-  data: number[];
-  query: any;
-  total: number;
-}
-
-interface RatingsAction {
-  type: string;
-  payload: any;
-}
+} from "../constants/ratings";
+import { addErrorNotification, addSuccessNotification } from "./notifications";
+import { addMedia } from "./media";
+import getError from "../utils/getError";
+import { Rating, RatingsRequest, RatingsAction } from "./types";
 
 // action to create default ratings
 export const addDefaultRatings = (query: any) => {
@@ -52,8 +23,11 @@ export const addDefaultRatings = (query: any) => {
       .then((response) => {
         const ratings: Rating[] = response.data.nodes.map((rating: Rating) => ({
           ...rating,
-          description: { json: rating.description, html: rating.description_html },
-          medium: rating.medium?.id
+          description: {
+            json: rating.description,
+            html: rating.description_html,
+          },
+          medium: rating.medium?.id,
         }));
 
         dispatch(addRatingsList(ratings));
@@ -62,7 +36,7 @@ export const addDefaultRatings = (query: any) => {
             data: response.data.nodes.map((item: Rating) => item.id),
             query: query,
             total: response.data.total,
-          }),
+          })
         );
       })
       .catch((error) => {
@@ -84,13 +58,16 @@ export const getRatings = (query: any) => {
         const mediaItems = response.data.nodes
           .filter((rating: Rating) => rating.medium)
           .map((rating: Rating) => rating.medium);
-        
+
         dispatch(addMedia(mediaItems));
-        
+
         const ratings: Rating[] = response.data.nodes.map((rating: Rating) => ({
           ...rating,
-          description: { json: rating.description, html: rating.description_html },
-          medium: rating.medium?.id
+          description: {
+            json: rating.description,
+            html: rating.description_html,
+          },
+          medium: rating.medium?.id,
         }));
 
         dispatch(addRatingsList(ratings));
@@ -99,7 +76,7 @@ export const getRatings = (query: any) => {
             data: response.data.nodes.map((item: Rating) => item.id),
             query: query,
             total: response.data.total,
-          }),
+          })
         );
       })
       .catch((error) => {
@@ -118,13 +95,15 @@ export const getRating = (id: number) => {
       .then((response) => {
         const rating: Rating = response.data;
         if (rating.medium) dispatch(addMedia([rating.medium]));
-        
+
         rating.description = {
           json: rating.description,
-          html: rating.description_html || '',
+          html: rating.description_html || "",
         };
-        
-        dispatch(addRating(GET_RATING, { ...rating, medium: rating.medium?.id }));
+
+        dispatch(
+          addRating(GET_RATING, { ...rating, medium: rating.medium?.id })
+        );
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -141,7 +120,7 @@ export const createRating = (data: Partial<Rating>) => {
       .post(RATINGS_API, data)
       .then(() => {
         dispatch(resetRatings());
-        dispatch(addSuccessNotification('Rating created'));
+        dispatch(addSuccessNotification("Rating created"));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -158,14 +137,16 @@ export const updateRating = (data: Rating) => {
       .then((response) => {
         const rating: Rating = response.data;
         if (rating.medium) dispatch(addMedia([rating.medium]));
-        
+
         rating.description = {
           json: rating.description,
-          html: rating.description_html || '',
+          html: rating.description_html || "",
         };
-        
-        dispatch(addRating(UPDATE_RATING, { ...rating, medium: rating.medium?.id }));
-        dispatch(addSuccessNotification('Rating updated'));
+
+        dispatch(
+          addRating(UPDATE_RATING, { ...rating, medium: rating.medium?.id })
+        );
+        dispatch(addSuccessNotification("Rating updated"));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -192,17 +173,17 @@ export const deleteRating = (id: number) => {
 export const addRatings = (ratings: Rating[]) => {
   return (dispatch: Dispatch) => {
     const mediaItems = ratings
-      .filter(rating => rating.medium)
-      .map(rating => rating.medium);
-    
+      .filter((rating) => rating.medium)
+      .map((rating) => rating.medium);
+
     dispatch(addMedia(mediaItems));
     dispatch(
       addRatingsList(
         ratings.map((rating) => ({
           ...rating,
-          medium: rating.medium?.id
-        })),
-      ),
+          medium: rating.medium?.id,
+        }))
+      )
     );
   };
 };
