@@ -1,0 +1,10 @@
+//Actions
+export const GET_CATEGORY = 'GET_CATEGORY';
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
+export const ADD_CATEGORIES = 'ADD_CATEGORIES';
+export const ADD_CATEGORIES_REQUEST = 'ADD_CATEGORIES_REQUEST';
+export const RESET_CATEGORIES = 'RESET_CATEGORIES';
+export const SET_CATEGORIES_LOADING = 'SET_CATEGORIES_LOADING';
+
+//API
+export const CATEGORIES_API = '/core/categories';

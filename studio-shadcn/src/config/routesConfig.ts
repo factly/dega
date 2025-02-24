@@ -1,4 +1,17 @@
 import { Microchip, ListCheck, Shield, LayoutDashboard } from "lucide-react";
+import { Dashboard } from "../pages/dashboard";
+import { Analytics } from "../pages/analytics";
+import Posts from "../pages/posts";
+import { Pages } from "../pages/pages/index";
+import Categories from "../pages/categories";
+import Tags from "../pages/tags";
+import Media from "../pages/media";
+import FactCheck from "../pages/fact-checks";
+import Claims from "../pages/claims";
+import Claimants from "../pages/claimants";
+import Ratings from "../pages/ratings";
+import Settings from "../pages/settings";
+import CreateRating from "../pages/ratings/CreateRating";
 
 export interface Route {
   path: string;
@@ -27,18 +40,13 @@ export const routes = {
     path: "/",
     title: "Home",
     menuKey: "/",
+    Component: Dashboard
   },
   analytics: {
     path: "/analytics",
     title: "Analytics",
     menuKey: "/analytics",
-  },
-
-  //Search route
-  search: {
-    path: "/search",
-    title: "Search",
-    menuKey: "/search",
+    Component: Analytics
   },
 
   // Core routes
@@ -46,6 +54,7 @@ export const routes = {
     path: "/posts",
     title: "Posts",
     menuKey: "/posts",
+    Component: Posts,
     permission: {
       resource: "posts",
       action: ["get", "create"],
@@ -55,6 +64,7 @@ export const routes = {
     path: "/pages",
     title: "Pages",
     menuKey: "/pages",
+    Component: Pages,
     permission: {
       resource: "pages",
       action: ["get", "create"],
@@ -64,6 +74,7 @@ export const routes = {
     path: "/categories",
     title: "Categories",
     menuKey: "/categories",
+    Component: Categories,
     permission: {
       resource: "categories",
       action: "get",
@@ -73,6 +84,7 @@ export const routes = {
     path: "/tags",
     title: "Tags",
     menuKey: "/tags",
+    Component: Tags,
     permission: {
       resource: "tags",
       action: "get",
@@ -82,6 +94,7 @@ export const routes = {
     path: "/media",
     title: "Media",
     menuKey: "/media",
+    Component: Media,
     permission: {
       resource: "media",
       action: "get",
@@ -90,9 +103,10 @@ export const routes = {
 
   // Fact checking routes
   factCheck: {
-    path: "/fact-check",
+    path: "/fact-checks",
     title: "Fact Checking",
-    menuKey: "/fact-check",
+    menuKey: "/fact-checks",
+    Component: FactCheck,
     permission: {
       resource: "fact-checks",
       action: ["get", "create"],
@@ -102,6 +116,7 @@ export const routes = {
     path: "/claims",
     title: "Claims",
     menuKey: "/claims",
+    Component: Claims,
     permission: {
       resource: "claims",
       action: ["get", "create"],
@@ -111,6 +126,7 @@ export const routes = {
     path: "/claimants",
     title: "Claimants",
     menuKey: "/claimants",
+    Component: Claimants,
     permission: {
       resource: "claimants",
       action: "get",
@@ -120,51 +136,27 @@ export const routes = {
     path: "/ratings",
     title: "Ratings",
     menuKey: "/ratings",
+    Component: Ratings,
     permission: {
       resource: "ratings",
       action: "get",
     },
   },
-  googleFactCheck: {
-    path: "/google-fact-check",
-    title: "Google Fact Check",
-    menuKey: "/google-fact-check",
-  },
-  sach: {
-    path: "/sach",
-    title: "SACH",
-    menuKey: "/sach",
-  },
-
-  // Administration routes
-  spaces: {
-    path: "/spaces",
-    title: "Spaces",
-    menuKey: "/spaces",
-    isAdmin: true,
-  },
-  requests: {
-    path: "/requests",
-    title: "Requests",
-    menuKey: "/requests",
-    isOwner: true,
-  },
-  permissions: {
-    path: "/permissions",
-    title: "Permissions",
-    menuKey: "/permissions",
-    isAdmin: true,
-  },
-  events: {
-    path: "/events",
-    title: "Events",
-    menuKey: "/events",
-    isAdmin: true,
+  createRating: {
+    path: '/ratings/create',
+    menuKey: '/ratings',
+    Component: CreateRating,
+    title: 'New Rating',
+    permission: {
+      resource: 'ratings',
+      action: 'create',
+    },
   },
   settings: {
     path: "/settings",
     title: "Settings",
     menuKey: "/settings",
+    Component: Settings
   },
 };
 
@@ -195,21 +187,8 @@ export const sidebarMenu: SidebarItem[] = [
       routes.claims,
       routes.claimants,
       routes.ratings,
-      routes.googleFactCheck,
-      routes.sach,
     ],
     isService: true,
-  },
-  {
-    title: "Administration",
-    Icon: Shield,
-    children: [
-      routes.spaces,
-      routes.requests,
-      routes.permissions,
-      routes.events,
-    ],
-    isService: false,
   },
 ];
 
