@@ -18,6 +18,15 @@ import VerifyEmail from "../utils/zitadel/VerifyEmail";
 import RecoveryPage from "../utils/zitadel/recovery";
 import Callback from "../utils/zitadel/redirect";
 
+//Spaces
+import Spaces from "../pages/spaces";
+import CreateSpace from "../pages/spaces/CreateSpace";
+import EditSpace from "../pages/spaces/EditSpace";
+
+//Organisations
+import Organisations from "../pages/organisations/index";
+import AddUsers from "../pages/organisations/AddUsers";
+
 export interface Route {
   path: string;
   title: string;
@@ -135,6 +144,19 @@ export const routes = {
     },
   },
 
+  organisations: {
+    path: "/settings/organisations",
+    menuKey: "/organisations",
+    Component: Organisations,
+    title: "Organisations",
+  },
+  addusers: {
+    path: "/settings/organisations/addusers",
+    menuKey: "/organisations",
+    Component: AddUsers,
+    title: "Add Users",
+  },
+
   // Fact checking routes
   factCheck: {
     path: "/fact-checks",
@@ -184,6 +206,33 @@ export const routes = {
     permission: {
       resource: "ratings",
       action: "create",
+    },
+  },
+  spaces: {
+    path: "/admin/spaces",
+    menuKey: "/admin/spaces",
+    Component: Spaces,
+    title: "Spaces",
+  },
+  createSpace: {
+    path: "/spaces/create",
+    menuKey: "/admin/spaces",
+    Component: CreateSpace,
+    title: "New Space",
+    permission: {
+      resource: "spaces",
+      action: "create",
+      isSpace: true,
+    },
+  },
+  editSpace: {
+    path: "/admin/spaces/:id/edit",
+    menuKey: "/admin/spaces",
+    Component: EditSpace,
+    title: "Edit",
+    permission: {
+      resource: "spaces",
+      action: "update",
     },
   },
   settings: {

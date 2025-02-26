@@ -9,8 +9,8 @@ interface ErrorResponse {
   };
 }
 
-// Interface for the error object
-interface ApiError extends Error {
+// Interface for the error object - now exported
+export interface ApiError extends Error {
   response?: ErrorResponse;
 }
 

@@ -28,7 +28,7 @@ export const BasicLayout: FC<BasicLayoutProps> = () => {
       <div className="flex min-h-screen bg-background">
         {!shouldHideSidebar && <Sidebar />}
         <div className={`flex-1 ${!shouldHideSidebar ? "ml-64" : ""}`}>
-          <main className="p-8">
+          <main className="p-6">
             <Outlet />
           </main>
         </div>

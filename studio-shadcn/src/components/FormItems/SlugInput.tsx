@@ -1,49 +1,42 @@
-import React from 'react';
-import { UseFormReturn } from 'react-hook-form';
-import { Input } from '@/components/ui/input';
-import { 
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage
-} from '@/components/ui/form';
+import React from "react";
+import { Input } from "@/components/ui/input";
 
 interface SlugInputProps {
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-  formItemProps?: any;
-  form: UseFormReturn<any>;
+  value?: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  className?: string;
+  disabled?: boolean;
+  id?: string;
+  name?: string;
+  [key: string]: any;
 }
 
-export const SlugInput: React.FC<SlugInputProps> = ({ 
-  onChange, 
-  inputProps = {}, 
-  formItemProps = {},
-  form
+export const SlugInput: React.FC<SlugInputProps> = ({
+  onChange,
+  value,
+  ...rest
 }) => {
-  const finalInputProps = onChange ? { ...inputProps, onChange } : inputProps;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Convert the input to a valid slug format
+    const slugValue = e.target.value
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/-+/g, "-");
+
+    // Call the onChange handler with the sanitized value
+    if (onChange) {
+      onChange(slugValue);
+    }
+  };
 
   return (
-    <FormField
-      control={form.control}
-      name="slug"
-      rules={{
-        required: "Please input the slug!",
-        pattern: {
-          value: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-          message: "Please enter valid slug!"
-        }
-      }}
-      render={({ field }) => (
-        <FormItem {...formItemProps}>
-          <FormLabel>Slug</FormLabel>
-          <FormControl>
-            <Input {...field} {...finalInputProps} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
+    <Input
+      value={value || ""}
+      onChange={handleChange}
+      placeholder="Enter a slug"
+      {...rest}
     />
   );
 };

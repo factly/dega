@@ -271,27 +271,15 @@ export interface PasswordResetResponse {
 // Media related types
 export interface Medium {
   id: number;
-  title: string;
-  description?: string;
-  url: string;
-  type: string;
-  dimensions?: {
-    width: number;
-    height: number;
-  };
-  fileSize?: number;
-  mimeType: string;
-  created_at: string;
-  updated_at: string;
+  [key: string]: any;
 }
 
 export interface MediaResponse {
   nodes: Medium[];
   total: number;
-  page: number;
-  limit: number;
 }
 
+// Media Action types
 export interface SetMediaLoadingAction {
   type: "SET_MEDIA_LOADING";
   payload: boolean;
@@ -306,7 +294,7 @@ export interface AddMediaRequestAction {
   type: "ADD_MEDIA_REQUEST";
   payload: {
     data: number[];
-    query: ExtendedQueryParams;
+    query: QueryParams;
     total: number;
   };
 }

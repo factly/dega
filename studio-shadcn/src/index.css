@@ -73,7 +73,5 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: "Inter", sans-serif;
-    font-size: 16px;
   }
 }

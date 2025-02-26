@@ -70,8 +70,8 @@ const menuItems: MenuItem[] = [
     title: "Administration",
     icon: Shield,
     children: [
-      { title: "Users", path: "/users" },
-      { title: "Roles", path: "/roles" },
+      { title: "Spaces", path: "/admin/spaces" },
+      { title: "Organisations", path: "/settings/organisations" },
     ],
   },
   {
@@ -97,7 +97,7 @@ export function Sidebar() {
     <aside
       className={cn(
         "fixed left-0 top-0 z-40 h-screen bg-white transition-all duration-300 p-6",
-        isCollapsed ? "w-20" : "w-64",
+        isCollapsed ? "w-[89px]" : "w-[265px]",
         "border-r border-gray-200"
       )}
     >

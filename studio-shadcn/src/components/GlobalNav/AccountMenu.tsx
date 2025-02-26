@@ -1,13 +1,21 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User, LogOut, Edit } from "lucide-react";
+import { User, Plus, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { getSpaces, setSelectedSpace } from "../../actions/spaces";
 
 interface Profile {
   medium?: {
@@ -18,18 +26,37 @@ interface Profile {
   };
 }
 
-interface SessionState {
-  loading: boolean;
+interface Space {
+  id: string;
+  name: string;
+  site_address: string;
+  site_title: string;
+  tag_line: string;
+  org_role?: string;
 }
 
-interface ProfileState {
-  details: Profile | null;
-  loading: boolean;
+interface Organization {
+  id: string;
+  title: string;
+  role: string;
+  spaces: Space[];
 }
 
+// RootState interface - matches what's in the code files
 interface RootState {
-  profile: ProfileState;
-  session: SessionState;
+  profile?: {
+    details: Profile | null;
+    loading: boolean;
+  };
+  spaces?: {
+    orgs: Organization[];
+    selected: string;
+    details: Record<string, Space>;
+    loading: boolean;
+  };
+  session?: {
+    loading: boolean;
+  };
 }
 
 interface AccountMenuProps {
@@ -38,53 +65,79 @@ interface AccountMenuProps {
 
 export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // These would come from your Redux store
-  const profile: Profile | null = null; // Replace with actual Redux selector
-  const loading: boolean = false; // Replace with actual Redux selector
+  const profile = useSelector(
+    (state: RootState) => state.profile?.details || null
+  );
+  const profileLoading = useSelector(
+    (state: RootState) => state.profile?.loading || false
+  );
+  const organizations = useSelector(
+    (state: RootState) => state.spaces?.orgs || []
+  );
+  const selectedSpaceId = useSelector(
+    (state: RootState) => state.spaces?.selected || ""
+  );
+  const spacesLoading = useSelector(
+    (state: RootState) => state.spaces?.loading || false
+  );
 
-  const handleLogout = async (): Promise<void> => {
-    const sessionId = localStorage.getItem("sessionId");
-    const sessionToken = localStorage.getItem("sessionToken");
+  useEffect(() => {
+    dispatch(getSpaces());
+  }, [dispatch]);
 
-    if (sessionId && sessionToken) {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_ZITADEL_AUTHORITY}/v2/sessions/${sessionId}`,
-          {
-            method: "DELETE",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionToken}`,
-            },
-            body: JSON.stringify({ sessionToken }),
-          }
-        );
+  const handleSelectSpace = (spaceId: string) => {
+    dispatch(setSelectedSpace(spaceId));
+  };
 
-        if (!response.ok) {
-          console.error("Logout failed:", await response.text());
-        }
-      } catch (error) {
-        console.error("Error during logout:", error);
+  const handleCreateSpace = () => {
+    navigate("/spaces/create");
+  };
+
+  // Filter spaces based on search query
+  const filteredOrganizations = organizations
+    .map((org) => ({
+      ...org,
+      spaces: (org.spaces || []).filter(
+        (space) =>
+          (space.name || "")
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          (space.site_title || "")
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())
+      ),
+    }))
+    .filter(
+      (org) =>
+        (org.spaces || []).length > 0 ||
+        (org.title || "").toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+  // Find selected space for display
+  const findSelectedSpace = () => {
+    if (!organizations || organizations.length === 0) return null;
+
+    for (const org of organizations) {
+      if (!org.spaces) continue;
+      const space = org.spaces.find(
+        (space) => space && space.id === selectedSpaceId
+      );
+      if (space) {
+        return space;
       }
     }
-
-    window.localStorage.clear();
-
-    const postLogoutRedirectUri = import.meta.env
-      .VITE_ZITADEL_POST_LOGOUT_REDIRECT_URI;
-    if (postLogoutRedirectUri) {
-      window.location.href = postLogoutRedirectUri;
-    } else {
-      window.location.reload();
-    }
+    return null;
   };
+
+  const selectedSpace = findSelectedSpace();
 
   if (isCollapsed) {
     return (
       <Button variant="ghost" size="icon" className="w-10 h-10 rounded-full">
-        {!loading && profile?.medium ? (
+        {!profileLoading && profile?.medium ? (
           <Avatar className="h-8 w-8">
             <AvatarImage
               src={
@@ -113,7 +166,7 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
           size="sm"
           className="w-full justify-start gap-2"
         >
-          {!loading && profile?.medium ? (
+          {!profileLoading && profile?.medium ? (
             <Avatar className="h-8 w-8">
               <AvatarImage
                 src={
@@ -130,17 +183,60 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
           ) : (
             <User className="h-4 w-4" />
           )}
-          <span>Profile</span>
+          <span>{selectedSpace?.name || "Select a space"}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuItem onClick={() => navigate("/profile")}>
-          <Edit className="h-4 w-4 mr-2" />
-          <span>My Account</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleLogout} className="text-red-600">
-          <LogOut className="h-4 w-4 mr-2" />
-          <span>Log Out</span>
+      <DropdownMenuContent align="end" className="w-80">
+        <div className="p-2">
+          <div className="relative">
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search spaces..."
+              className="pl-8"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <DropdownMenuSeparator />
+
+        {spacesLoading ? (
+          <DropdownMenuItem disabled>Loading spaces...</DropdownMenuItem>
+        ) : (
+          <>
+            {filteredOrganizations.map((org) => (
+              <div key={org.id || `org-${Math.random()}`}>
+                <DropdownMenuLabel>
+                  {org.title || "Organization"}
+                </DropdownMenuLabel>
+
+                <DropdownMenuGroup>
+                  {(org.spaces || []).map((space) => (
+                    <DropdownMenuItem
+                      key={space.id || `space-${Math.random()}`}
+                      onClick={() => handleSelectSpace(space.id)}
+                      className={
+                        selectedSpaceId === space.id ? "bg-accent" : ""
+                      }
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span>{space.name || "Unnamed space"}</span>
+                        {selectedSpaceId === space.id && <span>✓</span>}
+                      </div>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator />
+              </div>
+            ))}
+          </>
+        )}
+
+        <DropdownMenuItem onClick={handleCreateSpace}>
+          <Plus className="h-4 w-4 mr-2" />
+          <span>Create new space</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
