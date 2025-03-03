@@ -44,6 +44,7 @@ import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 import { formatDate } from '../../../utils/date';
 import languages from '../../../utils/languages.json';
 import useNavigation from '../../../utils/useNavigation';
+import RelatedURLs from './RelatedURLs';
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const navigate = useNavigation();
@@ -460,6 +461,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                       <Form.Item name="featured_medium_id" label="Featured Image">
                         <MediaSelector />
                       </Form.Item>
+                      <RelatedURLs />
                       <Form.Item
                         name="is_featured"
                         valuePropName="checked"
