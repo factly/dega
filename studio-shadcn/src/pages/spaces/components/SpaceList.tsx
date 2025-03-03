@@ -162,18 +162,22 @@ const SpaceList: React.FC = () => {
       </Table>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete Space</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="max-w-sm p-4">
+          <DialogHeader className="space-y-2">
+            <DialogTitle className="text-base">Delete Space</DialogTitle>
+            <DialogDescription className="text-sm">
               Are you sure you want to delete this space?
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>
+          <DialogFooter className="mt-4 flex justify-end space-x-2">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setDialogOpen(false)}
+            >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleDelete}>
+            <Button size="sm" variant="destructive" onClick={handleDelete}>
               Delete
             </Button>
           </DialogFooter>

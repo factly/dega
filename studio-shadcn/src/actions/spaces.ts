@@ -3,7 +3,7 @@ import {
   GET_SPACES_SUCCESS,
   ADD_SPACE_SUCCESS,
   LOADING_SPACES,
-  API_GET_SPACES as API_SPACES,
+  API_GET_SPACES,
   SET_SELECTED_SPACE,
   DELETE_SPACE_SUCCESS,
   UPDATE_SPACE_SUCCESS,
@@ -23,6 +23,7 @@ export interface Space {
   description?: string;
   meta_fields?: string | Record<string, any>;
   organisation_id: string;
+  org_role?: string;
 }
 
 export interface Organization {
@@ -107,7 +108,8 @@ export const getSpaces = (): AppThunk<Promise<Organization[] | undefined>> => {
   return async (dispatch) => {
     dispatch(loadingSpaces(true));
     try {
-      const response = await axios.get(`${API_SPACES}/my`);
+      // Fix: Use API_GET_SPACES constant here instead of API_SPACES
+      const response = await axios.get(`${API_GET_SPACES}/my`);
       const organizations: Organization[] = response.data;
       dispatch(getSpacesSuccess(organizations));
       return organizations;
@@ -121,10 +123,17 @@ export const getSpaces = (): AppThunk<Promise<Organization[] | undefined>> => {
 
 export const setSelectedSpace = (spaceId: string): AppThunk => {
   return (dispatch) => {
+    localStorage.setItem("space", spaceId);
+
+    axios.defaults.headers.common["X-Space"] = spaceId;
+
     dispatch({
       type: SET_SELECTED_SPACE,
-      payload: { id: spaceId },
+      payload: {
+        id: spaceId,
+      },
     });
+
     dispatch(addSuccessNotification("Space changed"));
   };
 };
@@ -135,7 +144,7 @@ export const addSpace = (
   return async (dispatch) => {
     dispatch(loadingSpaces(true));
     try {
-      const response = await axios.post(API_SPACES, data);
+      const response = await axios.post(API_GET_SPACES, data);
       dispatch(addSpaceSuccess(response.data));
       dispatch(addSuccessNotification("Space added"));
       return response.data;
@@ -152,7 +161,7 @@ export const deleteSpace = (id: string): AppThunk => {
   return async (dispatch) => {
     dispatch(loadingSpaces(true));
     try {
-      await axios.delete(`${API_SPACES}/${id}`);
+      await axios.delete(`${API_GET_SPACES}/${id}`);
       dispatch(deleteSpaceSuccess(id));
       dispatch(addSuccessNotification("Space deleted"));
     } catch (error) {
@@ -170,7 +179,8 @@ export const updateSpace = (
   return async (dispatch) => {
     dispatch(loadingSpaces(true));
     try {
-      const response = await axios.put(`${API_SPACES}/${data.id}`, data);
+      // Fix: Use API_GET_SPACES/id instead of just API_SPACES
+      const response = await axios.put(`${API_GET_SPACES}/${data.id}`, data);
       dispatch(updateSpaceSuccess(response.data));
       dispatch(addSuccessNotification("Space updated"));
       return response.data;

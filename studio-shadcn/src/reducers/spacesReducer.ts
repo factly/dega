@@ -8,21 +8,21 @@ import {
 } from "../constants/spaces";
 
 // Define interfaces for our data structures
-interface Space {
+export interface Space {
   id: string;
   organisation_id?: string;
   org_role?: string;
   [key: string]: any;
 }
 
-interface Organization {
+export interface Organization {
   id: string;
   role: string;
   spaces: Space[] | string[];
   [key: string]: any;
 }
 
-interface SpacesState {
+export interface SpacesState {
   orgs: Organization[];
   details: {
     [key: string]: Space;
@@ -66,7 +66,7 @@ interface DeleteSpaceSuccessAction {
 }
 
 // Union type for all possible actions
-type SpacesAction =
+export type SpacesAction =
   | LoadingSpacesAction
   | GetSpacesSuccessAction
   | AddSpaceSuccessAction
@@ -75,19 +75,23 @@ type SpacesAction =
   | DeleteSpaceSuccessAction
   | { type: string; payload?: any };
 
+// Initialize with the stored space ID to ensure there's a selected space on app load
+const storedSpaceId = localStorage.getItem("space") || "";
+
 const initialState: SpacesState = {
   orgs: [],
   details: {},
   loading: true,
-  selected: "",
+  selected: storedSpaceId,
   org_role: "",
 };
 
-export default function spacesReducer(
+export function spaces(
   state: SpacesState = initialState,
   action: SpacesAction = { type: "" }
 ): SpacesState {
-  if (!action.payload) {
+  // Return state for actions without payload, except for special cases
+  if (!action.payload && action.type !== LOADING_SPACES) {
     return state;
   }
 
@@ -95,7 +99,8 @@ export default function spacesReducer(
     case LOADING_SPACES:
       return {
         ...state,
-        loading: action.payload as boolean,
+        loading:
+          action.payload === undefined ? false : (action.payload as boolean),
       };
 
     case GET_SPACES_SUCCESS: {
@@ -108,20 +113,23 @@ export default function spacesReducer(
         });
       });
 
-      const spaceID = localStorage.getItem("space")
-        ? localStorage.getItem("space")
-        : "";
+      // Get space ID from localStorage, fallback to empty string
+      const spaceID = localStorage.getItem("space") || "";
 
+      // Use the stored ID if valid, otherwise use the first available space
       const defaultSpace =
         Object.keys(space_details).length > 0
-          ? space_details[spaceID || ""]
-            ? space_details[spaceID || ""].id
-            : space_details[Object.keys(space_details)[0]].id
+          ? space_details[spaceID]
+            ? spaceID // Use stored space if it exists
+            : space_details[Object.keys(space_details)[0]].id // Otherwise use first space
           : "";
 
+      // Use the current selected space if it exists in space_details, otherwise use defaultSpace
       const setSpaceID = space_details[state.selected]
         ? state.selected
         : defaultSpace;
+
+      // Store the selected space ID in localStorage
       localStorage.setItem("space", setSpaceID);
 
       return {

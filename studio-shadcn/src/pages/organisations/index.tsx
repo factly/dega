@@ -107,7 +107,7 @@ function Organisations() {
           </div>
         </div>
 
-        <div className="rounded-lg">
+        <div className="rounded-md">
           <Table>
             <TableHeader>
               <TableRow>
@@ -143,29 +143,6 @@ function Organisations() {
               ))}
             </TableBody>
           </Table>
-        </div>
-
-        <div className="flex items-center justify-end space-x-2 py-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() =>
-              setFilters((prev) => ({ ...prev, page: prev.page - 1 }))
-            }
-            disabled={filters.page === 1}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() =>
-              setFilters((prev) => ({ ...prev, page: prev.page + 1 }))
-            }
-            disabled={filters.page * filters.limit >= filteredMembers.length}
-          >
-            Next
-          </Button>
         </div>
       </div>
     </div>

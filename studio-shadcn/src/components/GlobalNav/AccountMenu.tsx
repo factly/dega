@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User, Plus, Search } from "lucide-react";
+import { User, CirclePlus, Search, ChevronsUpDown } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,9 +29,9 @@ interface Profile {
 interface Space {
   id: string;
   name: string;
-  site_address: string;
-  site_title: string;
-  tag_line: string;
+  site_address?: string;
+  site_title?: string;
+  tag_line?: string;
   org_role?: string;
 }
 
@@ -39,10 +39,9 @@ interface Organization {
   id: string;
   title: string;
   role: string;
-  spaces: Space[];
+  spaces: string[]; // Array of space IDs
 }
 
-// RootState interface - matches what's in the code files
 interface RootState {
   profile?: {
     details: Profile | null;
@@ -52,9 +51,6 @@ interface RootState {
     orgs: Organization[];
     selected: string;
     details: Record<string, Space>;
-    loading: boolean;
-  };
-  session?: {
     loading: boolean;
   };
 }
@@ -68,71 +64,80 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
   const dispatch = useAppDispatch();
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Get state from Redux
   const profile = useSelector(
     (state: RootState) => state.profile?.details || null
   );
   const profileLoading = useSelector(
     (state: RootState) => state.profile?.loading || false
   );
-  const organizations = useSelector(
-    (state: RootState) => state.spaces?.orgs || []
-  );
-  const selectedSpaceId = useSelector(
-    (state: RootState) => state.spaces?.selected || ""
-  );
-  const spacesLoading = useSelector(
-    (state: RootState) => state.spaces?.loading || false
-  );
+  const spaces = useSelector((state: RootState) => state.spaces);
+  const organizations = spaces?.orgs || [];
+  const selectedSpaceId = spaces?.selected || "";
+  const spacesDetails = spaces?.details || {};
+  const spacesLoading = spaces?.loading || false;
 
   useEffect(() => {
     dispatch(getSpaces());
   }, [dispatch]);
 
   const handleSelectSpace = (spaceId: string) => {
+    if (spaceId === selectedSpaceId) return;
+
+    // Simply dispatch the action and let Redux handle the rest
     dispatch(setSelectedSpace(spaceId));
+
+    const dropdownTrigger = document.querySelector('[data-state="open"]');
+    if (dropdownTrigger) {
+      (dropdownTrigger as HTMLElement).click();
+    }
   };
 
+  // Handle create space button click
   const handleCreateSpace = () => {
     navigate("/spaces/create");
   };
 
-  // Filter spaces based on search query
-  const filteredOrganizations = organizations
-    .map((org) => ({
-      ...org,
-      spaces: (org.spaces || []).filter(
-        (space) =>
-          (space.name || "")
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          (space.site_title || "")
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())
-      ),
-    }))
-    .filter(
-      (org) =>
-        (org.spaces || []).length > 0 ||
-        (org.title || "").toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  // Prepare data for display
+  const availableSpaces = organizations.flatMap((org) => {
+    // Get space objects from IDs
+    const orgSpaces = org.spaces
+      .map((spaceId) => spacesDetails[spaceId])
+      .filter(Boolean);
 
-  // Find selected space for display
-  const findSelectedSpace = () => {
-    if (!organizations || organizations.length === 0) return null;
+    // Filter by search query if needed
+    const filteredSpaces = searchQuery
+      ? orgSpaces.filter(
+          (space) =>
+            (space.name || "")
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
+            (space.site_title || "")
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())
+        )
+      : orgSpaces;
 
-    for (const org of organizations) {
-      if (!org.spaces) continue;
-      const space = org.spaces.find(
-        (space) => space && space.id === selectedSpaceId
-      );
-      if (space) {
-        return space;
-      }
+    // Return spaces with their org info for grouping
+    return filteredSpaces.map((space) => ({
+      ...space,
+      orgTitle: org.title,
+    }));
+  });
+
+  // Group spaces by organization for display
+  const spacesGroupedByOrg = availableSpaces.reduce((acc, space) => {
+    const orgTitle = space.orgTitle || "Unknown Organization";
+    if (!acc[orgTitle]) {
+      acc[orgTitle] = [];
     }
-    return null;
-  };
+    acc[orgTitle].push(space);
+    return acc;
+  }, {} as Record<string, Space[]>);
 
-  const selectedSpace = findSelectedSpace();
+  const selectedSpaceName = selectedSpaceId
+    ? spacesDetails[selectedSpaceId]?.name
+    : "";
 
   if (isCollapsed) {
     return (
@@ -158,84 +163,71 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
     );
   }
 
+  // Full dropdown view
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
-          className="w-full justify-start gap-2"
+          className="w-full justify-between items-center px-4 py-2 bg-white rounded-md"
+          disabled={spacesLoading}
         >
-          {!profileLoading && profile?.medium ? (
-            <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={
-                  profile.medium.url?.[
-                    import.meta.env.VITE_ENABLE_IMGPROXY ? "proxy" : "raw"
-                  ]
-                }
-                alt="Profile"
-              />
-              <AvatarFallback>
-                <User className="h-4 w-4" />
-              </AvatarFallback>
-            </Avatar>
-          ) : (
-            <User className="h-4 w-4" />
-          )}
-          <span>{selectedSpace?.name || "Select a space"}</span>
+          <span>{spacesLoading ? "Loading spaces..." : selectedSpaceName}</span>
+          <ChevronsUpDown className="h-4 w-4 ml-2" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80">
+
+      <DropdownMenuContent align="end" className="w-80 p-0">
+        {/* Search input */}
         <div className="p-2">
           <div className="relative">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search spaces..."
-              className="pl-8"
+              placeholder="search spaces..."
+              className="pl-8 py-4"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
 
-        <DropdownMenuSeparator />
-
+        {/* Spaces list grouped by organization */}
         {spacesLoading ? (
           <DropdownMenuItem disabled>Loading spaces...</DropdownMenuItem>
+        ) : Object.keys(spacesGroupedByOrg).length === 0 ? (
+          <DropdownMenuItem disabled>No spaces found</DropdownMenuItem>
         ) : (
-          <>
-            {filteredOrganizations.map((org) => (
-              <div key={org.id || `org-${Math.random()}`}>
-                <DropdownMenuLabel>
-                  {org.title || "Organization"}
-                </DropdownMenuLabel>
-
-                <DropdownMenuGroup>
-                  {(org.spaces || []).map((space) => (
-                    <DropdownMenuItem
-                      key={space.id || `space-${Math.random()}`}
-                      onClick={() => handleSelectSpace(space.id)}
-                      className={
-                        selectedSpaceId === space.id ? "bg-accent" : ""
-                      }
-                    >
-                      <div className="flex items-center justify-between w-full">
-                        <span>{space.name || "Unnamed space"}</span>
-                        {selectedSpaceId === space.id && <span>✓</span>}
-                      </div>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuGroup>
-
-                <DropdownMenuSeparator />
-              </div>
-            ))}
-          </>
+          Object.entries(spacesGroupedByOrg).map(([orgTitle, spaces]) => (
+            <div key={orgTitle}>
+              <DropdownMenuLabel className="text-gray-600 font-normal px-4 py-2">
+                {orgTitle}
+              </DropdownMenuLabel>
+              <DropdownMenuGroup>
+                {spaces.map((space) => (
+                  <DropdownMenuItem
+                    key={space.id}
+                    onClick={() => handleSelectSpace(space.id)}
+                    className="px-4 py-2"
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <span>{space.name || "Unnamed space"}</span>
+                      {selectedSpaceId === space.id && <span>✓</span>}
+                    </div>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+            </div>
+          ))
         )}
 
-        <DropdownMenuItem onClick={handleCreateSpace}>
-          <Plus className="h-4 w-4 mr-2" />
+        {/* Create new space button */}
+        <DropdownMenuItem
+          onClick={handleCreateSpace}
+          className="text-[#4E6497] mt-2 px-4 py-3"
+        >
+          <CirclePlus className="h-4 w-4 mr-2 text-[#4E6497]" />
           <span>Create new space</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

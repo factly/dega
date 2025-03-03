@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -8,8 +9,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { AccountMenu } from "./AccountMenu";
-import degaShort from "@/assets/dega-short.png";
-import degaLogo from "@/assets/dega.jpg";
+import degaShort from "../../assets/dega-short.png";
+import degaLogo from "../../assets/dega.png";
 import {
   ChevronDown,
   LayoutDashboard,
@@ -21,6 +22,8 @@ import {
   ArrowLeftToLine,
   ArrowRightToLine,
 } from "lucide-react";
+import { RootState } from "@/types";
+import { setCollapse } from "@/actions/sidebar";
 
 interface MenuItem {
   title: string;
@@ -71,7 +74,7 @@ const menuItems: MenuItem[] = [
     icon: Shield,
     children: [
       { title: "Spaces", path: "/admin/spaces" },
-      { title: "Organisations", path: "/settings/organisations" },
+      { title: "Organisations", path: "/organisations" },
     ],
   },
   {
@@ -83,9 +86,16 @@ const menuItems: MenuItem[] = [
 ];
 
 export function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const isCollapsed = useSelector(
+    (state: RootState) => state.sidebar.collapsed
+  );
   const [openSections, setOpenSections] = useState<string[]>(["Dashboard"]);
   const location = useLocation();
+
+  const toggleCollapse = (value: boolean) => {
+    dispatch(setCollapse(value));
+  };
 
   const toggleSection = (title: string): void => {
     setOpenSections((prev) =>
@@ -111,13 +121,13 @@ export function Sidebar() {
             <Button
               variant="outline"
               size="icon"
-              onClick={() => setIsCollapsed(true)}
-              className="p-2"
+              onClick={() => toggleCollapse(true)}
+              className="p-2 rounded-md"
             >
               <ArrowLeftToLine
                 className="h-4 w-4"
                 stroke="#4E6497"
-                strokeWidth="1.25"
+                strokeWidth="1.5"
               />
             </Button>
           </div>
@@ -188,9 +198,9 @@ export function Sidebar() {
                       to={item.path}
                       className={cn(
                         "flex items-center px-2 py-1.5 text-base rounded-md",
-                        "hover:bg-emerald-50 transition-colors",
+                        "hover:bg-[#DCEFEB] transition-colors",
                         location.pathname === item.path &&
-                          "bg-emerald-50 font-medium",
+                          "bg-[#DCEFEB] font-medium",
                         isCollapsed && "justify-center"
                       )}
                     >
@@ -216,11 +226,10 @@ export function Sidebar() {
               <AccountMenu />
             ) : (
               <div className="flex flex-col gap-2">
-                <AccountMenu isCollapsed />
                 <Button
                   variant="outline"
                   size="icon"
-                  onClick={() => setIsCollapsed(false)}
+                  onClick={() => toggleCollapse(false)}
                 >
                   <ArrowRightToLine
                     className="h-4 w-4"

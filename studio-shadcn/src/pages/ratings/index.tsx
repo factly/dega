@@ -1,53 +1,65 @@
-import React from 'react';
-import RatingList from './components/RatingList';
-import { Button } from '@/components/ui/button';
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getRatings } from '../../actions/ratings';
-import deepEqual from 'deep-equal';
-import { Loader2 } from 'lucide-react';
-import { Helmet } from 'react-helmet';
+import React, { useEffect } from "react";
+import RatingList from "./components/RatingList";
+import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getRatings } from "../../actions/ratings";
+import deepEqual from "deep-equal";
+import Loader from "../../components/Loader";
+import { Helmet } from "react-helmet";
+import { PlusCircle } from "lucide-react";
 
-
-interface Rating {
-  // Add specific rating properties here
-  id: string;
-  // ... other rating properties
+// Type definitions
+interface Permission {
+  actions: string[];
 }
 
-interface RootState {
-  ratings: {
-    req: {
-      query: Filters;
-      data: string[];
-      total: number;
-    }[];
-    details: Record<string, Rating>;
-    loading: boolean;
-  };
-}
-
-interface Filters {
+interface RatingFilters {
   page: number;
   limit: number;
 }
 
+interface Rating {
+  id: string;
+  [key: string]: any;
+}
 
-function Ratings() {
+interface RatingsState {
+  req: {
+    query: RatingFilters;
+    data: string[];
+    total: number;
+  }[];
+  details: {
+    [key: string]: Rating;
+  };
+  loading: boolean;
+}
+
+interface RootState {
+  ratings: RatingsState;
+}
+
+function Ratings({
+  permission = { actions: [] },
+}: {
+  permission?: Permission;
+}): JSX.Element {
+  const { actions } = permission;
   const dispatch = useDispatch();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  
-  const [filters, setFilters] = React.useState<Filters>({
+
+  const [filters, setFilters] = React.useState<RatingFilters>({
     page: 1,
     limit: 20,
   });
 
-  query.set('page', filters.page.toString());
+  query.set("page", filters.page.toString());
   window.history.replaceState(
-    {}, 
-    '', 
-    `${import.meta.env.PUBLIC_URL}${location.pathname}?${query}`
+    {},
+    "",
+    `${import.meta.env.VITE_PUBLIC_URL}${location.pathname}?${query}`
   );
 
   const { ratings, total, loading } = useSelector((state: RootState) => {
@@ -55,52 +67,45 @@ function Ratings() {
       return deepEqual(item.query, filters);
     });
 
-    if (node) {
+    if (node)
       return {
         ratings: node.data.map((element) => state.ratings.details[element]),
         total: node.total,
         loading: state.ratings.loading,
       };
-    }
     return { ratings: [], total: 0, loading: state.ratings.loading };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchRatings();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
-  const fetchRatings = () => {
+  const fetchRatings = (): void => {
     dispatch(getRatings(filters));
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center w-full h-full">
-        <Loader2 className="w-8 h-8 animate-spin" />
-      </div>
-    );
-  }
-
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="flex flex-col space-y-4">
-      <Helmet title={'Ratings'} />
-      
+      <Helmet title={"Ratings"} />
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-2xl font-semibold text-[#1E1E1E] m-0">
-          Ratings
-        </h3>
-        
-        <Link to="/ratings/create">
-          <Button
-            variant="default"
-          >
-            New Rating
-          </Button>
-        </Link>
+        <div>
+          <h3 className="m-0 inline text-[#1E1E1E]">Search comes here.....</h3>
+        </div>
+        <div>
+          <Link to="/ratings/create">
+            <Button className="flex items-center gap-2">
+              <PlusCircle className="h-4 w-4" />
+              New Rating
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <RatingList
+        actions={actions}
         data={{ ratings, total, loading }}
         filters={filters}
         setFilters={setFilters}
