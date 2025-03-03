@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
 import getUserPermission from '../../utils/getUserPermission';
+import { maker } from '../../utils/sluger';
 function Selector({
   invalidOptions = [],
   setLoading = true,
@@ -145,6 +146,7 @@ function Selector({
               dispatch(
                 selectorType['create' + createEntity]({
                   name: query.q?.trim() || '',
+                  slug: maker(query.q?.trim() || ''),
                 }),
               ).then(() => {
                 setQuery({ page: 1 });
