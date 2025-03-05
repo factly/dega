@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { RootState } from "@/types";
 import { setCollapse } from "@/actions/sidebar";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 interface MenuItem {
   title: string;
@@ -80,13 +81,13 @@ const menuItems: MenuItem[] = [
   {
     title: "Settings",
     icon: Settings,
-    path: "/settings",
+    path: "/settings/website/general",
     type: "link",
   },
 ];
 
 export function Sidebar() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isCollapsed = useSelector(
     (state: RootState) => state.sidebar.collapsed
   );

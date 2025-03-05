@@ -92,7 +92,7 @@ function Ratings({
       <Helmet title={"Ratings"} />
       <div className="flex justify-between items-center mb-4">
         <div>
-          <h3 className="m-0 inline text-[#1E1E1E]">Search comes here.....</h3>
+          <h3 className="m-0 inline text-[#1E1E1E]">Ratings</h3>
         </div>
         <div>
           <Link to="/ratings/create">

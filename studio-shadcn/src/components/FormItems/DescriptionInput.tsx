@@ -1,190 +1,203 @@
-// import React from 'react';
-// import { FormField, FormItem, FormLabel } from '@/components/ui/form';
-// import { Textarea } from '@/components/ui/textarea';
-// import { Button } from '@/components/ui/button';
-// import { Card, CardContent } from '@/components/ui/card';
-// import axios from 'axios';
-// import { MEDIA_API } from '../../constants/media';
-// import { useSelector } from 'react-redux';
-// import { ImagePlus } from 'lucide-react';
-// import { RootState } from '../../types/index';
+import React from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { FormItem, FormLabel } from "@/components/ui/form";
+import { ScooterCore as Editor } from "@factly/scooter-core";
+import { FactCheck } from "@factly/scooter-claim";
+import { Image } from "@factly/scooter-image";
+import { Embed } from "@factly/scooter-embed";
+import { ScooterTable } from "@factly/scooter-table";
+import { CodeBlock } from "@factly/scooter-code-block";
+import { RATINGS_API } from "../../constants/ratings";
+import { CLAIMANTS_API } from "../../constants/claimants";
+import { CLAIMS_API } from "../../constants/claims";
+import { MEDIA_API } from "../../constants/media";
 
-// interface DescriptionInputProps {
-//   name?: string;
-//   label?: string;
-//   noLabel?: boolean;
-//   onChange?: (value: any) => void;
-//   inputProps?: any;
-//   formItemProps?: any;
-//   initialValue?: string;
-//   rows?: number;
-// }
+interface DescriptionInputProps {
+  name?: string;
+  label?: string;
+  noLabel?: boolean;
+  onChange?: (value: any) => void;
+  inputProps?: Record<string, any>;
+  formItemProps?: Record<string, any>;
+  initialValue?: any;
+  rows?: number;
+}
 
-// interface UploadConfig {
-//   restrictions: {
-//     maxFileSize: number;
-//     allowedFileTypes: string[];
-//   };
-//   onBeforeUpload: (files: any) => any;
-// }
+interface RootState {
+  spaces: {
+    selected: number;
+    details: Record<number, { slug: string }>;
+  };
+}
 
-// interface UploadResult {
-//   successful: {
-//     size: number;
-//     fileName: string;
-//     response: {
-//       body: {
-//         key: string;
-//       };
-//     };
-//     uploadURL: string;
-//     meta: {
-//       type: string;
-//       caption?: string;
-//       width?: number;
-//       height?: number;
-//     };
-//   }[];
-// }
+const DescriptionInput: React.FC<DescriptionInputProps> = ({
+  name = "description",
+  label = "Description",
+  noLabel = false,
+  onChange = () => {},
+  inputProps = {},
+  formItemProps = {},
+  initialValue,
+  rows,
+}) => {
+  const space_slug = useSelector((state: RootState) => {
+    return state.spaces.details[state.spaces.selected]?.slug;
+  });
 
-// const DescriptionInput: React.FC<DescriptionInputProps> = ({
-//   name = 'description',
-//   label = 'Description',
-//   noLabel = false,
-//   onChange = () => {},
-//   inputProps,
-//   formItemProps,
-//   initialValue,
-//   rows,
-// }) => {
-//   const space_slug = useSelector((state: RootState) => {
-//     return state.spaces.details[state.spaces.selected]?.slug;
-//   });
+  const mergedInputProps = { ...inputProps, onChange };
+  const mergedFormItemProps = noLabel
+    ? formItemProps
+    : { ...formItemProps, label };
 
-//   const mergedInputProps = { ...inputProps, onChange };
-//   const mergedFormItemProps = noLabel ? formItemProps : { ...formItemProps, label };
+  return (
+    <FormItem name={name} {...mergedFormItemProps}>
+      {!noLabel && <FormLabel>{label}</FormLabel>}
+      <Editor
+        extensions={[FactCheck, Image, Embed, ScooterTable, CodeBlock]}
+        menuType="bubble"
+        heightStrategy="flexible"
+        rows={rows ? rows : 10}
+        {...mergedInputProps}
+        initialValue={initialValue}
+        uploadEndpoint={import.meta.env.VITE_COMPANION_URL}
+        iframelyEndpoint={import.meta.env.VITE_IFRAMELY_URL}
+        meta={{
+          claims: {
+            1: { id: 1, claim: "Claim 1", fact: "Fact 1" },
+            2: { id: 2, claim: "Claim 2", fact: "Fact 2" },
+            3: { id: 3, claim: "Claim 3", fact: "Fact 3" },
+            4: { id: 4, claim: "Claim 4", fact: "Fact 4" },
+          },
+        }}
+        claimConfig={{
+          ratingsFetcher: (page = 1) => {
+            return axios
+              .get(RATINGS_API, {
+                params: { page: page, limit: 10 },
+              })
+              .then((res) => {
+                return res.data;
+              });
+          },
+          claimantsFetcher: (page = 1) => {
+            return axios
+              .get(CLAIMANTS_API, {
+                params: { page: page, limit: 10 },
+              })
+              .then((res) => {
+                return res.data;
+              });
+          },
+          claimsFetcher: (
+            searchTerm: string,
+            page = 1,
+            limit = 10,
+            sort = "desc"
+          ) => {
+            const params = new URLSearchParams();
+            params.append("q", searchTerm);
+            params.append("page", page.toString());
+            params.append("limit", limit.toString());
+            params.append("sort", sort);
+            return axios.get(CLAIMS_API, { params: params }).then((res) => {
+              return res.data;
+            });
+          },
+          addClaim: (values: Record<string, any>) => {
+            function convertIdsToNumbers(
+              obj: Record<string, any>
+            ): Record<string, any> {
+              for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                  if (!isNaN(Number(obj[key]))) {
+                    obj[key] = Number(obj[key]);
+                  }
+                }
+              }
+              return obj;
+            }
+            return axios
+              .post(CLAIMS_API, convertIdsToNumbers(values))
+              .then((res) => {
+                return res.data;
+              });
+          },
+        }}
+        imagesFetcher={(currentPage: number) =>
+          axios
+            .get(MEDIA_API, {
+              params: { page: currentPage, limit: 12 },
+            })
+            .then((res) => res.data)
+        }
+        onFileAdded={(file: any) => {
+          const data = file.data;
+          const url = data.thumbnail
+            ? data.thumbnail
+            : URL.createObjectURL(data);
+          const image = document.createElement("img");
+          image.src = url;
+          image.onload = () => {
+            URL.revokeObjectURL(url);
+          };
+          image.onerror = () => {
+            URL.revokeObjectURL(url);
+          };
+        }}
+        onUploadComplete={(result: any) => {
+          const successful = result.successful[0];
+          const { meta } = successful;
+          const upload: Record<string, any> = {};
+          upload["alt_text"] = meta.caption;
+          upload["caption"] = meta.caption;
+          upload["description"] = meta.caption;
+          upload["dimensions"] = `${meta.width}x${meta.height}`;
+          upload["file_size"] = successful.size;
+          upload["name"] = successful.fileName;
+          upload["slug"] = successful.response.body.key;
+          upload["title"] = meta.caption ? meta.caption : " ";
+          upload["type"] = successful.meta.type;
+          upload["url"] = {};
+          upload["url"]["raw"] = successful.uploadURL;
 
-//   const uploadConfig: UploadConfig = {
-//     restrictions: {
-//       maxFileSize: 5242880, // 5MB
-//       allowedFileTypes: ['.jpg', '.jpeg', '.png', '.gif'],
-//     },
-//     onBeforeUpload: (files) => {
-//       const updatedFiles: Record<string, any> = {};
+          axios.post(MEDIA_API, [upload]).catch((error) => {
+            console.error(error);
+          });
+        }}
+        uploadConfig={{
+          restrictions: {
+            maxFileSize: 5242880,
+            allowedFileTypes: [".jpg", ".jpeg", ".png", ".gif"],
+          },
+          onBeforeUpload: (files: Record<string, any>) => {
+            const updatedFiles: Record<string, any> = {};
 
-//       Object.keys(files).forEach((fileID) => {
-//         updatedFiles[fileID] = {
-//           ...files[fileID],
-//           fileName: files[fileID].meta.name,
-//           meta: {
-//             ...files[fileID].meta,
-//             name:
-//               space_slug +
-//               '/' +
-//               new Date().getFullYear() +
-//               '/' +
-//               new Date().getMonth() +
-//               '/' +
-//               Date.now().toString() +
-//               '_' +
-//               files[fileID].meta.name,
-//           },
-//         };
-//       });
-//       return updatedFiles;
-//     },
-//   };
+            Object.keys(files).forEach((fileID) => {
+              updatedFiles[fileID] = {
+                ...files[fileID],
+                fileName: files[fileID].meta.name,
+                meta: {
+                  ...files[fileID].meta,
+                  name:
+                    space_slug +
+                    "/" +
+                    new Date().getFullYear() +
+                    "/" +
+                    new Date().getMonth() +
+                    "/" +
+                    Date.now().toString() +
+                    "_" +
+                    files[fileID].meta.name,
+                },
+              };
+            });
+            return updatedFiles;
+          },
+        }}
+      />
+    </FormItem>
+  );
+};
 
-//   const handleFileUpload = async (file: File) => {
-//     if (!uploadConfig.restrictions.allowedFileTypes.some(type => 
-//       file.name.toLowerCase().endsWith(type))) {
-//       console.error('Invalid file type');
-//       return;
-//     }
-
-//     if (file.size > uploadConfig.restrictions.maxFileSize) {
-//       console.error('File too large');
-//       return;
-//     }
-
-//     const formData = new FormData();
-//     formData.append('file', file);
-
-//     try {
-//       const response = await axios.post(MEDIA_API, formData, {
-//         headers: {
-//           'Content-Type': 'multipart/form-data',
-//         },
-//       });
-
-//       const upload = {
-//         alt_text: file.name,
-//         caption: file.name,
-//         description: file.name,
-//         file_size: file.size,
-//         name: file.name,
-//         slug: response.data.key,
-//         title: file.name,
-//         type: file.type,
-//         url: {
-//           raw: response.data.url,
-//         },
-//       };
-
-//       await axios.post(MEDIA_API, [upload]);
-//     } catch (error) {
-//       console.error('Upload error:', error);
-//     }
-//   };
-
-//   return (
-//     <FormField
-//       name={name}
-//       render={({ field }) => (
-//         <FormItem {...mergedFormItemProps}>
-//           {!noLabel && <FormLabel>{label}</FormLabel>}
-//           <Card className="p-0">
-//             <CardContent className="space-y-4 p-4">
-//               <Textarea
-//                 {...mergedInputProps}
-//                 {...field}
-//                 rows={rows || 10}
-//                 value={field.value || initialValue || ''}
-//                 className="min-h-[100px] flex-1"
-//                 placeholder="Enter your description here..."
-//               />
-//               <div className="flex items-center gap-2">
-//                 <Button
-//                   type="button"
-//                   variant="outline"
-//                   size="sm"
-//                   onClick={() => {
-//                     const input = document.createElement('input');
-//                     input.type = 'file';
-//                     input.accept = uploadConfig.restrictions.allowedFileTypes.join(',');
-//                     input.onchange = (e) => {
-//                       const file = (e.target as HTMLInputElement).files?.[0];
-//                       if (file) {
-//                         handleFileUpload(file);
-//                       }
-//                     };
-//                     input.click();
-//                   }}
-//                 >
-//                   <ImagePlus className="mr-2 h-4 w-4" />
-//                   Upload Image
-//                 </Button>
-//                 <p className="text-sm text-muted-foreground">
-//                   Max file size: {uploadConfig.restrictions.maxFileSize / 1024 / 1024}MB
-//                 </p>
-//               </div>
-//             </CardContent>
-//           </Card>
-//         </FormItem>
-//       )}
-//     />
-//   );
-// };
-
-
-// export default DescriptionInput;
+export default DescriptionInput;

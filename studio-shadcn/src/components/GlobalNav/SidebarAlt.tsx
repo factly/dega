@@ -1,11 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../utils/zitadel/logout";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   ChevronLeft,
-  ArrowRightToLine,
   LogOut,
   Users,
   Key,
@@ -17,13 +15,10 @@ import {
   ScrollText,
   Lock,
   Unplug,
-  RefreshCcw,
   Tags,
   Settings,
   LetterText,
 } from "lucide-react";
-import { RootState } from "@/types";
-import { setCollapse } from "@/actions/sidebar";
 
 interface MenuItem {
   title: string;
@@ -38,19 +33,12 @@ interface MenuItem {
 }
 
 export function SidebarAlt() {
-  const dispatch = useDispatch();
-  const isCollapsed = useSelector(
-    (state: RootState) => state.sidebar.collapsed
-  );
   const location = useLocation();
-
-  const toggleCollapse = (value: boolean) => {
-    dispatch(setCollapse(value));
-  };
+  const navigate = useNavigate();
 
   const handleBack = () => {
     // Navigate to main dashboard
-    window.history.back();
+    navigate("/");
   };
 
   const handleLogout = async () => {
@@ -67,25 +55,25 @@ export function SidebarAlt() {
     {
       title: "Branding",
       icon: Tags,
-      path: "/settings/branding",
+      path: "/settings/website/branding",
       type: "link",
     },
     {
       title: "Navigation",
       icon: SquareMenu,
-      path: "/settings/navigation",
+      path: "/settings/website/menus",
       type: "link",
     },
     {
       title: "Analytics",
       icon: ChartPie,
-      path: "/settings/analytics",
+      path: "/settings/website/analytics",
       type: "link",
     },
     {
       title: "Code Injection",
       icon: SquareDashedBottomCode,
-      path: "/settings/code-injection",
+      path: "/settings/website/code-injection",
       type: "link",
     },
     {
@@ -93,7 +81,11 @@ export function SidebarAlt() {
       icon: Users,
       children: [
         { title: "Members", path: "/settings/members", icon: Users },
-        { title: "Policies", path: "/settings/policies", icon: ScrollText },
+        {
+          title: "Policies",
+          path: "/settings/members/policies",
+          icon: ScrollText,
+        },
       ],
     },
 
@@ -112,14 +104,17 @@ export function SidebarAlt() {
       title: "Advanced",
       icon: Settings,
       children: [
-        { title: "Tokens", path: "/settings/tokens", icon: Unplug },
-        { title: "Webhooks", path: "/settings/webhooks", icon: Webhook },
+        { title: "Tokens", path: "/settings/advanced/tokens", icon: Unplug },
         {
-          title: "Re-indexing Meili",
-          path: "/settings/reindexing",
-          icon: RefreshCcw,
+          title: "Webhooks",
+          path: "/settings/advanced/webhooks",
+          icon: Webhook,
         },
-        { title: "Format", path: "/settings/format", icon: LetterText },
+        {
+          title: "Formats",
+          path: "/settings/advanced/formats",
+          icon: LetterText,
+        },
       ],
     },
   ];
@@ -127,40 +122,26 @@ export function SidebarAlt() {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-40 h-screen bg-white transition-all duration-300 p-6",
-        isCollapsed ? "w-[89px]" : "w-[265px]",
+        "fixed left-0 top-0 z-40 h-screen bg-white p-6 w-[265px]",
         "border-r border-gray-200"
       )}
     >
       {/* Back button */}
       <div className="mb-4">
-        {!isCollapsed ? (
-          <Button
-            variant="outline"
-            onClick={handleBack}
-            size="sm"
-            className="flex items-center gap-2 py-2 pr-4"
-          >
-            <ChevronLeft className="h-4 w-4" />
-            <span className="text-base font-normal">Back</span>
-          </Button>
-        ) : (
-          <Button
-            variant="outline"
-            onClick={handleBack}
-            size="icon"
-            className="p-2"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-        )}
+        <Button
+          variant="outline"
+          onClick={handleBack}
+          size="sm"
+          className="flex items-center gap-2 py-2 pr-4"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          <span className="text-base font-normal">Back</span>
+        </Button>
       </div>
 
       {/* Settings Navigation */}
       <div className="flex flex-col gap-1 h-[calc(100vh-12rem)] overflow-y-auto">
-        <div className="font-medium text-gray-500 mb-2 ml-2">
-          {!isCollapsed && "Website"}
-        </div>
+        <div className="font-medium text-gray-500 mb-2 ml-2">Website</div>
 
         {/* Direct Links */}
         {settingsMenuItems.map((section) => (
@@ -171,34 +152,28 @@ export function SidebarAlt() {
                   size="icon"
                   variant="ghost"
                   className={cn(
-                    "w-full flex items-center px-[12.5px] py-2 rounded-md",
-                    isCollapsed && "justify-center",
-                    !isCollapsed && "justify-start",
+                    "w-full flex items-center px-[12.5px] py-2 rounded-md justify-start",
                     location.pathname === section.path &&
                       "bg-[#DCEFEB] font-medium"
                   )}
                 >
                   <div className="flex items-center gap-2">
                     <section.icon className="h-4 w-4" />
-                    {!isCollapsed && (
-                      <span className="text-base font-normal">
-                        {section.title}
-                      </span>
-                    )}
+                    <span className="text-base font-normal">
+                      {section.title}
+                    </span>
                   </div>
                 </Button>
               </Link>
             ) : (
               <div className="mt-3">
                 {/* Section Header */}
-                {!isCollapsed && (
-                  <div className="px-[12.5px] py-2 text-sm font-medium text-gray-600">
-                    <span>{section.title}</span>
-                  </div>
-                )}
+                <div className="px-[12.5px] py-2 text-sm font-medium text-gray-600">
+                  <span>{section.title}</span>
+                </div>
 
                 {/* Section Children */}
-                <div className={cn("space-y-1", !isCollapsed && "ml-4")}>
+                <div className="space-y-1 ml-4">
                   {section.children?.map((item) => (
                     <Link
                       key={item.path}
@@ -207,21 +182,13 @@ export function SidebarAlt() {
                         "flex items-center px-2 py-1.5 text-base rounded-md",
                         "hover:bg-[#DCEFEB] transition-colors",
                         location.pathname === item.path &&
-                          "bg-[#DCEFEB] font-medium",
-                        isCollapsed && "justify-center"
+                          "bg-[#DCEFEB] font-medium"
                       )}
                     >
-                      {!isCollapsed ? (
-                        <div className="flex items-center gap-2">
-                          <item.icon className="h-4 w-4" />
-                          <span>{item.title}</span>
-                        </div>
-                      ) : (
-                        <>
-                          <item.icon className="h-4 w-4" />
-                          <span className="sr-only">{item.title}</span>
-                        </>
-                      )}
+                      <div className="flex items-center gap-2">
+                        <item.icon className="h-4 w-4" />
+                        <span>{item.title}</span>
+                      </div>
                     </Link>
                   ))}
                 </div>
@@ -231,46 +198,20 @@ export function SidebarAlt() {
         ))}
       </div>
 
-      {/* Footer with Logout and Collapse/Expand button */}
+      {/* Footer */}
       <div className="absolute bottom-0 left-0 right-0">
         <div className="p-6">
           <div className="flex flex-col gap-2">
-            {isCollapsed ? (
+            <div className="flex items-center justify-between w-full">
               <Button
                 variant="outline"
-                size="icon"
-                onClick={() => toggleCollapse(false)}
+                className="flex items-center justify-start text-red-600 px-2"
+                onClick={handleLogout}
               >
-                <ArrowRightToLine
-                  className="h-4 w-4"
-                  stroke="#4E6497"
-                  strokeWidth="1.25"
-                />
+                <LogOut className="h-4 w-4 mr-1" />
+                <span>Logout</span>
               </Button>
-            ) : (
-              <div className="flex items-center justify-between w-full">
-                <Button
-                  variant="outline"
-                  className="flex items-center justify-start text-red-600 px-2"
-                  onClick={handleLogout}
-                >
-                  <LogOut className="h-4 w-4 mr-1" />
-                  <span>Logout</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => toggleCollapse(true)}
-                  className="p-2 rounded-md"
-                >
-                  <ArrowRightToLine
-                    className="h-4 w-4 rotate-180"
-                    stroke="#4E6497"
-                    strokeWidth="1.5"
-                  />
-                </Button>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

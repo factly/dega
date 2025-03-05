@@ -1,18 +1,14 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-} from '@/components/ui/dialog';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import MediaUploader from './UploadMedium.tsx';
-import MediaList from './MediaList.tsx';
-import { getMedium } from '../../actions/media';
-import ImagePlaceholder from '../ErrorsAndImage/PlaceholderImage.tsx';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import MediaUploader from "./UploadMedium";
+import MediaList from "./MediaList";
+import { getMedium } from "../../actions/media";
+import ImagePlaceholder from "../ErrorsAndImage/PlaceholderImage";
 
 interface Medium {
   id: string;
@@ -20,13 +16,13 @@ interface Medium {
     proxy?: string;
     raw: string;
   };
-  alt_text: string;
+  alt_text?: string;
 }
 
 interface MediaSelectorProps {
-  value?: string | null;
+  value?: number | null;
   onChange: (value: string | null) => void;
-  maxWidth?: number;
+  maxWidth?: string;
   containerStyles?: React.CSSProperties;
   profile?: boolean;
 }
@@ -38,32 +34,36 @@ function MediaSelector({
   containerStyles = {},
   profile = false,
 }: MediaSelectorProps) {
-  const [show, setShow] = React.useState(false);
-  const [selected, setSelected] = React.useState<Medium | null>(null);
-  const [tab, setTab] = React.useState<'upload' | 'library'>('upload');
+  const [show, setShow] = useState<boolean>(false);
+  const [selected, setSelected] = useState<Medium | null>(null);
+  const [tab, setTab] = useState<"upload" | "library">("upload");
   const dispatch = useDispatch();
 
   const medium = useSelector((state: any) => {
     return state.media.details[value] || null;
   });
 
-  const setValue = () => {
-    value = null;
+  const setValue = (): void => {
+    // This function is passed to MediaList to help clear selection
+    setSelected(null);
   };
 
-  if (!selected && value && medium) {
-    setSelected(medium);
-  }
-
-  React.useEffect(() => {
-    if (value) {
-      dispatch(getMedium(value, profile));
+  // Set selected medium when it's loaded or value changes
+  useEffect(() => {
+    if (!selected && value && medium) {
       setSelected(medium);
     }
-  }, [value, dispatch, medium, profile]);
+  }, [selected, value, medium]);
 
-  const onUpload = (_values: any, medium: Medium) => {
-    value = medium.id;
+  // Load medium details when value is provided
+  useEffect(() => {
+    if (value) {
+      dispatch(getMedium(value, profile));
+    }
+  }, [value, dispatch, profile]);
+
+  // Handle successful upload in the upload tab
+  const onUpload = (_values: any, medium: Medium): void => {
     setSelected(medium);
   };
 
@@ -74,7 +74,7 @@ function MediaSelector({
           <div className="flex flex-col space-y-4">
             <RadioGroup
               defaultValue={tab}
-              onValueChange={(value) => setTab(value as 'upload' | 'library')}
+              onValueChange={(value) => setTab(value as "upload" | "library")}
               className="flex space-x-1"
             >
               <div className="flex items-center space-x-2">
@@ -87,7 +87,7 @@ function MediaSelector({
               </div>
             </RadioGroup>
 
-            {tab === 'library' ? (
+            {tab === "library" ? (
               <MediaList
                 onSelect={setSelected}
                 selected={selected}
@@ -128,8 +128,12 @@ function MediaSelector({
             >
               {medium ? (
                 <img
-                  src={medium.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
-                  alt={medium.alt_text}
+                  src={
+                    medium.url?.[
+                      import.meta.env.VITE_ENABLE_IMGPROXY ? "proxy" : "raw"
+                    ]
+                  }
+                  alt={medium.alt_text || "Selected media"}
                   className="w-full"
                 />
               ) : (

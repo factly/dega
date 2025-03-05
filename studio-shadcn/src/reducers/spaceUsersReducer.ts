@@ -8,12 +8,20 @@ import deepEqual from "deep-equal";
 // Define interfaces for our data structures
 interface SpaceUser {
   id: string;
+  display_name: string;
+  email: string;
   [key: string]: any;
 }
 
 interface SpaceUsersRequest {
-  query: any;
-  [key: string]: any;
+  query: {
+    page: string | null;
+    limit: string | null;
+    q?: string;
+    [key: string]: any;
+  };
+  data: string[];
+  total: number;
 }
 
 interface SpaceUsersState {
@@ -50,7 +58,7 @@ type SpaceUsersAction =
 const initialState: SpaceUsersState = {
   req: [],
   details: {},
-  loading: true,
+  loading: false, // Start with loading false to prevent immediate loading state
 };
 
 export default function usersReducer(
@@ -66,11 +74,27 @@ export default function usersReducer(
 
     case ADD_SPACE_USERS_REQUEST: {
       const request = action.payload as SpaceUsersRequest;
+
+      // Check if we already have this exact query
+      const existingRequestIndex = state.req.findIndex((req) =>
+        deepEqual(req.query, request.query)
+      );
+
+      if (existingRequestIndex >= 0) {
+        // We already have this request, just update it
+        const updatedRequests = [...state.req];
+        updatedRequests[existingRequestIndex] = request;
+
+        return {
+          ...state,
+          req: updatedRequests,
+        };
+      }
+
+      // Otherwise add it as a new request
       return {
         ...state,
-        req: state.req
-          .filter((value) => !deepEqual(value.query, request.query))
-          .concat(request),
+        req: [...state.req, request],
       };
     }
 
@@ -80,15 +104,15 @@ export default function usersReducer(
         return state;
       }
 
+      const updatedDetails: Record<string, SpaceUser> = { ...state.details };
+
+      users.forEach((user) => {
+        updatedDetails[user.id] = user;
+      });
+
       return {
         ...state,
-        details: {
-          ...state.details,
-          ...users.reduce<Record<string, SpaceUser>>((obj, item) => {
-            obj[item.id] = item;
-            return obj;
-          }, {}),
-        },
+        details: updatedDetails,
       };
     }
 

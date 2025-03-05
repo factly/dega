@@ -101,21 +101,6 @@ export interface AuthRequestDetails {
   // Add other fields as needed
 }
 
-// Notification types
-export type NotificationType = "error" | "success";
-
-export interface NotificationPayload {
-  type: NotificationType;
-  title: string;
-  message: string;
-  time: number;
-}
-
-export interface NotificationAction {
-  type: "ADD_NOTIFICATION";
-  payload: NotificationPayload;
-}
-
 // Ratings types
 export interface Description {
   json: any;

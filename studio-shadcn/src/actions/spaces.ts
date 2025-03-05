@@ -179,8 +179,7 @@ export const updateSpace = (
   return async (dispatch) => {
     dispatch(loadingSpaces(true));
     try {
-      // Fix: Use API_GET_SPACES/id instead of just API_SPACES
-      const response = await axios.put(`${API_GET_SPACES}/${data.id}`, data);
+      const response = await axios.put(API_GET_SPACES, data);
       dispatch(updateSpaceSuccess(response.data));
       dispatch(addSuccessNotification("Space updated"));
       return response.data;

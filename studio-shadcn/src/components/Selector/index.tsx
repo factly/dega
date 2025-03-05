@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Check, ChevronsUpDown } from "lucide-react";
 import deepEqual from "deep-equal";
-import getUserPermission from "../../utils/getUserPermission";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -17,8 +16,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { RootState } from "../../store/index";
 import { ScrollArea } from "@/components/ui/scroll-area";
+
+// Import the space users actions directly
+import * as spaceUsersActions from "../../actions/spaceUsers";
 
 // Define types for the Selector component props
 interface SelectorProps {
@@ -26,8 +27,8 @@ interface SelectorProps {
   setLoading?: boolean;
   mode?: "multiple" | "tags" | undefined;
   createEntity: string;
-  value: string | string[];
-  onChange: (values: string | string[]) => void;
+  value: string[] | string | undefined;
+  onChange: (values: string[] | string) => void;
   action: string;
   display?: string;
   placeholder?: string;
@@ -47,6 +48,22 @@ interface QueryState {
   q?: string;
 }
 
+// Define type for entity state
+interface EntityState {
+  details: { [key: string]: EntityDetail };
+  req: Array<{
+    query: any;
+    data: string[];
+    total: number;
+  }>;
+  loading: boolean;
+}
+
+// Define RootState interface
+interface RootState {
+  [key: string]: EntityState;
+}
+
 function Selector({
   invalidOptions = [],
   setLoading = true,
@@ -59,16 +76,24 @@ function Selector({
   placeholder,
   style,
 }: SelectorProps) {
+  // Convert action to lowercase for entity name
   const entity = action.toLowerCase();
-  const spaces = useSelector((state: RootState) => state.spaces);
-  const actions = getUserPermission({
-    resource: createEntity,
-    action: "create",
-    spaces,
-  });
 
-  // Use dynamic import with TypeScript
-  const selectorType = require(`../../actions/${entity}`);
+  // Map entity names to their respective action modules
+  const getActionModule = (entityName: string) => {
+    switch (entityName) {
+      case "users":
+        return spaceUsersActions;
+      // Add other entities as needed
+      default:
+        console.error(`No action module found for entity: ${entityName}`);
+        return null;
+    }
+  };
+
+  // Get the action module for this entity
+  const selectorType = getActionModule(entity);
+
   const [entityCreatedFlag, setEntityCreatedFlag] = useState<boolean>(false);
   const [query, setQuery] = useState<QueryState>({
     page: 1,
@@ -95,29 +120,25 @@ function Selector({
   const onSearch = (value: string) => {
     if (value) {
       setSearchValue(value);
-      setQuery({ q: value, page: 1, limit: 5 });
+      setQuery({ ...query, q: value, page: 1 });
     } else {
       setSearchValue("");
-      setQuery({ page: query.page, limit: query.limit });
+      setQuery({ ...query, page: query.page, q: undefined });
     }
   };
-
-  interface EntityState {
-    details: { [key: string]: EntityDetail };
-    req: Array<{
-      query: QueryState;
-      data: string[];
-      total: number;
-    }>;
-    loading: boolean;
-  }
 
   const { details, total, loading, ids } = useSelector((state: RootState) => {
     let details: EntityDetail[] = [];
     let ids: string[] = [];
     let total = 0;
 
-    const entityState = state[entity] as EntityState;
+    // For 'users' we need to check spaceUsers state
+    const stateKey = entity === "users" ? "spaceUsers" : entity;
+    const entityState = state[stateKey];
+
+    if (!entityState || !entityState.req) {
+      return { details, total, loading: false, ids };
+    }
 
     for (let i = 1; i <= query.page; i++) {
       let j = entityState.req.findIndex((item) =>
@@ -131,7 +152,7 @@ function Selector({
     }
 
     details = normalizedValue
-      .filter((id) => entityState.details[id])
+      .filter((id) => entityState.details && entityState.details[id])
       .map((id) => entityState.details[id]);
 
     details = details.concat(
@@ -148,22 +169,98 @@ function Selector({
     };
   });
 
-  if (entityCreatedFlag && !loading && entity && ids.length > 0) {
-    normalizedValue.push(ids[0]);
-    setEntityCreatedFlag(false);
-  }
+  // Fix the entityCreatedFlag check to ensure ids is not empty
+  useEffect(() => {
+    if (entityCreatedFlag && !loading && entity && ids.length > 0) {
+      const newValue = [...normalizedValue, ids[0]];
+      if (!mode) {
+        onChange(ids[0]);
+      } else {
+        onChange(newValue);
+      }
+      setEntityCreatedFlag(false);
+    }
+  }, [
+    entityCreatedFlag,
+    loading,
+    ids,
+    entity,
+    normalizedValue,
+    mode,
+    onChange,
+  ]);
+
+  // Get the entities state
+  const entityState = useSelector((state: RootState) => {
+    const stateKey = entity === "users" ? "spaceUsers" : entity;
+    return state[stateKey];
+  });
 
   useEffect(() => {
-    fetchEntities();
+    // Check if we need to fetch new entities
+    let shouldFetch = true;
+
+    if (entityState && entityState.req) {
+      // Check if this query already exists in our requests
+      const existingRequest = entityState.req.some((req) =>
+        deepEqual(req.query, {
+          page: query.page,
+          limit: query.limit,
+          q: query.q,
+        })
+      );
+
+      shouldFetch = !existingRequest;
+    }
+
+    if (shouldFetch) {
+      fetchEntities();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+  }, [query, entityState]);
+
+  // Track if this query has already been fetched
+  const [fetchedQueries, setFetchedQueries] = useState<Set<string>>(new Set());
 
   const fetchEntities = () => {
-    if (!setLoading) {
-      dispatch(selectorType["get" + action](query, setLoading));
+    if (!selectorType) return;
+
+    // Create a query string to track what we've fetched
+    const queryString = JSON.stringify(query);
+
+    // Only fetch if we haven't already fetched this exact query
+    if (fetchedQueries.has(queryString)) {
       return;
     }
-    dispatch(selectorType["get" + action](query));
+
+    // Mark this query as fetched
+    setFetchedQueries((prev) => {
+      const updated = new Set(prev);
+      updated.add(queryString);
+      return updated;
+    });
+
+    // Map action names to the correct function names
+    let actionFn;
+    if (entity === "users") {
+      // Use getUsers for 'users' entity
+      actionFn = selectorType.getUsers;
+    } else {
+      const actionName = "get" + action;
+      actionFn = selectorType[actionName];
+    }
+
+    // Safety check if the action creator doesn't exist
+    if (!actionFn) {
+      console.error(`Action creator for ${entity} not found`);
+      return;
+    }
+
+    if (!setLoading) {
+      dispatch(actionFn(query, setLoading));
+      return;
+    }
+    dispatch(actionFn(query));
   };
 
   // Helper function to safely get display value
@@ -194,18 +291,38 @@ function Selector({
 
   // Handle create entity
   const handleCreateEntity = () => {
+    if (!selectorType) return;
+
+    // Map create action names
+    let createFn;
+    if (entity === "users") {
+      createFn = selectorType.createUser;
+    } else {
+      const createAction = "create" + createEntity;
+      createFn = selectorType[createAction];
+    }
+
+    if (!createFn) {
+      console.error(`Create action for ${entity} not found`);
+      return;
+    }
+
+    // Reset fetchedQueries to force a refetch after creating
+    setFetchedQueries(new Set());
+
     dispatch(
-      selectorType["create" + createEntity]({
+      createFn({
         name: query.q?.trim() || "",
       })
     ).then(() => {
+      // Set a new query to trigger a refetch
       setQuery({ page: 1, limit: 5 });
       setEntityCreatedFlag(true);
       setSearchValue("");
     });
   };
 
-  // Filtering the details to remove invalid options
+  // Filtering the details to remove invalid options and handle undefined items
   const filteredDetails = details.filter(
     (item) => item && !invalidOptions.includes(item.id)
   );
@@ -240,20 +357,14 @@ function Selector({
             <CommandList>
               <ScrollArea className="h-64" onScrollCapture={handleScroll}>
                 <CommandEmpty>
-                  {actions.includes("admin") || actions.includes("create") ? (
-                    <Button
-                      variant="outline"
-                      className="w-full mt-2"
-                      onClick={handleCreateEntity}
-                      disabled={!query.q?.trim()}
-                    >
-                      Create a {createEntity} '{query.q}'
-                    </Button>
-                  ) : (
-                    <p className="p-2 text-center text-sm text-muted-foreground">
-                      No results found
-                    </p>
-                  )}
+                  <Button
+                    variant="outline"
+                    className="w-full mt-2"
+                    onClick={handleCreateEntity}
+                    disabled={!query.q?.trim()}
+                  >
+                    Create a {createEntity} '{query.q}'
+                  </Button>
                 </CommandEmpty>
                 <CommandGroup>
                   {filteredDetails.map((item) => (
@@ -311,20 +422,14 @@ function Selector({
             <CommandList>
               <ScrollArea className="h-64" onScrollCapture={handleScroll}>
                 <CommandEmpty>
-                  {actions.includes("admin") || actions.includes("create") ? (
-                    <Button
-                      variant="outline"
-                      className="w-full mt-2"
-                      onClick={handleCreateEntity}
-                      disabled={!query.q?.trim()}
-                    >
-                      Create a {createEntity} '{query.q}'
-                    </Button>
-                  ) : (
-                    <p className="p-2 text-center text-sm text-muted-foreground">
-                      No results found
-                    </p>
-                  )}
+                  <Button
+                    variant="outline"
+                    className="w-full mt-2"
+                    onClick={handleCreateEntity}
+                    disabled={!query.q?.trim()}
+                  >
+                    Create a {createEntity} '{query.q}'
+                  </Button>
                 </CommandEmpty>
                 <CommandGroup>
                   {filteredDetails.map((item) => (

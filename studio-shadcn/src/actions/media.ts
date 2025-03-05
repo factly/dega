@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Dispatch } from "redux";
 import {
   ADD_MEDIA,
   ADD_MEDIA_REQUEST,
@@ -11,29 +10,62 @@ import {
 } from "../constants/media";
 import { addErrorNotification, addSuccessNotification } from "./notifications";
 import getError from "../utils/getError";
-import {
-  Medium,
-  MediaResponse,
-  ExtendedQueryParams,
-  MediaActionTypes,
-  SetMediaLoadingAction,
-  AddMediaAction,
-  AddMediaRequestAction,
-  ResetMediaAction,
-} from "./types";
+import { Dispatch } from "redux";
+import { AppThunk } from "../store/types";
 
-export const getMedia = (query: ExtendedQueryParams, profile?: boolean) => {
-  return (dispatch: Dispatch<MediaActionTypes>) => {
+// Types
+export interface Medium {
+  id: string | number;
+  name?: string;
+  alt_text?: string;
+  caption?: string;
+  description?: string;
+  url?: {
+    proxy?: string;
+    raw: string;
+  };
+  [key: string]: any;
+}
+
+interface MediaRequestPayload {
+  data: (string | number)[];
+  query: Record<string, any>;
+  total: number;
+}
+
+interface MediaAction {
+  type: string;
+  payload?: any;
+}
+
+// Helper function to get space ID
+const getSpaceId = (): string => {
+  return localStorage.getItem("space") || "";
+};
+
+// Action to fetch media
+export const getMedia = (
+  query: Record<string, any>,
+  profile?: boolean
+): AppThunk => {
+  return (dispatch: Dispatch<MediaAction>) => {
     dispatch(loadingMedia());
+
+    // Get the space ID
+    const spaceId = getSpaceId();
+
     return axios
-      .get<MediaResponse>(MEDIA_API, {
+      .get(MEDIA_API, {
         params: query,
+        headers: {
+          "X-Space": spaceId,
+        },
       })
       .then((response) => {
         dispatch(addMedia(response.data.nodes));
         dispatch(
           addMediaRequest({
-            data: response.data.nodes.map((item) => item.id),
+            data: response.data.nodes.map((item: Medium) => item.id),
             query: query,
             total: response.data.total,
           })
@@ -46,11 +78,21 @@ export const getMedia = (query: ExtendedQueryParams, profile?: boolean) => {
   };
 };
 
-export const getMedium = (id: number, profile?: boolean) => {
-  return (dispatch: Dispatch<MediaActionTypes>) => {
+// Action to fetch medium by id
+export const getMedium = (
+  id: string | number,
+  profile?: boolean
+): AppThunk<Promise<void>> => {
+  return (dispatch: Dispatch<MediaAction>) => {
     dispatch(loadingMedia());
+    const spaceId = getSpaceId();
+
     return axios
-      .get<Medium>(`${MEDIA_API}/${id}`)
+      .get(`${MEDIA_API}/${id}`, {
+        headers: {
+          "X-Space": spaceId,
+        },
+      })
       .then((response) => {
         dispatch({ type: GET_MEDIUM, payload: response.data });
       })
@@ -61,33 +103,54 @@ export const getMedium = (id: number, profile?: boolean) => {
   };
 };
 
-export const createMedium = (data: Medium | Medium[], profile?: boolean) => {
-  return (dispatch: Dispatch<MediaActionTypes>) => {
+// Action to create medium
+export const createMedium = (
+  data: Medium | Medium[],
+  profile?: boolean
+): AppThunk<Promise<Medium>> => {
+  return (dispatch: Dispatch<MediaAction>) => {
     dispatch(loadingMedia());
+    const spaceId = getSpaceId();
+
     return axios
-      .post<profile extends true ? Medium : MediaResponse>(
+      .post(
         MEDIA_API,
-        profile ? (data as Medium[])[0] : data
+        profile ? (Array.isArray(data) ? data[0] : data) : data,
+        {
+          headers: {
+            "X-Space": spaceId,
+          },
+        }
       )
       .then((response) => {
         dispatch(resetMedia());
         dispatch(addSuccessNotification("Medium created"));
         return profile
           ? response.data
-          : (response.data as MediaResponse).nodes[0];
+          : Array.isArray(response.data.nodes)
+          ? response.data.nodes[0]
+          : response.data;
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+        throw error; // Re-throw to allow error handling in components
       })
       .finally(() => dispatch(stopMediaLoading()));
   };
 };
 
-export const updateMedium = (data: Medium) => {
-  return (dispatch: Dispatch<MediaActionTypes>) => {
+// Action to update medium
+export const updateMedium = (data: Medium): AppThunk<Promise<void>> => {
+  return (dispatch: Dispatch<MediaAction>) => {
     dispatch(loadingMedia());
+    const spaceId = getSpaceId();
+
     return axios
-      .put<Medium>(`${MEDIA_API}/${data.id}`, data)
+      .put(`${MEDIA_API}/${data.id}`, data, {
+        headers: {
+          "X-Space": spaceId,
+        },
+      })
       .then((response) => {
         dispatch({ type: UPDATE_MEDIUM, payload: response.data });
         dispatch(addSuccessNotification("Medium updated"));
@@ -99,11 +162,18 @@ export const updateMedium = (data: Medium) => {
   };
 };
 
-export const deleteMedium = (id: number) => {
-  return (dispatch: Dispatch<MediaActionTypes>) => {
+// Action to delete medium by id
+export const deleteMedium = (id: string | number): AppThunk<Promise<void>> => {
+  return (dispatch: Dispatch<MediaAction>) => {
     dispatch(loadingMedia());
+    const spaceId = getSpaceId();
+
     return axios
-      .delete(`${MEDIA_API}/${id}`)
+      .delete(`${MEDIA_API}/${id}`, {
+        headers: {
+          "X-Space": spaceId,
+        },
+      })
       .then(() => {
         dispatch(resetMedia());
         dispatch(addSuccessNotification("Medium deleted"));
@@ -115,30 +185,26 @@ export const deleteMedium = (id: number) => {
   };
 };
 
-export const loadingMedia = (): SetMediaLoadingAction => ({
+export const loadingMedia = (): MediaAction => ({
   type: SET_MEDIA_LOADING,
   payload: true,
 });
 
-export const stopMediaLoading = (): SetMediaLoadingAction => ({
+export const stopMediaLoading = (): MediaAction => ({
   type: SET_MEDIA_LOADING,
   payload: false,
 });
 
-export const addMedia = (data: Medium[]): AddMediaAction => ({
+export const addMedia = (data: Medium[]): MediaAction => ({
   type: ADD_MEDIA,
   payload: data,
 });
 
-export const addMediaRequest = (data: {
-  data: number[];
-  query: ExtendedQueryParams;
-  total: number;
-}): AddMediaRequestAction => ({
+export const addMediaRequest = (data: MediaRequestPayload): MediaAction => ({
   type: ADD_MEDIA_REQUEST,
   payload: data,
 });
 
-export const resetMedia = (): ResetMediaAction => ({
+export const resetMedia = (): MediaAction => ({
   type: RESET_MEDIA,
 });

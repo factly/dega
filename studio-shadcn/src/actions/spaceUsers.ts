@@ -11,19 +11,24 @@ import getError from "../utils/getError";
 
 // Define interfaces for the data structures
 interface SpaceUser {
-  id: number | string;
-  name: string;
+  id: string;
+  display_name: string;
+  email: string;
+  name?: string;
   description?: string;
-  [key: string]: any; // For other potential properties
+  [key: string]: any;
 }
 
 interface UsersRequestData {
-  data: (number | string)[];
+  data: string[];
   query: SpaceUserQuery;
   total: number;
 }
 
 interface SpaceUserQuery {
+  page?: number | string | null;
+  limit?: number | string | null;
+  q?: string;
   [key: string]: any;
 }
 
@@ -72,6 +77,13 @@ export const addSpaceUsers = (payload: SpaceUser[]): AddSpaceUsersAction => ({
 
 export const getSpaceUsers = (query: SpaceUserQuery) => {
   return (dispatch: Dispatch<any>) => {
+    // Create a normalized query object for consistent comparison
+    const normalizedQuery = {
+      page: query.page?.toString() || null,
+      limit: query.limit?.toString() || null,
+      q: query.q || undefined,
+    };
+
     dispatch(loadingSpaceUsers(true));
     return axios
       .get<SpaceUsersResponseData>(SPACE_USERS_API, {
@@ -82,13 +94,13 @@ export const getSpaceUsers = (query: SpaceUserQuery) => {
         dispatch(
           addUsersRequest({
             data: res.data.nodes.map((item) => item.id),
-            query: query,
+            query: normalizedQuery,
             total: res.data.total,
           })
         );
       })
       .catch((error: Error | AxiosError) => {
-        dispatch(addErrorNotification(error.message));
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => {
         dispatch(loadingSpaceUsers(false));
@@ -96,7 +108,7 @@ export const getSpaceUsers = (query: SpaceUserQuery) => {
   };
 };
 
-export const updateSpaceUsers = (data: any) => {
+export const updateSpaceUsers = (data: { ids: string[] }) => {
   return (dispatch: Dispatch<any>) => {
     dispatch(loadingSpaceUsers(true));
     return axios
@@ -116,8 +128,8 @@ export const updateSpaceUsers = (data: any) => {
 
 export const addSpaceUser = (
   data: SpaceUserData,
-  setUser: (user: SpaceUser) => void,
-  setShowModal: (show: boolean) => void
+  setUser?: (user: SpaceUser) => void,
+  setShowModal?: (show: boolean) => void
 ) => {
   return (dispatch: Dispatch<any>) => {
     return axios
@@ -126,17 +138,19 @@ export const addSpaceUser = (
         description: data.description,
       })
       .then((res) => {
-        setUser(res.data.user);
-        setShowModal(true);
+        if (setUser) setUser(res.data.user);
+        if (setShowModal) setShowModal(true);
         dispatch(addSuccessNotification("User Added Successfully"));
+        return res.data.user;
       })
       .catch((error: Error | AxiosError) => {
-        dispatch(addErrorNotification(error.message));
+        dispatch(addErrorNotification(getError(error)));
+        throw error;
       });
   };
 };
 
-export const deleteSpaceUser = (id: number | string) => {
+export const deleteSpaceUser = (id: string) => {
   return (dispatch: Dispatch<any>) => {
     return axios
       .delete(`${SPACE_USERS_API}/${id}`)
@@ -144,7 +158,7 @@ export const deleteSpaceUser = (id: number | string) => {
         dispatch(addSuccessNotification("User Deleted Successfully"));
       })
       .catch((error: Error | AxiosError) => {
-        dispatch(addErrorNotification(error.message));
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -162,3 +176,7 @@ export const addUsersRequest = (
   type: ADD_SPACE_USERS_REQUEST,
   payload: data,
 });
+
+// Add these exports for compatibility with the Selector component
+export const getUsers = getSpaceUsers;
+export const createUser = addSpaceUser;
