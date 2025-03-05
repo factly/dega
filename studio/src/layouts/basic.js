@@ -124,10 +124,10 @@ function BasicLayout(props) {
   }, []);
 
   useEffect(() => {
-    if (session.details && !session.loading && Object.keys(session.details).length > 0) {
+    if (session.details && !session.loading && Object.keys(session.details).length > 0 && loading) {
       dispatch(getSpaces());
     }
-  }, [dispatch, selected, session]);
+  }, [dispatch, selected, session, loading]);
 
   useEffect(() => {
     if (type && message && description && selected !== 0) {
@@ -228,9 +228,7 @@ function BasicLayout(props) {
               '/settings',
             ].includes(location.pathname) || <Pageheader location={location} />}
             <Card key={selected.toString()} className="wrap-children-content">
-              {publicPaths.includes(location.pathname) ? (
-                children
-              ) : !session.loading && !loading ? (
+              {publicPaths.includes(location.pathname) || (!session.loading && !loading) ? (
                 children
               ) : (
                 <Loader />

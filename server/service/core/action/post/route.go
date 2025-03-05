@@ -78,7 +78,7 @@ func PublicRouter() chi.Router {
 	r := chi.NewRouter()
 
 	r.Get("/", publicList)
-	r.Get("/post/{post_id}", publicDetails)
+	r.Get("/{post_id}", publicDetails)
 
 	return r
 }

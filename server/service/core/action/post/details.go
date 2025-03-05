@@ -13,6 +13,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 // details - Get post by id
@@ -111,16 +112,24 @@ func publicDetails(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	postIDOrSlug := chi.URLParam(r, "post_id")
+	id, _ := uuid.Parse(postIDOrSlug)
+
 	result := postData{}
 
 	err = config.DB.Model(&model.Post{}).
 		Where("status = ? AND de_post.space_id = ?", "publish", authCtx.SpaceID).
+		Where("de_post.id = ? OR de_post.slug = ?", id, postIDOrSlug).
 		Preload("Categories").
 		Preload("Tags").
 		Preload("Medium").
 		First(&result.Post).Error
 
 	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+			return
+		}
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
