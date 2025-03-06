@@ -17,6 +17,13 @@ import formatsReducer from "./formatsReducer";
 import policiesReducer from "./policiesReducer";
 import webhooklogsReducer from "./webhooklogsReducer";
 import webhooksReducer from "./webhooksReducer";
+import authorsReducer from "./authorsReducer";
+import claimantsReducer from "./claimantsReducer";
+import redirectReducer from "./redirectReducer";
+import organisationsReducer from "./organisationsReducer";
+import eventsReducer from "./eventsReducer";
+import profileReducer from "./profileReducer";
+import sessionReducer from "./sessionReducer";
 
 const appReducer = combineReducers({
   posts,
@@ -35,6 +42,13 @@ const appReducer = combineReducers({
   policies: policiesReducer,
   webhooklogs: webhooklogsReducer,
   webhooks: webhooksReducer,
+  authors: authorsReducer,
+  claimants: claimantsReducer,
+  redirect: redirectReducer,
+  organisations: organisationsReducer,
+  events: eventsReducer,
+  profile: profileReducer,
+  session: sessionReducer,
 });
 
 const rootReducer = (state: RootState | undefined, action: AnyAction) => {

@@ -1,65 +1,52 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import FormatList from "./components/FormatList";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { getFormats } from "../../actions/formats";
 import deepEqual from "deep-equal";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
+// Define types for the component props and state
 interface Format {
   id: string;
-  [key: string]: any;
+  name: string;
+  description: string;
+  // Add other format properties as needed
 }
 
-interface FormatsState {
-  details: Record<string, Format>;
-  loading: boolean;
-  req: Array<{
-    query: FiltersType;
-    data: string[];
-    total: number;
-  }>;
-}
-
-interface RootState {
-  formats: FormatsState;
-}
-
-interface FiltersType {
+interface FiltersState {
   page: number;
   limit: number;
 }
 
-interface PermissionProps {
-  actions: string[];
+interface FormatState {
+  formats: {
+    req: {
+      query: FiltersState;
+      data: string[];
+      total: number;
+    }[];
+    details: Record<string, Format>;
+    loading: boolean;
+  };
 }
 
-interface FormatsProps {
-  permission: PermissionProps;
-}
+function Formats() {
+  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialRenderDone = useRef(false);
 
-function Formats({ permission }: FormatsProps) {
-  const { actions } = permission;
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-
-  const [filters, setFilters] = useState<FiltersType>({
-    page: 1,
-    limit: 20,
+  // Initialize filters from URL or defaults
+  const [filters, setFilters] = useState<FiltersState>({
+    page: parseInt(searchParams.get("page") || "1", 10),
+    limit: parseInt(searchParams.get("limit") || "20", 10),
   });
 
-  query.set("page", filters.page.toString());
-  window.history.replaceState(
-    {},
-    "",
-    `${(window as any).PUBLIC_URL}${location.pathname}?${query}`
-  );
-
-  const { formats, total, loading } = useSelector((state: RootState) => {
+  const { formats, total, loading } = useSelector((state: FormatState) => {
     const node = state.formats.req.find((item) => {
       return deepEqual(item.query, filters);
     });
@@ -73,38 +60,54 @@ function Formats({ permission }: FormatsProps) {
     return { formats: [], total: 0, loading: state.formats.loading };
   });
 
+  // Update URL when filters change, but don't cause a re-render
+  useEffect(() => {
+    if (initialRenderDone.current) {
+      const newSearchParams = new URLSearchParams();
+      newSearchParams.set("page", filters.page.toString());
+      newSearchParams.set("limit", filters.limit.toString());
+      setSearchParams(newSearchParams, { replace: true });
+    } else {
+      initialRenderDone.current = true;
+    }
+  }, [filters, setSearchParams]);
+
+  // Fetch formats when filters change
   useEffect(() => {
     fetchFormats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchFormats = () => {
-    dispatch(getFormats(filters) as any);
+    dispatch(getFormats(filters));
   };
 
-  return loading ? (
-    <Loader />
-  ) : (
+  // Function to handle partial updates to the filters
+  const handleSetFilters = (newFilters: Partial<FiltersState>) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      ...newFilters,
+    }));
+  };
+
+  if (loading && formats.length === 0) {
+    return <Loader />;
+  }
+
+  return (
     <div className="flex flex-col space-y-4">
       <Helmet title={"Formats"} />
       <div className="flex justify-end">
         <Link to="/settings/advanced/formats/create">
-          <Button
-            disabled={
-              !(actions.includes("admin") || actions.includes("create"))
-            }
-            className="flex items-center gap-2"
-          >
-            <Plus size={16} /> New Format
+          <Button variant="default">
+            <Plus className="mr-2 h-4 w-4" /> New Format
           </Button>
         </Link>
       </div>
 
       <FormatList
-        actions={actions}
         data={{ formats, total, loading }}
         filters={filters}
-        setFilters={setFilters}
+        setFilters={handleSetFilters}
         fetchFormats={fetchFormats}
       />
     </div>

@@ -26,12 +26,12 @@ import { MetaForm, SlugInput } from "../../../components/FormItems";
 
 // Define the format data interface
 interface FormatData {
-  id?: number;
+  id?: string;
   name?: string;
   slug?: string;
   is_featured?: boolean;
   description?: string;
-  medium_id?: number;
+  medium_id?: number | string;
   meta_fields?: string | Record<string, unknown>;
 }
 

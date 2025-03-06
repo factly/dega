@@ -1,13 +1,12 @@
 import { Microchip, ListCheck, LayoutDashboard } from "lucide-react";
 import { Dashboard } from "../pages/dashboard";
-import { Analytics } from "../pages/analytics";
+import Analytics from "../pages/analytics";
 import Posts from "../pages/posts";
 import { Pages } from "../pages/pages/index";
 import Categories from "../pages/categories";
 import Tags from "../pages/tags";
 import FactCheck from "../pages/fact-checks";
 import Claims from "../pages/claims";
-import Claimants from "../pages/claimants";
 import Login from "../utils/zitadel/login";
 import RegistrationForm from "../utils/zitadel/registration";
 import VerifyEmail from "../utils/zitadel/VerifyEmail";
@@ -40,6 +39,11 @@ import EditMenu from "../pages/menu/EditMenu";
 import Ratings from "../pages/ratings";
 import CreateRating from "../pages/ratings/CreateRating";
 import EditRating from "../pages/ratings/EditRating";
+
+// //Claimants
+import Claimants from "../pages/claimants";
+import CreateClaimant from "../pages/claimants/CreateClaimant";
+import EditClaimant from "../pages/claimants/EditClaimant";
 
 //Spaces
 import Spaces from "../pages/spaces";
@@ -382,6 +386,36 @@ export const routes = {
       action: "update",
     },
   },
+  claimants: {
+    path: "/claimants",
+    menuKey: "/claimants",
+    Component: Claimants,
+    title: "Claimants",
+    permission: {
+      resource: "claimants",
+      action: "get",
+    },
+  },
+  createClaimant: {
+    path: "/claimants/create",
+    menuKey: "/claimants",
+    Component: CreateClaimant,
+    title: "New Claimant",
+    permission: {
+      resource: "claimants",
+      action: "create",
+    },
+  },
+  editClaimant: {
+    path: "/claimants/:id/edit",
+    menuKey: "/claimants",
+    Component: EditClaimant,
+    title: "Edit",
+    permission: {
+      resource: "claimants",
+      action: "update",
+    },
+  },
 
   // Fact checking routes
   factCheck: {
@@ -402,16 +436,6 @@ export const routes = {
     permission: {
       resource: "claims",
       action: ["get", "create"],
-    },
-  },
-  claimants: {
-    path: "/claimants",
-    title: "Claimants",
-    menuKey: "/claimants",
-    Component: Claimants,
-    permission: {
-      resource: "claimants",
-      action: "get",
     },
   },
   ratings: {

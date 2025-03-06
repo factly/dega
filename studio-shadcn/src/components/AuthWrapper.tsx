@@ -1,4 +1,4 @@
-import React, { useEffect, ReactNode } from "react";
+import React, { useEffect, ReactNode, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { getSession } from "../actions/session";
 import { login } from "../utils/zitadel";
@@ -36,7 +36,7 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
     return publicPaths.some((publicPath) => path.includes(publicPath));
   };
 
-  const checkAuthenticated = async (): Promise<void> => {
+  const checkAuthenticated = useCallback(async (): Promise<void> => {
     try {
       const res: SessionResponse = await dispatch(getSession());
 
@@ -66,11 +66,11 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
     } catch (error) {
       console.error("Authentication check failed:", error);
     }
-  };
+  }, [dispatch, location.pathname]);
 
   useEffect(() => {
     void checkAuthenticated();
-  }, [location.pathname]);
+  }, [checkAuthenticated]);
 
   return <>{children}</>;
 };

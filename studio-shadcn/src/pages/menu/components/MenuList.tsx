@@ -167,17 +167,16 @@ const MenuList: React.FC<MenuListProps> = ({
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-[311px]">
-          <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent className="max-w-sm p-4">
+          <DialogHeader className="space-y-2">
+            <DialogTitle className="text-base">Delete Menu</DialogTitle>
+            <DialogDescription className="text-sm">
+              Are you sure you want to delete this menu?
+            </DialogDescription>
           </DialogHeader>
-          <DialogDescription>
-            <h3 className="font-semibold">
-              Are you sure you want to delete this?
-            </h3>
-          </DialogDescription>
-          <DialogFooter className="flex gap-2">
+          <DialogFooter className="mt-4 flex justify-end space-x-2">
             <Button
+              size="sm"
               variant="outline"
               onClick={() => {
                 setDialogOpen(false);
@@ -187,6 +186,7 @@ const MenuList: React.FC<MenuListProps> = ({
               Cancel
             </Button>
             <Button
+              size="sm"
               variant="destructive"
               onClick={handleDelete}
               disabled={!isDeleteAllowed}

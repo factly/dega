@@ -135,7 +135,7 @@ const RatingList: React.FC<RatingListProps> = ({ data, fetchRatings }) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="min-w-[300px]">
+              <TableHead className="min-w-[400px]">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={handleSortByTitle}
@@ -145,7 +145,7 @@ const RatingList: React.FC<RatingListProps> = ({ data, fetchRatings }) => {
                 </div>
               </TableHead>
               <TableHead className="min-w-[200px]">Preview</TableHead>
-              <TableHead className="min-w-[200px]">Rating Value</TableHead>
+              <TableHead className="min-w-[100px]">Rating Value</TableHead>
               <TableHead className="min-w-[100px] text-center">
                 Action
               </TableHead>
@@ -219,21 +219,22 @@ const RatingList: React.FC<RatingListProps> = ({ data, fetchRatings }) => {
       </div>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="sm:max-w-[311px]">
-          <DialogHeader>
-            <DialogTitle>Delete Rating</DialogTitle>
+        <DialogContent className="max-w-sm p-4">
+          <DialogHeader className="space-y-2">
+            <DialogTitle className="text-base">Delete Rating</DialogTitle>
+            <DialogDescription className="text-sm">
+              Are you sure you want to delete this rating?
+            </DialogDescription>
           </DialogHeader>
-          <DialogDescription>
-            <h2>Are you sure you want to delete this rating?</h2>
-            {ratingToDelete && (
-              <p className="text-sm mt-2">"{ratingToDelete.name}"</p>
-            )}
-          </DialogDescription>
-          <DialogFooter>
-            <Button variant="outline" onClick={handleDeleteCancel}>
+          <DialogFooter className="mt-4 flex justify-end space-x-2">
+            <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleDeleteConfirm}>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={handleDeleteConfirm}
+            >
               Delete
             </Button>
           </DialogFooter>

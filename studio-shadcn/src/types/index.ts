@@ -1,5 +1,5 @@
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
 
 export interface Post {
   id: number;
@@ -43,6 +43,7 @@ export interface RootState {
   info: any;
   settings: any;
   spaces: any;
+  session: any;
   organisations: any;
   redirect: any;
   organisationRequests: any;
@@ -59,7 +60,12 @@ export interface RootState {
   ratings: RatingsState;
   claimants: any;
   claims: any;
-  notifications: any;
+  notifications: {
+    type: string | null;
+    message: string | null;
+    description: string | null;
+    time: number | null;
+  };
   policies: any;
   permissions: any;
   users: any;

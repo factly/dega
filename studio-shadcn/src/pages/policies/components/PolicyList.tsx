@@ -47,7 +47,6 @@ interface PolicyListProps {
 }
 
 function PolicyList({
-  actions,
   data,
   filters,
   setFilters,
@@ -73,12 +72,9 @@ function PolicyList({
     navigate(`/settings/members/policies/${id}/edit`);
   };
 
-  const hasDeletePermission =
-    actions.includes("admin") || actions.includes("delete");
-
   return (
     <div className="w-full">
-      <div className="rounded-md border">
+      <>
         <Table>
           <TableHeader>
             <TableRow>
@@ -108,7 +104,7 @@ function PolicyList({
               data.policies.map((policy) => (
                 <TableRow
                   key={policy.id}
-                  className="cursor-pointer hover:bg-muted/50"
+                  className="cursor-pointer"
                   onClick={() => handleRowClick(policy.id)}
                 >
                   <TableCell>
@@ -143,7 +139,6 @@ function PolicyList({
                         variant="outline"
                         size="icon"
                         className="h-9 w-9"
-                        disabled={!hasDeletePermission}
                         onClick={(e) => {
                           e.stopPropagation();
                           setDialogOpen(true);
@@ -159,7 +154,7 @@ function PolicyList({
             )}
           </TableBody>
         </Table>
-      </div>
+      </>
 
       <div className="flex items-center justify-end py-4">
         <Pagination>

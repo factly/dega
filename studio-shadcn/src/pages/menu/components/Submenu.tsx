@@ -44,7 +44,7 @@ const Submenu: React.FC<SubmenuProps> = ({
         <div key={field.id} className="space-y-2">
           <div
             className={`flex ${
-              isMobileScreen ? "flex-col" : "flex-row items-center"
+              isMobileScreen ? "flex-col" : "flex-col items-center"
             } gap-4`}
           >
             <div className={isMobileScreen ? "w-full" : "w-1/2"}>
@@ -56,16 +56,16 @@ const Submenu: React.FC<SubmenuProps> = ({
                 }}
                 formFieldPath={`${fieldKey}.menu.${index}`}
               />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => remove(index)}
+                type="button"
+                className="mt-4"
+              >
+                <MinusCircle className="h-4 w-4 mr-2" /> Remove menu
+              </Button>
             </div>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => remove(index)}
-              type="button"
-            >
-              <MinusCircle className="h-4 w-4 mr-2" /> Remove menu
-            </Button>
           </div>
 
           {!hasReachedMaxDepth && (

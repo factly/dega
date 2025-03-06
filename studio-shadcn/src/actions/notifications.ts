@@ -1,4 +1,5 @@
 import { ADD_NOTIFICATION } from "../constants/notifications";
+import { Dispatch, AnyAction } from "redux";
 
 // Notification types
 export type NotificationType = "error" | "success";
@@ -11,9 +12,10 @@ export interface NotificationPayload {
 }
 
 export interface NotificationAction {
-  type: "ADD_NOTIFICATION";
+  type: typeof ADD_NOTIFICATION;
   payload: NotificationPayload;
 }
+
 export const addErrorNotification = (data: string): NotificationAction => ({
   type: ADD_NOTIFICATION,
   payload: {
@@ -33,3 +35,14 @@ export const addSuccessNotification = (data: string): NotificationAction => ({
     time: Date.now(),
   },
 });
+
+// Helper thunk to allow for timed notifications
+export const showNotification = (type: NotificationType, message: string) => {
+  return (dispatch: Dispatch<AnyAction>) => {
+    if (type === "error") {
+      dispatch(addErrorNotification(message));
+    } else {
+      dispatch(addSuccessNotification(message));
+    }
+  };
+};

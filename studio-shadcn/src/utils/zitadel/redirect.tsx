@@ -1,3 +1,7 @@
+import { FC, useEffect } from "react";
+import { getToken, getUserInfo } from "./index";
+import { useLocation } from "react-router-dom";
+
 // Types for the authentication response
 interface TokenResponse {
   error?: string;
@@ -13,10 +17,6 @@ interface UserInfo {
   email?: string;
   name?: string;
 }
-
-import { FC, useEffect } from "react";
-import { getToken, getUserInfo } from "./index";
-import { useLocation } from "react-router-dom";
 
 const Callback: FC = () => {
   const location = useLocation();

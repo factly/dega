@@ -7,15 +7,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // Define types for the format and state
 interface Format {
   id: string;
   name: string;
-  [key: string]: any; // For other properties in format
+  slug?: string;
+  is_featured?: boolean;
+  description?: string;
+  medium_id?: number | string;
+  meta_fields?: string | Record<string, unknown>;
+  [key: string]: any; // For other properties
 }
 
 interface RootState {
@@ -65,19 +68,8 @@ function EditFormat(): React.ReactElement {
       dispatch(updateFormat({ ...format, ...values }));
       history(`/settings/advanced/formats/${id}/edit`);
     } else {
-      // Handle the case where id is undefined (shouldn't happen with proper routing)
       console.error("Format ID is undefined");
-
-      // Show an error alert instead of silently failing
-      return (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>
-            Unable to update format. Format ID is missing.
-          </AlertDescription>
-        </Alert>
-      );
+      return;
     }
   };
 

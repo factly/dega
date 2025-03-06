@@ -1,31 +1,40 @@
-import React from 'react'
-import { ChevronDown, ChevronUp } from 'lucide-react'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
+import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 interface MetaFormProps {
-  formData?: MetaFormData
-  style?: React.CSSProperties
+  formData?: MetaFormData;
+  style?: React.CSSProperties;
 }
 
 interface MetaFormData {
   meta?: {
-    title?: string
-    description?: string
-    canonical_URL?: string
-  }
-  header_code?: string
-  footer_code?: string
-  meta_fields?: string
+    title?: string;
+    description?: string;
+    canonical_URL?: string;
+  };
+  header_code?: string;
+  footer_code?: string;
+  meta_fields?: string;
 }
 
-const MetaForm: React.FC<MetaFormProps> = ({ formData, style }) => {
-  const [headerCode, setHeaderCode] = React.useState(formData?.header_code || '')
-  const [footerCode, setFooterCode] = React.useState(formData?.footer_code || '')
-  const [metaFields, setMetaFields] = React.useState(formData?.meta_fields || '')
+const MetaForm: React.FC<MetaFormProps> = ({ formData }) => {
+  const [headerCode, setHeaderCode] = React.useState(
+    formData?.header_code || ""
+  );
+  const [footerCode, setFooterCode] = React.useState(
+    formData?.footer_code || ""
+  );
+  const [metaFields, setMetaFields] = React.useState(
+    formData?.meta_fields || ""
+  );
 
   return (
     <div className="w-full space-y-4">
@@ -33,12 +42,7 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style }) => {
         <AccordionItem value="meta-data">
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center justify-between w-full">
-              <span>Meta Data</span>
-              {open => (
-                <Button variant="ghost" size="sm">
-                  {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                </Button>
-              )}
+              <span className="text-base">Meta Data</span>
             </div>
           </AccordionTrigger>
           <AccordionContent>
@@ -74,12 +78,7 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style }) => {
         <AccordionItem value="code-injection">
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center justify-between w-full">
-              <span>Code Injection</span>
-              {open => (
-                <Button variant="ghost" size="sm">
-                  {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                </Button>
-              )}
+              <span className="text-base">Code Injection</span>
             </div>
           </AccordionTrigger>
           <AccordionContent>
@@ -113,12 +112,7 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style }) => {
         <AccordionItem value="meta-fields">
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center justify-between w-full">
-              <span>Meta Fields</span>
-              {open => (
-                <Button variant="ghost" size="sm">
-                  {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                </Button>
-              )}
+              <span className="text-base">Meta Data Fields</span>
             </div>
           </AccordionTrigger>
           <AccordionContent>
@@ -139,7 +133,7 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style }) => {
         </AccordionItem>
       </Accordion>
     </div>
-  )
-}
+  );
+};
 
-export default MetaForm
+export default MetaForm;

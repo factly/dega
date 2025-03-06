@@ -146,17 +146,6 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
           onSubmit={form.handleSubmit(onSubmit)}
           onChange={() => setValueChange(true)}
         >
-          <div className="flex justify-end mb-4">
-            <Button
-              type="submit"
-              variant="default"
-              disabled={!valueChange}
-              className={!valueChange ? "opacity-50" : ""}
-            >
-              {data && data.id ? "Update" : "Save"}
-            </Button>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6">
             <div className="md:col-span-6">
               <FormField
@@ -177,7 +166,6 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
               <Button
                 type="button"
                 variant="outline"
-                className={isMobileScreen ? "" : "mt-8"}
                 onClick={() => {
                   if (addMenu.current) addMenu.current();
                 }}
@@ -191,10 +179,10 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
             {fields.map((field, index) => (
               <div
                 key={field.id}
-                className="bg-muted/40 mt-4 w-full p-4 rounded-lg overflow-x-auto md:overflow-visible"
+                className="bg-muted/40 mt-4 w-full p-4 rounded-md"
               >
-                <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
-                  <div className="md:w-1/2">
+                <div className="flex flex-col items-center gap-4 mb-4">
+                  <div className="w-1/2 ">
                     <MenuField
                       field={{
                         name: index,
@@ -203,15 +191,15 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
                       }}
                       formFieldPath={`menu.${index}`}
                     />
-                  </div>
-                  <div>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => remove(index)}
-                    >
-                      <MinusCircle className="h-4 w-4 mr-2" /> Remove menu
-                    </Button>
+                    <div className="mt-4">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => remove(index)}
+                      >
+                        <MinusCircle className="h-4 w-4 mr-2" /> Remove menu
+                      </Button>
+                    </div>
                   </div>
                 </div>
                 <div className="ml-6">
@@ -248,6 +236,16 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
           </div>
         </form>
       </Form>
+      <div className="flex justify-start mt-6">
+        <Button
+          type="submit"
+          variant="default"
+          disabled={!valueChange}
+          className={!valueChange ? "opacity-50" : ""}
+        >
+          {data && data.id ? "Update" : "Save"}
+        </Button>
+      </div>
     </div>
   );
 }

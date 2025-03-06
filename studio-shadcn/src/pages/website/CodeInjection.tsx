@@ -71,7 +71,7 @@ function CodeInjection(): React.ReactElement {
   }
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto">
       <Helmet title={"Code Injection"} />
       <Form {...form}>
         <form
@@ -79,16 +79,6 @@ function CodeInjection(): React.ReactElement {
           className="space-y-6"
           onChange={onFormChange} // Add onChange handler to the form
         >
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              disabled={!valueChange}
-              className="flex items-center gap-2"
-            >
-              Update
-            </Button>
-          </div>
-
           <FormField
             control={form.control}
             name="header_code"
@@ -128,6 +118,15 @@ function CodeInjection(): React.ReactElement {
           />
         </form>
       </Form>
+      <div className="flex justify-start mt-6">
+        <Button
+          type="submit"
+          disabled={!valueChange}
+          className="flex items-center gap-2"
+        >
+          Update
+        </Button>
+      </div>
     </div>
   );
 }

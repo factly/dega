@@ -86,7 +86,7 @@ function Organisations() {
   );
 
   return (
-    <div className="p-6">
+    <div>
       <div className="flex flex-row items-center justify-between space-y-0 pb-6">
         <h2 className="text-2xl font-bold tracking-tight">Members</h2>
         <Button onClick={() => navigate("/settings/organisations/addusers")}>

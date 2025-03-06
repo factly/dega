@@ -4,8 +4,6 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { createMenu } from "../../actions/menu";
 import useNavigation from "../../utils/useNavigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus } from "lucide-react";
 
 // Define the menu values interface
 interface MenuValues {
@@ -34,18 +32,15 @@ const CreateMenu: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-6">
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-2xl font-bold">
-            <Plus className="h-6 w-6 inline mr-2" />
-            Create Menu
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+    <div className="w-full max-w-4xl mx-auto">
+      <div className="bg-white">
+        <div className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
+          <h2 className="text-2xl font-bold">Create Menu</h2>
+        </div>
+        <div className="p-6">
           <MenuForm onCreate={onCreate} />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

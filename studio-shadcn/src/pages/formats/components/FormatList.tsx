@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import { deleteFormat } from "../../../actions/formats";
+import useNavigation from "../../../utils/useNavigation";
 
 import {
   Table,
@@ -55,7 +56,6 @@ interface Filters {
 }
 
 interface FormatListProps {
-  actions: string[];
   data: FormatData;
   filters: Filters;
   setFilters: (filters: Partial<Filters>) => void;
@@ -63,7 +63,6 @@ interface FormatListProps {
 }
 
 function FormatList({
-  actions,
   data,
   filters,
   setFilters,
@@ -73,7 +72,7 @@ function FormatList({
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigation();
 
   const handleDeleteConfirm = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -85,10 +84,8 @@ function FormatList({
   };
 
   const handleRowClick = (id: string) => {
-    navigate(`/advanced/formats/${id}/edit`);
+    navigate(`/settings/advanced/formats/${id}/edit`);
   };
-
-  const canDelete = actions.includes("admin") || actions.includes("delete");
 
   return (
     <div className="w-full">
@@ -117,7 +114,7 @@ function FormatList({
                 >
                   <TableCell className="min-w-[200px]">
                     <Link
-                      to={`/advanced/formats/${format.id}/edit`}
+                      to={`/settings/advanced/formats/${format.id}/edit`}
                       className="font-medium text-base"
                     >
                       {format.name}
@@ -137,7 +134,6 @@ function FormatList({
                         setDialogOpen(true);
                         setDeleteItemId(format.id);
                       }}
-                      disabled={!canDelete}
                     >
                       <Trash2 className="h-5 w-5 text-gray-500" />
                     </Button>
@@ -227,11 +223,7 @@ function FormatList({
             >
               Cancel
             </Button>
-            <Button
-              variant="destructive"
-              onClick={handleDeleteConfirm}
-              disabled={!canDelete}
-            >
+            <Button variant="destructive" onClick={handleDeleteConfirm}>
               Delete
             </Button>
           </DialogFooter>

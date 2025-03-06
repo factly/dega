@@ -20,7 +20,7 @@ interface UploadItem {
   };
 }
 
-function UploadMedium(): JSX.Element {
+function UploadMedium(): React.ReactElement {
   const history = useNavigation();
   const dispatch = useAppDispatch();
 

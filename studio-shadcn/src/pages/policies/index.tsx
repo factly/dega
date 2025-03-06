@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import PolicyList from "./components/PolicyList";
 import getUserPermission from "../../utils/getUserPermission";
@@ -102,7 +102,7 @@ function Policies(): React.ReactElement {
             }
             variant="default"
           >
-            <Plus className="mr-2 h-4 w-4" /> New Policy
+            <PlusCircle className="mr-2 h-4 w-4" /> New Policy
           </Button>
         </Link>
       </div>

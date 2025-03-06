@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useForm } from "react-hook-form";
 import Selector from "../../../components/Selector";
@@ -267,52 +266,48 @@ const PolicyForm: React.FC<PolicyFormProps> = ({
             />
           </div>
 
-          <Card className="lg:col-span-7">
-            <CardContent className="pt-6">
-              <h3 className="font-bold">Authorization</h3>
-              <Separator className="my-4" />
+          <div className="lg:col-span-7 bg-background p-6">
+            <h3 className="font-bold">Authorization</h3>
+            <Separator className="my-4" />
 
-              <div className="space-y-4">
-                {entities.map((entity, index) => (
-                  <div key={`permissions-${index}`} className="space-y-2">
-                    <FormLabel>{entity.label}</FormLabel>
-                    <div className="flex flex-wrap gap-4">
-                      {entity.options.map((option) => (
-                        <div
-                          key={`${entity.name}-${option.value}`}
-                          className="flex items-center space-x-2"
+            <div className="space-y-4">
+              {entities.map((entity, index) => (
+                <div key={`permissions-${index}`} className="space-y-2">
+                  <FormLabel>{entity.label}</FormLabel>
+                  <div className="flex flex-wrap gap-4">
+                    {entity.options.map((option) => (
+                      <div
+                        key={`${entity.name}-${option.value}`}
+                        className="flex items-center space-x-2"
+                      >
+                        <Checkbox
+                          id={`${entity.name}-${option.value}`}
+                          checked={(checkedValues[entity.name] || []).includes(
+                            option.value
+                          )}
+                          onCheckedChange={(checked) => {
+                            const currentValues =
+                              checkedValues[entity.name] || [];
+                            const newValues = checked
+                              ? [...currentValues, option.value]
+                              : currentValues.filter((v) => v !== option.value);
+
+                            handleCheckboxChange(newValues, entity.name);
+                          }}
+                        />
+                        <label
+                          htmlFor={`${entity.name}-${option.value}`}
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
-                          <Checkbox
-                            id={`${entity.name}-${option.value}`}
-                            checked={(
-                              checkedValues[entity.name] || []
-                            ).includes(option.value)}
-                            onCheckedChange={(checked) => {
-                              const currentValues =
-                                checkedValues[entity.name] || [];
-                              const newValues = checked
-                                ? [...currentValues, option.value]
-                                : currentValues.filter(
-                                    (v) => v !== option.value
-                                  );
-
-                              handleCheckboxChange(newValues, entity.name);
-                            }}
-                          />
-                          <label
-                            htmlFor={`${entity.name}-${option.value}`}
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            {option.label}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
+                          {option.label}
+                        </label>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </form>
     </Form>

@@ -42,6 +42,11 @@ interface SpaceState {
   loading: boolean;
 }
 
+// Define props type for the component
+interface SpaceListProps {
+  searchQuery?: string;
+}
+
 const LoadingRow: React.FC = () => (
   <TableRow>
     <TableCell>
@@ -65,7 +70,7 @@ const LoadingRow: React.FC = () => (
   </TableRow>
 );
 
-const SpaceList: React.FC = () => {
+const SpaceList: React.FC<SpaceListProps> = ({ searchQuery = "" }) => {
   const dispatch: ThunkDispatch<any, unknown, AnyAction> = useDispatch();
   const { spaces, loading } = useSelector(spaceSelector) as SpaceState;
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
@@ -95,6 +100,16 @@ const SpaceList: React.FC = () => {
     history(`/admin/spaces/${id}/edit`);
   };
 
+  // Filter spaces based on searchQuery
+  const filteredSpaces = spaces.filter(
+    (space) =>
+      space.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      space.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      space.site_address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      space.site_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      space.tag_line.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="w-full overflow-auto">
       <Table>
@@ -118,10 +133,10 @@ const SpaceList: React.FC = () => {
               <LoadingRow />
             </>
           ) : (
-            spaces.map((space) => (
+            filteredSpaces.map((space) => (
               <TableRow
                 key={space.id}
-                className="cursor-pointer hover:bg-muted/50"
+                className="cursor-pointer"
                 onClick={() => handleRowClick(space.id)}
               >
                 <TableCell className="font-medium">

@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
@@ -119,22 +120,35 @@ const CreateSpaceTokenForm: React.FC = () => {
       </Card>
 
       <Dialog open={showModal} onOpenChange={setShowModal}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Generated Token</DialogTitle>
+        <DialogContent
+          style={{ width: "480px", maxWidth: "90vw" }}
+          className="p-4"
+        >
+          <DialogHeader className="space-y-2">
+            <DialogTitle className="text-base">Generated Token</DialogTitle>
+            <DialogDescription className="text-sm">
+              Copy this token to use with your API calls.
+            </DialogDescription>
           </DialogHeader>
 
-          <div className="flex items-center justify-between p-3 bg-gray-100 rounded-md">
-            <div className="overflow-x-auto max-w-md">
-              <code className="text-sm">{token}</code>
+          <div className="flex items-center justify-between p-3 bg-gray-100 rounded-md mt-2">
+            <div className="overflow-x-auto w-full pr-2">
+              <code className="text-sm break-all">{token}</code>
             </div>
-            <Button variant="ghost" size="icon" onClick={handleCopyToClipboard}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleCopyToClipboard}
+              className="flex-shrink-0"
+            >
               <Copy className="h-4 w-4" />
             </Button>
           </div>
 
-          <DialogFooter>
-            <Button onClick={handleDialogClose}>Go to Tokens</Button>
+          <DialogFooter className="mt-4 flex justify-end space-x-2">
+            <Button size="sm" onClick={handleDialogClose}>
+              Go to Tokens
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

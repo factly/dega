@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { Eye, EyeOff, Shield } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import PasswordInput from "../../components/PasswordInput/index";
 
 // Type definitions
@@ -288,7 +288,6 @@ const TwoFactorAuthManagement: React.FC = () => {
             <div className="flex justify-start">
               {is2FAEnabled ? (
                 <Button variant="destructive" onClick={handleDisable2FA}>
-                  <Shield className="h-4 w-4 mr-2" />
                   Disable 2FA
                 </Button>
               ) : (
@@ -306,7 +305,6 @@ const TwoFactorAuthManagement: React.FC = () => {
                       className="hover:bg-black"
                       onClick={handleEnable2FA}
                     >
-                      <Shield className="h-4 w-4 mr-2" />
                       Enable 2FA
                     </Button>
                   )}

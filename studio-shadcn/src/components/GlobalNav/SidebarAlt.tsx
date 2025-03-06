@@ -173,7 +173,7 @@ export function SidebarAlt() {
                 </div>
 
                 {/* Section Children */}
-                <div className="space-y-1 ml-4">
+                <div className="space-y-1">
                   {section.children?.map((item) => (
                     <Link
                       key={item.path}

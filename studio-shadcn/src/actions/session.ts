@@ -12,9 +12,14 @@ import {
   RootState,
 } from "./types";
 
+export interface GetSessionResponse {
+  success: boolean;
+  noToken?: boolean;
+}
+
 // Action creators
 export const getSession = (): ThunkAction<
-  Promise<SessionResponse>,
+  Promise<GetSessionResponse>,
   RootState,
   unknown,
   SessionActionTypes

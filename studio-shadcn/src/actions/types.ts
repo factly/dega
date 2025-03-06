@@ -46,8 +46,10 @@ export interface UserResponse {
 }
 
 export interface SessionResponse {
-  sessionId: string;
-  sessionToken: string;
+  success: boolean;
+  noToken?: boolean;
+  sessionId?: string;
+  sessionToken?: string;
   details?: any;
 }
 

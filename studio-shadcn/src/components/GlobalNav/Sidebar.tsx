@@ -68,6 +68,7 @@ const menuItems: MenuItem[] = [
     children: [
       { title: "Claims", path: "/claims" },
       { title: "Ratings", path: "/ratings" },
+      { title: "Claimants", path: "/claimants" },
     ],
   },
   {

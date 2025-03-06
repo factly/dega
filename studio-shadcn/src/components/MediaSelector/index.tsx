@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Trash2 } from "lucide-react";
+import { useSelector } from "react-redux";
+import { Trash2, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -9,6 +9,7 @@ import MediaUploader from "./UploadMedium";
 import MediaList from "./MediaList";
 import { getMedium } from "../../actions/media";
 import ImagePlaceholder from "../ErrorsAndImage/PlaceholderImage";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 interface Medium {
   id: string;
@@ -37,7 +38,7 @@ function MediaSelector({
   const [show, setShow] = useState<boolean>(false);
   const [selected, setSelected] = useState<Medium | null>(null);
   const [tab, setTab] = useState<"upload" | "library">("upload");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const medium = useSelector((state: any) => {
     return state.media.details[value] || null;
@@ -117,28 +118,40 @@ function MediaSelector({
 
       <div className="flex flex-col space-y-4">
         <div
-          className="flex justify-center items-center"
+          className="flex flex-col justify-center items-center"
           style={containerStyles}
         >
-          <div className="relative">
+          <div className="relative w-full max-w-xl mx-auto">
             <Button
               variant="outline"
-              className="h-auto block border-dashed bg-transparent"
+              className="h-auto w-full py-4 px-8 block border-dashed bg-transparent hover:bg-gray-50"
               onClick={() => setShow(true)}
             >
-              {medium ? (
-                <img
-                  src={
-                    medium.url?.[
-                      import.meta.env.VITE_ENABLE_IMGPROXY ? "proxy" : "raw"
-                    ]
-                  }
-                  alt={medium.alt_text || "Selected media"}
-                  className="w-full"
-                />
-              ) : (
-                <ImagePlaceholder maxWidth={maxWidth} />
-              )}
+              <div className="flex flex-col items-center space-y-3">
+                {medium ? (
+                  <div className="flex justify-center w-full">
+                    <img
+                      src={
+                        medium.url?.[
+                          import.meta.env.VITE_ENABLE_IMGPROXY ? "proxy" : "raw"
+                        ]
+                      }
+                      alt={medium.alt_text || "Selected media"}
+                      className="w-3/4 max-h-32 object-contain"
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex justify-center w-full">
+                      <ImagePlaceholder maxWidth={maxWidth || "120px"} />
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-500">
+                      <Upload className="h-4 w-4" />
+                      <span>Choose from uploads or drag and drop</span>
+                    </div>
+                  </>
+                )}
+              </div>
             </Button>
             {medium && (
               <Button

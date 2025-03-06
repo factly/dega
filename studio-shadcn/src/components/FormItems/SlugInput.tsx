@@ -34,7 +34,7 @@ export const SlugInput: React.FC<SlugInputProps> = ({
       }}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className="text-base">{label}</FormLabel>
           <FormControl>
             <Input
               {...field}

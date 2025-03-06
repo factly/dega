@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import RatingList from "./components/RatingList";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getRatings } from "../../actions/ratings";
 import deepEqual from "deep-equal";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { PlusCircle } from "lucide-react";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // Type definitions
 interface Permission {
@@ -21,7 +23,14 @@ interface RatingFilters {
 
 interface Rating {
   id: string;
-  [key: string]: any;
+  name: string;
+  numeric_value: number;
+  background_colour?: {
+    hex: string;
+  };
+  text_colour?: {
+    hex: string;
+  };
 }
 
 interface RatingsState {
@@ -44,11 +53,12 @@ function Ratings({
   permission = { actions: [] },
 }: {
   permission?: Permission;
-}): JSX.Element {
+}): React.ReactElement {
   const { actions } = permission;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
+  const [searchText, setSearchText] = useState<string>("");
 
   const [filters, setFilters] = React.useState<RatingFilters>({
     page: 1,
@@ -85,18 +95,33 @@ function Ratings({
     dispatch(getRatings(filters));
   };
 
+  // Filter ratings based on search text
+  const filteredRatings = ratings.filter((rating) =>
+    rating.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
   return loading ? (
     <Loader />
   ) : (
     <div className="flex flex-col space-y-4">
       <Helmet title={"Ratings"} />
       <div className="flex justify-between items-center mb-4">
-        <div>
-          <h3 className="m-0 inline text-[#1E1E1E]">Ratings</h3>
+        <div className="flex items-center gap-4 flex-1">
+          <div className="relative flex-1 max-w-xs">
+            <Input
+              placeholder="Search ratings..."
+              value={searchText}
+              onChange={handleSearchChange}
+            />
+          </div>
         </div>
         <div>
           <Link to="/ratings/create">
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center">
               <PlusCircle className="h-4 w-4" />
               New Rating
             </Button>
@@ -106,7 +131,7 @@ function Ratings({
 
       <RatingList
         actions={actions}
-        data={{ ratings, total, loading }}
+        data={{ ratings: filteredRatings, total, loading }}
         filters={filters}
         setFilters={setFilters}
         fetchRatings={fetchRatings}

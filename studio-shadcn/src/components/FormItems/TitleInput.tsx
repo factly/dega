@@ -12,6 +12,7 @@ import {
 interface TitleInputProps {
   name?: string;
   label?: string;
+  placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   formItemProps?: any;
@@ -23,6 +24,7 @@ interface TitleInputProps {
 export const TitleInput: React.FC<TitleInputProps> = ({
   name = "name",
   label = "Title",
+  placeholder = "Enter title",
   onChange,
   inputProps = {},
   formItemProps = {},
@@ -46,6 +48,7 @@ export const TitleInput: React.FC<TitleInputProps> = ({
             <FormLabel>{label}</FormLabel>
             <FormControl>
               <Input
+                placeholder={placeholder}
                 {...field}
                 {...inputProps}
                 onChange={(e) => {
@@ -63,5 +66,5 @@ export const TitleInput: React.FC<TitleInputProps> = ({
 
   const finalInputProps = onChange ? { ...inputProps, onChange } : inputProps;
 
-  return <Input {...finalInputProps} {...rest} />;
+  return <Input placeholder={placeholder} {...finalInputProps} {...rest} />;
 };

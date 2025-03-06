@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { getMedium, updateMedium, deleteMedium } from "../../actions/media";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import getUserPermission from "../../utils/getUserPermission";
@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormItem, FormField, FormLabel } from "@/components/ui/form";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import {
   Accordion,
   AccordionContent,
@@ -62,7 +63,7 @@ interface RootState {
   spaces: any;
 }
 
-function EditMedium(): JSX.Element {
+function EditMedium(): React.ReactElement {
   const [valueChange, setValueChange] = useState<boolean>(false);
   const [isMobileScreen, setIsMobileScreen] = useState<boolean>(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
@@ -85,7 +86,7 @@ function EditMedium(): JSX.Element {
     spaces,
   });
   const disabled = !(actions.includes("admin") || actions.includes("update"));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { media, loading } = useSelector((state: RootState) => {
     return {
@@ -270,7 +271,9 @@ function EditMedium(): JSX.Element {
                       <img
                         src={
                           media.url?.[
-                            window.REACT_APP_ENABLE_IMGPROXY ? "proxy" : "raw"
+                            import.meta.env.VITE_ENABLE_IMGPROXY
+                              ? "proxy"
+                              : "raw"
                           ]
                         }
                         alt={media.name || "media"}

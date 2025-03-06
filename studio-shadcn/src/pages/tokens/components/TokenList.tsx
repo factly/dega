@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Trash2 } from "lucide-react";
 import { deleteSpaceToken, getSpaceTokens } from "../../../actions/tokens";
 import deepEqual from "deep-equal";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -145,7 +144,6 @@ export default function TokenList() {
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button variant="destructive" size="sm">
-                      <Trash2 className="mr-2 h-4 w-4" />
                       Revoke
                     </Button>
                   </AlertDialogTrigger>

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import {
   Select,
@@ -10,14 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
-import { Search } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { useSelector } from "react-redux";
 import MediumList from "./components/MediumList";
 import { getMedia } from "../../actions/media";
@@ -59,14 +51,12 @@ interface PermissionProps {
 }
 
 interface FilterParams {
-  q?: string;
   sort?: string;
   [key: string]: any;
 }
 
 // Form schema
 const formSchema = z.object({
-  q: z.string().optional(),
   sort: z.string().optional(),
 });
 
@@ -85,15 +75,12 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
   const [filters, setFilters] = React.useState<FilterParams>({
     ...params,
   });
-  const [searchFieldExpand, setSearchFieldExpand] =
-    React.useState<boolean>(false);
 
   const pathName = location.pathname;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      q: params.q || "",
       sort: params.sort || "desc",
     },
   });
@@ -175,12 +162,7 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
   const onValuesChange = (
     changedValues: Partial<z.infer<typeof formSchema>>
   ): void => {
-    if (!("q" in changedValues)) {
-      setFilters({ ...filters, ...changedValues });
-    } else if (changedValues.q === "") {
-      const { q, ...filtersWithoutQuery } = filters;
-      setFilters({ ...filtersWithoutQuery });
-    }
+    setFilters({ ...filters, ...changedValues });
   };
 
   return loading ? (
@@ -194,7 +176,7 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
           className="w-full mb-4"
           onChange={(e) => {
             const target = e.target as HTMLInputElement;
-            if (target.name && target.name !== "q") {
+            if (target.name) {
               onValuesChange({ [target.name]: target.value });
             }
           }}
@@ -203,55 +185,16 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
             <div>
               <div className="flex gap-4 items-center">
                 <h3 className="text-2xl font-semibold m-0 inline">Media</h3>
-                <div>
-                  {searchFieldExpand ? (
-                    <div className="flex">
-                      <FormField
-                        control={form.control}
-                        name="q"
-                        render={({ field }) => (
-                          <FormItem>
-                            <Input placeholder="Search media" {...field} />
-                          </FormItem>
-                        )}
-                      />
-                      <Button type="submit" className="ml-2">
-                        <Search className="h-4 w-4 mr-2" />
-                        Search
-                      </Button>
-                    </div>
-                  ) : (
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onFocus={() => {
-                              setSearchFieldExpand(true);
-                              setTimeout(() => {
-                                form.getValues().q === "" &&
-                                  setSearchFieldExpand(false);
-                              }, 10000);
-                            }}
-                          >
-                            <Search className="h-4 w-4" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Search</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  )}
-                </div>
               </div>
             </div>
             <div>
               <div className="flex flex-col items-end gap-4">
                 <div className="flex justify-end">
                   <Link to="/media/upload">
-                    <Button className="mb-4">Upload</Button>
+                    <Button className="flex items-center gap-2">
+                      <PlusCircle className="h-4 w-4" />
+                      New Media
+                    </Button>{" "}
                   </Link>
                 </div>
                 <div className="flex gap-4">
