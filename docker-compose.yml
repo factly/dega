@@ -164,6 +164,34 @@ services:
       - dega
 
   ###########################################################################
+  #######             DEGA STUDIO SHADCN                              #######
+  ###########################################################################
+  dega-studio-shadcn:
+    build:
+      context: ./studio-shadcn
+      dockerfile: Dockerfile
+      no_cache: true
+      args:
+        - CACHEBUST
+    environment:
+      - PUBLIC_URL=http://127.0.0.1:5173
+      - REACT_APP_SACH_API_URL=https://sach-server.factly.in
+      - VITE_WS_HOST=127.0.0.1
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - NODE_ENV=development
+    ports:
+      - "5173:5173"
+    volumes:
+      - type: bind
+        source: ./studio-shadcn
+        target: /app
+      - /app/node_modules
+    restart: unless-stopped
+    networks:
+      - dega
+
+  ###########################################################################
   #######             DEGA STUDIO UI, SERVER AND DB                   #######
   ###########################################################################
   dega-server:

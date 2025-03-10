@@ -1,0 +1,168 @@
+interface OpenIDConfiguration {
+  data?: any;
+  error?: string;
+}
+
+interface LoginResponse {
+  authorizeURL?: string;
+  error?: string;
+}
+
+interface TokenResponse {
+  access_token?: string;
+  id_token?: string;
+  error?: string;
+}
+
+interface UserInfoResponse {
+  data?: any;
+  error?: string;
+}
+
+export const login = async (): Promise<LoginResponse> => {
+  try {
+    const d = await getOpenIDConfiguration();
+    if (d.error) {
+      console.log(d.error);
+      return { error: d.error };
+    }
+
+    const codeVerifier = generateCodeVerifier();
+    const codeChallenge = await generateCodeChallenge(codeVerifier);
+
+    localStorage.setItem("code_verifier", codeVerifier);
+
+    const state = generateRandomString();
+    localStorage.setItem("auth_state", state);
+
+    const authorizeURL =
+      `${import.meta.env.VITE_DEGA_PUBLIC_URL}/auth/request?` +
+      `client_id=${encodeURIComponent(
+        import.meta.env.VITE_ZITADEL_CLIENT_ID
+      )}` +
+      `&response_type=code` +
+      `&response_mode=query` +
+      `&code_challenge_method=S256` +
+      `&redirect_uri=${encodeURIComponent(
+        import.meta.env.VITE_ZITADEL_REDIRECT_URI
+      )}` +
+      `&post_logout_redirect_uri=${encodeURIComponent(
+        import.meta.env.VITE_ZITADEL_POST_LOGOUT_REDIRECT_URI
+      )}` +
+      `&state=${state}` +
+      `&scope=${encodeURIComponent(
+        "openid profile email urn:zitadel:iam:user:metadata urn:zitadel:iam:user:resourceowner urn:zitadel:iam:org:project:id:zitadel:aud urn:zitadel:iam:org:project:" +
+          import.meta.env.VITE_ZITADEL_PROJECT_ID +
+          ":roles"
+      )}` +
+      `&code_challenge=${encodeURIComponent(codeChallenge)}`;
+
+    return { authorizeURL };
+  } catch (error) {
+    return { error: "Login failed" };
+  }
+};
+
+export const getToken = async (code: string): Promise<TokenResponse> => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_ZITADEL_AUTHORITY}/oauth/v2/token`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          code,
+          client_id: import.meta.env.VITE_ZITADEL_CLIENT_ID,
+          redirect_uri: import.meta.env.VITE_ZITADEL_REDIRECT_URI,
+          code_verifier: localStorage.getItem("code_verifier") || "",
+          grant_type: "authorization_code",
+        }).toString(),
+        credentials: "include",
+      }
+    );
+
+    const data = await response.json();
+    localStorage.setItem("sessionToken", data.access_token);
+    localStorage.setItem("x-zitadel-id-token", data.id_token);
+    return {};
+  } catch (error) {
+    return {
+      error: "Error fetching token",
+    };
+  }
+};
+
+export const getUserInfo = async (): Promise<UserInfoResponse> => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_ZITADEL_AUTHORITY}/oidc/v1/userinfo`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("sessionToken")}`,
+        },
+        credentials: "include",
+      }
+    );
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return { data };
+    }
+    throw new Error("Unauthorized");
+  } catch (error) {
+    return {
+      error: "Error fetching user info",
+    };
+  }
+};
+
+const generateCodeChallenge = async (codeVerifier: string): Promise<string> => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(codeVerifier);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+
+  return btoa(String.fromCharCode(...new Uint8Array(digest)))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+};
+
+function generateCodeVerifier(length: number = 128): string {
+  const randomArray = new Uint8Array(length);
+  crypto.getRandomValues(randomArray);
+  return btoa(String.fromCharCode(...randomArray))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+function generateRandomString(length: number = 128): string {
+  const randomArray = new Uint8Array(length);
+  crypto.getRandomValues(randomArray);
+  return btoa(String.fromCharCode(...randomArray))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+const getOpenIDConfiguration = async (): Promise<OpenIDConfiguration> => {
+  try {
+    const response = await fetch(
+      `${
+        import.meta.env.VITE_ZITADEL_AUTHORITY
+      }/.well-known/openid-configuration`,
+      {
+        credentials: "include",
+      }
+    );
+    const config = await response.json();
+    return { data: JSON.parse(JSON.stringify(config, null, 2)) };
+  } catch (error) {
+    return {
+      error: "Error fetching OpenID configuration",
+    };
+  }
+};

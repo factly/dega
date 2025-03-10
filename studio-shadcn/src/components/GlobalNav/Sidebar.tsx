@@ -7,11 +7,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { AccountMenu } from "./AccountMenu";
 import degaShort from "@/assets/dega-short.png";
 import degaLogo from "@/assets/dega.jpg";
 import {
@@ -21,14 +17,23 @@ import {
   Microchip,
   Shield,
   ListCheck,
-  LogOut,
-  HelpCircle,
+  Search,
   ArrowLeftToLine,
   ArrowRightToLine,
-  Search,
 } from "lucide-react";
 
-const menuItems = [
+interface MenuItem {
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+  path?: string;
+  type?: string;
+  children?: Array<{
+    title: string;
+    path: string;
+  }>;
+}
+
+const menuItems: MenuItem[] = [
   {
     title: "Dashboard",
     icon: LayoutDashboard,
@@ -78,11 +83,11 @@ const menuItems = [
 ];
 
 export function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const [openSections, setOpenSections] = useState<string[]>(["Dashboard"]);
   const location = useLocation();
 
-  const toggleSection = (title: string) => {
+  const toggleSection = (title: string): void => {
     setOpenSections((prev) =>
       prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title]
     );
@@ -124,7 +129,7 @@ export function Sidebar() {
         {menuItems.map((section) => (
           <div key={section.title} className="w-full">
             {section.type === "link" ? (
-              <Link to={section.path}>
+              <Link to={section.path!}>
                 <Button
                   size="icon"
                   variant="ghost"
@@ -177,7 +182,7 @@ export function Sidebar() {
                   </Button>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pl-6 mt-[6px] space-y-[6px]">
-                  {section.children.map((item) => (
+                  {section.children?.map((item) => (
                     <Link
                       key={item.path}
                       to={item.path}
@@ -203,53 +208,27 @@ export function Sidebar() {
         ))}
       </div>
 
-      {/* Footer */}
+      {/* Footer with AccountMenu */}
       <div className="absolute bottom-0 left-0 right-0">
         <div className="p-6">
           <div className="flex flex-col gap-2">
             {!isCollapsed ? (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start"
-                  >
-                    <span>Profile</span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-56 p-2">
-                  <div className="flex flex-col gap-2">
-                    <Button variant="ghost" size="sm" className="justify-start">
-                      <span>My Account</span>
-                    </Button>
-                    <Button variant="ghost" size="sm" className="justify-start">
-                      <HelpCircle className="h-4 w-4 mr-2" />
-                      <span>Help & Support</span>
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="justify-start text-red-600"
-                    >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      <span>Log Out</span>
-                    </Button>
-                  </div>
-                </PopoverContent>
-              </Popover>
+              <AccountMenu />
             ) : (
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setIsCollapsed(false)}
-              >
-                <ArrowRightToLine
-                  className="h-4 w-4"
-                  stroke="#4E6497"
-                  strokeWidth="1.25"
-                />
-              </Button>
+              <div className="flex flex-col gap-2">
+                <AccountMenu isCollapsed />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setIsCollapsed(false)}
+                >
+                  <ArrowRightToLine
+                    className="h-4 w-4"
+                    stroke="#4E6497"
+                    strokeWidth="1.25"
+                  />
+                </Button>
+              </div>
             )}
           </div>
         </div>

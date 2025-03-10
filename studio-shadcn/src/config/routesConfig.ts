@@ -1,4 +1,4 @@
-import { Microchip, ListCheck, Shield, LayoutDashboard } from "lucide-react";
+import { Microchip, ListCheck, LayoutDashboard } from "lucide-react";
 import { Dashboard } from "../pages/dashboard";
 import { Analytics } from "../pages/analytics";
 import Posts from "../pages/posts";
@@ -12,6 +12,11 @@ import Claimants from "../pages/claimants";
 import Ratings from "../pages/ratings";
 import Settings from "../pages/settings";
 import CreateRating from "../pages/ratings/CreateRating";
+import Login from "../utils/zitadel/login";
+import RegistrationForm from "../utils/zitadel/registration";
+import VerifyEmail from "../utils/zitadel/VerifyEmail";
+import RecoveryPage from "../utils/zitadel/recovery";
+import Callback from "../utils/zitadel/redirect";
 
 export interface Route {
   path: string;
@@ -40,13 +45,42 @@ export const routes = {
     path: "/",
     title: "Home",
     menuKey: "/",
-    Component: Dashboard
+    Component: Dashboard,
   },
   analytics: {
     path: "/analytics",
     title: "Analytics",
     menuKey: "/analytics",
-    Component: Analytics
+    Component: Analytics,
+  },
+  login: {
+    path: "/auth/login",
+    title: "Login",
+    menuKey: "/login",
+    Component: Login,
+  },
+  registration: {
+    path: "/auth/registration",
+    title: "Registration",
+    menuKey: "/registration",
+    Component: RegistrationForm,
+  },
+  emailverification: {
+    path: "/auth/verify",
+    menuKey: "/auth/verify",
+    Component: VerifyEmail,
+    title: "Verify Email",
+  },
+  recovery: {
+    path: "/auth/login/recovery",
+    menuKey: "/auth/login/recovery",
+    Component: RecoveryPage,
+    title: "Recovery Page",
+  },
+  redirect: {
+    path: "/redirect",
+    menuKey: "/redirect",
+    Component: Callback,
   },
 
   // Core routes
@@ -143,20 +177,20 @@ export const routes = {
     },
   },
   createRating: {
-    path: '/ratings/create',
-    menuKey: '/ratings',
+    path: "/ratings/create",
+    menuKey: "/ratings",
     Component: CreateRating,
-    title: 'New Rating',
+    title: "New Rating",
     permission: {
-      resource: 'ratings',
-      action: 'create',
+      resource: "ratings",
+      action: "create",
     },
   },
   settings: {
     path: "/settings",
     title: "Settings",
     menuKey: "/settings",
-    Component: Settings
+    Component: Settings,
   },
 };
 
