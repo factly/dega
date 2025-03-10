@@ -4,7 +4,6 @@ import Analytics from "../pages/analytics";
 import Posts from "../pages/posts";
 import { Pages } from "../pages/pages/index";
 import Categories from "../pages/categories";
-import Tags from "../pages/tags";
 import FactCheck from "../pages/fact-checks";
 import Login from "../utils/zitadel/login";
 import RegistrationForm from "../utils/zitadel/registration";
@@ -24,6 +23,11 @@ import CreateSpaceTokenForm from "../pages/tokens/components/CreateToken";
 import Formats from "../pages/formats";
 import CreateFormat from "../pages/formats/CreateFormat";
 import EditFormat from "../pages/formats/EditFormat";
+
+//Tags
+import Tags from "../pages/tags";
+import CreateTag from "../pages/tags/CreateTag";
+import EditTag from "../pages/tags/EditTag";
 
 //Claims
 import Claims from "../pages/claims";
@@ -190,12 +194,32 @@ export const routes = {
   },
   tags: {
     path: "/tags",
-    title: "Tags",
     menuKey: "/tags",
     Component: Tags,
+    title: "Tags",
     permission: {
       resource: "tags",
       action: "get",
+    },
+  },
+  createTag: {
+    path: "/tags/create",
+    menuKey: "/tags",
+    Component: CreateTag,
+    title: "New Tag",
+    permission: {
+      resource: "tags",
+      action: "create",
+    },
+  },
+  editTag: {
+    path: "/tags/:id/edit",
+    menuKey: "/tags",
+    Component: EditTag,
+    title: "Edit",
+    permission: {
+      resource: "tags",
+      action: "update",
     },
   },
   media: {

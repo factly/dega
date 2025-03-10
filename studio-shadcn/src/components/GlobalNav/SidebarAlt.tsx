@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../utils/zitadel/logout";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ interface MenuItem {
 export function SidebarAlt() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
 
   const handleBack = () => {
     // Navigate to main dashboard
@@ -43,6 +45,15 @@ export function SidebarAlt() {
 
   const handleLogout = async () => {
     await logout();
+  };
+
+  // Handlers for section hover
+  const handleSectionMouseEnter = (title: string) => {
+    setHoveredSection(title);
+  };
+
+  const handleSectionMouseLeave = () => {
+    setHoveredSection(null);
   };
 
   const settingsMenuItems: MenuItem[] = [
@@ -145,7 +156,12 @@ export function SidebarAlt() {
 
         {/* Direct Links */}
         {settingsMenuItems.map((section) => (
-          <div key={section.title} className="w-full">
+          <div
+            key={section.title}
+            className="w-full"
+            onMouseEnter={() => handleSectionMouseEnter(section.title)}
+            onMouseLeave={handleSectionMouseLeave}
+          >
             {section.type === "link" ? (
               <Link to={section.path!}>
                 <Button
@@ -154,7 +170,8 @@ export function SidebarAlt() {
                   className={cn(
                     "w-full flex items-center px-[12.5px] py-2 rounded-md justify-start",
                     location.pathname === section.path &&
-                      "bg-[#DCEFEB] font-medium"
+                      "bg-[#DCEFEB] font-medium",
+                    hoveredSection === section.title && "bg-gray-100" // Highlight when hovered
                   )}
                 >
                   <div className="flex items-center gap-2">
@@ -166,7 +183,12 @@ export function SidebarAlt() {
                 </Button>
               </Link>
             ) : (
-              <div className="mt-3">
+              <div
+                className={cn(
+                  "mt-3 rounded-md transition-colors",
+                  hoveredSection === section.title && "bg-[#F7FCFB]"
+                )}
+              >
                 {/* Section Header */}
                 <div className="px-[12.5px] py-2 text-sm font-medium text-gray-600">
                   <span>{section.title}</span>

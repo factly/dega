@@ -59,6 +59,8 @@ const menuItems: MenuItem[] = [
     children: [
       { title: "Posts", path: "/posts" },
       { title: "Pages", path: "/pages" },
+      { title: "Categories", path: "/categories" },
+      { title: "Tags", path: "/tags" },
       { title: "Media", path: "/media" },
     ],
   },
@@ -95,6 +97,7 @@ export function Sidebar() {
   const [openSections, setOpenSections] = useState<string[]>(["Dashboard"]);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isPopoverVisible, setIsPopoverVisible] = useState(false);
+  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const location = useLocation();
   // Reference for timeout to avoid memory leaks
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -172,6 +175,15 @@ export function Sidebar() {
     }, 200); // Delay before starting to hide
   };
 
+  // Handlers for section hover
+  const handleSectionMouseEnter = (title: string) => {
+    setHoveredSection(title);
+  };
+
+  const handleSectionMouseLeave = () => {
+    setHoveredSection(null);
+  };
+
   return (
     <aside
       className={cn(
@@ -206,7 +218,12 @@ export function Sidebar() {
       {/* Navigation */}
       <div className="flex flex-col gap-[6px] h-[calc(100vh-8rem)]">
         {menuItems.map((section) => (
-          <div key={section.title} className="w-full">
+          <div
+            key={section.title}
+            className="w-full"
+            onMouseEnter={() => handleSectionMouseEnter(section.title)}
+            onMouseLeave={handleSectionMouseLeave}
+          >
             {section.type === "link" ? (
               <Link to={section.path!}>
                 <Button
@@ -215,7 +232,8 @@ export function Sidebar() {
                   className={cn(
                     "w-full flex items-center px-[12.5px] py-2 rounded-md",
                     isCollapsed && "justify-center",
-                    !isCollapsed && "justify-start"
+                    !isCollapsed && "justify-start",
+                    hoveredSection === section.title && "bg-gray-100" // Highlight when hovered
                   )}
                 >
                   <div className="flex items-center gap-2">
@@ -237,7 +255,10 @@ export function Sidebar() {
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="w-full flex items-center justify-center px-[12.5px] py-2 rounded-md"
+                  className={cn(
+                    "w-full flex items-center justify-center px-[12.5px] py-2 rounded-md",
+                    hoveredSection === section.title && "bg-gray-100" // Highlight when hovered
+                  )}
                   onClick={() => handleMouseEnter(section.title)}
                 >
                   <section.icon className="h-4 w-4" />
@@ -296,47 +317,54 @@ export function Sidebar() {
                 )}
               </div>
             ) : (
-              <Collapsible
-                open={openSections.includes(section.title)}
-                onOpenChange={() => toggleSection(section.title)}
+              <div
+                className={cn(
+                  "rounded-md transition-colors",
+                  hoveredSection === section.title && "bg-[#F7FCFB]" // Highlight the entire section on hover
+                )}
               >
-                <CollapsibleTrigger asChild>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="w-full flex items-center justify-between px-[12.5px] py-2 rounded-md"
-                  >
-                    <div className="flex items-center gap-2">
-                      <section.icon className="h-4 w-4" />
-                      <span className="text-base font-normal">
-                        {section.title}
-                      </span>
-                    </div>
-                    <ChevronDown
-                      className={cn(
-                        "h-4 w-4 transition-transform",
-                        openSections.includes(section.title) && "rotate-180"
-                      )}
-                    />
-                  </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="pl-6 mt-[6px] space-y-[6px]">
-                  {section.children?.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={cn(
-                        "flex items-center px-2 py-1.5 text-base rounded-md",
-                        "hover:bg-[#DCEFEB] transition-colors",
-                        location.pathname === item.path &&
-                          "bg-[#DCEFEB] font-medium"
-                      )}
+                <Collapsible
+                  open={openSections.includes(section.title)}
+                  onOpenChange={() => toggleSection(section.title)}
+                >
+                  <CollapsibleTrigger asChild>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="w-full flex items-center justify-between px-[12.5px] py-2 rounded-md"
                     >
-                      {item.title}
-                    </Link>
-                  ))}
-                </CollapsibleContent>
-              </Collapsible>
+                      <div className="flex items-center gap-2">
+                        <section.icon className="h-4 w-4" />
+                        <span className="text-base font-normal">
+                          {section.title}
+                        </span>
+                      </div>
+                      <ChevronDown
+                        className={cn(
+                          "h-4 w-4 transition-transform",
+                          openSections.includes(section.title) && "rotate-180"
+                        )}
+                      />
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pl-6 mt-[6px] space-y-[6px]">
+                    {section.children?.map((item) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className={cn(
+                          "flex items-center px-2 py-1.5 text-base rounded-md",
+                          "hover:bg-[#DCEFEB] transition-colors",
+                          location.pathname === item.path &&
+                            "bg-[#DCEFEB] font-medium"
+                        )}
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
             )}
           </div>
         ))}
