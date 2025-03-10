@@ -24,6 +24,7 @@ import organisationsReducer from "./organisationsReducer";
 import eventsReducer from "./eventsReducer";
 import profileReducer from "./profileReducer";
 import sessionReducer from "./sessionReducer";
+import claimsReducer from "./claimsReducer";
 
 const appReducer = combineReducers({
   posts,
@@ -49,6 +50,7 @@ const appReducer = combineReducers({
   events: eventsReducer,
   profile: profileReducer,
   session: sessionReducer,
+  claims: claimsReducer,
 });
 
 const rootReducer = (state: RootState | undefined, action: AnyAction) => {

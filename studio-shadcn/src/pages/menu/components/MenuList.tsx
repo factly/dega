@@ -82,6 +82,14 @@ const MenuList: React.FC<MenuListProps> = ({
     navigate(`/settings/website/menus/${id}/edit`);
   };
 
+  const handlePageChange = (page: number) => {
+    setFilters((prev: any) => ({ ...prev, page }));
+  };
+
+  const handlePageSizeChange = (pageSize: number) => {
+    setFilters((prev: any) => ({ ...prev, limit: pageSize, page: 1 }));
+  };
+
   const isDeleteAllowed =
     actions.includes("admin") || actions.includes("delete");
 
@@ -156,10 +164,8 @@ const MenuList: React.FC<MenuListProps> = ({
             count={data.total}
             page={filters.page}
             pageSize={filters.limit}
-            onPageChange={(page) => setFilters({ ...filters, page })}
-            onPageSizeChange={(pageSize) =>
-              setFilters({ ...filters, limit: pageSize, page: 1 })
-            }
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
             pageSizeOptions={[10, 15, 20]}
           />
         </div>

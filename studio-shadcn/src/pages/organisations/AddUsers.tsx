@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -122,15 +121,6 @@ const AddUsers: React.FC = () => {
 
   return (
     <div className="p-6">
-      <Button
-        variant="ghost"
-        className="mb-6 -ml-3 flex items-center gap-2"
-        onClick={() => navigate("/settings/organisations")}
-      >
-        <ChevronLeft className="h-4 w-4" />
-        Back to Organisations
-      </Button>
-
       <div className="mx-auto max-w-lg">
         <h2 className="mb-6 text-2xl font-bold">Create New User</h2>
 

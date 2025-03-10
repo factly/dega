@@ -1,26 +1,27 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Sidebar } from "@/components/GlobalNav/Sidebar";
 import { SidebarAlt } from "@/components/GlobalNav/SidebarAlt";
 import AuthWrapper from "@/components/AuthWrapper";
 import { RootState } from "@/types";
-// import { getSpaces } from "@/actions/spaces";
-// import { useAppDispatch } from "@/hooks/reduxHooks";
+import { getSpaces } from "@/actions/spaces";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+
 interface BasicLayoutProps {
   children?: React.ReactNode;
 }
 
 export const BasicLayout: FC<BasicLayoutProps> = () => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const isCollapsed = useSelector(
     (state: RootState) => state.sidebar.collapsed
   );
 
   // Get session state from Redux
-  // const session = useSelector((state: RootState) => state.session);
-  // const selected = useSelector((state: RootState) => state.spaces.selected);
+  const session = useSelector((state: RootState) => state.session);
+  const selected = useSelector((state: RootState) => state.spaces.selected);
 
   // Paths where sidebar should be hidden
   const hiddenSidebarPaths = [
@@ -38,12 +39,16 @@ export const BasicLayout: FC<BasicLayoutProps> = () => {
   // Check if current path is settings path to show the alternate sidebar
   const isSettingsPath = location.pathname.startsWith("/settings");
 
-  // // Added effect to fetch spaces when session is loaded
-  // useEffect(() => {
-  //   if (session.details && !session.loading && Object.keys(session.details).length > 0) {
-  //     dispatch(getSpaces());
-  //   }
-  // }, [dispatch, selected, session]);
+  // Added effect to fetch spaces when session is loaded
+  useEffect(() => {
+    if (
+      session.details &&
+      !session.loading &&
+      Object.keys(session.details).length > 0
+    ) {
+      dispatch(getSpaces());
+    }
+  }, [dispatch, selected, session]);
 
   return (
     <AuthWrapper>

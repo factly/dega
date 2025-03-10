@@ -8,18 +8,19 @@ import { useSelector } from "react-redux";
 import { getFormats } from "./actions/formats";
 import deepEqual from "deep-equal";
 import { useAppDispatch } from "./hooks/reduxHooks";
+import { RootState } from "./types";
 
 function App() {
   const [reloadFlag, setReloadFlag] = useState(false);
   const dispatch = useAppDispatch();
 
-  const { selected } = useSelector(({ formats, spaces, session }: any) => {
-    const node = formats.req.find((item: any) => {
-      return deepEqual(item.query, { space_id: spaces.selected });
+  const { formats, selected, session } = useSelector((state: RootState) => {
+    const node = state.formats.req.find((item: any) => {
+      return deepEqual(item.query, { space_id: state.spaces.selected });
     });
     if (node) {
       const formatDetails = node.data.map(
-        (element: string) => formats.details[element]
+        (element: string) => state.formats.details[element]
       );
       const article = formatDetails.find(
         (format: any) => format.slug === "article"
@@ -31,15 +32,19 @@ function App() {
         const format = {
           factcheck: factcheck,
           article: article,
-          loading: formats.loading,
+          loading: state.formats.loading,
         };
-        return { formats: format, selected: spaces.selected, session };
+        return {
+          formats: format,
+          selected: state.spaces.selected,
+          session: state.session,
+        };
       }
     }
     return {
-      formats: { loading: formats.loading },
-      selected: spaces.selected,
-      session,
+      formats: { loading: state.formats.loading },
+      selected: state.spaces.selected,
+      session: state.session,
     };
   });
 
@@ -63,7 +68,7 @@ function App() {
                 <Route
                   key={route.path}
                   path={route.path}
-                  element={<route.Component />}
+                  element={<route.Component formats={formats} />}
                 />
               );
             })}

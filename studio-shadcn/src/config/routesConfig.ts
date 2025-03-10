@@ -6,7 +6,6 @@ import { Pages } from "../pages/pages/index";
 import Categories from "../pages/categories";
 import Tags from "../pages/tags";
 import FactCheck from "../pages/fact-checks";
-import Claims from "../pages/claims";
 import Login from "../utils/zitadel/login";
 import RegistrationForm from "../utils/zitadel/registration";
 import VerifyEmail from "../utils/zitadel/VerifyEmail";
@@ -25,6 +24,11 @@ import CreateSpaceTokenForm from "../pages/tokens/components/CreateToken";
 import Formats from "../pages/formats";
 import CreateFormat from "../pages/formats/CreateFormat";
 import EditFormat from "../pages/formats/EditFormat";
+
+//Claims
+import Claims from "../pages/claims";
+import CreateClaim from "../pages/claims/CreateClaim";
+import EditClaim from "../pages/claims/EditClaim";
 
 // Users & Permissions
 import Users from "../pages/users";
@@ -416,6 +420,36 @@ export const routes = {
       action: "update",
     },
   },
+  claims: {
+    path: "/claims",
+    menuKey: "/claims",
+    Component: Claims,
+    title: "Claims",
+    permission: {
+      resource: "claims",
+      action: "get",
+    },
+  },
+  createClaim: {
+    path: "/claims/create",
+    menuKey: "/claims",
+    Component: CreateClaim,
+    title: "New Claim",
+    permission: {
+      resource: "claims",
+      action: "create",
+    },
+  },
+  editClaim: {
+    path: "/claims/:id/edit",
+    menuKey: "/claims",
+    Component: EditClaim,
+    title: "Edit",
+    permission: {
+      action: "update",
+      resource: "claims",
+    },
+  },
 
   // Fact checking routes
   factCheck: {
@@ -425,16 +459,6 @@ export const routes = {
     Component: FactCheck,
     permission: {
       resource: "fact-checks",
-      action: ["get", "create"],
-    },
-  },
-  claims: {
-    path: "/claims",
-    title: "Claims",
-    menuKey: "/claims",
-    Component: Claims,
-    permission: {
-      resource: "claims",
       action: ["get", "create"],
     },
   },

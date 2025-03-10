@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Check, ChevronsUpDown } from "lucide-react";
-import deepEqual from "deep-equal";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -18,8 +17,10 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Import the space users actions directly
+// Import all necessary action modules
 import * as spaceUsersActions from "../../actions/spaceUsers";
+import * as claimantsActions from "../../actions/claimants";
+import * as ratingsActions from "../../actions/ratings";
 
 // Define types for the Selector component props
 interface SelectorProps {
@@ -27,8 +28,8 @@ interface SelectorProps {
   setLoading?: boolean;
   mode?: "multiple" | "tags" | undefined;
   createEntity: string;
-  value: string[] | string | undefined;
-  onChange: (values: string[] | string) => void;
+  value: string[] | string | number | undefined;
+  onChange: (values: string[] | string | number) => void;
   action: string;
   display?: string;
   placeholder?: string;
@@ -76,7 +77,9 @@ function Selector({
   placeholder,
   style,
 }: SelectorProps) {
-  // Convert action to lowercase for entity name
+  const originalValueType = typeof value;
+
+  // Convert action to lowercase for entity name - ensure consistent casing
   const entity = action.toLowerCase();
 
   // Map entity names to their respective action modules
@@ -84,6 +87,10 @@ function Selector({
     switch (entityName) {
       case "users":
         return spaceUsersActions;
+      case "claimants":
+        return claimantsActions;
+      case "ratings":
+        return ratingsActions;
       // Add other entities as needed
       default:
         console.error(`No action module found for entity: ${entityName}`);
@@ -108,9 +115,13 @@ function Selector({
   if (!value) {
     normalizedValue = [];
   } else if (!mode && value) {
-    normalizedValue = Array.isArray(value) ? value : [value];
+    normalizedValue = Array.isArray(value)
+      ? value.map((v) => String(v))
+      : [String(value)];
   } else {
-    normalizedValue = Array.isArray(value) ? value : [value];
+    normalizedValue = Array.isArray(value)
+      ? value.map((v) => String(v))
+      : [String(value)];
   }
 
   if (!placeholder) {
@@ -132,33 +143,66 @@ function Selector({
     let ids: string[] = [];
     let total = 0;
 
-    // For 'users' we need to check spaceUsers state
-    const stateKey = entity === "users" ? "spaceUsers" : entity;
+    // Use the entity name directly as the state key
+    // No need to transform "users" to "spaceUsers" - each entity's key in the state should match its name
+    const stateKey = entity;
     const entityState = state[stateKey];
 
     if (!entityState || !entityState.req) {
       return { details, total, loading: false, ids };
     }
 
+    // Find all entity data from all pages that have been loaded
     for (let i = 1; i <= query.page; i++) {
-      let j = entityState.req.findIndex((item) =>
-        deepEqual(item.query, { ...query, page: i })
-      );
+      const currentQuery = { ...query, page: i };
 
-      if (j > -1) {
-        total = entityState.req[j].total;
-        ids = ids.concat(entityState.req[j].data);
+      // Find the matching request in the state
+      const matchingReq = entityState.req.find((item) => {
+        // Use a more flexible matching method for queries
+        if (!item.query) return false;
+
+        // Match by page and limit, ignore other properties for now
+        const pageMatch =
+          String(item.query.page) === String(currentQuery.page) ||
+          (!item.query.page && currentQuery.page === 1);
+        const limitMatch =
+          String(item.query.limit) === String(currentQuery.limit) ||
+          (!item.query.limit && currentQuery.limit === 5);
+
+        // If we have a search term, make sure it matches too
+        const searchMatch =
+          (!currentQuery.q && !item.query.q) ||
+          (currentQuery.q &&
+            item.query.q &&
+            item.query.q.toLowerCase().includes(currentQuery.q.toLowerCase()));
+
+        return pageMatch && limitMatch && searchMatch;
+      });
+
+      if (matchingReq) {
+        total = matchingReq.total;
+        ids = ids.concat(matchingReq.data);
       }
     }
 
-    details = normalizedValue
-      .filter((id) => entityState.details && entityState.details[id])
-      .map((id) => entityState.details[id]);
+    // Add selected values to details first
+    if (normalizedValue.length > 0) {
+      details = normalizedValue
+        .filter((id) => entityState.details && entityState.details[id])
+        .map((id) => entityState.details[id]);
+    }
 
+    // Add all loaded entities
     details = details.concat(
       ids
         .filter((id) => !normalizedValue.includes(id))
         .map((id) => entityState.details[id])
+        .filter(Boolean) // Make sure we don't include undefined entries
+    );
+
+    // Remove duplicates by id
+    details = Array.from(
+      new Map(details.map((item) => [item.id, item])).values()
     );
 
     return {
@@ -172,10 +216,14 @@ function Selector({
   // Fix the entityCreatedFlag check to ensure ids is not empty
   useEffect(() => {
     if (entityCreatedFlag && !loading && entity && ids.length > 0) {
-      const newValue = [...normalizedValue, ids[0]];
       if (!mode) {
-        onChange(ids[0]);
+        if (originalValueType === "number") {
+          onChange(Number(ids[0]));
+        } else {
+          onChange(ids[0]);
+        }
       } else {
+        const newValue = [...normalizedValue, ids[0]];
         onChange(newValue);
       }
       setEntityCreatedFlag(false);
@@ -188,65 +236,32 @@ function Selector({
     normalizedValue,
     mode,
     onChange,
+    originalValueType,
   ]);
 
-  // Get the entities state
-  const entityState = useSelector((state: RootState) => {
-    const stateKey = entity === "users" ? "spaceUsers" : entity;
-    return state[stateKey];
-  });
-
   useEffect(() => {
-    // Check if we need to fetch new entities
-    let shouldFetch = true;
-
-    if (entityState && entityState.req) {
-      // Check if this query already exists in our requests
-      const existingRequest = entityState.req.some((req) =>
-        deepEqual(req.query, {
-          page: query.page,
-          limit: query.limit,
-          q: query.q,
-        })
-      );
-
-      shouldFetch = !existingRequest;
-    }
-
-    if (shouldFetch) {
-      fetchEntities();
-    }
+    fetchEntities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, entityState]);
-
-  // Track if this query has already been fetched
-  const [fetchedQueries, setFetchedQueries] = useState<Set<string>>(new Set());
+  }, [query]);
 
   const fetchEntities = () => {
     if (!selectorType) return;
 
-    // Create a query string to track what we've fetched
-    const queryString = JSON.stringify(query);
-
-    // Only fetch if we haven't already fetched this exact query
-    if (fetchedQueries.has(queryString)) {
-      return;
-    }
-
-    // Mark this query as fetched
-    setFetchedQueries((prev) => {
-      const updated = new Set(prev);
-      updated.add(queryString);
-      return updated;
-    });
-
-    // Map action names to the correct function names
+    // Map action names to the correct function names based on entity type
     let actionFn;
+
+    // Use consistent naming pattern for all entities
     if (entity === "users") {
-      // Use getUsers for 'users' entity
       actionFn = selectorType.getUsers;
+    } else if (entity === "claimants") {
+      actionFn = selectorType.getClaimants;
+    } else if (entity === "ratings") {
+      actionFn = selectorType.getRatings;
     } else {
-      const actionName = "get" + action;
+      // Fallback to generic pattern
+      const actionName = `get${
+        entity.charAt(0).toUpperCase() + entity.slice(1)
+      }`;
       actionFn = selectorType[actionName];
     }
 
@@ -286,7 +301,13 @@ function Selector({
 
   // Handle selection change
   const handleSelectionChange = (value: string | string[]) => {
-    onChange(value);
+    // Check if the original value was a number
+    if (originalValueType === "number" && !Array.isArray(value)) {
+      // Convert string back to number for consistency
+      onChange(Number(value));
+    } else {
+      onChange(value);
+    }
   };
 
   // Handle create entity
@@ -295,10 +316,17 @@ function Selector({
 
     // Map create action names
     let createFn;
+
+    // Use consistent naming pattern for all entities
     if (entity === "users") {
       createFn = selectorType.createUser;
+    } else if (entity === "claimants") {
+      createFn = selectorType.createClaimant;
+    } else if (entity === "ratings") {
+      createFn = selectorType.createRating;
     } else {
-      const createAction = "create" + createEntity;
+      // Fallback to generic pattern
+      const createAction = `create${createEntity}`;
       createFn = selectorType[createAction];
     }
 
@@ -306,9 +334,6 @@ function Selector({
       console.error(`Create action for ${entity} not found`);
       return;
     }
-
-    // Reset fetchedQueries to force a refetch after creating
-    setFetchedQueries(new Set());
 
     dispatch(
       createFn({

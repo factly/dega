@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
 import PolicyList from "./components/PolicyList";
-import getUserPermission from "../../utils/getUserPermission";
+import { Link, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getPolicies } from "../../actions/policies";
 import deepEqual from "deep-equal";
@@ -11,20 +10,17 @@ import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
+// Define types for our state and props
 interface Policy {
   id: string;
-  [key: string]: any;
+  // Add other policy properties as needed
 }
 
 interface PolicyState {
   details: Record<string, Policy>;
   loading: boolean;
   req: Array<{
-    query: {
-      page: number;
-      limit: number;
-      [key: string]: any;
-    };
+    query: PolicyFilters;
     data: string[];
     total: number;
   }>;
@@ -32,58 +28,57 @@ interface PolicyState {
 
 interface RootState {
   policies: PolicyState;
-  spaces: any;
+  spaces: any; // Define a more specific type based on your spaces structure
 }
 
-interface Filters {
+interface PolicyFilters {
   page: number;
   limit: number;
-  [key: string]: any;
+  [key: string]: any; // For any additional filters
 }
 
-function Policies(): React.ReactElement {
-  const spaces = useSelector((state: RootState) => state.spaces);
-  const actions = getUserPermission({
-    resource: "policies",
-    action: "get",
-    spaces,
-  });
+const Policies: React.FC = () => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [filters, setFilters] = useState<Filters>({
-    page: 1,
-    limit: 20,
+  // Initialize filters from URL params or defaults
+  const [filters, setFilters] = useState<PolicyFilters>({
+    page: parseInt(searchParams.get("page") || "1", 10),
+    limit: parseInt(searchParams.get("limit") || "20", 10),
   });
 
-  query.set("page", filters.page.toString());
-  window.history.replaceState(
-    {},
-    "",
-    `${import.meta.env.PUBLIC_URL}${location.pathname}?${query}`
-  );
+  // Update URL when filters change
+  useEffect(() => {
+    const newParams = new URLSearchParams();
+    Object.entries(filters).forEach(([key, value]) => {
+      newParams.set(key, value.toString());
+    });
+    setSearchParams(newParams);
+  }, [filters, setSearchParams]);
 
   const { policies, total, loading } = useSelector((state: RootState) => {
     const node = state.policies.req.find((item) => {
       return deepEqual(item.query, filters);
     });
 
-    if (node)
+    if (node) {
       return {
         policies: node.data.map((element) => state.policies.details[element]),
         total: node.total,
         loading: state.policies.loading,
       };
+    }
+
     return { policies: [], total: 0, loading: state.policies.loading };
   });
 
+  // Fetch policies when filters change
   useEffect(() => {
     fetchPolicies();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
-  const fetchPolicies = (): void => {
+  const fetchPolicies = () => {
     dispatch(getPolicies(filters));
   };
 
@@ -96,18 +91,14 @@ function Policies(): React.ReactElement {
       <Helmet title={"Policies"} />
       <div className="flex justify-end">
         <Link to="/settings/members/policies/create">
-          <Button
-            disabled={
-              !(actions.includes("admin") || actions.includes("create"))
-            }
-            variant="default"
-          >
-            <PlusCircle className="mr-2 h-4 w-4" /> New Policy
+          <Button variant="default">
+            <PlusCircle className="mr-2 h-4 w-4" />
+            New Policy
           </Button>
         </Link>
       </div>
+
       <PolicyList
-        actions={actions}
         data={{ policies, total, loading }}
         filters={filters}
         setFilters={setFilters}
@@ -115,6 +106,6 @@ function Policies(): React.ReactElement {
       />
     </div>
   );
-}
+};
 
 export default Policies;

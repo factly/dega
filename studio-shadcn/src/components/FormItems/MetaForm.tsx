@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 interface MetaFormProps {
   formData?: MetaFormData;
   style?: React.CSSProperties;
+  onChange?: () => void;
 }
 
 interface MetaFormData {

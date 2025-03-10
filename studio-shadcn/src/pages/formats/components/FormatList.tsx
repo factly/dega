@@ -89,7 +89,7 @@ function FormatList({
 
   return (
     <div className="w-full">
-      <div className="rounded-md border">
+      <div>
         <Table>
           <TableHeader>
             <TableRow>

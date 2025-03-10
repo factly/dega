@@ -1,65 +1,68 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import MenuList from "./components/MenuList";
-import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { getMenus } from "../../actions/menu";
 import deepEqual from "deep-equal";
 import getUserPermission from "../../utils/getUserPermission";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
-import { AppDispatch } from "../../store";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // Define types for our state and props
+interface Menu {
+  id: string;
+  // Add other menu properties as needed
+}
+
 interface MenuState {
-  details: Record<string, MenuData>;
+  details: Record<string, Menu>;
   loading: boolean;
   req: Array<{
-    query: FilterParams;
+    query: MenuFilters;
     data: string[];
     total: number;
   }>;
 }
 
-interface MenuData {
-  id: string;
-  // Add other menu properties here
+interface RootState {
+  menus: MenuState;
+  spaces: any; // Define a more specific type based on your spaces structure
 }
 
-interface FilterParams {
+interface MenuFilters {
   page: number;
   limit: number;
-  [key: string]: any;
+  [key: string]: any; // For any additional filters
 }
 
-interface RootState {
-  spaces: any;
-  menus: MenuState;
-}
-
-function Menu() {
+const Menu: React.FC = () => {
   const spaces = useSelector((state: RootState) => state.spaces);
   const actions = getUserPermission({
     resource: "menus",
     action: "get",
     spaces,
   });
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const location = useLocation();
-  const query = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [filters, setFilters] = useState<FilterParams>({
-    page: 1,
-    limit: 20,
+  // Initialize filters from URL params or defaults
+  const [filters, setFilters] = useState<MenuFilters>({
+    page: parseInt(searchParams.get("page") || "1", 10),
+    limit: parseInt(searchParams.get("limit") || "20", 10),
   });
 
-  query.set("page", filters.page.toString());
-  window.history.replaceState(
-    {},
-    "",
-    `${(window as any).PUBLIC_URL}${location.pathname}?${query}`
-  );
+  // Update URL when filters change, but don't manipulate history directly
+  useEffect(() => {
+    const newParams = new URLSearchParams();
+    Object.entries(filters).forEach(([key, value]) => {
+      newParams.set(key, value.toString());
+    });
+    setSearchParams(newParams);
+  }, [filters, setSearchParams]);
 
   const { menus, total, loading } = useSelector((state: RootState) => {
     const node = state.menus.req.find((item) => {
@@ -77,10 +80,11 @@ function Menu() {
     return { menus: [], total: 0, loading: state.menus.loading };
   });
 
+  // Fetch menus when filters change
   useEffect(() => {
-    fetchMenus();
+    dispatch(getMenus(filters));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
+  }, [filters, dispatch]);
 
   const fetchMenus = () => {
     dispatch(getMenus(filters));
@@ -93,7 +97,6 @@ function Menu() {
   return (
     <div className="flex flex-col space-y-4">
       <Helmet title={"Menu"} />
-
       <div className="flex justify-end">
         <Link to="/settings/website/menus/create">
           <Button
@@ -101,9 +104,9 @@ function Menu() {
               !(actions.includes("admin") || actions.includes("create"))
             }
             variant="default"
-            className="flex items-center gap-2"
           >
-            <Plus size={16} /> New Menu
+            <PlusCircle className="mr-2 h-4 w-4" />
+            New Menu
           </Button>
         </Link>
       </div>
@@ -117,6 +120,6 @@ function Menu() {
       />
     </div>
   );
-}
+};
 
 export default Menu;

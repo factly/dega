@@ -26,9 +26,14 @@ const CreateMenu: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const onCreate = (values: MenuValues) => {
-    dispatch(createMenu(values)).then(() =>
-      navigate("/settings/website/menus")
-    );
+    dispatch(createMenu(values))
+      .then(() => {
+        // Navigate to the menu list after successful creation
+        navigate("/settings/website/menus");
+      })
+      .catch((error) => {
+        console.error("Error creating menu:", error);
+      });
   };
 
   return (

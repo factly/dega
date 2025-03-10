@@ -103,31 +103,6 @@ export interface AuthRequestDetails {
   // Add other fields as needed
 }
 
-// Ratings types
-export interface Description {
-  json: any;
-  html: string;
-}
-
-export interface Rating {
-  id: number;
-  description: Description;
-  description_html?: string;
-  medium?: Medium;
-  [key: string]: any;
-}
-
-export interface RatingsRequest {
-  data: number[];
-  query: QueryParams;
-  total: number;
-}
-
-export interface RatingsAction {
-  type: string;
-  payload: any;
-}
-
 // Registration types
 export interface RegistrationData {
   email: {

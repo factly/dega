@@ -12,15 +12,9 @@ export default function useNavigation(): (path: string) => void {
    * @param newPath The path to navigate to
    */
   const navigateTo = (newPath: string): void => {
-    // Handle absolute paths (starting with /)
-    if (newPath.startsWith("/")) {
-      // Simply use the react-router navigate function with the new path
-      // This avoids manual path manipulation that could cause duplication
-      navigate(newPath);
-    } else {
-      // For relative paths, use them as is
-      navigate(newPath);
-    }
+    // Use the built-in react-router navigate function
+    // This correctly handles both absolute and relative paths
+    navigate(newPath, { replace: false });
   };
 
   return navigateTo;

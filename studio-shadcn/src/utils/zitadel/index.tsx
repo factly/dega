@@ -9,8 +9,7 @@ interface LoginResponse {
 }
 
 interface TokenResponse {
-  access_token?: string;
-  id_token?: string;
+  data?: any;
   error?: string;
 }
 
@@ -59,12 +58,25 @@ export const login = async (): Promise<LoginResponse> => {
 
     return { authorizeURL };
   } catch (error) {
+    console.error("Login error:", error);
     return { error: "Login failed" };
   }
 };
 
-export const getToken = async (code: string): Promise<TokenResponse> => {
+export const getToken = async (
+  code: string,
+  state?: string | null
+): Promise<TokenResponse> => {
   try {
+    if (!code) {
+      return { error: "No authorization code provided" };
+    }
+
+    const storedState = localStorage.getItem("auth_state");
+    if (state && storedState && state !== storedState) {
+      return { error: "Invalid state parameter" };
+    }
+
     const response = await fetch(
       `${import.meta.env.VITE_ZITADEL_AUTHORITY}/oauth/v2/token`,
       {
@@ -84,10 +96,15 @@ export const getToken = async (code: string): Promise<TokenResponse> => {
     );
 
     const data = await response.json();
+    if (data.error) {
+      return { error: data.error_description || data.error };
+    }
+
     localStorage.setItem("sessionToken", data.access_token);
     localStorage.setItem("x-zitadel-id-token", data.id_token);
-    return {};
+    return { data };
   } catch (error) {
+    console.error("Token error:", error);
     return {
       error: "Error fetching token",
     };
@@ -96,12 +113,17 @@ export const getToken = async (code: string): Promise<TokenResponse> => {
 
 export const getUserInfo = async (): Promise<UserInfoResponse> => {
   try {
+    const token = localStorage.getItem("sessionToken");
+    if (!token) {
+      return { error: "No session token found" };
+    }
+
     const response = await fetch(
       `${import.meta.env.VITE_ZITADEL_AUTHORITY}/oidc/v1/userinfo`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("sessionToken")}`,
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       }
@@ -111,8 +133,16 @@ export const getUserInfo = async (): Promise<UserInfoResponse> => {
       const data = await response.json();
       return { data };
     }
-    throw new Error("Unauthorized");
+
+    if (response.status === 401) {
+      localStorage.removeItem("sessionToken");
+      localStorage.removeItem("x-zitadel-id-token");
+      return { error: "Unauthorized" };
+    }
+
+    return { error: "Failed to fetch user info" };
   } catch (error) {
+    console.error("UserInfo error:", error);
     return {
       error: "Error fetching user info",
     };
@@ -158,9 +188,15 @@ const getOpenIDConfiguration = async (): Promise<OpenIDConfiguration> => {
         credentials: "include",
       }
     );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+
     const config = await response.json();
-    return { data: JSON.parse(JSON.stringify(config, null, 2)) };
+    return { data: config };
   } catch (error) {
+    console.error("OpenID Configuration error:", error);
     return {
       error: "Error fetching OpenID configuration",
     };
