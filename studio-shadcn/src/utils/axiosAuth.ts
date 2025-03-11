@@ -2,6 +2,10 @@ import axios from "axios";
 import { Middleware } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
+// Track the last space ID to avoid unnecessary updates
+let lastSpaceId: string | null = null;
+let lastToken: string | null = null;
+
 function createAxiosAuthMiddleware(): Middleware {
   return ({ getState }) =>
     (next) =>
@@ -15,23 +19,34 @@ function createAxiosAuthMiddleware(): Middleware {
         // Get stored space ID from localStorage as fallback
         const storedSpaceId = localStorage.getItem("space");
 
-        // Set the X-Space header
-        const spaceId = state.spaces?.selected || storedSpaceId || "";
-        if (spaceId) {
-          axios.defaults.headers.common["X-Space"] = spaceId;
+        // Get current space ID
+        const currentSpaceId = state.spaces?.selected || storedSpaceId || "";
+
+        // Only update headers if values have changed
+        if (currentSpaceId !== lastSpaceId) {
+          if (currentSpaceId) {
+            axios.defaults.headers.common["X-Space"] = currentSpaceId;
+          } else {
+            delete axios.defaults.headers.common["X-Space"];
+          }
+          lastSpaceId = currentSpaceId;
         }
 
-        // Set auth token if available
-        if (sessionToken) {
-          axios.defaults.headers.common.Authorization = `Bearer ${sessionToken}`;
-        } else {
-          // Clear the Authorization header if no token
-          delete axios.defaults.headers.common.Authorization;
+        // Only update auth token if it has changed
+        if (sessionToken !== lastToken) {
+          if (sessionToken) {
+            axios.defaults.headers.common.Authorization = `Bearer ${sessionToken}`;
+          } else {
+            delete axios.defaults.headers.common.Authorization;
+          }
+          lastToken = sessionToken;
         }
 
-        // Set baseURL from environment variable
-        axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-        axios.defaults.withCredentials = true;
+        // Set baseURL once (no need to do this on every action)
+        if (!axios.defaults.baseURL) {
+          axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+          axios.defaults.withCredentials = true;
+        }
       } catch (error) {
         console.error("Error in axios auth middleware:", error);
       }

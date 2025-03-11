@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import { getToken, getUserInfo } from "./index";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader";
 
 const Callback: FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,8 +34,23 @@ const Callback: FC = () => {
           return;
         }
 
-        const returnTo = localStorage.getItem("return_to");
-        window.location.href = returnTo || "/";
+        // Retrieve the stored return URL, defaulting to home if not found
+        const returnTo = localStorage.getItem("return_to") || "/";
+
+        // Use React Router's navigate for client-side navigation
+        // This prevents a full page reload
+        if (
+          returnTo.startsWith(window.location.origin) ||
+          returnTo.startsWith("/")
+        ) {
+          const path = returnTo.startsWith(window.location.origin)
+            ? returnTo.slice(window.location.origin.length)
+            : returnTo;
+          navigate(path, { replace: true });
+        } else {
+          // For external URLs, we still need to use location.href
+          window.location.href = returnTo;
+        }
       } catch (error) {
         console.error("Error during authentication callback:", error);
         setError("Authentication failed");
@@ -42,7 +58,7 @@ const Callback: FC = () => {
     };
 
     handleCallback();
-  }, [location]);
+  }, [location, navigate]);
 
   if (error) {
     return (
@@ -53,7 +69,7 @@ const Callback: FC = () => {
         <p className="mt-2 text-center text-gray-700">{error}</p>
         <button
           className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-          onClick={() => (window.location.href = "/auth/login")}
+          onClick={() => navigate("/auth/login", { replace: true })}
         >
           Back to Login
         </button>

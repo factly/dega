@@ -14,12 +14,14 @@ interface SlugInputProps {
   form: UseFormReturn<any>;
   label?: string;
   required?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const SlugInput: React.FC<SlugInputProps> = ({
   form,
   label = "Slug",
   required = true,
+  onChange,
 }) => {
   return (
     <FormField
@@ -47,6 +49,10 @@ export const SlugInput: React.FC<SlugInputProps> = ({
                   .replace(/-+/g, "-");
 
                 field.onChange(value);
+
+                if (onChange) {
+                  onChange(e);
+                }
               }}
             />
           </FormControl>

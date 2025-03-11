@@ -26,7 +26,7 @@ export const getSession = (): ThunkAction<
 > => {
   return async (
     dispatch: Dispatch<SessionActionTypes>
-  ): Promise<SessionResponse> => {
+  ): Promise<GetSessionResponse> => {
     dispatch(setLoading(true));
 
     try {

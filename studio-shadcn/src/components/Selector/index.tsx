@@ -21,13 +21,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import * as spaceUsersActions from "../../actions/spaceUsers";
 import * as claimantsActions from "../../actions/claimants";
 import * as ratingsActions from "../../actions/ratings";
+import * as categoriesActions from "../../actions/categories"; // Import categories actions
 
 // Define types for the Selector component props
 interface SelectorProps {
   invalidOptions?: string[];
   setLoading?: boolean;
   mode?: "multiple" | "tags" | undefined;
-  createEntity: string;
+  createEntity?: string;
   value: string[] | string | number | undefined;
   onChange: (values: string[] | string | number) => void;
   action: string;
@@ -91,6 +92,8 @@ function Selector({
         return claimantsActions;
       case "ratings":
         return ratingsActions;
+      case "categories":
+        return categoriesActions;
       // Add other entities as needed
       default:
         console.error(`No action module found for entity: ${entityName}`);
@@ -144,7 +147,6 @@ function Selector({
     let total = 0;
 
     // Use the entity name directly as the state key
-    // No need to transform "users" to "spaceUsers" - each entity's key in the state should match its name
     const stateKey = entity;
     const entityState = state[stateKey];
 
@@ -257,6 +259,8 @@ function Selector({
       actionFn = selectorType.getClaimants;
     } else if (entity === "ratings") {
       actionFn = selectorType.getRatings;
+    } else if (entity === "categories") {
+      actionFn = selectorType.getCategories;
     } else {
       // Fallback to generic pattern
       const actionName = `get${
@@ -312,7 +316,7 @@ function Selector({
 
   // Handle create entity
   const handleCreateEntity = () => {
-    if (!selectorType) return;
+    if (!selectorType || !createEntity) return;
 
     // Map create action names
     let createFn;
@@ -324,6 +328,8 @@ function Selector({
       createFn = selectorType.createClaimant;
     } else if (entity === "ratings") {
       createFn = selectorType.createRating;
+    } else if (entity === "categories") {
+      createFn = selectorType.createCategory;
     } else {
       // Fallback to generic pattern
       const createAction = `create${createEntity}`;
@@ -382,14 +388,16 @@ function Selector({
             <CommandList>
               <ScrollArea className="h-64" onScrollCapture={handleScroll}>
                 <CommandEmpty>
-                  <Button
-                    variant="outline"
-                    className="w-full mt-2"
-                    onClick={handleCreateEntity}
-                    disabled={!query.q?.trim()}
-                  >
-                    Create a {createEntity} '{query.q}'
-                  </Button>
+                  {createEntity && (
+                    <Button
+                      variant="outline"
+                      className="w-full mt-2"
+                      onClick={handleCreateEntity}
+                      disabled={!query.q?.trim()}
+                    >
+                      Create a {createEntity} '{query.q}'
+                    </Button>
+                  )}
                 </CommandEmpty>
                 <CommandGroup>
                   {filteredDetails.map((item) => (
@@ -447,14 +455,16 @@ function Selector({
             <CommandList>
               <ScrollArea className="h-64" onScrollCapture={handleScroll}>
                 <CommandEmpty>
-                  <Button
-                    variant="outline"
-                    className="w-full mt-2"
-                    onClick={handleCreateEntity}
-                    disabled={!query.q?.trim()}
-                  >
-                    Create a {createEntity} '{query.q}'
-                  </Button>
+                  {createEntity && (
+                    <Button
+                      variant="outline"
+                      className="w-full mt-2"
+                      onClick={handleCreateEntity}
+                      disabled={!query.q?.trim()}
+                    >
+                      Create a {createEntity} '{query.q}'
+                    </Button>
+                  )}
                 </CommandEmpty>
                 <CommandGroup>
                   {filteredDetails.map((item) => (

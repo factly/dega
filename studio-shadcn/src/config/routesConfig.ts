@@ -3,7 +3,6 @@ import { Dashboard } from "../pages/dashboard";
 import Analytics from "../pages/analytics";
 import Posts from "../pages/posts";
 import { Pages } from "../pages/pages/index";
-import Categories from "../pages/categories";
 import FactCheck from "../pages/fact-checks";
 import Login from "../utils/zitadel/login";
 import RegistrationForm from "../utils/zitadel/registration";
@@ -24,6 +23,10 @@ import Formats from "../pages/formats";
 import CreateFormat from "../pages/formats/CreateFormat";
 import EditFormat from "../pages/formats/EditFormat";
 
+//Categories
+import Categories from "../pages/categories";
+import CreateCategory from "../pages/categories/CreateCategory";
+import EditCategory from "../pages/categories/EditCategory";
 //Tags
 import Tags from "../pages/tags";
 import CreateTag from "../pages/tags/CreateTag";
@@ -184,12 +187,32 @@ export const routes = {
   },
   categories: {
     path: "/categories",
-    title: "Categories",
     menuKey: "/categories",
     Component: Categories,
+    title: "Categories",
     permission: {
       resource: "categories",
       action: "get",
+    },
+  },
+  createCategory: {
+    path: "/categories/create",
+    menuKey: "/categories",
+    Component: CreateCategory,
+    title: "New Category",
+    permission: {
+      resource: "categories",
+      action: "create",
+    },
+  },
+  editCategory: {
+    path: "/categories/:id/edit",
+    menuKey: "/categories",
+    Component: EditCategory,
+    title: "Edit",
+    permission: {
+      resource: "categories",
+      action: "update",
     },
   },
   tags: {
