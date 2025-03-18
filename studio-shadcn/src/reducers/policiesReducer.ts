@@ -9,17 +9,24 @@ import {
 import deepEqual from "deep-equal";
 
 // Define interfaces for the state and policy objects
-interface Policy {
+export interface Policy {
   id: string;
+  name: string;
+  description?: string;
+  permissions?: {
+    resource: string;
+    actions: string[];
+  }[];
   [key: string]: any;
 }
 
-interface PolicyRequest {
+export interface PolicyRequest {
   query: any;
-  [key: string]: any;
+  data: string[];
+  total: number;
 }
 
-interface PoliciesState {
+export interface PoliciesState {
   req: PolicyRequest[];
   details: {
     [id: string]: Policy;

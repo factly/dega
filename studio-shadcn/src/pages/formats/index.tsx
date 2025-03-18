@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import FormatList from "./components/FormatList";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getFormats } from "../../actions/formats";
@@ -99,7 +99,7 @@ function Formats() {
       <div className="flex justify-end">
         <Link to="/settings/advanced/formats/create">
           <Button variant="default">
-            <Plus className="mr-2 h-4 w-4" /> New Format
+            <PlusCircle className="h-4 w-4" /> New Format
           </Button>
         </Link>
       </div>

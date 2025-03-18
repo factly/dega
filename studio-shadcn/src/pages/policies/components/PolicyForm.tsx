@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -123,7 +123,7 @@ const dependencies: Record<string, string[]> = {
   categories: ["media"],
   tags: ["media"],
   formats: ["media"],
-  factchecks: ["categories", "tags", "media", "claims"],
+  "fact-checks": ["categories", "tags", "media", "claims"],
   claims: ["claimants", "ratings"],
   claimants: ["media"],
   ratings: ["media"],
@@ -135,77 +135,99 @@ const PolicyForm: React.FC<PolicyFormProps> = ({
   data = { name: "", users: [], permissions: {} },
   onCreate,
 }) => {
+  const [valueChange, setValueChange] = useState(false);
+
+  // Initialize the form with the defaultValues
   const form = useForm<PolicyFormData>({
-    defaultValues: data,
+    defaultValues: {
+      name: data.name || "",
+      users: data.users || [],
+      description: data.description || "",
+      permissions: data.permissions || {},
+    },
   });
 
-  const [valueChange, setValueChange] = useState(false);
-  const [checkedValues, setCheckedValues] = useState<Record<string, string[]>>(
-    {}
-  );
+  // Use a ref to track if we've initialized the form
+  const [initialized, setInitialized] = useState(false);
+
+  // Set up the permissions once on initial render
+  useEffect(() => {
+    if (!initialized && data) {
+      setInitialized(true);
+    }
+  }, [data, initialized]);
 
   const updateDependencies = (
     newState: Record<string, string[]>,
     entityName: string
   ) => {
+    const result = { ...newState };
+
     if (dependencies[entityName]) {
       dependencies[entityName].forEach((dependency) => {
-        newState[dependency] = Array.from(
-          new Set([...(newState[dependency] || []), "get"])
+        result[dependency] = Array.from(
+          new Set([...(result[dependency] || []), "get"])
         );
-        updateDependencies(newState, dependency);
+        const nestedDeps = updateDependencies({ ...result }, dependency);
+        Object.keys(nestedDeps).forEach((key) => {
+          result[key] = nestedDeps[key];
+        });
       });
     }
+
+    return result;
   };
 
   const handleCheckboxChange = (
-    newCheckedValues: string[],
-    entityName: string
+    checked: boolean | "indeterminate",
+    entityName: string,
+    optionValue: string
   ) => {
-    let updatedCheckedValues = [...newCheckedValues];
+    const currentPermissions = form.getValues("permissions") || {};
+    const currentEntityPermissions = currentPermissions[entityName] || [];
 
-    if (
-      newCheckedValues.includes("create") ||
-      newCheckedValues.includes("update") ||
-      newCheckedValues.includes("delete") ||
-      newCheckedValues.includes("publish")
-    ) {
-      updatedCheckedValues = Array.from(new Set([...newCheckedValues, "get"]));
+    let newEntityPermissions: string[];
+
+    if (checked === true) {
+      newEntityPermissions = [...currentEntityPermissions, optionValue];
+    } else {
+      newEntityPermissions = currentEntityPermissions.filter(
+        (v) => v !== optionValue
+      );
     }
 
-    setCheckedValues((prevState) => {
-      const newState = {
-        ...prevState,
-        [entityName]: updatedCheckedValues,
-      };
+    if (
+      optionValue !== "get" &&
+      checked === true &&
+      !newEntityPermissions.includes("get")
+    ) {
+      newEntityPermissions.push("get");
+    }
 
-      updateDependencies(newState, entityName);
+    let updatedPermissions = {
+      ...currentPermissions,
+      [entityName]: newEntityPermissions,
+    };
 
-      return newState;
-    });
+    if (checked === true) {
+      updatedPermissions = updateDependencies(updatedPermissions, entityName);
+    }
 
+    // Update the form state
+    form.setValue("permissions", updatedPermissions, { shouldDirty: true });
     setValueChange(true);
-
-    // Update form values
-    const currentPermissions = form.getValues("permissions") || {};
-    form.setValue(
-      "permissions",
-      {
-        ...currentPermissions,
-        [entityName]: updatedCheckedValues,
-      },
-      { shouldDirty: true }
-    );
   };
 
   const onSubmit = (values: PolicyFormData) => {
+    const permissions = Object.keys(values.permissions || {})
+      .filter(
+        (key) => values.permissions[key] && values.permissions[key].length > 0
+      )
+      .map((key) => ({ resource: key, actions: values.permissions[key] }));
+
     onCreate({
       ...values,
-      permissions: Object.keys(values.permissions)
-        .filter(
-          (key) => values.permissions[key] && values.permissions[key].length > 0
-        )
-        .map((key) => ({ resource: key, actions: values.permissions[key] })),
+      permissions,
     });
   };
 
@@ -266,7 +288,7 @@ const PolicyForm: React.FC<PolicyFormProps> = ({
             />
           </div>
 
-          <div className="lg:col-span-7 bg-background p-6">
+          <div className="lg:col-span-7 bg-background p-6 border rounded-md">
             <h3 className="font-bold">Authorization</h3>
             <Separator className="my-4" />
 
@@ -275,34 +297,37 @@ const PolicyForm: React.FC<PolicyFormProps> = ({
                 <div key={`permissions-${index}`} className="space-y-2">
                   <FormLabel>{entity.label}</FormLabel>
                   <div className="flex flex-wrap gap-4">
-                    {entity.options.map((option) => (
-                      <div
-                        key={`${entity.name}-${option.value}`}
-                        className="flex items-center space-x-2"
-                      >
-                        <Checkbox
-                          id={`${entity.name}-${option.value}`}
-                          checked={(checkedValues[entity.name] || []).includes(
-                            option.value
-                          )}
-                          onCheckedChange={(checked) => {
-                            const currentValues =
-                              checkedValues[entity.name] || [];
-                            const newValues = checked
-                              ? [...currentValues, option.value]
-                              : currentValues.filter((v) => v !== option.value);
+                    {entity.options.map((option) => {
+                      const permissions = form.watch("permissions") || {};
+                      const isChecked = (
+                        permissions[entity.name] || []
+                      ).includes(option.value);
 
-                            handleCheckboxChange(newValues, entity.name);
-                          }}
-                        />
-                        <label
-                          htmlFor={`${entity.name}-${option.value}`}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      return (
+                        <div
+                          key={`${entity.name}-${option.value}`}
+                          className="flex items-center space-x-2"
                         >
-                          {option.label}
-                        </label>
-                      </div>
-                    ))}
+                          <Checkbox
+                            id={`${entity.name}-${option.value}`}
+                            checked={isChecked}
+                            onCheckedChange={(checked) => {
+                              handleCheckboxChange(
+                                checked,
+                                entity.name,
+                                option.value
+                              );
+                            }}
+                          />
+                          <label
+                            htmlFor={`${entity.name}-${option.value}`}
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               ))}

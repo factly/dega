@@ -3,7 +3,6 @@ import { Dashboard } from "../pages/dashboard";
 import Analytics from "../pages/analytics";
 import Posts from "../pages/posts";
 import { Pages } from "../pages/pages/index";
-import FactCheck from "../pages/fact-checks";
 import Login from "../utils/zitadel/login";
 import RegistrationForm from "../utils/zitadel/registration";
 import VerifyEmail from "../utils/zitadel/VerifyEmail";
@@ -27,6 +26,14 @@ import EditFormat from "../pages/formats/EditFormat";
 import Categories from "../pages/categories";
 import CreateCategory from "../pages/categories/CreateCategory";
 import EditCategory from "../pages/categories/EditCategory";
+
+//Fact Checks
+import GoogleFactCheck from "../pages/fact-checks/GoogleFactCheck";
+import Factly from "../pages/fact-checks/Factly";
+import FactCheck from "../pages/fact-checks";
+import CreateFactCheck from "../pages/fact-checks/CreateFactCheck";
+import EditFactCheck from "../pages/fact-checks/EditFactCheck";
+
 //Tags
 import Tags from "../pages/tags";
 import CreateTag from "../pages/tags/CreateTag";
@@ -497,17 +504,43 @@ export const routes = {
       resource: "claims",
     },
   },
-
-  // Fact checking routes
   factCheck: {
     path: "/fact-checks",
-    title: "Fact Checking",
     menuKey: "/fact-checks",
     Component: FactCheck,
+    title: "Fact-Checks",
+  },
+  createFactCheck: {
+    path: "/fact-checks/create",
+    menuKey: "/fact-checks",
+    Component: CreateFactCheck,
+    title: "Create",
     permission: {
       resource: "fact-checks",
-      action: ["get", "create"],
+      action: "create",
     },
+  },
+  editFactCheck: {
+    path: "/fact-checks/:id/edit",
+    menuKey: "/fact-checks",
+    Component: EditFactCheck,
+    title: "Edit",
+    permission: {
+      action: "update",
+      resource: "fact-checks",
+    },
+  },
+  googleFactCheck: {
+    path: "/fact-checks/google",
+    menuKey: "/fact-checks/google",
+    Component: GoogleFactCheck,
+    title: "Google",
+  },
+  sach: {
+    path: "/fact-checks/sach",
+    menuKey: "/fact-checks/sach",
+    Component: Factly,
+    title: "Sach",
   },
   ratings: {
     path: "/ratings",

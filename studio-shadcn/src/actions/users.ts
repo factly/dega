@@ -1,16 +1,19 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { Dispatch } from "redux";
 import {
   USERS_API,
   ADD_USERS_REQUEST,
   SET_USERS_LOADING,
   ADD_USERS,
 } from "../constants/users";
-import { addErrorNotification } from "./notifications";
+import { addErrorNotification, addSuccessNotification } from "./notifications";
 import getError from "../utils/getError";
 
 // Define interfaces
 interface User {
   id: string;
+  display_name?: string;
+  email?: string;
   [key: string]: any; // For any additional properties
 }
 
@@ -26,7 +29,7 @@ interface UserRequestData {
 }
 
 export const getUsers = (query: any) => {
-  return (dispatch: (action: any) => void) => {
+  return (dispatch: Dispatch<any>) => {
     dispatch(loadingUsers());
     return axios
       .get(USERS_API, {
@@ -69,3 +72,27 @@ export const stopLoading = (): UserAction => ({
   type: SET_USERS_LOADING,
   payload: false,
 });
+
+export const createUser = (data: { name: string; description?: string }) => {
+  return (dispatch: Dispatch<any>) => {
+    return axios
+      .post(USERS_API, {
+        name: data.name,
+        description: data.description,
+      })
+      .then((res) => {
+        if (res.data.user) {
+          dispatch(addUsers([res.data.user]));
+        }
+        dispatch(addSuccessNotification("User Created Successfully"));
+        return res.data.user;
+      })
+      .catch((error: Error | AxiosError) => {
+        dispatch(addErrorNotification(getError(error)));
+        throw error;
+      });
+  };
+};
+
+// Alias for compatibility with the Selector component
+export const addUser = createUser;

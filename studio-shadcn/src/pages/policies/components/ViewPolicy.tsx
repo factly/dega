@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ChevronLeft } from "lucide-react";
@@ -16,9 +16,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getPolicy } from "../../../actions/policies";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 interface Permission {
-  id: string;
   resource: string;
   actions: string[];
 }
@@ -26,8 +27,8 @@ interface Permission {
 interface Policy {
   id: string;
   name: string;
-  description: string;
-  permissions: Permission[];
+  description?: string;
+  permissions?: Permission[];
 }
 
 interface RootState {
@@ -41,13 +42,20 @@ interface RootState {
 
 export default function ViewPolicy(): React.ReactElement {
   const { policyID } = useParams<{ policyID: string }>();
+  const dispatch = useAppDispatch();
 
   const { policy, loading } = useSelector((state: RootState) => {
     return {
-      policy: state.policies.details?.[policyID as string],
+      policy: policyID ? state.policies.details?.[policyID] : undefined,
       loading: state.policies.loading,
     };
   });
+
+  useEffect(() => {
+    if (policyID) {
+      dispatch(getPolicy(policyID));
+    }
+  }, [dispatch, policyID]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -90,32 +98,38 @@ export default function ViewPolicy(): React.ReactElement {
 
       <h3 className="text-xl font-semibold">Permissions</h3>
 
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Resource</TableHead>
-              <TableHead>Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {policy?.permissions.map((permission) => (
-              <TableRow key={permission.id}>
-                <TableCell>{permission.resource}</TableCell>
-                <TableCell>
-                  <div className="flex flex-wrap gap-2">
-                    {permission.actions?.map((action) => (
-                      <Badge key={action} variant="secondary">
-                        {action}
-                      </Badge>
-                    ))}
-                  </div>
-                </TableCell>
+      {loading ? (
+        <Skeleton className="h-32 w-full" />
+      ) : policy?.permissions && policy.permissions.length > 0 ? (
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Resource</TableHead>
+                <TableHead>Action</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+            </TableHeader>
+            <TableBody>
+              {policy.permissions.map((permission, index) => (
+                <TableRow key={`${permission.resource}-${index}`}>
+                  <TableCell>{permission.resource}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-wrap gap-2">
+                      {permission.actions?.map((action) => (
+                        <Badge key={action} variant="secondary">
+                          {action}
+                        </Badge>
+                      ))}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <p className="text-muted-foreground">No permissions found</p>
+      )}
     </div>
   );
 }

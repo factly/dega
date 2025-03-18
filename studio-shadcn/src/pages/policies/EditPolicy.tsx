@@ -81,7 +81,7 @@ function EditPolicy(): React.ReactElement {
   }
 
   const onUpdate = (values: Partial<PolicyWithFormattedPermissions>) => {
-    dispatch(updatePolicy({ ...policy, ...values })).then(() =>
+    dispatch(updatePolicy({ ...policy, ...values } as Policy)).then(() =>
       history(`/settings/members/policies/`)
     );
   };

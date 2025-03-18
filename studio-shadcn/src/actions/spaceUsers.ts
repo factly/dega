@@ -77,11 +77,11 @@ export const addSpaceUsers = (payload: SpaceUser[]): AddSpaceUsersAction => ({
 
 export const getSpaceUsers = (query: SpaceUserQuery) => {
   return (dispatch: Dispatch<any>) => {
-    // Create a normalized query object for consistent comparison
     const normalizedQuery = {
       page: query.page?.toString() || null,
       limit: query.limit?.toString() || null,
-      q: query.q || undefined,
+      // Only include q if it's explicitly defined
+      ...(query.q ? { q: query.q } : {}),
     };
 
     dispatch(loadingSpaceUsers(true));
@@ -90,17 +90,42 @@ export const getSpaceUsers = (query: SpaceUserQuery) => {
         params: query,
       })
       .then((res) => {
-        dispatch(addSpaceUsers(res.data.nodes));
-        dispatch(
-          addUsersRequest({
-            data: res.data.nodes.map((item) => item.id),
-            query: normalizedQuery,
-            total: res.data.total,
-          })
-        );
+        // First ensure we have data
+        if (res.data && res.data.nodes && Array.isArray(res.data.nodes)) {
+          // Add users to details
+          dispatch(addSpaceUsers(res.data.nodes));
+
+          // Make sure we don't have duplicate IDs in the data array
+          const uniqueIds = Array.from(
+            new Set(res.data.nodes.map((item) => item.id))
+          );
+
+          dispatch(
+            addUsersRequest({
+              data: uniqueIds,
+              query: normalizedQuery,
+              total: res.data.total || 0,
+            })
+          );
+
+          // Log success for debugging
+          console.log(
+            `Successfully fetched ${res.data.nodes.length} users for query`,
+            normalizedQuery
+          );
+        } else {
+          console.warn(
+            "Received empty or invalid response from space users API",
+            res.data
+          );
+        }
+
+        return res.data;
       })
       .catch((error: Error | AxiosError) => {
+        console.error("Error fetching space users:", error);
         dispatch(addErrorNotification(getError(error)));
+        throw error; // Rethrow for error handling in components
       })
       .finally(() => {
         dispatch(loadingSpaceUsers(false));
@@ -114,14 +139,13 @@ export const updateSpaceUsers = (data: { ids: string[] }) => {
     return axios
       .put("/core/spaces/users", data)
       .then((response) => {
-        dispatch(addSuccessNotification("User Added Successfully"));
-        return response.data;
+        dispatch(addSuccessNotification("Users Added Successfully"));
+        const refreshParams = { page: 1, limit: 10 };
+        return dispatch(getSpaceUsers(refreshParams));
       })
       .catch((error: Error | AxiosError) => {
         dispatch(addErrorNotification(getError(error)));
-      })
-      .finally(() => {
-        dispatch(loadingSpaceUsers(false));
+        throw error;
       });
   };
 };
@@ -140,7 +164,7 @@ export const addSpaceUser = (
       .then((res) => {
         if (setUser) setUser(res.data.user);
         if (setShowModal) setShowModal(true);
-        dispatch(addSuccessNotification("User Added Successfully"));
+        dispatch(addSuccessNotification("Users Added Successfully"));
         return res.data.user;
       })
       .catch((error: Error | AxiosError) => {

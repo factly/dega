@@ -68,9 +68,12 @@ const menuItems: MenuItem[] = [
     title: "Fact checking",
     icon: ListCheck,
     children: [
+      { title: "Fact-Checks", path: "/fact-checks" },
       { title: "Claims", path: "/claims" },
       { title: "Ratings", path: "/ratings" },
       { title: "Claimants", path: "/claimants" },
+      { title: "Google", path: "/fact-checks/google" },
+      { title: "Sach", path: "/fact-checks/sach" },
     ],
   },
   {

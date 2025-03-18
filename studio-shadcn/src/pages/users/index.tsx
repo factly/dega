@@ -42,6 +42,7 @@ interface SpaceUsersState {
     query: {
       page: string | null;
       limit: string | null;
+      q?: string;
     };
     data: string[];
     total: number;
@@ -77,26 +78,93 @@ function Users() {
   });
 
   const [filters, setFilters] = useState<FiltersState>({
-    page: 1,
-    limit: 10,
+    page: parseInt(query.get("page") || "1"),
+    limit: parseInt(query.get("limit") || "10"),
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { spaceUsers, total, loading } = useSelector((state: RootState) => {
-    const node = state.spaceUsers.req.find((item) => {
-      return deepEqual(item.query, {
-        page: query.get("page"),
-        limit: query.get("limit"),
-      });
+    if (!state.spaceUsers || !state.spaceUsers.req) {
+      return {
+        spaceUsers: [] as SpaceUser[],
+        total: 0,
+        loading: false,
+      };
+    }
+
+    const normalizedQuery = {
+      page: query.get("page") || null,
+      limit: query.get("limit") || null,
+    };
+
+    const matchingReq = state.spaceUsers.req.find((req) => {
+      if (!req.query) return false;
+
+      const pageMatch = req.query.page === normalizedQuery.page;
+      const limitMatch = req.query.limit === normalizedQuery.limit;
+
+      return pageMatch && limitMatch;
     });
 
-    if (node)
+    if (matchingReq && matchingReq.data && matchingReq.data.length > 0) {
+      const uniqueUsers = new Map<string, SpaceUser>();
+
+      matchingReq.data.forEach((id) => {
+        if (state.spaceUsers.details[id] && !uniqueUsers.has(id)) {
+          uniqueUsers.set(id, state.spaceUsers.details[id]);
+        }
+      });
+
+      const users = Array.from(uniqueUsers.values());
+
       return {
-        spaceUsers: node.data.map(
-          (element) => state.spaceUsers.details[element]
-        ),
-        total: node.total,
+        spaceUsers: users,
+        total: matchingReq.total,
         loading: state.spaceUsers.loading,
       };
+    }
+
+    for (const req of state.spaceUsers.req) {
+      if (
+        req.query &&
+        req.query.page === normalizedQuery.page &&
+        req.query.limit === normalizedQuery.limit &&
+        req.data &&
+        req.data.length > 0
+      ) {
+        const uniqueUsers = new Map<string, SpaceUser>();
+
+        req.data.forEach((id) => {
+          if (state.spaceUsers.details[id] && !uniqueUsers.has(id)) {
+            uniqueUsers.set(id, state.spaceUsers.details[id]);
+          }
+        });
+
+        const users = Array.from(uniqueUsers.values());
+
+        if (users.length > 0) {
+          return {
+            spaceUsers: users,
+            total: req.total,
+            loading: state.spaceUsers.loading,
+          };
+        }
+      }
+    }
+
+    console.log("No matching request found for query:", normalizedQuery);
+    if (state.spaceUsers.req.length > 0) {
+      console.log(
+        "Available requests:",
+        state.spaceUsers.req.map((r) => r.query)
+      );
+      console.log(
+        "Available details:",
+        Object.keys(state.spaceUsers.details).length
+      );
+    }
+
     return {
       spaceUsers: [] as SpaceUser[],
       total: 0,
@@ -116,16 +184,38 @@ function Users() {
   useEffect(() => {
     fetchUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [query.get("page"), query.get("limit")]);
 
   const fetchUsers = (): void => {
-    dispatch(getSpaceUsers(filters));
+    const currentPage = parseInt(query.get("page") || "1");
+    const currentLimit = parseInt(query.get("limit") || "10");
+
+    const queryParams = {
+      page: currentPage,
+      limit: currentLimit,
+    };
+
+    dispatch(getSpaceUsers(queryParams));
   };
 
-  const handleAddUsers = (values: FormValues): void => {
-    dispatch(updateSpaceUsers({ ids: values.users ? values.users : [] })).then(
-      () => navigate("/settings/users")
-    );
+  const handleAddUsers = async (values: FormValues): Promise<void> => {
+    if (!values.users || values.users.length === 0 || isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await dispatch(updateSpaceUsers({ ids: values.users }));
+
+      form.reset();
+
+      fetchUsers();
+    } catch (error) {
+      console.error("Error adding users:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handlePageChange = (pageNumber: number): void => {
@@ -154,7 +244,7 @@ function Users() {
                     <Selector
                       mode="multiple"
                       display={"display_name"}
-                      action="Users"
+                      action="users"
                       createEntity="User"
                       value={field.value}
                       onChange={field.onChange}
@@ -164,9 +254,13 @@ function Users() {
               />
             </div>
             <div className="col-span-4">
-              <Button type="submit" className="flex items-center gap-2">
+              <Button
+                type="submit"
+                className="flex items-center gap-2"
+                disabled={isSubmitting || loading}
+              >
                 <UserPlus size={16} />
-                Add users
+                {isSubmitting ? "Adding..." : "Add users"}
               </Button>
             </div>
           </div>
@@ -182,13 +276,23 @@ function Users() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {spaceUsers.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell className="font-medium">{user.id}</TableCell>
-              <TableCell className="font-medium">{user.display_name}</TableCell>
-              <TableCell className="font-medium">{user.email}</TableCell>
+          {spaceUsers && spaceUsers.length > 0 ? (
+            spaceUsers.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell className="font-medium">{user.id}</TableCell>
+                <TableCell className="font-medium">
+                  {user.display_name}
+                </TableCell>
+                <TableCell className="font-medium">{user.email}</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={3} className="text-center py-4">
+                No users found
+              </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
 

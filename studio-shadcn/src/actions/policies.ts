@@ -10,27 +10,38 @@ import {
 } from "../constants/policies";
 import { addErrorNotification, addSuccessNotification } from "./notifications";
 import getError from "../utils/getError";
+import { ThunkAction } from "redux-thunk";
+import { Action } from "redux";
+import { RootState } from "../store";
 
 // Define interfaces
-interface Policy {
+export interface Policy {
   id: string;
+  name: string;
+  description?: string;
+  permissions?: {
+    resource: string;
+    actions: string[];
+  }[];
   [key: string]: any;
 }
 
-interface PolicyAction {
+export interface PolicyAction {
   type: string;
   payload: any;
 }
 
-interface PolicyRequestData {
+export interface PolicyRequestData {
   data: string[];
   query: any;
   total: number;
 }
 
+type ThunkResult<R> = ThunkAction<R, RootState, undefined, Action<string>>;
+
 // action to fetch all policies
-export const addDefaultPolicies = (query: any) => {
-  return (dispatch: (action: any) => void) => {
+export const addDefaultPolicies = (query: any): ThunkResult<Promise<void>> => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .post(`${POLICIES_API}/default`)
@@ -52,8 +63,8 @@ export const addDefaultPolicies = (query: any) => {
 };
 
 // action to fetch all policies
-export const getPolicies = (query: any) => {
-  return (dispatch: (action: any) => void) => {
+export const getPolicies = (query: any): ThunkResult<Promise<void>> => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .get(POLICIES_API, {
@@ -77,8 +88,8 @@ export const getPolicies = (query: any) => {
 };
 
 // action to fetch policy by id
-export const getPolicy = (id: string) => {
-  return (dispatch: (action: any) => void) => {
+export const getPolicy = (id: string): ThunkResult<Promise<void>> => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .get(`${POLICIES_API}/${id}`)
@@ -93,8 +104,10 @@ export const getPolicy = (id: string) => {
 };
 
 // action to create policy
-export const createPolicy = (data: Omit<Policy, "id">) => {
-  return (dispatch: (action: any) => void) => {
+export const createPolicy = (
+  data: Omit<Policy, "id">
+): ThunkResult<Promise<void>> => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .post(POLICIES_API, data)
@@ -109,8 +122,8 @@ export const createPolicy = (data: Omit<Policy, "id">) => {
 };
 
 // action to update policy by id
-export const updatePolicy = (data: Policy) => {
-  return (dispatch: (action: any) => void) => {
+export const updatePolicy = (data: Policy): ThunkResult<Promise<void>> => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .put(`${POLICIES_API}/${data.id}`, data)
@@ -126,8 +139,8 @@ export const updatePolicy = (data: Policy) => {
 };
 
 // action to delete policy by id
-export const deletePolicy = (id: string) => {
-  return (dispatch: (action: any) => void) => {
+export const deletePolicy = (id: string): ThunkResult<Promise<void>> => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .delete(`${POLICIES_API}/${id}`)

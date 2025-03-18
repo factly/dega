@@ -13,6 +13,8 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 // Define types for our state and props
 interface Policy {
   id: string;
+  name: string;
+  description?: string;
   // Add other policy properties as needed
 }
 
@@ -28,7 +30,7 @@ interface PolicyState {
 
 interface RootState {
   policies: PolicyState;
-  spaces: any; // Define a more specific type based on your spaces structure
+  spaces?: any;
 }
 
 interface PolicyFilters {

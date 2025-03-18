@@ -27,6 +27,8 @@ import sessionReducer from "./sessionReducer";
 import claimsReducer from "./claimsReducer";
 import tagsReducer from "./tagsReducer";
 import categoriesReducer from "./categoriesReducer";
+import googleFactChecksReducer from "./googleFactChecksReducer";
+import sachFactCheckReducer from "./sachFactChecksReducer";
 
 const appReducer = combineReducers({
   posts,
@@ -55,6 +57,8 @@ const appReducer = combineReducers({
   claims: claimsReducer,
   tags: tagsReducer,
   categories: categoriesReducer,
+  googleFactChecks: googleFactChecksReducer,
+  sachFactChecks: sachFactCheckReducer,
 });
 
 const rootReducer = (state: RootState | undefined, action: AnyAction) => {

@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import deepEqual from "deep-equal";
-import { Plus } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -179,7 +179,7 @@ function Categories() {
         <div className="flex flex-row md:flex-row justify-between gap-4">
           <div className="relative w-64">
             <Input
-              placeholder="Search categories"
+              placeholder="Search categories..."
               value={searchText}
               onChange={handleSearchChange}
               className="pr-10"
@@ -203,8 +203,8 @@ function Categories() {
                       variant="default"
                       className="flex items-center gap-2"
                     >
-                      <Plus className="h-4 w-4" />
-                      Create
+                      <PlusCircle className="h-4 w-4" />
+                      Create category
                     </Button>
                   </Link>
                 </div>

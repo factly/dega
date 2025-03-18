@@ -401,7 +401,7 @@ function Claims() {
         <Link to="/claims/create">
           <Button className="rounded-md px-4 flex items-center gap-2">
             <PlusCircle className="h-4 w-4" />
-            Create
+            Create Claim
           </Button>
         </Link>
       </div>
