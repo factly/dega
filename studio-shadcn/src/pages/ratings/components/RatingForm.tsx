@@ -43,20 +43,21 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
 
   const form = useForm<Rating>({
     defaultValues: {
-      name: data.name || '', // Initialize name field
+      name: data.name || "",
       ...data,
       meta_fields:
         typeof data.meta_fields === "string"
           ? data.meta_fields
           : JSON.stringify(data.meta_fields),
     },
+    mode: "onChange",
   });
 
   const handleBgClick = () => {
     setDisplayBgColorPicker((prev) => !prev);
     setValueChange(true);
   };
-  
+
   const handleTextClick = () => {
     setDisplayTextColorPicker((prev) => !prev);
     setValueChange(true);
@@ -80,6 +81,11 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
   };
 
   const onSubmit = (values: Rating) => {
+    // Validate form fields before proceeding
+    if (!form.formState.isValid) {
+      return;
+    }
+
     const processedValues = {
       ...values,
       meta_fields: values.meta_fields
@@ -107,12 +113,17 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
       </div>
 
       <Form {...form}>
-        <form 
-          onSubmit={form.handleSubmit(onSubmit)} 
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-6"
           onChange={() => setValueChange(true)}
         >
-          <Accordion type="single" collapsible defaultValue="general" className="w-full">
+          <Accordion
+            type="single"
+            collapsible
+            defaultValue="general"
+            className="w-full"
+          >
             <AccordionItem value="general">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center justify-between w-full">
@@ -124,7 +135,7 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
                     style={{
                       color: textColour?.hex,
                       background: backgroundColour?.hex,
-                      border: '1px solid #9CA3AF',
+                      border: "1px solid #9CA3AF",
                     }}
                   >
                     {previewText}
@@ -137,24 +148,27 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
                     form={form}
                     name="name"
                     label="Title"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onTitleChange(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onTitleChange(e.target.value)
+                    }
                   />
 
                   <div className="grid grid-cols-2 gap-4">
-                    <FormItem>
+                    <FormItem className="w-full">
                       <FormLabel>Background Color</FormLabel>
                       <div className="relative">
                         <div
-                          className="p-1 bg-white rounded border cursor-pointer inline-block"
+                          className="px-2 py-[6px] bg-white rounded-md border cursor-pointer inline-flex items-center w-full"
                           onClick={handleBgClick}
                         >
                           <div
-                            className="w-24 h-6 rounded"
+                            className="h-6 w-6 rounded-full mr-3"
                             style={{ background: backgroundColour?.hex }}
                           />
+                          <span>{backgroundColour?.hex || "#FFFFFF"}</span>
                         </div>
                         {displayBgColorPicker && (
-                          <div className="absolute z-10 top-0 left-32">
+                          <div className="absolute z-10 top-0 left-0">
                             <div
                               className="fixed inset-0"
                               onClick={handleBgClose}
@@ -169,20 +183,21 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
                       </div>
                     </FormItem>
 
-                    <FormItem>
+                    <FormItem className="w-full">
                       <FormLabel>Text Color</FormLabel>
                       <div className="relative">
                         <div
-                          className="p-1 bg-white rounded border cursor-pointer inline-block"
+                          className="px-2 py-[6px] bg-white rounded border cursor-pointer inline-flex items-center w-full"
                           onClick={handleTextClick}
                         >
                           <div
-                            className="w-24 h-6 rounded"
+                            className="h-6 w-6 rounded-full mr-3"
                             style={{ background: textColour?.hex }}
                           />
+                          <span>{textColour?.hex || "#000000"}</span>
                         </div>
                         {displayTextColorPicker && (
-                          <div className="absolute z-10 top-0 left-32">
+                          <div className="absolute z-10 top-0 left-0">
                             <div
                               className="fixed inset-0"
                               onClick={handleTextClose}
@@ -225,7 +240,7 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
             </AccordionItem>
           </Accordion>
 
-          <MetaForm className="mb-4" />
+          <MetaForm />
 
           <div className="flex justify-start space-x-4 pt-4">
             <Button type="button" variant="outline" onClick={handleCancel}>

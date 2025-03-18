@@ -297,7 +297,7 @@ const Login: React.FC<LoginProps> = () => {
       case "email":
         return {
           title: "Hey there!",
-          subtitle: "Let's get started by using your Email",
+          subtitle: "Let's get started by using your email",
         };
       case "password":
         return {
@@ -313,11 +313,6 @@ const Login: React.FC<LoginProps> = () => {
         return {
           title: "Reset Password",
           subtitle: "Enter your email to receive reset instructions",
-        };
-      default:
-        return {
-          title: "Hey there!",
-          subtitle: "Let's get started by using your Email",
         };
     }
   };

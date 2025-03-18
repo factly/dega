@@ -46,8 +46,10 @@ export interface UserResponse {
 }
 
 export interface SessionResponse {
-  sessionId: string;
-  sessionToken: string;
+  success: boolean;
+  noToken?: boolean;
+  sessionId?: string;
+  sessionToken?: string;
   details?: any;
 }
 
@@ -99,46 +101,6 @@ export interface AuthRequestResponse {
 export interface AuthRequestDetails {
   id: string;
   // Add other fields as needed
-}
-
-// Notification types
-export type NotificationType = "error" | "success";
-
-export interface NotificationPayload {
-  type: NotificationType;
-  title: string;
-  message: string;
-  time: number;
-}
-
-export interface NotificationAction {
-  type: "ADD_NOTIFICATION";
-  payload: NotificationPayload;
-}
-
-// Ratings types
-export interface Description {
-  json: any;
-  html: string;
-}
-
-export interface Rating {
-  id: number;
-  description: Description;
-  description_html?: string;
-  medium?: Medium;
-  [key: string]: any;
-}
-
-export interface RatingsRequest {
-  data: number[];
-  query: QueryParams;
-  total: number;
-}
-
-export interface RatingsAction {
-  type: string;
-  payload: any;
 }
 
 // Registration types
@@ -271,27 +233,15 @@ export interface PasswordResetResponse {
 // Media related types
 export interface Medium {
   id: number;
-  title: string;
-  description?: string;
-  url: string;
-  type: string;
-  dimensions?: {
-    width: number;
-    height: number;
-  };
-  fileSize?: number;
-  mimeType: string;
-  created_at: string;
-  updated_at: string;
+  [key: string]: any;
 }
 
 export interface MediaResponse {
   nodes: Medium[];
   total: number;
-  page: number;
-  limit: number;
 }
 
+// Media Action types
 export interface SetMediaLoadingAction {
   type: "SET_MEDIA_LOADING";
   payload: boolean;
@@ -306,7 +256,7 @@ export interface AddMediaRequestAction {
   type: "ADD_MEDIA_REQUEST";
   payload: {
     data: number[];
-    query: ExtendedQueryParams;
+    query: QueryParams;
     total: number;
   };
 }

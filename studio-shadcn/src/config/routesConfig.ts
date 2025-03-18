@@ -1,22 +1,85 @@
 import { Microchip, ListCheck, LayoutDashboard } from "lucide-react";
 import { Dashboard } from "../pages/dashboard";
-import { Analytics } from "../pages/analytics";
+import Analytics from "../pages/analytics";
 import Posts from "../pages/posts";
 import { Pages } from "../pages/pages/index";
-import Categories from "../pages/categories";
-import Tags from "../pages/tags";
-import Media from "../pages/media";
 import FactCheck from "../pages/fact-checks";
-import Claims from "../pages/claims";
-import Claimants from "../pages/claimants";
-import Ratings from "../pages/ratings";
-import Settings from "../pages/settings";
-import CreateRating from "../pages/ratings/CreateRating";
 import Login from "../utils/zitadel/login";
 import RegistrationForm from "../utils/zitadel/registration";
 import VerifyEmail from "../utils/zitadel/VerifyEmail";
 import RecoveryPage from "../utils/zitadel/recovery";
 import Callback from "../utils/zitadel/redirect";
+import SecuritySettings from "../pages/website/TwoFactorAuthManagement";
+import EditWebsite from "../pages/website/EditWebsite";
+import Branding from "../pages/website/Branding";
+import AnalyticsForm from "../pages/website/AnalyticsForm";
+import CodeInjection from "../pages/website/CodeInjection";
+
+import Tokens from "../pages/tokens";
+import CreateSpaceTokenForm from "../pages/tokens/components/CreateToken";
+
+//Formats
+import Formats from "../pages/formats";
+import CreateFormat from "../pages/formats/CreateFormat";
+import EditFormat from "../pages/formats/EditFormat";
+
+//Categories
+import Categories from "../pages/categories";
+import CreateCategory from "../pages/categories/CreateCategory";
+import EditCategory from "../pages/categories/EditCategory";
+//Tags
+import Tags from "../pages/tags";
+import CreateTag from "../pages/tags/CreateTag";
+import EditTag from "../pages/tags/EditTag";
+
+//Claims
+import Claims from "../pages/claims";
+import CreateClaim from "../pages/claims/CreateClaim";
+import EditClaim from "../pages/claims/EditClaim";
+
+// Users & Permissions
+import Users from "../pages/users";
+import PermissionList from "../pages/users/PermissionList";
+
+// Menu
+import Menu from "../pages/menu";
+import CreateMenu from "../pages/menu/CreateMenu";
+import EditMenu from "../pages/menu/EditMenu";
+
+//Ratings
+import Ratings from "../pages/ratings";
+import CreateRating from "../pages/ratings/CreateRating";
+import EditRating from "../pages/ratings/EditRating";
+
+// //Claimants
+import Claimants from "../pages/claimants";
+import CreateClaimant from "../pages/claimants/CreateClaimant";
+import EditClaimant from "../pages/claimants/EditClaimant";
+
+//Spaces
+import Spaces from "../pages/spaces";
+import CreateSpace from "../pages/spaces/CreateSpace";
+import EditSpace from "../pages/spaces/EditSpace";
+
+//Organisations
+import Organisations from "../pages/organisations/index";
+import AddUsers from "../pages/organisations/AddUsers";
+
+//Media
+import Media from "../pages/media";
+import UploadMedium from "../pages/media/UploadMedium";
+import EditMedium from "../pages/media/EditMedium";
+
+// //Policies
+import Policies from "../pages/policies";
+import CreatePolicy from "../pages/policies/CreatePolicy";
+import EditPolicy from "../pages/policies/EditPolicy";
+import ViewPolicy from "../pages/policies/components/ViewPolicy";
+
+//Webhooks
+import Webhooks from "../pages/webhooks";
+import CreateWebhook from "../pages/webhooks/CreateWebhook";
+import EditWebhook from "../pages/webhooks/EditWebhook";
 
 export interface Route {
   path: string;
@@ -82,6 +145,24 @@ export const routes = {
     menuKey: "/redirect",
     Component: Callback,
   },
+  SecuritySettings: {
+    path: "/settings/website/authentication",
+    menuKey: "/website",
+    Component: SecuritySettings,
+    title: "Authentication",
+  },
+  tokens: {
+    path: "/settings/advanced/tokens",
+    menuKey: "/tokens",
+    Component: Tokens,
+    title: "Tokens",
+  },
+  createTokens: {
+    path: "/settings/advanced/tokens/create",
+    menuKey: "/tokens",
+    Component: CreateSpaceTokenForm,
+    title: "New Token",
+  },
 
   // Core routes
   posts: {
@@ -106,32 +187,314 @@ export const routes = {
   },
   categories: {
     path: "/categories",
-    title: "Categories",
     menuKey: "/categories",
     Component: Categories,
+    title: "Categories",
     permission: {
       resource: "categories",
       action: "get",
     },
   },
+  createCategory: {
+    path: "/categories/create",
+    menuKey: "/categories",
+    Component: CreateCategory,
+    title: "New Category",
+    permission: {
+      resource: "categories",
+      action: "create",
+    },
+  },
+  editCategory: {
+    path: "/categories/:id/edit",
+    menuKey: "/categories",
+    Component: EditCategory,
+    title: "Edit",
+    permission: {
+      resource: "categories",
+      action: "update",
+    },
+  },
   tags: {
     path: "/tags",
-    title: "Tags",
     menuKey: "/tags",
     Component: Tags,
+    title: "Tags",
     permission: {
       resource: "tags",
       action: "get",
     },
   },
+  createTag: {
+    path: "/tags/create",
+    menuKey: "/tags",
+    Component: CreateTag,
+    title: "New Tag",
+    permission: {
+      resource: "tags",
+      action: "create",
+    },
+  },
+  editTag: {
+    path: "/tags/:id/edit",
+    menuKey: "/tags",
+    Component: EditTag,
+    title: "Edit",
+    permission: {
+      resource: "tags",
+      action: "update",
+    },
+  },
   media: {
     path: "/media",
-    title: "Media",
     menuKey: "/media",
     Component: Media,
+    title: "Media",
     permission: {
       resource: "media",
       action: "get",
+    },
+  },
+  createMedia: {
+    path: "/media/upload",
+    menuKey: "/media",
+    Component: UploadMedium,
+    title: "Upload",
+    permission: {
+      resource: "media",
+      action: "create",
+    },
+  },
+  editMedium: {
+    path: "/media/:id/edit",
+    menuKey: "/media",
+    Component: EditMedium,
+    title: "Edit",
+    permission: {
+      resource: "media",
+      action: "update",
+    },
+  },
+  policies: {
+    path: "/settings/members/policies",
+    menuKey: "/members",
+    Component: Policies,
+    title: "Policies",
+  },
+  createPolicy: {
+    path: "/settings/members/policies/create",
+    menuKey: "/members",
+    Component: CreatePolicy,
+    title: "New Policy",
+    permission: {
+      resource: "policies",
+      action: "create",
+    },
+  },
+  ViewPolicy: {
+    path: "/settings/members/policies/:policyID/view",
+    menuKey: "/members",
+    Component: ViewPolicy,
+    title: "Policy",
+  },
+  editPolicy: {
+    path: "/settings/members/policies/:id/edit",
+    menuKey: "/members",
+    Component: EditPolicy,
+    title: "Edit",
+    permission: {
+      resource: "policies",
+      action: "update",
+    },
+  },
+  branding: {
+    path: "/settings/website/branding",
+    menuKey: "/website",
+    Component: Branding,
+    title: "Branding",
+    permission: {
+      resource: "spaces",
+      action: "update",
+    },
+  },
+  menu: {
+    path: "/settings/website/menus",
+    menuKey: "/website",
+    Component: Menu,
+    title: "Menus",
+  },
+  createMenu: {
+    path: "/settings/website/menus/create",
+    menuKey: "/website",
+    Component: CreateMenu,
+    title: "New Menu",
+    permission: {
+      resource: "menus",
+      action: "create",
+    },
+  },
+  editMenu: {
+    path: "/settings/website/menus/:id/edit",
+    menuKey: "/website",
+    Component: EditMenu,
+    title: "Edit",
+    permission: {
+      resource: "menus",
+      action: "update",
+    },
+  },
+  organisations: {
+    path: "/organisations",
+    menuKey: "/organisations",
+    Component: Organisations,
+    title: "Organisations",
+  },
+  addusers: {
+    path: "/settings/organisations/addusers",
+    menuKey: "/organisations",
+    Component: AddUsers,
+    title: "Add Users",
+  },
+  analyticsForm: {
+    path: "/settings/website/analytics",
+    menuKey: "/website",
+    Component: AnalyticsForm,
+    title: "Analytics",
+    permission: {
+      resource: "spaces",
+      action: "update",
+    },
+  },
+  codeInjection: {
+    path: "/settings/website/code-injection",
+    menuKey: "/website",
+    Component: CodeInjection,
+    title: "Code Injection",
+    permission: {
+      resource: "spaces",
+      action: "update",
+    },
+  },
+
+  formats: {
+    path: "/settings/advanced/formats",
+    menuKey: "/advanced",
+    Component: Formats,
+    title: "Formats",
+    permission: {
+      resource: "formats",
+      action: "get",
+    },
+  },
+  createFormat: {
+    path: "/settings/advanced/formats/create",
+    menuKey: "/advanced",
+    Component: CreateFormat,
+    title: "New Format",
+    permission: {
+      resource: "formats",
+      action: "create",
+    },
+  },
+  editFormat: {
+    path: "/settings/advanced/formats/:id/edit",
+    menuKey: "/advanced",
+    Component: EditFormat,
+    title: "Edit",
+    permission: {
+      resource: "formats",
+      action: "update",
+    },
+  },
+
+  webhooks: {
+    path: "/settings/advanced/webhooks",
+    menuKey: "/advanced",
+    Component: Webhooks,
+    title: "Webhooks",
+    permission: {
+      resource: "webhooks",
+      action: "get",
+    },
+  },
+  createWebhook: {
+    path: "/settings/advanced/webhooks/create",
+    menuKey: "/advanced",
+    Component: CreateWebhook,
+    title: "New Webhook",
+    permission: {
+      resource: "webhooks",
+      action: "create",
+    },
+  },
+  editWebhook: {
+    path: "/settings/advanced/webhooks/:id/edit",
+    menuKey: "/advanced",
+    Component: EditWebhook,
+    title: "Edit",
+    permission: {
+      resource: "webhooks",
+      action: "update",
+    },
+  },
+  claimants: {
+    path: "/claimants",
+    menuKey: "/claimants",
+    Component: Claimants,
+    title: "Claimants",
+    permission: {
+      resource: "claimants",
+      action: "get",
+    },
+  },
+  createClaimant: {
+    path: "/claimants/create",
+    menuKey: "/claimants",
+    Component: CreateClaimant,
+    title: "New Claimant",
+    permission: {
+      resource: "claimants",
+      action: "create",
+    },
+  },
+  editClaimant: {
+    path: "/claimants/:id/edit",
+    menuKey: "/claimants",
+    Component: EditClaimant,
+    title: "Edit",
+    permission: {
+      resource: "claimants",
+      action: "update",
+    },
+  },
+  claims: {
+    path: "/claims",
+    menuKey: "/claims",
+    Component: Claims,
+    title: "Claims",
+    permission: {
+      resource: "claims",
+      action: "get",
+    },
+  },
+  createClaim: {
+    path: "/claims/create",
+    menuKey: "/claims",
+    Component: CreateClaim,
+    title: "New Claim",
+    permission: {
+      resource: "claims",
+      action: "create",
+    },
+  },
+  editClaim: {
+    path: "/claims/:id/edit",
+    menuKey: "/claims",
+    Component: EditClaim,
+    title: "Edit",
+    permission: {
+      action: "update",
+      resource: "claims",
     },
   },
 
@@ -144,26 +507,6 @@ export const routes = {
     permission: {
       resource: "fact-checks",
       action: ["get", "create"],
-    },
-  },
-  claims: {
-    path: "/claims",
-    title: "Claims",
-    menuKey: "/claims",
-    Component: Claims,
-    permission: {
-      resource: "claims",
-      action: ["get", "create"],
-    },
-  },
-  claimants: {
-    path: "/claimants",
-    title: "Claimants",
-    menuKey: "/claimants",
-    Component: Claimants,
-    permission: {
-      resource: "claimants",
-      action: "get",
     },
   },
   ratings: {
@@ -186,11 +529,68 @@ export const routes = {
       action: "create",
     },
   },
-  settings: {
-    path: "/settings",
-    title: "Settings",
-    menuKey: "/settings",
-    Component: Settings,
+  editRating: {
+    path: "/ratings/:id/edit",
+    menuKey: "/ratings",
+    Component: EditRating,
+    title: "Edit",
+    permission: {
+      resource: "ratings",
+      action: "update",
+    },
+  },
+  spaces: {
+    path: "/admin/spaces",
+    menuKey: "/admin/spaces",
+    Component: Spaces,
+    title: "Spaces",
+  },
+  createSpace: {
+    path: "/spaces/create",
+    menuKey: "/admin/spaces",
+    Component: CreateSpace,
+    title: "New Space",
+    permission: {
+      resource: "spaces",
+      action: "create",
+      isSpace: true,
+    },
+  },
+  editSpace: {
+    path: "/admin/spaces/:id/edit",
+    menuKey: "/admin/spaces",
+    Component: EditSpace,
+    title: "Edit",
+    permission: {
+      resource: "spaces",
+      action: "update",
+    },
+  },
+  editWebsite: {
+    path: "/settings/website/general",
+    menuKey: "/website",
+    Component: EditWebsite,
+    title: "General",
+    permission: {
+      resource: "spaces",
+      action: "update",
+    },
+  },
+  users: {
+    path: "/settings/members",
+    menuKey: "/members",
+    Component: Users,
+    title: "Users",
+  },
+  usersPermission: {
+    path: "/settings/members/:id/permissions",
+    menuKey: "/members",
+    Component: PermissionList,
+    title: "Users Permission ",
+    permission: {
+      resource: "users",
+      action: "get",
+    },
   },
 };
 

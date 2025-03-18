@@ -1,7 +1,7 @@
-import React from 'react';
-import { CheckCircle2 } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Input } from '@/components/ui/input';
+import React, { useEffect } from "react";
+import { CheckCircle2 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { Input } from "@/components/ui/input";
 import {
   Pagination,
   PaginationContent,
@@ -9,10 +9,10 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination';
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { getMedia } from '../../actions/media';
-import deepEqual from 'deep-equal';
+} from "@/components/ui/pagination";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { getMedia } from "../../actions/media";
+import deepEqual from "deep-equal";
 
 interface Medium {
   id: string;
@@ -35,7 +35,12 @@ interface Filters {
   q?: string;
 }
 
-function MediaList({ onSelect, selected, onUnselect, profile = false }: MediaListProps) {
+function MediaList({
+  onSelect,
+  selected,
+  onUnselect,
+  profile = false,
+}: MediaListProps) {
   const dispatch = useDispatch();
 
   const [filters, setFilters] = React.useState<Filters>({
@@ -57,7 +62,7 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }: MediaLis
     return { media: [], total: 0 };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchMedia();
   }, [dispatch, filters]);
 
@@ -73,7 +78,7 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }: MediaLis
         placeholder="Search Media"
         onChange={(e) => setFilters({ ...filters, q: e.target.value })}
       />
-      
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {media.map((item: Medium) => (
           <div key={item.id}>
@@ -87,12 +92,15 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }: MediaLis
                   }}
                 >
                   <AvatarImage
-                    src={item.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
+                    src={
+                      item.url?.[
+                        import.meta.env.VITE_ENABLE_IMGPROXY ? "proxy" : "raw"
+                      ]
+                    }
+                    alt="Selected media"
                   />
                 </Avatar>
-                <CheckCircle2
-                  className="absolute top-2 right-2 h-8 w-8 text-green-500"
-                />
+                <CheckCircle2 className="absolute top-2 right-2 h-8 w-8 text-green-500" />
               </div>
             ) : (
               <div className="relative">
@@ -101,7 +109,12 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }: MediaLis
                   onClick={() => onSelect(item)}
                 >
                   <AvatarImage
-                    src={item.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
+                    src={
+                      item.url?.[
+                        import.meta.env.VITE_ENABLE_IMGPROXY ? "proxy" : "raw"
+                      ]
+                    }
+                    alt="Media item"
                   />
                 </Avatar>
               </div>
@@ -110,34 +123,66 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }: MediaLis
         ))}
       </div>
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious 
-              onClick={() => setFilters({ ...filters, page: Math.max(1, filters.page - 1) })}
-              className={filters.page <= 1 ? 'pointer-events-none opacity-50' : ''}
-            />
-          </PaginationItem>
-          
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <PaginationItem key={page}>
-              <PaginationLink
-                onClick={() => setFilters({ ...filters, page })}
-                isActive={page === filters.page}
-              >
-                {page}
-              </PaginationLink>
+      {totalPages > 1 && (
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() =>
+                  setFilters({
+                    ...filters,
+                    page: Math.max(1, filters.page - 1),
+                  })
+                }
+                className={
+                  filters.page <= 1 ? "pointer-events-none opacity-50" : ""
+                }
+              />
             </PaginationItem>
-          ))}
-          
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => setFilters({ ...filters, page: Math.min(totalPages, filters.page + 1) })}
-              className={filters.page >= totalPages ? 'pointer-events-none opacity-50' : ''}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              // Show pages around the current page
+              let pageNum;
+              if (totalPages <= 5) {
+                pageNum = i + 1;
+              } else if (filters.page <= 3) {
+                pageNum = i + 1;
+              } else if (filters.page >= totalPages - 2) {
+                pageNum = totalPages - 4 + i;
+              } else {
+                pageNum = filters.page - 2 + i;
+              }
+
+              return (
+                <PaginationItem key={pageNum}>
+                  <PaginationLink
+                    onClick={() => setFilters({ ...filters, page: pageNum })}
+                    isActive={pageNum === filters.page}
+                  >
+                    {pageNum}
+                  </PaginationLink>
+                </PaginationItem>
+              );
+            })}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={() =>
+                  setFilters({
+                    ...filters,
+                    page: Math.min(totalPages, filters.page + 1),
+                  })
+                }
+                className={
+                  filters.page >= totalPages
+                    ? "pointer-events-none opacity-50"
+                    : ""
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 }

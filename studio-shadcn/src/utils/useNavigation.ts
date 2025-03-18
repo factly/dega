@@ -1,21 +1,21 @@
-import { useEffect, useRef } from "react";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 
-// Custom hook to navigate to a specified path
+/**
+ * Custom hook to handle navigation without path duplication
+ * @returns A function that navigates to the specified path without duplicating paths
+ */
 export default function useNavigation(): (path: string) => void {
   const navigate: NavigateFunction = useNavigate();
-  const pathRef = useRef<string | null>(null);
 
-  useEffect(() => {
-    if (pathRef.current) {
-      navigate(pathRef.current);
-      pathRef.current = null; // Reset the path after navigation
-    }
-  }, [pathRef, navigate]);
-
-  const triggerNavigation = (newPath: string): void => {
-    pathRef.current = newPath;
+  /**
+   * Navigates to the specified path, preventing duplicate path segments
+   * @param newPath The path to navigate to
+   */
+  const navigateTo = (newPath: string): void => {
+    // Use the built-in react-router navigate function
+    // This correctly handles both absolute and relative paths
+    navigate(newPath, { replace: false });
   };
 
-  return triggerNavigation;
+  return navigateTo;
 }

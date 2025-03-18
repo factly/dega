@@ -6,6 +6,7 @@ interface WindowSize {
   isMobileScreen: boolean;
 }
 
+// Original hook that returns window dimensions and mobile status
 const useWindowSize = (): WindowSize => {
   const [windowSize, setWindowSize] = useState<WindowSize>({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
@@ -34,4 +35,37 @@ const useWindowSize = (): WindowSize => {
   return windowSize;
 };
 
+// Overloaded function that accepts a media query string and returns boolean
+function useWindowSizeWithQuery(mediaQuery: string): boolean {
+  const [matches, setMatches] = useState<boolean>(
+    typeof window !== "undefined"
+      ? window.matchMedia(mediaQuery).matches
+      : false
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mediaQueryList = window.matchMedia(mediaQuery);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setMatches(event.matches);
+    };
+
+    // Modern browsers
+    mediaQueryList.addEventListener("change", handleChange);
+
+    // Initial check
+    setMatches(mediaQueryList.matches);
+
+    return () => {
+      mediaQueryList.removeEventListener("change", handleChange);
+    };
+  }, [mediaQuery]);
+
+  return matches;
+}
+
+// Export both versions
+export { useWindowSizeWithQuery };
 export default useWindowSize;

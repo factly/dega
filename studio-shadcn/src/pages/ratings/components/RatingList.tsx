@@ -1,9 +1,10 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Trash2 } from 'lucide-react';
-import useNavigation from '../../../utils/useNavigation';
-import { deleteRating } from '../../../actions/ratings';
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
+import { deleteRating } from "../../../actions/ratings";
+import useNavigation from "../../../utils/useNavigation";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -12,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -22,21 +22,22 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { AppThunkDispatch } from "../../../store/types";
 
+// Type definitions
 interface Rating {
   id: string;
   name: string;
   numeric_value: number;
-  text_colour?: {
+  background_colour?: {
     hex: string;
   };
-  background_colour?: {
+  text_colour?: {
     hex: string;
   };
 }
@@ -45,8 +46,8 @@ interface RatingListProps {
   actions: string[];
   data: {
     ratings: Rating[];
-    total: number;
     loading: boolean;
+    total: number;
   };
   filters: {
     page: number;
@@ -56,134 +57,184 @@ interface RatingListProps {
   fetchRatings: () => void;
 }
 
-function RatingList({ actions, data, filters, setFilters, fetchRatings }: RatingListProps) {
+const RatingList: React.FC<RatingListProps> = ({ data, fetchRatings }) => {
   const history = useNavigation();
-  const dispatch = useDispatch();
-  const [modalOpen, setModalOpen] = React.useState(false);
-  const [deleteItemId, setDeleteItemId] = React.useState<string | null>(null);
+  const dispatch = useDispatch<AppThunkDispatch>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [ratingToDelete, setRatingToDelete] = useState<Rating | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortedRatings, setSortedRatings] = useState<Rating[]>([]);
 
-  const handleRowClick = (rating: Rating) => {
-    history(`/ratings/${rating.id}/edit`);
+  // Update sortedRatings whenever data.ratings changes
+  useEffect(() => {
+    const sorted = [...data.ratings].sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+    setSortedRatings(sorted);
+  }, [data.ratings, sortOrder]);
+
+  const handleRowClick = (id: string) => {
+    history(`/ratings/${id}/edit`);
   };
 
-  const handleDelete = async (e: React.MouseEvent) => {
+  const handleEditClick = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
-    if (deleteItemId) {
-      await dispatch(deleteRating(deleteItemId));
-      await fetchRatings();
-      setModalOpen(false);
-      setDeleteItemId(null);
+    history(`/ratings/${id}/edit`);
+  };
+
+  const handleDeleteClick = (e: React.MouseEvent, rating: Rating) => {
+    e.stopPropagation();
+    setModalOpen(true);
+    setRatingToDelete(rating);
+  };
+
+  const handleDeleteConfirm = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    if (ratingToDelete && ratingToDelete.id) {
+      try {
+        await dispatch(deleteRating(ratingToDelete.id));
+        fetchRatings();
+      } catch (error) {
+        console.error("Error deleting rating:", error);
+      } finally {
+        setModalOpen(false);
+        setRatingToDelete(null);
+      }
     }
   };
 
+  const handleDeleteCancel = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setModalOpen(false);
+    setRatingToDelete(null);
+  };
+
+  const handleSortByTitle = () => {
+    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newSortOrder);
+
+    const sorted = [...data.ratings].sort((a, b) => {
+      if (newSortOrder === "asc") {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+
+    setSortedRatings(sorted);
+  };
+
   return (
-    <div className="space-y-4">
-      <div className="rounded-md border">
+    <div>
+      <div className="rounded-md">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[200px]">Name</TableHead>
-              <TableHead className="w-[200px]">Rating Value</TableHead>
-              <TableHead className="w-[200px]">Preview</TableHead>
-              <TableHead className="w-[150px] text-center">Action</TableHead>
+              <TableHead className="min-w-[400px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleSortByTitle}
+                >
+                  Title
+                  <ChevronsUpDown className="ml-1 h-4 w-4" />
+                </div>
+              </TableHead>
+              <TableHead className="min-w-[200px]">Preview</TableHead>
+              <TableHead className="min-w-[100px]">Rating Value</TableHead>
+              <TableHead className="min-w-[100px] text-center">
+                Action
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.ratings.map((rating) => (
+            {sortedRatings.map((rating) => (
               <TableRow
                 key={rating.id}
-                className="cursor-pointer hover:bg-gray-100"
-                onClick={() => handleRowClick(rating)}
+                onClick={() => handleRowClick(rating.id)}
+                className="cursor-pointer"
               >
                 <TableCell>
                   <Link
                     to={`/ratings/${rating.id}/edit`}
-                    className="text-gray-900 font-medium"
+                    className="mr-2"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {rating.name}
+                    <h3 className="text-[#101828]">{rating.name}</h3>
                   </Link>
-                </TableCell>
-                <TableCell className="text-gray-900 font-medium">
-                  {rating.numeric_value}
                 </TableCell>
                 <TableCell>
                   <div
-                    className="w-[100px] border border-solid border-black p-2 text-center"
+                    className="text-center w-28 text-sm rounded-xl"
                     style={{
                       color: rating.text_colour?.hex,
                       backgroundColor: rating.background_colour?.hex,
+                      padding: "0.25rem",
                     }}
                   >
                     {rating.name}
                   </div>
                 </TableCell>
+                <TableCell>
+                  <h3 className="text-[#101828]">{rating.numeric_value}</h3>
+                </TableCell>
+
                 <TableCell className="text-center">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setModalOpen(true);
-                      setDeleteItemId(rating.id);
-                    }}
-                    disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                  >
-                    <Trash2 className="h-5 w-5 text-gray-500" />
-                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger
+                      asChild
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Button variant="ghost" size="icon">
+                        <Ellipsis className="h-5 w-5 text-[#858585]" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={(e) => handleEditClick(e, rating.id)}
+                        className="cursor-pointer"
+                      >
+                        <Pencil className="h-4 w-4 mr-2" />
+                        <span>Edit</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={(e) => handleDeleteClick(e, rating)}
+                        className="cursor-pointer text-red-600 focus:text-red-600"
+                      >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        <span>Delete</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </div>
-
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">
-          Showing {((filters.page - 1) * filters.limit) + 1}-
-          {Math.min(filters.page * filters.limit, data.total)} of {data.total} results
-        </p>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious 
-                onClick={() => filters.page > 1 && 
-                  setFilters({ ...filters, page: filters.page - 1 })}
-                className={filters.page <= 1 ? 'pointer-events-none opacity-50' : ''}
-              />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext 
-                onClick={() => filters.page < Math.ceil(data.total / filters.limit) && 
-                  setFilters({ ...filters, page: filters.page + 1 })}
-                className={filters.page >= Math.ceil(data.total / filters.limit) ? 
-                  'pointer-events-none opacity-50' : ''}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <div className="border-t"></div>
       </div>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Delete Rating</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="max-w-sm p-4">
+          <DialogHeader className="space-y-2">
+            <DialogTitle className="text-base">Delete Rating</DialogTitle>
+            <DialogDescription className="text-sm">
               Are you sure you want to delete this rating?
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.stopPropagation();
-                setModalOpen(false);
-                setDeleteItemId(null);
-              }}
-            >
+          <DialogFooter className="mt-4 flex justify-end space-x-2">
+            <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleDelete}>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={handleDeleteConfirm}
+            >
               Delete
             </Button>
           </DialogFooter>
@@ -191,6 +242,6 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }: Rating
       </Dialog>
     </div>
   );
-}
+};
 
 export default RatingList;

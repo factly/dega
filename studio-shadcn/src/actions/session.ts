@@ -12,16 +12,21 @@ import {
   RootState,
 } from "./types";
 
+export interface GetSessionResponse {
+  success: boolean;
+  noToken?: boolean;
+}
+
 // Action creators
 export const getSession = (): ThunkAction<
-  Promise<SessionResponse>,
+  Promise<GetSessionResponse>,
   RootState,
   unknown,
   SessionActionTypes
 > => {
   return async (
     dispatch: Dispatch<SessionActionTypes>
-  ): Promise<SessionResponse> => {
+  ): Promise<GetSessionResponse> => {
     dispatch(setLoading(true));
 
     try {

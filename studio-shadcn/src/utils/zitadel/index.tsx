@@ -9,8 +9,7 @@ interface LoginResponse {
 }
 
 interface TokenResponse {
-  access_token?: string;
-  id_token?: string;
+  data?: any;
   error?: string;
 }
 
@@ -59,12 +58,32 @@ export const login = async (): Promise<LoginResponse> => {
 
     return { authorizeURL };
   } catch (error) {
+    console.error("Login error:", error);
     return { error: "Login failed" };
   }
 };
 
-export const getToken = async (code: string): Promise<TokenResponse> => {
+export const getToken = async (
+  code: string,
+  state?: string | null
+): Promise<TokenResponse> => {
   try {
+    if (!code) {
+      return { error: "No authorization code provided" };
+    }
+
+    // Verify state parameter
+    const storedState = localStorage.getItem("auth_state");
+    if (state && storedState && state !== storedState) {
+      return { error: "Invalid state parameter" };
+    }
+
+    // Get code verifier
+    const codeVerifier = localStorage.getItem("code_verifier");
+    if (!codeVerifier) {
+      return { error: "Code verifier not found" };
+    }
+
     const response = await fetch(
       `${import.meta.env.VITE_ZITADEL_AUTHORITY}/oauth/v2/token`,
       {
@@ -76,32 +95,70 @@ export const getToken = async (code: string): Promise<TokenResponse> => {
           code,
           client_id: import.meta.env.VITE_ZITADEL_CLIENT_ID,
           redirect_uri: import.meta.env.VITE_ZITADEL_REDIRECT_URI,
-          code_verifier: localStorage.getItem("code_verifier") || "",
+          code_verifier: codeVerifier,
           grant_type: "authorization_code",
         }).toString(),
         credentials: "include",
       }
     );
 
+    if (!response.ok) {
+      // Try to get more detailed error information
+      try {
+        const errorData = await response.json();
+        return {
+          error:
+            errorData.error_description ||
+            errorData.error ||
+            `Token request failed: ${response.status}`,
+        };
+      } catch (e) {
+        return { error: `Token request failed: ${response.status}` };
+      }
+    }
+
     const data = await response.json();
-    localStorage.setItem("sessionToken", data.access_token);
-    localStorage.setItem("x-zitadel-id-token", data.id_token);
-    return {};
+    if (data.error) {
+      return { error: data.error_description || data.error };
+    }
+
+    // Store tokens
+    if (data.access_token) {
+      localStorage.setItem("sessionToken", data.access_token);
+    } else {
+      return { error: "No access token received" };
+    }
+
+    if (data.id_token) {
+      localStorage.setItem("x-zitadel-id-token", data.id_token);
+    }
+
+    // Clean up used auth state and code verifier
+    localStorage.removeItem("auth_state");
+    localStorage.removeItem("code_verifier");
+
+    return { data };
   } catch (error) {
+    console.error("Token error:", error);
     return {
-      error: "Error fetching token",
+      error: error instanceof Error ? error.message : "Error fetching token",
     };
   }
 };
 
 export const getUserInfo = async (): Promise<UserInfoResponse> => {
   try {
+    const token = localStorage.getItem("sessionToken");
+    if (!token) {
+      return { error: "No session token found" };
+    }
+
     const response = await fetch(
       `${import.meta.env.VITE_ZITADEL_AUTHORITY}/oidc/v1/userinfo`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("sessionToken")}`,
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       }
@@ -111,10 +168,32 @@ export const getUserInfo = async (): Promise<UserInfoResponse> => {
       const data = await response.json();
       return { data };
     }
-    throw new Error("Unauthorized");
+
+    // Handle different error scenarios
+    if (response.status === 401) {
+      // Clear tokens on unauthorized response
+      localStorage.removeItem("sessionToken");
+      localStorage.removeItem("x-zitadel-id-token");
+      localStorage.removeItem("code_verifier");
+      localStorage.removeItem("auth_state");
+      return { error: "Unauthorized" };
+    }
+
+    // For other error statuses, try to get more details
+    try {
+      const errorData = await response.json();
+      return {
+        error:
+          errorData.error || `Failed to fetch user info: ${response.status}`,
+      };
+    } catch (e) {
+      return { error: `Failed to fetch user info: ${response.status}` };
+    }
   } catch (error) {
+    console.error("UserInfo error:", error);
     return {
-      error: "Error fetching user info",
+      error:
+        error instanceof Error ? error.message : "Error fetching user info",
     };
   }
 };
@@ -158,9 +237,15 @@ const getOpenIDConfiguration = async (): Promise<OpenIDConfiguration> => {
         credentials: "include",
       }
     );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+
     const config = await response.json();
-    return { data: JSON.parse(JSON.stringify(config, null, 2)) };
+    return { data: config };
   } catch (error) {
+    console.error("OpenID Configuration error:", error);
     return {
       error: "Error fetching OpenID configuration",
     };

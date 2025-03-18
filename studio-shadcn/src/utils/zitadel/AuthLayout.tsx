@@ -25,7 +25,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
       {isMobileScreen ? (
         // Mobile Layout
         <div className="w-full flex flex-col">
-          \{" "}
+          {" "}
           <div className="w-full bg-[#DCEFEB] flex justify-center items-center py-5">
             <div className="w-full max-w-[300px] relative">
               <img
