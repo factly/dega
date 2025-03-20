@@ -1,7 +1,7 @@
 import { combineReducers, AnyAction } from "redux";
 import { RootState } from "../types/index";
 import ratings from "./ratingsReducer";
-import postsReducer from "./postReducer";
+import postsReducer from "./postsReducer";
 import spaceSelectorPage from "./spaceSelectorPage";
 import spaceUsers from "./spaceUsersReducer";
 import { spaces } from "./spacesReducer";
@@ -29,6 +29,7 @@ import tagsReducer from "./tagsReducer";
 import categoriesReducer from "./categoriesReducer";
 import googleFactChecksReducer from "./googleFactChecksReducer";
 import sachFactCheckReducer from "./sachFactChecksReducer";
+import pagesReducer from "./pagesReducer";
 
 const appReducer = combineReducers({
   posts: postsReducer,
@@ -59,6 +60,7 @@ const appReducer = combineReducers({
   categories: categoriesReducer,
   googleFactChecks: googleFactChecksReducer,
   sachFactChecks: sachFactCheckReducer,
+  pages: pagesReducer,
 });
 
 const rootReducer = (state: RootState | undefined, action: AnyAction) => {

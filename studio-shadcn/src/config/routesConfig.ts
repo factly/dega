@@ -1,7 +1,6 @@
 import { Microchip, ListCheck, LayoutDashboard } from "lucide-react";
 import { Dashboard } from "../pages/dashboard";
 import Analytics from "../pages/analytics";
-import { Pages } from "../pages/pages/index";
 import Login from "../utils/zitadel/login";
 import RegistrationForm from "../utils/zitadel/registration";
 import VerifyEmail from "../utils/zitadel/VerifyEmail";
@@ -86,6 +85,11 @@ import Policies from "../pages/policies";
 import CreatePolicy from "../pages/policies/CreatePolicy";
 import EditPolicy from "../pages/policies/EditPolicy";
 import ViewPolicy from "../pages/policies/components/ViewPolicy";
+
+//Pages
+import Pages from '../pages/pages';
+import CreatePage from '../pages/pages/CreatePage';
+import EditPage from '../pages/pages/EditPage';
 
 //Webhooks
 import Webhooks from "../pages/webhooks";
@@ -175,13 +179,29 @@ export const routes = {
     title: "New Token",
   },
   pages: {
-    path: "/pages",
-    title: "Pages",
-    menuKey: "/pages",
+    path: '/pages',
+    menuKey: '/pages',
     Component: Pages,
+    title: 'Pages',
+  },
+  createPage: {
+    path: '/pages/create',
+    menuKey: '/pages',
+    Component: CreatePage,
+    title: 'New Page',
     permission: {
-      resource: "pages",
-      action: ["get", "create"],
+      resource: 'pages',
+      action: 'create',
+    },
+  },
+  editPage: {
+    path: '/pages/:id/edit',
+    menuKey: '/pages',
+    Component: EditPage,
+    title: 'Edit',
+    permission: {
+      resource: 'pages',
+      action: 'update',
     },
   },
   categories: {
