@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
+
+// Import the useAppDispatch hook
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // Import all necessary action modules
 import * as spaceUsersActions from "../../actions/spaceUsers";
@@ -67,6 +70,10 @@ interface EntityState {
 // Define RootState interface
 interface RootState {
   [key: string]: EntityState;
+  spaces: {
+    selected: number;
+    spaces: any[];
+  };
 }
 
 function Selector({
@@ -132,7 +139,7 @@ function Selector({
   });
   const [searchValue, setSearchValue] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   let normalizedValue: (string | number)[] = [];
 
@@ -270,7 +277,7 @@ function Selector({
     if (!selectorType) return;
 
     // Map action names to the correct function names based on entity type
-    let actionFn;
+    let actionFn: any;
 
     if (entity === "users" || action === "Authors") {
       actionFn = selectorType.getUsers;
@@ -346,7 +353,7 @@ function Selector({
     if (!selectorType || !createEntity) return;
 
     // Map create action names
-    let createFn;
+    let createFn: any;
 
     // Use consistent naming pattern for all entities
     if (entity === "users") {

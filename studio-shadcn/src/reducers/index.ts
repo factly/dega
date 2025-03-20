@@ -1,7 +1,7 @@
 import { combineReducers, AnyAction } from "redux";
 import { RootState } from "../types/index";
-import posts from "../reducers/postReducer";
 import ratings from "./ratingsReducer";
+import postsReducer from "./postReducer";
 import spaceSelectorPage from "./spaceSelectorPage";
 import spaceUsers from "./spaceUsersReducer";
 import { spaces } from "./spacesReducer";
@@ -31,7 +31,7 @@ import googleFactChecksReducer from "./googleFactChecksReducer";
 import sachFactCheckReducer from "./sachFactChecksReducer";
 
 const appReducer = combineReducers({
-  posts,
+  posts: postsReducer,
   ratings,
   spaces,
   spaceSelectorPage,

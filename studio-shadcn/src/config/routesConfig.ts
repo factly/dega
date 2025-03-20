@@ -1,7 +1,6 @@
 import { Microchip, ListCheck, LayoutDashboard } from "lucide-react";
 import { Dashboard } from "../pages/dashboard";
 import Analytics from "../pages/analytics";
-import Posts from "../pages/posts";
 import { Pages } from "../pages/pages/index";
 import Login from "../utils/zitadel/login";
 import RegistrationForm from "../utils/zitadel/registration";
@@ -26,6 +25,11 @@ import EditFormat from "../pages/formats/EditFormat";
 import Categories from "../pages/categories";
 import CreateCategory from "../pages/categories/CreateCategory";
 import EditCategory from "../pages/categories/EditCategory";
+
+//Post
+import Posts from "../pages/posts";
+import CreatePost from "../pages/posts/CreatePost";
+import EditPost from "../pages/posts/EditPost";
 
 //Fact Checks
 import GoogleFactCheck from "../pages/fact-checks/GoogleFactCheck";
@@ -169,18 +173,6 @@ export const routes = {
     menuKey: "/tokens",
     Component: CreateSpaceTokenForm,
     title: "New Token",
-  },
-
-  // Core routes
-  posts: {
-    path: "/posts",
-    title: "Posts",
-    menuKey: "/posts",
-    Component: Posts,
-    permission: {
-      resource: "posts",
-      action: ["get", "create"],
-    },
   },
   pages: {
     path: "/pages",
@@ -502,6 +494,32 @@ export const routes = {
     permission: {
       action: "update",
       resource: "claims",
+    },
+  },
+  posts: {
+    path: "/posts",
+    menuKey: "/posts",
+    Component: Posts,
+    title: "Posts",
+  },
+  createPost: {
+    path: "/posts/create",
+    menuKey: "/posts",
+    Component: CreatePost,
+    title: "New Post",
+    permission: {
+      resource: "posts",
+      action: "create",
+    },
+  },
+  editPost: {
+    path: "/posts/:id/edit",
+    menuKey: "/posts",
+    Component: EditPost,
+    title: "Edit",
+    permission: {
+      resource: "posts",
+      action: "update",
     },
   },
   factCheck: {

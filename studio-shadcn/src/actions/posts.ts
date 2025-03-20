@@ -15,11 +15,17 @@ import { addMedia } from "./media";
 import { addAuthors } from "./authors";
 import { addClaims } from "./claims";
 import getError from "../utils/getError";
-import { ThunkAction } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
-import { RootState } from "../store/index";
 
-// Type definitions
+// Define types for state
+interface RootState {
+  spaces?: {
+    selected: number;
+  };
+}
+
+// Define types for API responses and entities
 interface Author {
   id: number;
   [key: string]: any;
@@ -51,48 +57,47 @@ interface Medium {
   [key: string]: any;
 }
 
-interface PostDescription {
+interface Description {
   json: any;
   html: string;
 }
 
-interface PostData {
+interface Post {
   id: number;
-  title?: string;
-  slug?: string;
-  description?: any;
+  title: string;
+  slug: string;
+  status: string;
+  description: Description;
   description_html?: string;
-  status?: string;
   categories: Category[] | number[];
   tags: Tag[] | number[];
   authors: Author[] | number[];
   format: Format | number;
   claims: Claim[] | number[];
-  medium?: Medium | number | null;
+  medium?: Medium | number;
+  published_date?: string;
   [key: string]: any;
 }
 
-interface ProcessedPost
-  extends Omit<
-    PostData,
-    "categories" | "tags" | "authors" | "format" | "claims" | "medium"
-  > {
-  categories: number[];
-  tags: number[];
-  authors: number[];
-  format: number;
-  claims: number[];
-  medium?: number | null;
-  description: PostDescription;
+interface PostNode extends Omit<Post, "description"> {
+  description: any;
+  description_html: string;
+  categories: Category[];
+  tags: Tag[];
+  authors: Author[];
+  format: Format;
+  claims: Claim[];
+  medium?: Medium;
+  published_date?: string;
 }
 
-interface PostsRequestData {
-  data: number[];
-  query: QueryParams;
+interface PostsResponse {
+  nodes: PostNode[];
   total: number;
 }
 
-interface QueryParams {
+// Define types for action parameters
+interface PostsQueryParams {
   category?: number[];
   tag?: number[];
   format?: number[];
@@ -102,9 +107,14 @@ interface QueryParams {
   q?: string;
   status?: string;
   author?: number[];
+}
+
+interface PublishData {
+  id: number;
   [key: string]: any;
 }
 
+// Define return types for actions
 type AppThunk<ReturnType = void> = ThunkAction<
   Promise<ReturnType> | void,
   RootState,
@@ -112,8 +122,8 @@ type AppThunk<ReturnType = void> = ThunkAction<
   AnyAction
 >;
 
-export const getPosts = (query: QueryParams): AppThunk => {
-  return (dispatch, getState) => {
+export const getPosts = (query: PostsQueryParams): AppThunk => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>, getState) => {
     const currentSpaceID = getState().spaces?.selected;
     if (currentSpaceID === 0) {
       return;
@@ -151,15 +161,15 @@ export const getPosts = (query: QueryParams): AppThunk => {
       query.author.forEach((each) => params.append("author", each.toString()));
     }
     return axios
-      .get(POSTS_API, {
+      .get<PostsResponse>(POSTS_API, {
         params: params,
       })
       .then((response) => {
         dispatch(
           addAuthors(
             response.data.nodes
-              .filter((post: PostData) => post.authors.length > 0)
-              .map((post: PostData) => {
+              .filter((post) => post.authors.length > 0)
+              .map((post) => {
                 return post.authors;
               })
               .flat(1)
@@ -168,8 +178,8 @@ export const getPosts = (query: QueryParams): AppThunk => {
         dispatch(
           addTags(
             response.data.nodes
-              .filter((post: PostData) => post.tags.length > 0)
-              .map((post: PostData) => {
+              .filter((post) => post.tags.length > 0)
+              .map((post) => {
                 return post.tags;
               })
               .flat(1)
@@ -178,8 +188,8 @@ export const getPosts = (query: QueryParams): AppThunk => {
         dispatch(
           addCategories(
             response.data.nodes
-              .filter((post: PostData) => post.categories.length > 0)
-              .map((post: PostData) => {
+              .filter((post) => post.categories.length > 0)
+              .map((post) => {
                 return post.categories;
               })
               .flat(1)
@@ -188,8 +198,8 @@ export const getPosts = (query: QueryParams): AppThunk => {
         dispatch(
           addFormats(
             response.data.nodes
-              .filter((post: PostData) => post.format)
-              .map((post: PostData) => {
+              .filter((post) => post.format)
+              .map((post) => {
                 return post.format;
               })
               .flat(1)
@@ -198,8 +208,8 @@ export const getPosts = (query: QueryParams): AppThunk => {
         dispatch(
           addClaims(
             response.data.nodes
-              .filter((post: PostData) => post.claims.length > 0)
-              .map((post: PostData) => {
+              .filter((post) => post.claims.length > 0)
+              .map((post) => {
                 return post.claims;
               })
               .flat(1)
@@ -208,37 +218,38 @@ export const getPosts = (query: QueryParams): AppThunk => {
         dispatch(
           addMedia(
             response.data.nodes
-              .filter((post: PostData) => post.medium)
-              .map((post: PostData) => {
+              .filter((post) => post.medium)
+              .map((post) => {
                 return post.medium;
               })
           )
         );
         dispatch(
           addPostsList(
-            response.data.nodes.map((post: PostData) => {
-              const processedPost: ProcessedPost = {
+            response.data.nodes.map((post) => {
+              // Ensure status is properly preserved
+              const postWithDescription = {
                 ...post,
                 description: {
                   json: post.description,
-                  html: post.description_html || "",
+                  html: post.description_html,
                 },
-                categories: (post.categories as Category[]).map(
-                  (category) => category.id
-                ),
-                tags: (post.tags as Tag[]).map((tag) => tag.id),
-                authors: (post.authors as Author[]).map((author) => author.id),
-                format: (post.format as Format).id,
-                claims: (post.claims as Claim[]).map((claim) => claim.id),
-                medium: post.medium ? (post.medium as Medium).id : undefined,
+                categories: post.categories.map((category) => category.id),
+                tags: post.tags.map((tag) => tag.id),
+                authors: post.authors.map((author) => author.id),
+                format: post.format.id,
+                claims: post.claims.map((claim) => claim.id),
+                medium: post.medium?.id,
+                status: post.status, // Explicitly set status
+                published_date: post.published_date, // Ensure published_date is included
               };
-              return processedPost;
+              return postWithDescription;
             })
           )
         );
         dispatch(
           addPostsRequest({
-            data: response.data.nodes.map((item: PostData) => item.id),
+            data: response.data.nodes.map((item) => item.id),
             query: query,
             total: response.data.total,
           })
@@ -252,36 +263,35 @@ export const getPosts = (query: QueryParams): AppThunk => {
 };
 
 export const getPost = (id: number): AppThunk => {
-  return (dispatch) => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
     dispatch(loadingPosts());
     return axios
-      .get(`${POSTS_API}/${id}`)
+      .get<PostNode>(POSTS_API + "/" + id)
       .then((response) => {
-        let post: PostData = response.data;
-        const processedPost: ProcessedPost = {
+        let post = response.data;
+        const postWithDescription = {
           ...post,
-          description: {
-            json: post.description,
-            html: post.description_html || "",
-          },
-          authors: (post.authors as Author[]).map((author) => author.id),
-          categories: (post.categories as Category[]).map(
-            (category) => category.id
-          ),
-          claims: (post.claims as Claim[]).map((claim) => claim.id),
-          tags: (post.tags as Tag[]).map((tag) => tag.id),
-          format: (post.format as Format).id,
-          medium: post.medium ? (post.medium as Medium).id : undefined,
+          description: { json: post.description, html: post.description_html },
+          status: post.status, // Explicitly include status
         };
+        dispatch(addTags(post.tags));
+        dispatch(addAuthors(post.authors));
+        dispatch(addCategories(post.categories));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
-        dispatch(addTags(post.tags as Tag[]));
-        dispatch(addAuthors(post.authors as Author[]));
-        dispatch(addCategories(post.categories as Category[]));
-        dispatch(addClaims(post.claims as Claim[]));
-        dispatch(addFormats([post.format as Format]));
-        if (post.medium) dispatch(addMedia([post.medium as Medium]));
-
-        dispatch(getPostByID(processedPost));
+        dispatch(
+          getPostByID({
+            ...postWithDescription,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            claims: post.claims.map((claim) => claim.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format.id,
+            medium: post.medium?.id,
+          })
+        );
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -290,81 +300,75 @@ export const getPost = (id: number): AppThunk => {
   };
 };
 
-export const addPost = (
-  data: PostData
-): AppThunk<Promise<PostData | undefined>> => {
-  return (dispatch) => {
+export const addPost = (data: Partial<Post>): AppThunk<Post | undefined> => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
     dispatch(loadingPosts());
     return axios
-      .post(POSTS_API, data)
+      .post<PostNode>(POSTS_API, data)
       .then((response) => {
-        let post: PostData = response.data;
-        post.description = {
-          json: post.description,
-          html: post.description_html || "",
+        let post = response.data;
+        const postWithDescription = {
+          ...post,
+          description: { json: post.description, html: post.description_html },
+          status: post.status, // Explicitly include status
         };
-        dispatch(addTags(post.tags as Tag[]));
-        dispatch(addCategories(post.categories as Category[]));
-        dispatch(addAuthors(post.authors as Author[]));
-        dispatch(addClaims(post.claims as Claim[]));
-        dispatch(addFormats([post.format as Format]));
-        if (post.medium) dispatch(addMedia([post.medium as Medium]));
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
         dispatch(resetPosts());
-
-        const format = post.format as Format;
-        if (post.status === "publish") {
-          dispatch(addSuccessNotification(`${format.name} Published`));
-        } else if (post.status === "future") {
-          dispatch(
-            addSuccessNotification("Post added & Scheduled for future publish")
-          );
-        } else if (post.status === "draft") {
-          dispatch(addSuccessNotification("Post added"));
-        } else {
-          dispatch(addSuccessNotification("Post added & Ready to Publish"));
-        }
-
-        return post;
+        post.status === "publish"
+          ? dispatch(addSuccessNotification(`${post.format.name} Published`))
+          : post.status === "future"
+          ? dispatch(
+              addSuccessNotification(
+                "Post added & Scheduled for future publish"
+              )
+            )
+          : post.status === "draft"
+          ? dispatch(addSuccessNotification("Post added"))
+          : dispatch(addSuccessNotification("Post added & Ready to Publish"));
+        return postWithDescription;
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
-        return undefined;
       });
   };
 };
 
-export const publish = (data: PostData): AppThunk => {
-  return (dispatch) => {
+export const publish = (data: PublishData): AppThunk => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
     dispatch(loadingPosts());
     return axios
-      .post(`${POSTS_API}/publish`, data)
+      .post<PostNode>(POSTS_API + "/publish", data)
       .then((response) => {
-        let post: PostData = response.data;
-        post.description = {
-          json: post.description,
-          html: post.description_html || "",
-        };
-        dispatch(addTags(post.tags as Tag[]));
-        dispatch(addCategories(post.categories as Category[]));
-        dispatch(addAuthors(post.authors as Author[]));
-        dispatch(addClaims(post.claims as Claim[]));
-        dispatch(addFormats([post.format as Format]));
-        if (post.medium) dispatch(addMedia([post.medium as Medium]));
-
-        const processedPost: ProcessedPost = {
+        let post = response.data;
+        const postWithDescription = {
           ...post,
-          authors: (post.authors as Author[]).map((author) => author.id),
-          categories: (post.categories as Category[]).map(
-            (category) => category.id
-          ),
-          tags: (post.tags as Tag[]).map((tag) => tag.id),
-          format: (post.format as Format).id,
-          claims: (post.claims as Claim[]).map((claim) => claim.id),
-          medium: post.medium ? (post.medium as Medium).id : undefined,
+          description: { json: post.description, html: post.description_html },
+          status: post.status, // Explicitly include status
         };
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
-        dispatch(getPostByID(processedPost));
+        dispatch(
+          getPostByID({
+            ...postWithDescription,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format.id,
+            claims: post.claims.map((claim) => claim.id),
+            medium: post.medium?.id,
+          })
+        );
         dispatch(addSuccessNotification("Post published"));
       })
       .catch((error) => {
@@ -374,41 +378,37 @@ export const publish = (data: PostData): AppThunk => {
   };
 };
 
-export const addTemplate = (data: PostData): AppThunk => {
-  return (dispatch) => {
+export const addTemplate = (data: Partial<Post>): AppThunk => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
     dispatch(loadingPosts());
     return axios
-      .post(`${POSTS_API}/templates`, data)
+      .post<PostNode>(POSTS_API + "/templates", data)
       .then((response) => {
-        let post: PostData = response.data;
-        post.description = {
-          json: post.description,
-          html: post.description_html || "",
-        };
-        dispatch(addTags(post.tags as Tag[]));
-        dispatch(addCategories(post.categories as Category[]));
-
-        const authors = (post.authors as Author[]) || [];
-        const claims = (post.claims as Claim[]) || [];
-
-        dispatch(addAuthors(authors));
-        dispatch(addClaims(claims));
-        dispatch(addFormats([post.format as Format]));
-        if (post.medium) dispatch(addMedia([post.medium as Medium]));
-
-        const processedPost: ProcessedPost = {
+        let post = response.data;
+        const postWithDescription = {
           ...post,
-          authors: authors.map((author) => author.id),
-          categories: (post.categories as Category[]).map(
-            (category) => category.id
-          ),
-          tags: (post.tags as Tag[]).map((tag) => tag.id),
-          format: (post.format as Format).id,
-          claims: claims.map((claim) => claim.id),
-          medium: post.medium ? (post.medium as Medium).id : undefined,
+          description: { json: post.description, html: post.description_html },
+          status: post.status, // Explicitly include status
         };
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors || []));
+        dispatch(addClaims(post.claims || []));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
-        dispatch(getPostByID(processedPost));
+        dispatch(
+          getPostByID({
+            ...postWithDescription,
+            authors:
+              (post.authors && post.authors.map((author) => author.id)) || [],
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format.id,
+            claims: (post.claims && post.claims.map((claim) => claim.id)) || [],
+            medium: post.medium?.id,
+          })
+        );
         dispatch(addSuccessNotification("Template created"));
       })
       .catch((error) => {
@@ -418,37 +418,36 @@ export const addTemplate = (data: PostData): AppThunk => {
   };
 };
 
-export const publishPost = (data: PostData): AppThunk => {
-  return (dispatch) => {
+export const publishPost = (data: PublishData): AppThunk => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
     dispatch(loadingPosts());
     return axios
-      .put(`${POSTS_API}/${data.id}/publish`, data)
+      .put<PostNode>(POSTS_API + "/" + data.id + "/publish", data)
       .then((response) => {
-        let post: PostData = response.data;
-        post.description = {
-          json: post.description,
-          html: post.description_html || "",
-        };
-        dispatch(addTags(post.tags as Tag[]));
-        dispatch(addCategories(post.categories as Category[]));
-        dispatch(addAuthors(post.authors as Author[]));
-        dispatch(addClaims(post.claims as Claim[]));
-        dispatch(addFormats([post.format as Format]));
-        if (post.medium) dispatch(addMedia([post.medium as Medium]));
-
-        const processedPost: ProcessedPost = {
+        let post = response.data;
+        const postWithDescription = {
           ...post,
-          authors: (post.authors as Author[]).map((author) => author.id),
-          categories: (post.categories as Category[]).map(
-            (category) => category.id
-          ),
-          tags: (post.tags as Tag[]).map((tag) => tag.id),
-          format: (post.format as Format).id,
-          claims: (post.claims as Claim[]).map((claim) => claim.id),
-          medium: post.medium ? (post.medium as Medium).id : undefined,
+          description: { json: post.description, html: post.description_html },
+          status: post.status, // Explicitly include status
         };
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
-        dispatch(getPostByID(processedPost));
+        dispatch(
+          getPostByID({
+            ...postWithDescription,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format.id,
+            claims: post.claims.map((claim) => claim.id),
+            medium: post.medium?.id,
+          })
+        );
         dispatch(addSuccessNotification("Post published"));
       })
       .catch((error) => {
@@ -458,50 +457,51 @@ export const publishPost = (data: PostData): AppThunk => {
   };
 };
 
-export const updatePost = (data: PostData): AppThunk => {
-  return (dispatch) => {
+export const updatePost = (data: Post): AppThunk => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
     dispatch(loadingPosts());
     return axios
-      .put(`${POSTS_API}/${data.id}`, data)
+      .put<PostNode>(POSTS_API + "/" + data.id, data)
       .then((response) => {
-        let post: PostData = response.data;
-        post.description = {
-          json: post.description,
-          html: post.description_html || "",
-        };
-        dispatch(addTags(post.tags as Tag[]));
-        dispatch(addCategories(post.categories as Category[]));
-        dispatch(addAuthors(post.authors as Author[]));
-        dispatch(addClaims(post.claims as Claim[]));
-        dispatch(addFormats([post.format as Format]));
-        if (post.medium) dispatch(addMedia([post.medium as Medium]));
-
-        const processedPost: ProcessedPost = {
+        let post = response.data;
+        const postWithDescription = {
           ...post,
-          authors: (post.authors as Author[]).map((author) => author.id),
-          categories: (post.categories as Category[]).map(
-            (category) => category.id
-          ),
-          tags: (post.tags as Tag[]).map((tag) => tag.id),
-          format: (post.format as Format).id,
-          claims: (post.claims as Claim[]).map((claim) => claim.id),
-          medium: post.medium ? (post.medium as Medium).id : undefined,
+          description: { json: post.description, html: post.description_html },
+          status: post.status, // Explicitly include status
         };
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
-        dispatch(getPostByID(processedPost));
-
-        const format = post.format as Format;
-        if (data.status === "publish") {
-          dispatch(addSuccessNotification(`${format.name} Published`));
-        } else if (post.status === "future") {
-          dispatch(
-            addSuccessNotification("Post saved & Scheduled for future publish")
-          );
-        } else if (data.status === "draft") {
-          dispatch(addSuccessNotification("Draft Saved"));
-        } else {
-          dispatch(addSuccessNotification("Draft saved & Ready to Publish"));
-        }
+        dispatch(
+          getPostByID({
+            ...postWithDescription,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format.id,
+            claims: post.claims.map((claim) => claim.id),
+            medium: post.medium?.id,
+          })
+        );
+        data.status === "publish"
+          ? dispatch(
+              addSuccessNotification(
+                `${(post.format as Format).name} Published`
+              )
+            )
+          : post.status === "future"
+          ? dispatch(
+              addSuccessNotification(
+                "Post saved & Scheduled for future publish"
+              )
+            )
+          : data.status === "draft"
+          ? dispatch(addSuccessNotification("Draft Saved"))
+          : dispatch(addSuccessNotification("Draft saved & Ready to Publish"));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -511,10 +511,10 @@ export const updatePost = (data: PostData): AppThunk => {
 };
 
 export const deletePost = (id: number): AppThunk => {
-  return (dispatch) => {
+  return (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
     dispatch(loadingPosts());
     return axios
-      .delete(`${POSTS_API}/${id}`)
+      .delete(POSTS_API + "/" + id)
       .then(() => {
         dispatch(resetPosts());
         dispatch(addSuccessNotification("Post deleted"));
@@ -535,17 +535,21 @@ export const stopPostsLoading = () => ({
   payload: false,
 });
 
-export const getPostByID = (data: ProcessedPost) => ({
+export const getPostByID = (data: Post) => ({
   type: ADD_POST,
   payload: data,
 });
 
-export const addPostsList = (data: ProcessedPost[]) => ({
+export const addPostsList = (data: Post[]) => ({
   type: ADD_POSTS,
   payload: data,
 });
 
-export const addPostsRequest = (data: PostsRequestData) => ({
+export const addPostsRequest = (data: {
+  data: number[];
+  query: PostsQueryParams;
+  total: number;
+}) => ({
   type: ADD_POSTS_REQUEST,
   payload: data,
 });
