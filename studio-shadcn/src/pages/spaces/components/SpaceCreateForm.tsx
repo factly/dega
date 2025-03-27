@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { maker } from "../../../utils/sluger";
 import getJsonValue from "../../../utils/getJsonValue";
-import { SlugInput } from "../../../components/FormItems";
+import { SlugInput } from "../../../components/FormItems/SlugInput";
 import MonacoEditor from "../../../components/MonacoEditor/index";
 import { Building2 } from "lucide-react";
 import { RootState } from "../../../store";
@@ -50,7 +50,6 @@ export interface SpaceFormValues {
   name: string;
   slug: string;
   site_title?: string;
-  tag_line?: string;
   site_address?: string;
   description?: string;
   meta_fields?: Record<string, any>;
@@ -65,7 +64,6 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
       name: "",
       slug: "",
       site_title: "",
-      tag_line: "",
       site_address: "",
       description: "",
     },
@@ -100,7 +98,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
     <div className="bg-white flex justify-center">
       <div className="w-full max-w-3xl">
         <div className="mb-3 pb-4 border-b border-gray-200">
-          <h2 className="text-xl font-bold">Create Space</h2>
+          <h2 className="text-xl font-semibold">Create Space</h2>
           <p className="text-gray-600 mt-2">
             Set up a category to help organize by utilizing the advanced options
             provided below.
@@ -119,12 +117,15 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                 className="w-full"
               >
                 {/* General Section */}
-                <AccordionItem value="general">
-                  <AccordionTrigger className="hover:no-underline">
-                    <span className="text-lg font-semibold">General</span>
+                <AccordionItem
+                  value="general"
+                  className="rounded-md overflow-hidden mb-2"
+                >
+                  <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                    <span className="text-lg font-medium">General</span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-6 pt-4">
+                    <div className="space-y-6 pt-4 px-4 pb-4">
                       {/* Name */}
                       <FormField
                         control={form.control}
@@ -228,12 +229,15 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                 </AccordionItem>
 
                 {/* Site Details Section */}
-                <AccordionItem value="site-details">
-                  <AccordionTrigger className="hover:no-underline">
-                    <span className="text-lg font-semibold">Site details</span>
+                <AccordionItem
+                  value="site-details"
+                  className="rounded-md overflow-hidden mb-2"
+                >
+                  <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                    <span className="text-lg font-medium">Site details</span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-6 pt-4">
+                    <div className="space-y-6 pt-4 px-4 pb-4">
                       <FormField
                         control={form.control}
                         name="site_title"
@@ -253,30 +257,13 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
 
                       <FormField
                         control={form.control}
-                        name="tag_line"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Tagline</FormLabel>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                placeholder="Enter tagline"
-                                maxLength={100}
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
                         name="site_address"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Website URL</FormLabel>
                             <FormControl>
                               <div className="flex">
-                                <div className="bg-gray-100 flex items-center px-3 rounded-l-md border border-r-0 border-input">
+                                <div className="bg-[#F0F5FF] flex items-center px-3 rounded-l-md border border-r-0 border-input">
                                   https://
                                 </div>
                                 <Input
@@ -294,12 +281,15 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                 </AccordionItem>
 
                 {/* Meta Fields Section */}
-                <AccordionItem value="meta-fields">
-                  <AccordionTrigger className="hover:no-underline">
-                    <span className="text-lg font-semibold">Meta fields</span>
+                <AccordionItem
+                  value="meta-fields"
+                  className="rounded-md overflow-hidden mb-2"
+                >
+                  <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                    <span className="text-lg font-medium">Meta fields</span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-4 pt-4">
+                    <div className="space-y-4 pt-4 px-4 pb-4">
                       <FormField
                         control={form.control}
                         name="meta_fields"
@@ -333,6 +323,13 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
 
               {/* Action Buttons */}
               <div className="flex justify-start gap-3 pt-4 border-t border-gray-100">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => window.history.back()}
+                >
+                  Cancel
+                </Button>
                 <Button type="submit">Create space</Button>
               </div>
             </form>

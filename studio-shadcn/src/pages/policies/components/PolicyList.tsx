@@ -28,11 +28,11 @@ import useNavigation from "../../../utils/useNavigation";
 interface Policy {
   id: string;
   name: string;
-  description: string;
+  description?: string;
 }
 
 interface PolicyListProps {
-  actions: string[];
+  actions?: string[];
   data: {
     policies: Policy[];
     loading: boolean;

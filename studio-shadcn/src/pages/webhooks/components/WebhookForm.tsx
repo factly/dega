@@ -63,7 +63,12 @@ const WebhookForm: React.FC<WebhookFormProps> = ({ onCreate, data = {} }) => {
   });
 
   const form = useForm<WebhookFormData>({
-    defaultValues: { ...data },
+    defaultValues: {
+      name: data.name || "",
+      url: data.url || "",
+      enabled: data.enabled || false,
+      events: data.events || [],
+    },
   });
 
   const { events } = useSelector((state: RootState) => {
@@ -185,6 +190,8 @@ const WebhookForm: React.FC<WebhookFormProps> = ({ onCreate, data = {} }) => {
                           control={form.control}
                           name="events"
                           render={({ field }) => {
+                            // Make sure field.value is always an array
+                            const fieldValue = field.value || [];
                             return (
                               <FormItem
                                 key={event.id}
@@ -192,15 +199,15 @@ const WebhookForm: React.FC<WebhookFormProps> = ({ onCreate, data = {} }) => {
                               >
                                 <FormControl>
                                   <Checkbox
-                                    checked={field.value?.includes(event.id)}
+                                    checked={fieldValue.includes(event.id)}
                                     onCheckedChange={(checked) => {
                                       return checked
                                         ? field.onChange([
-                                            ...(field.value || []),
+                                            ...fieldValue,
                                             event.id,
                                           ])
                                         : field.onChange(
-                                            field.value?.filter(
+                                            fieldValue.filter(
                                               (value) => value !== event.id
                                             )
                                           );

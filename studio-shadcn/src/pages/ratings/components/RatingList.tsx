@@ -130,12 +130,12 @@ const RatingList: React.FC<RatingListProps> = ({ data, fetchRatings }) => {
   };
 
   return (
-    <div>
+    <div className="pb-4 overflow-auto">
       <div className="rounded-md">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="min-w-[400px]">
+              <TableHead className="min-w-[300px] text-[13px]">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={handleSortByTitle}
@@ -144,78 +144,89 @@ const RatingList: React.FC<RatingListProps> = ({ data, fetchRatings }) => {
                   <ChevronsUpDown className="ml-1 h-4 w-4" />
                 </div>
               </TableHead>
-              <TableHead className="min-w-[200px]">Preview</TableHead>
-              <TableHead className="min-w-[100px]">Rating Value</TableHead>
-              <TableHead className="min-w-[100px] text-center">
+              <TableHead className="min-w-[250px] text-[13px]">
+                Preview
+              </TableHead>
+              <TableHead className="min-w-[100px] text-[13px]">
+                Rating Value
+              </TableHead>
+              <TableHead className="min-w-[100px] text-center text-[13px]">
                 Action
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sortedRatings.map((rating) => (
-              <TableRow
-                key={rating.id}
-                onClick={() => handleRowClick(rating.id)}
-                className="cursor-pointer"
-              >
-                <TableCell>
-                  <Link
-                    to={`/ratings/${rating.id}/edit`}
-                    className="mr-2"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <h3 className="text-[#101828]">{rating.name}</h3>
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  <div
-                    className="text-center w-28 text-sm rounded-xl"
-                    style={{
-                      color: rating.text_colour?.hex,
-                      backgroundColor: rating.background_colour?.hex,
-                      padding: "0.25rem",
-                    }}
-                  >
-                    {rating.name}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <h3 className="text-[#101828]">{rating.numeric_value}</h3>
-                </TableCell>
-
-                <TableCell className="text-center">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger
-                      asChild
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <Button variant="ghost" size="icon">
-                        <Ellipsis className="h-5 w-5 text-[#858585]" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={(e) => handleEditClick(e, rating.id)}
-                        className="cursor-pointer"
-                      >
-                        <Pencil className="h-4 w-4 mr-2" />
-                        <span>Edit</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={(e) => handleDeleteClick(e, rating)}
-                        className="cursor-pointer text-red-600 focus:text-red-600"
-                      >
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        <span>Delete</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+            {sortedRatings.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center py-10">
+                  No ratings found
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              sortedRatings.map((rating) => (
+                <TableRow
+                  key={rating.id}
+                  onClick={() => handleRowClick(rating.id)}
+                  className="cursor-pointer"
+                >
+                  <TableCell>
+                    <Link
+                      to={`/ratings/${rating.id}/edit`}
+                      className="mr-2"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <h3 className="text-[#101828]">{rating.name}</h3>
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <div
+                      className="text-center w-28 text-sm rounded-xl"
+                      style={{
+                        color: rating.text_colour?.hex,
+                        backgroundColor: rating.background_colour?.hex,
+                        padding: "0.25rem",
+                      }}
+                    >
+                      {rating.name}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <h3 className="text-[#101828]">{rating.numeric_value}</h3>
+                  </TableCell>
+
+                  <TableCell className="text-center">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        asChild
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Button variant="ghost" size="icon">
+                          <Ellipsis className="h-5 w-5 text-[#858585]" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => handleEditClick(e, rating.id)}
+                          className="cursor-pointer"
+                        >
+                          <Pencil className="h-4 w-4 mr-2" />
+                          <span>Edit</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={(e) => handleDeleteClick(e, rating)}
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                        >
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          <span>Delete</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
-        <div className="border-t"></div>
       </div>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>

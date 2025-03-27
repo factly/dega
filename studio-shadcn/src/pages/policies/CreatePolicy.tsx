@@ -1,10 +1,9 @@
 import React from "react";
 import { createPolicy } from "../../actions/policies";
-import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import PolicyCreateForm from "./components/PolicyForm";
-import { AppDispatch } from "../../store/index";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // Define the policy value interface
 interface PolicyPermission {
@@ -13,7 +12,8 @@ interface PolicyPermission {
 }
 
 interface PolicyFormValues {
-  name?: string;
+  name: string;
+  users: string[];
   description?: string;
   permissions?: PolicyPermission[];
   [key: string]: any;
@@ -21,7 +21,7 @@ interface PolicyFormValues {
 
 const CreatePolicy: React.FC = () => {
   const history = useNavigation();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const onCreate = (values: PolicyFormValues): void => {
     // Filter out incomplete permission entries

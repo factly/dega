@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
@@ -17,11 +16,17 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+// Import the useAppDispatch hook
+import { useAppDispatch } from "@/hooks/reduxHooks";
+
 // Import all necessary action modules
 import * as spaceUsersActions from "../../actions/spaceUsers";
+import * as usersActions from "../../actions/users";
 import * as claimantsActions from "../../actions/claimants";
 import * as ratingsActions from "../../actions/ratings";
-import * as categoriesActions from "../../actions/categories"; // Import categories actions
+import * as categoriesActions from "../../actions/categories";
+import * as claimsActions from "../../actions/claims";
+import * as tagsActions from "../../actions/tags";
 
 // Define types for the Selector component props
 interface SelectorProps {
@@ -29,8 +34,8 @@ interface SelectorProps {
   setLoading?: boolean;
   mode?: "multiple" | "tags" | undefined;
   createEntity?: string;
-  value: string[] | string | number | undefined;
-  onChange: (values: string[] | string | number) => void;
+  value: string[] | string | number | number[] | undefined;
+  onChange: (values: string[] | string | number | number[]) => void;
   action: string;
   display?: string;
   placeholder?: string;
@@ -39,7 +44,7 @@ interface SelectorProps {
 
 // Define type for entity detail object
 interface EntityDetail {
-  id: string;
+  id: string | number;
   [key: string]: any;
 }
 
@@ -47,7 +52,6 @@ interface EntityDetail {
 interface QueryState {
   page: number;
   limit: number;
-  q?: string;
 }
 
 // Define type for entity state
@@ -55,7 +59,7 @@ interface EntityState {
   details: { [key: string]: EntityDetail };
   req: Array<{
     query: any;
-    data: string[];
+    data: (string | number)[];
     total: number;
   }>;
   loading: boolean;
@@ -64,6 +68,10 @@ interface EntityState {
 // Define RootState interface
 interface RootState {
   [key: string]: EntityState;
+  spaces: {
+    selected: number;
+    spaces: any[];
+  };
 }
 
 function Selector({
@@ -80,21 +88,39 @@ function Selector({
 }: SelectorProps) {
   const originalValueType = typeof value;
 
-  // Convert action to lowercase for entity name - ensure consistent casing
-  const entity = action.toLowerCase();
+  // Normalize action to lowercase and handle plurals consistently
+  const normalizeEntityName = (name: string): string => {
+    name = name.toLowerCase();
+    // Handle special case mappings
+    if (name === "authors") return "users";
+    if (name === "claims") return "claims";
+    if (name === "categories") return "categories";
+    if (name === "tags") return "tags";
+
+    // Remove trailing 's' for consistency if needed
+    return name.endsWith("s") ? name : name;
+  };
+
+  // Convert action to lowercase for entity name
+  const entity = normalizeEntityName(action);
 
   // Map entity names to their respective action modules
   const getActionModule = (entityName: string) => {
     switch (entityName) {
-      case "users":
+      case "spaceusers":
         return spaceUsersActions;
+      case "users":
+        return usersActions;
       case "claimants":
         return claimantsActions;
       case "ratings":
         return ratingsActions;
       case "categories":
         return categoriesActions;
-      // Add other entities as needed
+      case "claims":
+        return claimsActions;
+      case "tags":
+        return tagsActions;
       default:
         console.error(`No action module found for entity: ${entityName}`);
         return null;
@@ -107,46 +133,30 @@ function Selector({
   const [entityCreatedFlag, setEntityCreatedFlag] = useState<boolean>(false);
   const [query, setQuery] = useState<QueryState>({
     page: 1,
-    limit: 5,
+    limit: 20,
   });
-  const [searchValue, setSearchValue] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  let normalizedValue: string[] = [];
+  let normalizedValue: (string | number)[] = [];
 
   if (!value) {
     normalizedValue = [];
   } else if (!mode && value) {
-    normalizedValue = Array.isArray(value)
-      ? value.map((v) => String(v))
-      : [String(value)];
+    normalizedValue = Array.isArray(value) ? value.map((v) => v) : [value];
   } else {
-    normalizedValue = Array.isArray(value)
-      ? value.map((v) => String(v))
-      : [String(value)];
+    normalizedValue = Array.isArray(value) ? value : [value];
   }
 
   if (!placeholder) {
-    placeholder = `Select ${entity}`;
+    placeholder = `Select ${action}`;
   }
-
-  const onSearch = (value: string) => {
-    if (value) {
-      setSearchValue(value);
-      setQuery({ ...query, q: value, page: 1 });
-    } else {
-      setSearchValue("");
-      setQuery({ ...query, page: query.page, q: undefined });
-    }
-  };
 
   const { details, total, loading, ids } = useSelector((state: RootState) => {
     let details: EntityDetail[] = [];
-    let ids: string[] = [];
+    let ids: (string | number)[] = [];
     let total = 0;
 
-    // Use the entity name directly as the state key
     const stateKey = entity;
     const entityState = state[stateKey];
 
@@ -169,43 +179,40 @@ function Selector({
           (!item.query.page && currentQuery.page === 1);
         const limitMatch =
           String(item.query.limit) === String(currentQuery.limit) ||
-          (!item.query.limit && currentQuery.limit === 5);
+          (!item.query.limit && currentQuery.limit === 20);
 
-        // If we have a search term, make sure it matches too
-        const searchMatch =
-          (!currentQuery.q && !item.query.q) ||
-          (currentQuery.q &&
-            item.query.q &&
-            item.query.q.toLowerCase().includes(currentQuery.q.toLowerCase()));
-
-        return pageMatch && limitMatch && searchMatch;
+        return pageMatch && limitMatch;
       });
 
       if (matchingReq) {
         total = matchingReq.total;
-        ids = ids.concat(matchingReq.data);
+        const uniqueIds = new Set(ids);
+        matchingReq.data.forEach((id) => uniqueIds.add(id));
+        ids = Array.from(uniqueIds);
       }
     }
 
+    // Create a map to ensure unique details by ID
+    const detailsMap = new Map<string | number, EntityDetail>();
+
     // Add selected values to details first
     if (normalizedValue.length > 0) {
-      details = normalizedValue
+      normalizedValue
         .filter((id) => entityState.details && entityState.details[id])
-        .map((id) => entityState.details[id]);
+        .forEach((id) => {
+          detailsMap.set(id, entityState.details[id]);
+        });
     }
 
     // Add all loaded entities
-    details = details.concat(
-      ids
-        .filter((id) => !normalizedValue.includes(id))
-        .map((id) => entityState.details[id])
-        .filter(Boolean) // Make sure we don't include undefined entries
-    );
+    ids
+      .filter((id) => !normalizedValue.includes(id) && entityState.details[id])
+      .forEach((id) => {
+        detailsMap.set(id, entityState.details[id]);
+      });
 
-    // Remove duplicates by id
-    details = Array.from(
-      new Map(details.map((item) => [item.id, item])).values()
-    );
+    // Convert map to array
+    details = Array.from(detailsMap.values());
 
     return {
       details,
@@ -250,17 +257,22 @@ function Selector({
     if (!selectorType) return;
 
     // Map action names to the correct function names based on entity type
-    let actionFn;
+    let actionFn: any;
 
-    // Use consistent naming pattern for all entities
-    if (entity === "users") {
+    if (entity === "users" || action === "Authors") {
       actionFn = selectorType.getUsers;
+    } else if (entity === "spaceusers") {
+      actionFn = selectorType.getSpaceUsers;
     } else if (entity === "claimants") {
       actionFn = selectorType.getClaimants;
     } else if (entity === "ratings") {
       actionFn = selectorType.getRatings;
     } else if (entity === "categories") {
       actionFn = selectorType.getCategories;
+    } else if (entity === "claims") {
+      actionFn = selectorType.getClaims;
+    } else if (entity === "tags") {
+      actionFn = selectorType.getTags;
     } else {
       // Fallback to generic pattern
       const actionName = `get${
@@ -287,6 +299,7 @@ function Selector({
     if (!item) return "";
     if (item[display]) return item[display];
     if (item["email"]) return item["email"];
+    if (item["name"]) return item["name"];
     return "";
   };
 
@@ -304,7 +317,9 @@ function Selector({
   };
 
   // Handle selection change
-  const handleSelectionChange = (value: string | string[]) => {
+  const handleSelectionChange = (
+    value: string | number | (string | number)[]
+  ) => {
     // Check if the original value was a number
     if (originalValueType === "number" && !Array.isArray(value)) {
       // Convert string back to number for consistency
@@ -319,17 +334,23 @@ function Selector({
     if (!selectorType || !createEntity) return;
 
     // Map create action names
-    let createFn;
+    let createFn: any;
 
     // Use consistent naming pattern for all entities
     if (entity === "users") {
-      createFn = selectorType.createUser;
+      createFn = selectorType.createUser || selectorType.addUser;
+    } else if (entity === "spaceusers") {
+      createFn = selectorType.createSpaceUser || selectorType.addSpaceUser;
     } else if (entity === "claimants") {
       createFn = selectorType.createClaimant;
     } else if (entity === "ratings") {
       createFn = selectorType.createRating;
     } else if (entity === "categories") {
       createFn = selectorType.createCategory;
+    } else if (entity === "claims") {
+      createFn = selectorType.createClaim;
+    } else if (entity === "tags") {
+      createFn = selectorType.createTag;
     } else {
       // Fallback to generic pattern
       const createAction = `create${createEntity}`;
@@ -341,21 +362,23 @@ function Selector({
       return;
     }
 
+    const newName = prompt(`Enter name for new ${createEntity}:`);
+    if (!newName || newName.trim() === "") return;
+
     dispatch(
       createFn({
-        name: query.q?.trim() || "",
+        name: newName.trim(),
       })
     ).then(() => {
       // Set a new query to trigger a refetch
-      setQuery({ page: 1, limit: 5 });
+      setQuery({ page: 1, limit: 20 });
       setEntityCreatedFlag(true);
-      setSearchValue("");
     });
   };
 
   // Filtering the details to remove invalid options and handle undefined items
   const filteredDetails = details.filter(
-    (item) => item && !invalidOptions.includes(item.id)
+    (item) => item && !invalidOptions.includes(String(item.id))
   );
 
   // For single select
@@ -380,37 +403,40 @@ function Selector({
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" style={{ width: style?.width }}>
           <Command>
-            <CommandInput
-              placeholder={`Search ${entity}...`}
-              value={searchValue}
-              onValueChange={onSearch}
-            />
             <CommandList>
               <ScrollArea className="h-64" onScrollCapture={handleScroll}>
                 <CommandEmpty>
-                  {createEntity && (
-                    <Button
-                      variant="outline"
-                      className="w-full mt-2"
-                      onClick={handleCreateEntity}
-                      disabled={!query.q?.trim()}
-                    >
-                      Create a {createEntity} '{query.q}'
-                    </Button>
+                  {loading ? (
+                    <div className="p-2 text-center text-sm">Loading...</div>
+                  ) : (
+                    <>
+                      <div className="p-2 text-center text-sm">
+                        No items found
+                      </div>
+                      {createEntity && (
+                        <Button
+                          variant="outline"
+                          className="w-full mt-2"
+                          onClick={handleCreateEntity}
+                        >
+                          Create a new {createEntity}
+                        </Button>
+                      )}
+                    </>
                   )}
                 </CommandEmpty>
                 <CommandGroup>
                   {filteredDetails.map((item) => (
                     <CommandItem
-                      key={entity + item?.id}
-                      value={item?.id}
+                      key={`${entity}-${item?.id}`}
+                      value={String(item?.id)}
                       onSelect={() => {
                         handleSelectionChange(item?.id);
                         setOpen(false);
                       }}
                     >
                       <Check
-                        className={`mr-2 h-4 w-4 ${
+                        className={`h-4 w-4 ${
                           normalizedValue.includes(item?.id)
                             ? "opacity-100"
                             : "opacity-0"
@@ -447,30 +473,33 @@ function Selector({
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" style={{ width: style?.width }}>
           <Command>
-            <CommandInput
-              placeholder={`Search ${entity}...`}
-              value={searchValue}
-              onValueChange={onSearch}
-            />
             <CommandList>
               <ScrollArea className="h-64" onScrollCapture={handleScroll}>
                 <CommandEmpty>
-                  {createEntity && (
-                    <Button
-                      variant="outline"
-                      className="w-full mt-2"
-                      onClick={handleCreateEntity}
-                      disabled={!query.q?.trim()}
-                    >
-                      Create a {createEntity} '{query.q}'
-                    </Button>
+                  {loading ? (
+                    <div className="p-2 text-center text-sm">Loading...</div>
+                  ) : (
+                    <>
+                      <div className="p-2 text-center text-sm">
+                        No items found
+                      </div>
+                      {createEntity && (
+                        <Button
+                          variant="outline"
+                          className="w-full mt-2"
+                          onClick={handleCreateEntity}
+                        >
+                          Create a new {createEntity}
+                        </Button>
+                      )}
+                    </>
                   )}
                 </CommandEmpty>
                 <CommandGroup>
                   {filteredDetails.map((item) => (
                     <CommandItem
-                      key={entity + item?.id}
-                      value={item?.id}
+                      key={`${entity}-${item?.id}`}
+                      value={String(item?.id)}
                       onSelect={() => {
                         const newValue = normalizedValue.includes(item?.id)
                           ? normalizedValue.filter((id) => id !== item?.id)

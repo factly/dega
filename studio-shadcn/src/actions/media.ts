@@ -123,8 +123,15 @@ export const createMedium = (
         }
       )
       .then((response) => {
+        // Reset the media state completely to force a refresh on next fetch
         dispatch(resetMedia());
+
+        // Immediately fetch the updated media list with the latest data
+        const latestQuery = { page: 1, limit: 10, sort: "desc" };
+        dispatch(getMedia(latestQuery));
+
         dispatch(addSuccessNotification("Medium created"));
+
         return profile
           ? response.data
           : Array.isArray(response.data.nodes)
@@ -168,20 +175,36 @@ export const deleteMedium = (id: string | number): AppThunk<Promise<void>> => {
     dispatch(loadingMedia());
     const spaceId = getSpaceId();
 
-    return axios
-      .delete(`${MEDIA_API}/${id}`, {
-        headers: {
-          "X-Space": spaceId,
-        },
-      })
-      .then(() => {
-        dispatch(resetMedia());
-        dispatch(addSuccessNotification("Medium deleted"));
-      })
-      .catch((error) => {
-        dispatch(addErrorNotification(getError(error)));
-      })
-      .finally(() => dispatch(stopMediaLoading()));
+    return new Promise((resolve, reject) => {
+      axios
+        .delete(`${MEDIA_API}/${id}`, {
+          headers: {
+            "X-Space": spaceId,
+          },
+        })
+        .then(() => {
+          // First reset the media state completely
+          dispatch(resetMedia());
+
+          // Add a longer delay before fetching updated data
+          // This ensures the backend has time to process the deletion
+          setTimeout(() => {
+            // Then fetch the updated media list with the latest data
+            const latestQuery = { page: 1, limit: 10, sort: "desc" };
+            dispatch(getMedia(latestQuery))
+              .then(() => {
+                dispatch(addSuccessNotification("Medium deleted"));
+                resolve();
+              })
+              .catch(reject);
+          }, 800);
+        })
+        .catch((error) => {
+          dispatch(addErrorNotification(getError(error)));
+          reject(error);
+        })
+        .finally(() => dispatch(stopMediaLoading()));
+    });
   };
 };
 

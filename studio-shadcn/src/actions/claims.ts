@@ -77,6 +77,51 @@ type AppThunk<ReturnType = void> = ThunkAction<
   AnyAction
 >;
 
+export const hasClaims = (json: any): boolean => {
+  if (!json || !json.content) {
+    return false;
+  }
+
+  if (!Array.isArray(json.content)) {
+    return false;
+  }
+
+  return json.content.some(
+    (node: any) => node.type === "claim" || (node.content && hasClaims(node))
+  );
+};
+
+export const extractClaimIdsAndOrder = (json: any) => {
+  const claimIds: number[] = [];
+  const claimOrder: number[] = [];
+
+  if (!json || !json.content || !Array.isArray(json.content)) {
+    return { claimIds, claimOrder };
+  }
+
+  // Process the content to extract claims
+  json.content.forEach((node: any) => {
+    if (node.type === "claim" && node.attrs && node.attrs.id) {
+      const id = parseInt(node.attrs.id);
+      if (!isNaN(id) && !claimIds.includes(id)) {
+        claimIds.push(id);
+        claimOrder.push(id);
+      }
+    } else if (node.content) {
+      const { claimIds: nestedIds, claimOrder: nestedOrder } =
+        extractClaimIdsAndOrder(node);
+      nestedIds.forEach((id: number) => {
+        if (!claimIds.includes(id)) {
+          claimIds.push(id);
+          claimOrder.push(id);
+        }
+      });
+    }
+  });
+
+  return { claimIds, claimOrder };
+};
+
 // action to fetch all claims
 export const getClaims = (query: ClaimsQuery): AppThunk => {
   const params = new URLSearchParams();

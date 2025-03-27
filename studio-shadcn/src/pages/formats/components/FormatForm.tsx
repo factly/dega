@@ -11,11 +11,11 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ExpandIcon, ShrinkIcon } from "lucide-react";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -23,6 +23,7 @@ import { maker } from "../../../utils/sluger";
 import getJsonValue from "../../../utils/getJsonValue";
 import MediaSelector from "../../../components/MediaSelector";
 import { MetaForm, SlugInput } from "../../../components/FormItems";
+import { useNavigate } from "react-router-dom";
 
 // Define the format data interface
 interface FormatData {
@@ -60,7 +61,7 @@ interface FormatFormProps {
 }
 
 const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const navigate = useNavigate();
   const [valueChange, setValueChange] = useState(false);
 
   // Process meta_fields if it exists
@@ -78,6 +79,16 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
   // Handle title change to generate slug
   const onTitleChange = (value: string) => {
     form.setValue("slug", maker(value), { shouldDirty: true });
+    setValueChange(true);
+  };
+
+  const onReset = () => {
+    form.reset(initialData as FormatFormValues);
+  };
+
+  const handleCancel = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent form submission
+    navigate(-1); // Navigate to the previous page
   };
 
   // Handle form submission
@@ -91,128 +102,162 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
     }
 
     onCreate(submissionValues);
-    form.reset();
+    onReset();
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        onChange={() => setValueChange(true)}
-        className="w-full max-w-6xl mx-auto"
-      >
-        <div className="flex justify-end mb-4">
-          <Button type="submit" disabled={!valueChange}>
-            {data && data.id ? "Update" : "Submit"}
-          </Button>
+    <div className="px-60 max-w-6xl mx-auto">
+      {/* Header and Subheader */}
+      <div className="mb-4 px-4">
+        <h1 className="text-xl font-semibold text-gray-900">Create Format</h1>
+        <div className="mt-2">
+          <p className="text-gray-600 text-[13px]">
+            Set up a format by entering the essential details provided below
+          </p>
         </div>
+      </div>
 
-        <div className="mb-6">
-          <Collapsible
-            open={!isCollapsed}
-            onOpenChange={setIsCollapsed}
-            className="w-full bg-slate-100 rounded-md"
-          >
-            <div className="flex items-center justify-between p-4 border-b">
-              <h3 className="text-lg font-medium">General</h3>
-              <CollapsibleTrigger asChild>
-                <Button variant="outline">
-                  {isCollapsed ? (
-                    <ExpandIcon className="h-4 w-4 mr-2" />
-                  ) : (
-                    <ShrinkIcon className="h-4 w-4 mr-2" />
-                  )}
-                  {isCollapsed ? "Expand" : "Collapse"}
-                </Button>
-              </CollapsibleTrigger>
+      {/* Top border */}
+      <div className="border-t border-gray-200 mb-4"></div>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full mx-auto">
+          <div className="w-full">
+            <Accordion
+              type="multiple"
+              defaultValue={["general"]}
+              className="w-full"
+            >
+              <AccordionItem
+                value="general"
+                className="rounded-md overflow-hidden mb-2"
+              >
+                <AccordionTrigger className="hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-base font-medium">General</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-1 md:grid-cols-12 p-6 bg-white">
+                    <div className="md:col-span-5 space-y-6">
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem className="mb-6">
+                            <FormLabel className="text-base">Title</FormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                placeholder="Format name"
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  onTitleChange(e.target.value);
+                                }}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className="mb-6">
+                        <SlugInput form={form} />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="is_featured"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center justify-between">
+                            <FormLabel className="text-base">
+                              Featured
+                            </FormLabel>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                            />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => (
+                          <FormItem className="mb-6">
+                            <FormLabel className="text-base mb-2">
+                              Description
+                            </FormLabel>
+                            <Textarea
+                              {...field}
+                              placeholder="Enter description"
+                              onChange={(e) => {
+                                field.onChange(e);
+                                setValueChange(true);
+                              }}
+                              className="min-h-24"
+                            />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="md:col-span-7">
+                      <FormField
+                        control={form.control}
+                        name="medium_id"
+                        render={({ field }) => (
+                          <FormItem className="h-full">
+                            <FormLabel className="text-base mb-2">
+                              Featured Image
+                            </FormLabel>
+                            <div className="flex justify-center items-start h-full mt-4">
+                              <MediaSelector
+                                value={field.value}
+                                onChange={(value) => {
+                                  field.onChange(value);
+                                  setValueChange(true);
+                                }}
+                                containerStyles={{ justifyContent: "center" }}
+                              />
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <div className="w-full mb-8">
+            <MetaForm
+              style={{ marginBottom: 24, background: "#f0f2f5", border: 0 }}
+            />
+          </div>
+
+          <div className="flex justify-start mb-8 mt-8">
+            <div className="space-x-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleCancel}
+                className="px-6"
+              >
+                Cancel
+              </Button>
+              <Button type="submit" disabled={!valueChange} className="px-6">
+                {data && data.id ? "Update" : "Create format"}
+              </Button>
             </div>
-
-            <CollapsibleContent className="p-4 bg-slate-50">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                <div className="md:col-span-7">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Format Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            onChange={(e) => {
-                              field.onChange(e);
-                              onTitleChange(e.target.value);
-                            }}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-
-                  <SlugInput form={form} />
-
-                  <FormField
-                    control={form.control}
-                    name="is_featured"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 my-4">
-                        <FormLabel>Featured</FormLabel>
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Textarea {...field} rows={5} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="md:col-span-5">
-                  <FormField
-                    control={form.control}
-                    name="medium_id"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Featured Image</FormLabel>
-                        <FormControl>
-                          <MediaSelector
-                            value={field.value}
-                            onChange={field.onChange}
-                            maxWidth="250px"
-                            containerStyles={{
-                              maxWidth: "250px",
-                              justifyContent: "start",
-                            }}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-
-        <div className="bg-slate-100 rounded-md">
-          <MetaForm />
-        </div>
-      </form>
-    </Form>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 };
 

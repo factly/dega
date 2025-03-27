@@ -1,6 +1,7 @@
 import * as React from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/popover";
 
 interface DatePickerProps {
+  selected?: Date;
   date?: Date;
   onSelect?: (date: Date | undefined) => void;
   disabled?: (date: Date) => boolean;
@@ -20,32 +22,43 @@ interface DatePickerProps {
 }
 
 export function DatePicker({
+  selected,
   date,
   onSelect,
   disabled,
   placeholder = "Pick a date",
   className,
 }: DatePickerProps) {
+  const [open, setOpen] = React.useState(false);
+  const selectedDate = selected || date;
+
+  const handleSelect = (selectedDate: Date | undefined) => {
+    if (onSelect) {
+      onSelect(selectedDate);
+    }
+    setOpen(false); // Close the popover when a date is selected
+  };
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
           className={cn(
             "w-full justify-start text-left font-normal",
-            !date && "text-muted-foreground",
+            !selectedDate && "text-muted-foreground",
             className
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : placeholder}
+          {selectedDate ? format(selectedDate, "PPP") : placeholder}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
-          selected={date}
-          onSelect={onSelect}
+          selected={selectedDate}
+          onSelect={handleSelect}
           disabled={disabled}
           initialFocus
         />
@@ -56,8 +69,8 @@ export function DatePicker({
 
 // Date Range Picker
 interface DateRangePickerProps {
-  dateRange?: { from: Date | undefined; to: Date | undefined };
-  onSelect?: (range: { from: Date | undefined; to: Date | undefined }) => void;
+  dateRange?: DateRange;
+  onSelect?: (range: DateRange | undefined) => void;
   disabled?: (date: Date) => boolean;
   placeholder?: string;
   className?: string;
@@ -70,10 +83,8 @@ export function DateRangePicker({
   placeholder = "Pick a date range",
   className,
 }: DateRangePickerProps) {
-  const [date, setDate] = React.useState<{
-    from: Date | undefined;
-    to: Date | undefined;
-  }>(dateRange || { from: undefined, to: undefined });
+  const [date, setDate] = React.useState<DateRange | undefined>(dateRange);
+  const [open, setOpen] = React.useState(false);
 
   // When date changes, call the onSelect prop
   React.useEffect(() => {
@@ -82,8 +93,18 @@ export function DateRangePicker({
     }
   }, [date, onSelect]);
 
+  // Create a handler with the correct type
+  const handleSelect: SelectRangeEventHandler = (selected) => {
+    setDate(selected);
+
+    // If we have a complete range (both from and to dates), close the popover
+    if (selected?.from && selected?.to) {
+      setOpen(false);
+    }
+  };
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -112,7 +133,7 @@ export function DateRangePicker({
         <Calendar
           mode="range"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleSelect}
           disabled={disabled}
           numberOfMonths={2}
           initialFocus
@@ -124,7 +145,7 @@ export function DateRangePicker({
 
 // DatePicker with Presets
 interface DatePickerWithPresetsProps {
-  date?: Date;
+  selected?: Date;
   onSelect?: (date: Date | undefined) => void;
   disabled?: (date: Date) => boolean;
   placeholder?: string;
@@ -133,13 +154,14 @@ interface DatePickerWithPresetsProps {
 }
 
 export function DatePickerWithPresets({
-  date,
+  selected,
   onSelect,
   disabled,
   placeholder = "Pick a date",
   className,
   presets,
 }: DatePickerWithPresetsProps) {
+  const [open, setOpen] = React.useState(false);
   const defaultPresets = [
     { name: "Today", date: new Date() },
     { name: "Yesterday", date: new Date(Date.now() - 86400000) },
@@ -151,19 +173,26 @@ export function DatePickerWithPresets({
 
   const finalPresets = presets || defaultPresets;
 
+  const handleSelect = (selectedDate: Date | undefined) => {
+    if (onSelect) {
+      onSelect(selectedDate);
+    }
+    setOpen(false); // Close the popover when a date is selected
+  };
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
           className={cn(
             "w-full justify-start text-left font-normal",
-            !date && "text-muted-foreground",
+            !selected && "text-muted-foreground",
             className
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : placeholder}
+          {selected ? format(selected, "PPP") : placeholder}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -173,7 +202,9 @@ export function DatePickerWithPresets({
               key={preset.name}
               variant="ghost"
               className="text-left"
-              onClick={() => onSelect?.(preset.date)}
+              onClick={() => {
+                handleSelect(preset.date);
+              }}
             >
               {preset.name}
             </Button>
@@ -182,8 +213,8 @@ export function DatePickerWithPresets({
         <div className="border-t">
           <Calendar
             mode="single"
-            selected={date}
-            onSelect={onSelect}
+            selected={selected}
+            onSelect={handleSelect}
             disabled={disabled}
             initialFocus
           />
@@ -193,7 +224,6 @@ export function DatePickerWithPresets({
   );
 }
 
-// For use in forms - this matches how it's used in your ClaimForm.tsx
 interface FormDatePickerProps {
   date?: Date;
   onSelect: (date: Date | undefined) => void;
@@ -205,7 +235,7 @@ export function FormDatePicker({
   onSelect,
   disabled,
 }: FormDatePickerProps) {
-  return <DatePicker date={date} onSelect={onSelect} disabled={disabled} />;
+  return <DatePicker selected={date} onSelect={onSelect} disabled={disabled} />;
 }
 
 export default DatePicker;

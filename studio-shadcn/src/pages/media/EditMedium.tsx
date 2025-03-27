@@ -67,6 +67,7 @@ function EditMedium(): React.ReactElement {
   const [valueChange, setValueChange] = useState<boolean>(false);
   const [isMobileScreen, setIsMobileScreen] = useState<boolean>(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   useEffect(() => {
     function handleResize(): void {
@@ -132,10 +133,21 @@ function EditMedium(): React.ReactElement {
 
   const handleDeleteMedium = (): void => {
     if (!id) return;
-    dispatch(deleteMedium(id)).then(() => history("/media"));
-    setShowDeleteDialog(false);
-  };
 
+    setIsDeleting(true);
+
+    dispatch(deleteMedium(id))
+      .then(() => {
+        history("/media");
+      })
+      .catch((error) => {
+        console.error("Delete error:", error);
+      })
+      .finally(() => {
+        setShowDeleteDialog(false);
+        setIsDeleting(false);
+      });
+  };
   if (loading) return <Skeleton className="w-full h-64" />;
 
   if (!media) {
@@ -166,10 +178,10 @@ function EditMedium(): React.ReactElement {
               <Button
                 variant="destructive"
                 type="button"
-                disabled={disabled}
+                disabled={disabled || isDeleting}
                 onClick={() => setShowDeleteDialog(true)}
               >
-                Delete
+                {isDeleting ? "Deleting..." : "Delete"}
               </Button>
               <Button type="submit" disabled={disabled || !valueChange}>
                 Submit
@@ -305,9 +317,13 @@ function EditMedium(): React.ReactElement {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteMedium}>
-              Delete
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteMedium}
+              disabled={isDeleting}
+              className={isDeleting ? "opacity-50 cursor-not-allowed" : ""}
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

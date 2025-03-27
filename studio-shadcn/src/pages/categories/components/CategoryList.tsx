@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteCategory } from "../../../actions/categories";
 import useNavigation from "../../../utils/useNavigation";
@@ -27,7 +27,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 // Types
 interface Category {
@@ -55,35 +54,13 @@ interface CategoryListProps {
 
 const CategoryList: React.FC<CategoryListProps> = ({
   data,
-  filters,
-  setFilters,
   fetchCategories,
-  sortOrder = "desc",
   onSortToggle,
 }) => {
   const dispatch = useAppDispatch();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const [deleteItemID, setDeleteItemID] = useState<string | null>(null);
   const navigate = useNavigation();
-
-  // Safely access filters with defaults
-  const page = filters?.page || 1;
-  const limit = filters?.limit || 10;
-
-  // Sort categories by name based on sort order
-  const sortedCategories = useMemo(() => {
-    if (!data.categories || data.categories.length === 0) {
-      return [];
-    }
-
-    return [...data.categories].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.name?.localeCompare(b.name || "") || 0;
-      } else {
-        return b.name?.localeCompare(a.name || "") || 0;
-      }
-    });
-  }, [data.categories, sortOrder]);
 
   const handleRowClick = useCallback(
     (id: string) => {
@@ -131,19 +108,13 @@ const CategoryList: React.FC<CategoryListProps> = ({
     setDeleteDialogOpen(false);
   }, []);
 
-  // Calculate pagination values
-  const totalPages = Math.ceil(data.total / limit) || 1;
-  const startRange = data.total === 0 ? 0 : (page - 1) * limit + 1;
-  const endRange = Math.min(page * limit, data.total);
-
   return (
-    <div className="flex flex-col h-full space-y-4">
-      {/* Table container with flex-grow to push pagination to bottom */}
-      <div className="relative w-full overflow-auto flex-grow">
+    <div className="pb-4 overflow-auto">
+      <div className="rounded-md">
         <Table>
-          <TableHeader>
+          <TableHeader className="w-1/2 text-[13px]">
             <TableRow>
-              <TableHead className="min-w-[200px]">
+              <TableHead className="w-1/2">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={onSortToggle}
@@ -152,35 +123,27 @@ const CategoryList: React.FC<CategoryListProps> = ({
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
-              <TableHead className="min-w-[200px]">Slug</TableHead>
+              <TableHead className="w-2/5">Slug</TableHead>
               <TableHead className="w-[150px] text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.loading ? (
-              <TableRow>
-                <TableCell colSpan={4} className="text-center">
-                  Loading...
-                </TableCell>
-              </TableRow>
-            ) : sortedCategories.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={4} className="text-center">
-                  No categories found
-                </TableCell>
-              </TableRow>
-            ) : (
-              sortedCategories.map((category) => (
+            {data.categories && data.categories.length > 0 ? (
+              data.categories.map((category) => (
                 <TableRow
                   key={category.id}
                   onClick={() => handleRowClick(category.id)}
-                  className="cursor-pointer hover:bg-muted/50"
+                  className="cursor-pointer"
                 >
                   <TableCell>
-                    <h3 className="font-medium text-base">{category.name}</h3>
+                    <h3 className="font-normal">
+                      {category.name || "Unnamed Category"}
+                    </h3>
                   </TableCell>
                   <TableCell>
-                    <span className="text-base">{category.slug}</span>
+                    <p className="line-clamp-2 font-normal">
+                      {category.slug || "---"}
+                    </p>
                   </TableCell>
                   <TableCell className="text-center">
                     <DropdownMenu>
@@ -212,79 +175,15 @@ const CategoryList: React.FC<CategoryListProps> = ({
                   </TableCell>
                 </TableRow>
               ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3} className="text-center py-4">
+                  No categories found
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>
-      </div>
-
-      {/* Pagination footer */}
-      <div className="flex items-center justify-between py-2 border-t mt-auto">
-        {/* Results count */}
-        <div>
-          <p className="text-sm text-muted-foreground">
-            {data.total > 0
-              ? `${startRange}-${endRange} of ${data.total} results`
-              : "No results"}
-          </p>
-        </div>
-
-        {/* Pagination controls */}
-        <div className="flex items-center space-x-4">
-          {/* Rows per page */}
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-muted-foreground">
-              Rows per page:
-            </span>
-            <select
-              className="h-8 rounded-md border border-input px-2"
-              value={limit}
-              onChange={(e) =>
-                setFilters({
-                  ...filters,
-                  limit: Number(e.target.value),
-                  page: 1,
-                })
-              }
-            >
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-              <option value={20}>20</option>
-            </select>
-          </div>
-
-          {/* Page indicator */}
-          <div className="flex items-center space-x-1">
-            <span className="text-sm">
-              Page {page} of {totalPages}
-            </span>
-          </div>
-
-          {/* Pagination controls */}
-          <div className="flex items-center space-x-1">
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-8 w-8"
-              onClick={() =>
-                page > 1 && setFilters({ ...filters, page: page - 1 })
-              }
-              disabled={page <= 1}
-            >
-              <PaginationPrevious className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-8 w-8"
-              onClick={() =>
-                page < totalPages && setFilters({ ...filters, page: page + 1 })
-              }
-              disabled={page >= totalPages}
-            >
-              <PaginationNext className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
       </div>
 
       {/* Delete Confirmation Dialog */}

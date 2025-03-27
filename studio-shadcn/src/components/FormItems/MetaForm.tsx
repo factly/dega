@@ -26,7 +26,7 @@ interface MetaFormData {
   meta_fields?: string;
 }
 
-const MetaForm: React.FC<MetaFormProps> = ({ formData }) => {
+const MetaForm: React.FC<MetaFormProps> = ({ formData, style }) => {
   const [headerCode, setHeaderCode] = React.useState(
     formData?.header_code || ""
   );
@@ -38,16 +38,19 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData }) => {
   );
 
   return (
-    <div className="w-full space-y-4">
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="meta-data">
-          <AccordionTrigger className="hover:no-underline">
+    <div className="w-full space-y-4" style={style}>
+      <Accordion type="single" collapsible className="w-full bg-white">
+        <AccordionItem
+          value="meta-data"
+          className="rounded-md overflow-hidden mb-2"
+        >
+          <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
             <div className="flex items-center justify-between w-full">
-              <span className="text-base">Meta Data</span>
+              <span className="text-base font-medium">Meta Data</span>
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-4 pt-4">
+            <div className="space-y-4 bg-white mt-3">
               <div className="space-y-2">
                 <Label htmlFor="meta-title">Meta Title</Label>
                 <Input
@@ -76,14 +79,17 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData }) => {
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="code-injection">
-          <AccordionTrigger className="hover:no-underline">
+        <AccordionItem
+          value="code-injection"
+          className="rounded-md overflow-hidden mb-2"
+        >
+          <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
             <div className="flex items-center justify-between w-full">
-              <span className="text-base">Code Injection</span>
+              <span className="text-base font-medium">Code Injection</span>
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-4 pt-4">
+            <div className="space-y-4 bg-white mt-3">
               <div className="space-y-2">
                 <Label htmlFor="header-code">Header Code</Label>
                 <Textarea
@@ -110,14 +116,17 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData }) => {
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="meta-fields">
-          <AccordionTrigger className="hover:no-underline">
+        <AccordionItem
+          value="meta-fields"
+          className="rounded-md overflow-hidden mb-2"
+        >
+          <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
             <div className="flex items-center justify-between w-full">
-              <span className="text-base">Meta Data Fields</span>
+              <span className="text-base font-medium">Meta Data Fields</span>
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            <div className="pt-4">
+            <div className="bg-white mt-3">
               <div className="space-y-2">
                 <Label htmlFor="meta-fields">Meta Fields (JSON)</Label>
                 <Textarea

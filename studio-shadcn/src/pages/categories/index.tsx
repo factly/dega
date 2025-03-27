@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import deepEqual from "deep-equal";
-import { Plus } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import CategoryList from "./components/CategoryList";
 import Loader from "../../components/Loader";
 import { getCategories } from "../../actions/categories";
-import getUrlParams from "../../utils/getUrlParams";
+import Pagination from "../../components/Pagination";
 
 interface Category {
   id: string;
@@ -29,6 +29,9 @@ interface CategoryState {
 
 interface RootState {
   categories: CategoryState;
+  sidebar: {
+    collapsed: boolean;
+  };
 }
 
 interface FilterParams {
@@ -41,81 +44,26 @@ interface FilterParams {
 
 function Categories() {
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  // Use URLSearchParams to get the current query parameters
-  const query = useMemo(
-    () => new URLSearchParams(location.search),
-    [location.search]
-  );
-  const params = useMemo(() => getUrlParams(query), [query]);
 
   // State for search and filters
-  const [searchText, setSearchText] = useState<string>(
-    (params.q as string) || ""
-  );
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
-    (params.sort as "asc" | "desc") || "desc"
-  );
+  const [searchText, setSearchText] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [filters, setFilters] = useState<FilterParams>({
-    ...params,
-    page: parseInt(params.page as string) || 1,
-    limit: parseInt(params.limit as string) || 10,
+    page: 1,
+    limit: 10,
   });
 
   const [isMobileScreen, setIsMobileScreen] = useState<boolean>(false);
 
-  // Detect mobile screen on mount
+  // Fetch categories when filters change
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobileScreen(window.innerWidth <= 768);
-    };
-
-    handleResize(); // Initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Update URL when filters change
-  useEffect(() => {
-    const searchParams = new URLSearchParams();
-
-    // Only add non-empty values to the search params
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== "") {
-        // Don't add default pagination values to URL
-        if (
-          (key === "page" && value === 1) ||
-          (key === "limit" && value === 10)
-        ) {
-          return;
-        }
-        searchParams.set(key, String(value));
-      }
-    });
-
-    const searchParamsString = searchParams.toString();
-    const newUrl =
-      location.pathname + (searchParamsString ? `?${searchParamsString}` : "");
-
-    // Only navigate if the URL actually changed to avoid loops
-    const currentFullPath = location.pathname + location.search;
-
-    if (currentFullPath !== newUrl) {
-      navigate(newUrl, { replace: true });
-    }
-  }, [filters, navigate, location.pathname, location.search]);
-
-  // Fetch categories when component mounts or URL params change
-  useEffect(() => {
-    dispatch(getCategories(params));
-  }, [dispatch, location.search, params]);
+    fetchCategories();
+  }, [filters]);
 
   // Get data from Redux store
   const { categories, total, loading } = useSelector((state: RootState) => {
     const node = state.categories.req.find((item) => {
-      return deepEqual(item.query, params);
+      return deepEqual(item.query, filters);
     });
 
     if (node)
@@ -142,9 +90,20 @@ function Categories() {
     );
   }, [categories, searchText]);
 
+  // Sort categories based on sort order
+  const sortedCategories = useMemo(() => {
+    return [...filteredCategories].sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.name?.localeCompare(b.name || "") || 0;
+      } else {
+        return b.name?.localeCompare(a.name || "") || 0;
+      }
+    });
+  }, [filteredCategories, sortOrder]);
+
   const fetchCategories = useCallback(() => {
-    dispatch(getCategories(params));
-  }, [dispatch, params]);
+    dispatch(getCategories(filters));
+  }, [dispatch, filters]);
 
   // Handle search input changes - dynamic search
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,79 +112,116 @@ function Categories() {
 
   // Handle sort toggle
   const handleSortToggle = useCallback(() => {
-    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
-    setSortOrder(newSortOrder);
-    setFilters({
-      ...filters,
-      sort: newSortOrder,
-    });
-  }, [sortOrder, filters]);
+    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+  }, []);
 
-  // Update filter parameters
-  const updateFilterParams = (newParams: Record<string, any>) => {
-    setFilters({
-      ...filters,
-      ...newParams,
-    });
-  };
+  // Pagination handlers
+  const handlePageChange = useCallback((page: number) => {
+    setFilters((prev) => ({ ...prev, page }));
+  }, []);
+
+  const handlePageSizeChange = useCallback((size: number) => {
+    setFilters((prev) => ({ ...prev, limit: size, page: 1 }));
+  }, []);
+
+  // Calculate total pages
+  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+
+  // Get sidebar state from Redux store
+  const isCollapsed = useSelector(
+    (state: RootState) => state.sidebar?.collapsed
+  );
+
+  // Calculate left margin based on sidebar state
+  const sidebarWidth = isCollapsed ? "89px" : "265px";
+
+  // Define the header height (including padding)
+  const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
 
   return loading ? (
     <Loader />
   ) : (
-    <div className="flex flex-col space-y-4 w-full">
+    <div className="flex flex-col h-full">
       <Helmet title={"Categories"} />
 
-      <div className="w-full">
-        <div className="flex flex-row md:flex-row justify-between gap-4">
-          <div className="relative w-64">
-            <Input
-              placeholder="Search categories"
-              value={searchText}
-              onChange={handleSearchChange}
-              className="pr-10"
-            />
-          </div>
-
-          <div className="w-full md:w-1/3">
-            <div
-              className={`flex items-center gap-4 ${
-                isMobileScreen
-                  ? "justify-between flex-row-reverse"
-                  : "justify-end"
-              }`}
-            >
-              <div
-                className={`${isMobileScreen ? "w-1/2" : "w-full md:w-auto"}`}
-              >
-                <div className="flex justify-end">
-                  <Link to="/categories/create">
-                    <Button
-                      variant="default"
-                      className="flex items-center gap-2"
-                    >
-                      <Plus className="h-4 w-4" />
-                      Create
-                    </Button>
-                  </Link>
-                </div>
-              </div>
+      {/* Header */}
+      <div
+        className="fixed top-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: headerHeight,
+          transition: "left 0.3s ease",
+        }}
+      >
+        <div className="flex justify-between items-center h-full px-6 pt-1">
+          <div className="flex items-center gap-4 flex-1">
+            <div className="relative flex-1 max-w-xs">
+              <Input
+                placeholder="Search categories..."
+                value={searchText}
+                onChange={handleSearchChange}
+                className="h-10"
+              />
             </div>
+          </div>
+          <div>
+            <Link to="/categories/create">
+              <Button size="lg" className="flex items-center gap-2 py-2">
+                <PlusCircle className="h-4 w-4" />
+                Create category
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
 
-      <div className="flex-grow flex flex-col min-h-0">
+      {/* Content */}
+      <div
+        className="absolute overflow-auto"
+        style={{
+          top: headerHeight,
+          left: sidebarWidth,
+          right: 0,
+          bottom: "64px",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          paddingBottom: "1.5rem",
+          paddingTop: "1rem",
+          transition: "left 0.3s ease, top 0.3s ease",
+        }}
+      >
         <CategoryList
           data={{
-            categories: filteredCategories,
-            total: filteredCategories.length,
+            categories: sortedCategories,
+            total: total,
             loading,
           }}
           filters={filters}
-          setFilters={updateFilterParams}
+          setFilters={setFilters}
           fetchCategories={fetchCategories}
           sortOrder={sortOrder}
           onSortToggle={handleSortToggle}
+        />
+      </div>
+
+      {/* Footer with Pagination */}
+      <div
+        className="fixed bottom-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: "64px",
+          transition: "left 0.3s ease",
+        }}
+      >
+        <Pagination
+          currentPage={filters.page}
+          totalPages={totalPages}
+          totalItems={total}
+          pageSize={filters.limit}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
         />
       </div>
     </div>

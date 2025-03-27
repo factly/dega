@@ -1,7 +1,8 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import ClaimCreateForm from "./components/ClaimForm";
 import { useSelector } from "react-redux";
 import { createClaim } from "../../actions/claims";
+import { getClaimants } from "../../actions/claimants";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
@@ -10,10 +11,36 @@ import { AlertTriangle } from "lucide-react";
 import useNavigation from "../../utils/useNavigation";
 import { RootState } from "../../store/index";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import Loader from "../../components/Loader";
 
 const CreateClaim: FC = () => {
   const history = useNavigation();
   const dispatch = useAppDispatch();
+  const [initialLoadDone, setInitialLoadDone] = useState(false);
+
+  // Fetch claimants on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        await dispatch(getClaimants({ limit: 5 }));
+      } finally {
+        setInitialLoadDone(true);
+      }
+    };
+
+    loadData();
+  }, [dispatch]);
+
+  const { claimantsCount, loading } = useSelector((state: RootState) => {
+    const req = state.claimants?.req || [];
+    const detailsLength = Object.keys(state.claimants?.details || {}).length;
+
+    return {
+      claimantsCount:
+        req.length > 0 && req[0]?.total ? req[0].total : detailsLength,
+      loading: state.claimants?.loading,
+    };
+  });
 
   const onCreate = (values: any) => {
     Promise.resolve(dispatch(createClaim(values))).then(() => {
@@ -21,18 +48,15 @@ const CreateClaim: FC = () => {
     });
   };
 
-  const { claimantsCount } = useSelector((state: RootState) => {
-    return {
-      claimantsCount: state.claimants?.req?.[0]?.data
-        ? state.claimants?.req?.[0]?.data
-        : 0,
-    };
-  });
+  // Only show loader during initial data fetch
+  if (!initialLoadDone) {
+    return <Loader />;
+  }
 
   return (
     <>
       <Helmet title={"Create Claim"} />
-      {claimantsCount ? (
+      {claimantsCount > 0 ? (
         <ClaimCreateForm onCreate={onCreate} />
       ) : (
         <div className="flex flex-col items-center justify-center p-6 space-y-4">

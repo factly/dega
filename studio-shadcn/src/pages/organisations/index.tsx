@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, Trash2 } from "lucide-react";
+import { PlusCircle, Trash2 } from "lucide-react";
 import { searchMembers, removeMember } from "../../actions/organisation";
 import { Member } from "../../actions/organisation";
 
@@ -88,41 +88,37 @@ function Organisations() {
   return (
     <div>
       <div className="flex flex-row items-center justify-between space-y-0 pb-6">
-        <h2 className="text-2xl font-bold tracking-tight">Members</h2>
-        <Button onClick={() => navigate("/settings/organisations/addusers")}>
-          <Plus className="mr-2 h-4 w-4" />
+        <div className="relative w-72">
+          <Input
+            placeholder="Search by name or email..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+        <Button
+          size="lg"
+          className="py-2"
+          onClick={() => navigate("/settings/organisations/addusers")}
+        >
+          <PlusCircle className="h-4 w-4" />
           Add New User
         </Button>
       </div>
       <div>
-        <div className="flex justify-end mb-4">
-          <div className="relative w-72">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search by name or email"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              className="pl-8"
-            />
-          </div>
-        </div>
-
         <div className="rounded-md">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[30%]">Name</TableHead>
-                <TableHead className="w-[40%]">Email</TableHead>
-                <TableHead className="w-[20%]">Role</TableHead>
-                <TableHead className="w-[10%]">Actions</TableHead>
+                <TableHead className="w-[30%] text-[13px]">Name</TableHead>
+                <TableHead className="w-[40%] text-[13px]">Email</TableHead>
+                <TableHead className="w-[20%] text-[13px]">Role</TableHead>
+                <TableHead className="w-[10%] text-[13px]">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {paginatedMembers.map((member) => (
                 <TableRow key={member.userId}>
-                  <TableCell className="font-medium">
-                    {member.displayName || "---"}
-                  </TableCell>
+                  <TableCell>{member.displayName || "---"}</TableCell>
                   <TableCell>{member.email || "---"}</TableCell>
                   <TableCell>{member.roles?.join(", ") || "---"}</TableCell>
                   <TableCell>

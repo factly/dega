@@ -21,9 +21,9 @@ interface Medium {
 }
 
 interface MediaSelectorProps {
-  value?: number | null;
+  value?: string | null;
   onChange: (value: string | null) => void;
-  maxWidth?: string;
+  maxWidth?: number | string;
   containerStyles?: React.CSSProperties;
   profile?: boolean;
 }
@@ -133,7 +133,9 @@ function MediaSelector({
                     <img
                       src={
                         medium.url?.[
-                          import.meta.env.VITE_ENABLE_IMGPROXY ? "proxy" : "raw"
+                          import.meta.env.VITE_ENABLE_IMGPROXY === "true"
+                            ? "proxy"
+                            : "raw"
                         ]
                       }
                       alt={medium.alt_text || "Selected media"}

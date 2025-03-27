@@ -42,8 +42,8 @@ interface ClaimantListProps {
     total: number;
   };
   filters: {
-    page?: number;
-    limit?: number;
+    page: number;
+    limit: number;
     [key: string]: any;
   };
   setFilters: (filters: any) => void;
@@ -54,18 +54,13 @@ interface ClaimantListProps {
 
 function ClaimantList({
   data,
-  filters,
   fetchClaimants,
-  sortOrder = "asc",
   onSortToggle,
 }: ClaimantListProps) {
   const dispatch = useAppDispatch();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const history = useNavigation();
-
-  const currentPage = Number(filters.page) || 1;
-  const currentLimit = Number(filters.limit) || 10;
 
   // Memoize handlers to prevent unnecessary re-renders
   const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
@@ -117,94 +112,85 @@ function ClaimantList({
   );
 
   return (
-    <div className="space-y-4">
-      <Table className="border-b border-gray-200">
-        <TableHeader className="w-1/2 text-[13px]">
-          <TableRow>
-            <TableHead className="w-1/2">
-              <div
-                className="flex items-center cursor-pointer"
-                onClick={onSortToggle}
-              >
-                Title
-                <ChevronsUpDown className="ml-1 h-3 w-3" />
-              </div>
-            </TableHead>
-            <TableHead className="w-2/5">Tag Line</TableHead>
-            <TableHead className="w-[150px] text-center">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.claimants && data.claimants.length > 0 ? (
-            data.claimants.map((claimant) => (
-              <TableRow
-                key={claimant.id}
-                onClick={() => handleRowClick(claimant.id)}
-                className="cursor-pointer"
-              >
-                <TableCell>
-                  <Link
-                    to={`/claimants/${claimant.id}/edit`}
-                    className="font-normal"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {claimant.name || "Unnamed Claimant"}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  <p className="line-clamp-2 font-normal">
-                    {claimant.tag_line || "No tag line"}
-                  </p>
-                </TableCell>
-                <TableCell className="text-center">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger
-                      asChild
+    <div className="pb-4 overflow-auto">
+      <div className="rounded-md">
+        <Table>
+          <TableHeader className="w-1/2 text-[13px]">
+            <TableRow>
+              <TableHead className="w-1/2">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={onSortToggle}
+                >
+                  Title
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-2/5">Tag Line</TableHead>
+              <TableHead className="w-[150px] text-center">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.claimants && data.claimants.length > 0 ? (
+              data.claimants.map((claimant) => (
+                <TableRow
+                  key={claimant.id}
+                  onClick={() => handleRowClick(claimant.id)}
+                  className="cursor-pointer"
+                >
+                  <TableCell>
+                    <Link
+                      to={`/claimants/${claimant.id}/edit`}
+                      className="font-normal"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Button variant="ghost" size="icon">
-                        <Ellipsis className="h-5 w-5" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={(e) => handleEditClick(e, claimant.id)}
-                        className="cursor-pointer"
+                      {claimant.name || "Unnamed Claimant"}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <p className="line-clamp-2 font-normal">
+                      {claimant.tag_line || "---"}
+                    </p>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        asChild
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        <Pencil className="h-4 w-4 mr-2" />
-                        <span>Edit</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={(e) => handleDeleteClick(e, claimant.id)}
-                        className="cursor-pointer text-red-600 focus:text-red-600"
-                      >
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        <span>Delete</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                        <Button variant="ghost" size="icon">
+                          <Ellipsis className="h-5 w-5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => handleEditClick(e, claimant.id)}
+                          className="cursor-pointer"
+                        >
+                          <Pencil className="h-4 w-4 mr-2" />
+                          <span>Edit</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={(e) => handleDeleteClick(e, claimant.id)}
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                        >
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          <span>Delete</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3} className="text-center py-4">
+                  No claimants found
                 </TableCell>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={3} className="text-center py-4">
-                No claimants found
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-sm text-gray-500">
-          {data.total > 0
-            ? `${(currentPage - 1) * currentLimit + 1}-${Math.min(
-                currentPage * currentLimit,
-                data.total
-              )} of ${data.total} results`
-            : "0 results"}
-        </div>
+            )}
+          </TableBody>
+        </Table>
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>

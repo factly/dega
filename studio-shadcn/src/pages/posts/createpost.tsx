@@ -1,30 +1,31 @@
-import React from 'react';
-import PostForm from './components/PostForm';
-import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../../actions/posts';
-import getUserPermission from '../../utils/getUserPermission';
-import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
-import { AppDispatch, RootState } from '../../store/types';
-import { Helmet } from 'react-helmet';
-import useNavigation from '../../utils/useNavigation';
+import PostForm from "./components/PostForm";
+import { useDispatch } from "react-redux";
+import { addPost } from "../../actions/posts";
+import FormatNotFound from "../../components/ErrorsAndImage/RecordNotFound";
+import { Helmet } from "react-helmet";
+import useNavigation from "../../utils/useNavigation";
+import { AppDispatch } from "../../store/index";
 
 interface Format {
-  id: string;
+  id: number;
+  [key: string]: any;
+}
+
+interface Formats {
   loading: boolean;
-  article: any; // Define proper type based on your article structure
+  article?: Format;
+  [key: string]: any;
 }
 
 interface CreatePostProps {
-  formats: Format;
+  formats: Formats;
 }
 
-const CreatePost: React.FC<CreatePostProps> = ({ formats }) => {
-  const spaces = useSelector((state: RootState) => state.spaces);
-  const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
+function CreatePost({ formats }: CreatePostProps): React.ReactElement {
   const history = useNavigation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const onCreate = (values: any) => {
+  const onCreate = (values: any): void => {
     dispatch(addPost(values)).then((post) => {
       if (post && post.id) history(`/posts/${post.id}/edit`);
     });
@@ -33,13 +34,19 @@ const CreatePost: React.FC<CreatePostProps> = ({ formats }) => {
   if (!formats.loading && formats.article) {
     return (
       <>
-        <Helmet title="Create Post" />
-        <PostForm onCreate={onCreate} actions={actions} format={formats.article} />
+        <Helmet title={"Create Post"} />
+        <PostForm onCreate={onCreate} format={formats.article} />
       </>
     );
   }
 
-  return <FormatNotFound status="info" title="Article format not found" link="/formats" />;
-};
+  return (
+    <FormatNotFound
+      status="info"
+      title="Article format not found"
+      link="/formats"
+    />
+  );
+}
 
 export default CreatePost;

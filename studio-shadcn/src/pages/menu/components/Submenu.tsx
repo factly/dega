@@ -30,13 +30,12 @@ const Submenu: React.FC<SubmenuProps> = ({
     <div className="space-y-4">
       {!hasReachedMaxDepth && (
         <Button
-          variant="outline"
           size="sm"
           className="mt-2"
           onClick={() => append({ name: "", title: "", url: "" })}
           type="button"
         >
-          <Plus className="h-4 w-4 mr-2" /> Add submenu
+          <Plus className="h-4 w-4" /> Add submenu
         </Button>
       )}
 
@@ -63,7 +62,7 @@ const Submenu: React.FC<SubmenuProps> = ({
                 type="button"
                 className="mt-4"
               >
-                <MinusCircle className="h-4 w-4 mr-2" /> Remove menu
+                <MinusCircle className="h-4 w-4" /> Remove menu
               </Button>
             </div>
           </div>

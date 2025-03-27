@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import RatingList from "./components/RatingList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import RootState from "../../store/index";
 import { getRatings } from "../../actions/ratings";
 import deepEqual from "deep-equal";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { PlusCircle } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import Pagination from "../../components/Pagination";
 
 // Type definitions
 interface Permission {
@@ -56,21 +58,12 @@ function Ratings({
 }): React.ReactElement {
   const { actions } = permission;
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
   const [searchText, setSearchText] = useState<string>("");
 
   const [filters, setFilters] = React.useState<RatingFilters>({
     page: 1,
     limit: 20,
   });
-
-  query.set("page", filters.page.toString());
-  window.history.replaceState(
-    {},
-    "",
-    `${import.meta.env.VITE_PUBLIC_URL}${location.pathname}?${query}`
-  );
 
   const { ratings, total, loading } = useSelector((state: RootState) => {
     const node = state.ratings.req.find((item) => {
@@ -104,38 +97,109 @@ function Ratings({
     setSearchText(e.target.value);
   };
 
+  const handlePageChange = (page: number) => {
+    setFilters({ ...filters, page });
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    setFilters({ page: 1, limit: size });
+  };
+
+  // Calculate total pages
+  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+
+  // Get sidebar state from Redux store
+  const isCollapsed = useSelector(
+    (state: RootState) => state.sidebar.collapsed
+  );
+
+  // Calculate left margin based on sidebar state
+  const sidebarWidth = isCollapsed ? "89px" : "265px";
+
+  // Define the header height (including padding)
+  const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
+
   return loading ? (
     <Loader />
   ) : (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col h-full">
       <Helmet title={"Ratings"} />
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center gap-4 flex-1">
-          <div className="relative flex-1 max-w-xs">
-            <Input
-              placeholder="Search ratings..."
-              value={searchText}
-              onChange={handleSearchChange}
-            />
+
+      {/* Header */}
+      <div
+        className="fixed top-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: headerHeight,
+          transition: "left 0.3s ease",
+        }}
+      >
+        <div className="flex justify-between items-center h-full px-6 pt-1">
+          <div className="flex items-center gap-4 flex-1">
+            <div className="relative flex-1 max-w-xs">
+              <Input
+                placeholder="Search ratings..."
+                value={searchText}
+                onChange={handleSearchChange}
+                className="h-10"
+              />
+            </div>
           </div>
-        </div>
-        <div>
-          <Link to="/ratings/create">
-            <Button className="flex items-center">
-              <PlusCircle className="h-4 w-4" />
-              New Rating
-            </Button>
-          </Link>
+          <div>
+            <Link to="/ratings/create">
+              <Button size="lg" className="flex items-center py-2">
+                <PlusCircle className="h-4 w-4" />
+                Create Rating
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
 
-      <RatingList
-        actions={actions}
-        data={{ ratings: filteredRatings, total, loading }}
-        filters={filters}
-        setFilters={setFilters}
-        fetchRatings={fetchRatings}
-      />
+      {/* Content */}
+      <div
+        className="absolute overflow-auto"
+        style={{
+          top: headerHeight,
+          left: sidebarWidth,
+          right: 0,
+          bottom: "64px",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          paddingBottom: "1.5rem",
+          paddingTop: "1rem",
+          transition: "left 0.3s ease, top 0.3s ease",
+        }}
+      >
+        <RatingList
+          actions={actions}
+          data={{ ratings: filteredRatings, total, loading }}
+          filters={filters}
+          setFilters={setFilters}
+          fetchRatings={fetchRatings}
+        />
+      </div>
+
+      {/* Footer with Pagination */}
+      <div
+        className="fixed bottom-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: "64px",
+          transition: "left 0.3s ease",
+        }}
+      >
+        <Pagination
+          currentPage={filters.page}
+          totalPages={totalPages}
+          totalItems={total}
+          pageSize={filters.limit}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
+      </div>
     </div>
   );
 }
