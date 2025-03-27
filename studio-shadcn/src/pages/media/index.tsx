@@ -1,14 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Form, FormField, FormItem } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form } from "@/components/ui/form";
 import { PlusCircle } from "lucide-react";
 import { useSelector } from "react-redux";
 import MediumList from "./components/MediumList";
@@ -52,6 +45,8 @@ interface PermissionProps {
 
 interface FilterParams {
   sort?: string;
+  page?: number;
+  limit?: number;
   [key: string]: any;
 }
 
@@ -66,9 +61,19 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const params = getUrlParams(query) as FilterParams;
 
-  // Use a ref to track initial mount
+  // Set default pagination params if not present
+  const defaultParams = {
+    page: 1,
+    limit: 10,
+    sort: "desc",
+  };
+
+  // Get URL params and set defaults
+  const rawParams = getUrlParams(query) as FilterParams;
+  const params = { ...defaultParams, ...rawParams };
+
+  // Use a ref to track initial mount and previous params
   const isInitialMount = useRef(true);
   const previousParams = useRef(params);
 
@@ -85,21 +90,34 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
     },
   });
 
+  // Get media data from Redux state
   const { media, total, loading } = useSelector((state: RootState) => {
+    // Try to find cached data for current query params
     const node = state.media.req.find((item) => {
       return deepEqual(item.query, params);
     });
 
-    if (node)
+    if (node) {
+      // Map IDs to actual media objects from details
       return {
-        media: node.data.map((element) => state.media.details[element]),
+        media: node.data
+          .map((id) => state.media.details[id])
+          // Filter out undefined or null values
+          .filter(Boolean),
         total: node.total,
         loading: state.media.loading,
       };
-    return { media: [], total: 0, loading: state.media.loading };
+    }
+
+    // Return empty data if no cache node found
+    return {
+      media: [],
+      total: 0,
+      loading: state.media.loading,
+    };
   });
 
-  // FIXED: Only update URL if filters actually changed from params
+  // Update URL when filters change
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -117,7 +135,7 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
     }
   }, [filters, navigate, pathName, params]);
 
-  // FIXED: Only reset form when params change from previous value
+  // Reset form when params change
   useEffect(() => {
     // Skip if this is just the initial params
     if (isInitialMount.current) {
@@ -135,10 +153,16 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
     }
   }, [params, form]);
 
-  // FIXED: Fetch data only once on initial load and when params change
+  // Fetch data on initial load and when params change
   useEffect(() => {
+    // Use a stable params representation for the dependency
+    const paramsString = JSON.stringify(params);
+
+    // Explicitly log what we're fetching for debugging
+    console.log("Fetching media with params:", params);
+
     dispatch(getMedia(params));
-  }, [dispatch, JSON.stringify(params)]); // Use JSON.stringify for deep comparison
+  }, [dispatch, JSON.stringify(params)]);
 
   // Use useCallback to prevent unnecessary re-creation
   const fetchMedia = useCallback((): void => {
@@ -168,7 +192,7 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
   return loading ? (
     <Loader />
   ) : (
-    <div className="space-y-4">
+    <div className="space-y-4 p-4">
       <Helmet title={"Media"} />
       <Form {...form}>
         <form
@@ -197,33 +221,6 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
                     </Button>{" "}
                   </Link>
                 </div>
-                <div className="flex gap-4">
-                  <div>
-                    <FormField
-                      control={form.control}
-                      name="sort"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-col">
-                          <div className="flex items-center gap-2">
-                            <span>Sort By</span>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <SelectTrigger className="w-[120px]">
-                                <SelectValue placeholder="Sort By" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="desc">Latest</SelectItem>
-                                <SelectItem value="asc">Old</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -231,7 +228,7 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
       </Form>
       <MediumList
         actions={actions}
-        data={{ media: media, total: total, loading: loading }}
+        data={{ media: media || [], total: total || 0, loading: loading }}
         filters={filters}
         setFilters={setFilters}
       />

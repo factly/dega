@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useCallback, useMemo } from "react";
 import ClaimantList from "./components/ClaimantList";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getClaimants } from "../../actions/claimants";
 import deepEqual from "deep-equal";
-import getUrlParams from "../../utils/getUrlParams";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import Pagination from "../../components/Pagination";
 
 interface ClaimantType {
   id: string;
@@ -32,25 +32,25 @@ interface ClaimantState {
 
 interface RootState {
   claimants: ClaimantState;
+  sidebar: {
+    collapsed: boolean;
+  };
 }
 
 function Claimants() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
   const [searchText, setSearchText] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+  });
 
-  // Use the URL search directly - avoid derived state
-  const urlParams = useMemo(
-    () => getUrlParams(new URLSearchParams(location.search)),
-    [location.search]
-  );
-
-  // Get data from Redux using the URL parameters directly
-  const { claimants, loading } = useSelector((state: RootState) => {
+  // Get data from Redux
+  const { claimants, total, loading } = useSelector((state: RootState) => {
     const node = state.claimants.req.find((item) => {
-      return deepEqual(item.query, urlParams);
+      return deepEqual(item.query, filters);
     });
 
     if (node)
@@ -90,61 +90,36 @@ function Claimants() {
   }, []);
 
   useEffect(() => {
-    const paramsToUse = {
-      ...urlParams,
-      page: urlParams.page || 1,
-      limit: urlParams.limit || 10,
-    };
+    fetchClaimants();
+  }, [filters]);
 
-    dispatch(getClaimants(paramsToUse));
-  }, [location.search, dispatch]);
-
-  // Memoized fetch function that won't change on re-renders
+  // Fetch claimants function
   const fetchClaimants = useCallback(() => {
-    const paramsToUse = {
-      ...urlParams,
-      page: urlParams.page || 1,
-      limit: urlParams.limit || 10,
-    };
+    dispatch(getClaimants(filters));
+  }, [dispatch, filters]);
 
-    dispatch(getClaimants(paramsToUse));
-  }, [dispatch, urlParams]);
+  // Pagination handlers
+  const handlePageChange = useCallback((page: number) => {
+    setFilters((prev) => ({ ...prev, page }));
+  }, []);
 
-  // Update URL with new parameters
-  const updateURLParams = useCallback(
-    (newParams: Record<string, any>) => {
-      const searchParams = new URLSearchParams();
+  const handlePageSizeChange = useCallback((size: number) => {
+    setFilters({ page: 1, limit: size });
+  }, []);
 
-      // Combine existing params with new ones
-      const combinedParams = {
-        ...urlParams,
-        ...newParams,
-      };
+  // Calculate total pages
+  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
 
-      // Only add non-empty/non-default values to keep URL clean
-      Object.entries(combinedParams).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== "") {
-          // Don't add default pagination values to URL
-          if (
-            (key === "page" && value === 1) ||
-            (key === "limit" && value === 10)
-          ) {
-            return;
-          }
-          searchParams.set(key, String(value));
-        }
-      });
-
-      navigate(
-        {
-          pathname: location.pathname,
-          search: searchParams.toString(),
-        },
-        { replace: true }
-      );
-    },
-    [urlParams, navigate, location.pathname]
+  // Get sidebar state from Redux store
+  const isCollapsed = useSelector(
+    (state: RootState) => state.sidebar.collapsed
   );
+
+  // Calculate left margin based on sidebar state
+  const sidebarWidth = isCollapsed ? "89px" : "265px";
+
+  // Define the header height (including padding)
+  const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
 
   // Define user permissions array
   const userActions = ["view"]; // Default minimum permissions
@@ -152,40 +127,90 @@ function Claimants() {
   return loading ? (
     <Loader />
   ) : (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col h-full">
       <Helmet title={"Claimants"} />
 
-      <div className="flex items-center justify-between gap-4">
-        <div className="relative w-63">
-          <Input
-            className="py-2"
-            placeholder="Search claimants..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
+      {/* Header */}
+      <div
+        className="fixed top-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: headerHeight,
+          transition: "left 0.3s ease",
+        }}
+      >
+        <div className="flex justify-between items-center h-full px-6 pt-1">
+          <div className="flex items-center gap-4 flex-1">
+            <div className="relative flex-1 max-w-xs">
+              <Input
+                placeholder="Search claimants..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                className="h-10"
+              />
+            </div>
+          </div>
+          <div>
+            <Link to="/claimants/create">
+              <Button size="lg" className="flex items-center gap-2 py-2">
+                <PlusCircle className="h-4 w-4" />
+                Create claimant
+              </Button>
+            </Link>
+          </div>
         </div>
-
-        <Link to="/claimants/create">
-          <Button className="rounded-md px-4 flex items-center gap-2">
-            <PlusCircle className="h-4 w-4" />
-            Create claimant
-          </Button>
-        </Link>
       </div>
 
-      <ClaimantList
-        data={{
-          claimants: filteredClaimants,
-          total: filteredClaimants.length,
-          loading,
+      {/* Content */}
+      <div
+        className="absolute overflow-auto"
+        style={{
+          top: headerHeight,
+          left: sidebarWidth,
+          right: 0,
+          bottom: "64px",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          paddingBottom: "1.5rem",
+          paddingTop: "1rem",
+          transition: "left 0.3s ease, top 0.3s ease",
         }}
-        filters={urlParams}
-        setFilters={updateURLParams}
-        fetchClaimants={fetchClaimants}
-        actions={userActions}
-        sortOrder={sortOrder}
-        onSortToggle={handleSortToggle}
-      />
+      >
+        <ClaimantList
+          data={{
+            claimants: filteredClaimants,
+            total: total,
+            loading,
+          }}
+          filters={filters}
+          setFilters={setFilters}
+          fetchClaimants={fetchClaimants}
+          actions={userActions}
+          sortOrder={sortOrder}
+          onSortToggle={handleSortToggle}
+        />
+      </div>
+
+      {/* Footer with Pagination */}
+      <div
+        className="fixed bottom-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: "64px",
+          transition: "left 0.3s ease",
+        }}
+      >
+        <Pagination
+          currentPage={filters.page}
+          totalPages={totalPages}
+          totalItems={total}
+          pageSize={filters.limit}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
+      </div>
     </div>
   );
 }

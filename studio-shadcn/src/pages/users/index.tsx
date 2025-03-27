@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import deepEqual from "deep-equal";
 import { Helmet } from "react-helmet";
-import { UserPlus } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import Loader from "../../components/Loader";
@@ -18,16 +17,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import Pagination from "../../components/Pagination";
 
 // Type definitions
 interface SpaceUser {
@@ -52,6 +44,9 @@ interface SpaceUsersState {
 
 interface RootState {
   spaceUsers: SpaceUsersState;
+  sidebar: {
+    collapsed: boolean;
+  };
 }
 
 interface FiltersState {
@@ -153,18 +148,6 @@ function Users() {
       }
     }
 
-    console.log("No matching request found for query:", normalizedQuery);
-    if (state.spaceUsers.req.length > 0) {
-      console.log(
-        "Available requests:",
-        state.spaceUsers.req.map((r) => r.query)
-      );
-      console.log(
-        "Available details:",
-        Object.keys(state.spaceUsers.details).length
-      );
-    }
-
     return {
       spaceUsers: [] as SpaceUser[],
       total: 0,
@@ -172,13 +155,22 @@ function Users() {
     };
   });
 
+  // Get sidebar state from Redux store
+  const isCollapsed = useSelector(
+    (state: RootState) => state.sidebar.collapsed
+  );
+
+  // Calculate left margin based on sidebar state
+  const sidebarWidth = isCollapsed ? "89px" : "265px";
+
+  // Define the header height (including padding)
+  const headerHeight = "calc(1.5rem + 4.5rem + 1rem)"; // top padding + height + bottom padding
+
   useEffect(() => {
-    navigate(
-      `${pathname}?${new URLSearchParams({
-        page: filters.page.toString(),
-        limit: filters.limit.toString(),
-      }).toString()}`
-    );
+    const newParams = new URLSearchParams();
+    newParams.set("page", filters.page.toString());
+    newParams.set("limit", filters.limit.toString());
+    navigate(`${pathname}?${newParams.toString()}`);
   }, [filters, pathname, navigate]);
 
   useEffect(() => {
@@ -218,116 +210,153 @@ function Users() {
     }
   };
 
-  const handlePageChange = (pageNumber: number): void => {
-    setFilters({ ...filters, page: pageNumber });
-  };
+  // Pagination handlers
+  const handlePageChange = useCallback((page: number) => {
+    setFilters((prev) => ({ ...prev, page }));
+  }, []);
 
-  return loading ? (
-    <Loader />
-  ) : (
-    <div className="flex flex-col space-y-4">
+  const handlePageSizeChange = useCallback((size: number) => {
+    setFilters({ page: 1, limit: size });
+  }, []);
+
+  // Calculate total pages
+  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  return (
+    <div className="flex flex-col h-full">
       <Helmet title={"Users"} />
 
-      {/* Update Form with form context */}
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleAddUsers)}
-          className="space-y-4"
-        >
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-6">
-              <FormField
-                control={form.control}
-                name="users"
-                render={({ field }) => (
-                  <FormItem>
-                    <Selector
-                      mode="multiple"
-                      display={"display_name"}
-                      action="users"
-                      createEntity="User"
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="col-span-4">
+      {/* Header */}
+      <div
+        className="fixed top-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: headerHeight,
+          transition: "left 0.3s ease",
+        }}
+      >
+        <div className="flex justify-between items-center h-full px-6 pt-1">
+          <div className="flex items-center gap-4 flex-1">
+            <div className="text-xl font-semibold">Users</div>
+          </div>
+
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleAddUsers)}
+              className="flex items-center gap-4"
+            >
+              <div className="w-64">
+                <FormField
+                  control={form.control}
+                  name="users"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Selector
+                        mode="multiple"
+                        display={"display_name"}
+                        action="users"
+                        createEntity="User"
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <Button
                 type="submit"
                 className="flex items-center gap-2"
-                disabled={isSubmitting || loading}
+                disabled={isSubmitting}
               >
-                <UserPlus size={16} />
+                <PlusCircle size={16} />
                 {isSubmitting ? "Adding..." : "Add users"}
               </Button>
-            </div>
-          </div>
-        </form>
-      </Form>
+            </form>
+          </Form>
+        </div>
+      </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[15%]">ID</TableHead>
-            <TableHead className="w-[35%]">Name</TableHead>
-            <TableHead className="w-[50%]">E-mail</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {spaceUsers && spaceUsers.length > 0 ? (
-            spaceUsers.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.id}</TableCell>
-                <TableCell className="font-medium">
-                  {user.display_name}
-                </TableCell>
-                <TableCell className="font-medium">{user.email}</TableCell>
+      {/* Content */}
+      <div
+        className="absolute overflow-auto"
+        style={{
+          top: headerHeight,
+          left: sidebarWidth,
+          right: 0,
+          bottom: "64px",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          paddingBottom: "1.5rem",
+          paddingTop: "1rem",
+          transition: "left 0.3s ease, top 0.3s ease",
+        }}
+      >
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="w-1/2 text-[13px]">
+              <TableRow>
+                <TableHead className="w-1/4">ID</TableHead>
+                <TableHead className="w-1/3">Name</TableHead>
+                <TableHead className="w-1/3">E-mail</TableHead>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={3} className="text-center py-4">
-                No users found
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            </TableHeader>
+            <TableBody>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center py-4">
+                    Loading...
+                  </TableCell>
+                </TableRow>
+              ) : spaceUsers.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center py-4">
+                    No users found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                spaceUsers.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell>
+                      <span className="font-normal">{user.id}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-normal">{user.display_name}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-normal">{user.email}</span>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() =>
-                filters.page > 1 && handlePageChange(filters.page - 1)
-              }
-              className={
-                filters.page <= 1
-                  ? "opacity-50 cursor-not-allowed"
-                  : "cursor-pointer"
-              }
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink isActive>{filters.page}</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              onClick={() =>
-                filters.page < Math.ceil(total / filters.limit) &&
-                handlePageChange(filters.page + 1)
-              }
-              className={
-                filters.page >= Math.ceil(total / filters.limit)
-                  ? "opacity-50 cursor-not-allowed"
-                  : "cursor-pointer"
-              }
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      {/* Footer with Pagination */}
+      <div
+        className="fixed bottom-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: "64px",
+          transition: "left 0.3s ease",
+        }}
+      >
+        <Pagination
+          currentPage={filters.page}
+          totalPages={totalPages}
+          totalItems={total}
+          pageSize={filters.limit}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
+      </div>
     </div>
   );
 }

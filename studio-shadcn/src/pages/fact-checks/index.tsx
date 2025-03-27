@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import deepEqual from "deep-equal";
+import debounce from "lodash/debounce";
 
 // Lucide icons
 import { Filter, PlusCircle } from "lucide-react";
@@ -30,6 +31,7 @@ import FormatNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import Template from "../../components/Template";
 import Selector from "../../components/Selector";
 import Loader from "../../components/Loader";
+import Pagination from "../../components/Pagination";
 
 // Utils and actions
 import getUserPermission from "../../utils/getUserPermission";
@@ -130,6 +132,9 @@ interface RootState {
     details: Record<number, Author>;
   };
   spaces: any;
+  sidebar: {
+    collapsed: boolean;
+  };
 }
 
 const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
@@ -142,8 +147,13 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
   const query = new URLSearchParams(search);
   const initialSearchText = query.get("q") || "";
   const [searchText, setSearchText] = useState(initialSearchText);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   const spaces = useSelector((state: RootState) => state.spaces);
+  const isCollapsed = useSelector(
+    (state: RootState) => state.sidebar.collapsed
+  );
+
   const actions = getUserPermission({
     resource: "fact-checks",
     action: "get",
@@ -152,6 +162,17 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
 
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [status, setStatus] = useState(query.get("status") || "all");
+  const [filters, setFilters] = useState({
+    page: parseInt(query.get("page") || "1", 10),
+    limit: parseInt(query.get("limit") || "10", 10),
+    status: query.get("status") || "all",
+    q: query.get("q") || "",
+    sort: query.get("sort") || "",
+    format:
+      formats && !formats.loading && formats.factcheck
+        ? [formats.factcheck.id]
+        : [],
+  });
 
   const keys = [
     "format",
@@ -186,7 +207,49 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
     dispatch(getPosts(params));
   };
 
-  const { posts, total, loading, tags, categories } = useSelector(
+  // Debounced search function to update URL
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      const newQuery = new URLSearchParams(query.toString());
+
+      if (value.trim()) {
+        newQuery.set("q", value);
+      } else {
+        newQuery.delete("q");
+      }
+
+      // Reset page when searching
+      newQuery.set("page", "1");
+
+      navigate({
+        pathname,
+        search: "?" + newQuery.toString(),
+      });
+    }, 500),
+    [pathname, query]
+  );
+
+  // Handle search input change with debounce
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchText(value);
+    debouncedSearch(value);
+  };
+
+  // Clear search
+  const clearSearch = () => {
+    setSearchText("");
+    const newQuery = new URLSearchParams(query.toString());
+    newQuery.delete("q");
+
+    navigate({
+      pathname,
+      search: "?" + newQuery.toString(),
+    });
+  };
+
+  const { posts, total, loading, tags, categories, authors } = useSelector(
     (state: RootState) => {
       const node = state.posts.req.find((item) => {
         return deepEqual(item.query, params);
@@ -195,7 +258,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
       if (node) {
         return {
           posts: node.data.map((element) => {
-            const post = state.posts.details[element];
+            const post = { ...state.posts.details[element] };
             post.medium = state.media.details[post.featured_medium_id];
             return post;
           }),
@@ -203,6 +266,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
           loading: state.posts.loading,
           tags: state.tags.details,
           categories: state.categories.details,
+          authors: state.authors.details,
         };
       }
 
@@ -212,6 +276,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
         loading: state.posts.loading,
         tags: {},
         categories: {},
+        authors: {},
       };
     }
   );
@@ -266,12 +331,14 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
       pathname,
       search: "?" + searchFilter.toString(),
     });
+
+    // Close the filters popover after applying
+    setIsFiltersOpen(false);
   };
 
   // Handle pagination
-  const onPagination = (page: number, limit: number) => {
+  const handlePageChange = (page: number) => {
     const newQuery = new URLSearchParams(query.toString());
-    newQuery.set("limit", limit.toString());
     newQuery.set("page", page.toString());
 
     navigate({
@@ -280,42 +347,11 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
     });
   };
 
-  // Handle search input change
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
-
-  // Handle search submission (Enter key or search button)
-  const handleServerSearch = () => {
+  // Handle page size change
+  const handlePageSizeChange = (size: number) => {
     const newQuery = new URLSearchParams(query.toString());
-
-    if (searchText.trim()) {
-      newQuery.set("q", searchText);
-    } else {
-      newQuery.delete("q");
-    }
-
-    // Reset page when searching
+    newQuery.set("limit", size.toString());
     newQuery.set("page", "1");
-
-    navigate({
-      pathname,
-      search: "?" + newQuery.toString(),
-    });
-  };
-
-  // Handle Enter key press in search input
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleServerSearch();
-    }
-  };
-
-  // Clear search
-  const clearSearch = () => {
-    setSearchText("");
-    const newQuery = new URLSearchParams(query.toString());
-    newQuery.delete("q");
 
     navigate({
       pathname,
@@ -343,6 +379,24 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
     });
   };
 
+  // Check if any filters are applied
+  const hasActiveFilters = () => {
+    return !!(
+      (params.tag && params.tag.length > 0) ||
+      (params.category && params.category.length > 0) ||
+      (params.author && params.author.length > 0)
+    );
+  };
+
+  // Calculate total pages
+  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+
+  // Calculate sidebar width based on sidebar state
+  const sidebarWidth = isCollapsed ? "89px" : "265px";
+
+  // Define the header height (including padding)
+  const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
+
   if (formats.loading) {
     return <Loader />;
   }
@@ -358,8 +412,9 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col h-full">
       <Helmet title={"Fact-checks"} />
+
       {/* Templates Dialog */}
       <Dialog open={templatesOpen} onOpenChange={setTemplatesOpen}>
         <DialogContent className="max-w-4xl">
@@ -370,17 +425,24 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
         </DialogContent>
       </Dialog>
 
-      <div>
-        <div className="flex items-center justify-between pb-3 w-full">
-          {/* Search */}
-          <div className="flex-1 flex justify-start">
-            <div className="relative w-63">
+      {/* Header */}
+      <div
+        className="fixed top-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: headerHeight,
+          transition: "left 0.3s ease",
+        }}
+      >
+        <div className="flex justify-between items-center h-full px-6 pt-1">
+          <div className="flex items-center gap-4 flex-1">
+            <div className="relative flex-1 max-w-xs">
               <Input
-                placeholder="Search"
-                className="py-2"
+                placeholder="Search fact-checks..."
                 value={searchText}
                 onChange={handleSearch}
-                onKeyPress={handleKeyPress}
+                className="h-10"
               />
               {searchText && (
                 <Button
@@ -392,17 +454,81 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
                 </Button>
               )}
             </div>
-            <Button
-              className="ml-2"
-              variant="outline"
-              onClick={handleServerSearch}
-            >
-              Search
-            </Button>
-          </div>
+            <Popover open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={hasActiveFilters() ? "default" : "outline"}
+                  className="flex items-center bg-[#F0F5FF] border-[#F0F5FF] space-x-1"
+                >
+                  <Filter className="h-4 w-4" />
+                  <span>Filters</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-4">
+                <div className="space-y-4">
+                  <Form {...form}>
+                    <div className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="tag"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Tags</FormLabel>
+                            <Selector
+                              mode="multiple"
+                              action="Tags"
+                              placeholder="Filter Tags"
+                              {...field}
+                            />
+                          </FormItem>
+                        )}
+                      />
 
-          {/* Templates and Create buttons */}
-          <div className="flex items-center space-x-2">
+                      <FormField
+                        control={form.control}
+                        name="category"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Categories</FormLabel>
+                            <Selector
+                              mode="multiple"
+                              action="Categories"
+                              placeholder="Filter Categories"
+                              {...field}
+                            />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="author"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Authors</FormLabel>
+                            <Selector
+                              mode="multiple"
+                              action="Authors"
+                              placeholder="Filter Authors"
+                              display="display_name"
+                              {...field}
+                            />
+                          </FormItem>
+                        )}
+                      />
+
+                      <Button
+                        type="button"
+                        className="w-full"
+                        onClick={() => form.handleSubmit(onSave)()}
+                      >
+                        Apply Filters
+                      </Button>
+                    </div>
+                  </Form>
+                </div>
+              </PopoverContent>
+            </Popover>
             <Button
               variant="outline"
               className="flex items-center space-x-1 bg-[#DCEFEB]"
@@ -410,127 +536,81 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
             >
               <span>Explore Templates</span>
             </Button>
-
+          </div>
+          <div>
             <Link to="/fact-checks/create">
-              <Button className="flex items-center space-x-1">
+              <Button size="lg" className="flex items-center gap-2 py-2">
                 <PlusCircle className="h-4 w-4" />
-                <span>Create Fact-Check</span>
+                Create Fact-Check
               </Button>
             </Link>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <Tabs defaultValue={status} onValueChange={handleStatusChange}>
-            <div className="flex items-center justify-between">
-              <TabsList className="grid grid-cols-5">
-                {factCheckStatusItems.map((item) => (
-                  <TabsTrigger key={item.value} value={item.value}>
-                    {item.label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-
-              {/* Filters Popover */}
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="flex items-center bg-[#F0F5FF] border-[#F0F5FF] space-x-1"
-                  >
-                    <Filter className="h-4 w-4" />
-                    <span>Filters</span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-80 p-4">
-                  <div className="space-y-4">
-                    <Form {...form}>
-                      <div className="space-y-4">
-                        <FormField
-                          control={form.control}
-                          name="tag"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Tags</FormLabel>
-                              <Selector
-                                mode="multiple"
-                                action="Tags"
-                                placeholder="Filter Tags"
-                                {...field}
-                              />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="category"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Categories</FormLabel>
-                              <Selector
-                                mode="multiple"
-                                action="Categories"
-                                placeholder="Filter Categories"
-                                {...field}
-                              />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="author"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Authors</FormLabel>
-                              <Selector
-                                mode="multiple"
-                                action="Authors"
-                                placeholder="Filter Authors"
-                                display="display_name"
-                                {...field}
-                              />
-                            </FormItem>
-                          )}
-                        />
-
-                        <Button
-                          type="button"
-                          className="w-full"
-                          onClick={() => form.handleSubmit(onSave)()}
-                        >
-                          Apply Filters
-                        </Button>
-                      </div>
-                    </Form>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
-
+      {/* Content */}
+      <div
+        className="absolute overflow-auto"
+        style={{
+          top: headerHeight,
+          left: sidebarWidth,
+          right: 0,
+          bottom: "64px",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          paddingBottom: "1.5rem",
+          paddingTop: "1rem",
+          transition: "left 0.3s ease, top 0.3s ease",
+        }}
+      >
+        <Tabs defaultValue={status} onValueChange={handleStatusChange}>
+          <TabsList className="grid grid-cols-5">
             {factCheckStatusItems.map((item) => (
-              <TabsContent key={item.value} value={item.value}>
-                <FactCheckList
-                  actions={actions}
-                  format={formats.factcheck}
-                  data={{
-                    posts: posts,
-                    total: total,
-                    loading,
-                    tags,
-                    categories,
-                  }}
-                  filters={params}
-                  onPagination={onPagination}
-                  fetchPosts={fetchPosts}
-                />
-              </TabsContent>
+              <TabsTrigger key={item.value} value={item.value}>
+                {item.label}
+              </TabsTrigger>
             ))}
-          </Tabs>
-        </div>
+          </TabsList>
+
+          {/* Content for the selected tab */}
+          <TabsContent value={status}>
+            <FactCheckList
+              actions={actions}
+              format={formats.factcheck}
+              data={{
+                posts: posts,
+                total: total,
+                loading,
+                tags,
+                categories,
+                authors,
+              }}
+              filters={params}
+              fetchPosts={fetchPosts}
+              query={status}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
+
+      {/* Footer with Pagination */}
+      <div
+        className="fixed bottom-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: "64px",
+          transition: "left 0.3s ease",
+        }}
+      >
+        <Pagination
+          currentPage={parseInt(params.page || "1", 10)}
+          totalPages={totalPages}
+          totalItems={total}
+          pageSize={parseInt(params.limit || "10", 10)}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </div>
     </div>
   );

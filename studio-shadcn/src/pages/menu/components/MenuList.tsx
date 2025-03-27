@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Trash2 } from "lucide-react";
+import { Trash2, Ellipsis, Pencil, ChevronsUpDown } from "lucide-react";
 import { deleteMenu } from "../../../actions/menu";
 import useNavigation from "../../../utils/useNavigation";
 import { AppDispatch } from "../../../store";
@@ -24,7 +24,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Pagination } from "@/components/ui/pagination";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Define types
 interface Menu {
@@ -47,14 +52,15 @@ interface MenuListProps {
   };
   setFilters: (filters: any) => void;
   fetchMenus: () => void;
+  sortOrder?: "asc" | "desc";
+  onSortToggle?: () => void;
 }
 
 const MenuList: React.FC<MenuListProps> = ({
   actions,
   data,
-  filters,
-  setFilters,
   fetchMenus,
+  onSortToggle,
 }) => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | number | null>(
@@ -63,7 +69,17 @@ const MenuList: React.FC<MenuListProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigation();
 
-  const handleDelete = () => {
+  // Memoize handlers to prevent unnecessary re-renders
+  const handleDeleteClick = useCallback(
+    (e: React.MouseEvent, id: string | number) => {
+      e.stopPropagation();
+      setDialogOpen(true);
+      setDeleteItemId(id);
+    },
+    []
+  );
+
+  const handleDeleteConfirm = useCallback(() => {
     if (deleteItemId) {
       dispatch(deleteMenu(deleteItemId))
         .then(() => {
@@ -76,100 +92,103 @@ const MenuList: React.FC<MenuListProps> = ({
           setDialogOpen(false);
         });
     }
-  };
+  }, [deleteItemId, dispatch, fetchMenus]);
 
-  const handleRowClick = (id: string | number) => {
-    navigate(`/settings/website/menus/${id}/edit`);
-  };
+  const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDialogOpen(false);
+    setDeleteItemId(null);
+  }, []);
 
-  const handlePageChange = (page: number) => {
-    setFilters((prev: any) => ({ ...prev, page }));
-  };
-
-  const handlePageSizeChange = (pageSize: number) => {
-    setFilters((prev: any) => ({ ...prev, limit: pageSize, page: 1 }));
-  };
+  const handleRowClick = useCallback(
+    (id: string | number) => {
+      navigate(`/settings/website/menus/${id}/edit`);
+    },
+    [navigate]
+  );
 
   const isDeleteAllowed =
     actions.includes("admin") || actions.includes("delete");
 
   return (
-    <div className="space-y-4">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead className="w-[150px] text-center">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.loading ? (
+    <div className="pb-4 overflow-auto">
+      <div className="rounded-md">
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={2} className="text-center py-6">
-                Loading...
-              </TableCell>
+              <TableHead className="w-full">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={onSortToggle}
+                >
+                  Name
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-[150px] text-center">Action</TableHead>
             </TableRow>
-          ) : data.menus.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={2} className="text-center py-6">
-                No menus found
-              </TableCell>
-            </TableRow>
-          ) : (
-            data.menus.map((menu) => (
-              <TableRow
-                key={menu.id}
-                onClick={() => handleRowClick(menu.id)}
-                className="cursor-pointer hover:bg-gray-50"
-              >
-                <TableCell>
-                  <Link
-                    to={`/settings/website/menus/${menu.id}/edit`}
-                    className="text-primary hover:underline"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <h3 className="font-semibold text-gray-900">{menu.name}</h3>
-                  </Link>
-                </TableCell>
-                <TableCell className="text-center">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setDialogOpen(true);
-                      setDeleteItemId(menu.id);
-                    }}
-                    disabled={!isDeleteAllowed}
-                  >
-                    <Trash2 className="h-5 w-5 text-gray-500" />
-                  </Button>
+          </TableHeader>
+          <TableBody>
+            {data.menus.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={2} className="text-center py-6">
+                  No menus found
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-
-      {/* Pagination */}
-      {data.total > 0 && (
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-gray-500">
-            {`${(filters.page - 1) * filters.limit + 1}-${Math.min(
-              filters.page * filters.limit,
-              data.total
-            )} of ${data.total} results`}
-          </p>
-          <Pagination
-            count={data.total}
-            page={filters.page}
-            pageSize={filters.limit}
-            onPageChange={handlePageChange}
-            onPageSizeChange={handlePageSizeChange}
-            pageSizeOptions={[10, 15, 20]}
-          />
-        </div>
-      )}
+            ) : (
+              data.menus.map((menu) => (
+                <TableRow
+                  key={menu.id}
+                  onClick={() => handleRowClick(menu.id)}
+                  className="cursor-pointer"
+                >
+                  <TableCell>
+                    <Link
+                      to={`/settings/website/menus/${menu.id}/edit`}
+                      className="font-normal"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {menu.name || "Unnamed Menu"}
+                    </Link>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        asChild
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Button variant="ghost" size="icon">
+                          <Ellipsis className="h-5 w-5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRowClick(menu.id);
+                          }}
+                          className="cursor-pointer"
+                        >
+                          <Pencil className="h-4 w-4 mr-2" />
+                          <span>Edit</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={(e) => handleDeleteClick(e, menu.id)}
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                          disabled={!isDeleteAllowed}
+                        >
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          <span>Delete</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -181,20 +200,13 @@ const MenuList: React.FC<MenuListProps> = ({
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4 flex justify-end space-x-2">
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => {
-                setDialogOpen(false);
-                setDeleteItemId(null);
-              }}
-            >
+            <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
               Cancel
             </Button>
             <Button
               size="sm"
               variant="destructive"
-              onClick={handleDelete}
+              onClick={handleDeleteConfirm}
               disabled={!isDeleteAllowed}
             >
               Delete

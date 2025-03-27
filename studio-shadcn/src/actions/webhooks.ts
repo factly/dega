@@ -34,11 +34,14 @@ interface WebhookRequestData {
   total: number;
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+const API_PATH = WEBHOOKS_API;
+
 export const getWebhooks = (query: any) => {
   return (dispatch: (action: any) => void) => {
     dispatch(loadingWebhooks());
     return axios
-      .get(WEBHOOKS_API, {
+      .get(`${API_BASE_URL}${API_PATH}`, {
         params: query,
       })
       .then((response) => {
@@ -46,7 +49,8 @@ export const getWebhooks = (query: any) => {
           addEvents(
             response.data.nodes
               .filter(
-                (webhook: Webhook) => (webhook.events as Event[]).length > 0
+                (webhook: Webhook) =>
+                  Array.isArray(webhook.events) && webhook.events.length > 0
               )
               .map((webhook: Webhook) => {
                 return webhook.events;
@@ -59,9 +63,9 @@ export const getWebhooks = (query: any) => {
             response.data.nodes.map((webhook: Webhook) => {
               return {
                 ...webhook,
-                events: (webhook.events as Event[]).map(
-                  (event: Event) => event.id
-                ),
+                events: Array.isArray(webhook.events)
+                  ? (webhook.events as Event[]).map((event: Event) => event.id)
+                  : webhook.events,
               };
             })
           )
@@ -85,14 +89,16 @@ export const getWebhook = (id: string) => {
   return (dispatch: (action: any) => void) => {
     dispatch(loadingWebhooks());
     return axios
-      .get(`${WEBHOOKS_API}/${id}`)
+      .get(`${API_BASE_URL}${API_PATH}/${id}`)
       .then((response) => {
         let webhook: Webhook = response.data;
         dispatch(addEvents(webhook.events as Event[]));
         dispatch(
           getWebhookByID({
             ...webhook,
-            events: (webhook.events as Event[]).map((event: Event) => event.id),
+            events: Array.isArray(webhook.events)
+              ? (webhook.events as Event[]).map((event: Event) => event.id)
+              : webhook.events,
           })
         );
       })
@@ -107,7 +113,7 @@ export const addWebhook = (data: Omit<Webhook, "id">) => {
   return (dispatch: (action: any) => void) => {
     dispatch(loadingWebhooks());
     return axios
-      .post(WEBHOOKS_API, data)
+      .post(`${API_BASE_URL}${API_PATH}`, data)
       .then((response) => {
         let webhook: Webhook = response.data;
         dispatch(addEvents(webhook.events as Event[]));
@@ -125,14 +131,16 @@ export const updateWebhook = (data: Webhook) => {
   return (dispatch: (action: any) => void) => {
     dispatch(loadingWebhooks());
     return axios
-      .put(`${WEBHOOKS_API}/${data.id}`, data)
+      .put(`${API_BASE_URL}${API_PATH}/${data.id}`, data)
       .then((response) => {
         let webhook: Webhook = response.data;
         dispatch(addEvents(webhook.events as Event[]));
         dispatch(
           getWebhookByID({
             ...webhook,
-            events: (webhook.events as Event[]).map((event: Event) => event.id),
+            events: Array.isArray(webhook.events)
+              ? (webhook.events as Event[]).map((event: Event) => event.id)
+              : webhook.events,
           })
         );
         dispatch(addSuccessNotification("Webhook updated"));
@@ -148,7 +156,7 @@ export const deleteWebhook = (id: string) => {
   return (dispatch: (action: any) => void) => {
     dispatch(loadingWebhooks());
     return axios
-      .delete(`${WEBHOOKS_API}/${id}`)
+      .delete(`${API_BASE_URL}${API_PATH}/${id}`)
       .then(() => {
         dispatch(resetWebhooks());
         dispatch(addSuccessNotification("Webhook deleted"));

@@ -74,13 +74,8 @@ function EditMenu(): React.ReactElement {
     <>
       <Helmet title={`${menu?.name || "Menu"} - Edit Menu`} />
       <div className="w-full max-w-4xl mx-auto">
-        <div className="bg-white">
-          <div className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
-            <h2 className="text-2xl font-bold">Edit Menu</h2>
-          </div>
-          <div className="p-6">
-            <MenuForm data={menu} onCreate={onUpdate} />
-          </div>
+        <div className="bg-white p-6">
+          <MenuForm data={menu} onCreate={onUpdate} />
         </div>
       </div>
     </>

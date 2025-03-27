@@ -30,6 +30,8 @@ import categoriesReducer from "./categoriesReducer";
 import googleFactChecksReducer from "./googleFactChecksReducer";
 import sachFactCheckReducer from "./sachFactChecksReducer";
 import pagesReducer from "./pagesReducer";
+import infoReducer from "./infoReducer";
+import searchReducer from "./searchReducer";
 
 const appReducer = combineReducers({
   posts: postsReducer,
@@ -61,6 +63,8 @@ const appReducer = combineReducers({
   googleFactChecks: googleFactChecksReducer,
   sachFactChecks: sachFactCheckReducer,
   pages: pagesReducer,
+  info: infoReducer,
+  search: searchReducer,
 });
 
 const rootReducer = (state: RootState | undefined, action: AnyAction) => {

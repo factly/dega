@@ -6,7 +6,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
@@ -53,7 +52,6 @@ interface EntityDetail {
 interface QueryState {
   page: number;
   limit: number;
-  q?: string;
 }
 
 // Define type for entity state
@@ -135,9 +133,8 @@ function Selector({
   const [entityCreatedFlag, setEntityCreatedFlag] = useState<boolean>(false);
   const [query, setQuery] = useState<QueryState>({
     page: 1,
-    limit: 5,
+    limit: 20,
   });
-  const [searchValue, setSearchValue] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
@@ -154,16 +151,6 @@ function Selector({
   if (!placeholder) {
     placeholder = `Select ${action}`;
   }
-
-  const onSearch = (value: string) => {
-    if (value) {
-      setSearchValue(value);
-      setQuery({ ...query, q: value, page: 1 });
-    } else {
-      setSearchValue("");
-      setQuery({ ...query, page: query.page, q: undefined });
-    }
-  };
 
   const { details, total, loading, ids } = useSelector((state: RootState) => {
     let details: EntityDetail[] = [];
@@ -192,16 +179,9 @@ function Selector({
           (!item.query.page && currentQuery.page === 1);
         const limitMatch =
           String(item.query.limit) === String(currentQuery.limit) ||
-          (!item.query.limit && currentQuery.limit === 5);
+          (!item.query.limit && currentQuery.limit === 20);
 
-        // If we have a search term, make sure it matches too
-        const searchMatch =
-          (!currentQuery.q && !item.query.q) ||
-          (currentQuery.q &&
-            item.query.q &&
-            item.query.q.toLowerCase().includes(currentQuery.q.toLowerCase()));
-
-        return pageMatch && limitMatch && searchMatch;
+        return pageMatch && limitMatch;
       });
 
       if (matchingReq) {
@@ -319,6 +299,7 @@ function Selector({
     if (!item) return "";
     if (item[display]) return item[display];
     if (item["email"]) return item["email"];
+    if (item["name"]) return item["name"];
     return "";
   };
 
@@ -381,15 +362,17 @@ function Selector({
       return;
     }
 
+    const newName = prompt(`Enter name for new ${createEntity}:`);
+    if (!newName || newName.trim() === "") return;
+
     dispatch(
       createFn({
-        name: query.q?.trim() || "",
+        name: newName.trim(),
       })
     ).then(() => {
       // Set a new query to trigger a refetch
-      setQuery({ page: 1, limit: 5 });
+      setQuery({ page: 1, limit: 20 });
       setEntityCreatedFlag(true);
-      setSearchValue("");
     });
   };
 
@@ -420,23 +403,26 @@ function Selector({
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" style={{ width: style?.width }}>
           <Command>
-            <CommandInput
-              placeholder={`Search ${action.toLowerCase()}...`}
-              value={searchValue}
-              onValueChange={onSearch}
-            />
             <CommandList>
               <ScrollArea className="h-64" onScrollCapture={handleScroll}>
                 <CommandEmpty>
-                  {createEntity && (
-                    <Button
-                      variant="outline"
-                      className="w-full mt-2"
-                      onClick={handleCreateEntity}
-                      disabled={!query.q?.trim()}
-                    >
-                      Create a {createEntity} '{query.q}'
-                    </Button>
+                  {loading ? (
+                    <div className="p-2 text-center text-sm">Loading...</div>
+                  ) : (
+                    <>
+                      <div className="p-2 text-center text-sm">
+                        No items found
+                      </div>
+                      {createEntity && (
+                        <Button
+                          variant="outline"
+                          className="w-full mt-2"
+                          onClick={handleCreateEntity}
+                        >
+                          Create a new {createEntity}
+                        </Button>
+                      )}
+                    </>
                   )}
                 </CommandEmpty>
                 <CommandGroup>
@@ -450,7 +436,7 @@ function Selector({
                       }}
                     >
                       <Check
-                        className={`mr-2 h-4 w-4 ${
+                        className={`h-4 w-4 ${
                           normalizedValue.includes(item?.id)
                             ? "opacity-100"
                             : "opacity-0"
@@ -487,23 +473,26 @@ function Selector({
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" style={{ width: style?.width }}>
           <Command>
-            <CommandInput
-              placeholder={`Search ${action.toLowerCase()}...`}
-              value={searchValue}
-              onValueChange={onSearch}
-            />
             <CommandList>
               <ScrollArea className="h-64" onScrollCapture={handleScroll}>
                 <CommandEmpty>
-                  {createEntity && (
-                    <Button
-                      variant="outline"
-                      className="w-full mt-2"
-                      onClick={handleCreateEntity}
-                      disabled={!query.q?.trim()}
-                    >
-                      Create a {createEntity} '{query.q}'
-                    </Button>
+                  {loading ? (
+                    <div className="p-2 text-center text-sm">Loading...</div>
+                  ) : (
+                    <>
+                      <div className="p-2 text-center text-sm">
+                        No items found
+                      </div>
+                      {createEntity && (
+                        <Button
+                          variant="outline"
+                          className="w-full mt-2"
+                          onClick={handleCreateEntity}
+                        >
+                          Create a new {createEntity}
+                        </Button>
+                      )}
+                    </>
                   )}
                 </CommandEmpty>
                 <CommandGroup>

@@ -14,6 +14,7 @@ import getUrlParams from "../../utils/getUrlParams";
 import Loader from "../../components/Loader";
 import Filters from "../../utils/filters";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import Pagination from "../../components/Pagination";
 
 interface FilterParams {
   q?: string;
@@ -99,6 +100,17 @@ function Tags(): React.ReactElement {
     return { tags: [], total: 0, loading: state.tags.loading || false };
   });
 
+  // Get sidebar state from Redux store
+  const isCollapsed = useSelector(
+    (state: RootState) => state.sidebar?.collapsed ?? false
+  );
+
+  // Calculate left margin based on sidebar state
+  const sidebarWidth = isCollapsed ? "89px" : "265px";
+
+  // Define the header height (including padding)
+  const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
+
   // Filter tags locally based on search text
   const filteredTags = useMemo(() => {
     let filtered = tags;
@@ -142,21 +154,16 @@ function Tags(): React.ReactElement {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   }, []);
 
-  // Update URL with new parameters (without affecting search)
   const updateURLParams = useCallback(
     (newParams: Record<string, any>) => {
       const searchParams = new URLSearchParams();
-
-      // Combine existing params with new ones, but exclude 'q' if we're using local filtering
       const combinedParams = {
         ...urlParams,
         ...newParams,
       };
 
-      // Only add non-empty/non-default values to keep URL clean
       Object.entries(combinedParams).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== "") {
-          // Don't add default pagination values to URL
           if (
             (key === "page" && value === 1) ||
             (key === "limit" && value === 10)
@@ -195,7 +202,6 @@ function Tags(): React.ReactElement {
     }
   }, [urlParams]);
 
-  // Fetch tags when URL params change (but not when just the search text changes)
   useEffect(() => {
     fetchTags();
   }, [location.search]);
@@ -213,11 +219,27 @@ function Tags(): React.ReactElement {
   const handleSortChange = (value: string) => {
     updateURLParams({ sort: value });
   };
-
-  // Apply search to URL only when user explicitly submits
   const handleSearchSubmit = () => {
     updateURLParams({ q: searchText, page: 1 });
   };
+
+  // Pagination handlers
+  const handlePageChange = useCallback(
+    (page: number) => {
+      updateURLParams({ page });
+    },
+    [updateURLParams]
+  );
+
+  const handlePageSizeChange = useCallback(
+    (size: number) => {
+      updateURLParams({ limit: size, page: 1 });
+    },
+    [updateURLParams]
+  );
+
+  // Calculate total pages
+  const totalPages = Math.max(1, Math.ceil(total / (filters.limit || 10)));
 
   return loading ? (
     <Loader />
@@ -225,59 +247,65 @@ function Tags(): React.ReactElement {
     <div className="flex flex-col h-full w-full">
       <Helmet title={"Tags"} />
 
-      <div className="w-full">
-        <form
-          ref={form}
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSearchSubmit();
-          }}
-        >
-          <div className="flex flex-row md:flex-row justify-between gap-4">
-            <div className="relative w-83">
+      {/* Header */}
+      <div
+        className="fixed top-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: headerHeight,
+          transition: "left 0.3s ease",
+        }}
+      >
+        <div className="flex justify-between items-center h-full px-6 pt-1">
+          <form
+            ref={form}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearchSubmit();
+            }}
+            className="flex items-center gap-4 flex-1"
+          >
+            <div className="relative flex-1 max-w-xs">
               <Input
                 name="q"
                 placeholder="Search tags..."
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
+                className="h-10"
               />
             </div>
-
-            <div className="w-full md:w-1/3">
-              <div
-                className={`flex items-center gap-4 ${
-                  isMobileScreen
-                    ? "justify-between flex-row-reverse"
-                    : "justify-end"
-                }`}
-              >
-                <div
-                  className={`${isMobileScreen ? "w-1/2" : "w-full md:w-auto"}`}
-                >
-                  <div className="flex justify-end">
-                    <Link to="/tags/create">
-                      <Button
-                        variant="default"
-                        className="flex items-center gap-2"
-                      >
-                        <PlusCircle className="h-4 w-4" />
-                        Create tag
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
+          </form>
+          <div>
+            <Link to="/tags/create">
+              <Button size="lg" className="flex items-center gap-2 py-2">
+                <PlusCircle className="h-4 w-4" />
+                Create tag
+              </Button>
+            </Link>
           </div>
-        </form>
+        </div>
       </div>
 
-      {/* Make the TagList fill the remaining height */}
-      <div className="flex-grow flex flex-col mt-2 min-h-0">
+      {/* Content */}
+      <div
+        className="absolute overflow-auto"
+        style={{
+          top: headerHeight,
+          left: sidebarWidth,
+          right: 0,
+          bottom: "64px",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          paddingBottom: "1.5rem",
+          paddingTop: "1rem",
+          transition: "left 0.3s ease, top 0.3s ease",
+        }}
+      >
         <TagList
           data={{
             tags: filteredTags,
-            total: filteredTags.length,
+            total: total,
             loading,
           }}
           filters={filters}
@@ -285,6 +313,26 @@ function Tags(): React.ReactElement {
           fetchTags={fetchTags}
           sortOrder={sortOrder}
           onSortToggle={handleSortToggle}
+        />
+      </div>
+
+      {/* Footer with Pagination */}
+      <div
+        className="fixed bottom-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: "64px",
+          transition: "left 0.3s ease",
+        }}
+      >
+        <Pagination
+          currentPage={filters.page || 1}
+          totalPages={totalPages}
+          totalItems={total}
+          pageSize={filters.limit || 10}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
         />
       </div>
     </div>

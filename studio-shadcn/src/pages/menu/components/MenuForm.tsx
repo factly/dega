@@ -17,6 +17,7 @@ import MenuField from "./MenuField";
 import Submenu from "./Submenu";
 import MonacoEditor from "../../../components/MonacoEditor";
 import getJsonValue from "../../../utils/getJsonValue";
+import { useNavigate } from "react-router-dom";
 
 // Define TypeScript interfaces
 interface MenuItem {
@@ -65,6 +66,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 function MenuForm({ onCreate, data = {} }: MenuFormProps) {
+  const navigate = useNavigate();
+
   // Process initial meta_fields
   const initialData = { ...data };
   if (initialData && initialData.meta_fields) {
@@ -109,6 +112,11 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
     setValueChange(false);
   };
 
+  const handleCancel = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent form submission
+    navigate(-1); // Navigate to the previous page
+  };
+
   const onSubmit = (values: FormValues) => {
     const submittedValues = { ...values };
 
@@ -141,6 +149,18 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
 
   return (
     <div className="bg-background">
+      <div className="mb-4">
+        <h1 className="text-xl font-semibold text-gray-900">
+          {data && data.id ? "Edit Menu" : "Create Menu"}
+        </h1>
+        <div className="mt-2">
+          <p className="text-gray-600 text-[13px]">
+            Manage your website navigation by creating and organizing menu items
+          </p>
+        </div>
+      </div>
+
+      <div className="border-t border-gray-200 mb-4"></div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -165,12 +185,11 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
             <div className="md:col-span-6 flex items-end">
               <Button
                 type="button"
-                variant="outline"
                 onClick={() => {
                   if (addMenu.current) addMenu.current();
                 }}
               >
-                <Plus className="h-4 w-4 mr-2" /> Add menu
+                <Plus className="h-4 w-4" /> Add menu
               </Button>
             </div>
           </div>
@@ -197,7 +216,7 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
                         variant="outline"
                         onClick={() => remove(index)}
                       >
-                        <MinusCircle className="h-4 w-4 mr-2" /> Remove menu
+                        <MinusCircle className="h-4 w-4" /> Remove menu
                       </Button>
                     </div>
                   </div>
@@ -236,10 +255,18 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
           </div>
         </form>
       </Form>
-      <div className="flex justify-start mt-6">
+      <div className="flex justify-start mt-6 space-x-4">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleCancel}
+          className="px-6"
+        >
+          Cancel
+        </Button>
         <Button
           type="submit"
-          variant="default"
+          onClick={form.handleSubmit(onSubmit)}
           disabled={!valueChange}
           className={!valueChange ? "opacity-50" : ""}
         >

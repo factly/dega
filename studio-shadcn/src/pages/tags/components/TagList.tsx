@@ -27,7 +27,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 interface Tag {
   id: string;
@@ -64,10 +63,6 @@ function TagList({
 
   const dispatch = useAppDispatch();
   const navigate = useNavigation();
-
-  // Safely access filters with defaults
-  const page = filters?.page || 1;
-  const limit = filters?.limit || 10;
 
   const handleRowClick = useCallback(
     (id: string) => {
@@ -110,15 +105,13 @@ function TagList({
     setDeleteItemID(null);
   }, []);
 
-  // Safely calculate total pages
+  // Safely access data
   const tags = data?.tags || [];
-  const total = data?.total || 0;
-  const totalPages = Math.ceil(total / limit) || 1;
 
   return (
     <div className="flex flex-col h-full">
-      {/* Table container with flex-grow to push pagination to bottom */}
-      <div className="flex-grow overflow-auto">
+      {/* Table */}
+      <div className="rounded-md">
         <Table>
           <TableHeader>
             <TableRow>
@@ -190,79 +183,6 @@ function TagList({
             )}
           </TableBody>
         </Table>
-      </div>
-
-      {/* Pagination footer - fixed at bottom */}
-      <div className="flex items-center justify-between py-2 border-t mt-auto">
-        {/* Results count - left aligned */}
-        <div>
-          <p className="text-sm text-muted-foreground">
-            {page > 0 && total > 0
-              ? `${(page - 1) * limit + 1}-${Math.min(
-                  page * limit,
-                  total
-                )} out of ${total} results`
-              : `0-0 out of ${total} results`}
-          </p>
-        </div>
-
-        {/* Pagination controls and rows per page - right aligned */}
-        <div className="flex items-center space-x-4">
-          {/* Rows per page */}
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-muted-foreground">
-              Rows per page:
-            </span>
-            <select
-              className="h-8 rounded-md border border-input px-2"
-              value={limit}
-              onChange={(e) =>
-                setFilters({
-                  ...filters,
-                  limit: Number(e.target.value),
-                  page: 1,
-                })
-              }
-            >
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-              <option value={20}>20</option>
-            </select>
-          </div>
-
-          {/* Page indicator */}
-          <div className="flex items-center space-x-1">
-            <span className="text-sm">
-              Page {page} of {totalPages}
-            </span>
-          </div>
-
-          {/* Pagination controls */}
-          <div className="flex items-center space-x-1">
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-8 w-8"
-              onClick={() =>
-                page > 1 && setFilters({ ...filters, page: page - 1 })
-              }
-              disabled={page <= 1}
-            >
-              <PaginationPrevious className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-8 w-8"
-              onClick={() =>
-                page < totalPages && setFilters({ ...filters, page: page + 1 })
-              }
-              disabled={page >= totalPages}
-            >
-              <PaginationNext className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
       </div>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>

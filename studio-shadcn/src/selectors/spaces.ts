@@ -36,6 +36,7 @@ export const spaceSelector = (state: RootState): SelectorOutput => {
     return {
       loading: false,
       spaces: [],
+      total: 0,
     };
   }
 
@@ -55,5 +56,6 @@ export const spaceSelector = (state: RootState): SelectorOutput => {
   return {
     loading: state.spaces.loading,
     spaces: spaces,
+    total: spaces.length, // Add the total count based on the filtered spaces
   };
 };

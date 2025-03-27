@@ -8,12 +8,19 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { MoreHorizontal, Download, Trash2 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Define types for component props and data
 interface MediaItem {
   id: string | number;
   name: string;
-  url: {
+  url?: {
     proxy?: string;
     raw?: string;
   };
@@ -38,16 +45,15 @@ interface MediumListProps {
   actions?: string[];
 }
 
-/**
- * MediumList component displays a grid of media items with pagination
- * @param data - Object containing media items array and total count
- * @param filters - Current filter state including pagination info
- * @param setFilters - Function to update filters
- */
-function MediumList({ data, filters, setFilters }: MediumListProps) {
+function MediumList({
+  data,
+  filters,
+  setFilters,
+  actions = [],
+}: MediumListProps) {
   // Calculate pagination values
-  const currentPage = filters.page || 1;
-  const pageSize = filters.limit || 10;
+  const currentPage = Number(filters.page) || 1;
+  const pageSize = Number(filters.limit) || 10;
   const totalPages = Math.ceil(data.total / pageSize);
 
   // Handle page change
@@ -62,37 +68,60 @@ function MediumList({ data, filters, setFilters }: MediumListProps) {
 
   return (
     <div className="flex flex-col space-y-6">
-      {/* Grid layout for media items */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      {/* Media Grid - using 3 columns*/}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data.media.map((item) => (
-          <Link key={item.id} to={`/media/${item.id}/edit`} className="block">
-            <Card className="hover:shadow-md transition-shadow duration-200 overflow-hidden">
-              <CardContent className="p-0">
-                <img
-                  alt={item.name}
-                  src={
-                    item.url
-                      ? `${
-                          item.url[
-                            import.meta.env.VITE_ENABLE_IMGPROXY
-                              ? "proxy"
-                              : "raw"
-                          ]
-                        }?gravity:sm/resize:fill:220:220`
-                      : ""
-                  }
-                  className="w-full h-64 object-cover object-center rounded-t-lg"
-                  title={item.name}
-                />
-              </CardContent>
-            </Card>
-          </Link>
+          <div key={item.id} className="relative group">
+            <Link to={`/media/${item.id}/edit`} className="block">
+              <Card className="overflow-hidden h-64 transition-all hover:shadow-md">
+                <CardContent className="p-0 h-full bg-gray-50">
+                  {item.url && (
+                    <img
+                      src={item.url.proxy || item.url.raw}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </CardContent>
+              </Card>
+            </Link>
+
+            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="p-1 rounded-md bg-white/90 hover:bg-white">
+                    <MoreHorizontal className="h-5 w-5" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-40">
+                  <DropdownMenuItem asChild>
+                    <Link
+                      to={`/media/${item.id}/edit`}
+                      className="flex items-center w-full cursor-pointer"
+                    >
+                      <span>Edit</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="flex items-center cursor-pointer">
+                    <Download className="h-4 w-4 mr-2" />
+                    <span>Download</span>
+                  </DropdownMenuItem>
+                  {actions.includes("admin") && (
+                    <DropdownMenuItem className="flex items-center text-red-500 cursor-pointer">
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      <span>Delete</span>
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
         ))}
       </div>
 
       {/* Pagination */}
-      {data.total > 0 && (
-        <div className="flex items-center justify-between">
+      {data.total > pageSize && (
+        <div className="flex items-center justify-between mt-4">
           <p className="text-sm text-gray-500">
             {`${(currentPage - 1) * pageSize + 1}-${Math.min(
               currentPage * pageSize,
@@ -110,9 +139,7 @@ function MediumList({ data, filters, setFilters }: MediumListProps) {
                 </PaginationItem>
               )}
 
-              {/* Generate page numbers */}
               {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                // Show pages around the current page
                 let pageNum;
                 if (totalPages <= 5) {
                   pageNum = i + 1;
@@ -146,7 +173,6 @@ function MediumList({ data, filters, setFilters }: MediumListProps) {
             </PaginationContent>
           </Pagination>
 
-          {/* Page size selector */}
           <select
             className="p-2 border rounded-md text-sm"
             value={pageSize}
@@ -156,6 +182,16 @@ function MediumList({ data, filters, setFilters }: MediumListProps) {
             <option value={15}>15 per page</option>
             <option value={20}>20 per page</option>
           </select>
+        </div>
+      )}
+
+      {/* No media items message */}
+      {data.media.length === 0 && !data.loading && (
+        <div className="flex flex-col items-center justify-center p-8 text-center bg-gray-50 rounded-lg">
+          <p className="text-lg text-gray-500 mb-4">No media items found</p>
+          <Link to="/media/upload" className="text-primary hover:underline">
+            Upload new media
+          </Link>
         </div>
       )}
     </div>

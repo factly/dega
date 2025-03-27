@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/popover";
 
 interface DatePickerProps {
+  selected?: Date;
   date?: Date;
   onSelect?: (date: Date | undefined) => void;
   disabled?: (date: Date) => boolean;
@@ -21,6 +22,7 @@ interface DatePickerProps {
 }
 
 export function DatePicker({
+  selected,
   date,
   onSelect,
   disabled,
@@ -28,6 +30,7 @@ export function DatePicker({
   className,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
+  const selectedDate = selected || date;
 
   const handleSelect = (selectedDate: Date | undefined) => {
     if (onSelect) {
@@ -43,18 +46,18 @@ export function DatePicker({
           variant="outline"
           className={cn(
             "w-full justify-start text-left font-normal",
-            !date && "text-muted-foreground",
+            !selectedDate && "text-muted-foreground",
             className
           )}
         >
-          {date ? format(date, "PPP") : placeholder}
-          <CalendarIcon className="h-4 w-4 ml-73" />
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {selectedDate ? format(selectedDate, "PPP") : placeholder}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
-          selected={date}
+          selected={selectedDate}
           onSelect={handleSelect}
           disabled={disabled}
           initialFocus
@@ -142,7 +145,7 @@ export function DateRangePicker({
 
 // DatePicker with Presets
 interface DatePickerWithPresetsProps {
-  date?: Date;
+  selected?: Date;
   onSelect?: (date: Date | undefined) => void;
   disabled?: (date: Date) => boolean;
   placeholder?: string;
@@ -151,7 +154,7 @@ interface DatePickerWithPresetsProps {
 }
 
 export function DatePickerWithPresets({
-  date,
+  selected,
   onSelect,
   disabled,
   placeholder = "Pick a date",
@@ -184,12 +187,12 @@ export function DatePickerWithPresets({
           variant="outline"
           className={cn(
             "w-full justify-start text-left font-normal",
-            !date && "text-muted-foreground",
+            !selected && "text-muted-foreground",
             className
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : placeholder}
+          {selected ? format(selected, "PPP") : placeholder}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -210,7 +213,7 @@ export function DatePickerWithPresets({
         <div className="border-t">
           <Calendar
             mode="single"
-            selected={date}
+            selected={selected}
             onSelect={handleSelect}
             disabled={disabled}
             initialFocus
@@ -221,7 +224,6 @@ export function DatePickerWithPresets({
   );
 }
 
-// For use in forms - this matches how it's used in your ClaimForm.tsx
 interface FormDatePickerProps {
   date?: Date;
   onSelect: (date: Date | undefined) => void;
@@ -233,7 +235,7 @@ export function FormDatePicker({
   onSelect,
   disabled,
 }: FormDatePickerProps) {
-  return <DatePicker date={date} onSelect={onSelect} disabled={disabled} />;
+  return <DatePicker selected={date} onSelect={onSelect} disabled={disabled} />;
 }
 
 export default DatePicker;

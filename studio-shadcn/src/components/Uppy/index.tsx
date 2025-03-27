@@ -83,6 +83,7 @@ function UppyUploader({
     return org ? org.slug : "";
   });
   const slug = profile ? org_slug : space_slug;
+  const companionUrl = import.meta.env.VITE_COMPANION_URL;
 
   const uppy = new Uppy({
     id: "uppy-media",
@@ -121,16 +122,54 @@ function UppyUploader({
     },
   })
     .use(AwsS3, {
-      companionUrl:
-        import.meta.env.VITE_COMPANION_URL || window.REACT_APP_COMPANION_URL,
+      companionUrl: companionUrl,
+
+      endpoint: companionUrl,
+
+      getUploadParameters(file) {
+        const paramsEndpoint = `${companionUrl}/s3/params`;
+
+        const queryParams = new URLSearchParams({
+          filename: file.meta.name,
+        });
+
+        // Add metadata if available
+        if (file.meta.width && file.meta.height) {
+          queryParams.append("metadata[width]", file.meta.width.toString());
+          queryParams.append("metadata[height]", file.meta.height.toString());
+        }
+
+        // Make the request to get S3 upload parameters
+        return fetch(`${paramsEndpoint}?${queryParams.toString()}`, {
+          method: "GET",
+          credentials: "same-origin",
+          headers: {
+            Accept: "application/json",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                `Failed to get upload parameters. Status: ${response.status}`
+              );
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("S3 upload parameters received:", data);
+            return data;
+          })
+          .catch((error) => {
+            console.error("Error getting S3 upload parameters:", error);
+            throw error;
+          });
+      },
     })
     .use(Url, {
-      companionUrl:
-        import.meta.env.VITE_COMPANION_URL || window.REACT_APP_COMPANION_URL,
+      companionUrl: companionUrl,
     })
     .use(GoogleDrive, {
-      companionUrl:
-        import.meta.env.VITE_COMPANION_URL || window.REACT_APP_COMPANION_URL,
+      companionUrl: companionUrl,
     })
     .use(ImageEditor, {
       id: "ImageEditor",
@@ -140,8 +179,7 @@ function UppyUploader({
         autoCropArea: 1,
         responsive: true,
       },
-      companionUrl:
-        import.meta.env.VITE_COMPANION_URL || window.REACT_APP_COMPANION_URL,
+      companionUrl: companionUrl,
     });
 
   uppy.on("file-added", (file: UppyFileExtended) => {
@@ -158,7 +196,20 @@ function UppyUploader({
     };
   });
 
+  uppy.on("error", (error) => {
+    console.error("Uppy error:", error);
+  });
+
+  uppy.on("upload-error", (file, error, response) => {
+    console.error("Upload error:", file, error, response);
+  });
+
   uppy.on("complete", (result) => {
+    if (result.successful.length === 0) {
+      console.warn("No files were successfully uploaded");
+      return;
+    }
+
     const uploadList: UploadItem[] = result.successful.map(
       (successful: UppyFileExtended) => {
         const upload: UploadItem = {

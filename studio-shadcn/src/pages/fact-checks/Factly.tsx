@@ -168,24 +168,6 @@ function Factly(): React.ReactElement {
             <Button type="submit">Search</Button>
           </form>
         </div>
-
-        <div
-          className={`flex items-center gap-2 ${isMobileScreen ? "mt-4" : ""}`}
-        >
-          <span>Sort by:</span>
-          <Select
-            value={dateOrder || undefined}
-            onValueChange={handleDateChange}
-          >
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Sort by date" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="desc">Latest</SelectItem>
-              <SelectItem value="asc">Oldest</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

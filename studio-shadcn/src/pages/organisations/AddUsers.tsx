@@ -110,7 +110,6 @@ const AddUsers: React.FC = () => {
       }
 
       toast.success("User created successfully");
-      navigate("/settings/members");
     } catch (error) {
       console.error("Error creating user:", error);
       toast.error("Failed to create user. Please try again.");
@@ -120,99 +119,125 @@ const AddUsers: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="mx-auto max-w-lg">
-        <h2 className="mb-6 text-2xl font-bold">Create New User</h2>
+    <div className="bg-white flex justify-center">
+      <div className="w-full max-w-xl">
+        <div className="mb-3 pb-4 px-4 border-b border-gray-200">
+          <h2 className="text-xl font-semibold">Create New User</h2>
+          <p className="text-gray-600 mt-2 text-[13px]">
+            Add new team members by entering their details below.
+          </p>
+        </div>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>First Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <div className="bg-white">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="space-y-6 pb-4 px-4">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base">First Name</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Last Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base">Last Name</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input type="email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base">Email</FormLabel>
+                      <FormControl>
+                        <Input type="email" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <PasswordInput
-                      id="password"
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      required
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base">Password</FormLabel>
+                      <FormControl>
+                        <PasswordInput
+                          id="password"
+                          name={field.name}
+                          value={field.value}
+                          onChange={field.onChange}
+                          required
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
-                  <FormControl>
-                    <PasswordInput
-                      id="confirmPassword"
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
-                      required
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base">
+                        Confirm Password
+                      </FormLabel>
+                      <FormControl>
+                        <PasswordInput
+                          id="confirmPassword"
+                          name={field.name}
+                          value={field.value}
+                          onChange={field.onChange}
+                          required
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Creating User..." : "Create User"}
-            </Button>
-          </form>
-        </Form>
+              {/* Action Buttons */}
+              <div className="flex justify-start gap-3 pt-4 px-4 border-t border-gray-100">
+                <Button
+                  className="text-base"
+                  type="button"
+                  variant="outline"
+                  onClick={() => navigate("/organisations")}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="text-base"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Creating User..." : "Create User"}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </div>
     </div>
   );

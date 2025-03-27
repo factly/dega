@@ -38,13 +38,8 @@ const CreateMenu: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="bg-white">
-        <div className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
-          <h2 className="text-2xl font-bold">Create Menu</h2>
-        </div>
-        <div className="p-6">
-          <MenuForm onCreate={onCreate} />
-        </div>
+      <div className="bg-white p-6">
+        <MenuForm onCreate={onCreate} />
       </div>
     </div>
   );

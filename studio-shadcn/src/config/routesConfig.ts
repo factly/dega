@@ -1,17 +1,23 @@
 import { Microchip, ListCheck, LayoutDashboard } from "lucide-react";
-import { Dashboard } from "../pages/dashboard";
+import Dashboard from "../pages/dashboard";
 import Analytics from "../pages/analytics";
+import Search from "@/pages/search";
+
+//Authentication
 import Login from "../utils/zitadel/login";
 import RegistrationForm from "../utils/zitadel/registration";
 import VerifyEmail from "../utils/zitadel/VerifyEmail";
 import RecoveryPage from "../utils/zitadel/recovery";
 import Callback from "../utils/zitadel/redirect";
+
+//Settings
 import SecuritySettings from "../pages/website/TwoFactorAuthManagement";
 import EditWebsite from "../pages/website/EditWebsite";
 import Branding from "../pages/website/Branding";
 import AnalyticsForm from "../pages/website/AnalyticsForm";
 import CodeInjection from "../pages/website/CodeInjection";
 
+//Tokens
 import Tokens from "../pages/tokens";
 import CreateSpaceTokenForm from "../pages/tokens/components/CreateToken";
 
@@ -57,7 +63,7 @@ import CreateMenu from "../pages/menu/CreateMenu";
 import EditMenu from "../pages/menu/EditMenu";
 
 //Ratings
-import Ratings from "../pages/ratings";
+import Ratings from "../pages/ratings/";
 import CreateRating from "../pages/ratings/CreateRating";
 import EditRating from "../pages/ratings/EditRating";
 
@@ -70,6 +76,7 @@ import EditClaimant from "../pages/claimants/EditClaimant";
 import Spaces from "../pages/spaces";
 import CreateSpace from "../pages/spaces/CreateSpace";
 import EditSpace from "../pages/spaces/EditSpace";
+import Reindex from "../pages/spaces/Reindex";
 
 //Organisations
 import Organisations from "../pages/organisations/index";
@@ -80,16 +87,16 @@ import Media from "../pages/media";
 import UploadMedium from "../pages/media/UploadMedium";
 import EditMedium from "../pages/media/EditMedium";
 
-// //Policies
+//Policies
 import Policies from "../pages/policies";
 import CreatePolicy from "../pages/policies/CreatePolicy";
 import EditPolicy from "../pages/policies/EditPolicy";
 import ViewPolicy from "../pages/policies/components/ViewPolicy";
 
 //Pages
-import Pages from '../pages/pages';
-import CreatePage from '../pages/pages/CreatePage';
-import EditPage from '../pages/pages/EditPage';
+import Pages from "../pages/pages";
+import CreatePage from "../pages/pages/CreatePage";
+import EditPage from "../pages/pages/EditPage";
 
 //Webhooks
 import Webhooks from "../pages/webhooks";
@@ -130,6 +137,12 @@ export const routes = {
     title: "Analytics",
     menuKey: "/analytics",
     Component: Analytics,
+  },
+  search: {
+    path: "/search",
+    title: "Search",
+    menuKey: "/search",
+    Component: Search,
   },
   login: {
     path: "/auth/login",
@@ -179,29 +192,29 @@ export const routes = {
     title: "New Token",
   },
   pages: {
-    path: '/pages',
-    menuKey: '/pages',
+    path: "/pages",
+    menuKey: "/pages",
     Component: Pages,
-    title: 'Pages',
+    title: "Pages",
   },
   createPage: {
-    path: '/pages/create',
-    menuKey: '/pages',
+    path: "/pages/create",
+    menuKey: "/pages",
     Component: CreatePage,
-    title: 'New Page',
+    title: "New Page",
     permission: {
-      resource: 'pages',
-      action: 'create',
+      resource: "pages",
+      action: "create",
     },
   },
   editPage: {
-    path: '/pages/:id/edit',
-    menuKey: '/pages',
+    path: "/pages/:id/edit",
+    menuKey: "/pages",
     Component: EditPage,
-    title: 'Edit',
+    title: "Edit",
     permission: {
-      resource: 'pages',
-      action: 'update',
+      resource: "pages",
+      action: "update",
     },
   },
   categories: {
@@ -636,6 +649,12 @@ export const routes = {
       resource: "spaces",
       action: "update",
     },
+  },
+  reindex: {
+    path: "/settings/advanced/reindex",
+    menuKey: "/advanced",
+    Component: Reindex,
+    title: "Reindex",
   },
   editWebsite: {
     path: "/settings/website/general",

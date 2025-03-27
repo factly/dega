@@ -1,13 +1,61 @@
-import { AnyAction } from 'redux';
-import deepEqual from 'deep-equal';
 import {
   ADD_POST,
   ADD_POSTS,
   ADD_POSTS_REQUEST,
   SET_POSTS_LOADING,
   RESET_POSTS,
-} from '../constants/posts';
-import { PostsState } from '../types/index';
+} from "../constants/posts";
+import deepEqual from "deep-equal";
+
+// Define interfaces for the state and actions
+interface Post {
+  id: string | number;
+  [key: string]: any;
+}
+
+interface PostsState {
+  req: RequestItem[];
+  details: Record<string | number, Post>;
+  loading: boolean;
+}
+
+interface RequestItem {
+  query: any;
+  [key: string]: any;
+}
+
+// Action interfaces
+interface ResetPostsAction {
+  type: typeof RESET_POSTS;
+}
+
+interface SetPostsLoadingAction {
+  type: typeof SET_POSTS_LOADING;
+  payload: boolean;
+}
+
+interface AddPostsRequestAction {
+  type: typeof ADD_POSTS_REQUEST;
+  payload: RequestItem;
+}
+
+interface AddPostsAction {
+  type: typeof ADD_POSTS;
+  payload: Post[];
+}
+
+interface AddPostAction {
+  type: typeof ADD_POST;
+  payload: Post;
+}
+
+// Union type for all possible action types
+type PostAction =
+  | ResetPostsAction
+  | SetPostsLoadingAction
+  | AddPostsRequestAction
+  | AddPostsAction
+  | AddPostAction;
 
 const initialState: PostsState = {
   req: [],
@@ -15,7 +63,10 @@ const initialState: PostsState = {
   loading: true,
 };
 
-export default function postsReducer(state = initialState, action: AnyAction = {} as AnyAction): PostsState {
+export default function postsReducer(
+  state: PostsState = initialState,
+  action: PostAction = {} as PostAction
+): PostsState {
   switch (action.type) {
     case RESET_POSTS:
       return {
@@ -44,9 +95,10 @@ export default function postsReducer(state = initialState, action: AnyAction = {
         ...state,
         details: {
           ...state.details,
-          ...action.payload.reduce((obj: Record<number, any>, item: any) => {
-            return {...obj, [item.id]: item};
-          }, {}),
+          ...action.payload.reduce<Record<string | number, Post>>(
+            (obj, item) => Object.assign(obj, { [item.id]: item }),
+            {}
+          ),
         },
       };
     case ADD_POST:

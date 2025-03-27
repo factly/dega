@@ -6,6 +6,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -152,7 +153,7 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
 
         <Form {...form}>
           <form
-            className="space-y-4 border-t"
+            className="space-y-4 border-t pt-4"
             onSubmit={form.handleSubmit((values) => {
               const formValues = { ...values };
               if (formValues.meta_fields) {
@@ -176,9 +177,16 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
               onValueChange={setActiveKeys}
               className="w-full"
             >
-              <AccordionItem value="general" className="bg-white mb-4">
-                <AccordionTrigger className="px-4">General</AccordionTrigger>
-                <AccordionContent className="px-4 pb-4">
+              <AccordionItem
+                value="general"
+                className="rounded-md overflow-hidden mb-4"
+              >
+                <AccordionTrigger className="hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-base font-medium">General</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pt-4 pb-4">
                   <div className="grid gap-4">
                     <FormField
                       control={form.control}
@@ -192,7 +200,9 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
                       }}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Claim</FormLabel>
+                          <FormLabel className="after:content-['*'] after:ml-0.5 after:text-red-500">
+                            Claim
+                          </FormLabel>
                           <FormControl>
                             <Textarea
                               rows={6}
@@ -205,11 +215,12 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
                               }}
                             />
                           </FormControl>
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
 
-                    <SlugInput form={form} />
+                    <SlugInput form={form} required={true} />
 
                     <FormField
                       control={form.control}
@@ -238,7 +249,9 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
                       rules={{ required: "Please add claimant!" }}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Claimant</FormLabel>
+                          <FormLabel className="after:content-['*'] after:ml-0.5 after:text-red-500">
+                            Claimant
+                          </FormLabel>
                           <FormControl>
                             <Selector
                               action="Claimants"
@@ -250,6 +263,7 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
                               }}
                             />
                           </FormControl>
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
@@ -260,7 +274,9 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
                       rules={{ required: "Please add rating!" }}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Rating</FormLabel>
+                          <FormLabel className="after:content-['*'] after:ml-0.5 after:text-red-500">
+                            Rating
+                          </FormLabel>
                           <FormControl>
                             <Selector
                               action="Ratings"
@@ -272,6 +288,7 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
                               }}
                             />
                           </FormControl>
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
@@ -331,9 +348,16 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="sources" className="bg-white mb-4">
-                <AccordionTrigger className="px-4">Sources</AccordionTrigger>
-                <AccordionContent>
+              <AccordionItem
+                value="sources"
+                className="rounded-md overflow-hidden mb-4"
+              >
+                <AccordionTrigger className="hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-base font-medium">Sources</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pt-4 pb-4">
                   {/* SourcesSection component */}
                   <SourcesSection
                     claimSourcesArray={claimSourcesArray}
@@ -352,7 +376,7 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
                 Cancel
               </Button>
               <Button disabled={!valueChange} type="submit">
-                {data && data.id ? "Update" : "Create claim"}
+                {data && data.id ? "Update" : "Create Claim"}
               </Button>
             </div>
           </form>

@@ -38,7 +38,7 @@ interface Webhook {
 }
 
 interface WebhookListProps {
-  actions: string[];
+  actions?: string[];
   data: {
     webhooks: Webhook[];
     loading: boolean;
@@ -53,7 +53,7 @@ interface WebhookListProps {
 }
 
 const WebhookList: React.FC<WebhookListProps> = ({
-  actions,
+  actions = [],
   data,
   filters,
   setFilters,
@@ -95,6 +95,7 @@ const WebhookList: React.FC<WebhookListProps> = ({
     );
   };
 
+  // Fixed check with default value for actions
   const isDeleteAllowed =
     actions.includes("admin") || actions.includes("delete");
 

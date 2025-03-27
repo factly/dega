@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import {
   Form,
   FormControl,
@@ -29,7 +30,6 @@ import { SlugInput } from "../../../components/FormItems";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDown, ChevronUp } from "lucide-react";
 
 // Type definitions
 interface Organization {
@@ -95,8 +95,6 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
 
   // Local state
   const [valueChange, setValueChange] = useState<boolean>(false);
-  const [titleSectionOpen, setTitleSectionOpen] = useState<boolean>(true);
-  const [metaFieldsOpen, setMetaFieldsOpen] = useState<boolean>(true);
 
   // Form setup
   const form = useForm<WebsiteFormValues>({
@@ -126,151 +124,195 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 space-y-4">
-      {" "}
+    <div className="max-w-3xl mx-auto px-4">
+      {/* Added Heading and Subheading with bottom border */}
+      <div className="mb-4 px-4">
+        <h1 className="text-xl font-semibold text-gray-900">Edit Website</h1>
+        <div className="mt-2">
+          <p className="text-gray-600 text-[13px]">
+            Modify the website details by entering the essential information
+            below
+          </p>
+        </div>
+      </div>
+
+      {/* Added a top border above the form */}
+      <div className="border-t border-gray-200 mb-4"></div>
+
       <Form {...form}>
         <form
-          className="edit-form"
+          className="w-full"
           onSubmit={form.handleSubmit(onSubmit)}
           onChange={() => setValueChange(true)}
         >
-          <Collapsible
-            open={titleSectionOpen}
-            onOpenChange={setTitleSectionOpen}
-            className="w-full rounded-md mb-4"
-          >
-            <div
-              className={`flex items-center justify-between px-4 py-2 border-b hover:bg-[#F0F5FF] transition-colors ${
-                titleSectionOpen ? "bg-[#F0F5FF]" : "bg-white"
-              }`}
+          <div className="w-full">
+            <Accordion
+              type="multiple"
+              defaultValue={["title-description"]}
+              className="w-full"
             >
-              <h3 className="text-lg font-medium">Title and Description</h3>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  {titleSectionOpen ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                </Button>
-              </CollapsibleTrigger>
-            </div>
+              <AccordionItem
+                value="title-description"
+                className="rounded-md overflow-hidden mb-2"
+              >
+                <AccordionTrigger className="hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-base font-medium">
+                      Title and Description
+                    </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="p-6 bg-white space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-4">
+                        <FormField
+                          control={form.control}
+                          name="organisation_id"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Organisation</FormLabel>
+                              <Select
+                                disabled
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select organisation" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {orgs.map((org) => (
+                                    <SelectItem key={org.id} value={org.id}>
+                                      {org.title}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-            <CollapsibleContent>
-              <div className="p-4 bg-white space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-4">
+                        <FormField
+                          control={form.control}
+                          name="space_id"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Space ID</FormLabel>
+                              <FormControl>
+                                <Input {...field} disabled />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Name</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Input name" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="site_title"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Title</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="tag_line"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Tag line</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <SlugInput form={form} />
+
+                        <FormField
+                          control={form.control}
+                          name="site_address"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Site Address</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="description"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Description</FormLabel>
+                              <FormControl>
+                                <Textarea
+                                  placeholder="Enter Description..."
+                                  {...field}
+                                  className="min-h-24"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                value="meta-fields"
+                className="rounded-md overflow-hidden mb-2"
+              >
+                <AccordionTrigger className="hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-base font-medium">Meta Fields</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="p-6 bg-white">
                     <FormField
                       control={form.control}
-                      name="organisation_id"
+                      name="meta_fields"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Organisation</FormLabel>
-                          <Select
-                            disabled
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select organisation" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {orgs.map((org) => (
-                                <SelectItem key={org.id} value={org.id}>
-                                  {org.title}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="space_id"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Space ID</FormLabel>
+                          <FormLabel>Metafields</FormLabel>
                           <FormControl>
-                            <Input {...field} disabled />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Input name" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="site_title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Title</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="tag_line"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Tag line</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <SlugInput form={form} />
-
-                    <FormField
-                      control={form.control}
-                      name="site_address"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Site Address</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Description</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Enter Description..."
-                              {...field}
+                            <MonacoEditor
+                              language="json"
+                              width="100%"
+                              value={field.value as string}
+                              onChange={field.onChange}
                             />
                           </FormControl>
                           <FormMessage />
@@ -278,75 +320,27 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
                       )}
                     />
                   </div>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
 
-          <Collapsible
-            open={metaFieldsOpen}
-            onOpenChange={setMetaFieldsOpen}
-            className="w-full rounded-md"
-          >
-            <div
-              className={`flex items-center justify-between px-4 py-2 border-b hover:bg-[#F0F5FF] transition-colors ${
-                metaFieldsOpen ? "bg-[#F0F5FF]" : "bg-white"
-              }`}
+          <div className="flex justify-start mb-8 mt-8 space-x-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleCancel}
+              disabled={!valueChange}
+              className="px-6"
             >
-              <h3 className="text-lg font-medium">Meta Fields</h3>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  {metaFieldsOpen ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-
-            <CollapsibleContent>
-              <div className="p-4 bg-white">
-                <FormField
-                  control={form.control}
-                  name="meta_fields"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Metafields</FormLabel>
-                      <FormControl>
-                        <MonacoEditor
-                          language="json"
-                          width="100%"
-                          value={field.value as string}
-                          onChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={!valueChange} className="px-6">
+              Save Changes
+            </Button>
+          </div>
         </form>
       </Form>
-      <div className="flex justify-start gap-2 mb-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={handleCancel}
-          disabled={!valueChange}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          onClick={form.handleSubmit(onSubmit)}
-          disabled={!valueChange}
-        >
-          Save Changes
-        </Button>
-      </div>
     </div>
   );
 };

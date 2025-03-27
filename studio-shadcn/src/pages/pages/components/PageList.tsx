@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
+import React, { useState, useCallback } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -9,21 +16,28 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Trash2,
   CheckCircle,
   AlertCircle,
   Clock,
-  X,
   Edit,
   Calendar,
-} from 'lucide-react';
-import { deletePage } from '../../../actions/pages';
-import { Link } from 'react-router-dom';
-import QuickEdit from '../../../components/List/QuickEdit';
-import useNavigation from '../../../utils/useNavigation';
-import { useAppDispatch } from '@/hooks/reduxHooks';
+  Ellipsis,
+  Pencil,
+} from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { deletePage } from "../../../actions/pages";
+import { Link } from "react-router-dom";
+import QuickEdit from "../../../components/List/QuickEdit";
+import useNavigation from "../../../utils/useNavigation";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 interface Page {
   id: number;
@@ -74,7 +88,13 @@ interface PageListProps {
   fetchPages: () => void;
 }
 
-function PageList({ format, data, filters, onPagination, fetchPages }: PageListProps) {
+function PageList({
+  format,
+  data,
+  filters,
+  onPagination,
+  fetchPages,
+}: PageListProps) {
   const dispatch = useAppDispatch();
   const [id, setID] = useState<number>(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([0]);
@@ -83,23 +103,51 @@ function PageList({ format, data, filters, onPagination, fetchPages }: PageListP
 
   const navigate = useNavigation();
 
-  const handleDeletePage = () => {
+  // Memoize handlers to prevent unnecessary re-renders
+  const handleEditClick = useCallback(
+    (e: React.MouseEvent, item: Page) => {
+      e.stopPropagation();
+      navigate(`/pages/${item.id}/edit`);
+    },
+    [navigate]
+  );
+
+  const handleQuickEdit = useCallback(
+    (e: React.MouseEvent, item: Page) => {
+      e.stopPropagation();
+      const isOpen = item.id === expandedRowKeys[0];
+      setExpandedRowKeys(isOpen ? [] : [item.id]);
+      setID(item.id);
+    },
+    [expandedRowKeys]
+  );
+
+  const handleDeleteClick = useCallback(
+    (e: React.MouseEvent, itemId: number) => {
+      e.stopPropagation();
+      setModalOpen(true);
+      setDeleteItemID(itemId);
+    },
+    []
+  );
+
+  const handleDeletePage = useCallback(() => {
     if (deleteItemID) {
       dispatch(deletePage(deleteItemID) as any).then(() => fetchPages());
       setModalOpen(false);
       setDeleteItemID(null);
     }
-  };
+  }, [deleteItemID, dispatch, fetchPages]);
 
   // Function to format date - simplified for example
   const formatDate = (dateString?: string) => {
-    if (!dateString) return '-';
+    if (!dateString) return "-";
     try {
       const date = new Date(dateString);
-      return new Intl.DateTimeFormat('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
+      return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
       }).format(date);
     } catch (error) {
       return dateString;
@@ -108,45 +156,59 @@ function PageList({ format, data, filters, onPagination, fetchPages }: PageListP
 
   // Function to get time difference from now
   const getDifferenceInModifiedTime = (dateString?: string) => {
-    if (!dateString) return '';
-    
+    if (!dateString) return "";
+
     const date = new Date(dateString);
     const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
+    const diffInHours = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60 * 60)
+    );
+
     if (diffInHours < 1) {
-      return 'Just now';
+      return "Just now";
     } else if (diffInHours < 24) {
-      return `${diffInHours} ${diffInHours === 1 ? 'hour' : 'hours'} ago`;
+      return `${diffInHours} ${diffInHours === 1 ? "hour" : "hours"} ago`;
     } else {
       const diffInDays = Math.floor(diffInHours / 24);
-      return `${diffInDays} ${diffInDays === 1 ? 'day' : 'days'} ago`;
+      return `${diffInDays} ${diffInDays === 1 ? "day" : "days"} ago`;
     }
   };
 
   const renderStatus = (status: string) => {
     switch (status) {
-      case 'publish':
+      case "publish":
         return (
-          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+          <Badge
+            variant="outline"
+            className="bg-green-50 text-green-700 border-green-200"
+          >
             <CheckCircle className="mr-1 h-3 w-3" /> Published
           </Badge>
         );
-      case 'draft':
+      case "draft":
         return (
-          <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200">
+          <Badge
+            variant="outline"
+            className="bg-gray-50 text-gray-700 border-gray-200"
+          >
             <AlertCircle className="mr-1 h-3 w-3" /> Draft
           </Badge>
         );
-      case 'ready':
+      case "ready":
         return (
-          <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+          <Badge
+            variant="outline"
+            className="bg-amber-50 text-amber-700 border-amber-200"
+          >
             <Clock className="mr-1 h-3 w-3" /> Ready to Publish
           </Badge>
         );
-      case 'future':
+      case "future":
         return (
-          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+          <Badge
+            variant="outline"
+            className="bg-blue-50 text-blue-700 border-blue-200"
+          >
             <Calendar className="mr-1 h-3 w-3" /> Future Publish
           </Badge>
         );
@@ -163,7 +225,7 @@ function PageList({ format, data, filters, onPagination, fetchPages }: PageListP
             <TableHead className="min-w-[250px] w-[40%]">Title</TableHead>
             <TableHead className="w-[15%]">Status</TableHead>
             <TableHead className="w-[25%]">Last Modified</TableHead>
-            <TableHead className="w-[20%] text-right">Actions</TableHead>
+            <TableHead className="w-[20%] text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -184,7 +246,9 @@ function PageList({ format, data, filters, onPagination, fetchPages }: PageListP
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <p className="text-gray-500 font-medium">No pages found</p>
-                  <p className="text-gray-400 text-sm">Try adjusting your filters or create a new page</p>
+                  <p className="text-gray-400 text-sm">
+                    Try adjusting your filters or create a new page
+                  </p>
                 </div>
               </TableCell>
             </TableRow>
@@ -194,17 +258,16 @@ function PageList({ format, data, filters, onPagination, fetchPages }: PageListP
               // Ensure tag_ids and category_ids are always arrays, even if undefined
               const tagIds = item.tag_ids || [];
               const categoryIds = item.category_ids || [];
-              
+
               return (
                 <React.Fragment key={item.id}>
                   <TableRow
-                    className="cursor-pointer hover:bg-blue-50 transition-colors"
+                    className="cursor-pointer hover:bg-blue-50"
                     onClick={() => navigate(`/pages/${item.id}/edit`)}
                   >
                     <TableCell className="py-3">
-                      <Link 
+                      <Link
                         to={`/pages/${item.id}/edit`}
-                        className="text-base font-medium text-gray-900 hover:text-blue-600"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {item.title}
@@ -213,50 +276,52 @@ function PageList({ format, data, filters, onPagination, fetchPages }: PageListP
                     <TableCell>{renderStatus(item.status)}</TableCell>
                     <TableCell>
                       <div className="flex flex-col">
-                        <span className="font-medium text-gray-900">
-                          {formatDate(item.updated_at)}
-                        </span>
+                        <span>{formatDate(item.updated_at)}</span>
                         <span className="text-gray-500 text-sm">
                           {getDifferenceInModifiedTime(item.updated_at)}
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="h-8 px-2"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            isOpen ? setExpandedRowKeys([]) : setExpandedRowKeys([item.id]);
-                            return setID(item.id);
-                          }}
+                    <TableCell className="text-center">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger
+                          asChild
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          {isOpen ? 
-                            <><X className="h-4 w-4 text-gray-500 mr-1" /> Close</> : 
-                            <><Edit className="h-4 w-4 text-gray-500 mr-1" /></>
-                          }
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="h-8 w-8 p-0 bg-transparent border-red-200 hover:bg-red-50 hover:text-red-600"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setModalOpen(true);
-                            setDeleteItemID(item.id);
-                          }}
-                        >
-                          <Trash2 className="h-4 w-4 text-red-500" />
-                        </Button>
-                      </div>
+                          <Button variant="ghost" size="icon">
+                            <Ellipsis className="h-5 w-5" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            onClick={(e) => handleEditClick(e, item)}
+                            className="cursor-pointer"
+                          >
+                            <Pencil className="h-4 w-4 mr-2" />
+                            <span>Edit</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={(e) => handleQuickEdit(e, item)}
+                            className="cursor-pointer"
+                          >
+                            <Edit className="h-4 w-4 mr-2" />
+                            <span>Quick Edit</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={(e) => handleDeleteClick(e, item.id)}
+                            className="cursor-pointer text-red-600 focus:text-red-600"
+                          >
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            <span>Delete</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                   {isOpen && (
                     <TableRow>
                       <TableCell colSpan={4} className="p-0">
-                        <div className=" p-4">
+                        <div className="p-4">
                           <QuickEdit
                             data={item}
                             page={true}
@@ -274,55 +339,11 @@ function PageList({ format, data, filters, onPagination, fetchPages }: PageListP
           )}
         </TableBody>
       </Table>
-      
-      {data.total > 0 && (
-        <div className="flex items-center justify-between py-4 px-6">
-          <div className="text-sm text-gray-500">
-            {filters.page && (
-              <>
-                Showing {((Number(filters.page) - 1) * (Number(filters.limit) || 10)) + 1}-
-                {Math.min(Number(filters.page) * (Number(filters.limit) || 10), data.total)} of {data.total} results
-              </>
-            )}
-          </div>
-          <div className="flex items-center space-x-2">
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="h-8 px-3"
-              disabled={!filters.page || Number(filters.page) <= 1}
-              onClick={() => onPagination(Number(filters.page) - 1, Number(filters.limit) || 10)}
-            >
-              Previous
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="h-8 px-3 bg-white"
-              disabled={!filters.page || Number(filters.page) * (Number(filters.limit) || 10) >= data.total}
-              onClick={() => onPagination(Number(filters.page) + 1, Number(filters.limit) || 10)}
-            >
-              Next
-            </Button>
-            <select 
-              className="h-8 rounded-md px-3 py-1 text-sm"
-              value={filters.limit || 10}
-              onChange={(e) => onPagination(1, Number(e.target.value))}
-            >
-              {[10, 15, 20].map((size) => (
-                <option key={size} value={size}>{size} per page</option>
-              ))}
-            </select>
-          </div>
-        </div>
-      )}
-      
+
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent className="sm:max-w-[311px]">
           <DialogHeader>
-            <DialogTitle className="text-base font-medium text-gray-900">
-              Delete Confirmation
-            </DialogTitle>
+            <DialogTitle className="text-base">Delete Confirmation</DialogTitle>
           </DialogHeader>
           <DialogDescription>
             Are you sure you want to delete this page?

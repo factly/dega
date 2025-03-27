@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Trash2 } from "lucide-react";
+import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteFormat } from "../../../actions/formats";
 import useNavigation from "../../../utils/useNavigation";
 
@@ -13,20 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -36,6 +21,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // Define interfaces for type safety
 interface Format {
@@ -60,40 +52,86 @@ interface FormatListProps {
   filters: Filters;
   setFilters: (filters: Partial<Filters>) => void;
   fetchFormats: () => void;
+  sortOrder?: "asc" | "desc";
+  onSortToggle?: () => void;
 }
 
-function FormatList({
-  data,
-  filters,
-  setFilters,
-  fetchFormats,
-}: FormatListProps) {
+function FormatList({ data, fetchFormats, onSortToggle }: FormatListProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigation();
 
-  const handleDeleteConfirm = (e: React.MouseEvent) => {
+  // Memoize handlers to prevent unnecessary re-renders
+  const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
     e.stopPropagation();
-    if (deleteItemId) {
-      dispatch(deleteFormat(deleteItemId) as any).then(() => fetchFormats());
-      setDialogOpen(false);
-      setDeleteItemId(null);
-    }
-  };
+    setDialogOpen(true);
+    setDeleteItemId(id);
+  }, []);
 
-  const handleRowClick = (id: string) => {
-    navigate(`/settings/advanced/formats/${id}/edit`);
-  };
+  const handleEditClick = useCallback(
+    (e: React.MouseEvent, id: string) => {
+      e.stopPropagation();
+      navigate(`/settings/advanced/formats/${id}/edit`);
+    },
+    [navigate]
+  );
+
+  const handleDeleteConfirm = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (deleteItemId) {
+        // Use a promise chain to ensure proper sequence
+        dispatch(deleteFormat(deleteItemId) as any)
+          .then(() => {
+            setDialogOpen(false);
+            setDeleteItemId(null);
+            // Only fetch after the delete is complete
+            setTimeout(() => fetchFormats(), 100);
+          })
+          .catch(() => {
+            setDialogOpen(false);
+            setDeleteItemId(null);
+          });
+      }
+    },
+    [deleteItemId, dispatch, fetchFormats]
+  );
+
+  const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDialogOpen(false);
+    setDeleteItemId(null);
+  }, []);
+
+  const handleRowClick = useCallback(
+    (id: string) => {
+      navigate(`/settings/advanced/formats/${id}/edit`);
+    },
+    [navigate]
+  );
 
   return (
-    <div className="w-full">
-      <div>
+    <div className="pb-4 overflow-auto">
+      <div className="rounded-md">
         <Table>
-          <TableHeader>
+          <TableHeader className="w-1/2 text-[13px]">
             <TableRow>
-              <TableHead className="w-[200px]">Name</TableHead>
+              <TableHead className="w-[200px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={onSortToggle}
+                >
+                  Name
+                  {onSortToggle && (
+                    <div className="flex items-center">
+                      <ChevronsUpDown className="ml-1 h-3 w-3" />
+                      <span className="ml-1 text-xs text-muted-foreground"></span>
+                    </div>
+                  )}
+                </div>
+              </TableHead>
               <TableHead className="w-[400px]">Description</TableHead>
               <TableHead className="w-[150px] text-center">Action</TableHead>
             </TableRow>
@@ -105,125 +143,82 @@ function FormatList({
                   Loading...
                 </TableCell>
               </TableRow>
-            ) : (
+            ) : data.formats && data.formats.length > 0 ? (
               data.formats.map((format) => (
                 <TableRow
                   key={format.id}
                   onClick={() => handleRowClick(format.id)}
-                  className="cursor-pointer hover:bg-muted"
+                  className="cursor-pointer"
                 >
                   <TableCell className="min-w-[200px]">
                     <Link
                       to={`/settings/advanced/formats/${format.id}/edit`}
-                      className="font-medium text-base"
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      {format.name}
+                      {format.name || "Unnamed Format"}
                     </Link>
                   </TableCell>
                   <TableCell className="min-w-[400px]">
-                    <p className="line-clamp-2 text-base font-medium">
-                      {format.description}
-                    </p>
+                    <p>{format.description || "---"}</p>
                   </TableCell>
                   <TableCell className="min-w-[150px] text-center">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setDialogOpen(true);
-                        setDeleteItemId(format.id);
-                      }}
-                    >
-                      <Trash2 className="h-5 w-5 text-gray-500" />
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        asChild
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Button variant="ghost" size="icon">
+                          <Ellipsis className="h-5 w-5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => handleEditClick(e, format.id)}
+                          className="cursor-pointer"
+                        >
+                          <Pencil className="h-4 w-4 mr-2" />
+                          <span>Edit</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={(e) => handleDeleteClick(e, format.id)}
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                        >
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          <span>Delete</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3} className="text-center py-4">
+                  No formats found
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
 
-      <div className="flex items-center justify-between mt-4">
-        <p className="text-sm text-muted-foreground">
-          Showing{" "}
-          {data.formats.length > 0 ? (filters.page - 1) * filters.limit + 1 : 0}
-          -{Math.min(filters.page * filters.limit, data.total)} of {data.total}{" "}
-          results
-        </p>
-        <div className="flex items-center space-x-6">
-          <Select
-            value={String(filters.limit)}
-            onValueChange={(value) =>
-              setFilters({ page: 1, limit: Number(value) })
-            }
-          >
-            <SelectTrigger className="w-[80px]">
-              <SelectValue placeholder="10" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="15">15</SelectItem>
-              <SelectItem value="20">20</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  onClick={() =>
-                    filters.page > 1 && setFilters({ page: filters.page - 1 })
-                  }
-                  className={
-                    filters.page <= 1
-                      ? "pointer-events-none opacity-50"
-                      : "cursor-pointer"
-                  }
-                />
-              </PaginationItem>
-              <PaginationItem>
-                <span className="px-4">Page {filters.page}</span>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext
-                  onClick={() =>
-                    filters.page < Math.ceil(data.total / filters.limit) &&
-                    setFilters({ page: filters.page + 1 })
-                  }
-                  className={
-                    filters.page >= Math.ceil(data.total / filters.limit)
-                      ? "pointer-events-none opacity-50"
-                      : "cursor-pointer"
-                  }
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
-      </div>
-
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-[311px]">
-          <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent className="max-w-sm p-4">
+          <DialogHeader className="space-y-2">
+            <DialogTitle className="text-base">Delete Format</DialogTitle>
+            <DialogDescription className="text-sm">
+              Are you sure you want to delete this format?
+            </DialogDescription>
           </DialogHeader>
-          <DialogDescription>
-            Are you sure you want to delete this?
-          </DialogDescription>
-          <DialogFooter className="flex justify-between">
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.stopPropagation();
-                setDialogOpen(false);
-                setDeleteItemId(null);
-              }}
-            >
+          <DialogFooter className="mt-4 flex justify-end space-x-2">
+            <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleDeleteConfirm}>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={handleDeleteConfirm}
+            >
               Delete
             </Button>
           </DialogFooter>

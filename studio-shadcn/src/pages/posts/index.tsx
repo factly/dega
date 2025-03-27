@@ -11,12 +11,6 @@ import { Filter, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   Dialog,
   DialogContent,
@@ -30,9 +24,9 @@ import FormatNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import Template from "../../components/Template";
 import Selector from "../../components/Selector";
 import Loader from "../../components/Loader";
+import Pagination from "../../components/Pagination";
 
 // Utils and actions
-import getUserPermission from "../../utils/getUserPermission";
 import getUrlParams from "../../utils/getUrlParams";
 import Filters from "../../utils/filters";
 import { getPosts } from "../../actions/posts";
@@ -129,6 +123,9 @@ interface RootState {
     details: Record<number, Author>;
   };
   spaces: any;
+  sidebar: {
+    collapsed: boolean;
+  };
 }
 
 const Posts: React.FC<PostsProps> = ({ formats }) => {
@@ -142,15 +139,23 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
   const initialSearchText = query.get("q") || "";
   const [searchText, setSearchText] = useState(initialSearchText);
 
-  const spaces = useSelector((state: RootState) => state.spaces);
-  const actions = getUserPermission({
-    resource: "posts",
-    action: "get",
-    spaces,
-  });
+  const isCollapsed = useSelector(
+    (state: RootState) => state.sidebar.collapsed
+  );
 
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [status, setStatus] = useState(query.get("status") || "all");
+  const [filters, setFilters] = useState({
+    page: parseInt(query.get("page") || "1", 10),
+    limit: parseInt(query.get("limit") || "10", 10),
+    status: query.get("status") || "all",
+    q: query.get("q") || "",
+    sort: query.get("sort") || "",
+    format:
+      formats && !formats.loading && formats.article
+        ? [formats.article.id]
+        : [],
+  });
 
   const keys = [
     "format",
@@ -224,13 +229,6 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
     }
   );
 
-  // For debugging
-  useEffect(() => {
-    if (posts && posts.length > 0) {
-      console.log("Posts from state:", posts);
-    }
-  }, [posts]);
-
   const postStatusItems = [
     { value: "all", label: "All" },
     { value: "publish", label: "Published" },
@@ -284,10 +282,21 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
   };
 
   // Handle pagination
-  const onPagination = (page: number, limit: number) => {
+  const handlePageChange = (page: number) => {
     const newQuery = new URLSearchParams(query.toString());
-    newQuery.set("limit", limit.toString());
     newQuery.set("page", page.toString());
+
+    navigate({
+      pathname,
+      search: "?" + newQuery.toString(),
+    });
+  };
+
+  // Handle page size change
+  const handlePageSizeChange = (size: number) => {
+    const newQuery = new URLSearchParams(query.toString());
+    newQuery.set("limit", size.toString());
+    newQuery.set("page", "1");
 
     navigate({
       pathname,
@@ -326,18 +335,6 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
     }
   };
 
-  // Clear search
-  const clearSearch = () => {
-    setSearchText("");
-    const newQuery = new URLSearchParams(query.toString());
-    newQuery.delete("q");
-
-    navigate({
-      pathname,
-      search: "?" + newQuery.toString(),
-    });
-  };
-
   // Handle status tab change
   const handleStatusChange = (value: string) => {
     const newQuery = new URLSearchParams(query.toString());
@@ -358,6 +355,15 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
     });
   };
 
+  // Calculate total pages
+  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+
+  // Calculate sidebar width based on sidebar state
+  const sidebarWidth = isCollapsed ? "89px" : "265px";
+
+  // Define the header height (including padding)
+  const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
+
   if (formats.loading) {
     return <Loader />;
   }
@@ -373,8 +379,9 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col h-full">
       <Helmet title={"Posts"} />
+
       {/* Templates Dialog */}
       <Dialog open={templatesOpen} onOpenChange={setTemplatesOpen}>
         <DialogContent className="max-w-4xl">
@@ -385,39 +392,35 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
         </DialogContent>
       </Dialog>
 
-      <div>
-        <div className="flex items-center justify-between pb-3 w-full">
-          {/* Search */}
-          <div className="flex-1 flex justify-start">
-            <div className="relative w-63">
+      {/* Header */}
+      <div
+        className="fixed top-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: headerHeight,
+          transition: "left 0.3s ease",
+        }}
+      >
+        <div className="flex justify-between items-center h-full px-6 pt-1">
+          <div className="flex items-center gap-4 flex-1">
+            <div className="relative flex-1 max-w-xs">
               <Input
-                placeholder="Search"
-                className="py-2"
+                placeholder="Search posts..."
                 value={searchText}
                 onChange={handleSearch}
                 onKeyPress={handleKeyPress}
+                className="h-10"
               />
-              {searchText && (
-                <Button
-                  variant="ghost"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2"
-                  onClick={clearSearch}
-                >
-                  ✕
-                </Button>
-              )}
             </div>
             <Button
-              className="ml-2"
               variant="outline"
-              onClick={handleServerSearch}
+              className="flex items-center bg-[#F0F5FF] border-[#F0F5FF] space-x-1"
+              onClick={() => form.handleSubmit(onSave)()}
             >
-              Search
+              <Filter className="h-4 w-4" />
+              <span>Filters</span>
             </Button>
-          </div>
-
-          {/* Templates and Create buttons */}
-          <div className="flex items-center space-x-2">
             <Button
               variant="outline"
               className="flex items-center space-x-1 bg-[#DCEFEB]"
@@ -425,128 +428,79 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
             >
               <span>Explore Templates</span>
             </Button>
-
+          </div>
+          <div>
             <Link to="/posts/create">
-              <Button className="flex items-center space-x-1">
+              <Button size="lg" className="flex items-center gap-2 py-2">
                 <PlusCircle className="h-4 w-4" />
-                <span>Create Post</span>
+                Create Post
               </Button>
             </Link>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <Tabs defaultValue={status} onValueChange={handleStatusChange}>
-            <div className="flex items-center justify-between">
-              <TabsList className="grid grid-cols-5">
-                {postStatusItems.map((item) => (
-                  <TabsTrigger key={item.value} value={item.value}>
-                    {item.label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+      {/* Content */}
+      <div
+        className="absolute overflow-auto"
+        style={{
+          top: headerHeight,
+          left: sidebarWidth,
+          right: 0,
+          bottom: "64px",
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          paddingBottom: "1.5rem",
+          paddingTop: "1rem",
+          transition: "left 0.3s ease, top 0.3s ease",
+        }}
+      >
+        <Tabs defaultValue={status} onValueChange={handleStatusChange}>
+          <TabsList className="grid grid-cols-5">
+            {postStatusItems.map((item) => (
+              <TabsTrigger key={item.value} value={item.value}>
+                {item.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
-              {/* Filters Popover */}
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="flex items-center bg-[#F0F5FF] border-[#F0F5FF] space-x-1"
-                  >
-                    <Filter className="h-4 w-4" />
-                    <span>Filters</span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-80 p-4">
-                  <div className="space-y-4">
-                    <Form {...form}>
-                      <div className="space-y-4">
-                        <FormField
-                          control={form.control}
-                          name="tag"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Tags</FormLabel>
-                              <Selector
-                                mode="multiple"
-                                action="Tags"
-                                placeholder="Filter Tags"
-                                {...field}
-                              />
-                            </FormItem>
-                          )}
-                        />
+          <TabsContent value={status}>
+            <PostList
+              format={formats.article}
+              data={{
+                posts: posts,
+                total: total,
+                loading,
+                tags,
+                categories,
+                authors,
+              }}
+              filters={params}
+              fetchPosts={fetchPosts}
+              query={status}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
 
-                        <FormField
-                          control={form.control}
-                          name="category"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Categories</FormLabel>
-                              <Selector
-                                mode="multiple"
-                                action="Categories"
-                                placeholder="Filter Categories"
-                                {...field}
-                              />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="author"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Authors</FormLabel>
-                              <Selector
-                                mode="multiple"
-                                action="Authors"
-                                placeholder="Filter Authors"
-                                display="display_name"
-                                {...field}
-                              />
-                            </FormItem>
-                          )}
-                        />
-
-                        <Button
-                          type="button"
-                          className="w-full"
-                          onClick={() => form.handleSubmit(onSave)()}
-                        >
-                          Apply Filters
-                        </Button>
-                      </div>
-                    </Form>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            {/* This is the important change - render the PostList the same way for all tabs */}
-            <TabsContent value={status}>
-              <PostList
-                actions={actions}
-                format={formats.article}
-                data={{
-                  posts: posts,
-                  total: total,
-                  loading,
-                  tags,
-                  categories,
-                  authors,
-                }}
-                filters={params}
-                onPagination={onPagination}
-                fetchPosts={fetchPosts}
-                query={status}
-              />
-            </TabsContent>
-          </Tabs>
-        </div>
+      {/* Footer with Pagination */}
+      <div
+        className="fixed bottom-0 z-10 bg-white"
+        style={{
+          left: sidebarWidth,
+          right: 0,
+          height: "64px",
+          transition: "left 0.3s ease",
+        }}
+      >
+        <Pagination
+          currentPage={parseInt(params.page || "1", 10)}
+          totalPages={totalPages}
+          totalItems={total}
+          pageSize={parseInt(params.limit || "10", 10)}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </div>
     </div>
   );

@@ -94,7 +94,7 @@ const Policies: React.FC = () => {
       <div className="flex justify-end">
         <Link to="/settings/members/policies/create">
           <Button variant="default">
-            <PlusCircle className="mr-2 h-4 w-4" />
+            <PlusCircle className="h-4 w-4" />
             New Policy
           </Button>
         </Link>

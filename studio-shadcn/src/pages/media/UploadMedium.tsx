@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import { createMedium } from "../../actions/media";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import UppyUploader from "../../components/Uppy";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 // Types
 interface UploadItem {
@@ -21,23 +23,59 @@ interface UploadItem {
 }
 
 function UploadMedium(): React.ReactElement {
-  const history = useNavigation();
+  const navigate = useNavigation();
   const dispatch = useAppDispatch();
+  const [isUploading, setIsUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  /**
-   * Handles the upload completion and redirects to media page
-   *
-   * @param values - The values from the UppyUploader component
-   */
   const onUpload = (values: UploadItem[]): void => {
+    if (!values || values.length === 0) {
+      setError("No files were uploaded. Please try again.");
+      return;
+    }
+
+    setIsUploading(true);
+    setError(null);
+
     // Make sure we're passing an array of upload items
-    dispatch(createMedium(values)).then(() => history("/media"));
+    dispatch(createMedium(values))
+      .then(() => {
+        // Force a small delay to ensure backend processes the upload
+        setTimeout(() => {
+          // Reset the Redux media state completely
+          navigate("/media");
+        }, 500);
+      })
+      .catch((err) => {
+        setError(err?.message || "Upload failed. Please try again.");
+      })
+      .finally(() => {
+        setIsUploading(false);
+      });
   };
 
   return (
     <>
       <Helmet title={"Upload Medium"} />
-      <UppyUploader onUpload={onUpload} />
+
+      <div className="space-y-4">
+        <h2 className="text-2xl font-semibold">Upload Media</h2>
+
+        {error && (
+          <Alert variant="destructive">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        {isUploading ? (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          </div>
+        ) : (
+          <UppyUploader onUpload={onUpload} />
+        )}
+      </div>
     </>
   );
 }

@@ -9,6 +9,7 @@ import deepEqual from "deep-equal";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import getUserPermission from "../../utils/getUserPermission";
 
 // Define types for our state and props
 interface WebhookFilters {
@@ -37,6 +38,13 @@ interface RootState {
 }
 
 function Webhooks(): React.ReactElement {
+  const spaces = useSelector(({ spaces }: RootState) => spaces);
+  const actions = getUserPermission({
+    resource: "webhooks",
+    action: "get",
+    spaces,
+  });
+
   const dispatch = useAppDispatch();
   const [filters, setFilters] = useState<WebhookFilters>({
     page: 1,
@@ -74,13 +82,14 @@ function Webhooks(): React.ReactElement {
       <div className="flex justify-end">
         <Link to="/settings/advanced/webhooks/create">
           <Button variant="default">
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="h-4 w-4" />
             New Webhook
           </Button>
         </Link>
       </div>
 
       <WebhookList
+        actions={actions}
         data={{ webhooks, total, loading }}
         filters={filters}
         setFilters={setFilters}
