@@ -1,7 +1,7 @@
 import React from "react";
 import SpaceCreateForm from "./components/SpaceCreateForm";
 import { useDispatch } from "react-redux";
-import { getSpaces, addSpace } from "../../actions/spaces";
+import { getSpaces,addSpace } from "../../actions/spaces";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import { SpaceFormValues } from "./components/SpaceCreateForm";

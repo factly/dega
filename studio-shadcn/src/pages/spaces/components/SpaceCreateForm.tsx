@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
@@ -32,7 +32,6 @@ import { SlugInput } from "../../../components/FormItems/SlugInput";
 import MonacoEditor from "../../../components/MonacoEditor/index";
 import { Building2 } from "lucide-react";
 import { RootState } from "../../../store";
-import { getSpaces } from "../../../actions/spaces";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 
@@ -68,10 +67,6 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
       description: "",
     },
   });
-
-  useEffect(() => {
-    dispatch(getSpaces());
-  }, [dispatch]);
 
   const orgs = useSelector((state: RootState) => state.spaces?.orgs || []);
   const loading = useSelector((state: RootState) => state.spaces?.loading);

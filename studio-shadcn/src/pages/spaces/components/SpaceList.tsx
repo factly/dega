@@ -28,7 +28,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getSpaces } from "../../../actions/spaces";
 import { deleteSpace } from "../../../actions/spaces";
 import { spaceSelector } from "../../../selectors/spaces";
 import useNavigation from "../../../utils/useNavigation";
@@ -87,7 +86,6 @@ const SpaceList: React.FC<SpaceListProps> = ({
   searchQuery = "",
   sortOrder = "asc",
   onSortToggle,
-  filters,
 }) => {
   const dispatch: ThunkDispatch<any, unknown, AnyAction> = useDispatch();
   const { spaces, loading } = useSelector(spaceSelector) as SpaceState;
@@ -101,10 +99,6 @@ const SpaceList: React.FC<SpaceListProps> = ({
   // Date sorting is managed internally
   const [dateSortOrder, setDateSortOrder] = useState<"asc" | "desc">("desc"); // Default newest first
   const [sortBy, setSortBy] = useState<"name" | "date">("name"); // Default sort by name
-
-  const fetchSpaces = () => {
-    dispatch(getSpaces(filters));
-  };
 
   const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
     e.stopPropagation();
@@ -123,7 +117,6 @@ const SpaceList: React.FC<SpaceListProps> = ({
   const handleDelete = async () => {
     if (deleteItemId) {
       await dispatch(deleteSpace(deleteItemId));
-      await fetchSpaces();
       setDialogOpen(false);
       setDeleteItemId(null);
     }

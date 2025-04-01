@@ -106,6 +106,7 @@ export const getToken = async (
       // Try to get more detailed error information
       try {
         const errorData = await response.json();
+        console.error("Token exchange error:", errorData);
         return {
           error:
             errorData.error_description ||
@@ -132,10 +133,6 @@ export const getToken = async (
     if (data.id_token) {
       localStorage.setItem("x-zitadel-id-token", data.id_token);
     }
-
-    // Clean up used auth state and code verifier
-    localStorage.removeItem("auth_state");
-    localStorage.removeItem("code_verifier");
 
     return { data };
   } catch (error) {
@@ -167,27 +164,6 @@ export const getUserInfo = async (): Promise<UserInfoResponse> => {
     if (response.status === 200) {
       const data = await response.json();
       return { data };
-    }
-
-    // Handle different error scenarios
-    if (response.status === 401) {
-      // Clear tokens on unauthorized response
-      localStorage.removeItem("sessionToken");
-      localStorage.removeItem("x-zitadel-id-token");
-      localStorage.removeItem("code_verifier");
-      localStorage.removeItem("auth_state");
-      return { error: "Unauthorized" };
-    }
-
-    // For other error statuses, try to get more details
-    try {
-      const errorData = await response.json();
-      return {
-        error:
-          errorData.error || `Failed to fetch user info: ${response.status}`,
-      };
-    } catch (e) {
-      return { error: `Failed to fetch user info: ${response.status}` };
     }
   } catch (error) {
     console.error("UserInfo error:", error);

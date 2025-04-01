@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   SET_SELECTED_SPACE,
   GET_SPACES_SUCCESS,
@@ -30,6 +31,7 @@ export interface SpacesState {
   loading: boolean;
   selected: string;
   org_role: string;
+  lastFetched: number | null;
 }
 
 // Define action interfaces
@@ -84,6 +86,7 @@ const initialState: SpacesState = {
   loading: true,
   selected: storedSpaceId,
   org_role: "",
+  lastFetched: null,
 };
 
 export function spaces(
@@ -132,6 +135,11 @@ export function spaces(
       // Store the selected space ID in localStorage
       localStorage.setItem("space", setSpaceID);
 
+      // Update header with space ID
+      if (setSpaceID) {
+        axios.defaults.headers.common["X-Space"] = setSpaceID;
+      }
+
       return {
         ...state,
         orgs: organizations.map((each) => {
@@ -146,6 +154,8 @@ export function spaces(
         org_role: space_details[setSpaceID]
           ? space_details[setSpaceID].org_role || ""
           : "",
+        // Add timestamp to track when spaces were last fetched
+        lastFetched: Date.now(),
       };
     }
 
@@ -169,6 +179,9 @@ export function spaces(
 
       localStorage.setItem("space", newSpace.id);
 
+      // Update header with new space ID
+      axios.defaults.headers.common["X-Space"] = newSpace.id;
+
       return {
         ...state,
         loading: false,
@@ -184,6 +197,9 @@ export function spaces(
     case SET_SELECTED_SPACE: {
       const { id } = action.payload as { id: string };
       localStorage.setItem("space", id);
+
+      // Update header with selected space ID
+      axios.defaults.headers.common["X-Space"] = id;
 
       return {
         ...state,

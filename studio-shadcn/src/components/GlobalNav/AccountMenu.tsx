@@ -52,6 +52,10 @@ interface RootState {
     selected: string;
     details: Record<string, Space>;
     loading: boolean;
+    org_role?: string;
+  };
+  sidebar?: {
+    collapsed: boolean;
   };
 }
 
@@ -98,40 +102,26 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
     navigate("/spaces/create");
   };
 
-  // Prepare data for display
-  const availableSpaces = organizations.flatMap((org) => {
-    // Get space objects from IDs
-    const orgSpaces = org.spaces
+  // Get organization spaces with filtering
+  const getOrganizationSpaces = () => {
+    const orgsSpaces = organizations.filter((org) => org.spaces.length > 0);
+    const orgsNoSpaces = organizations.filter((org) => org.spaces.length === 0);
+    const sortedOrgs = [...orgsSpaces, ...orgsNoSpaces];
+
+    return sortedOrgs;
+  };
+
+  // Prepare grouped spaces for display
+  const spacesGroupedByOrg = getOrganizationSpaces().reduce((acc, org) => {
+    // Get valid spaces for this organization
+    const validSpaces = org.spaces
       .map((spaceId) => spacesDetails[spaceId])
       .filter(Boolean);
 
-    // Filter by search query if needed
-    const filteredSpaces = searchQuery
-      ? orgSpaces.filter(
-          (space) =>
-            (space.name || "")
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase()) ||
-            (space.site_title || "")
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase())
-        )
-      : orgSpaces;
-
-    // Return spaces with their org info for grouping
-    return filteredSpaces.map((space) => ({
-      ...space,
-      orgTitle: org.title,
-    }));
-  });
-
-  // Group spaces by organization for display
-  const spacesGroupedByOrg = availableSpaces.reduce((acc, space) => {
-    const orgTitle = space.orgTitle || "Unknown Organization";
-    if (!acc[orgTitle]) {
-      acc[orgTitle] = [];
+    if (validSpaces.length > 0) {
+      acc[org.title] = validSpaces;
     }
-    acc[orgTitle].push(space);
+
     return acc;
   }, {} as Record<string, Space[]>);
 
@@ -173,8 +163,12 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
           className="w-full justify-between items-center px-4 py-2 bg-white rounded-md"
           disabled={spacesLoading}
         >
-          <span>{spacesLoading ? "Loading spaces..." : selectedSpaceName}</span>
-          <ChevronsUpDown className="h-4 w-4 ml-2" />
+          <span className="truncate max-w-[180px]">
+            {spacesLoading
+              ? "Loading spaces..."
+              : selectedSpaceName || "Select a space"}
+          </span>
+          <ChevronsUpDown className="h-4 w-4 ml-2 flex-shrink-0" />
         </Button>
       </DropdownMenuTrigger>
 
@@ -191,16 +185,22 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
             />
           </div>
         </div>
-
-        {/* Spaces list grouped by organization */}
+        {/* Space list grouped by organization */}
         {spacesLoading ? (
-          <DropdownMenuItem disabled>Loading spaces...</DropdownMenuItem>
+          <DropdownMenuItem disabled className="text-center py-4">
+            <div className="flex items-center justify-center w-full">
+              <div className="animate-spin h-4 w-4 border-2 border-primary rounded-full border-t-transparent mr-2"></div>
+              Loading spaces...
+            </div>
+          </DropdownMenuItem>
         ) : Object.keys(spacesGroupedByOrg).length === 0 ? (
-          <DropdownMenuItem disabled>No spaces found</DropdownMenuItem>
+          <DropdownMenuItem disabled className="text-center py-4">
+            No spaces found
+          </DropdownMenuItem>
         ) : (
           Object.entries(spacesGroupedByOrg).map(([orgTitle, spaces]) => (
             <div key={orgTitle}>
-              <DropdownMenuLabel className="text-gray-600 font-normal px-4 py-2">
+              <DropdownMenuLabel className="text-gray-600 font-semibold px-4 py-2">
                 {orgTitle}
               </DropdownMenuLabel>
               <DropdownMenuGroup>
@@ -211,8 +211,12 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
                     className="px-4 py-2"
                   >
                     <div className="flex items-center justify-between w-full">
-                      <span>{space.name || "Unnamed space"}</span>
-                      {selectedSpaceId === space.id && <span>✓</span>}
+                      <span className="truncate">
+                        {space.name || "Unnamed space"}
+                      </span>
+                      {selectedSpaceId === space.id && (
+                        <span className="text-primary">✓</span>
+                      )}
                     </div>
                   </DropdownMenuItem>
                 ))}

@@ -3,7 +3,7 @@ import {
   GET_SPACES_SUCCESS,
   ADD_SPACE_SUCCESS,
   LOADING_SPACES,
-  API_GET_SPACES,
+  API_SPACES,
   SET_SELECTED_SPACE,
   DELETE_SPACE_SUCCESS,
   UPDATE_SPACE_SUCCESS,
@@ -103,13 +103,19 @@ export const deleteSpaceSuccess = (id: string): DeleteSpaceSuccessAction => ({
   payload: id,
 });
 
-// Thunk action creators
 export const getSpaces = (): AppThunk<Promise<Organization[] | undefined>> => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    // Get current state
+    const state = getState();
+    const { spaces } = state;
+    if (spaces && spaces.lastFetched && spaces.orgs.length > 0) {
+      // Don't fetch again if we have recent data
+      return;
+    }
+
     dispatch(loadingSpaces(true));
     try {
-      // Fix: Use API_GET_SPACES constant here instead of API_SPACES
-      const response = await axios.get(`${API_GET_SPACES}/my`);
+      const response = await axios.get(`${API_SPACES}/my`);
       const organizations: Organization[] = response.data;
       dispatch(getSpacesSuccess(organizations));
       return organizations;
@@ -144,7 +150,7 @@ export const addSpace = (
   return async (dispatch) => {
     dispatch(loadingSpaces(true));
     try {
-      const response = await axios.post(API_GET_SPACES, data);
+      const response = await axios.post(API_SPACES, data);
       dispatch(addSpaceSuccess(response.data));
       dispatch(addSuccessNotification("Space added"));
       return response.data;
@@ -161,7 +167,7 @@ export const deleteSpace = (id: string): AppThunk => {
   return async (dispatch) => {
     dispatch(loadingSpaces(true));
     try {
-      await axios.delete(`${API_GET_SPACES}/${id}`);
+      await axios.delete(`${API_SPACES}/${id}`);
       dispatch(deleteSpaceSuccess(id));
       dispatch(addSuccessNotification("Space deleted"));
     } catch (error) {
@@ -179,7 +185,7 @@ export const updateSpace = (
   return async (dispatch) => {
     dispatch(loadingSpaces(true));
     try {
-      const response = await axios.put(API_GET_SPACES, data);
+      const response = await axios.put(API_SPACES, data);
       dispatch(updateSpaceSuccess(response.data));
       dispatch(addSuccessNotification("Space updated"));
       return response.data;

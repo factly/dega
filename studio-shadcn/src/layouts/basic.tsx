@@ -1,27 +1,41 @@
-import { FC, useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { FC, useEffect, ReactNode, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Sidebar } from "@/components/GlobalNav/Sidebar";
 import { SidebarAlt } from "@/components/GlobalNav/SidebarAlt";
-import AuthWrapper from "@/components/AuthWrapper";
 import { RootState } from "@/types";
 import { getSpaces } from "@/actions/spaces";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import { routes, Route } from "@/config/routesConfig";
+import _ from "lodash";
 
 interface BasicLayoutProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
+  formats?: any;
+  setReloadFlag?: React.Dispatch<React.SetStateAction<boolean>>;
+  reloadFlag?: boolean;
 }
 
-export const BasicLayout: FC<BasicLayoutProps> = () => {
+export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const isCollapsed = useSelector(
     (state: RootState) => state.sidebar.collapsed
   );
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
+  const [enteredRoute, setRoute] = useState<Route | undefined>({
+    path: "/",
+    title: "Home",
+    menuKey: "/",
+  });
 
-  // Get session state from Redux
+  // Get session and spaces state from Redux
   const session = useSelector((state: RootState) => state.session);
-  const selected = useSelector((state: RootState) => state.spaces.selected);
+  const spaces = useSelector((state: RootState) => state.spaces);
+  const { selected, loading, orgs } = spaces;
+
+  // Get notification data from Redux
+  const notification = useSelector((state: RootState) => state.notifications);
 
   // Paths where sidebar should be hidden
   const hiddenSidebarPaths = [
@@ -31,6 +45,97 @@ export const BasicLayout: FC<BasicLayoutProps> = () => {
     "/callback",
   ];
 
+  // Public paths that should render children regardless of loading state
+  const publicPaths = [
+    "/auth/login",
+    "/auth/registration",
+    "/auth/login/recovery",
+    "/auth/login/google",
+    "/redirect",
+    "/auth/verify",
+  ];
+
+  // Get space details and permissions for current space
+  const spaceDetails = useSelector((state: RootState) => {
+    if (selected !== "") {
+      const space = state.spaces.details[selected];
+      const applications =
+        orgs.find((org) => org.spaces.includes(space?.id))?.applications || [];
+
+      return {
+        applications,
+        permission: space?.permissions || [],
+        services: space?.services || ["core"],
+        org_role: space?.org_role,
+      };
+    }
+
+    return {
+      applications: [],
+      permission: [],
+      services: ["core"],
+      org_role: state.spaces.org_role,
+    };
+  });
+
+  // Track current route for menu highlighting
+  useEffect(() => {
+    const pathSnippets = location.pathname.split("/").filter((i) => i);
+    if (pathSnippets.length === 0) {
+      setRoute({ path: "/", title: "Home", menuKey: "/" });
+      return;
+    }
+
+    // Look for matching routes using same approach as basic.js
+    for (let index = 0; index < pathSnippets.length; index++) {
+      const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+      const nextTempRoute =
+        pathSnippets.length - index > 1
+          ? _.find(routes, {
+              path: `/${pathSnippets.slice(0, index + 2).join("/")}`,
+            })
+          : null;
+      const tempRoute = _.find(routes, { path: url });
+
+      if (nextTempRoute) {
+        continue;
+      }
+
+      if (tempRoute) {
+        setRoute(tempRoute);
+        break;
+      }
+    }
+  }, [location]);
+
+  // Check screen size for responsive design
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileScreen(window.innerWidth <= 460);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Added effect to fetch spaces when session is loaded
+  // Key fix: Add a check for spaces array length before fetching
+  useEffect(() => {
+    // Only fetch spaces when the session is loaded,
+    // we don't have organizations yet, and we're not currently loading
+    if (
+      session.details &&
+      !session.loading &&
+      Object.keys(session.details).length > 0 &&
+      orgs.length === 0 &&
+      !loading
+    ) {
+      dispatch(getSpaces());
+    }
+  }, [dispatch, session.details, session.loading, orgs.length, loading]);
+
   // Check if current path should hide sidebar
   const shouldHideSidebar = hiddenSidebarPaths.some((path) =>
     location.pathname.startsWith(path)
@@ -39,35 +144,67 @@ export const BasicLayout: FC<BasicLayoutProps> = () => {
   // Check if current path is settings path to show the alternate sidebar
   const isSettingsPath = location.pathname.startsWith("/settings");
 
-  // Added effect to fetch spaces when session is loaded
-  useEffect(() => {
-    if (
-      session.details &&
-      !session.loading &&
-      Object.keys(session.details).length > 0
-    ) {
-      dispatch(getSpaces());
-    }
-  }, [dispatch, selected, session]);
+  // Check if sidebar should be hidden for specific content pages (edit/create)
+  const hideSidebar =
+    (location.pathname.includes("posts") ||
+      location.pathname.includes("fact-checks") ||
+      location.pathname.includes("pages")) &&
+    (location.pathname.includes("edit") ||
+      location.pathname.includes("create"));
+
+  const isPublicPath = publicPaths.some((path) =>
+    location.pathname.startsWith(path)
+  );
+  const shouldRenderContent = isPublicPath || (!session.loading && !loading);
 
   return (
-    <AuthWrapper>
-      <div className="flex min-h-screen bg-background">
-        {!shouldHideSidebar && (
-          <>{isSettingsPath ? <SidebarAlt /> : <Sidebar />}</>
-        )}
-        <div
-          className={`flex-1 transition-all duration-300 ${
-            !shouldHideSidebar ? (isCollapsed ? "ml-[89px]" : "ml-[265px]") : ""
-          }`}
-        >
-          <main className="p-6">
-            <Outlet />
-          </main>
-        </div>
+    <div className="flex min-h-screen bg-background">
+      {!shouldHideSidebar && !hideSidebar && (
+        <>
+          {isSettingsPath ? (
+            <SidebarAlt
+              permission={spaceDetails.permission}
+              menuKey={enteredRoute?.menuKey}
+              orgs={orgs}
+              loading={loading}
+              applications={spaceDetails.applications}
+              services={spaceDetails.services}
+              org_role={spaceDetails.org_role}
+              isMobile={isMobileScreen}
+            />
+          ) : (
+            <Sidebar
+              permission={spaceDetails.permission}
+              menuKey={enteredRoute?.menuKey}
+              orgs={orgs}
+              loading={loading}
+              applications={spaceDetails.applications}
+              services={spaceDetails.services}
+              org_role={spaceDetails.org_role}
+              isMobile={isMobileScreen}
+            />
+          )}
+        </>
+      )}
+      <div
+        className={`flex-1 transition-all duration-300 ${
+          !shouldHideSidebar && !hideSidebar
+            ? isCollapsed
+              ? "ml-[89px]"
+              : "ml-[265px]"
+            : ""
+        } ${isMobileScreen ? "ml-0" : ""}`}
+      >
+        <main className="p-6">
+          {shouldRenderContent ? (
+            children
+          ) : (
+            <div className="flex items-center justify-center p-8">
+              <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
+            </div>
+          )}
+        </main>
       </div>
-    </AuthWrapper>
+    </div>
   );
 };
-
-export default BasicLayout;

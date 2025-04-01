@@ -1,3 +1,4 @@
+import React from "react";
 import { Microchip, ListCheck, LayoutDashboard } from "lucide-react";
 import Dashboard from "../pages/dashboard";
 import Analytics from "../pages/analytics";
@@ -103,6 +104,12 @@ import Webhooks from "../pages/webhooks";
 import CreateWebhook from "../pages/webhooks/CreateWebhook";
 import EditWebhook from "../pages/webhooks/EditWebhook";
 
+// Import necessary components for the extractV6RouteObject function
+import { BasicLayout } from "../layouts/basic";
+import Authwrapper from "../components/AuthWrapper";
+import ProtectedRoute from "../components/ProtectedRoute";
+import AdminRoute from "../components/AdminRoute";
+
 export interface Route {
   path: string;
   title: string;
@@ -115,6 +122,11 @@ export interface Route {
   isAdmin?: boolean;
   isOwner?: boolean;
   menuKey?: string;
+}
+
+export interface V6RouteObject extends Route {
+  element: React.ReactNode;
+  children?: V6RouteObject[];
 }
 
 export interface SidebarItem {
@@ -716,4 +728,117 @@ export const sidebarMenu: SidebarItem[] = [
   },
 ];
 
-export default routes;
+export function extractV6RouteObject(
+  formats?: any,
+  setReloadFlag?: React.Dispatch<React.SetStateAction<boolean>>,
+  reloadFlag?: boolean
+): V6RouteObject[] {
+  const extractedRoutes: V6RouteObject[] = [];
+
+  // Define public paths that should be treated differently
+  const publicPaths = [
+    "/auth/login",
+    "/auth/registration",
+    "/redirect",
+    "/callback",
+    "/auth/verify",
+    "/auth/login/recovery",
+    "/auth/login/google",
+  ];
+
+  // Loop through the original routes object and convert each route to v6 format
+  for (const routeKey in routes) {
+    const route = routes[routeKey as keyof typeof routes];
+    const { path, Component, title, permission, isAdmin, isOwner, menuKey } =
+      route;
+
+    if (!Component) continue; // Skip routes without components
+
+    // Check if this is a public route
+    const isPublicRoute = publicPaths.some(
+      (publicPath) => path === publicPath || path.startsWith(publicPath)
+    );
+
+    // Create the v6 route element based on the original route data
+    let v6RouteElement;
+
+    if (isPublicRoute) {
+      v6RouteElement = React.createElement(
+        Authwrapper,
+        null,
+        React.createElement(Component, { formats })
+      );
+    } else if (permission) {
+      v6RouteElement = React.createElement(
+        Authwrapper,
+        null,
+        React.createElement(
+          BasicLayout,
+          { formats, setReloadFlag, reloadFlag },
+          React.createElement(ProtectedRoute, {
+            component: Component,
+            permission,
+            formats,
+            setReloadFlag,
+            reloadFlag,
+            path,
+            title,
+            isAdmin,
+            isOwner,
+            menuKey,
+          })
+        )
+      );
+    } else if (isAdmin) {
+      v6RouteElement = React.createElement(
+        Authwrapper,
+        null,
+        React.createElement(
+          BasicLayout,
+          { formats, setReloadFlag, reloadFlag },
+          React.createElement(AdminRoute, {
+            component: Component,
+            formats,
+            path,
+            title,
+            menuKey,
+          })
+        )
+      );
+    } else {
+      v6RouteElement = React.createElement(
+        Authwrapper,
+        null,
+        React.createElement(
+          BasicLayout,
+          { formats, setReloadFlag, reloadFlag },
+          React.createElement(Component, {
+            formats,
+            setReloadFlag,
+            reloadFlag,
+          })
+        )
+      );
+    }
+
+    // Create the v6 route object based on the original route data
+    const v6Route: V6RouteObject = {
+      path,
+      element: v6RouteElement,
+      title,
+      ...(permission && { permission }),
+      ...(isAdmin && { isAdmin }),
+      ...(isOwner && { isOwner }),
+    };
+
+    // Add menuKey if it exists
+    if (menuKey) {
+      v6Route.menuKey = menuKey;
+    }
+
+    // Push the v6 route object to the extractedRoutes array
+    extractedRoutes.push(v6Route);
+  }
+
+  return extractedRoutes;
+}

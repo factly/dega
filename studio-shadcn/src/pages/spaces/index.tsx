@@ -91,11 +91,6 @@ const Spaces: React.FC = () => {
   // Define the header height (including padding)
   const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
 
-  // Fetch spaces when filters change
-  useEffect(() => {
-    dispatch(getSpaces(filters));
-  }, [dispatch, filters]);
-
   // Handle sort toggle
   const handleSortToggle = () => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));

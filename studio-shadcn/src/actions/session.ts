@@ -41,7 +41,7 @@ export const getSession = (): ThunkAction<
         return { success: true, noToken: false };
       }
 
-      return { success: false, noToken: true };
+      return { success: false, noToken: false };
     } catch (error) {
       console.error("Error in getSession:", error);
       return { success: false, noToken: false };

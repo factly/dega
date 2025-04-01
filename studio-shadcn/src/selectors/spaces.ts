@@ -29,33 +29,42 @@ interface RootState {
 interface SelectorOutput {
   loading: boolean;
   spaces: Space[];
+  total: number;
 }
 
-export const spaceSelector = (state: RootState): SelectorOutput => {
-  if (!state.spaces) {
+// Memoize the selector to prevent unnecessary recalculations
+import { createSelector } from "reselect";
+
+const getSpacesState = (state: RootState) => state.spaces;
+
+export const spaceSelector = createSelector(
+  [getSpacesState],
+  (spacesState): SelectorOutput => {
+    if (!spacesState) {
+      return {
+        loading: false,
+        spaces: [],
+        total: 0,
+      };
+    }
+
+    // Find the organization that contains the selected space
+    const selectedOrg = spacesState.orgs.find((item) =>
+      item.spaces.includes(spacesState.selected)
+    );
+
+    let spaces: Space[] = [];
+
+    if (selectedOrg) {
+      spaces = selectedOrg.spaces
+        .map((s) => spacesState.details[s])
+        .filter(Boolean);
+    }
+
     return {
-      loading: false,
-      spaces: [],
-      total: 0,
+      loading: spacesState.loading,
+      spaces: spaces,
+      total: spaces.length,
     };
   }
-
-  // Find the organization that contains the selected space
-  const selectedOrg = state.spaces.orgs.find((item) =>
-    item.spaces.includes(state.spaces.selected)
-  );
-
-  let spaces: Space[] = [];
-
-  if (selectedOrg) {
-    spaces = selectedOrg.spaces
-      .map((s) => state.spaces.details[s])
-      .filter(Boolean);
-  }
-
-  return {
-    loading: state.spaces.loading,
-    spaces: spaces,
-    total: spaces.length, // Add the total count based on the filtered spaces
-  };
-};
+);
