@@ -150,11 +150,9 @@ function Categories() {
     }
   }, [showSearch]);
 
-  // Calculate total pages - use the consistent page size
   const pageSize = filters.limit || 10;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  // Calculate left margin based on sidebar state
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
   
   if (loading) return <Loader />;
@@ -163,7 +161,6 @@ function Categories() {
     <div className="flex flex-col h-full">
       <Helmet title={"Categories"} />
 
-      {/* Header - Adaptive for both mobile and desktop */}
       <div className={`${isMobile ? 'sticky top-0' : 'fixed'} z-10 bg-white ${isMobile ? 'border-b' : ''}`}
         style={!isMobile ? {
           left: isCollapsed ? "89px" : "265px",
@@ -175,7 +172,6 @@ function Categories() {
           {/* Title only for mobile */}
           {isMobile && <h1 className="text-xl font-semibold">Categories</h1>}
           
-          {/* Search bar - hidden by default on mobile */}
           {(showSearch || !isMobile) && (
             <div className={`${isMobile ? 'w-full' : 'flex-1 max-w-xs'}`}>
               <Input
@@ -190,7 +186,6 @@ function Categories() {
           
           {/* Action buttons */}
           <div className={`${isMobile ? 'flex items-center gap-2' : ''}`}>
-            {/* Search toggle button - only for mobile */}
             {isMobile && (
               <Button 
                 variant="ghost" 
@@ -202,7 +197,6 @@ function Categories() {
               </Button>
             )}
             
-            {/* Create button - adaptive for mobile/desktop */}
             <Link to="/categories/create">
               {isMobile ? (
                 <Button size="icon" className="h-9 w-9">
@@ -218,7 +212,6 @@ function Categories() {
           </div>
         </div>
         
-        {/* Mobile Search Bar (separate row) */}
         {isMobile && showSearch && (
           <div className="px-4 pb-3">
             <Input
@@ -232,7 +225,6 @@ function Categories() {
         )}
       </div>
 
-      {/* Content Area - Adaptive for both mobile and desktop */}
       <div 
         className={isMobile ? "flex-1 px-4 pb-16 pt-4 overflow-auto" : "absolute overflow-auto"}
         style={!isMobile ? {
@@ -247,7 +239,6 @@ function Categories() {
           transition: "left 0.3s ease, top 0.3s ease",
         } : undefined}
       >
-        {/* Reuse the same CategoryList component with isMobile prop */}
         <CategoryList
           data={{
             categories: sortedCategories,
@@ -263,7 +254,6 @@ function Categories() {
         />
       </div>
 
-      {/* Footer with Pagination - Adaptive for both mobile and desktop */}
       <div
         className={`${isMobile ? 'fixed bottom-0 left-0 right-0 py-3 px-4' : 'fixed bottom-0'} z-10 bg-white ${isMobile ? 'border-t' : ''}`}
         style={!isMobile ? {
@@ -273,7 +263,6 @@ function Categories() {
           transition: "left 0.3s ease",
         } : undefined}
       >
-        {/* Reuse the same Pagination component with isMobile prop */}
         <Pagination
           currentPage={filters.page}
           totalPages={totalPages}
