@@ -32,6 +32,7 @@ export interface SpacesState {
   selected: string;
   org_role: string;
   lastFetched: number | null;
+  hasAttemptedFetch: boolean;
 }
 
 // Define action interfaces
@@ -87,6 +88,7 @@ const initialState: SpacesState = {
   selected: storedSpaceId,
   org_role: "",
   lastFetched: null,
+  hasAttemptedFetch: false,
 };
 
 export function spaces(
@@ -124,7 +126,7 @@ export function spaces(
         Object.keys(space_details).length > 0
           ? space_details[spaceID]
             ? spaceID // Use stored space if it exists
-            : space_details[Object.keys(space_details)[0]].id // Otherwise use first space
+            : Object.keys(space_details)[0] // Otherwise use first space
           : "";
 
       // Use the current selected space if it exists in space_details, otherwise use defaultSpace
@@ -156,6 +158,7 @@ export function spaces(
           : "",
         // Add timestamp to track when spaces were last fetched
         lastFetched: Date.now(),
+        hasAttemptedFetch: true, // Mark that we've attempted the fetch
       };
     }
 
@@ -191,6 +194,7 @@ export function spaces(
         },
         orgs: org_copy,
         selected: newSpace.id,
+        hasAttemptedFetch: true,
       };
     }
 
@@ -224,7 +228,10 @@ export function spaces(
     }
 
     case DELETE_SPACE_SUCCESS:
-      return initialState;
+      return {
+        ...initialState,
+        hasAttemptedFetch: true,
+      };
 
     default:
       return state;

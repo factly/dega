@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 interface Space {
   id: string;
   name: string;
@@ -20,6 +22,7 @@ interface SpacesState {
   details: Record<string, Space>;
   loading: boolean;
   org_role: string;
+  hasAttemptedFetch: boolean;
 }
 
 interface RootState {
@@ -30,10 +33,8 @@ interface SelectorOutput {
   loading: boolean;
   spaces: Space[];
   total: number;
+  hasAttemptedFetch: boolean;
 }
-
-// Memoize the selector to prevent unnecessary recalculations
-import { createSelector } from "reselect";
 
 const getSpacesState = (state: RootState) => state.spaces;
 
@@ -45,6 +46,7 @@ export const spaceSelector = createSelector(
         loading: false,
         spaces: [],
         total: 0,
+        hasAttemptedFetch: false,
       };
     }
 
@@ -65,6 +67,7 @@ export const spaceSelector = createSelector(
       loading: spacesState.loading,
       spaces: spaces,
       total: spaces.length,
+      hasAttemptedFetch: spacesState.hasAttemptedFetch || false,
     };
   }
 );

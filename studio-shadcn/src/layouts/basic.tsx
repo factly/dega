@@ -1,4 +1,4 @@
-import { FC, useEffect, ReactNode, useState } from "react";
+import { FC, useEffect, ReactNode, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Sidebar } from "@/components/GlobalNav/Sidebar";
@@ -28,6 +28,9 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     title: "Home",
     menuKey: "/",
   });
+
+  // Add a ref to track if spaces have been fetched
+  const hasAttemptedSpacesFetch = useRef(false);
 
   // Get session and spaces state from Redux
   const session = useSelector((state: RootState) => state.session);
@@ -120,21 +123,19 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Added effect to fetch spaces when session is loaded
-  // Key fix: Add a check for spaces array length before fetching
   useEffect(() => {
-    // Only fetch spaces when the session is loaded,
-    // we don't have organizations yet, and we're not currently loading
+    // Only fetch spaces when the session is loaded and we haven't tried fetching yet
     if (
       session.details &&
       !session.loading &&
       Object.keys(session.details).length > 0 &&
-      orgs.length === 0 &&
+      !hasAttemptedSpacesFetch.current &&
       !loading
     ) {
+      hasAttemptedSpacesFetch.current = true;
       dispatch(getSpaces());
     }
-  }, [dispatch, session.details, session.loading, orgs.length, loading]);
+  }, [dispatch, session.details, session.loading, loading]);
 
   // Check if current path should hide sidebar
   const shouldHideSidebar = hiddenSidebarPaths.some((path) =>

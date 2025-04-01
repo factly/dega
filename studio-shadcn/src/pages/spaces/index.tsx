@@ -37,6 +37,7 @@ interface SpaceState {
   spaces: any[];
   loading: boolean;
   total: number | null;
+  hasAttemptedFetch: boolean;
 }
 
 const Spaces: React.FC = () => {
@@ -53,18 +54,15 @@ const Spaces: React.FC = () => {
     spaces,
     loading,
     total = 0,
+    hasAttemptedFetch = false,
   } = useSelector(spaceSelector) as SpaceState;
 
-  const [hasAttemptedLoad, setHasAttemptedLoad] = useState(false);
-
   useEffect(() => {
-    const fetchSpaces = async () => {
-      await dispatch(getSpaces());
-      setHasAttemptedLoad(true);
-    };
-
-    fetchSpaces();
-  }, [dispatch]);
+    // Only fetch spaces if we haven't attempted to fetch them yet
+    if (!hasAttemptedFetch) {
+      dispatch(getSpaces());
+    }
+  }, [dispatch, hasAttemptedFetch]);
 
   const { role } = useSelector((state: RootState): RoleState => {
     // Check if spaces exists in the state
@@ -131,12 +129,6 @@ const Spaces: React.FC = () => {
         Spaces help you organize your content. Create your first space to get
         started.
       </p>
-      <Link to="/spaces/create">
-        <Button size="lg" className="flex items-center gap-2 py-2">
-          <PlusCircle className="h-4 w-4" />
-          Create New Space
-        </Button>
-      </Link>
     </div>
   );
 
@@ -203,7 +195,7 @@ const Spaces: React.FC = () => {
           transition: "left 0.3s ease, top 0.3s ease",
         }}
       >
-        {loading && !hasAttemptedLoad ? (
+        {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
           </div>

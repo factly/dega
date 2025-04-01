@@ -775,12 +775,23 @@ export function extractV6RouteObject(
         React.createElement(
           BasicLayout,
           { formats, setReloadFlag, reloadFlag },
-          React.createElement(ProtectedRoute, {
-            component: Component,
-            permission,
+          // React.createElement(ProtectedRoute, {
+          //   component: Component,
+          //   permission,
+          //   formats,
+          //   setReloadFlag,
+          //   reloadFlag,
+          //   path,
+          //   title,
+          //   isAdmin,
+          //   isOwner,
+          //   menuKey,
+          // })
+          React.createElement(Component, {
             formats,
             setReloadFlag,
             reloadFlag,
+            permission,
             path,
             title,
             isAdmin,
@@ -796,9 +807,17 @@ export function extractV6RouteObject(
         React.createElement(
           BasicLayout,
           { formats, setReloadFlag, reloadFlag },
-          React.createElement(AdminRoute, {
-            component: Component,
+          // React.createElement(AdminRoute, {
+          //   component: Component,
+          //   formats,
+          //   path,
+          //   title,
+          //   menuKey,
+          // })
+          React.createElement(Component, {
             formats,
+            setReloadFlag,
+            reloadFlag,
             path,
             title,
             menuKey,

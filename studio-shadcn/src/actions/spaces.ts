@@ -75,7 +75,7 @@ export type SpaceAction =
   | DeleteSpaceSuccessAction
   | SetSelectedSpaceAction;
 
-// Action creators as named exports
+// Action creators
 export const loadingSpaces = (payload: boolean): LoadingSpacesAction => ({
   type: LOADING_SPACES,
   payload,
@@ -108,8 +108,15 @@ export const getSpaces = (): AppThunk<Promise<Organization[] | undefined>> => {
     // Get current state
     const state = getState();
     const { spaces } = state;
-    if (spaces && spaces.lastFetched && spaces.orgs.length > 0) {
-      // Don't fetch again if we have recent data
+
+    // If spaces have been fetched recently and we have data, don't fetch again
+    if (
+      spaces &&
+      spaces.lastFetched &&
+      Date.now() - spaces.lastFetched < 300000 &&
+      spaces.orgs.length > 0
+    ) {
+      // Don't fetch again if we have data less than 5 minutes old
       return;
     }
 
@@ -117,10 +124,15 @@ export const getSpaces = (): AppThunk<Promise<Organization[] | undefined>> => {
     try {
       const response = await axios.get(`${API_SPACES}/my`);
       const organizations: Organization[] = response.data;
-      dispatch(getSpacesSuccess(organizations));
+
+      // Ensure we handle empty array correctly
+      dispatch(getSpacesSuccess(organizations || []));
       return organizations;
     } catch (error) {
       dispatch(addErrorNotification(getError(error as ApiError)));
+      // Also dispatch success with empty array to mark fetch as complete
+      dispatch(getSpacesSuccess([]));
+      return [];
     } finally {
       dispatch(loadingSpaces(false));
     }
