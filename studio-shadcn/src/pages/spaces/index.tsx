@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import SpaceList from "./components/SpaceList";
-import { RefreshCw, PlusCircle } from "lucide-react";
+import { RefreshCw, PlusCircle, FolderPlus } from "lucide-react";
 import Pagination from "../../components/Pagination";
 import { getSpaces } from "../../actions/spaces";
 import { spaceSelector } from "../../selectors/spaces";
@@ -54,6 +54,17 @@ const Spaces: React.FC = () => {
     loading,
     total = 0,
   } = useSelector(spaceSelector) as SpaceState;
+
+  const [hasAttemptedLoad, setHasAttemptedLoad] = useState(false);
+
+  useEffect(() => {
+    const fetchSpaces = async () => {
+      await dispatch(getSpaces());
+      setHasAttemptedLoad(true);
+    };
+
+    fetchSpaces();
+  }, [dispatch]);
 
   const { role } = useSelector((state: RootState): RoleState => {
     // Check if spaces exists in the state
@@ -109,6 +120,26 @@ const Spaces: React.FC = () => {
   // Calculate total pages
   const totalPages = Math.max(1, Math.ceil((total || 0) / filters.limit));
 
+  // Empty state component when no spaces exist
+  const EmptySpacesState = () => (
+    <div className="flex flex-col items-center justify-center h-full mt-16">
+      <div className="bg-gray-50 rounded-full p-6 mb-4">
+        <FolderPlus className="h-16 w-16 text-gray-400" />
+      </div>
+      <h3 className="text-xl font-medium mb-2">No spaces found</h3>
+      <p className="text-gray-500 mb-6 text-center max-w-md">
+        Spaces help you organize your content. Create your first space to get
+        started.
+      </p>
+      <Link to="/spaces/create">
+        <Button size="lg" className="flex items-center gap-2 py-2">
+          <PlusCircle className="h-4 w-4" />
+          Create New Space
+        </Button>
+      </Link>
+    </div>
+  );
+
   return (
     <div className="flex flex-col h-full">
       <Helmet title={"Spaces"} />
@@ -130,6 +161,7 @@ const Spaces: React.FC = () => {
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 className="h-10"
+                disabled={spaces.length === 0}
               />
             </div>
           </div>
@@ -171,34 +203,43 @@ const Spaces: React.FC = () => {
           transition: "left 0.3s ease, top 0.3s ease",
         }}
       >
-        <SpaceList
-          searchQuery={searchText}
-          sortOrder={sortOrder}
-          onSortToggle={handleSortToggle}
-          filters={filters}
-          setFilters={setFilters}
-        />
+        {loading && !hasAttemptedLoad ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
+          </div>
+        ) : spaces.length === 0 ? (
+          <EmptySpacesState />
+        ) : (
+          <SpaceList
+            searchQuery={searchText}
+            sortOrder={sortOrder}
+            onSortToggle={handleSortToggle}
+            filters={filters}
+            setFilters={setFilters}
+          />
+        )}
       </div>
 
-      {/* Footer with Pagination */}
-      <div
-        className="fixed bottom-0 z-10 bg-white"
-        style={{
-          left: sidebarWidth,
-          right: 0,
-          height: "64px",
-          transition: "left 0.3s ease",
-        }}
-      >
-        <Pagination
-          currentPage={filters.page}
-          totalPages={totalPages}
-          totalItems={total}
-          pageSize={filters.limit}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
-        />
-      </div>
+      {spaces.length > 0 && (
+        <div
+          className="fixed bottom-0 z-10 bg-white"
+          style={{
+            left: sidebarWidth,
+            right: 0,
+            height: "64px",
+            transition: "left 0.3s ease",
+          }}
+        >
+          <Pagination
+            currentPage={filters.page}
+            totalPages={totalPages}
+            totalItems={total}
+            pageSize={filters.limit}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+          />
+        </div>
+      )}
     </div>
   );
 };
