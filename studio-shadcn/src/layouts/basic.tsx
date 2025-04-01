@@ -1,16 +1,20 @@
 import { FC, useEffect, ReactNode, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Sidebar from "./app-sidebar"
+import Sidebar from "./app-sidebar";
 import { SidebarAlt } from "@/components/GlobalNav/SidebarAlt";
 import { RootState } from "@/types";
 import { getSpaces } from "@/actions/spaces";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { routes, Route } from "@/config/routesConfig";
 import _ from "lodash";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
-import degaLogoLetters from '@/assets/dega.png'
+import degaLogoLetters from "@/assets/dega.png";
 
 interface BasicLayoutProps {
   children?: ReactNode;
@@ -99,8 +103,8 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
       const nextTempRoute =
         pathSnippets.length - index > 1
           ? _.find(routes, {
-            path: `/${pathSnippets.slice(0, index + 2).join("/")}`,
-          })
+              path: `/${pathSnippets.slice(0, index + 2).join("/")}`,
+            })
           : null;
       const tempRoute = _.find(routes, { path: url });
 
@@ -168,15 +172,17 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
         <>{isSettingsPath ? <SidebarAlt /> : <Sidebar />}</>
       )}
       <SidebarInset>
-        {isMobile && (<header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="-ml-1" />
-          <img
-            src={degaLogoLetters}
-            alt="Dega"
-            className="h-8 cursor-pointer mx-auto"
-          />
-        </header>)}
-        <main className="p-6">
+        {isMobile && (
+          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+            <SidebarTrigger className="-ml-1" />
+            <img
+              src={degaLogoLetters}
+              alt="Dega"
+              className="h-8 cursor-pointer mx-auto"
+            />
+          </header>
+        )}
+        <main className={isMobile ? "p-4" : "p-6"}>
           {shouldRenderContent ? (
             children
           ) : (
@@ -187,53 +193,5 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
         </main>
       </SidebarInset>
     </SidebarProvider>
-    // // <div className="flex min-h-screen bg-background">
-    // //   {!shouldHideSidebar && !hideSidebar && (
-    // //     <>
-    // //       {isSettingsPath ? (
-    // //         <SidebarAlt
-    // //           permission={spaceDetails.permission}
-    // //           menuKey={enteredRoute?.menuKey}
-    // //           orgs={orgs}
-    // //           loading={loading}
-    // //           applications={spaceDetails.applications}
-    // //           services={spaceDetails.services}
-    // //           org_role={spaceDetails.org_role}
-    // //           isMobile={isMobileScreen}
-    // //         />
-    // //       ) : (
-    // //         <Sidebar
-    // //           permission={spaceDetails.permission}
-    // //           menuKey={enteredRoute?.menuKey}
-    // //           orgs={orgs}
-    // //           loading={loading}
-    // //           applications={spaceDetails.applications}
-    // //           services={spaceDetails.services}
-    // //           org_role={spaceDetails.org_role}
-    // //           isMobile={isMobileScreen}
-    // //         />
-    // //       )}
-    // //     </>
-    // //   )}
-    // //   <div
-    // //     className={`flex-1 transition-all duration-300 ${
-    // //       !shouldHideSidebar && !hideSidebar
-    // //         ? isCollapsed
-    // //           ? "ml-[89px]"
-    // //           : "ml-[265px]"
-    // //         : ""
-    // //     } ${isMobileScreen ? "ml-0" : ""}`}
-    // //   >
-    // //     <main className="p-6">
-    // //       {shouldRenderContent ? (
-    // //         children
-    // //       ) : (
-    // //         <div className="flex items-center justify-center p-8">
-    // //           <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
-    // //         </div>
-    // //       )}
-    // //     </main>
-    // //   </div>
-    // // </div>
   );
 };

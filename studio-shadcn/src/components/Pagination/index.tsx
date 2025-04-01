@@ -21,21 +21,100 @@ interface PaginationProps {
   pageSize: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
+  isMobile?: boolean;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
-  totalItems,
   pageSize,
   onPageChange,
   onPageSizeChange,
+  isMobile = false,
 }) => {
   const pageSizeOptions = [10, 20, 50, 100];
 
   const handlePageSizeChange = (value: string) => {
     onPageSizeChange(Number(value));
   };
+
+  if (isMobile) {
+    return (
+      <div className="flex flex-col w-full bg-white">
+        {/* Top row - Rows selector */}
+        <div className="flex items-center px-4">
+          <div className="flex items-center gap-2 text-sm text-gray-700">
+            <span>Rows per page:</span>
+            <Select
+              value={pageSize.toString()}
+              onValueChange={handlePageSizeChange}
+            >
+              <SelectTrigger className="h-8 w-16">
+                <SelectValue placeholder={pageSize.toString()} />
+              </SelectTrigger>
+              <SelectContent>
+                {pageSizeOptions.map((size) => (
+                  <SelectItem key={size} value={size.toString()}>
+                    {size}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Bottom row - Page info and navigation */}
+        <div className="flex items-center justify-between px-4 py-2">
+          {/* Left section - Page info */}
+          <div className="flex items-center text-sm text-gray-700">
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+          </div>
+
+          {/* Right section - Navigation buttons */}
+          <div className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(1)}
+              disabled={currentPage === 1}
+              className="h-8 w-8"
+            >
+              <ChevronsLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="h-8 w-8"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="h-8 w-8"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="h-8 w-8"
+            >
+              <ChevronsRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center justify-between px-4 py-3">

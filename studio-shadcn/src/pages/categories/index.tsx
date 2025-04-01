@@ -13,6 +13,7 @@ import { getCategories } from "../../actions/categories";
 import Pagination from "../../components/Pagination";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 
 interface Category {
   id: string;
@@ -53,7 +54,7 @@ function Categories() {
   const [searchText, setSearchText] = useState<string>("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  
+
   // Initialize filters with a ref to prevent unnecessary reloads
   const [filters, setFilters] = useState<FilterParams>({
     page: 1,
@@ -64,7 +65,7 @@ function Categories() {
   useEffect(() => {
     // Just update the UI state for search visibility
     setShowSearch(!isMobile);
-    
+
     // We don't update filters.limit here anymore to prevent data reload
   }, [isMobile]);
 
@@ -77,7 +78,7 @@ function Categories() {
   const { categories, total, loading } = useSelector((state: RootState) => {
     // Adjust the query to match current device type for proper cache lookup
     const adjustedQuery = {
-      ...filters
+      ...filters,
     };
 
     const node = state.categories.req.find((item) => {
@@ -144,7 +145,7 @@ function Categories() {
 
   // Toggle search on mobile
   const toggleSearch = useCallback(() => {
-    setShowSearch(prev => !prev);
+    setShowSearch((prev) => !prev);
     if (showSearch) {
       setSearchText("");
     }
@@ -154,49 +155,67 @@ function Categories() {
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
-  
+
   if (loading) return <Loader />;
 
   return (
     <div className="flex flex-col h-full">
       <Helmet title={"Categories"} />
 
-      <div className={`${isMobile ? 'sticky top-0' : 'fixed'} z-10 bg-white ${isMobile ? 'border-b' : ''}`}
-        style={!isMobile ? {
-          left: isCollapsed ? "89px" : "265px",
-          right: 0,
-          transition: "left 0.3s ease",
-        } : undefined}
+      {/* Mobile Breadcrumb */}
+      {isMobile && (
+        <MobileBreadcrumb
+          currentPage="Categories"
+          parentPath="/"
+          parentLabel="Core"
+        />
+      )}
+
+      <div
+        className={`${isMobile ? "sticky top-0" : "fixed"} z-10 bg-white`}
+        style={
+          !isMobile
+            ? {
+                left: isCollapsed ? "89px" : "265px",
+                right: 0,
+                transition: "left 0.3s ease",
+              }
+            : undefined
+        }
       >
-        <div className={`flex justify-between items-center ${isMobile ? 'px-4 py-3' : 'px-6 pt-1 h-full'}`}>
+        <div
+          className={`flex justify-between items-center ${
+            isMobile ? "pb-3 pt-1" : "px-6 pt-1 h-full"
+          }`}
+        >
           {/* Title only for mobile */}
           {isMobile && <h1 className="text-xl font-semibold">Categories</h1>}
-          
+
           {(showSearch || !isMobile) && (
-            <div className={`${isMobile ? 'w-full' : 'flex-1 max-w-xs'}`}>
+            <div className={`${isMobile ? "w-full" : "flex-1 max-w-xs"}`}>
               <Input
                 placeholder="Search categories..."
                 value={searchText}
                 onChange={handleSearchChange}
-                className={`${isMobile ? 'h-9' : 'h-10'}`}
+                className={`${isMobile ? "h-9" : "h-10"}`}
                 autoFocus={isMobile && showSearch}
               />
             </div>
           )}
-          
+
           {/* Action buttons */}
-          <div className={`${isMobile ? 'flex items-center gap-2' : ''}`}>
+          <div className={`${isMobile ? "flex items-center gap-2" : ""}`}>
             {isMobile && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="outline"
+                size="icon"
                 onClick={toggleSearch}
-                className="h-9 w-9"
+                className="h-9 w-9 text-gray-500"
               >
                 <SearchIcon className="h-5 w-5" />
               </Button>
             )}
-            
+
             <Link to="/categories/create">
               {isMobile ? (
                 <Button size="icon" className="h-9 w-9">
@@ -211,7 +230,7 @@ function Categories() {
             </Link>
           </div>
         </div>
-        
+
         {isMobile && showSearch && (
           <div className="px-4 pb-3">
             <Input
@@ -225,19 +244,27 @@ function Categories() {
         )}
       </div>
 
-      <div 
-        className={isMobile ? "flex-1 px-4 pb-16 pt-4 overflow-auto" : "absolute overflow-auto"}
-        style={!isMobile ? {
-          top: "calc(1.5rem + 2.5rem + 1rem)",
-          left: 8,
-          right: 0,
-          bottom: "64px",
-          paddingLeft: "1.5rem",
-          paddingRight: "1.5rem",
-          paddingBottom: "1.5rem",
-          paddingTop: "1rem",
-          transition: "left 0.3s ease, top 0.3s ease",
-        } : undefined}
+      <div
+        className={
+          isMobile
+            ? "flex-1 pb-16 pt-1 overflow-auto"
+            : "absolute overflow-auto"
+        }
+        style={
+          !isMobile
+            ? {
+                top: "calc(1.5rem + 2.5rem + 1rem)",
+                left: 8,
+                right: 0,
+                bottom: "64px",
+                paddingLeft: "1.5rem",
+                paddingRight: "1.5rem",
+                paddingBottom: "1.5rem",
+                paddingTop: "1rem",
+                transition: "left 0.3s ease, top 0.3s ease",
+              }
+            : undefined
+        }
       >
         <CategoryList
           data={{
@@ -255,13 +282,19 @@ function Categories() {
       </div>
 
       <div
-        className={`${isMobile ? 'fixed bottom-0 left-0 right-0 py-3 px-4' : 'fixed bottom-0'} z-10 bg-white ${isMobile ? 'border-t' : ''}`}
-        style={!isMobile ? {
-          left: isCollapsed ? "89px" : "265px",
-          right: 0,
-          height: "64px",
-          transition: "left 0.3s ease",
-        } : undefined}
+        className={`${
+          isMobile ? "fixed bottom-0 left-0 right-0 py-3" : "fixed bottom-0"
+        } z-10 bg-white`}
+        style={
+          !isMobile
+            ? {
+                left: isCollapsed ? "89px" : "265px",
+                right: 0,
+                height: "64px",
+                transition: "left 0.3s ease",
+              }
+            : undefined
+        }
       >
         <Pagination
           currentPage={filters.page}
