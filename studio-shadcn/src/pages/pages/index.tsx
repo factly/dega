@@ -28,7 +28,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 // lucide icons
 import { X, Filter, PlusCircle } from "lucide-react";
 
@@ -44,6 +50,7 @@ import Pagination from "../../components/Pagination";
 import getUrlParams from "../../utils/getUrlParams";
 import Filters from "../../utils/filters";
 import { getPages } from "../../actions/pages";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Types
 interface Format {
@@ -155,6 +162,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
   const query = new URLSearchParams(search);
+  const isMobile = useIsMobile();
 
   const [templatesOpen, setTemplatesOpen] = useState<boolean>(false);
   const [isMobileScreen, setIsMobileScreen] = useState<boolean>(false);
@@ -426,7 +434,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full gap-6">
       <Helmet title={"Pages"} />
 
       {/* Templates Dialog */}
@@ -440,16 +448,8 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       </Dialog>
 
       {/* Header */}
-      <div
-        className="fixed top-0 z-10 bg-white"
-        style={{
-          left: sidebarWidth,
-          right: 0,
-          height: headerHeight,
-          transition: "left 0.3s ease",
-        }}
-      >
-        <div className="flex justify-between items-center h-full px-6 pt-1">
+      <div>
+        <div className="flex justify-between items-center h-full">
           <div className="flex items-center gap-4 flex-1">
             <div className="relative flex-1 max-w-xs">
               <Input
@@ -577,28 +577,27 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       </div>
 
       {/* Content */}
-      <div
-        className="absolute overflow-auto"
-        style={{
-          top: headerHeight,
-          left: sidebarWidth,
-          right: 0,
-          bottom: "64px",
-          paddingLeft: "1.5rem",
-          paddingRight: "1.5rem",
-          paddingBottom: "1.5rem",
-          paddingTop: "1rem",
-          transition: "left 0.3s ease, top 0.3s ease",
-        }}
-      >
-        <Tabs defaultValue={status} onValueChange={handleStatusChange}>
-          <TabsList className="grid grid-cols-5">
+      <div>
+        <Tabs defaultValue={status} onValueChange={handleStatusChange} value={status}>
+          {!isMobile ? <TabsList className="grid grid-cols-5 ">
             {pageStatusItems.map((item) => (
               <TabsTrigger key={item.value} value={item.value}>
                 {item.label}
               </TabsTrigger>
             ))}
-          </TabsList>
+          </TabsList> :
+            (<Select defaultValue={status} value={status} onValueChange={handleStatusChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={status} />
+              </SelectTrigger>
+              <SelectContent>
+                {pageStatusItems.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>)}
 
           <TabsContent value={status} className="mt-0">
             <PageList
