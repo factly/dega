@@ -426,7 +426,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full gap-6">
       <Helmet title={"Pages"} />
 
       {/* Templates Dialog */}
@@ -440,16 +440,8 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       </Dialog>
 
       {/* Header */}
-      <div
-        className="fixed top-0 z-10 bg-white"
-        style={{
-          left: sidebarWidth,
-          right: 0,
-          height: headerHeight,
-          transition: "left 0.3s ease",
-        }}
-      >
-        <div className="flex justify-between items-center h-full px-6 pt-1">
+      <div>
+        <div className="flex justify-between items-center h-full">
           <div className="flex items-center gap-4 flex-1">
             <div className="relative flex-1 max-w-xs">
               <Input
@@ -577,22 +569,9 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       </div>
 
       {/* Content */}
-      <div
-        className="absolute overflow-auto"
-        style={{
-          top: headerHeight,
-          left: sidebarWidth,
-          right: 0,
-          bottom: "64px",
-          paddingLeft: "1.5rem",
-          paddingRight: "1.5rem",
-          paddingBottom: "1.5rem",
-          paddingTop: "1rem",
-          transition: "left 0.3s ease, top 0.3s ease",
-        }}
-      >
+      <div>
         <Tabs defaultValue={status} onValueChange={handleStatusChange}>
-          <TabsList className="grid grid-cols-5">
+          <TabsList className="grid grid-cols-5 ">
             {pageStatusItems.map((item) => (
               <TabsTrigger key={item.value} value={item.value}>
                 {item.label}
