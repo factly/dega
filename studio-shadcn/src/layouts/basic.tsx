@@ -170,23 +170,21 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
         <>{isSettingsPath ? <SidebarAlt /> : <Sidebar />}</>
       )}
       <SidebarInset>
-        {isMobile && (<header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="-ml-1" />
-          <img
-            src={degaLogoLetters}
-            alt="Dega"
-            className="h-8 cursor-pointer mx-auto"
-          />
-        </header>)}
-        <main className="p-6">
-          {shouldRenderContent ? (
-            children
-          ) : (
-            <div className="flex items-center justify-center p-8">
-              <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
-            </div>
-          )}
-        </main>
+      {isMobile && (<header className="flex h-16 w-screen shrink-0 items-center gap-2 border-b px-4">
+        <SidebarTrigger className="-ml-1" />
+        <img
+          src={degaLogoLetters}
+          alt="Dega"
+          className="h-8 cursor-pointer mx-auto"
+        />
+      </header>)}
+        {shouldRenderContent ? (
+          children
+        ) : (
+          <div className="flex items-center justify-center p-8">
+            <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
+          </div>
+        )}
       </SidebarInset>
     </SidebarProvider>
     // // <div className="flex min-h-screen bg-background">

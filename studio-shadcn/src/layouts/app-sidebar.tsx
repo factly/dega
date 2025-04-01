@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ArrowLeftToLine, ArrowRightToLine, ChevronDown, ChevronUp, LayoutDashboard, ListChecksIcon as ListCheck, type LucideIcon, MicroscopeIcon as Microchip, Search, Settings, Shield } from 'lucide-react'
+import { ArrowLeftToLine, ArrowRightToLine, ChevronDown, ChevronUp, LayoutDashboard, ListChecksIcon as ListCheck, type LucideIcon, Microchip, Search, Settings, Shield } from 'lucide-react'
 import degaLogoLetters from '@/assets/dega.png'
 import degaLogoShort from '@/assets/dega-short.png'
 import { cn } from "@/lib/utils"
@@ -176,7 +176,7 @@ export default function AppSidebar(): React.ReactNode {
                       className={cn(
                         "flex items-center gap-3 rounded-md hover:bg-[#DCEFEB]",
                         isCollapsed ? "justify-center px-2 py-2 w-10 h-10" : "px-3 py-2",
-                        isItemActive(item.url) && "bg-[#DCEFEB] text-emerald-900"
+                        isItemActive(item.url) && "bg-[#DCEFEB] text-[#0D1D2D] font-medium"
                       )}
                       tooltip={item.title}
                     >
@@ -266,7 +266,7 @@ function CollapsibleOrPopoverMenuItem({
               className={cn(
                 "flex items-center justify-center rounded-md hover:bg-[#DCEFEB]",
                 "px-2 py-2 w-10 h-10",
-                isActive && "bg-[#DCEFEB] text-emerald-900"
+                isActive && "bg-[#DCEFEB] text-[#0D1D2D] font-medium"
               )}
               size="lg"
               tooltip={title}
@@ -282,7 +282,7 @@ function CollapsibleOrPopoverMenuItem({
               <Link
                 key={idx}
                 to={subItem.url}
-                className="px-3 py-2 text-sm rounded-md hover:bg-[#DCEFEB] hover:text-emerald-900"
+                className="px-3 py-2 text-sm rounded-md hover:bg-[#DCEFEB] text-[#0D1D2D] "
               >
                 {subItem.title}
               </Link>
@@ -329,8 +329,8 @@ function CollapsibleOrPopoverMenuItem({
               <SidebarMenuButton
                 asChild
                 size="lg"
-                className={`hover:bg-[#DCEFEB] hover:text-emerald-900 pl-9
-                  ${isItemActiveCallback(subItem.url) && "bg-[#DCEFEB] text-emerald-900"}
+                className={`hover:bg-[#DCEFEB] text-[#0D1D2D]   pl-9
+                  ${isItemActiveCallback(subItem.url) && "bg-[#DCEFEB] text-[#0D1D2D] font-medium"}
                   `}
               >
                 <Link to={subItem.url} className="truncate">
