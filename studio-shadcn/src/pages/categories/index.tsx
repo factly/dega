@@ -188,17 +188,17 @@ function Categories() {
             isMobile ? "pb-3 pt-1" : "px-6 pt-1 h-full"
           }`}
         >
-          {/* Title only for mobile */}
+          {/* Title */}
           {isMobile && <h1 className="text-xl font-semibold">Categories</h1>}
 
-          {(showSearch || !isMobile) && (
-            <div className={`${isMobile ? "w-full" : "flex-1 max-w-xs"}`}>
+          {/* Desktop search bar */}
+          {!isMobile && (
+            <div className="flex-1 max-w-xs">
               <Input
                 placeholder="Search categories..."
                 value={searchText}
                 onChange={handleSearchChange}
-                className={`${isMobile ? "h-9" : "h-10"}`}
-                autoFocus={isMobile && showSearch}
+                className="h-10"
               />
             </div>
           )}
@@ -231,6 +231,7 @@ function Categories() {
           </div>
         </div>
 
+        {/* Mobile search bar */}
         {isMobile && showSearch && (
           <div className="px-4 pb-3">
             <Input
