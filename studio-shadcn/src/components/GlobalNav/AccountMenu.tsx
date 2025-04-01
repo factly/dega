@@ -161,7 +161,7 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
           variant="outline"
           size="sm"
           className="w-full justify-between items-center px-4 py-2 bg-white rounded-md"
-          disabled={spacesLoading}
+          // disabled={spacesLoading}
         >
           <span className="truncate max-w-[180px]">
             {spacesLoading
@@ -172,7 +172,7 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-80 p-0">
+      <DropdownMenuContent align="end" className="w-[--radix-dropdown-menu-trigger-width] p-0">
         {/* Search input */}
         <div className="p-2">
           <div className="relative">

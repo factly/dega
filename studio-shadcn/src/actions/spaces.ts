@@ -129,6 +129,7 @@ export const getSpaces = (): AppThunk<Promise<Organization[] | undefined>> => {
       dispatch(getSpacesSuccess(organizations || []));
       return organizations;
     } catch (error) {
+      dispatch(loadingSpaces(false));
       dispatch(addErrorNotification(getError(error as ApiError)));
       // Also dispatch success with empty array to mark fetch as complete
       dispatch(getSpacesSuccess([]));

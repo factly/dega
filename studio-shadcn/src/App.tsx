@@ -8,7 +8,6 @@ import deepEqual from "deep-equal";
 import { useAppDispatch } from "./hooks/reduxHooks";
 import { RootState } from "./types";
 import { extractV6RouteObject } from "./config/routesConfig";
-
 function App() {
   const [reloadFlag, setReloadFlag] = useState(false);
   const dispatch = useAppDispatch();

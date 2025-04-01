@@ -122,6 +122,7 @@ export interface Route {
   isAdmin?: boolean;
   isOwner?: boolean;
   menuKey?: string;
+  isFullScreen?: boolean;
 }
 
 export interface V6RouteObject extends Route {
@@ -160,29 +161,34 @@ export const routes = {
     path: "/auth/login",
     title: "Login",
     menuKey: "/login",
+    isFullScreen: true,
     Component: Login,
   },
   registration: {
     path: "/auth/registration",
     title: "Registration",
     menuKey: "/registration",
+    isFullScreen: true,
     Component: RegistrationForm,
   },
   emailverification: {
     path: "/auth/verify",
     menuKey: "/auth/verify",
     Component: VerifyEmail,
+    isFullScreen: true,
     title: "Verify Email",
   },
   recovery: {
     path: "/auth/login/recovery",
     menuKey: "/auth/login/recovery",
+    isFullScreen: true,
     Component: RecoveryPage,
     title: "Recovery Page",
   },
   redirect: {
     path: "/redirect",
     menuKey: "/redirect",
+    isFullScreen: true,
     Component: Callback,
   },
   SecuritySettings: {
