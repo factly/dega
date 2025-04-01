@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { AccountMenu } from "@/components/GlobalNav/AccountMenu";
 
 
@@ -48,7 +48,6 @@ const navMain: NavItem[] = [
     title: "Dashboard",
     url: "#",
     icon: LayoutDashboard,
-    isActive: true,
     items: [
       {
         title: "Home",
@@ -106,8 +105,15 @@ const navMain: NavItem[] = [
 export default function AppSidebar(): React.ReactNode {
   const { state, toggleSidebar } = useSidebar();
   const isMobile = useIsMobile();
+  const location = useLocation();
 
   const isCollapsed = state === 'collapsed' && !isMobile;
+
+  const isItemActive = (path: string) => {
+    console.log(path)
+    if (path === location.pathname) return true;
+    return false;
+  };
 
   return (
     <Sidebar
@@ -158,7 +164,8 @@ export default function AppSidebar(): React.ReactNode {
                   <CollapsibleOrPopoverMenuItem
                     title={item.title}
                     icon={item.icon}
-                    isActive={!!item.isActive}
+                    isActive={submenuItems.some((subItem) => isItemActive(subItem.url))}
+                    isItemActiveCallback={isItemActive}
                     submenuItems={submenuItems}
                   />
                 ) : (
@@ -169,7 +176,7 @@ export default function AppSidebar(): React.ReactNode {
                       className={cn(
                         "flex items-center gap-3 rounded-md hover:bg-[#DCEFEB]",
                         isCollapsed ? "justify-center px-2 py-2 w-10 h-10" : "px-3 py-2",
-                        item.isActive && "bg-[#DCEFEB] text-emerald-900"
+                        isItemActive(item.url) && "bg-[#DCEFEB] text-emerald-900"
                       )}
                       tooltip={item.title}
                     >
@@ -241,6 +248,7 @@ function CollapsibleOrPopoverMenuItem({
   title,
   icon: Icon,
   isActive,
+  isItemActiveCallback,
   submenuItems
 }: CollapsibleOrPopoverMenuItemProps): React.ReactNode {
   const { state } = useSidebar();
@@ -297,7 +305,6 @@ function CollapsibleOrPopoverMenuItem({
           <SidebarMenuButton
             className={cn(
               "flex items-center justify-between gap-3 px-3 py-2 w-full rounded-md hover:bg-[#DCEFEB]",
-              isActive && "bg-[#DCEFEB] text-emerald-900"
             )}
             size="lg"
             aria-expanded={isOpen}
@@ -322,7 +329,9 @@ function CollapsibleOrPopoverMenuItem({
               <SidebarMenuButton
                 asChild
                 size="lg"
-                className="hover:bg-[#DCEFEB] hover:text-emerald-900 pl-9"
+                className={`hover:bg-[#DCEFEB] hover:text-emerald-900 pl-9
+                  ${isItemActiveCallback(subItem.url) && "bg-[#DCEFEB] text-emerald-900"}
+                  `}
               >
                 <Link to={subItem.url} className="truncate">
                   {subItem.title}
