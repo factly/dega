@@ -28,7 +28,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 // lucide icons
 import { X, Filter, PlusCircle } from "lucide-react";
 
@@ -44,6 +50,7 @@ import Pagination from "../../components/Pagination";
 import getUrlParams from "../../utils/getUrlParams";
 import Filters from "../../utils/filters";
 import { getPages } from "../../actions/pages";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Types
 interface Format {
@@ -155,6 +162,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
   const query = new URLSearchParams(search);
+  const isMobile = useIsMobile();
 
   const [templatesOpen, setTemplatesOpen] = useState<boolean>(false);
   const [isMobileScreen, setIsMobileScreen] = useState<boolean>(false);
@@ -570,14 +578,26 @@ function Pages({ formats }: PagesProps): React.ReactElement {
 
       {/* Content */}
       <div>
-        <Tabs defaultValue={status} onValueChange={handleStatusChange}>
-          <TabsList className="grid grid-cols-5 ">
+        <Tabs defaultValue={status} onValueChange={handleStatusChange} value={status}>
+          {!isMobile ? <TabsList className="grid grid-cols-5 ">
             {pageStatusItems.map((item) => (
               <TabsTrigger key={item.value} value={item.value}>
                 {item.label}
               </TabsTrigger>
             ))}
-          </TabsList>
+          </TabsList> :
+            (<Select defaultValue={status} value={status} onValueChange={handleStatusChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={status} />
+              </SelectTrigger>
+              <SelectContent>
+                {pageStatusItems.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>)}
 
           <TabsContent value={status} className="mt-0">
             <PageList
