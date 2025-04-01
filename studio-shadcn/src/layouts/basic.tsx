@@ -1,7 +1,6 @@
 import { FC, useEffect, ReactNode, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import {Sidebar} from "@/components/GlobalNav/Sidebar";
 import Sidebar from "./app-sidebar"
 import { SidebarAlt } from "@/components/GlobalNav/SidebarAlt";
 import { RootState } from "@/types";
@@ -10,7 +9,6 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import { routes, Route } from "@/config/routesConfig";
 import _ from "lodash";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import degaLogoLetters from '@/assets/dega.png'
 
