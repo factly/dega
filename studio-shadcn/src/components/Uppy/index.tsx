@@ -85,6 +85,10 @@ function UppyUploader({
   const slug = profile ? org_slug : space_slug;
   const companionUrl = import.meta.env.VITE_COMPANION_URL;
 
+  // Define target dimensions for images
+  const TARGET_WIDTH = 468;
+  const TARGET_HEIGHT = 468;
+
   const uppy = new Uppy({
     id: "uppy-media",
     meta: { type: "avatar" },
@@ -115,6 +119,9 @@ function UppyUploader({
               Date.now().toString() +
               "_" +
               name,
+            // Set target dimensions for image editor
+            width: TARGET_WIDTH,
+            height: TARGET_HEIGHT,
           },
         };
       });
@@ -123,9 +130,7 @@ function UppyUploader({
   })
     .use(AwsS3, {
       companionUrl: companionUrl,
-
       endpoint: companionUrl,
-
       getUploadParameters(file) {
         const paramsEndpoint = `${companionUrl}/s3/params`;
 
@@ -133,11 +138,9 @@ function UppyUploader({
           filename: file.meta.name,
         });
 
-        // Add metadata if available
-        if (file.meta.width && file.meta.height) {
-          queryParams.append("metadata[width]", file.meta.width.toString());
-          queryParams.append("metadata[height]", file.meta.height.toString());
-        }
+        // Always use our defined dimensions
+        queryParams.append("metadata[width]", TARGET_WIDTH.toString());
+        queryParams.append("metadata[height]", TARGET_HEIGHT.toString());
 
         // Make the request to get S3 upload parameters
         return fetch(`${paramsEndpoint}?${queryParams.toString()}`, {
@@ -173,11 +176,27 @@ function UppyUploader({
     })
     .use(ImageEditor, {
       id: "ImageEditor",
+      quality: 0.9,
       cropperOptions: {
         viewMode: 1,
         background: true,
         autoCropArea: 1,
         responsive: true,
+        croppedCanvasOptions: {
+          width: TARGET_WIDTH,
+          height: TARGET_HEIGHT,
+        },
+      },
+      actions: {
+        revert: true,
+        rotate: true,
+        granularRotate: true,
+        flip: true,
+        zoomIn: true,
+        zoomOut: true,
+        cropSquare: true,
+        cropWidescreen: false,
+        cropWidescreenVertical: false,
       },
       companionUrl: companionUrl,
     });
@@ -188,7 +207,10 @@ function UppyUploader({
     const image = new Image();
     image.src = url;
     image.onload = () => {
-      uppy.setFileMeta(file.id, { width: image.width, height: image.height });
+      uppy.setFileMeta(file.id, {
+        width: TARGET_WIDTH,
+        height: TARGET_HEIGHT,
+      });
       URL.revokeObjectURL(url);
     };
     image.onerror = () => {
@@ -218,7 +240,7 @@ function UppyUploader({
             : successful.file_name,
           caption: successful.meta.caption,
           description: successful.meta.caption,
-          dimensions: `${successful.meta.width}x${successful.meta.height}`,
+          dimensions: `${TARGET_WIDTH}x${TARGET_HEIGHT}`,
           file_size: successful.size,
           name: successful.file_name,
           slug: successful.file_name,
@@ -236,6 +258,13 @@ function UppyUploader({
 
   return (
     <div className="w-full">
+      <div className="mb-4">
+        <h3 className="font-medium mb-2">Image Requirements</h3>
+        <p className="text-sm text-gray-600">
+          Images will be displayed at {TARGET_WIDTH}x{TARGET_HEIGHT}px. You can
+          use the built-in editor to crop and adjust your images as needed.
+        </p>
+      </div>
       <Dashboard
         uppy={uppy}
         plugins={["GoogleDrive", "Url", "ImageEditor"]}
@@ -252,6 +281,10 @@ function UppyUploader({
             placeholder: "describe what the image is content",
           },
         ]}
+        proudlyDisplayPoweredByUppy={false}
+        showSelectedFiles={true}
+        showRemoveButtonAfterComplete={true}
+        note={`Optimal image size: ${TARGET_WIDTH}x${TARGET_HEIGHT}px`}
       />
     </div>
   );
