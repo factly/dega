@@ -132,7 +132,7 @@ export interface PaginationFooterProps {
   pageSize: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
-  sidebarWidth: string;
+  selectedItems: number;
 }
 
 export interface PageData {
