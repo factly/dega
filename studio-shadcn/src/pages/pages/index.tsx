@@ -21,11 +21,11 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 
 // Custom Components
-import SearchInput from "./components/SearchInput";
+import SearchInput from "../../components/SearchInput";
 import SearchButton from "./components/SearchButton";
 import FiltersPopover from "./components/FiltersPopover";
 import StatusTabs from "./components/StatusTabs";
-import PaginationFooter from "./components/PaginationFooter";
+import PaginationFooter from "@/components/PaginationFooter";
 
 // Utils and actions
 import getUrlParams from "../../utils/getUrlParams";

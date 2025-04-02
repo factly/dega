@@ -1,7 +1,17 @@
 // components/PaginationFooter.tsx
-import Pagination from "../../../components/Pagination";
-import { PaginationFooterProps } from "../types";
+import Pagination from "@/components/Pagination";
+
 import { useSidebar } from "@/components/ui/sidebar";
+
+export interface PaginationFooterProps {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
+  selectedItems: number;
+}
 
 const PaginationFooter = ({
   currentPage,
