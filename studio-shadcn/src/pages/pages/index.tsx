@@ -145,7 +145,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   };
 
   const onSave = (values: FilterParams) => {
-    let searchFilter = new URLSearchParams();
+    const searchFilter = new URLSearchParams();
 
     // Preserve search text if present
     if (searchText.trim()) {
@@ -153,7 +153,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
     }
 
     // Add status filter
-    status !== "all" && searchFilter.set("status", status);
+    if (status !== "all") searchFilter.set("status", status);
 
     Object.keys(values).forEach((key) => {
       if (values[key]) {
@@ -218,7 +218,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
           {isMobile && (
             <MobileBreadcrumb
               currentPage="Pages"
-              parentPath="/"
               parentLabel="Core"
             />
           )}
@@ -316,11 +315,12 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       <PaginationFooter
         currentPage={Number(filters.page) || 1}
         totalPages={totalPages}
+        // todo - add selectedItems
+        selectedItems={0}
         totalItems={total}
         pageSize={Number(filters.limit) || 10}
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
-        sidebarWidth={sidebarWidth}
       />
     </div>
   );

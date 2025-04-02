@@ -176,7 +176,7 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
           </header>
         )}
         {shouldRenderContent ? (
-          <div className={isMobile ? "p-4" : "p-6"}>{children}</div>
+          <div className={isMobile ? "p-4 h-[calc(100vh-4rem)] relative" : "p-6 h-screen relative o"}>{children}</div>
         ) : (
           <div className="flex items-center justify-center p-8">
             <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
