@@ -49,16 +49,11 @@ interface TagListProps {
   };
   sortOrder?: "asc" | "desc";
   onSortToggle?: () => void;
+  isMobile?: boolean;
 }
 
-function TagList({
-  filters,
-  setFilters,
-  fetchTags,
-  data,
-  onSortToggle,
-}: TagListProps) {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+function TagList({ fetchTags, data, onSortToggle }: TagListProps) {
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const [deleteItemID, setDeleteItemID] = useState<string | null>(null);
 
   const dispatch = useAppDispatch();
@@ -81,41 +76,44 @@ function TagList({
 
   const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
     e.stopPropagation();
-    setModalOpen(true);
+    setDeleteDialogOpen(true);
     setDeleteItemID(id);
   }, []);
 
-  const handleDelete = useCallback(
-    (e: React.MouseEvent) => {
+  const handleDeleteConfirm = useCallback(
+    async (e: React.MouseEvent) => {
       e.stopPropagation();
       if (deleteItemID) {
-        dispatch(deleteTag(deleteItemID)).then(() => {
+        try {
+          await dispatch(deleteTag(deleteItemID));
           fetchTags();
-          setModalOpen(false);
+        } catch (error) {
+          console.error("Error deleting tag:", error);
+        } finally {
           setDeleteItemID(null);
-        });
+          setDeleteDialogOpen(false);
+        }
       }
     },
     [deleteItemID, dispatch, fetchTags]
   );
 
-  const handleCancel = useCallback((e: React.MouseEvent) => {
+  const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    setModalOpen(false);
     setDeleteItemID(null);
+    setDeleteDialogOpen(false);
   }, []);
 
   // Safely access data
   const tags = data?.tags || [];
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Table */}
+    <div className="pb-4 overflow-auto">
       <div className="rounded-md">
         <Table>
-          <TableHeader>
+          <TableHeader className="w-1/2 text-[13px]">
             <TableRow>
-              <TableHead className="w-[400px] min-w-[200px]">
+              <TableHead className="w-1/2">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={onSortToggle}
@@ -124,10 +122,8 @@ function TagList({
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
-              <TableHead className="w-[400px] min-w-[200px]">Slug</TableHead>
-              <TableHead className="text-center w-[150px] min-w-[150px]">
-                Action
-              </TableHead>
+              <TableHead className="w-2/5">Slug</TableHead>
+              <TableHead className="w-[150px] text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -139,10 +135,12 @@ function TagList({
                   className="cursor-pointer"
                 >
                   <TableCell>
-                    <h3>{tag.name}</h3>
+                    <h3 className="font-normal">{tag.name || "Unnamed Tag"}</h3>
                   </TableCell>
                   <TableCell>
-                    <h3>{tag.slug}</h3>
+                    <p className="line-clamp-2 font-normal">
+                      {tag.slug || "---"}
+                    </p>
                   </TableCell>
                   <TableCell className="text-center">
                     <DropdownMenu>
@@ -185,8 +183,12 @@ function TagList({
         </Table>
       </div>
 
-      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-sm p-4">
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent
+          className="max-w-sm p-4"
+          onPointerDownOutside={(e) => e.preventDefault()}
+        >
           <DialogHeader className="space-y-2">
             <DialogTitle className="text-base">Delete Tag</DialogTitle>
             <DialogDescription className="text-sm">
@@ -194,10 +196,23 @@ function TagList({
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4 flex justify-end space-x-2">
-            <Button size="sm" variant="outline" onClick={handleCancel}>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={(e) => {
+                handleDeleteCancel(e);
+              }}
+            >
               Cancel
             </Button>
-            <Button size="sm" variant="destructive" onClick={handleDelete}>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={(e) => {
+                handleDeleteConfirm(e);
+              }}
+              type="button"
+            >
               Delete
             </Button>
           </DialogFooter>
