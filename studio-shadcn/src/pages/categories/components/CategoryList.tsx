@@ -50,6 +50,7 @@ interface CategoryListProps {
   fetchCategories: () => void;
   sortOrder?: "asc" | "desc";
   onSortToggle?: () => void;
+  isMobile?: boolean;
 }
 
 const CategoryList: React.FC<CategoryListProps> = ({
@@ -88,8 +89,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
       e.stopPropagation();
       if (deleteItemID) {
         try {
-          // Convert string ID to number for the API call
-          await dispatch(deleteCategory(parseInt(deleteItemID, 10)));
+          const result = await dispatch(deleteCategory(deleteItemID));
           fetchCategories();
         } catch (error) {
           console.error("Error deleting category:", error);
@@ -188,7 +188,10 @@ const CategoryList: React.FC<CategoryListProps> = ({
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent className="max-w-sm p-4">
+        <DialogContent
+          className="max-w-sm p-4"
+          onPointerDownOutside={(e) => e.preventDefault()}
+        >
           <DialogHeader className="space-y-2">
             <DialogTitle className="text-base">Delete Category</DialogTitle>
             <DialogDescription className="text-sm">
@@ -196,13 +199,22 @@ const CategoryList: React.FC<CategoryListProps> = ({
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4 flex justify-end space-x-2">
-            <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={(e) => {
+                handleDeleteCancel(e);
+              }}
+            >
               Cancel
             </Button>
             <Button
               size="sm"
               variant="destructive"
-              onClick={handleDeleteConfirm}
+              onClick={(e) => {
+                handleDeleteConfirm(e);
+              }}
+              type="button"
             >
               Delete
             </Button>

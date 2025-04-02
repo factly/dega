@@ -110,7 +110,6 @@ export default function AppSidebar(): React.ReactNode {
   const isCollapsed = state === 'collapsed' && !isMobile;
 
   const isItemActive = (path: string) => {
-    console.log(path)
     if (path === location.pathname) return true;
     return false;
   };

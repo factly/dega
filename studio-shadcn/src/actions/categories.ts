@@ -27,7 +27,7 @@ interface Description {
 }
 
 interface Category {
-  id: number;
+  id: string | number;
   name: string;
   description?: any;
   description_html?: string;
@@ -36,7 +36,7 @@ interface Category {
 }
 
 interface CategoryWithProcessedFields {
-  id: number;
+  id: string | number; // Allow both string and number IDs
   name: string;
   description: Description;
   medium?: number | null;
@@ -97,7 +97,7 @@ type CategoryActionTypes =
   | UpdateCategoryAction;
 
 type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
+  Promise<ReturnType>,
   RootState,
   unknown,
   AnyAction
@@ -121,7 +121,7 @@ const processCategory = (category: Category): CategoryWithProcessedFields => {
 export const getCategories = (
   query: GetCategoriesQuery,
   setLoading: boolean = true
-): AppThunk => {
+): AppThunk<any> => {
   return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
     if (currentSpaceID === 0) {
@@ -173,10 +173,10 @@ export const getCategories = (
 };
 
 // action to fetch category by id
-export const getCategory = (id: number): AppThunk => {
+export const getCategory = (id: string | number): AppThunk<any> => {
   return (dispatch) => {
     // Validate id before making the API call
-    if (!id || id <= 0) {
+    if (!id) {
       dispatch(addErrorNotification("Invalid category ID"));
       return Promise.reject(new Error("Invalid category ID"));
     }
@@ -202,7 +202,7 @@ export const getCategory = (id: number): AppThunk => {
 };
 
 // action to create category
-export const createCategory = (data: Partial<Category>): AppThunk => {
+export const createCategory = (data: Partial<Category>): AppThunk<any> => {
   return (dispatch) => {
     dispatch(loadingCategories());
     return axios
@@ -221,7 +221,7 @@ export const createCategory = (data: Partial<Category>): AppThunk => {
 };
 
 // action to update category by id
-export const updateCategory = (data: Category): AppThunk => {
+export const updateCategory = (data: Category): AppThunk<any> => {
   return (dispatch) => {
     if (!data.id) {
       dispatch(addErrorNotification("Category ID is required for update"));
@@ -249,10 +249,9 @@ export const updateCategory = (data: Category): AppThunk => {
   };
 };
 
-// action to delete category by id
-export const deleteCategory = (id: number): AppThunk => {
+export const deleteCategory = (id: string | number): AppThunk<any> => {
   return (dispatch) => {
-    if (!id || id <= 0) {
+    if (!id) {
       dispatch(addErrorNotification("Invalid category ID"));
       return Promise.reject(new Error("Invalid category ID"));
     }
@@ -269,11 +268,13 @@ export const deleteCategory = (id: number): AppThunk => {
         dispatch(addErrorNotification(getError(error)));
         return Promise.reject(error); // Propagate the error
       })
-      .finally(() => dispatch(stopCategoriesLoading()));
+      .finally(() => {
+        dispatch(stopCategoriesLoading());
+      });
   };
 };
 
-export const addCategories = (categories: Category[]): AppThunk => {
+export const addCategories = (categories: Category[]): AppThunk<any> => {
   return (dispatch) => {
     const mediaItems = categories
       .filter((category): category is Category & { medium: Medium } =>

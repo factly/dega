@@ -89,7 +89,6 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     };
   });
 
-  // Track current route for menu highlighting
   useEffect(() => {
     const pathSnippets = location.pathname.split("/").filter((i) => i);
     if (pathSnippets.length === 0) {
@@ -97,7 +96,6 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
       return;
     }
 
-    // Look for matching routes using same approach as basic.js
     for (let index = 0; index < pathSnippets.length; index++) {
       const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
       const nextTempRoute =
@@ -119,7 +117,6 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     }
   }, [location]);
 
-  // Check screen size for responsive design
   useEffect(() => {
     const handleResize = () => {
       setIsMobileScreen(window.innerWidth <= 460);
@@ -132,7 +129,6 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // Only fetch spaces when the session is loaded and we haven't tried fetching yet
     if (
       session.details &&
       !session.loading &&
@@ -145,15 +141,12 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     }
   }, [dispatch, session.details, session.loading, loading]);
 
-  // Check if current path should hide sidebar
   const shouldHideSidebar = hiddenSidebarPaths.some((path) =>
     location.pathname.startsWith(path)
   );
 
-  // Check if current path is settings path to show the alternate sidebar
   const isSettingsPath = location.pathname.startsWith("/settings");
 
-  // Check if sidebar should be hidden for specific content pages (edit/create)
   const hideSidebar =
     (location.pathname.includes("posts") ||
       location.pathname.includes("fact-checks") ||
@@ -172,16 +165,18 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
         <>{isSettingsPath ? <SidebarAlt /> : <Sidebar />}</>
       )}
       <SidebarInset>
-      {isMobile && (<header className="flex h-16 w-screen shrink-0 items-center gap-2 border-b px-4">
-        <SidebarTrigger className="-ml-1" />
-        <img
-          src={degaLogoLetters}
-          alt="Dega"
-          className="h-8 cursor-pointer mx-auto"
-        />
-      </header>)}
+        {isMobile && (
+          <header className="flex h-16 w-screen shrink-0 items-center gap-2 border-b px-4">
+            <SidebarTrigger className="-ml-1" />
+            <img
+              src={degaLogoLetters}
+              alt="Dega"
+              className="h-8 cursor-pointer mx-auto"
+            />
+          </header>
+        )}
         {shouldRenderContent ? (
-          <div className="p-6">{children}</div>
+          <div className={isMobile ? "p-4" : "p-6"}>{children}</div>
         ) : (
           <div className="flex items-center justify-center p-8">
             <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>

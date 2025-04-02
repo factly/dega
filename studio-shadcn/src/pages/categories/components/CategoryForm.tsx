@@ -16,6 +16,7 @@ import {
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ColorResult {
   hex: string;
@@ -57,6 +58,7 @@ interface CategoryFormProps {
 
 const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
   const setLoading = data.id ? false : true;
+  const isMobile = useIsMobile();
 
   // Handle meta_fields conversion
   const initialData = { ...data };
@@ -134,20 +136,38 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
   };
 
   return (
-    <div className="px-60 max-w-6xl mx-auto">
-      <div className="mb-6 px-4">
-        <h1 className="text-xl font-semibold text-gray-900">
-          {data && data.id ? "Edit Category" : "Create Category"}
-        </h1>
-        <div className="mt-2">
-          <p className="text-gray-600 text-[13px]">
-            Set up a category to help improve by entering the essential details
-            provided below
-          </p>
+    <div className={isMobile ? "" : "px-60 max-w-6xl mx-auto"}>
+      {/* Mobile header */}
+      {isMobile && (
+        <div className="mb-4">
+          <h1 className="text-xl font-semibold">
+            {data && data.id ? "Edit Category" : "Create Category"}
+          </h1>
+          <div className="mt-2">
+            <p className="text-gray-600 text-[13px]">
+              Set up a category to help improve by entering the essential
+              details provided below
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="border-t border-gray-200 mb-6"></div>
+      {/* Desktop header */}
+      {!isMobile && (
+        <div className="mb-6 px-4">
+          <h1 className="text-xl font-semibold text-gray-900">
+            {data && data.id ? "Edit Category" : "Create Category"}
+          </h1>
+          <div className="mt-2">
+            <p className="text-gray-600 text-[13px]">
+              Set up a category to help improve by entering the essential
+              details provided below
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div className="border-t border-gray-200 mb-4"></div>
 
       <Form {...methods}>
         <form
@@ -170,13 +190,13 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="grid grid-cols-1 md:grid-cols-12 p-6 bg-white">
-                    <div className="md:col-span-5 space-y-6">
+                  <div className="py-3 bg-white">
+                    <div className="space-y-4">
                       <FormField
                         control={methods.control}
                         name="name"
                         render={({ field }) => (
-                          <FormItem className="mb-6">
+                          <FormItem className="mb-4 sm:mb-6">
                             <FormLabel className="text-base">Title</FormLabel>
                             <TitleInput
                               {...field}
@@ -190,7 +210,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
                         )}
                       />
 
-                      <div className="mb-6">
+                      <div className="mb-4 sm:mb-6">
                         <SlugInput form={methods} />
                       </div>
 
@@ -198,7 +218,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
                         control={methods.control}
                         name="parent_id"
                         render={({ field }) => (
-                          <FormItem className="mb-6">
+                          <FormItem className="mb-4 sm:mb-6">
                             <FormLabel className="text-base">
                               Parent Category
                             </FormLabel>
@@ -239,7 +259,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
                         control={methods.control}
                         name="background_colour"
                         render={() => (
-                          <FormItem className="mb-6">
+                          <FormItem className="mb-4 sm:mb-6">
                             <FormLabel className="text-base">Colour</FormLabel>
                             <div className="relative w-full">
                               <div
@@ -260,7 +280,11 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
                                 )}
                               </div>
                               {displayBgColorPicker ? (
-                                <div className="absolute z-10 top-0 left-full">
+                                <div
+                                  className={`absolute z-10 ${
+                                    isMobile ? "right-0" : "top-0 left-full"
+                                  }`}
+                                >
                                   <div
                                     className="fixed inset-0"
                                     onClick={handleBgClose}
@@ -282,25 +306,28 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
                           </FormItem>
                         )}
                       />
-                    </div>
 
-                    <div className="md:col-span-7">
+                      {/* Featured Image */}
                       <FormField
                         control={methods.control}
                         name="medium_id"
                         render={({ field }) => (
-                          <FormItem className="h-full">
+                          <FormItem className="mt-6">
                             <FormLabel className="text-base mb-2">
                               Featured Image
                             </FormLabel>
-                            <div className="flex justify-center items-start h-full mt-4">
+                            <div className="flex justify-center items-start mt-4">
                               <MediaSelector
                                 value={field.value}
                                 onChange={(value) => {
                                   field.onChange(value);
                                   setValueChange(true);
                                 }}
-                                containerStyles={{ justifyContent: "center" }}
+                                containerStyles={{
+                                  justifyContent: "center",
+                                  width: isMobile ? "84%" : "100%",
+                                  height: isMobile ? "160px" : "220px",
+                                }}
                               />
                             </div>
                           </FormItem>
@@ -313,20 +340,35 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
             </Accordion>
           </div>
 
-          <div className="w-full mb-8">
-            <MetaForm
-              form={methods}
-              style={{ marginBottom: 24, background: "#f0f2f5", border: 0 }}
-            />
+          <div className="w-full mb-2">
+            <MetaForm form={methods} />
           </div>
 
-          <div className="flex justify-start mb-8 mt-8">
-            <div className="space-x-4">
-              <Button variant="outline" onClick={handleCancel} className="px-6">
+          <div
+            className={`flex ${
+              isMobile ? "justify-between" : "justify-start"
+            } mb-8 mt-8`}
+          >
+            <div
+              className={isMobile ? "w-full flex justify-between" : "space-x-4"}
+            >
+              <Button
+                variant="outline"
+                onClick={handleCancel}
+                className={isMobile ? "w-[48%]" : "px-6"}
+              >
                 Cancel
               </Button>
-              <Button type="submit" disabled={!valueChange} className="px-6">
-                {data && data.id ? "Update" : "Create category"}
+              <Button
+                type="submit"
+                disabled={!valueChange}
+                className={isMobile ? "w-[48%]" : "px-6"}
+              >
+                {data && data.id
+                  ? "Update"
+                  : isMobile
+                  ? "Create"
+                  : "Create category"}
               </Button>
             </div>
           </div>
