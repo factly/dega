@@ -36,39 +36,41 @@ const PaginationFooter = ({
 
   if (isMobile) {
     paginationStyle = {
-      width: "calc(100% - 48px)",
+      width: "calc(100%)",
+      paddingRight: "32px",
     };
   } else if (state === "expanded") {
     paginationStyle = {
-      width: `calc(100% - ${SIDEBAR_WIDTH} - 48px)`,
-      // marginLeft: SIDEBAR_WIDTH,
+      width: `calc(100% - ${SIDEBAR_WIDTH})`,
+      paddingRight: "48px",
     };
   } else {
     // Collapsed state
     paginationStyle = {
-      width: `calc(100% - ${SIDEBAR_WIDTH_ICON} - 48px)`,
-      // marginLeft: SIDEBAR_WIDTH_ICON,
+      width: `calc(100% - ${SIDEBAR_WIDTH_ICON})`,
+      paddingRight: "48px",
     };
   }
 
   return (
-    <div
-      className="fixed bottom-0 z-10 bg-white"
-      style={{
-        ...paginationStyle,
-        transition: "margin-left 0.3s ease, width 0.3s ease",
-      }}
-    >
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        totalItems={totalItems}
-        selectedItems={selectedItems}
-        pageSize={pageSize}
-        onPageChange={onPageChange}
-        onPageSizeChange={onPageSizeChange}
-        isMobile={isMobile}
-      />
+    <div className="fixed bottom-0 z-10 bg-white w-full">
+      <div
+        style={{
+          ...paginationStyle,
+          transition: "margin-left 0.3s ease, width 0.3s ease",
+        }}
+      >
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          selectedItems={selectedItems}
+          pageSize={pageSize}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
+          isMobile={isMobile}
+        />
+      </div>
     </div>
   );
 };
