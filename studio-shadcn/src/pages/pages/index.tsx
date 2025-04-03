@@ -3,14 +3,17 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import deepEqual from "deep-equal";
-import { useForm } from "react-hook-form";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // UI Components
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { X, Filter, PlusCircle, Search } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { PlusCircle } from "lucide-react";
 
 // Local Components
 import PageList from "./components/PageList";
@@ -29,7 +32,6 @@ import PaginationFooter from "@/components/PaginationFooter";
 
 // Utils and actions
 import getUrlParams from "../../utils/getUrlParams";
-import Filters from "../../utils/filters";
 import { getPages } from "../../actions/pages";
 import { usePagination } from "./hooks/usePagination";
 import { usePageFilters } from "./hooks/usePageFilters";
@@ -51,17 +53,20 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   const [isSearchExpanded, setIsSearchExpanded] = useState(!!query.get("q"));
 
   // Custom hooks for page functionality
-  const { filters, setFilters, searchText, setSearchText, status, setStatus, form } =
-    usePageFilters(query);
+  const {
+    filters,
+    setFilters,
+    searchText,
+    setSearchText,
+    status,
+    setStatus,
+    form,
+  } = usePageFilters(query);
 
   const { pages, total, loading, tags, categories } = usePageData(query);
 
-  const {
-    handlePageChange,
-    handlePageSizeChange,
-    totalPages,
-    onPagination
-  } = usePagination(filters, setFilters, total, navigate, pathname, query);
+  const { handlePageChange, handlePageSizeChange, totalPages, onPagination } =
+    usePagination(filters, setFilters, total, navigate, pathname, query);
 
   // Calculate sidebar width based on sidebar state
   const sidebarWidth = isCollapsed ? "89px" : "265px";
@@ -80,7 +85,14 @@ function Pages({ formats }: PagesProps): React.ReactElement {
 
   const fetchPages = () => {
     const params = getUrlParams(query, [
-      "page", "limit", "q", "sort", "tag", "category", "author", "status",
+      "page",
+      "limit",
+      "q",
+      "sort",
+      "tag",
+      "category",
+      "author",
+      "status",
     ]) as FilterParams;
 
     dispatch(getPages(params));
@@ -216,10 +228,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
         <div className="space-y-4 flex justify-between items-center">
           {/* First row */}
           {isMobile && (
-            <MobileBreadcrumb
-              currentPage="Pages"
-              parentLabel="Core"
-            />
+            <MobileBreadcrumb currentPage="Pages" parentLabel="Core" />
           )}
           <div className="flex gap-2 items-center">
             <div>
@@ -227,7 +236,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
             </div>
 
             <div className="flex items-center gap-2">
-
               {/* Templates Button */}
               <Button
                 variant="outline"
@@ -258,13 +266,8 @@ function Pages({ formats }: PagesProps): React.ReactElement {
               handleSearchSubmit={handleSearchSubmit}
               clearSearch={clearSearch}
             />
-
-            {/* Filters */}
-            <FiltersPopover
-              form={form}
-              onSave={onSave}
-            />
-
+          </div>
+          <div className="flex items-center gap-4 ">
             {/* Templates Button */}
             <Button
               variant="outline"
@@ -273,15 +276,15 @@ function Pages({ formats }: PagesProps): React.ReactElement {
             >
               <span>Explore Templates</span>
             </Button>
-          </div>
 
-          {/* Create Page Button */}
-          <Link to="/pages/create">
-            <Button size="lg" className="flex items-center gap-2 py-2">
-              <PlusCircle className="h-4 w-4" />
-              <span>Create Page</span>
-            </Button>
-          </Link>
+            {/* Create Page Button */}
+            <Link to="/pages/create">
+              <Button size="lg" className="flex items-center gap-2 py-2">
+                <PlusCircle className="h-4 w-4" />
+                <span>Create Page</span>
+              </Button>
+            </Link>
+          </div>
         </div>
       )}
       {/* Search input row - appears when expanded */}
@@ -296,21 +299,29 @@ function Pages({ formats }: PagesProps): React.ReactElement {
           />
         </div>
       )}
-      <StatusTabs
-        status={status}
-        handleStatusChange={handleStatusChange}
-        isMobile={isMobile}
-        form={form}
-        onSave={onSave}
-      >
-        <PageList
-          format={formats.article}
-          data={{ pages, total, loading, tags, categories }}
-          filters={filters}
-          onPagination={onPagination}
-          fetchPages={fetchPages}
-        />
-      </StatusTabs>
+      <div className="flex justify-between items-center">
+        <div className="flex-grow max-w-[70%]">
+          <StatusTabs
+            status={status}
+            handleStatusChange={handleStatusChange}
+            isMobile={isMobile}
+            form={form}
+            onSave={onSave}
+            children={null} // We moved the children outside the StatusTabs component
+          />
+        </div>
+        <div className="flex items-center">
+          {/* Keep only this instance of FiltersPopover, which will be shown in both mobile and desktop views */}
+          <FiltersPopover form={form} onSave={onSave} />
+        </div>
+      </div>
+      <PageList
+        format={formats.article}
+        data={{ pages, total, loading, tags, categories }}
+        filters={filters}
+        onPagination={onPagination}
+        fetchPages={fetchPages}
+      />
       {/* Footer with Pagination */}
       <PaginationFooter
         currentPage={Number(filters.page) || 1}

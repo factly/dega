@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -17,16 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Trash2,
-  CheckCircle,
-  AlertCircle,
-  Clock,
-  Edit,
-  Calendar,
-  Ellipsis,
-  Pencil,
-} from "lucide-react";
+import { Trash2, Edit, Ellipsis, Pencil } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,6 +28,7 @@ import { Link } from "react-router-dom";
 import QuickEdit from "../../../components/List/QuickEdit";
 import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import { renderStatusBadge } from "../../../components/statusBadge/index";
 
 interface Page {
   id: number;
@@ -174,49 +165,6 @@ function PageList({
     }
   };
 
-  const renderStatus = (status: string) => {
-    switch (status) {
-      case "publish":
-        return (
-          <Badge
-            variant="outline"
-            className="bg-green-50 text-green-700 border-green-200"
-          >
-            <CheckCircle className="mr-1 h-3 w-3" /> Published
-          </Badge>
-        );
-      case "draft":
-        return (
-          <Badge
-            variant="outline"
-            className="bg-gray-50 text-gray-700 border-gray-200"
-          >
-            <AlertCircle className="mr-1 h-3 w-3" /> Draft
-          </Badge>
-        );
-      case "ready":
-        return (
-          <Badge
-            variant="outline"
-            className="bg-amber-50 text-amber-700 border-amber-200"
-          >
-            <Clock className="mr-1 h-3 w-3" /> Ready to Publish
-          </Badge>
-        );
-      case "future":
-        return (
-          <Badge
-            variant="outline"
-            className="bg-blue-50 text-blue-700 border-blue-200"
-          >
-            <Calendar className="mr-1 h-3 w-3" /> Future Publish
-          </Badge>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <div className="space-y-4">
       <Table>
@@ -242,9 +190,6 @@ function PageList({
             <TableRow>
               <TableCell colSpan={4} className="text-center py-16">
                 <div className="flex flex-col items-center space-y-2">
-                  <div className="text-gray-400 rounded-full bg-gray-100 p-4">
-                    <AlertCircle className="h-8 w-8" />
-                  </div>
                   <p className="text-gray-500 font-medium">No pages found</p>
                   <p className="text-gray-400 text-sm">
                     Try adjusting your filters or create a new page
@@ -273,7 +218,7 @@ function PageList({
                         {item.title}
                       </Link>
                     </TableCell>
-                    <TableCell>{renderStatus(item.status)}</TableCell>
+                    <TableCell>{renderStatusBadge(item.status)}</TableCell>
                     <TableCell>
                       <div className="flex flex-col">
                         <span>{formatDate(item.updated_at)}</span>
@@ -341,8 +286,8 @@ function PageList({
       </Table>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="sm:max-w-[311px]">
-          <DialogHeader>
+        <DialogContent className="max-w-sm p-4">
+          <DialogHeader className="space-y-2">
             <DialogTitle className="text-base">Delete Confirmation</DialogTitle>
           </DialogHeader>
           <DialogDescription>

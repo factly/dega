@@ -185,7 +185,7 @@ const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col h-full">
+    <>
       <Helmet title={"Dashboard"} />
 
       {/* Mobile Breadcrumb */}
@@ -204,7 +204,7 @@ const Dashboard: React.FC = () => {
             ? {
                 position: "absolute",
                 top: 0,
-                left: isCollapsed ? "89px" : "265px",
+                left: 0,
                 right: 0,
                 bottom: 0,
                 transition: "left 0.3s ease",
@@ -213,35 +213,45 @@ const Dashboard: React.FC = () => {
             : { overflow: "auto", flex: 1 }
         }
       >
-        {!isMobile && <h1 className="text-2xl font-bold mb-6">Dashboard</h1>}
-        {isMobile && <h1 className="text-xl font-semibold mb-4">Dashboard</h1>}
-
-        <div className={`space-y-${isMobile ? "4" : "6"}`}>
-          {renderStatsSection(
-            "Posts",
-            articlePublish + articleDraft + articleReady + articleFuture,
-            articlePublish,
-            articleFuture,
-            articleDraft,
-            articleReady,
-            "/posts"
+        {/* Added container for width control */}
+        <div
+          className="container mx-auto"
+          style={{
+            maxWidth: isMobile ? "100%" : "1200px", // Adjust max width as needed
+          }}
+        >
+          {!isMobile && <h1 className="text-2xl font-bold mb-6">Dashboard</h1>}
+          {isMobile && (
+            <h1 className="text-xl font-semibold mb-4">Dashboard</h1>
           )}
 
-          {renderStatsSection(
-            "Fact Checks",
-            factCheckPublish +
-              factCheckDraft +
-              factCheckReady +
+          <div className={`space-y-${isMobile ? "4" : "6"}`}>
+            {renderStatsSection(
+              "Posts",
+              articlePublish + articleDraft + articleReady + articleFuture,
+              articlePublish,
+              articleFuture,
+              articleDraft,
+              articleReady,
+              "/posts"
+            )}
+
+            {renderStatsSection(
+              "Fact Checks",
+              factCheckPublish +
+                factCheckDraft +
+                factCheckReady +
+                factCheckFuture,
+              factCheckPublish,
               factCheckFuture,
-            factCheckPublish,
-            factCheckFuture,
-            factCheckDraft,
-            factCheckReady,
-            "/fact-checks"
-          )}
+              factCheckDraft,
+              factCheckReady,
+              "/fact-checks"
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

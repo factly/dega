@@ -1,13 +1,25 @@
-import * as React from "react"
-import { ArrowLeftToLine, ArrowRightToLine, ChevronDown, ChevronUp, LayoutDashboard, ListChecksIcon as ListCheck, type LucideIcon, Microchip, Search, Settings, Shield } from 'lucide-react'
-import degaLogoLetters from '@/assets/dega.png'
-import degaLogoShort from '@/assets/dega-short.png'
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import {
+  ArrowLeftToLine,
+  ArrowRightToLine,
+  ChevronDown,
+  ChevronUp,
+  LayoutDashboard,
+  ListChecksIcon as ListCheck,
+  type LucideIcon,
+  Microchip,
+  Search,
+  Settings,
+  Shield,
+} from "lucide-react";
+import degaLogoLetters from "@/assets/dega.png";
+import degaLogoShort from "@/assets/dega-short.png";
+import { cn } from "@/lib/utils";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
@@ -17,17 +29,16 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { Link, useLocation } from "react-router-dom"
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Link, useLocation } from "react-router-dom";
 import { AccountMenu } from "@/components/GlobalNav/AccountMenu";
-
 
 interface NavSubItem {
   title: string;
@@ -67,7 +78,7 @@ const navMain: NavItem[] = [
   {
     title: "Core",
     icon: Microchip,
-    url: '#',
+    url: "#",
     items: [
       { title: "Posts", url: "/posts" },
       { title: "Pages", url: "/pages" },
@@ -79,17 +90,20 @@ const navMain: NavItem[] = [
   {
     title: "Fact checking",
     icon: ListCheck,
-    url: '#',
+    url: "#",
     children: [
+      { title: "Fact-Checks", url: "/fact-checks" },
       { title: "Claims", url: "/claims" },
       { title: "Ratings", url: "/ratings" },
       { title: "Claimants", url: "/claimants" },
+      { title: "Google", url: "/fact-checks/google" },
+      { title: "Sach", url: "/fact-checks/sach" },
     ],
   },
   {
     title: "Administration",
     icon: Shield,
-    url: '#',
+    url: "#",
     children: [
       { title: "Spaces", url: "/admin/spaces" },
       { title: "Organisations", url: "/organisations" },
@@ -100,14 +114,14 @@ const navMain: NavItem[] = [
     url: "/settings/website/general",
     icon: Settings,
   },
-]
+];
 
 export default function AppSidebar(): React.ReactNode {
   const { state, toggleSidebar } = useSidebar();
   const isMobile = useIsMobile();
   const location = useLocation();
 
-  const isCollapsed = state === 'collapsed' && !isMobile;
+  const isCollapsed = state === "collapsed" && !isMobile;
 
   const isItemActive = (path: string) => {
     if (path === location.pathname) return true;
@@ -115,28 +129,24 @@ export default function AppSidebar(): React.ReactNode {
   };
 
   return (
-    <Sidebar
-      className={cn(
-        "border-r",
-      )}
-      collapsible="icon"
-    >
+    <Sidebar className={cn("border-r")} collapsible="icon">
       <SidebarContent
-        className={cn(
-          "p-2 md:py-6",
-          isCollapsed ? "items-center" : ""
-        )}
+        className={cn("p-2 md:py-6", isCollapsed ? "items-center" : "")}
       >
-        <div className={cn(
-          "flex items-center w-full md:mb-8",
-          isCollapsed ? "justify-center" : "justify-between",
-        )}>
-          {!isMobile && <img
-            src={isCollapsed ? degaLogoShort : degaLogoLetters}
-            alt="Dega"
-            className="h-8 cursor-pointer"
-          />}
-          {(!isCollapsed && !isMobile) && (
+        <div
+          className={cn(
+            "flex items-center w-full md:mb-8",
+            isCollapsed ? "justify-center" : "justify-between"
+          )}
+        >
+          {!isMobile && (
+            <img
+              src={isCollapsed ? degaLogoShort : degaLogoLetters}
+              alt="Dega"
+              className="h-8 cursor-pointer"
+            />
+          )}
+          {!isCollapsed && !isMobile && (
             <Button
               variant="outline"
               size="icon"
@@ -163,19 +173,26 @@ export default function AppSidebar(): React.ReactNode {
                   <CollapsibleOrPopoverMenuItem
                     title={item.title}
                     icon={item.icon}
-                    isActive={submenuItems.some((subItem) => isItemActive(subItem.url))}
+                    isActive={submenuItems.some((subItem) =>
+                      isItemActive(subItem.url)
+                    )}
                     isItemActiveCallback={isItemActive}
                     submenuItems={submenuItems}
                   />
                 ) : (
-                  <SidebarMenuItem className={isCollapsed ? "flex justify-center" : ""}>
+                  <SidebarMenuItem
+                    className={isCollapsed ? "flex justify-center" : ""}
+                  >
                     <SidebarMenuButton
                       asChild
                       size="lg"
                       className={cn(
                         "flex items-center gap-3 rounded-md hover:bg-[#DCEFEB]",
-                        isCollapsed ? "justify-center px-2 py-2 w-10 h-10" : "px-3 py-2",
-                        isItemActive(item.url) && "bg-[#DCEFEB] text-[#0D1D2D] font-medium"
+                        isCollapsed
+                          ? "justify-center px-2 py-2 w-10 h-10"
+                          : "px-3 py-2",
+                        isItemActive(item.url) &&
+                          "bg-[#DCEFEB] text-[#0D1D2D] font-medium"
                       )}
                       tooltip={item.title}
                     >
@@ -184,7 +201,9 @@ export default function AppSidebar(): React.ReactNode {
                         className="flex items-center gap-3"
                         aria-label={item.title}
                       >
-                        <item.icon className={isCollapsed ? "h-6 w-6" : "h-5 w-5"} />
+                        <item.icon
+                          className={isCollapsed ? "h-6 w-6" : "h-5 w-5"}
+                        />
                         <IconModeAwareText>{item.title}</IconModeAwareText>
                       </Link>
                     </SidebarMenuButton>
@@ -194,11 +213,15 @@ export default function AppSidebar(): React.ReactNode {
             );
           })}
         </SidebarMenu>
-        <SidebarFooter className={cn(
-          "flex items-center mt-auto w-full",
-          isCollapsed ? "justify-center" : "justify-between"
-        )}>
-          {!isCollapsed ? <AccountMenu /> : (
+        <SidebarFooter
+          className={cn(
+            "flex items-center mt-auto w-full",
+            isCollapsed ? "justify-center" : "justify-between"
+          )}
+        >
+          {!isCollapsed ? (
+            <AccountMenu />
+          ) : (
             <Button
               variant="outline"
               size="icon"
@@ -224,7 +247,10 @@ interface IconModeAwareTextProps {
   className?: string;
 }
 
-function IconModeAwareText({ children, className }: IconModeAwareTextProps): React.ReactNode | null {
+function IconModeAwareText({
+  children,
+  className,
+}: IconModeAwareTextProps): React.ReactNode | null {
   const { state } = useSidebar();
   const isMobile = useIsMobile();
   const isIconMode = state === "collapsed" && !isMobile;
@@ -248,7 +274,7 @@ function CollapsibleOrPopoverMenuItem({
   icon: Icon,
   isActive,
   isItemActiveCallback,
-  submenuItems
+  submenuItems,
 }: CollapsibleOrPopoverMenuItemProps): React.ReactNode {
   const { state } = useSidebar();
   const isMobile = useIsMobile();
@@ -294,16 +320,12 @@ function CollapsibleOrPopoverMenuItem({
 
   // Use collapsible when not in icon mode
   return (
-    <Collapsible
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      className="w-full"
-    >
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton
             className={cn(
-              "flex items-center justify-between gap-3 px-3 py-2 w-full rounded-md hover:bg-[#DCEFEB]",
+              "flex items-center justify-between gap-3 px-3 py-2 w-full rounded-md hover:bg-[#DCEFEB]"
             )}
             size="lg"
             aria-expanded={isOpen}
@@ -312,11 +334,16 @@ function CollapsibleOrPopoverMenuItem({
               <Icon className="h-5 w-5" aria-hidden="true" />
               <span className="truncate">{title}</span>
             </div>
-            <span className="sr-only">{isOpen ? 'Collapse' : 'Expand'} {title} menu</span>
+            <span className="sr-only">
+              {isOpen ? "Collapse" : "Expand"} {title} menu
+            </span>
             {isOpen ? (
               <ChevronUp className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
             ) : (
-              <ChevronDown className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+              <ChevronDown
+                className="h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+              />
             )}
           </SidebarMenuButton>
         </CollapsibleTrigger>
@@ -329,7 +356,10 @@ function CollapsibleOrPopoverMenuItem({
                 asChild
                 size="lg"
                 className={`hover:bg-[#DCEFEB] text-[#0D1D2D]   pl-9
-                  ${isItemActiveCallback(subItem.url) && "bg-[#DCEFEB] text-[#0D1D2D] font-medium"}
+                  ${
+                    isItemActiveCallback(subItem.url) &&
+                    "bg-[#DCEFEB] text-[#0D1D2D] font-medium"
+                  }
                   `}
               >
                 <Link to={subItem.url} className="truncate">

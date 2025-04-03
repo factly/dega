@@ -185,7 +185,7 @@ function Categories() {
       >
         <div
           className={`flex justify-between items-center ${
-            isMobile ? "pb-3 pt-1" : "px-6 pt-1 h-full"
+            isMobile ? "pb-3 pt-1" : "px-3 pt-1 h-full"
           }`}
         >
           {/* Title */}

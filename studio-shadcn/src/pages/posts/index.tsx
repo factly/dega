@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import deepEqual from "deep-equal";
 
 // Lucide icons
-import { Filter, PlusCircle } from "lucide-react";
+import { Filter, PlusCircle, Search, X } from "lucide-react";
 
 // shadcn components
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Custom components
 import PostList from "../../components/List";
@@ -24,13 +31,18 @@ import FormatNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import Template from "../../components/Template";
 import Selector from "../../components/Selector";
 import Loader from "../../components/Loader";
-import Pagination from "../../components/Pagination";
+import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+// Import PaginationFooter instead of using Pagination directly
+import PaginationFooter from "@/components/PaginationFooter";
 
 // Utils and actions
 import getUrlParams from "../../utils/getUrlParams";
 import Filters from "../../utils/filters";
 import { getPosts } from "../../actions/posts";
 import { useForm } from "react-hook-form";
+
+// Custom hooks
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // TypeScript interfaces
 interface Format {
@@ -128,16 +140,154 @@ interface RootState {
   };
 }
 
+// Search Input Component
+const SearchInput = ({
+  searchText,
+  setSearchText,
+  handleSearchSubmit,
+  clearSearch,
+  autoFocus = false,
+}) => {
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchSubmit();
+    }
+  };
+
+  return (
+    <div className="relative flex-1">
+      <Input
+        placeholder="Search posts..."
+        value={searchText}
+        onChange={handleSearch}
+        onKeyPress={handleKeyPress}
+        className="h-9 w-64"
+        autoFocus={autoFocus}
+      />
+      {searchText && (
+        <button
+          className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          onClick={clearSearch}
+        >
+          <X className="h-4 w-4" />
+        </button>
+      )}
+      <button
+        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        onClick={handleSearchSubmit}
+      ></button>
+    </div>
+  );
+};
+
+// Search Button Component
+const SearchButton = ({ onClick }) => {
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={onClick}
+      className="h-9 w-9 p-0 flex items-center justify-center"
+    >
+      <Search className="h-4 w-4" />
+    </Button>
+  );
+};
+
+// FiltersPopover Component
+const FiltersPopover = ({ form, onSave }) => {
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      className="flex items-center bg-[#F0F5FF] border-[#F0F5FF] space-x-1 mb-5"
+      onClick={() => form.handleSubmit(onSave)()}
+    >
+      <Filter className="h-4 w-4" />
+      <span>Filters</span>
+    </Button>
+  );
+};
+
+// Status Tabs Component - Keeping it defined locally but with consistent style
+const StatusTabs = ({
+  status,
+  handleStatusChange,
+  children,
+  isMobile,
+  form,
+  onSave,
+}) => {
+  const pageStatusItems = [
+    { value: "all", label: "All" },
+    { value: "publish", label: "Published" },
+    { value: "future", label: "Future Publish" },
+    { value: "ready", label: "Ready to Publish" },
+    { value: "draft", label: "Drafts" },
+  ];
+
+  return (
+    <Tabs
+      defaultValue={status}
+      onValueChange={handleStatusChange}
+      value={status}
+    >
+      {!isMobile ? (
+        <div className="flex mb-5">
+          <TabsList className="grid grid-cols-5 flex-1 max-w-[60%] mr-120">
+            {pageStatusItems.map((item) => (
+              <TabsTrigger key={item.value} value={item.value}>
+                {item.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          <FiltersPopover form={form} onSave={onSave} />
+        </div>
+      ) : (
+        <div className="space-y-4 flex justify-between items-center">
+          <Select
+            defaultValue={status}
+            value={status}
+            onValueChange={handleStatusChange}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder={status} />
+            </SelectTrigger>
+            <SelectContent>
+              {pageStatusItems.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {isMobile && <FiltersPopover form={form} onSave={onSave} />}
+        </div>
+      )}
+
+      <TabsContent value={status} className="mt-0">
+        {children}
+      </TabsContent>
+    </Tabs>
+  );
+};
+
 const Posts: React.FC<PostsProps> = ({ formats }) => {
   const dispatch = useDispatch();
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
   const form = useForm();
+  const isMobile = useIsMobile();
 
   // Read the current search query from URL
   const query = new URLSearchParams(search);
   const initialSearchText = query.get("q") || "";
   const [searchText, setSearchText] = useState(initialSearchText);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(!!initialSearchText);
 
   const isCollapsed = useSelector(
     (state: RootState) => state.sidebar.collapsed
@@ -186,6 +336,13 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
     fetchPosts();
   }, [search, formats.loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // If we have search text, make sure search is expanded on mobile
+  useEffect(() => {
+    if (searchText && isMobile && !isSearchExpanded) {
+      setIsSearchExpanded(true);
+    }
+  }, [searchText, isMobile]);
+
   const fetchPosts = () => {
     dispatch(getPosts(params) as any);
   };
@@ -228,14 +385,6 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
       };
     }
   );
-
-  const postStatusItems = [
-    { value: "all", label: "All" },
-    { value: "publish", label: "Published" },
-    { value: "future", label: "Future Publish" },
-    { value: "ready", label: "Ready to Publish" },
-    { value: "draft", label: "Drafts" },
-  ];
 
   // Handle applying filters from the filter popover
   const onSave = (values: FilterValues) => {
@@ -304,12 +453,7 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
     });
   };
 
-  // Handle search input change
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
-
-  // Handle search submission (Enter key or search button)
+  // Handle search submission
   const handleServerSearch = () => {
     const newQuery = new URLSearchParams(query.toString());
 
@@ -328,11 +472,26 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
     });
   };
 
-  // Handle Enter key press in search input
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleServerSearch();
+  // Clear search
+  const clearSearch = () => {
+    setSearchText("");
+    const newQuery = new URLSearchParams(query.toString());
+    newQuery.delete("q");
+
+    navigate({
+      pathname,
+      search: "?" + newQuery.toString(),
+    });
+
+    // If on mobile, collapse the search input
+    if (isMobile) {
+      setIsSearchExpanded(false);
     }
+  };
+
+  // Toggle search on mobile
+  const toggleSearch = () => {
+    setIsSearchExpanded(!isSearchExpanded);
   };
 
   // Handle status tab change
@@ -355,14 +514,13 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
     });
   };
 
+  // Calculate pagination details
+  const onPagination = (page: number, pageSize: number) => {
+    handlePageChange(page);
+  };
+
   // Calculate total pages
   const totalPages = Math.max(1, Math.ceil(total / filters.limit));
-
-  // Calculate sidebar width based on sidebar state
-  const sidebarWidth = isCollapsed ? "89px" : "265px";
-
-  // Define the header height (including padding)
-  const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
 
   if (formats.loading) {
     return <Loader />;
@@ -379,8 +537,8 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <Helmet title={"Posts"} />
+    <div className="flex flex-col h-full gap-6">
+      <Helmet title="Posts" />
 
       {/* Templates Dialog */}
       <Dialog open={templatesOpen} onOpenChange={setTemplatesOpen}>
@@ -392,35 +550,51 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
         </DialogContent>
       </Dialog>
 
-      {/* Header */}
-      <div
-        className="fixed top-0 z-10 bg-white"
-        style={{
-          left: sidebarWidth,
-          right: 0,
-          height: headerHeight,
-          transition: "left 0.3s ease",
-        }}
-      >
-        <div className="flex justify-between items-center h-full px-6 pt-1">
-          <div className="flex items-center gap-4 flex-1">
-            <div className="relative flex-1 max-w-xs">
-              <Input
-                placeholder="Search posts..."
-                value={searchText}
-                onChange={handleSearch}
-                onKeyPress={handleKeyPress}
-                className="h-10"
-              />
+      {/* Mobile Header */}
+      {isMobile ? (
+        <div className="space-y-4 flex justify-between items-center">
+          {/* Breadcrumb */}
+          <MobileBreadcrumb currentPage="Posts" parentLabel="Core" />
+
+          <div className="flex gap-2 items-center">
+            {/* Search Button */}
+            <div>
+              <SearchButton onClick={toggleSearch} />
             </div>
-            <Button
-              variant="outline"
-              className="flex items-center bg-[#F0F5FF] border-[#F0F5FF] space-x-1"
-              onClick={() => form.handleSubmit(onSave)()}
-            >
-              <Filter className="h-4 w-4" />
-              <span>Filters</span>
-            </Button>
+
+            <div className="flex items-center gap-2">
+              {/* Templates Button */}
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center bg-[#DCEFEB]"
+                onClick={() => setTemplatesOpen(true)}
+              >
+                <span>Templates</span>
+              </Button>
+
+              {/* Create Post Button */}
+              <Link to="/posts/create">
+                <Button size="sm" className="flex items-center gap-1">
+                  <PlusCircle className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Desktop Header */
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4 flex-1">
+            {/* Search Input - Always visible on desktop */}
+            <SearchInput
+              searchText={searchText}
+              setSearchText={setSearchText}
+              handleSearchSubmit={handleServerSearch}
+              clearSearch={clearSearch}
+            />
+
+            {/* Templates Button */}
             <Button
               variant="outline"
               className="flex items-center space-x-1 bg-[#DCEFEB]"
@@ -428,80 +602,68 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
             >
               <span>Explore Templates</span>
             </Button>
-          </div>
-          <div>
+
+            {/* Create Post Button */}
             <Link to="/posts/create">
               <Button size="lg" className="flex items-center gap-2 py-2">
                 <PlusCircle className="h-4 w-4" />
-                Create Post
+                <span>Create Post</span>
               </Button>
             </Link>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Content */}
-      <div
-        className="absolute overflow-auto"
-        style={{
-          top: headerHeight,
-          left: sidebarWidth,
-          right: 0,
-          bottom: "64px",
-          paddingLeft: "1.5rem",
-          paddingRight: "1.5rem",
-          paddingBottom: "1.5rem",
-          paddingTop: "1rem",
-          transition: "left 0.3s ease, top 0.3s ease",
-        }}
+      {/* Search input row - appears when expanded on mobile */}
+      {isMobile && isSearchExpanded && (
+        <div className="w-full">
+          <SearchInput
+            searchText={searchText}
+            setSearchText={setSearchText}
+            handleSearchSubmit={handleServerSearch}
+            clearSearch={clearSearch}
+            autoFocus={true}
+          />
+        </div>
+      )}
+
+      {/* Status Tabs and Content */}
+      <StatusTabs
+        status={status}
+        handleStatusChange={handleStatusChange}
+        isMobile={isMobile}
+        form={form}
+        onSave={onSave}
       >
-        <Tabs defaultValue={status} onValueChange={handleStatusChange}>
-          <TabsList className="grid grid-cols-5">
-            {postStatusItems.map((item) => (
-              <TabsTrigger key={item.value} value={item.value}>
-                {item.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
-          <TabsContent value={status}>
-            <PostList
-              format={formats.article}
-              data={{
-                posts: posts,
-                total: total,
-                loading,
-                tags,
-                categories,
-                authors,
-              }}
-              filters={params}
-              fetchPosts={fetchPosts}
-              query={status}
-            />
-          </TabsContent>
-        </Tabs>
-      </div>
-
-      {/* Footer with Pagination */}
-      <div
-        className="fixed bottom-0 z-10 bg-white"
-        style={{
-          left: sidebarWidth,
-          right: 0,
-          height: "64px",
-          transition: "left 0.3s ease",
-        }}
-      >
-        <Pagination
-          currentPage={parseInt(params.page || "1", 10)}
-          totalPages={totalPages}
-          totalItems={total}
-          pageSize={parseInt(params.limit || "10", 10)}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
+        <PostList
+          format={formats.article}
+          data={{
+            posts: posts,
+            total: total,
+            loading,
+            tags,
+            categories,
+            authors,
+          }}
+          filters={params}
+          fetchPosts={fetchPosts}
+          query={status}
+          onPagination={onPagination}
+          form={form}
+          onSave={onSave}
         />
-      </div>
+      </StatusTabs>
+
+      {/* Replace the custom pagination implementation with PaginationFooter */}
+      <PaginationFooter
+        currentPage={parseInt(params.page || "1", 10)}
+        totalPages={totalPages}
+        selectedItems={0}
+        totalItems={total}
+        pageSize={parseInt(params.limit || "10", 10)}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+      />
     </div>
   );
 };

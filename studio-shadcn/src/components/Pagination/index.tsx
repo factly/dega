@@ -1,4 +1,3 @@
-// components/Pagination.tsx
 import React from "react";
 import {
   Select,
@@ -20,7 +19,6 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   totalItems: number;
-  selectedItems: number;
   pageSize: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
@@ -46,9 +44,9 @@ const Pagination: React.FC<PaginationProps> = ({
   // Mobile layout
   if (isMobile) {
     return (
-      <div className="flex items-center justify-between py-3 border-t w-full px-4">
-        <div className="flex flex-col w-full justify-between gap-3">
-
+      <div className="flex flex-col w-full py-2 px-4">
+        {/* Top row - Rows per page */}
+        <div className="flex justify-end mb-3">
           <div className="flex items-center gap-2 text-sm text-gray-700">
             <span>Rows per page:</span>
             <Select
@@ -69,14 +67,16 @@ const Pagination: React.FC<PaginationProps> = ({
           </div>
         </div>
 
-        {/* Second row */}
-        <div className="flex gap-6 items-center w-full">
+        {/* Bottom row - Page indicator and navigation */}
+        <div className="flex justify-between items-center">
+          {/* Page indicator */}
           <div className="flex items-center text-sm text-gray-700">
             <span>
               Page {currentPage} of {totalPages}
             </span>
           </div>
 
+          {/* Navigation buttons */}
           <div className="flex items-center gap-1">
             <Button
               variant="outline"
@@ -122,7 +122,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
   // Desktop layout
   return (
-    <div className="flex items-center justify-between py-3 border-t gap-6 w-full px-4">
+    <div className="flex items-center justify-between py-3 gap-6 w-full px-4">
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-2 text-sm text-gray-700">
           <span>Rows per page:</span>
@@ -197,4 +197,3 @@ const Pagination: React.FC<PaginationProps> = ({
 };
 
 export default Pagination;
-

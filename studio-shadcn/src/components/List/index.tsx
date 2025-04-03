@@ -1,16 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Edit,
-  Trash2,
-  Check,
-  Clock,
-  CheckCircle,
-  AlertCircle,
-  Ellipsis,
-  Pencil,
-} from "lucide-react";
+import { Edit, Trash2, Ellipsis, Pencil } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -27,7 +18,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -38,6 +28,7 @@ import {
 import { deletePost } from "../../actions/posts";
 import { getDifferenceInModifiedTime, formatDate } from "../../utils/date";
 import QuickEdit from "./QuickEdit";
+import { renderStatusBadge } from "../../components/statusBadge/index";
 
 // interfaces for the component props and data structure
 interface Post {
@@ -88,6 +79,8 @@ interface PostListProps {
   query: string;
   actions?: string[];
   onPagination?: (pageNumber: number, pageSize: number) => void;
+  form?: any;
+  onSave?: (values: any) => void;
 }
 
 interface RootState {
@@ -211,57 +204,6 @@ const PostList: React.FC<PostListProps> = ({
 
   const displayedPosts = getDisplayedPosts();
 
-  const getStatusBadge = (status: string | undefined) => {
-    // If status is undefined, log it and default to draft
-    if (status === undefined || status === null) {
-      console.warn("Undefined status found for a post, defaulting to 'draft'");
-      status = "draft";
-    }
-
-    // Ensure we're normalizing the status to lowercase for consistent comparison
-    const normalizedStatus = status.toLowerCase();
-    switch (normalizedStatus) {
-      case "publish":
-        return (
-          <Badge
-            variant="outline"
-            className="bg-green-100 text-green-800 border-green-300"
-          >
-            <CheckCircle className="h-3 w-3 mr-1" /> Published
-          </Badge>
-        );
-      case "draft":
-        return (
-          <Badge
-            variant="outline"
-            className="bg-gray-100 text-gray-800 border-gray-300"
-          >
-            <AlertCircle className="h-3 w-3 mr-1" /> Draft
-          </Badge>
-        );
-      case "ready":
-        return (
-          <Badge
-            variant="outline"
-            className="bg-yellow-100 text-yellow-800 border-yellow-300"
-          >
-            <Check className="h-3 w-3 mr-1" /> Ready to Publish
-          </Badge>
-        );
-      case "future":
-        return (
-          <Badge
-            variant="outline"
-            className="bg-blue-100 text-blue-800 border-blue-300"
-          >
-            <Clock className="h-3 w-3 mr-1" /> Future Publish
-          </Badge>
-        );
-      default:
-        return <Badge variant="outline">{status || "Unknown"}</Badge>;
-    }
-  };
-
   // Format and display the published date
   const displayPublishedDate = (item: Post) => {
     if (!item.published_date) {
@@ -325,7 +267,7 @@ const PostList: React.FC<PostListProps> = ({
                           <span>{item.title}</span>
                         </Link>
                       </TableCell>
-                      <TableCell>{getStatusBadge(item.status)}</TableCell>
+                      <TableCell>{renderStatusBadge(item.status)}</TableCell>
                       <TableCell>
                         <div className="flex flex-col">
                           <span>{displayPublishedDate(item)}</span>

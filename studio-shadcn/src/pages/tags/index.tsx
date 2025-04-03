@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import TagList from "./components/TagList";
 import { Link } from "react-router-dom";
@@ -10,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import { getTags } from "../../actions/tags";
-import getUrlParams from "../../utils/getUrlParams";
 import Loader from "../../components/Loader";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import Pagination from "../../components/Pagination";
@@ -32,14 +30,6 @@ interface TagNode {
   total: number;
 }
 
-interface TagsState {
-  tags: {
-    req: TagNode[];
-    details: Record<number, any>;
-    loading: boolean;
-  };
-}
-
 function Tags(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { state: sidebarState } = useSidebar();
@@ -50,17 +40,10 @@ function Tags(): React.ReactElement {
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  // Get URL params to initialize filters
-  const urlParams = useMemo(
-    () => getUrlParams(new URLSearchParams(window.location.search)),
-    [window.location.search]
-  );
-
-  // Initialize filters with default values
+  // Initialize filters with a state to prevent unnecessary reloads
   const [filters, setFilters] = useState<FilterParams>({
-    ...urlParams,
-    page: parseInt(urlParams.page as string) || 1,
-    limit: parseInt(urlParams.limit as string) || 10,
+    page: 1,
+    limit: 10,
   });
 
   // Handle responsive UI changes
@@ -68,17 +51,21 @@ function Tags(): React.ReactElement {
     setShowSearch(!isMobile);
   }, [isMobile]);
 
-  const form = React.useRef<HTMLFormElement>(null);
+  // Fetch tags when filters change - key improvement from categories page
+  useEffect(() => {
+    fetchTags();
+  }, [filters]);
 
-  // Get data from Redux using the URL parameters directly
+  // Get data from Redux store
   const { tags, total, loading } = useSelector((state: RootState) => {
     // Ensure state.tags and state.tags.req exist
     if (!state.tags || !state.tags.req) {
       return { tags: [], total: 0, loading: false };
     }
 
+    // Adjust the query to match current filters for proper cache lookup
     const node = (state.tags.req as TagNode[]).find((item) => {
-      return deepEqual(item.query, urlParams);
+      return deepEqual(item.query, filters);
     });
 
     if (node && state.tags.details) {
@@ -134,58 +121,23 @@ function Tags(): React.ReactElement {
     });
   }, [filteredTags, sortOrder]);
 
+  const fetchTags = useCallback(() => {
+    dispatch(getTags(filters));
+  }, [dispatch, filters]);
+
   const handleSortToggle = useCallback(() => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   }, []);
-
-  const updateURLParams = useCallback(
-    (newParams: Record<string, any>) => {
-      const searchParams = new URLSearchParams();
-      const combinedParams = {
-        ...urlParams,
-        ...newParams,
-      };
-
-      Object.entries(combinedParams).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== "") {
-          if (
-            (key === "page" && value === 1) ||
-            (key === "limit" && value === 10)
-          ) {
-            return;
-          }
-          searchParams.set(key, String(value));
-        }
-      });
-
-      window.history.replaceState(
-        {},
-        "",
-        `${window.location.pathname}?${searchParams.toString()}`
-      );
-    },
-    [urlParams]
-  );
-
-  useEffect(() => {
-    fetchTags();
-  }, [window.location.search]);
-
-  const fetchTags = useCallback(() => {
-    const paramsToUse = {
-      ...urlParams,
-      page: urlParams.page || 1,
-      limit: urlParams.limit || 10,
-    };
-
-    dispatch(getTags(paramsToUse));
-  }, [dispatch, urlParams]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
-  const handleSearchSubmit = () => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFilters((prev) => ({ ...prev, q: searchText, page: 1 }));
+
+    // Update URL for shareable links, but don't depend on it for data fetching
     updateURLParams({ q: searchText, page: 1 });
   };
 
@@ -198,19 +150,43 @@ function Tags(): React.ReactElement {
   }, [showSearch]);
 
   // Pagination handlers
-  const handlePageChange = useCallback(
-    (page: number) => {
-      updateURLParams({ page });
-    },
-    [updateURLParams]
-  );
+  const handlePageChange = useCallback((page: number) => {
+    setFilters((prev) => ({ ...prev, page }));
+    updateURLParams({ page });
+  }, []);
 
-  const handlePageSizeChange = useCallback(
-    (size: number) => {
-      updateURLParams({ limit: size, page: 1 });
-    },
-    [updateURLParams]
-  );
+  const handlePageSizeChange = useCallback((size: number) => {
+    setFilters((prev) => ({ ...prev, limit: size, page: 1 }));
+    updateURLParams({ limit: size, page: 1 });
+  }, []);
+
+  // URL params update function - now decoupled from data fetching
+  const updateURLParams = useCallback((newParams: Record<string, any>) => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    Object.entries(newParams).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        if (
+          (key === "page" && value === 1) ||
+          (key === "limit" && value === 10)
+        ) {
+          searchParams.delete(key);
+        } else {
+          searchParams.set(key, String(value));
+        }
+      } else {
+        searchParams.delete(key);
+      }
+    });
+
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}${
+        searchParams.toString() ? `?${searchParams.toString()}` : ""
+      }`
+    );
+  }, []);
 
   // Calculate total pages
   const pageSize = filters.limit || 10;
@@ -258,16 +234,11 @@ function Tags(): React.ReactElement {
           {/* Desktop search bar */}
           {!isMobile && (
             <form
-              ref={form}
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSearchSubmit();
-              }}
+              onSubmit={handleSearchSubmit}
               className="flex items-center gap-4 flex-1"
             >
               <div className="relative flex-1 max-w-xs">
                 <Input
-                  name="q"
                   placeholder="Search tags..."
                   value={searchText}
                   onChange={handleSearchChange}
@@ -308,13 +279,15 @@ function Tags(): React.ReactElement {
         {/* Mobile search bar */}
         {isMobile && showSearch && (
           <div className="px-4 pb-3">
-            <Input
-              placeholder="Search tags..."
-              value={searchText}
-              onChange={handleSearchChange}
-              className="h-9 w-full"
-              autoFocus
-            />
+            <form onSubmit={handleSearchSubmit}>
+              <Input
+                placeholder="Search tags..."
+                value={searchText}
+                onChange={handleSearchChange}
+                className="h-9 w-full"
+                autoFocus
+              />
+            </form>
           </div>
         )}
       </div>
@@ -348,7 +321,10 @@ function Tags(): React.ReactElement {
             loading,
           }}
           filters={filters}
-          setFilters={updateURLParams}
+          setFilters={(newParams) => {
+            setFilters((prev) => ({ ...prev, ...newParams }));
+            updateURLParams(newParams);
+          }}
           fetchTags={fetchTags}
           sortOrder={sortOrder}
           onSortToggle={handleSortToggle}
