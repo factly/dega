@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import degaLogoLetters from "@/assets/dega.png";
+import { cn } from "@/lib/utils";
 
 interface BasicLayoutProps {
   children?: ReactNode;
@@ -176,7 +177,14 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
           </header>
         )}
         {shouldRenderContent ? (
-          <div className={isMobile ? "p-4 h-[calc(100vh-4rem)] " : "p-6 h-screen"}>{children}</div>
+          <div
+            className={cn(
+              isMobile ? "p-4 h-[calc(100vh-4rem)]" : "p-6 h-screen",
+              isSettingsPath && !isMobile && "ml-[265px]"
+            )}
+          >
+            {children}
+          </div>
         ) : (
           <div className="flex items-center justify-center p-8">
             <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>

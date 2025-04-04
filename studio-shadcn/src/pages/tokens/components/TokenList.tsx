@@ -1,5 +1,4 @@
 import { deleteSpaceToken } from "../../../actions/tokens";
-import { useLocation } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -40,15 +39,16 @@ interface TokenListProps {
     limit: number;
   };
   fetchTokens: () => void;
+  isMobile?: boolean;
 }
 
 export default function TokenList({
   tokens,
   loading,
   fetchTokens,
+  isMobile,
 }: TokenListProps) {
   const dispatch = useAppDispatch();
-  const location = useLocation();
 
   const onDelete = (id: string) => {
     dispatch(deleteSpaceToken(id)).then(() => fetchTokens());
@@ -63,39 +63,70 @@ export default function TokenList({
   }
 
   return (
-    <div>
+    <div className="pb-4 overflow-auto">
       <Table>
-        <TableHeader>
+        <TableHeader className="text-[13px]">
           <TableRow>
             <TableHead className="w-[30%]">Name</TableHead>
-            <TableHead className="w-[40%]">Description</TableHead>
-            <TableHead className="w-[30%] text-center">Action</TableHead>
+            {!isMobile && (
+              <TableHead className="w-[40%]">Description</TableHead>
+            )}
+            <TableHead className={isMobile ? "text-right" : "text-center"}>
+              Action
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {tokens.length > 0 ? (
             tokens.map((token: Token) => (
               <TableRow key={token.id}>
-                <TableCell>{token.name}</TableCell>
-                <TableCell>{token.description}</TableCell>
-                <TableCell className="text-center">
+                <TableCell>
+                  <div>
+                    <p className="font-medium">{token.name}</p>
+                    {isMobile && token.description && (
+                      <p className="text-sm text-gray-500 mt-1 line-clamp-1">
+                        {token.description}
+                      </p>
+                    )}
+                  </div>
+                </TableCell>
+                {!isMobile && <TableCell>{token.description}</TableCell>}
+                <TableCell className={isMobile ? "text-right" : "text-center"}>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="sm">
+                      <Button
+                        variant="destructive"
+                        size={isMobile ? "sm" : "sm"}
+                        className={isMobile ? "h-8 px-3" : ""}
+                      >
                         Revoke
                       </Button>
                     </AlertDialogTrigger>
-                    <AlertDialogContent>
+                    <AlertDialogContent
+                      className={isMobile ? "max-w-[90%] p-4 rounded-lg" : ""}
+                      onPointerDownOutside={(e) => e.preventDefault()}
+                    >
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                        <AlertDialogDescription>
+                        <AlertDialogTitle className="text-base">
+                          Revoke Token
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="text-sm">
                           This will permanently revoke the token. This action
                           cannot be undone.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => onDelete(token.id)}>
+                      <AlertDialogFooter className="mt-4 flex justify-end space-x-2">
+                        <AlertDialogCancel className={isMobile ? "h-9" : ""}>
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => onDelete(token.id)}
+                          className={
+                            isMobile
+                              ? "h-9 bg-red-600 hover:bg-red-700"
+                              : "bg-red-600 hover:bg-red-700"
+                          }
+                        >
                           Revoke
                         </AlertDialogAction>
                       </AlertDialogFooter>
@@ -106,7 +137,10 @@ export default function TokenList({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={3} className="text-center py-4">
+              <TableCell
+                colSpan={isMobile ? 2 : 3}
+                className="text-center py-4"
+              >
                 No tokens found
               </TableCell>
             </TableRow>

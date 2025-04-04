@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
+import { Helmet } from "react-helmet";
 import {
   Table,
   TableBody,
@@ -12,9 +13,12 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PlusCircle, Trash2 } from "lucide-react";
+import { PlusCircle, Trash2, Search as SearchIcon } from "lucide-react";
 import { searchMembers, removeMember } from "../../actions/organisation";
 import { Member } from "../../actions/organisation";
+import { useSidebar } from "@/components/ui/sidebar";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 
 interface Profile {
   id: string;
@@ -40,11 +44,19 @@ function Organisations() {
     page: 1,
     limit: 10,
   });
+  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const { state: sidebarState } = useSidebar();
+  const isMobile = useIsMobile();
 
   // Fixed selector to safely handle undefined state.profile
   const profileDetails = useSelector(
     (state: RootState) => state.profile?.details
   );
+
+  // Handle responsive UI changes
+  useEffect(() => {
+    setShowSearch(!isMobile);
+  }, [isMobile]);
 
   useEffect(() => {
     fetchMembers();
@@ -74,6 +86,22 @@ function Organisations() {
     }
   };
 
+  // Toggle search on mobile
+  const toggleSearch = useCallback(() => {
+    setShowSearch((prev) => !prev);
+    if (showSearch) {
+      setSearchText("");
+    }
+  }, [showSearch]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   const filteredMembers = members.filter(
     (member) =>
       member.displayName?.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -85,26 +113,134 @@ function Organisations() {
     filters.page * filters.limit
   );
 
+  const isCollapsed = sidebarState === "collapsed" && !isMobile;
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-full">Loading...</div>
+    );
+  }
+
   return (
-    <div>
-      <div className="flex flex-row items-center justify-between space-y-0 pb-6">
-        <div className="relative w-72">
-          <Input
-            placeholder="Search by name or email..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-        </div>
-        <Button
-          size="lg"
-          className="py-2"
-          onClick={() => navigate("/settings/organisations/addusers")}
+    <div className="flex flex-col h-full">
+      <Helmet title={"Organisation Members"} />
+
+      {/* Mobile Breadcrumb */}
+      {isMobile && (
+        <MobileBreadcrumb currentPage="Organisations" parentLabel="Settings" />
+      )}
+
+      <div
+        className={`${isMobile ? "sticky top-0" : "fixed"} z-10 bg-white`}
+        style={
+          !isMobile
+            ? {
+                left: isCollapsed ? "89px" : "265px",
+                right: 0,
+                transition: "left 0.3s ease",
+              }
+            : undefined
+        }
+      >
+        <div
+          className={`flex justify-between items-center ${
+            isMobile ? "pb-3 pt-1" : "px-3 pt-1 h-full"
+          }`}
         >
-          <PlusCircle className="h-4 w-4" />
-          Add New User
-        </Button>
+          {/* Title */}
+          {isMobile && (
+            <h1 className="text-xl font-semibold">Organisation Members</h1>
+          )}
+
+          {/* Desktop search bar */}
+          {!isMobile && (
+            <form
+              onSubmit={handleSearchSubmit}
+              className="flex items-center gap-4 flex-1"
+            >
+              <div className="relative flex-1 max-w-xs">
+                <Input
+                  placeholder="Search by name or email..."
+                  value={searchText}
+                  onChange={handleSearchChange}
+                  className="h-10"
+                />
+              </div>
+            </form>
+          )}
+
+          {/* Action buttons */}
+          <div className={`${isMobile ? "flex items-center gap-2" : ""}`}>
+            {isMobile && (
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={toggleSearch}
+                className="h-9 w-9 text-gray-500"
+              >
+                <SearchIcon className="h-5 w-5" />
+              </Button>
+            )}
+
+            {isMobile ? (
+              <Button
+                size="icon"
+                className="h-9 w-9"
+                onClick={() => navigate("/settings/organisations/addusers")}
+              >
+                <PlusCircle className="h-5 w-5" />
+              </Button>
+            ) : (
+              <Button
+                size="lg"
+                className="flex items-center gap-2 py-2"
+                onClick={() => navigate("/settings/organisations/addusers")}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Add New User
+              </Button>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile search bar */}
+        {isMobile && showSearch && (
+          <div className="px-4 pb-3">
+            <form onSubmit={handleSearchSubmit}>
+              <Input
+                placeholder="Search by name or email..."
+                value={searchText}
+                onChange={handleSearchChange}
+                className="h-9 w-full"
+                autoFocus
+              />
+            </form>
+          </div>
+        )}
       </div>
-      <div>
+
+      <div
+        className={
+          isMobile
+            ? "flex-1 pb-16 pt-1 overflow-auto"
+            : "absolute overflow-auto"
+        }
+        style={
+          !isMobile
+            ? {
+                top: "calc(1.5rem + 2.5rem + 1rem)",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                paddingLeft: "1.5rem",
+                paddingRight: "1.5rem",
+                paddingBottom: "1.5rem",
+                paddingTop: "1rem",
+                transition: "left 0.3s ease, top 0.3s ease",
+              }
+            : undefined
+        }
+      >
         <div className="rounded-md">
           <Table>
             <TableHeader>

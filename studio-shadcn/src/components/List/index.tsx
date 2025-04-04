@@ -278,13 +278,15 @@ const PostList: React.FC<PostListProps> = ({
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-col">
-                          {item.authors?.map((authorId) => (
-                            <span key={authorId}>
-                              {authors[authorId]?.display_name ||
-                                authors[authorId]?.email ||
-                                null}
-                            </span>
-                          ))}
+                          {item.authors?.length > 0
+                            ? item.authors.map((authorId) => (
+                                <span key={authorId}>
+                                  {authors[authorId]?.display_name ||
+                                    authors[authorId]?.email ||
+                                    null}
+                                </span>
+                              ))
+                            : "-"}
                         </div>
                       </TableCell>
                       <TableCell className="text-center">

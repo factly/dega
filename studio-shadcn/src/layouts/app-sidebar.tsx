@@ -135,7 +135,7 @@ export default function AppSidebar(): React.ReactNode {
       >
         <div
           className={cn(
-            "flex items-center w-full md:mb-8",
+            "flex items-center w-full md:mb-4",
             isCollapsed ? "justify-center" : "justify-between"
           )}
         >

@@ -20,6 +20,15 @@ import {
   Settings,
   LetterText,
 } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useSidebar } from "@/components/ui/sidebar";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 
 interface MenuItem {
   title: string;
@@ -36,6 +45,8 @@ interface MenuItem {
 export function SidebarAlt() {
   const location = useLocation();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
+  const { openMobile, setOpenMobile } = useSidebar();
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
 
   const handleBack = () => {
@@ -99,7 +110,6 @@ export function SidebarAlt() {
         },
       ],
     },
-
     {
       title: "Security",
       icon: Key,
@@ -130,20 +140,15 @@ export function SidebarAlt() {
     },
   ];
 
-  return (
-    <aside
-      className={cn(
-        "fixed left-0 top-0 z-40 h-screen bg-white p-6 w-[265px]",
-        "border-r border-gray-200"
-      )}
-    >
-      {/* Back button */}
-      <div className="mb-4">
+  const SidebarContent = () => (
+    <div className="h-full flex flex-col p-4">
+      {/* Header with Back button */}
+      <div className="flex items-center mb-4">
         <Button
           variant="outline"
           onClick={handleBack}
           size="sm"
-          className="flex items-center gap-2 py-2 pr-4"
+          className="flex items-center gap-2 py-2"
         >
           <ChevronLeft className="h-4 w-4" />
           <span className="text-base font-normal">Back</span>
@@ -154,7 +159,7 @@ export function SidebarAlt() {
       <div className="flex flex-col gap-1 h-[calc(100vh-12rem)] overflow-y-auto">
         <div className="font-medium text-gray-500 mb-2 ml-2">Website</div>
 
-        {/* Direct Links */}
+        {/* Menu items */}
         {settingsMenuItems.map((section) => (
           <div
             key={section.title}
@@ -163,7 +168,10 @@ export function SidebarAlt() {
             onMouseLeave={handleSectionMouseLeave}
           >
             {section.type === "link" ? (
-              <Link to={section.path!}>
+              <Link
+                to={section.path!}
+                onClick={() => isMobile && setOpenMobile(false)} // Close mobile sidebar on navigation
+              >
                 <Button
                   size="icon"
                   variant="ghost"
@@ -200,6 +208,7 @@ export function SidebarAlt() {
                     <Link
                       key={item.path}
                       to={item.path}
+                      onClick={() => isMobile && setOpenMobile(false)} // Close mobile sidebar on navigation
                       className={cn(
                         "flex items-center px-2 py-1.5 text-base rounded-md",
                         "hover:bg-[#DCEFEB] transition-colors",
@@ -220,23 +229,44 @@ export function SidebarAlt() {
         ))}
       </div>
 
-      {/* Footer */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <div className="p-6">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between w-full">
-              <Button
-                variant="outline"
-                className="flex items-center justify-start text-red-600 px-2"
-                onClick={handleLogout}
-              >
-                <LogOut className="h-4 w-4 mr-1" />
-                <span>Logout</span>
-              </Button>
-            </div>
-          </div>
-        </div>
+      {/* Footer with Logout */}
+      <div className="mt-auto pt-4">
+        <Button
+          variant="outline"
+          className="w-1/2 flex items-center justify-start text-red-600 px-2"
+          onClick={handleLogout}
+        >
+          <LogOut className="h-4 w-4 mr-1" />
+          <span>Logout</span>
+        </Button>
       </div>
+    </div>
+  );
+
+  // For mobile view, use Sheet component
+  if (isMobile) {
+    return (
+      <Sheet open={openMobile} onOpenChange={setOpenMobile}>
+        <SheetContent
+          data-sidebar="sidebar"
+          data-slot="sidebar"
+          data-mobile="true"
+          className="bg-sidebar text-sidebar-foreground w-[18rem] p-0 [&>button]:hidden fixed top-16 h-[calc(100vh-4rem)]"
+          side="left"
+        >
+          <SheetHeader className="sr-only">
+            <SheetTitle>Settings Sidebar</SheetTitle>
+            <SheetDescription>Displays the settings sidebar.</SheetDescription>
+          </SheetHeader>
+          <SidebarContent />
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
+  return (
+    <aside className="fixed left-0 top-0 z-40 h-screen w-[265px] bg-white border-r border-gray-200">
+      <SidebarContent />
     </aside>
   );
 }

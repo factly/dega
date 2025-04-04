@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import MenuList from "./components/MenuList";
 import { Link, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -9,9 +8,12 @@ import deepEqual from "deep-equal";
 import getUserPermission from "../../utils/getUserPermission";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
+import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { Input } from "@/components/ui/input";
 import Pagination from "../../components/Pagination";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 
 // Define types for our state and props
 interface Menu {
@@ -31,10 +33,7 @@ interface MenuState {
 
 interface RootState {
   menus: MenuState;
-  spaces: any; // Define a more specific type based on your spaces structure
-  sidebar: {
-    collapsed: boolean;
-  };
+  spaces: any;
 }
 
 interface MenuFilters {
@@ -51,8 +50,12 @@ const Menu: React.FC = () => {
     spaces,
   });
   const dispatch = useAppDispatch();
+  const isMobile = useIsMobile();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchText, setSearchText] = useState("");
+
+  // State for search and filters
+  const [searchText, setSearchText] = useState<string>("");
+  const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   // Initialize filters from URL params or defaults
@@ -61,7 +64,7 @@ const Menu: React.FC = () => {
     limit: parseInt(searchParams.get("limit") || "10", 10),
   });
 
-  // Update URL when filters change, but don't manipulate history directly
+  // Update URL when filters change
   useEffect(() => {
     const newParams = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
@@ -69,6 +72,11 @@ const Menu: React.FC = () => {
     });
     setSearchParams(newParams);
   }, [filters, setSearchParams]);
+
+  // Fetch menus when filters change
+  useEffect(() => {
+    fetchMenus();
+  }, [filters]);
 
   const { menus, total, loading } = useSelector((state: RootState) => {
     const node = state.menus.req.find((item) => {
@@ -86,153 +94,220 @@ const Menu: React.FC = () => {
     return { menus: [], total: 0, loading: state.menus.loading };
   });
 
-  // Filter and sort menus based on search text and sort order
-  const filteredMenus = React.useMemo(() => {
-    let filtered = menus;
-
-    // Apply search filter
-    if (searchText.trim()) {
-      filtered = menus.filter((menu) =>
-        menu.name?.toLowerCase().includes(searchText.toLowerCase())
-      );
+  // Filter menus locally based on search text
+  const filteredMenus = useMemo(() => {
+    if (!searchText.trim()) {
+      return menus;
     }
 
-    // Apply sorting
-    return [...filtered].sort((a, b) => {
+    return menus.filter((menu) =>
+      menu.name?.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }, [menus, searchText]);
+
+  const sortedMenus = useMemo(() => {
+    return [...filteredMenus].sort((a, b) => {
       if (sortOrder === "asc") {
         return a.name?.localeCompare(b.name || "") || 0;
       } else {
         return b.name?.localeCompare(a.name || "") || 0;
       }
     });
-  }, [menus, searchText, sortOrder]);
+  }, [filteredMenus, sortOrder]);
 
-  // Fetch menus when filters change
-  useEffect(() => {
+  const fetchMenus = useCallback(() => {
     dispatch(getMenus(filters));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters, dispatch]);
+  }, [dispatch, filters]);
 
-  const fetchMenus = () => {
-    dispatch(getMenus(filters));
+  // Handle search input changes
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
   };
 
-  // Pagination handlers
-  const handlePageChange = (page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
-  };
-
-  const handlePageSizeChange = (size: number) => {
-    setFilters({ ...filters, page: 1, limit: size });
-  };
-
-  const handleSortToggle = React.useCallback(() => {
+  // Handle sort toggle
+  const handleSortToggle = useCallback(() => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   }, []);
 
-  // Calculate total pages
-  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+  // Pagination handlers
+  const handlePageChange = useCallback((page: number) => {
+    setFilters((prev) => ({ ...prev, page }));
+  }, []);
 
-  // Get sidebar state from Redux store
-  const isCollapsed = useSelector(
-    (state: RootState) => state.sidebar.collapsed
-  );
+  const handlePageSizeChange = useCallback((size: number) => {
+    setFilters((prev) => ({ ...prev, limit: size, page: 1 }));
+  }, []);
 
-  // Calculate left margin based on sidebar state
-  const sidebarWidth = isCollapsed ? "89px" : "265px";
+  // Toggle search on mobile
+  const toggleSearch = useCallback(() => {
+    setShowSearch((prev) => !prev);
+    if (showSearch) {
+      setSearchText("");
+    }
+  }, [showSearch]);
 
-  // Define the header height (including padding)
-  const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
+  const pageSize = filters.limit || 10;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  if (loading) {
-    return <Loader />;
-  }
+  if (loading) return <Loader />;
 
   return (
     <div className="flex flex-col h-full">
       <Helmet title={"Menu"} />
 
-      {/* Header */}
+      {/* Mobile Breadcrumb */}
+      {isMobile && (
+        <MobileBreadcrumb
+          currentPage="Menus"
+          parentPath="/settings/website"
+          parentLabel="Website Settings"
+        />
+      )}
+
       <div
-        className="fixed top-0 z-10 bg-white"
-        style={{
-          left: sidebarWidth,
-          right: 0,
-          height: headerHeight,
-          transition: "left 0.3s ease",
-        }}
+        className={`${isMobile ? "sticky top-0" : "fixed"} z-10 bg-white`}
+        style={
+          !isMobile
+            ? {
+                left: "265px",
+                right: 0,
+              }
+            : undefined
+        }
       >
-        <div className="flex justify-between items-center h-full px-6 pt-1">
-          <div className="flex items-center gap-4 flex-1">
-            <div className="relative flex-1 max-w-xs">
+        <div
+          className={`flex justify-between items-center ${
+            isMobile ? "pb-3 pt-1" : "px-3 pt-1 h-full"
+          }`}
+        >
+          {/* Title */}
+          {isMobile && <h1 className="text-xl font-semibold">Menus</h1>}
+
+          {/* Desktop search bar */}
+          {!isMobile && (
+            <div className="flex-1 max-w-xs">
               <Input
                 placeholder="Search menus..."
                 value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
+                onChange={handleSearchChange}
                 className="h-10"
               />
             </div>
-          </div>
-          <div>
-            <Link to="/settings/website/menus/create">
+          )}
+
+          {/* Action buttons */}
+          <div className={`${isMobile ? "flex items-center gap-2" : ""}`}>
+            {isMobile && (
               <Button
-                size="lg"
-                className="flex items-center gap-2 py-2"
-                disabled={
-                  !(actions.includes("admin") || actions.includes("create"))
-                }
+                variant="outline"
+                size="icon"
+                onClick={toggleSearch}
+                className="h-9 w-9 text-gray-500"
               >
-                <PlusCircle className="h-4 w-4" />
-                New Menu
+                <SearchIcon className="h-5 w-5" />
               </Button>
+            )}
+
+            <Link to="/settings/website/menus/create">
+              {isMobile ? (
+                <Button
+                  size="icon"
+                  className="h-9 w-9"
+                  disabled={
+                    !(actions.includes("admin") || actions.includes("create"))
+                  }
+                >
+                  <PlusCircle className="h-5 w-5" />
+                </Button>
+              ) : (
+                <Button
+                  size="lg"
+                  className="flex items-center gap-2 py-2"
+                  disabled={
+                    !(actions.includes("admin") || actions.includes("create"))
+                  }
+                >
+                  <PlusCircle className="h-4 w-4" />
+                  New Menu
+                </Button>
+              )}
             </Link>
           </div>
         </div>
+
+        {/* Mobile search bar */}
+        {isMobile && showSearch && (
+          <div className="px-4 pb-3">
+            <Input
+              placeholder="Search menus..."
+              value={searchText}
+              onChange={handleSearchChange}
+              className="h-9 w-full"
+              autoFocus
+            />
+          </div>
+        )}
       </div>
 
-      {/* Content */}
       <div
-        className="absolute overflow-auto"
-        style={{
-          top: headerHeight,
-          left: sidebarWidth,
-          right: 0,
-          bottom: "64px",
-          paddingLeft: "1.5rem",
-          paddingRight: "1.5rem",
-          paddingBottom: "1.5rem",
-          paddingTop: "1rem",
-          transition: "left 0.3s ease, top 0.3s ease",
-        }}
+        className={
+          isMobile
+            ? "flex-1 pb-16 pt-1 overflow-auto"
+            : "absolute overflow-auto"
+        }
+        style={
+          !isMobile
+            ? {
+                top: "calc(1.5rem + 2.5rem + 1rem)",
+                left: "265px",
+                right: 0,
+                bottom: "64px",
+                paddingLeft: "1.5rem",
+                paddingRight: "1.5rem",
+                paddingBottom: "1.5rem",
+                paddingTop: "1rem",
+              }
+            : undefined
+        }
       >
         <MenuList
           actions={actions}
-          data={{ menus: filteredMenus, total, loading }}
+          data={{
+            menus: sortedMenus,
+            total: total,
+            loading,
+          }}
           filters={filters}
           setFilters={setFilters}
           fetchMenus={fetchMenus}
           sortOrder={sortOrder}
           onSortToggle={handleSortToggle}
+          isMobile={isMobile}
         />
       </div>
 
-      {/* Footer with Pagination */}
       <div
-        className="fixed bottom-0 z-10 bg-white"
-        style={{
-          left: sidebarWidth,
-          right: 0,
-          height: "64px",
-          transition: "left 0.3s ease",
-        }}
+        className={`${
+          isMobile ? "fixed bottom-0 left-0 right-0 py-3" : "fixed bottom-0"
+        } z-10 bg-white`}
+        style={
+          !isMobile
+            ? {
+                left: "265px",
+                right: 0,
+                height: "64px",
+              }
+            : undefined
+        }
       >
         <Pagination
           currentPage={filters.page}
           totalPages={totalPages}
           totalItems={total}
-          pageSize={filters.limit}
+          pageSize={pageSize}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
+          isMobile={isMobile}
         />
       </div>
     </div>

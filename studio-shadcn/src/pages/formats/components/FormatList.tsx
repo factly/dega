@@ -54,9 +54,15 @@ interface FormatListProps {
   fetchFormats: () => void;
   sortOrder?: "asc" | "desc";
   onSortToggle?: () => void;
+  isMobile?: boolean;
 }
 
-function FormatList({ data, fetchFormats, onSortToggle }: FormatListProps) {
+function FormatList({
+  data,
+  fetchFormats,
+  onSortToggle,
+  isMobile,
+}: FormatListProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
 
@@ -116,30 +122,30 @@ function FormatList({ data, fetchFormats, onSortToggle }: FormatListProps) {
     <div className="pb-4 overflow-auto">
       <div className="rounded-md">
         <Table>
-          <TableHeader className="w-1/2 text-[13px]">
+          <TableHeader className="text-[13px]">
             <TableRow>
-              <TableHead className="w-[200px]">
+              <TableHead className={isMobile ? "w-full" : "w-[200px]"}>
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={onSortToggle}
                 >
                   Name
-                  {onSortToggle && (
-                    <div className="flex items-center">
-                      <ChevronsUpDown className="ml-1 h-3 w-3" />
-                      <span className="ml-1 text-xs text-muted-foreground"></span>
-                    </div>
-                  )}
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
-              <TableHead className="w-[400px]">Description</TableHead>
+              {!isMobile && (
+                <TableHead className="w-[400px]">Description</TableHead>
+              )}
               <TableHead className="w-[150px] text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.loading ? (
               <TableRow>
-                <TableCell colSpan={3} className="text-center py-4">
+                <TableCell
+                  colSpan={isMobile ? 2 : 3}
+                  className="text-center py-4"
+                >
                   Loading...
                 </TableCell>
               </TableRow>
@@ -150,18 +156,22 @@ function FormatList({ data, fetchFormats, onSortToggle }: FormatListProps) {
                   onClick={() => handleRowClick(format.id)}
                   className="cursor-pointer"
                 >
-                  <TableCell className="min-w-[200px]">
-                    <Link
-                      to={`/settings/advanced/formats/${format.id}/edit`}
-                      onClick={(e) => e.stopPropagation()}
-                    >
+                  <TableCell>
+                    <h3 className="font-normal">
                       {format.name || "Unnamed Format"}
-                    </Link>
+                    </h3>
+                    {isMobile && format.description && (
+                      <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
+                        {format.description}
+                      </p>
+                    )}
                   </TableCell>
-                  <TableCell className="min-w-[400px]">
-                    <p>{format.description || "---"}</p>
-                  </TableCell>
-                  <TableCell className="min-w-[150px] text-center">
+                  {!isMobile && (
+                    <TableCell className="min-w-[400px]">
+                      <p>{format.description || "---"}</p>
+                    </TableCell>
+                  )}
+                  <TableCell className="text-center">
                     <DropdownMenu>
                       <DropdownMenuTrigger
                         asChild
@@ -193,7 +203,10 @@ function FormatList({ data, fetchFormats, onSortToggle }: FormatListProps) {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={3} className="text-center py-4">
+                <TableCell
+                  colSpan={isMobile ? 2 : 3}
+                  className="text-center py-4"
+                >
                   No formats found
                 </TableCell>
               </TableRow>
@@ -202,8 +215,12 @@ function FormatList({ data, fetchFormats, onSortToggle }: FormatListProps) {
         </Table>
       </div>
 
+      {/* Delete Confirmation Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-sm p-4">
+        <DialogContent
+          className="max-w-sm p-4"
+          onPointerDownOutside={(e) => e.preventDefault()}
+        >
           <DialogHeader className="space-y-2">
             <DialogTitle className="text-base">Delete Format</DialogTitle>
             <DialogDescription className="text-sm">
@@ -218,6 +235,7 @@ function FormatList({ data, fetchFormats, onSortToggle }: FormatListProps) {
               size="sm"
               variant="destructive"
               onClick={handleDeleteConfirm}
+              type="button"
             >
               Delete
             </Button>

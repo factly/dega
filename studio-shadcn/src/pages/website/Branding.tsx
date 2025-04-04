@@ -140,7 +140,7 @@ function Branding() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="p-4 bg-white max-w-3xl mx-auto space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 gap-6">
                       <FormField
                         control={form.control}
                         name="logo_id"

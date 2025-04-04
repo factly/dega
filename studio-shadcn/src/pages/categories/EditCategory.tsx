@@ -33,10 +33,10 @@ function EditCategory(): React.ReactElement {
 
   const { category, loading } = useSelector((state: RootState) => {
     return {
-      // Use string ID for lookup in details object
-      category: state.categories.details[id as string]
-        ? state.categories.details[id as string]
-        : null,
+      category:
+        state.categories.details[id as string] ||
+        state.categories.details[String(numericId)] ||
+        null,
       loading: state.categories.loading,
     };
   });
@@ -63,7 +63,13 @@ function EditCategory(): React.ReactElement {
   }
 
   const onUpdate = (values: Partial<Category>) => {
-    dispatch(updateCategory({ ...category, ...values })).then(() => {
+    const updatedCategory = {
+      ...category,
+      ...values,
+      id: numericId,
+    };
+
+    dispatch(updateCategory(updatedCategory)).then(() => {
       // Navigate to the categories list after update
       navigate("/categories");
     });

@@ -228,9 +228,11 @@ export const updateCategory = (data: Category): AppThunk<any> => {
       return Promise.reject(new Error("Category ID is required"));
     }
 
+    const categoryId = String(data.id);
+
     dispatch(loadingCategories());
     return axios
-      .put<Category>(`${CATEGORIES_API}/${data.id}`, data)
+      .put<Category>(`${CATEGORIES_API}/${categoryId}`, data)
       .then((response) => {
         if (response.data.medium) {
           dispatch(addMedia([response.data.medium]));
@@ -256,9 +258,11 @@ export const deleteCategory = (id: string | number): AppThunk<any> => {
       return Promise.reject(new Error("Invalid category ID"));
     }
 
+    const categoryId = String(id);
+
     dispatch(loadingCategories());
     return axios
-      .delete(`${CATEGORIES_API}/${id}`)
+      .delete(`${CATEGORIES_API}/${categoryId}`)
       .then((response) => {
         dispatch(resetCategories());
         dispatch(addSuccessNotification("Category deleted"));

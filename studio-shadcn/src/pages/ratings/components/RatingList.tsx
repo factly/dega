@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteRating } from "../../../actions/ratings";
 import useNavigation from "../../../utils/useNavigation";
@@ -55,79 +54,70 @@ interface RatingListProps {
   };
   setFilters: (filters: { page: number; limit: number }) => void;
   fetchRatings: () => void;
+  sortOrder?: "asc" | "desc";
+  onSortToggle?: () => void;
+  isMobile?: boolean;
 }
 
-const RatingList: React.FC<RatingListProps> = ({ data, fetchRatings }) => {
-  const history = useNavigation();
+const RatingList: React.FC<RatingListProps> = ({
+  data,
+  fetchRatings,
+  onSortToggle,
+  isMobile = false,
+}) => {
+  const navigate = useNavigation();
   const dispatch = useDispatch<AppThunkDispatch>();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [ratingToDelete, setRatingToDelete] = useState<Rating | null>(null);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [sortedRatings, setSortedRatings] = useState<Rating[]>([]);
 
-  // Update sortedRatings whenever data.ratings changes
-  useEffect(() => {
-    const sorted = [...data.ratings].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.name.localeCompare(b.name);
-      } else {
-        return b.name.localeCompare(a.name);
+  const handleRowClick = useCallback(
+    (id: string) => {
+      navigate(`/ratings/${id}/edit`);
+    },
+    [navigate]
+  );
+
+  const handleEditClick = useCallback(
+    (e: React.MouseEvent, id: string) => {
+      e.stopPropagation();
+      navigate(`/ratings/${id}/edit`);
+    },
+    [navigate]
+  );
+
+  const handleDeleteClick = useCallback(
+    (e: React.MouseEvent, rating: Rating) => {
+      e.stopPropagation();
+      setModalOpen(true);
+      setRatingToDelete(rating);
+    },
+    []
+  );
+
+  const handleDeleteConfirm = useCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation();
+
+      if (ratingToDelete && ratingToDelete.id) {
+        try {
+          await dispatch(deleteRating(ratingToDelete.id));
+          fetchRatings();
+        } catch (error) {
+          console.error("Error deleting rating:", error);
+        } finally {
+          setModalOpen(false);
+          setRatingToDelete(null);
+        }
       }
-    });
-    setSortedRatings(sorted);
-  }, [data.ratings, sortOrder]);
+    },
+    [ratingToDelete, dispatch, fetchRatings]
+  );
 
-  const handleRowClick = (id: string) => {
-    history(`/ratings/${id}/edit`);
-  };
-
-  const handleEditClick = (e: React.MouseEvent, id: string) => {
-    e.stopPropagation();
-    history(`/ratings/${id}/edit`);
-  };
-
-  const handleDeleteClick = (e: React.MouseEvent, rating: Rating) => {
-    e.stopPropagation();
-    setModalOpen(true);
-    setRatingToDelete(rating);
-  };
-
-  const handleDeleteConfirm = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-
-    if (ratingToDelete && ratingToDelete.id) {
-      try {
-        await dispatch(deleteRating(ratingToDelete.id));
-        fetchRatings();
-      } catch (error) {
-        console.error("Error deleting rating:", error);
-      } finally {
-        setModalOpen(false);
-        setRatingToDelete(null);
-      }
-    }
-  };
-
-  const handleDeleteCancel = (e: React.MouseEvent) => {
+  const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     setModalOpen(false);
     setRatingToDelete(null);
-  };
-
-  const handleSortByTitle = () => {
-    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
-    setSortOrder(newSortOrder);
-
-    const sorted = [...data.ratings].sort((a, b) => {
-      if (newSortOrder === "asc") {
-        return a.name.localeCompare(b.name);
-      } else {
-        return b.name.localeCompare(a.name);
-      }
-    });
-
-    setSortedRatings(sorted);
-  };
+  }, []);
 
   return (
     <div className="pb-4 overflow-auto">
@@ -135,56 +125,68 @@ const RatingList: React.FC<RatingListProps> = ({ data, fetchRatings }) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="min-w-[300px] text-[13px]">
+              <TableHead
+                className={`min-w-[200px] text-[13px] ${
+                  isMobile ? "w-2/5" : ""
+                }`}
+              >
                 <div
                   className="flex items-center cursor-pointer"
-                  onClick={handleSortByTitle}
+                  onClick={onSortToggle}
                 >
                   Title
                   <ChevronsUpDown className="ml-1 h-4 w-4" />
                 </div>
               </TableHead>
-              <TableHead className="min-w-[250px] text-[13px]">
+              <TableHead
+                className={`${
+                  isMobile ? "w-2/5" : "min-w-[250px]"
+                } text-[13px]`}
+              >
                 Preview
               </TableHead>
-              <TableHead className="min-w-[100px] text-[13px]">
-                Rating Value
+              <TableHead
+                className={`min-w-[100px] text-[13px] ${
+                  isMobile ? "w-1/5" : ""
+                }`}
+              >
+                Value
               </TableHead>
-              <TableHead className="min-w-[100px] text-center text-[13px]">
+              <TableHead
+                className={`text-center text-[13px] ${
+                  isMobile ? "w-[80px]" : "min-w-[100px]"
+                }`}
+              >
                 Action
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sortedRatings.length === 0 ? (
+            {data.ratings.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4} className="text-center py-10">
                   No ratings found
                 </TableCell>
               </TableRow>
             ) : (
-              sortedRatings.map((rating) => (
+              data.ratings.map((rating) => (
                 <TableRow
                   key={rating.id}
                   onClick={() => handleRowClick(rating.id)}
                   className="cursor-pointer"
                 >
                   <TableCell>
-                    <Link
-                      to={`/ratings/${rating.id}/edit`}
-                      className="mr-2"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <h3 className="text-[#101828]">{rating.name}</h3>
-                    </Link>
+                    <h3 className="text-[#101828]">{rating.name}</h3>
                   </TableCell>
                   <TableCell>
                     <div
-                      className="text-center w-28 text-sm rounded-xl"
+                      className={`text-center text-sm rounded-xl ${
+                        isMobile ? "w-auto text-xs" : "w-28"
+                      }`}
                       style={{
                         color: rating.text_colour?.hex,
                         backgroundColor: rating.background_colour?.hex,
-                        padding: "0.25rem",
+                        padding: isMobile ? "0.15rem" : "0.25rem",
                       }}
                     >
                       {rating.name}
@@ -230,7 +232,10 @@ const RatingList: React.FC<RatingListProps> = ({ data, fetchRatings }) => {
       </div>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-sm p-4">
+        <DialogContent
+          className="max-w-sm p-4"
+          onPointerDownOutside={(e) => e.preventDefault()}
+        >
           <DialogHeader className="space-y-2">
             <DialogTitle className="text-base">Delete Rating</DialogTitle>
             <DialogDescription className="text-sm">
