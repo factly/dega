@@ -101,7 +101,7 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
   }, [form]);
 
   return (
-    <div className={isMobile ? "" : "px-60 max-w-6xl mx-auto"}>
+    <div className={isMobile ? "px-4" : "px-60 max-w-6xl mx-auto"}>
       {/* Mobile header */}
       {isMobile && (
         <div className="mb-4">
@@ -152,7 +152,7 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="py-3 bg-white">
+                  <div className="py-3 bg-white px-4">
                     <div className="space-y-4">
                       <FormField
                         control={form.control}
@@ -203,26 +203,33 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
                             <FormLabel className="text-base">Colour</FormLabel>
                             <div className="relative w-full">
                               <div
-                                className="p-1 w-full bg-white rounded shadow-sm inline-block cursor-pointer"
+                                className="border border-input rounded-md h-9 w-full flex items-center px-3 bg-white shadow-xs cursor-pointer"
                                 onClick={handleBgClick}
                               >
-                                {backgroundColour?.hex ? (
-                                  <div
-                                    className="w-full h-6 rounded"
-                                    style={{
-                                      background: `${backgroundColour?.hex}`,
-                                    }}
-                                  />
-                                ) : (
-                                  <span className="text-gray-600 text-sm">
-                                    Select a colour
-                                  </span>
-                                )}
+                                <div className="flex w-full items-center">
+                                  {backgroundColour?.hex ? (
+                                    <div className="flex items-center gap-2 w-full">
+                                      <div
+                                        className="w-5 h-5 rounded-sm"
+                                        style={{
+                                          background: `${backgroundColour?.hex}`,
+                                        }}
+                                      />
+                                      <span className="text-sm">
+                                        {backgroundColour.hex}
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <span className="text-muted-foreground text-sm">
+                                      Select a colour
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                               {displayBgColorPicker ? (
                                 <div
                                   className={`absolute z-10 ${
-                                    isMobile ? "right-0" : "top-0 left-full"
+                                    isMobile ? "right-0" : "top-10 left-0"
                                   }`}
                                 >
                                   <div
@@ -256,20 +263,18 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
                             <FormLabel className="text-base mb-2">
                               Featured Image
                             </FormLabel>
-                            <div className="flex justify-center items-start mt-4">
-                              <MediaSelector
-                                value={field.value}
-                                onChange={(value) => {
-                                  field.onChange(value);
-                                  setValueChange(true);
-                                }}
-                                containerStyles={{
-                                  justifyContent: "center",
-                                  width: isMobile ? "84%" : "100%",
-                                  height: isMobile ? "160px" : "220px",
-                                }}
-                              />
-                            </div>
+                            <MediaSelector
+                              value={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              containerStyles={{
+                                justifyContent: "center",
+                                width: "100%",
+                                height: isMobile ? "160px" : "220px",
+                              }}
+                            />
                           </FormItem>
                         )}
                       />

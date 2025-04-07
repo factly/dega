@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
+import EmptyState from "@/components/EmptyState";
 
 // Define interfaces
 interface Token {
@@ -61,24 +62,25 @@ export default function TokenList({
       </div>
     );
   }
+  const hasTokens = tokens && tokens.length > 0;
 
   return (
     <div className="pb-4 overflow-auto">
-      <Table>
-        <TableHeader className="text-[13px]">
-          <TableRow>
-            <TableHead className="w-[30%]">Name</TableHead>
-            {!isMobile && (
-              <TableHead className="w-[40%]">Description</TableHead>
-            )}
-            <TableHead className={isMobile ? "text-right" : "text-center"}>
-              Action
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {tokens.length > 0 ? (
-            tokens.map((token: Token) => (
+      {hasTokens ? (
+        <Table>
+          <TableHeader className="text-[13px]">
+            <TableRow>
+              <TableHead className="w-[30%]">Name</TableHead>
+              {!isMobile && (
+                <TableHead className="w-[40%]">Description</TableHead>
+              )}
+              <TableHead className={isMobile ? "text-right" : "text-center"}>
+                Action
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tokens.map((token: Token) => (
               <TableRow key={token.id}>
                 <TableCell>
                   <div>
@@ -134,19 +136,17 @@ export default function TokenList({
                   </AlertDialog>
                 </TableCell>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell
-                colSpan={isMobile ? 2 : 3}
-                className="text-center py-4"
-              >
-                No tokens found
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <EmptyState
+          contentType="tokens"
+          title="No tokens found"
+          description="Your tokens list is empty"
+          isMobile={isMobile}
+        />
+      )}
     </div>
   );
 }

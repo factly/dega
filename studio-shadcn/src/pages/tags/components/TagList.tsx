@@ -26,7 +26,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import EmptyState from "@/components/EmptyState";
 
 interface Tag {
   id: string;
@@ -52,7 +54,7 @@ interface TagListProps {
   isMobile?: boolean;
 }
 
-function TagList({ fetchTags, data, onSortToggle }: TagListProps) {
+function TagList({ fetchTags, data, onSortToggle, isMobile }: TagListProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const [deleteItemID, setDeleteItemID] = useState<string | null>(null);
 
@@ -106,29 +108,30 @@ function TagList({ fetchTags, data, onSortToggle }: TagListProps) {
 
   // Safely access data
   const tags = data?.tags || [];
+  const hasTagsData = tags && tags.length > 0;
 
   return (
     <div className="pb-4 overflow-auto">
-      <div className="rounded-md">
-        <Table>
-          <TableHeader className="w-1/2 text-[13px]">
-            <TableRow>
-              <TableHead className="w-1/2">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={onSortToggle}
-                >
-                  Title
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              <TableHead className="w-2/5">Slug</TableHead>
-              <TableHead className="w-[150px] text-center">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {tags.length > 0 ? (
-              tags.map((tag) => (
+      {hasTagsData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="w-1/2 text-[13px]">
+              <TableRow>
+                <TableHead className="w-1/2">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={onSortToggle}
+                  >
+                    Title
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-2/5">Slug</TableHead>
+                <TableHead className="w-[150px] text-center">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tags.map((tag) => (
                 <TableRow
                   key={tag.id}
                   onClick={() => handleRowClick(tag.id)}
@@ -160,6 +163,7 @@ function TagList({ fetchTags, data, onSortToggle }: TagListProps) {
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => handleDeleteClick(e, tag.id)}
                           className="cursor-pointer text-red-600 focus:text-red-600"
@@ -171,17 +175,18 @@ function TagList({ fetchTags, data, onSortToggle }: TagListProps) {
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={3} className="text-center py-4">
-                  No tags found
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="tags"
+          title="No tags found"
+          description="Your tags list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

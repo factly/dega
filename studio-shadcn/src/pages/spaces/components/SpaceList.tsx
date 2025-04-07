@@ -31,6 +31,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { deleteSpace } from "../../../actions/spaces";
 import { spaceSelector } from "../../../selectors/spaces";
 import useNavigation from "../../../utils/useNavigation";
+import EmptyState from "@/components/EmptyState";
 
 // Define types for the space object
 interface Space {
@@ -206,42 +207,54 @@ const SpaceList: React.FC<SpaceListProps> = ({
       }
     });
   }, [spaces, searchQuery, sortBy, currentNameSortOrder, dateSortOrder]);
+  const hasSpacesData = !loading && filteredAndSortedSpaces.length > 0;
 
   // Mobile view table
   if (isMobile) {
     return (
       <div className="pb-4 overflow-auto">
-        <Table>
-          <TableHeader className="text-[13px]">
-            <TableRow>
-              <TableHead className="w-1/2">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={handleNameSort}
-                >
-                  Title
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              <TableHead className="w-1/3">ID</TableHead>
-              <TableHead className="w-[50px] text-center">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {loading ? (
-              <>
-                <MobileLoadingRow />
-                <MobileLoadingRow />
-                <MobileLoadingRow />
-              </>
-            ) : filteredAndSortedSpaces.length === 0 ? (
+        {loading ? (
+          <Table>
+            <TableHeader className="text-[13px]">
               <TableRow>
-                <TableCell colSpan={3} className="text-center py-4">
-                  No spaces found
-                </TableCell>
+                <TableHead className="w-1/2">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={handleNameSort}
+                  >
+                    Title
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-1/3">ID</TableHead>
+                <TableHead className="w-[50px] text-center">Action</TableHead>
               </TableRow>
-            ) : (
-              filteredAndSortedSpaces.map((space) => (
+            </TableHeader>
+            <TableBody>
+              <MobileLoadingRow />
+              <MobileLoadingRow />
+              <MobileLoadingRow />
+            </TableBody>
+          </Table>
+        ) : hasSpacesData ? (
+          <Table>
+            <TableHeader className="text-[13px]">
+              <TableRow>
+                <TableHead className="w-1/2">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={handleNameSort}
+                  >
+                    Title
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-1/3">ID</TableHead>
+                <TableHead className="w-[50px] text-center">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredAndSortedSpaces.map((space) => (
                 <TableRow
                   key={space.id}
                   className="cursor-pointer"
@@ -284,10 +297,17 @@ const SpaceList: React.FC<SpaceListProps> = ({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <EmptyState
+            contentType="spaces"
+            title="No spaces found"
+            description="Your spaces list is empty"
+            isMobile={isMobile}
+          />
+        )}
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent
@@ -321,52 +341,76 @@ const SpaceList: React.FC<SpaceListProps> = ({
   // Desktop view table
   return (
     <div className="pb-4 overflow-auto">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-1/4 text-[13px]">
-              <div
-                className="flex items-center cursor-pointer"
-                onClick={handleNameSort}
-              >
-                Title
-                <ChevronsUpDown className="ml-1 h-3 w-3" />
-              </div>
-            </TableHead>
-            <TableHead className="w-1/4 text-[13px]">ID</TableHead>
-            <TableHead className="w-1/6 text-[13px]">Site Title</TableHead>
-            <TableHead className="w-1/6 text-[13px]">Site Address</TableHead>
-            <TableHead className="w-1/7 text-[13px]">
-              <div
-                className="flex items-center cursor-pointer"
-                onClick={handleDateSort}
-              >
-                Created On
-                <ChevronsUpDown className="ml-1 h-3 w-3" />
-              </div>
-            </TableHead>
-            <TableHead className="w-[100px] text-[13px] text-center">
-              Actions
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {loading ? (
-            <>
-              <LoadingRow />
-              <LoadingRow />
-              <LoadingRow />
-              <LoadingRow />
-              <LoadingRow />
-            </>
-          ) : filteredAndSortedSpaces.length === 0 ? (
+      {loading ? (
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={6} className="text-center py-10">
-                No spaces found
-              </TableCell>
+              <TableHead className="w-1/4 text-[13px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleNameSort}
+                >
+                  Title
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-1/4 text-[13px]">ID</TableHead>
+              <TableHead className="w-1/6 text-[13px]">Site Title</TableHead>
+              <TableHead className="w-1/6 text-[13px]">Site Address</TableHead>
+              <TableHead className="w-1/7 text-[13px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleDateSort}
+                >
+                  Created On
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-[100px] text-[13px] text-center">
+                Actions
+              </TableHead>
             </TableRow>
-          ) : (
-            filteredAndSortedSpaces.map((space) => (
+          </TableHeader>
+          <TableBody>
+            <LoadingRow />
+            <LoadingRow />
+            <LoadingRow />
+            <LoadingRow />
+            <LoadingRow />
+          </TableBody>
+        </Table>
+      ) : hasSpacesData ? (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-1/4 text-[13px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleNameSort}
+                >
+                  Title
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-1/4 text-[13px]">ID</TableHead>
+              <TableHead className="w-1/6 text-[13px]">Site Title</TableHead>
+              <TableHead className="w-1/6 text-[13px]">Site Address</TableHead>
+              <TableHead className="w-1/7 text-[13px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleDateSort}
+                >
+                  Created On
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-[100px] text-[13px] text-center">
+                Actions
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredAndSortedSpaces.map((space) => (
               <TableRow
                 key={space.id}
                 className="cursor-pointer"
@@ -414,10 +458,17 @@ const SpaceList: React.FC<SpaceListProps> = ({
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <EmptyState
+          contentType="spaces"
+          title="No spaces found"
+          description="Your spaces list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-sm p-4">

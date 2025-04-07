@@ -38,7 +38,7 @@ const CreateMenu: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="bg-white p-6">
+      <div>
         <MenuForm onCreate={onCreate} />
       </div>
     </div>

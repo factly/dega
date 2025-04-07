@@ -105,7 +105,7 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 // Helper function to process category data
 const processCategory = (category: Category): CategoryWithProcessedFields => {
-  const { medium, description_html, ...rest } = category;
+  const { medium, description_html, parent_category, ...rest } = category;
 
   return {
     ...rest,
@@ -114,7 +114,25 @@ const processCategory = (category: Category): CategoryWithProcessedFields => {
       html: description_html || "",
     },
     medium: medium?.id || null,
+    // Preserve parent_category data for use in UI
+    parent_category: parent_category
+      ? {
+          id: parent_category.id,
+          name: parent_category.name,
+        }
+      : undefined,
   };
+};
+
+// Helper to ensure the ID is properly formatted for API calls
+const ensureValidId = (id: string | number): string => {
+  // If it's already a string, just return it
+  if (typeof id === "string") {
+    return id;
+  }
+
+  // If it's a number, convert to string
+  return String(id);
 };
 
 // action to fetch all categories
@@ -147,7 +165,7 @@ export const getCategories = (
           dispatch(addMedia(mediaItems));
         }
 
-        // Process and add categories
+        // Process and add categories with parent data
         const processedCategories = response.data.nodes.map(processCategory);
         dispatch(addCategoriesList(processedCategories));
 
@@ -181,14 +199,17 @@ export const getCategory = (id: string | number): AppThunk<any> => {
       return Promise.reject(new Error("Invalid category ID"));
     }
 
+    const validId = ensureValidId(id);
+
     dispatch(loadingCategories());
     return axios
-      .get<Category>(`${CATEGORIES_API}/${id}`)
+      .get<Category>(`${CATEGORIES_API}/${validId}`)
       .then((response) => {
         if (response.data.medium) {
           dispatch(addMedia([response.data.medium]));
         }
 
+        // Preserve the original ID format from the response
         const processedCategory = processCategory(response.data);
         dispatch(addCategory(GET_CATEGORY, processedCategory));
         return response;
@@ -210,7 +231,7 @@ export const createCategory = (data: Partial<Category>): AppThunk<any> => {
       .then((response) => {
         dispatch(resetCategories());
         dispatch(addSuccessNotification("Category created"));
-        return response;
+        return response; // Important: Return the response for proper Promise chaining
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -228,20 +249,21 @@ export const updateCategory = (data: Category): AppThunk<any> => {
       return Promise.reject(new Error("Category ID is required"));
     }
 
-    const categoryId = String(data.id);
+    const validId = ensureValidId(data.id);
 
     dispatch(loadingCategories());
     return axios
-      .put<Category>(`${CATEGORIES_API}/${categoryId}`, data)
+      .put<Category>(`${CATEGORIES_API}/${validId}`, data)
       .then((response) => {
         if (response.data.medium) {
           dispatch(addMedia([response.data.medium]));
         }
 
+        // Preserve the original ID format from the response
         const processedCategory = processCategory(response.data);
         dispatch(addCategory(UPDATE_CATEGORY, processedCategory));
         dispatch(addSuccessNotification("Category updated"));
-        return response;
+        return response; // Important: Return the response for proper Promise chaining
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -258,11 +280,11 @@ export const deleteCategory = (id: string | number): AppThunk<any> => {
       return Promise.reject(new Error("Invalid category ID"));
     }
 
-    const categoryId = String(id);
+    const validId = ensureValidId(id);
 
     dispatch(loadingCategories());
     return axios
-      .delete(`${CATEGORIES_API}/${categoryId}`)
+      .delete(`${CATEGORIES_API}/${validId}`)
       .then((response) => {
         dispatch(resetCategories());
         dispatch(addSuccessNotification("Category deleted"));

@@ -43,37 +43,45 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
     initialData.meta_fields = JSON.stringify(initialData.meta_fields);
   }
 
-  const form = useForm({
+  const methods = useForm({
     defaultValues: initialData,
   });
 
   const [valueChange, setValueChange] = useState(false);
 
   const onReset = () => {
-    form.reset(initialData);
+    methods.reset(initialData);
   };
 
-  const handleCancel = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent form submission
-    navigate(-1); // Navigate to the previous page
+  const handleCancel = () => {
+    navigate(-1);
   };
 
-  const onTitleChange = (string: string) => {
-    form.setValue("slug", maker(string));
+  const onTitleChange = (title: string) => {
+    methods.setValue("slug", maker(title));
     setValueChange(true);
   };
 
   const onSubmit = (values: ClaimantData) => {
+    // Create a new object to avoid modifying the form values directly
     const submissionValues = { ...values };
+
+    // Always preserve the original ID format from the data
+    if (data.id !== undefined) {
+      submissionValues.id = data.id;
+    }
+
+    // Process meta_fields
     if (submissionValues.meta_fields) {
       submissionValues.meta_fields = getJsonValue(submissionValues.meta_fields);
     }
+
+    // Call the onCreate prop function and let the parent component handle navigation
     onCreate(submissionValues);
-    onReset();
   };
 
   return (
-    <div className={isMobile ? "" : "px-60 max-w-6xl mx-auto"}>
+    <div className={isMobile ? "px-4" : "px-60 max-w-6xl mx-auto"}>
       {/* Mobile header */}
       {isMobile && (
         <div className="mb-4">
@@ -90,7 +98,7 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
 
       {/* Desktop header */}
       {!isMobile && (
-        <div className="mb-4 px-4">
+        <div className="mb-6 px-4">
           <h1 className="text-xl font-semibold text-gray-900">
             {data && data.id ? "Edit Claimant" : "Create Claimant"}
           </h1>
@@ -104,9 +112,12 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
 
       <div className="border-t border-gray-200 mb-4"></div>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full mx-auto">
-          <div className="w-full">
+      <Form {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="w-full mx-auto"
+        >
+          <div className="w-full mb-6">
             <Accordion
               type="multiple"
               defaultValue={["general"]}
@@ -122,10 +133,10 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="py-3 bg-white">
+                  <div className="py-3 bg-white px-4">
                     <div className="space-y-4">
                       <FormField
-                        control={form.control}
+                        control={methods.control}
                         name="name"
                         render={({ field }) => (
                           <FormItem className="mb-4 sm:mb-6">
@@ -143,11 +154,11 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
                       />
 
                       <div className="mb-4 sm:mb-6">
-                        <SlugInput form={form} />
+                        <SlugInput form={methods} />
                       </div>
 
                       <FormField
-                        control={form.control}
+                        control={methods.control}
                         name="is_featured"
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between">
@@ -166,7 +177,7 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
                       />
 
                       <FormField
-                        control={form.control}
+                        control={methods.control}
                         name="tag_line"
                         render={({ field }) => (
                           <FormItem className="mb-4 sm:mb-6">
@@ -188,27 +199,25 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
 
                       {/* Featured Image */}
                       <FormField
-                        control={form.control}
+                        control={methods.control}
                         name="medium_id"
                         render={({ field }) => (
                           <FormItem className="mt-6">
                             <FormLabel className="text-base mb-2">
                               Featured Image
                             </FormLabel>
-                            <div className="flex justify-center items-start mt-4">
-                              <MediaSelector
-                                value={field.value}
-                                onChange={(value) => {
-                                  field.onChange(value);
-                                  setValueChange(true);
-                                }}
-                                containerStyles={{
-                                  justifyContent: "center",
-                                  width: isMobile ? "84%" : "100%",
-                                  height: isMobile ? "160px" : "220px",
-                                }}
-                              />
-                            </div>
+                            <MediaSelector
+                              value={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              containerStyles={{
+                                justifyContent: "center",
+                                width: "100%",
+                                height: isMobile ? "160px" : "220px",
+                              }}
+                            />
                           </FormItem>
                         )}
                       />
@@ -220,9 +229,7 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
           </div>
 
           <div className="w-full mb-2">
-            <MetaForm
-              style={{ marginBottom: 24, background: "#f0f2f5", border: 0 }}
-            />
+            <MetaForm form={methods} />
           </div>
 
           <div
@@ -246,11 +253,7 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
                 disabled={!valueChange}
                 className={isMobile ? "w-[48%]" : "px-6"}
               >
-                {data && data.id
-                  ? "Update"
-                  : isMobile
-                  ? "Create"
-                  : "Create claimant"}
+                {data && data.id ? "Update" : "Create"}
               </Button>
             </div>
           </div>

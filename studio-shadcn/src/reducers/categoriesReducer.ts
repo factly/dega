@@ -10,7 +10,7 @@ import deepEqual from "deep-equal";
 
 // Define types for the category object
 interface Category {
-  id: number;
+  id: number | string;
   [key: string]: any;
 }
 
@@ -114,7 +114,8 @@ export default function categoriesReducer(
 
       const newDetails = payload.reduce<{ [key: string]: Category }>(
         (obj, item) => {
-          obj[String(item.id)] = item;
+          const stringId = String(item.id);
+          obj[stringId] = { ...item };
           return obj;
         },
         {}
@@ -132,11 +133,13 @@ export default function categoriesReducer(
     case UPDATE_CATEGORY: {
       const payload = (action as GetCategoryAction | UpdateCategoryAction)
         .payload;
+      const stringId = String(payload.id);
+
       return {
         ...state,
         details: {
           ...state.details,
-          [String(payload.id)]: payload,
+          [stringId]: { ...payload },
         },
       };
     }

@@ -26,7 +26,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import EmptyState from "@/components/EmptyState";
 
 // Types
 interface Policy {
@@ -123,41 +125,35 @@ const PolicyList: React.FC<PolicyListProps> = ({
   const isDeleteAllowed =
     actions.includes("admin") || actions.includes("delete");
 
+  // Check if there are any policies to display
+  const hasPoliciesData = data.policies && data.policies.length > 0;
+
   return (
     <div className="pb-4 overflow-auto">
-      <div className="rounded-md">
-        <Table>
-          <TableHeader className="text-[13px]">
-            <TableRow>
-              <TableHead className="w-full">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={onSortToggle}
-                >
-                  Name
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              {!isMobile && (
-                <TableHead className="w-[400px] min-w-[400px]">
-                  Description
-                </TableHead>
-              )}
-              <TableHead className="w-[150px] text-center">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.policies.length === 0 ? (
+      {hasPoliciesData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="text-[13px]">
               <TableRow>
-                <TableCell
-                  colSpan={isMobile ? 2 : 3}
-                  className="text-center py-6"
-                >
-                  No policies found
-                </TableCell>
+                <TableHead className="w-full">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={onSortToggle}
+                  >
+                    Name
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                {!isMobile && (
+                  <TableHead className="w-[400px] min-w-[400px]">
+                    Description
+                  </TableHead>
+                )}
+                <TableHead className="w-[150px] text-center">Action</TableHead>
               </TableRow>
-            ) : (
-              data.policies.map((policy) => (
+            </TableHeader>
+            <TableBody>
+              {data.policies.map((policy) => (
                 <TableRow
                   key={policy.id}
                   onClick={() => handleRowClick(policy.id)}
@@ -198,6 +194,7 @@ const PolicyList: React.FC<PolicyListProps> = ({
                           <Eye className="h-4 w-4 mr-2" />
                           <span>View</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => handleEditClick(e, policy.id)}
                           className="cursor-pointer"
@@ -205,6 +202,7 @@ const PolicyList: React.FC<PolicyListProps> = ({
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => handleDeleteClick(e, policy.id)}
                           className="cursor-pointer text-red-600 focus:text-red-600"
@@ -217,11 +215,18 @@ const PolicyList: React.FC<PolicyListProps> = ({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="policies"
+          title="No policies found"
+          description="Your policies list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

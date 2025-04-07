@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, CircleX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -15,6 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
 
 // Import the useAppDispatch hook
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -329,6 +330,15 @@ function Selector({
     }
   };
 
+  // Handle removal of a single item from selection
+  const handleRemoveItem = (e: React.MouseEvent, itemId: string | number) => {
+    e.stopPropagation(); // Prevent opening the dropdown
+    if (mode) {
+      const newValue = normalizedValue.filter((id) => id !== itemId);
+      handleSelectionChange(newValue);
+    }
+  };
+
   // Handle create entity
   const handleCreateEntity = () => {
     if (!selectorType || !createEntity) return;
@@ -380,6 +390,11 @@ function Selector({
   const filteredDetails = details.filter(
     (item) => item && !invalidOptions.includes(String(item.id))
   );
+
+  // Get selected items for display in the trigger button
+  const selectedItems = normalizedValue
+    .map((id) => details.find((item) => item?.id === id))
+    .filter((item) => item) as EntityDetail[];
 
   // For single select
   if (!mode) {
@@ -434,14 +449,12 @@ function Selector({
                         handleSelectionChange(item?.id);
                         setOpen(false);
                       }}
+                      className={
+                        normalizedValue.includes(item?.id)
+                          ? "bg-slate-100 dark:bg-slate-700"
+                          : ""
+                      }
                     >
-                      <Check
-                        className={`h-4 w-4 ${
-                          normalizedValue.includes(item?.id)
-                            ? "opacity-100"
-                            : "opacity-0"
-                        }`}
-                      />
                       {getDisplayValue(item)}
                     </CommandItem>
                   ))}
@@ -454,7 +467,7 @@ function Selector({
     );
   }
 
-  // For multi-select mode
+  // For multi-select mode with badges and remove buttons
   return (
     <div style={style}>
       <Popover open={open} onOpenChange={setOpen}>
@@ -463,12 +476,34 @@ function Selector({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-between"
+            className="w-full justify-between relative h-auto min-h-10"
           >
-            {normalizedValue.length > 0
-              ? `${normalizedValue.length} selected`
-              : placeholder}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <div className="flex flex-wrap gap-1 py-1 pr-8">
+              {selectedItems.length > 0 ? (
+                selectedItems.map((item) => (
+                  <Badge
+                    key={`selected-${item.id}`}
+                    variant="secondary"
+                    className="flex items-center gap-1 mr-1 mb-1"
+                  >
+                    <span className="max-w-[100px] truncate">
+                      {getDisplayValue(item)}
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={(e) => handleRemoveItem(e, item.id)}
+                      className="h-4 w-4 p-0 rounded-full ml-1 hover:bg-slate-300"
+                    >
+                      <CircleX className="h-3 w-3" />
+                    </Button>
+                  </Badge>
+                ))
+              ) : (
+                <span className="text-muted-foreground">{placeholder}</span>
+              )}
+            </div>
+            <ChevronsUpDown className="absolute right-3 top-3 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" style={{ width: style?.width }}>
@@ -506,14 +541,12 @@ function Selector({
                           : [...normalizedValue, item?.id];
                         handleSelectionChange(newValue);
                       }}
+                      className={
+                        normalizedValue.includes(item?.id)
+                          ? "bg-slate-100 dark:bg-slate-700"
+                          : ""
+                      }
                     >
-                      <Check
-                        className={`mr-2 h-4 w-4 ${
-                          normalizedValue.includes(item?.id)
-                            ? "opacity-100"
-                            : "opacity-0"
-                        }`}
-                      />
                       {getDisplayValue(item)}
                     </CommandItem>
                   ))}

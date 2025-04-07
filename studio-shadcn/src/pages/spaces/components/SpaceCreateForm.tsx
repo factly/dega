@@ -100,8 +100,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
             <h1 className="text-xl font-semibold">Create Space</h1>
             <div className="mt-2">
               <p className="text-gray-600 text-[13px]">
-                Set up a category to help organize by utilizing the advanced
-                options provided below.
+                Create a space to help organize your content.
               </p>
             </div>
           </div>
@@ -109,11 +108,10 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
 
         {/* Desktop header */}
         {!isMobile && (
-          <div className="mb-3 pb-4 border-b border-gray-200">
+          <div className="mb-3 pb-4 border-b border-gray-200 px-4">
             <h2 className="text-xl font-semibold">Create Space</h2>
-            <p className="text-gray-600 mt-2">
-              Set up a category to help organize by utilizing the advanced
-              options provided below.
+            <p className="text-gray-600 mt-2 text-[13px]">
+              Create a space to help organize your content.
             </p>
           </div>
         )}
@@ -163,9 +161,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         }}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
-                              Title
-                            </FormLabel>
+                            <FormLabel className="text-base">Title</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
@@ -189,7 +185,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         rules={{ required: "Organisation is required" }}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Organization
                             </FormLabel>
                             <Select
@@ -238,7 +234,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         name="description"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Description
                             </FormLabel>
                             <FormControl>
@@ -280,7 +276,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         name="site_title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Site Title
                             </FormLabel>
                             <FormControl>
@@ -293,13 +289,29 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                           </FormItem>
                         )}
                       />
+                      <FormField
+                        control={form.control}
+                        name="tag_line"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-base">Tagline</FormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                placeholder="Enter tagline"
+                                maxLength={100}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
 
                       <FormField
                         control={form.control}
                         name="site_address"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Website URL
                             </FormLabel>
                             <FormControl>
@@ -344,7 +356,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         name="meta_fields"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Metadata
                             </FormLabel>
                             <FormControl>
@@ -355,6 +367,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                                   language="json"
                                   value={field.value as string}
                                   onChange={field.onChange}
+                                  borderless={true}
                                   options={{
                                     minimap: { enabled: false },
                                     scrollBeyondLastLine: false,

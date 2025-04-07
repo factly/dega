@@ -16,42 +16,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useForm } from "react-hook-form";
 import { updateSpace } from "../../actions/spaces";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
-
-// Define types
-interface AnalyticsPlausible {
-  server_url?: string;
-  domain?: string;
-  embed_code?: string;
-}
-
-interface Analytics {
-  plausible: AnalyticsPlausible;
-}
-
-interface Space {
-  id: string;
-  name: string;
-  slug: string;
-  organisation_id: string;
-  analytics?: Analytics;
-  [key: string]: any;
-}
-
-interface RootState {
-  spaces: {
-    selected: string;
-    details: Record<string, Space>;
-    loading: boolean;
-  };
-}
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Space, RootState } from "./types";
 
 function AnalyticsForm() {
   const dispatch = useAppDispatch();
   const [valueChange, setValueChange] = useState(false);
-
+  const isMobile = useIsMobile();
   // Get space ID from Redux state
   const id = useSelector((state: RootState) => state.spaces.selected);
-
   // Get space and loading state from Redux
   const { space, loading } = useSelector((state: RootState) => {
     return {
@@ -59,16 +32,12 @@ function AnalyticsForm() {
       loading: state.spaces.loading,
     };
   });
-
-  // Initialize form with react-hook-form
   const form = useForm<Space>({
     // Do not set default values here, we'll set them with reset when space data loads
   });
 
-  // Watch for form value changes
   useEffect(() => {
     const subscription = form.watch(() => {
-      // Only set valueChange to true if form has been initialized with data
       if (form.formState.isDirty) {
         setValueChange(true);
       }
@@ -80,7 +49,6 @@ function AnalyticsForm() {
   // Use useEffect to update form values when space data is loaded
   useEffect(() => {
     if (space) {
-      // Ensure we have the correct structure even if analytics is not present in the space data
       const formValues = {
         ...space,
         analytics: {
@@ -106,6 +74,25 @@ function AnalyticsForm() {
     setValueChange(false);
   };
 
+  // Handle form reset/cancel
+  const handleCancel = () => {
+    if (space) {
+      // Reset to the original values from the space data
+      const formValues = {
+        ...space,
+        analytics: {
+          plausible: {
+            server_url: space.analytics?.plausible?.server_url || "",
+            domain: space.analytics?.plausible?.domain || "",
+            embed_code: space.analytics?.plausible?.embed_code || "",
+          },
+        },
+      };
+      form.reset(formValues);
+      setValueChange(false);
+    }
+  };
+
   // Show loading state
   if (loading) return <Skeleton className="w-full h-48" />;
 
@@ -115,66 +102,102 @@ function AnalyticsForm() {
   }
 
   return (
-    <div className="space-y-6">
-      <Helmet title="Analytics Form" />
-
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6"
-          onChange={() => setValueChange(true)}
-        >
-          <div className="max-w-md space-y-4">
-            <FormField
-              control={form.control}
-              name="analytics.plausible.server_url"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Server URL</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="analytics.plausible.domain"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Domain</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="analytics.plausible.embed_code"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Embed Code</FormLabel>
-                  <FormControl>
-                    <Textarea {...field} className="min-h-24" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+    <>
+      <Helmet title="Analytics Settings" />
+      <div className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-60 max-w-6xl mx-auto">
+        <div className="mb-4 px-4">
+          <h1 className="text-xl font-semibold">Analytics Settings</h1>
+          <div className="mt-2">
+            <p className="text-gray-600 text-[13px]">
+              Configure your analytics tracking to monitor visitor activity on
+              your website
+            </p>
           </div>
+        </div>
 
-          <Button
-            type="submit"
-            disabled={!valueChange}
-            className="flex items-center gap-2"
+        <div className="border-t border-gray-200 mb-4"></div>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full mx-auto"
+            onChange={() => setValueChange(true)}
           >
-            Update
-          </Button>
-        </form>
-      </Form>
-    </div>
+            <div className="w-full mb-6 bg-white rounded-md">
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="analytics.plausible.server_url"
+                  render={({ field }) => (
+                    <FormItem className="mb-4 sm:mb-6">
+                      <FormLabel className="text-base">Server URL</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="text-sm sm:text-base h-9 sm:h-10"
+                          placeholder="https://plausible.io"
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="analytics.plausible.domain"
+                  render={({ field }) => (
+                    <FormItem className="mb-4 sm:mb-6">
+                      <FormLabel className="text-base">Domain</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="text-sm sm:text-base h-9 sm:h-10"
+                          placeholder="yourdomain.com"
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="analytics.plausible.embed_code"
+                  render={({ field }) => (
+                    <FormItem className="mb-4 sm:mb-6">
+                      <FormLabel className="text-base">Embed Code</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          {...field}
+                          className="min-h-24 text-sm sm:text-base"
+                          placeholder="<script>...</script>"
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row sm:justify-start mb-8 mt-8 gap-3 sm:gap-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleCancel}
+                className="w-full sm:w-auto sm:px-6"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={!valueChange}
+                className="w-full sm:w-auto sm:px-6"
+              >
+                Update
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </>
   );
 }
 

@@ -178,166 +178,175 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
                 <AccordionContent>
                   <div className="py-3 bg-white">
                     <div className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem className="mb-4 sm:mb-6">
-                            <FormLabel className="text-base">Title</FormLabel>
-                            <TitleInput
-                              {...field}
-                              placeholder="Rating name"
-                              onChange={(e) => {
-                                field.onChange(e);
-                                onTitleChange(e.target.value);
-                              }}
-                            />
-                          </FormItem>
-                        )}
-                      />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-base">Title</FormLabel>
+                              <TitleInput
+                                {...field}
+                                placeholder="Rating name"
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  onTitleChange(e.target.value);
+                                }}
+                              />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="numeric_value"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-base">
+                                Numeric Value
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  min={1}
+                                  value={
+                                    field.value === undefined ||
+                                    field.value === null
+                                      ? ""
+                                      : field.value
+                                  }
+                                  onChange={(e) => {
+                                    const value =
+                                      e.target.value === ""
+                                        ? undefined
+                                        : Number(e.target.value);
+                                    field.onChange(value);
+                                    setValueChange(true);
+                                  }}
+                                  onBlur={field.onBlur}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
 
                       <div className="mb-4 sm:mb-6">
                         <SlugInput form={form} />
                       </div>
 
-                      <FormField
-                        control={form.control}
-                        name="numeric_value"
-                        render={({ field }) => (
-                          <FormItem className="mb-4 sm:mb-6">
-                            <FormLabel className="text-base">
-                              Numeric Value
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                type="number"
-                                min={1}
-                                value={
-                                  field.value === undefined ||
-                                  field.value === null
-                                    ? ""
-                                    : field.value
-                                }
-                                onChange={(e) => {
-                                  const value =
-                                    e.target.value === ""
-                                      ? undefined
-                                      : Number(e.target.value);
-                                  field.onChange(value);
-                                  setValueChange(true);
-                                }}
-                                onBlur={field.onBlur}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 sm:mb-6">
-                        <FormItem className="w-full">
-                          <FormLabel className="text-base">
-                            Background Color
-                          </FormLabel>
-                          <div className="relative">
-                            <div
-                              className="p-1 w-full bg-white rounded shadow-sm inline-block cursor-pointer"
-                              onClick={handleBgClick}
-                            >
-                              {backgroundColour?.hex ? (
+                      {/* Background Color and Text Color row */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <FormField
+                          control={form.control}
+                          name="background_colour"
+                          render={() => (
+                            <FormItem>
+                              <FormLabel className="text-base">
+                                Background color
+                              </FormLabel>
+                              <div className="relative w-full">
                                 <div
-                                  className="w-full h-6 rounded flex items-center px-2"
-                                  style={{
-                                    background: `${backgroundColour?.hex}`,
-                                  }}
+                                  className="border border-input rounded-md h-9 w-full flex items-center px-3 bg-white shadow-xs cursor-pointer"
+                                  onClick={handleBgClick}
                                 >
-                                  <span
-                                    className={
-                                      backgroundColour?.hex?.toLowerCase() ===
-                                      "#ffffff"
-                                        ? "text-black"
-                                        : "text-white"
-                                    }
-                                  >
-                                    {backgroundColour?.hex}
-                                  </span>
+                                  <div className="flex w-full items-center">
+                                    {backgroundColour?.hex ? (
+                                      <div className="flex items-center gap-2 w-full">
+                                        <div
+                                          className="w-5 h-5 rounded-sm"
+                                          style={{
+                                            background: `${backgroundColour?.hex}`,
+                                          }}
+                                        />
+                                        <span className="text-sm">
+                                          {backgroundColour.hex}
+                                        </span>
+                                      </div>
+                                    ) : (
+                                      <span className="text-muted-foreground text-sm">
+                                        Select a color
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
-                              ) : (
-                                <span className="text-gray-600 text-sm">
-                                  Select a color
-                                </span>
-                              )}
-                            </div>
-                            {displayBgColorPicker ? (
-                              <div
-                                className={`absolute z-10 ${
-                                  isMobile ? "right-0" : "top-0 left-full"
-                                }`}
-                              >
-                                <div
-                                  className="fixed inset-0"
-                                  onClick={handleBgClose}
-                                />
-                                <SketchPicker
-                                  color={backgroundColour?.hex}
-                                  onChange={setBackgroundColour}
-                                  disableAlpha
-                                />
+                                {displayBgColorPicker ? (
+                                  <div
+                                    className={`absolute z-10 ${
+                                      isMobile ? "right-0" : "top-10 left-0"
+                                    }`}
+                                  >
+                                    <div
+                                      className="fixed inset-0"
+                                      onClick={handleBgClose}
+                                    />
+                                    <SketchPicker
+                                      color={backgroundColour?.hex}
+                                      onChange={setBackgroundColour}
+                                      disableAlpha
+                                    />
+                                  </div>
+                                ) : null}
                               </div>
-                            ) : null}
-                          </div>
-                        </FormItem>
+                            </FormItem>
+                          )}
+                        />
 
-                        <FormItem className="w-full">
-                          <FormLabel className="text-base">
-                            Text Color
-                          </FormLabel>
-                          <div className="relative">
-                            <div
-                              className="p-1 w-full bg-white rounded shadow-sm inline-block cursor-pointer"
-                              onClick={handleTextClick}
-                            >
-                              {textColour?.hex ? (
+                        <FormField
+                          control={form.control}
+                          name="text_colour"
+                          render={() => (
+                            <FormItem>
+                              <FormLabel className="text-base">
+                                Text color
+                              </FormLabel>
+                              <div className="relative w-full">
                                 <div
-                                  className="w-full h-6 rounded flex items-center px-2"
-                                  style={{ background: `${textColour?.hex}` }}
+                                  className="border border-input rounded-md h-9 w-full flex items-center px-3 bg-white shadow-xs cursor-pointer"
+                                  onClick={handleTextClick}
                                 >
-                                  <span
-                                    className={
-                                      textColour?.hex?.toLowerCase() ===
-                                      "#ffffff"
-                                        ? "text-black"
-                                        : "text-white"
-                                    }
-                                  >
-                                    {textColour?.hex}
-                                  </span>
+                                  <div className="flex w-full items-center">
+                                    {textColour?.hex ? (
+                                      <div className="flex items-center gap-2 w-full">
+                                        <div
+                                          className="w-5 h-5 rounded-sm"
+                                          style={{
+                                            background: `${textColour?.hex}`,
+                                          }}
+                                        />
+                                        <span className="text-sm">
+                                          {textColour.hex}
+                                        </span>
+                                      </div>
+                                    ) : (
+                                      <span className="text-muted-foreground text-sm">
+                                        Select a color
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
-                              ) : (
-                                <span className="text-gray-600 text-sm">
-                                  Select a color
-                                </span>
-                              )}
-                            </div>
-                            {displayTextColorPicker ? (
-                              <div
-                                className={`absolute z-10 ${
-                                  isMobile ? "right-0" : "top-0 left-full"
-                                }`}
-                              >
-                                <div
-                                  className="fixed inset-0"
-                                  onClick={handleTextClose}
-                                />
-                                <SketchPicker
-                                  color={textColour?.hex}
-                                  onChange={setTextColour}
-                                  disableAlpha
-                                />
+                                {displayTextColorPicker ? (
+                                  <div
+                                    className={`absolute z-10 ${
+                                      isMobile ? "right-0" : "top-10 left-0"
+                                    }`}
+                                  >
+                                    <div
+                                      className="fixed inset-0"
+                                      onClick={handleTextClose}
+                                    />
+                                    <SketchPicker
+                                      color={textColour?.hex}
+                                      onChange={setTextColour}
+                                      disableAlpha
+                                    />
+                                  </div>
+                                ) : null}
                               </div>
-                            ) : null}
-                          </div>
-                        </FormItem>
+                            </FormItem>
+                          )}
+                        />
                       </div>
 
                       {/* Featured Image */}
@@ -347,7 +356,7 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
                         render={({ field }) => (
                           <FormItem className="mt-6">
                             <FormLabel className="text-base mb-2">
-                              Featured Image
+                              Cover image
                             </FormLabel>
                             <div className="flex justify-center items-start mt-4">
                               <MediaSelector

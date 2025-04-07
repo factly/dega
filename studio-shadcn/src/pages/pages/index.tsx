@@ -291,7 +291,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
         </div>
       )}
       {/* Search input row - appears when expanded */}
-      {(isSearchExpanded && isMobile) && (
+      {isSearchExpanded && isMobile && (
         <div className="w-full">
           <SearchInput
             searchText={searchText}

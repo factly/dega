@@ -22,6 +22,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { deletePage } from "../../../actions/pages";
 import { Link } from "react-router-dom";
@@ -29,6 +30,7 @@ import QuickEdit from "../../../components/List/QuickEdit";
 import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { renderStatusBadge } from "../../../components/statusBadge/index";
+import EmptyState from "@/components/EmptyState";
 
 interface Page {
   id: number;
@@ -77,6 +79,7 @@ interface PageListProps {
   };
   onPagination: (page: number, limit: number) => void;
   fetchPages: () => void;
+  isMobile?: boolean;
 }
 
 function PageList({
@@ -85,6 +88,7 @@ function PageList({
   filters,
   onPagination,
   fetchPages,
+  isMobile = false,
 }: PageListProps) {
   const dispatch = useAppDispatch();
   const [id, setID] = useState<number>(0);
@@ -165,19 +169,14 @@ function PageList({
     }
   };
 
+  // Check if there are any pages to display
+  const hasPagesData = !data.loading && data.pages && data.pages.length > 0;
+
   return (
-    <div className="space-y-4">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="min-w-[250px] w-[40%]">Title</TableHead>
-            <TableHead className="w-[15%]">Status</TableHead>
-            <TableHead className="w-[25%]">Last Modified</TableHead>
-            <TableHead className="w-[20%] text-center">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.loading ? (
+    <div className="space-y-4 pb-4 overflow-auto">
+      {data.loading ? (
+        <Table>
+          <TableBody>
             <TableRow>
               <TableCell colSpan={4} className="text-center py-10">
                 <div className="flex items-center justify-center space-x-2">
@@ -186,104 +185,116 @@ function PageList({
                 </div>
               </TableCell>
             </TableRow>
-          ) : data.pages.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={4} className="text-center py-16">
-                <div className="flex flex-col items-center space-y-2">
-                  <p className="text-gray-500 font-medium">No pages found</p>
-                  <p className="text-gray-400 text-sm">
-                    Try adjusting your filters or create a new page
-                  </p>
-                </div>
-              </TableCell>
-            </TableRow>
-          ) : (
-            data.pages.map((item) => {
-              const isOpen = item.id === expandedRowKeys[0];
-              // Ensure tag_ids and category_ids are always arrays, even if undefined
-              const tagIds = item.tag_ids || [];
-              const categoryIds = item.category_ids || [];
+          </TableBody>
+        </Table>
+      ) : hasPagesData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="min-w-[250px] w-[40%]">Title</TableHead>
+                <TableHead className="w-[15%]">Status</TableHead>
+                <TableHead className="w-[25%]">Last Modified</TableHead>
+                <TableHead className="w-[20%] text-center">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.pages.map((item) => {
+                const isOpen = item.id === expandedRowKeys[0];
+                // Ensure tag_ids and category_ids are always arrays, even if undefined
+                const tagIds = item.tag_ids || [];
+                const categoryIds = item.category_ids || [];
 
-              return (
-                <React.Fragment key={item.id}>
-                  <TableRow
-                    className="cursor-pointer hover:bg-blue-50"
-                    onClick={() => navigate(`/pages/${item.id}/edit`)}
-                  >
-                    <TableCell className="py-3">
-                      <Link
-                        to={`/pages/${item.id}/edit`}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {item.title}
-                      </Link>
-                    </TableCell>
-                    <TableCell>{renderStatusBadge(item.status)}</TableCell>
-                    <TableCell>
-                      <div className="flex flex-col">
-                        <span>{formatDate(item.updated_at)}</span>
-                        <span className="text-gray-500 text-sm">
-                          {getDifferenceInModifiedTime(item.updated_at)}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger
-                          asChild
+                return (
+                  <React.Fragment key={item.id}>
+                    <TableRow
+                      className="cursor-pointer hover:bg-blue-50"
+                      onClick={() => navigate(`/pages/${item.id}/edit`)}
+                    >
+                      <TableCell className="py-3">
+                        <Link
+                          to={`/pages/${item.id}/edit`}
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <Button variant="ghost" size="icon">
-                            <Ellipsis className="h-5 w-5" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem
-                            onClick={(e) => handleEditClick(e, item)}
-                            className="cursor-pointer"
-                          >
-                            <Pencil className="h-4 w-4 mr-2" />
-                            <span>Edit</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={(e) => handleQuickEdit(e, item)}
-                            className="cursor-pointer"
-                          >
-                            <Edit className="h-4 w-4 mr-2" />
-                            <span>Quick Edit</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={(e) => handleDeleteClick(e, item.id)}
-                            className="cursor-pointer text-red-600 focus:text-red-600"
-                          >
-                            <Trash2 className="h-4 w-4 mr-2" />
-                            <span>Delete</span>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                  {isOpen && (
-                    <TableRow>
-                      <TableCell colSpan={4} className="p-0">
-                        <div className="p-4">
-                          <QuickEdit
-                            data={item}
-                            page={true}
-                            setID={setID}
-                            slug={format.slug}
-                            onQuickEditUpdate={() => setExpandedRowKeys([])}
-                          />
+                          {item.title}
+                        </Link>
+                      </TableCell>
+                      <TableCell>{renderStatusBadge(item.status)}</TableCell>
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <span>{formatDate(item.updated_at)}</span>
+                          <span className="text-gray-500 text-sm">
+                            {getDifferenceInModifiedTime(item.updated_at)}
+                          </span>
                         </div>
                       </TableCell>
+                      <TableCell className="text-center">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger
+                            asChild
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Button variant="ghost" size="icon">
+                              <Ellipsis className="h-5 w-5" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem
+                              onClick={(e) => handleEditClick(e, item)}
+                              className="cursor-pointer"
+                            >
+                              <Pencil className="h-4 w-4 mr-2" />
+                              <span>Edit</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                              onClick={(e) => handleQuickEdit(e, item)}
+                              className="cursor-pointer"
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              <span>Quick Edit</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                              onClick={(e) => handleDeleteClick(e, item.id)}
+                              className="cursor-pointer text-red-600 focus:text-red-600"
+                            >
+                              <Trash2 className="h-4 w-4 mr-2" />
+                              <span>Delete</span>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
                     </TableRow>
-                  )}
-                </React.Fragment>
-              );
-            })
-          )}
-        </TableBody>
-      </Table>
+                    {isOpen && (
+                      <TableRow>
+                        <TableCell colSpan={4} className="p-0">
+                          <div className="p-4">
+                            <QuickEdit
+                              data={item}
+                              page={true}
+                              setID={setID}
+                              slug={format.slug}
+                              onQuickEditUpdate={() => setExpandedRowKeys([])}
+                            />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="pages"
+          title="No pages found"
+          description="Your pages list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent className="max-w-sm p-4">

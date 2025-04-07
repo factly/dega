@@ -26,13 +26,20 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import EmptyState from "@/components/EmptyState";
 
 // Types
 interface Category {
   id: string;
   name: string;
   slug: string;
+  parent_id?: string | number;
+  parent_category?: {
+    id: string | number;
+    name: string;
+  };
 }
 
 interface CategoryListProps {
@@ -57,6 +64,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
   data,
   fetchCategories,
   onSortToggle,
+  isMobile,
 }) => {
   const dispatch = useAppDispatch();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
@@ -89,7 +97,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
       e.stopPropagation();
       if (deleteItemID) {
         try {
-          const result = await dispatch(deleteCategory(deleteItemID));
+          await dispatch(deleteCategory(deleteItemID));
           fetchCategories();
         } catch (error) {
           console.error("Error deleting category:", error);
@@ -108,28 +116,40 @@ const CategoryList: React.FC<CategoryListProps> = ({
     setDeleteDialogOpen(false);
   }, []);
 
+  // Helper function to get parent category name
+  const getParentCategoryName = useCallback((category: Category): string => {
+    if (category.parent_category?.name) {
+      return category.parent_category.name;
+    }
+    return "---";
+  }, []);
+
+  // Check if there are any categories to display
+  const hasCategoriesData = data.categories && data.categories.length > 0;
+
   return (
     <div className="pb-4 overflow-auto">
-      <div className="rounded-md">
-        <Table>
-          <TableHeader className="w-1/2 text-[13px]">
-            <TableRow>
-              <TableHead className="w-1/2">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={onSortToggle}
-                >
-                  Name
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              <TableHead className="w-2/5">Slug</TableHead>
-              <TableHead className="w-[150px] text-center">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.categories && data.categories.length > 0 ? (
-              data.categories.map((category) => (
+      {hasCategoriesData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="w-1/2 text-[13px]">
+              <TableRow>
+                <TableHead className="w-2/5">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={onSortToggle}
+                  >
+                    Name
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-2/5">Slug</TableHead>
+                <TableHead className="w-1/5">Parent Category</TableHead>
+                <TableHead className="w-[100px] text-center">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.categories.map((category) => (
                 <TableRow
                   key={category.id}
                   onClick={() => handleRowClick(category.id)}
@@ -142,7 +162,12 @@ const CategoryList: React.FC<CategoryListProps> = ({
                   </TableCell>
                   <TableCell>
                     <p className="line-clamp-2 font-normal">
-                      {category.slug || "---"}
+                      {category.slug || "—"}
+                    </p>
+                  </TableCell>
+                  <TableCell>
+                    <p className="line-clamp-2 font-normal">
+                      {getParentCategoryName(category)}
                     </p>
                   </TableCell>
                   <TableCell className="text-center">
@@ -163,6 +188,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => handleDeleteClick(e, category.id)}
                           className="cursor-pointer text-red-600 focus:text-red-600"
@@ -174,17 +200,18 @@ const CategoryList: React.FC<CategoryListProps> = ({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={3} className="text-center py-4">
-                  No categories found
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="categories"
+          title="No categories found"
+          description="Your categories list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

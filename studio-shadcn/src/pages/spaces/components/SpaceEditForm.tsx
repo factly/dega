@@ -132,21 +132,11 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
 
         {/* Desktop header */}
         {!isMobile && (
-          <div className="mb-3 pb-4 border-b border-gray-200 flex justify-between items-center">
-            <div>
-              <h2 className="text-xl font-bold">Edit Space</h2>
-              <p className="text-gray-600 mt-2">
-                Update your space settings and information.
-              </p>
-            </div>
-            <Button
-              disabled={!valueChange}
-              type="submit"
-              form="edit-space-form"
-              className="flex items-center gap-2"
-            >
-              Update
-            </Button>
+          <div className="mb-3 pb-4 border-b border-gray-200 px-4">
+            <h2 className="text-xl font-semibold">Edit Space</h2>
+            <p className="text-gray-600 mt-2 text-[13px]">
+              Update your space settings and information.
+            </p>
           </div>
         )}
 
@@ -162,7 +152,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
             >
               <Accordion
                 type="multiple"
-                defaultValue={["general", "site-details", "meta-fields"]}
+                defaultValue={["general"]}
                 className="w-full"
               >
                 {/* General Section */}
@@ -175,7 +165,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                       className={
                         isMobile
                           ? "text-base font-medium"
-                          : "text-lg font-semibold"
+                          : "text-lg font-medium"
                       }
                     >
                       General
@@ -189,9 +179,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
-                              Title
-                            </FormLabel>
+                            <FormLabel className="text-base">Title</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
@@ -210,7 +198,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="organisation_id"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Organization
                             </FormLabel>
                             <Select
@@ -255,7 +243,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="description"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Description
                             </FormLabel>
                             <FormControl>
@@ -284,7 +272,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                       className={
                         isMobile
                           ? "text-base font-medium"
-                          : "text-lg font-semibold"
+                          : "text-lg font-medium"
                       }
                     >
                       Site details
@@ -297,7 +285,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="site_title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Site Title
                             </FormLabel>
                             <FormControl>
@@ -316,9 +304,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="tag_line"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
-                              Tagline
-                            </FormLabel>
+                            <FormLabel className="text-base">Tagline</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
@@ -335,12 +321,12 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="site_address"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Website URL
                             </FormLabel>
                             <FormControl>
                               <div className="flex">
-                                <div className="bg-gray-100 flex items-center px-3 rounded-l-md border border-r-0 border-input">
+                                <div className="bg-[#F0F5FF] flex items-center px-3 rounded-l-md border border-r-0 border-input">
                                   https://
                                 </div>
                                 <Input
@@ -367,7 +353,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                       className={
                         isMobile
                           ? "text-base font-medium"
-                          : "text-lg font-semibold"
+                          : "text-lg font-medium"
                       }
                     >
                       Meta fields
@@ -380,7 +366,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="meta_fields"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className={isMobile ? "text-base" : ""}>
+                            <FormLabel className="text-base">
                               Metadata
                             </FormLabel>
                             <FormControl>
@@ -409,26 +395,30 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                 </AccordionItem>
               </Accordion>
 
-              {/* Mobile Action Buttons */}
-              {isMobile && (
-                <div className="flex justify-between mb-8 mt-8">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => window.history.back()}
-                    className="w-[48%]"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={!valueChange}
-                    className="w-[48%]"
-                  >
-                    Update
-                  </Button>
-                </div>
-              )}
+              {/* Action Buttons */}
+              <div
+                className={
+                  isMobile
+                    ? "flex justify-between mb-8 mt-8"
+                    : "flex justify-start gap-3 pt-4 border-t border-gray-100"
+                }
+              >
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => window.history.back()}
+                  className={isMobile ? "w-[48%]" : ""}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={!valueChange}
+                  className={isMobile ? "w-[48%]" : ""}
+                >
+                  Update
+                </Button>
+              </div>
             </form>
           </Form>
         </div>

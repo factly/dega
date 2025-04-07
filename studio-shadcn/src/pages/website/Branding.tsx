@@ -141,103 +141,107 @@ function Branding() {
                 <AccordionContent>
                   <div className="p-4 bg-white max-w-3xl mx-auto space-y-4">
                     <div className="grid grid-cols-1 gap-6">
-                      <FormField
-                        control={form.control}
-                        name="logo_id"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Primary Logo</FormLabel>
-                            <FormControl>
-                              <MediaSelector
-                                value={field.value}
-                                onChange={field.onChange}
-                                containerStyles={{
-                                  justifyContent: "flex-start",
-                                  maxWidth: "100%",
-                                  margin: "8px 0",
-                                }}
-                                maxWidth={100}
-                              />
-                            </FormControl>
-                            <FormDescription>Primary Logo</FormDescription>
-                          </FormItem>
-                        )}
-                      />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <FormField
+                          control={form.control}
+                          name="logo_id"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Primary Logo</FormLabel>
+                              <FormDescription>Primary Logo</FormDescription>
+                              <FormControl>
+                                <MediaSelector
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  containerStyles={{
+                                    justifyContent: "flex-start",
+                                    maxWidth: "100%",
+                                    margin: "8px 0",
+                                  }}
+                                  maxWidth={100}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
 
-                      <FormField
-                        control={form.control}
-                        name="logo_mobile_id"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Logo Mobile</FormLabel>
-                            <FormControl>
-                              <MediaSelector
-                                value={field.value}
-                                onChange={field.onChange}
-                                containerStyles={{
-                                  justifyContent: "flex-start",
-                                  maxWidth: "100%",
-                                  margin: "8px 0",
-                                }}
-                                maxWidth={100}
-                              />
-                            </FormControl>
-                            <FormDescription>
-                              Secondary logo for mobile sites or amp pages
-                            </FormDescription>
-                          </FormItem>
-                        )}
-                      />
+                        <FormField
+                          control={form.control}
+                          name="logo_mobile_id"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Logo Mobile</FormLabel>
+                              <FormDescription>
+                                Secondary logo for mobile sites or amp pages
+                              </FormDescription>
+                              <FormControl>
+                                <MediaSelector
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  containerStyles={{
+                                    justifyContent: "flex-start",
+                                    maxWidth: "100%",
+                                    margin: "8px 0",
+                                  }}
+                                  maxWidth={100}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
 
-                      <FormField
-                        control={form.control}
-                        name="fav_icon_id"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Fav Icon</FormLabel>
-                            <FormControl>
-                              <MediaSelector
-                                value={field.value}
-                                onChange={field.onChange}
-                                containerStyles={{
-                                  justifyContent: "flex-start",
-                                  maxWidth: "100%",
-                                  margin: "8px 0",
-                                }}
-                                maxWidth={100}
-                              />
-                            </FormControl>
-                            <FormDescription>
-                              Default favicon for browsers and pwa sites
-                            </FormDescription>
-                          </FormItem>
-                        )}
-                      />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <FormField
+                          control={form.control}
+                          name="fav_icon_id"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Fav Icon</FormLabel>
+                              <FormDescription>
+                                Default favicon for browsers and pwa sites
+                              </FormDescription>
+                              <FormControl>
+                                <MediaSelector
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  containerStyles={{
+                                    justifyContent: "flex-start",
+                                    maxWidth: "100%",
+                                    margin: "8px 0",
+                                  }}
+                                  maxWidth={100}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
 
-                      <FormField
-                        control={form.control}
-                        name="mobile_icon_id"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Mobile Icon</FormLabel>
-                            <FormControl>
-                              <MediaSelector
-                                value={field.value}
-                                onChange={field.onChange}
-                                containerStyles={{
-                                  justifyContent: "flex-start",
-                                  maxWidth: "100%",
-                                  margin: "8px 0",
-                                }}
-                                maxWidth={100}
-                              />
-                            </FormControl>
-                            <FormDescription>
-                              Favicon for mobile and pwa sites
-                            </FormDescription>
-                          </FormItem>
-                        )}
-                      />
+                        <FormField
+                          control={form.control}
+                          name="mobile_icon_id"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Mobile Icon</FormLabel>
+                              <FormDescription>
+                                Favicon for mobile and pwa sites
+                              </FormDescription>
+                              <FormControl>
+                                <MediaSelector
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  containerStyles={{
+                                    justifyContent: "flex-start",
+                                    maxWidth: "100%",
+                                    margin: "8px 0",
+                                  }}
+                                  maxWidth={100}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </AccordionContent>

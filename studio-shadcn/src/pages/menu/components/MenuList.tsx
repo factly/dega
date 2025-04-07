@@ -26,7 +26,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import EmptyState from "@/components/EmptyState";
 
 // Types
 interface Menu {
@@ -59,6 +61,7 @@ const MenuList: React.FC<MenuListProps> = ({
   data,
   fetchMenus,
   onSortToggle,
+  isMobile,
 }) => {
   const dispatch = useAppDispatch();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
@@ -118,33 +121,30 @@ const MenuList: React.FC<MenuListProps> = ({
   const isDeleteAllowed =
     actions.includes("admin") || actions.includes("delete");
 
+  // Check if there are any menus to display
+  const hasMenusData = data.menus && data.menus.length > 0;
+
   return (
     <div className="pb-4 overflow-auto">
-      <div className="rounded-md">
-        <Table>
-          <TableHeader className="text-[13px]">
-            <TableRow>
-              <TableHead className="w-full">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={onSortToggle}
-                >
-                  Name
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              <TableHead className="w-[150px] text-center">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.menus.length === 0 ? (
+      {hasMenusData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="text-[13px]">
               <TableRow>
-                <TableCell colSpan={2} className="text-center py-6">
-                  No menus found
-                </TableCell>
+                <TableHead className="w-full">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={onSortToggle}
+                  >
+                    Name
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-[150px] text-center">Action</TableHead>
               </TableRow>
-            ) : (
-              data.menus.map((menu) => (
+            </TableHeader>
+            <TableBody>
+              {data.menus.map((menu) => (
                 <TableRow
                   key={menu.id}
                   onClick={() => handleRowClick(menu.id)}
@@ -173,6 +173,7 @@ const MenuList: React.FC<MenuListProps> = ({
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => handleDeleteClick(e, menu.id)}
                           className="cursor-pointer text-red-600 focus:text-red-600"
@@ -185,11 +186,18 @@ const MenuList: React.FC<MenuListProps> = ({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="menus"
+          title="No menus found"
+          description="Your menus list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

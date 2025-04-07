@@ -24,6 +24,7 @@ import getJsonValue from "../../../utils/getJsonValue";
 import MediaSelector from "../../../components/MediaSelector";
 import { MetaForm, SlugInput } from "../../../components/FormItems";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Define the format data interface
 interface FormatData {
@@ -63,6 +64,7 @@ interface FormatFormProps {
 const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
   const navigate = useNavigate();
   const [valueChange, setValueChange] = useState(false);
+  const isMobile = useIsMobile();
 
   // Process meta_fields if it exists
   const initialData = { ...data };
@@ -75,6 +77,12 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
     resolver: zodResolver(formatFormSchema),
     defaultValues: initialData as FormatFormValues,
   });
+
+  // Watch for changes to enable the submit button
+  React.useEffect(() => {
+    const subscription = form.watch(() => setValueChange(true));
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   // Handle title change to generate slug
   const onTitleChange = (value: string) => {
@@ -106,16 +114,34 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
   };
 
   return (
-    <div className="px-60 max-w-6xl mx-auto">
-      {/* Header and Subheader */}
-      <div className="mb-4 px-4">
-        <h1 className="text-xl font-semibold text-gray-900">Create Format</h1>
-        <div className="mt-2">
-          <p className="text-gray-600 text-[13px]">
-            Set up a format by entering the essential details provided below
-          </p>
+    <div className={isMobile ? "" : "px-60 max-w-6xl mx-auto"}>
+      {/* Mobile header */}
+      {isMobile && (
+        <div className="mb-4">
+          <h1 className="text-xl font-semibold">
+            {data && data.id ? "Edit Format" : "Create Format"}
+          </h1>
+          <div className="mt-2">
+            <p className="text-gray-600 text-[13px]">
+              Set up a format by entering the essential details provided below
+            </p>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Desktop header */}
+      {!isMobile && (
+        <div className="mb-6 px-4">
+          <h1 className="text-xl font-semibold text-gray-900">
+            {data && data.id ? "Edit Format" : "Create Format"}
+          </h1>
+          <div className="mt-2">
+            <p className="text-gray-600 text-[13px]">
+              Set up a format by entering the essential details provided below
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Top border */}
       <div className="border-t border-gray-200 mb-4"></div>
@@ -138,8 +164,8 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="grid grid-cols-1 md:grid-cols-12 p-6 bg-white">
-                    <div className="md:col-span-5 space-y-6">
+                  <div className="py-3 bg-white">
+                    <div className="space-y-4">
                       <FormField
                         control={form.control}
                         name="name"
@@ -203,25 +229,28 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
                           </FormItem>
                         )}
                       />
-                    </div>
 
-                    <div className="md:col-span-7">
+                      {/* Featured Image - Moved below Description */}
                       <FormField
                         control={form.control}
                         name="medium_id"
                         render={({ field }) => (
-                          <FormItem className="h-full">
+                          <FormItem className="mt-6">
                             <FormLabel className="text-base mb-2">
                               Featured Image
                             </FormLabel>
-                            <div className="flex justify-center items-start h-full mt-4">
+                            <div className="flex justify-center items-start mt-4">
                               <MediaSelector
                                 value={field.value}
                                 onChange={(value) => {
                                   field.onChange(value);
                                   setValueChange(true);
                                 }}
-                                containerStyles={{ justifyContent: "center" }}
+                                containerStyles={{
+                                  justifyContent: "center",
+                                  width: isMobile ? "84%" : "100%",
+                                  height: isMobile ? "160px" : "220px",
+                                }}
                               />
                             </div>
                           </FormItem>
@@ -234,24 +263,36 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
             </Accordion>
           </div>
 
-          <div className="w-full mb-8">
-            <MetaForm
-              style={{ marginBottom: 24, background: "#f0f2f5", border: 0 }}
-            />
+          <div className="w-full mb-2">
+            <MetaForm form={form} />
           </div>
 
-          <div className="flex justify-start mb-8 mt-8">
-            <div className="space-x-4">
+          <div
+            className={`flex ${
+              isMobile ? "justify-between" : "justify-start"
+            } mb-8 mt-8`}
+          >
+            <div
+              className={isMobile ? "w-full flex justify-between" : "space-x-4"}
+            >
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleCancel}
-                className="px-6"
+                className={isMobile ? "w-[48%]" : "px-6"}
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={!valueChange} className="px-6">
-                {data && data.id ? "Update" : "Create format"}
+              <Button
+                type="submit"
+                disabled={!valueChange}
+                className={isMobile ? "w-[48%]" : "px-6"}
+              >
+                {data && data.id
+                  ? "Update"
+                  : isMobile
+                  ? "Create"
+                  : "Create format"}
               </Button>
             </div>
           </div>

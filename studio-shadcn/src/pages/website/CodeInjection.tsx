@@ -84,7 +84,7 @@ function CodeInjection(): React.ReactElement {
             name="header_code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Header Code</FormLabel>
+                <FormLabel className="text-base">Header Code</FormLabel>
                 <MonacoEditor
                   language="html"
                   width="100%"
@@ -103,7 +103,7 @@ function CodeInjection(): React.ReactElement {
             name="footer_code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Footer Code</FormLabel>
+                <FormLabel className="text-base">Footer Code</FormLabel>
                 <MonacoEditor
                   language="html"
                   width="100%"

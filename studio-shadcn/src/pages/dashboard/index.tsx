@@ -1,106 +1,29 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-
-// ShadcN UI components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// Lucide icons
 import { FileText, Check, Clock, FileEdit, FileClock } from "lucide-react";
-
-// Redux actions
 import { getInfo } from "../../actions/info";
-
-// Components
 import Loader from "../../components/Loader";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
-
-// Hooks
+import StatisticCard from "./components/StatisticCard";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useSidebar } from "@/components/ui/sidebar";
-
-// Define types for Redux state
-interface RootState {
-  spaces: {
-    selected: string;
-  };
-  info: {
-    article: {
-      publish?: string | number;
-      draft?: string | number;
-      ready?: string | number;
-      future?: string | number;
-    };
-    factCheck: {
-      publish?: string | number;
-      draft?: string | number;
-      ready?: string | number;
-      future?: string | number;
-    };
-    loading: boolean;
-  };
-  sidebar: {
-    collapsed: boolean;
-  };
-}
-
-// Statistic card component
-const StatisticCard: React.FC<{
-  title: string;
-  value: number;
-  loading: boolean;
-  icon?: React.ReactNode;
-  href: string;
-  isMobile: boolean;
-}> = ({ title, value, loading, icon, href, isMobile }) => {
-  return (
-    <Link to={href} className="block">
-      <Card
-        className={`hover:bg-muted/50 transition-colors h-full ${
-          isMobile ? "p-1" : ""
-        }`}
-      >
-        <CardHeader className={`${isMobile ? "p-3 pb-1" : "pb-2"}`}>
-          <CardTitle
-            className={`${
-              isMobile ? "text-xs" : "text-sm"
-            } font-medium flex items-center gap-2`}
-          >
-            {icon}
-            {title}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className={isMobile ? "p-3 pt-1" : undefined}>
-          {loading ? (
-            <div className="h-6 w-12 bg-muted animate-pulse rounded" />
-          ) : (
-            <span className={`${isMobile ? "text-lg" : "text-2xl"} font-bold`}>
-              {value}
-            </span>
-          )}
-        </CardContent>
-      </Card>
-    </Link>
-  );
-};
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { RootState } from "./types";
 
 const Dashboard: React.FC = () => {
-  const { spaces, info, sidebar } = useSelector((state: RootState) => ({
+  const { spaces, info } = useSelector((state: RootState) => ({
     spaces: state.spaces,
     info: state.info,
-    sidebar: state.sidebar,
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
-  const { state: sidebarState } = useSidebar();
 
   useEffect(() => {
-    if (spaces.selected !== "") fetchInfo();
-  }, [spaces.selected]);
-
-  const fetchInfo = () => {
-    dispatch(getInfo());
-  };
+    if (spaces.selected !== "") {
+      dispatch(getInfo());
+    }
+  }, [spaces.selected, dispatch]);
 
   const { article = {}, factCheck = {}, loading } = info;
   const articlePublish = Number(article.publish) || 0;
@@ -116,9 +39,7 @@ const Dashboard: React.FC = () => {
     return <Loader />;
   }
 
-  const isCollapsed = sidebarState === "collapsed" && !isMobile;
-
-  const renderStatsSection = (
+  const renderStats = (
     title: string,
     totalCount: number,
     publishCount: number,
@@ -190,43 +111,22 @@ const Dashboard: React.FC = () => {
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Dashboard"
-          parentPath="/"
-          parentLabel="Core"
-        />
+        <MobileBreadcrumb currentPage="Home" parentLabel="Dashboard" />
       )}
 
-      <div
-        className={`${isMobile ? "p-4" : "p-6"}`}
-        style={
-          !isMobile
-            ? {
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                transition: "left 0.3s ease",
-                overflow: "auto",
-              }
-            : { overflow: "auto", flex: 1 }
-        }
-      >
-        {/* Added container for width control */}
+      <div className={`${isMobile ? "" : "p-6"}`}>
         <div
           className="container mx-auto"
           style={{
-            maxWidth: isMobile ? "100%" : "1200px", // Adjust max width as needed
+            maxWidth: isMobile ? "100%" : "1200px",
           }}
         >
-          {!isMobile && <h1 className="text-2xl font-bold mb-6">Dashboard</h1>}
           {isMobile && (
             <h1 className="text-xl font-semibold mb-4">Dashboard</h1>
           )}
 
           <div className={`space-y-${isMobile ? "4" : "6"}`}>
-            {renderStatsSection(
+            {renderStats(
               "Posts",
               articlePublish + articleDraft + articleReady + articleFuture,
               articlePublish,
@@ -236,7 +136,7 @@ const Dashboard: React.FC = () => {
               "/posts"
             )}
 
-            {renderStatsSection(
+            {renderStats(
               "Fact Checks",
               factCheckPublish +
                 factCheckDraft +

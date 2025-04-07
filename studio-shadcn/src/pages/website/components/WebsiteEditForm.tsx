@@ -171,7 +171,9 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
                           name="organisation_id"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Organisation</FormLabel>
+                              <FormLabel className="text-base">
+                                Organisation
+                              </FormLabel>
                               <Select
                                 disabled
                                 onValueChange={field.onChange}
@@ -200,7 +202,9 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
                           name="space_id"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Space ID</FormLabel>
+                              <FormLabel className="text-base">
+                                Space ID
+                              </FormLabel>
                               <FormControl>
                                 <Input {...field} disabled />
                               </FormControl>
@@ -214,7 +218,7 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
                           name="name"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Name</FormLabel>
+                              <FormLabel className="text-base">Name</FormLabel>
                               <FormControl>
                                 <Input placeholder="Input name" {...field} />
                               </FormControl>
@@ -227,8 +231,8 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
                           control={form.control}
                           name="site_title"
                           render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Title</FormLabel>
+                            <FormItem className="text-base">
+                              <FormLabel className="text-base">Title</FormLabel>
                               <FormControl>
                                 <Input {...field} />
                               </FormControl>
@@ -242,7 +246,9 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
                           name="tag_line"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Tag line</FormLabel>
+                              <FormLabel className="text-base">
+                                Tag line
+                              </FormLabel>
                               <FormControl>
                                 <Input {...field} />
                               </FormControl>
@@ -258,7 +264,9 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
                           name="site_address"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Site Address</FormLabel>
+                              <FormLabel className="text-base">
+                                Site Address
+                              </FormLabel>
                               <FormControl>
                                 <Input {...field} />
                               </FormControl>
@@ -272,7 +280,9 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
                           name="description"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Description</FormLabel>
+                              <FormLabel className="text-base">
+                                Description
+                              </FormLabel>
                               <FormControl>
                                 <Textarea
                                   placeholder="Enter Description..."
@@ -306,7 +316,9 @@ const WebsiteEditForm: React.FC<WebsiteEditFormProps> = ({
                       name="meta_fields"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Metafields</FormLabel>
+                          <FormLabel className="text-base">
+                            Metafields
+                          </FormLabel>
                           <FormControl>
                             <MonacoEditor
                               language="json"

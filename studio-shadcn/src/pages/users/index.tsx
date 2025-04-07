@@ -10,6 +10,7 @@ import Selector from "../../components/Selector/index";
 import { getSpaceUsers, updateSpaceUsers } from "../../actions/spaceUsers";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+import EmptyState from "@/components/EmptyState";
 
 import {
   Table,
@@ -252,6 +253,7 @@ function Users() {
 
   // Calculate total pages
   const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+  const hasUsersData = filteredUsers().length > 0;
 
   if (loading) {
     return <Loader />;
@@ -263,11 +265,7 @@ function Users() {
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Users"
-          parentPath="/settings"
-          parentLabel="Settings"
-        />
+        <MobileBreadcrumb currentPage="Users" parentLabel="Settings" />
       )}
 
       {/* Header */}
@@ -430,33 +428,22 @@ function Users() {
             : undefined
         }
       >
-        <div className="rounded-md">
-          <Table>
-            <TableHeader className="text-[13px]">
-              <TableRow>
-                {!isMobile && <TableHead className="w-1/4">ID</TableHead>}
-                <TableHead className={isMobile ? "w-1/2" : "w-1/3"}>
-                  Name
-                </TableHead>
-                <TableHead className={isMobile ? "w-1/2" : "w-1/3"}>
-                  E-mail
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredUsers().length === 0 ? (
+        {hasUsersData ? (
+          <div className="rounded-md">
+            <Table>
+              <TableHeader className="text-[13px]">
                 <TableRow>
-                  <TableCell
-                    colSpan={isMobile ? 2 : 3}
-                    className="text-center py-4"
-                  >
-                    {searchText
-                      ? "No users matching your search"
-                      : "No users found"}
-                  </TableCell>
+                  {!isMobile && <TableHead className="w-1/4">ID</TableHead>}
+                  <TableHead className={isMobile ? "w-1/2" : "w-1/3"}>
+                    Name
+                  </TableHead>
+                  <TableHead className={isMobile ? "w-1/2" : "w-1/3"}>
+                    E-mail
+                  </TableHead>
                 </TableRow>
-              ) : (
-                filteredUsers().map((user) => (
+              </TableHeader>
+              <TableBody>
+                {filteredUsers().map((user) => (
                   <TableRow key={user.id}>
                     {!isMobile && (
                       <TableCell>
@@ -470,39 +457,58 @@ function Users() {
                       <span className="font-normal">{user.email}</span>
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        ) : (
+          <EmptyState
+            contentType="users"
+            title="No users found"
+            description={
+              searchText
+                ? "No users matching your search"
+                : "Your users list is empty"
+            }
+            isMobile={isMobile}
+            actionText="Add user"
+            onActionClick={() => {
+              if (isMobile) {
+                form.handleSubmit(handleAddUsers)();
+              }
+            }}
+          />
+        )}
       </div>
 
       {/* Footer with Pagination */}
-      <div
-        className={`${
-          isMobile ? "fixed bottom-0 left-0 right-0 py-3" : "fixed bottom-0"
-        } z-10 bg-white`}
-        style={
-          !isMobile
-            ? {
-                left: sidebarWidth,
-                right: 0,
-                height: "64px",
-                transition: "left 0.3s ease",
-              }
-            : undefined
-        }
-      >
-        <Pagination
-          currentPage={filters.page}
-          totalPages={totalPages}
-          totalItems={total}
-          pageSize={filters.limit}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
-          isMobile={isMobile}
-        />
-      </div>
+      {hasUsersData && (
+        <div
+          className={`${
+            isMobile ? "fixed bottom-0 left-0 right-0 py-3" : "fixed bottom-0"
+          } z-10 bg-white`}
+          style={
+            !isMobile
+              ? {
+                  left: sidebarWidth,
+                  right: 0,
+                  height: "64px",
+                  transition: "left 0.3s ease",
+                }
+              : undefined
+          }
+        >
+          <Pagination
+            currentPage={filters.page}
+            totalPages={totalPages}
+            totalItems={total}
+            pageSize={filters.limit}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+            isMobile={isMobile}
+          />
+        </div>
+      )}
     </div>
   );
 }

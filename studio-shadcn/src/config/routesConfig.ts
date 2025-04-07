@@ -3,6 +3,7 @@ import { Microchip, ListCheck, LayoutDashboard } from "lucide-react";
 import Dashboard from "../pages/dashboard";
 import Analytics from "../pages/analytics";
 import Search from "@/pages/search";
+import NotFoundPage from "@/components/ErrorsAndImage/PageNotFound";
 
 //Authentication
 import Login from "../utils/zitadel/login";
@@ -699,6 +700,14 @@ export const routes = {
       resource: "users",
       action: "get",
     },
+  },
+  // Not Found route - add this at the end
+  noMatch: {
+    path: "*",
+    title: "Page Not Found",
+    menuKey: "/404",
+    Component: NotFoundPage,
+    isFullScreen: true, // This will make it fill the screen without sidebar
   },
 };
 

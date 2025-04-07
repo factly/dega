@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
 import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteRating } from "../../../actions/ratings";
 import useNavigation from "../../../utils/useNavigation";
-import { Button } from "@/components/ui/button";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+
 import {
   Table,
   TableBody,
@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -25,50 +26,47 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { AppThunkDispatch } from "../../../store/types";
+import EmptyState from "@/components/EmptyState";
 
-// Type definitions
+// Types
 interface Rating {
   id: string;
   name: string;
-  numeric_value: number;
-  background_colour?: {
-    hex: string;
-  };
-  text_colour?: {
-    hex: string;
-  };
+  value: number;
+  // Add any other properties that ratings might have
 }
 
-interface RatingListProps {
-  actions: string[];
+interface RatingsListProps {
   data: {
-    ratings: Rating[];
+    ratings: Rating[] | null;
     loading: boolean;
     total: number;
   };
   filters: {
-    page: number;
-    limit: number;
+    page?: number;
+    limit?: number;
+    [key: string]: any;
   };
-  setFilters: (filters: { page: number; limit: number }) => void;
+  setFilters: (filters: any) => void;
   fetchRatings: () => void;
   sortOrder?: "asc" | "desc";
   onSortToggle?: () => void;
   isMobile?: boolean;
 }
 
-const RatingList: React.FC<RatingListProps> = ({
-  data,
+function RatingsList({
   fetchRatings,
+  data,
   onSortToggle,
-  isMobile = false,
-}) => {
+  isMobile,
+}: RatingsListProps) {
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [deleteItemID, setDeleteItemID] = useState<string | null>(null);
+
+  const dispatch = useAppDispatch();
   const navigate = useNavigation();
-  const dispatch = useDispatch<AppThunkDispatch>();
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [ratingToDelete, setRatingToDelete] = useState<Rating | null>(null);
 
   const handleRowClick = useCallback(
     (id: string) => {
@@ -85,117 +83,77 @@ const RatingList: React.FC<RatingListProps> = ({
     [navigate]
   );
 
-  const handleDeleteClick = useCallback(
-    (e: React.MouseEvent, rating: Rating) => {
-      e.stopPropagation();
-      setModalOpen(true);
-      setRatingToDelete(rating);
-    },
-    []
-  );
+  const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    setDeleteDialogOpen(true);
+    setDeleteItemID(id);
+  }, []);
 
   const handleDeleteConfirm = useCallback(
     async (e: React.MouseEvent) => {
       e.stopPropagation();
-
-      if (ratingToDelete && ratingToDelete.id) {
+      if (deleteItemID) {
         try {
-          await dispatch(deleteRating(ratingToDelete.id));
+          await dispatch(deleteRating(deleteItemID));
           fetchRatings();
         } catch (error) {
           console.error("Error deleting rating:", error);
         } finally {
-          setModalOpen(false);
-          setRatingToDelete(null);
+          setDeleteItemID(null);
+          setDeleteDialogOpen(false);
         }
       }
     },
-    [ratingToDelete, dispatch, fetchRatings]
+    [deleteItemID, dispatch, fetchRatings]
   );
 
   const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    setModalOpen(false);
-    setRatingToDelete(null);
+    setDeleteItemID(null);
+    setDeleteDialogOpen(false);
   }, []);
+
+  // Safely access data
+  const ratings = data?.ratings || [];
+  const hasRatingsData = ratings && ratings.length > 0;
 
   return (
     <div className="pb-4 overflow-auto">
-      <div className="rounded-md">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead
-                className={`min-w-[200px] text-[13px] ${
-                  isMobile ? "w-2/5" : ""
-                }`}
-              >
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={onSortToggle}
-                >
-                  Title
-                  <ChevronsUpDown className="ml-1 h-4 w-4" />
-                </div>
-              </TableHead>
-              <TableHead
-                className={`${
-                  isMobile ? "w-2/5" : "min-w-[250px]"
-                } text-[13px]`}
-              >
-                Preview
-              </TableHead>
-              <TableHead
-                className={`min-w-[100px] text-[13px] ${
-                  isMobile ? "w-1/5" : ""
-                }`}
-              >
-                Value
-              </TableHead>
-              <TableHead
-                className={`text-center text-[13px] ${
-                  isMobile ? "w-[80px]" : "min-w-[100px]"
-                }`}
-              >
-                Action
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.ratings.length === 0 ? (
+      {hasRatingsData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="w-1/2 text-[13px]">
               <TableRow>
-                <TableCell colSpan={4} className="text-center py-10">
-                  No ratings found
-                </TableCell>
+                <TableHead className="w-1/2">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={onSortToggle}
+                  >
+                    Name
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-2/5">Value</TableHead>
+                <TableHead className="w-[150px] text-center">Action</TableHead>
               </TableRow>
-            ) : (
-              data.ratings.map((rating) => (
+            </TableHeader>
+            <TableBody>
+              {ratings.map((rating) => (
                 <TableRow
                   key={rating.id}
                   onClick={() => handleRowClick(rating.id)}
                   className="cursor-pointer"
                 >
                   <TableCell>
-                    <h3 className="text-[#101828]">{rating.name}</h3>
+                    <h3 className="font-normal">
+                      {rating.name || "Unnamed Rating"}
+                    </h3>
                   </TableCell>
                   <TableCell>
-                    <div
-                      className={`text-center text-sm rounded-xl ${
-                        isMobile ? "w-auto text-xs" : "w-28"
-                      }`}
-                      style={{
-                        color: rating.text_colour?.hex,
-                        backgroundColor: rating.background_colour?.hex,
-                        padding: isMobile ? "0.15rem" : "0.25rem",
-                      }}
-                    >
-                      {rating.name}
-                    </div>
+                    <p className="line-clamp-2 font-normal">
+                      {rating.value || "---"}
+                    </p>
                   </TableCell>
-                  <TableCell>
-                    <h3 className="text-[#101828]">{rating.numeric_value}</h3>
-                  </TableCell>
-
                   <TableCell className="text-center">
                     <DropdownMenu>
                       <DropdownMenuTrigger
@@ -203,7 +161,7 @@ const RatingList: React.FC<RatingListProps> = ({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button variant="ghost" size="icon">
-                          <Ellipsis className="h-5 w-5 text-[#858585]" />
+                          <Ellipsis className="h-5 w-5" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -214,8 +172,9 @@ const RatingList: React.FC<RatingListProps> = ({
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          onClick={(e) => handleDeleteClick(e, rating)}
+                          onClick={(e) => handleDeleteClick(e, rating.id)}
                           className="cursor-pointer text-red-600 focus:text-red-600"
                         >
                           <Trash2 className="h-4 w-4 mr-2" />
@@ -225,13 +184,21 @@ const RatingList: React.FC<RatingListProps> = ({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="ratings"
+          title="No ratings found"
+          description="Your ratings list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
-      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent
           className="max-w-sm p-4"
           onPointerDownOutside={(e) => e.preventDefault()}
@@ -243,13 +210,22 @@ const RatingList: React.FC<RatingListProps> = ({
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4 flex justify-end space-x-2">
-            <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={(e) => {
+                handleDeleteCancel(e);
+              }}
+            >
               Cancel
             </Button>
             <Button
               size="sm"
               variant="destructive"
-              onClick={handleDeleteConfirm}
+              onClick={(e) => {
+                handleDeleteConfirm(e);
+              }}
+              type="button"
             >
               Delete
             </Button>
@@ -258,6 +234,6 @@ const RatingList: React.FC<RatingListProps> = ({
       </Dialog>
     </div>
   );
-};
+}
 
-export default RatingList;
+export default RatingsList;

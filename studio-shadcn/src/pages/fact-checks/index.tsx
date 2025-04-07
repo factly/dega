@@ -242,7 +242,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
       <FormatNotFound
         status="info"
         title="Fact-Check format not found"
-        link="/formats/create"
+        link="/settings/advanced/formats/create"
       />
     );
   }

@@ -94,8 +94,8 @@ const navMain: NavItem[] = [
     children: [
       { title: "Fact-Checks", url: "/fact-checks" },
       { title: "Claims", url: "/claims" },
-      { title: "Ratings", url: "/ratings" },
       { title: "Claimants", url: "/claimants" },
+      { title: "Ratings", url: "/ratings" },
       { title: "Google", url: "/fact-checks/google" },
       { title: "Sach", url: "/fact-checks/sach" },
     ],

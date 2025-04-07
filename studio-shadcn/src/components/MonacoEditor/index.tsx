@@ -23,6 +23,7 @@ interface MonacoEditorProps {
   themes?: string[];
   languages?: string[];
   className?: string;
+  borderless?: boolean;
 }
 
 export const MonacoEditor: React.FC<MonacoEditorProps> = ({
@@ -35,6 +36,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
   themes = ["vs-dark", "light"],
   languages = [],
   className,
+  borderless = false,
 }) => {
   const [currentTheme, setCurrentTheme] = React.useState(themes[0]);
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -56,7 +58,13 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
   }, [language]);
 
   return (
-    <Card className={cn("border shadow-sm overflow-hidden", className)}>
+    <Card
+      className={cn(
+        borderless ? "border-0 shadow-none" : "border shadow-sm",
+        "overflow-hidden",
+        className
+      )}
+    >
       <div className="flex items-center justify-between p-3 border-b">
         <div className="font-medium">{title}</div>
         <div className="flex items-center gap-2">

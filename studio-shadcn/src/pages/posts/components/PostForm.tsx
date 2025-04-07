@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 // Shadcn UI components
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
-import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import {
   DropdownMenu,
@@ -16,19 +15,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // Lucide icons
-import {
-  ChevronDown,
-  CheckCircle,
-  AlertCircle,
-  Clock,
-  PanelRightDashed,
-} from "lucide-react";
+import { ChevronDown, PanelRightDashed } from "lucide-react";
 
 // Custom components and utilities
 import { maker } from "../../../utils/sluger";
 import { addTemplate } from "../../../actions/posts";
 import useNavigation from "../../../utils/useNavigation";
 import PostSidePanel from "./PostSidePanel";
+import { renderStatusBadge } from "../../../components/statusBadge/index";
 
 // TypeScript interfaces
 export interface Author {
@@ -345,29 +339,7 @@ function PostForm({
 
                 {/* Status badge */}
                 <div className="flex justify-center mt-4">
-                  {status === "publish" ? (
-                    <Badge variant="default" className="bg-green-500">
-                      <CheckCircle className="h-4 w-4 mr-1" /> Published
-                    </Badge>
-                  ) : status === "draft" ? (
-                    <Badge variant="destructive">
-                      <AlertCircle className="h-4 w-4 mr-1" /> Draft
-                    </Badge>
-                  ) : status === "ready" ? (
-                    <Badge
-                      variant="outline"
-                      className="bg-amber-100 text-amber-800 border-amber-200"
-                    >
-                      <Clock className="h-4 w-4 mr-1" /> Ready to Publish
-                    </Badge>
-                  ) : status === "future" ? (
-                    <Badge
-                      variant="outline"
-                      className="bg-blue-100 text-blue-800 border-blue-200"
-                    >
-                      <Clock className="h-4 w-4 mr-1" /> Future Publish
-                    </Badge>
-                  ) : null}
+                  {renderStatusBadge(status)}
                 </div>
               </div>
             </div>

@@ -1,32 +1,45 @@
 import PostForm from "./components/PostForm";
-import { useDispatch } from "react-redux";
 import { addPost } from "../../actions/posts";
 import FormatNotFound from "../../components/ErrorsAndImage/RecordNotFound";
+
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
-import { AppDispatch } from "../../store/index";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 interface Format {
   id: number;
-  [key: string]: any;
+  name: string;
 }
 
-interface Formats {
+interface FormatState {
   loading: boolean;
-  article?: Format;
-  [key: string]: any;
+  article: Format | null;
+}
+
+interface Space {
+  id: number;
+  name: string;
+  permissions: string[];
+}
+
+interface RootState {
+  spaces: Space[];
 }
 
 interface CreatePostProps {
-  formats: Formats;
+  formats: FormatState;
+}
+
+interface PostValues {
+  [key: string]: any;
 }
 
 function CreatePost({ formats }: CreatePostProps): React.ReactElement {
   const history = useNavigation();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
-  const onCreate = (values: any): void => {
-    dispatch(addPost(values)).then((post) => {
+  const onCreate = (values: PostValues): void => {
+    dispatch(addPost(values)).then((post: { id: number } | undefined) => {
       if (post && post.id) history(`/posts/${post.id}/edit`);
     });
   };
