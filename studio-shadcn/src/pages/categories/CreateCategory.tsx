@@ -10,11 +10,17 @@ interface CategoryValues {
 }
 
 const CreateCategory: React.FC = () => {
-  const history = useNavigation();
+  const navigate = useNavigation();
   const dispatch = useAppDispatch();
 
   const onCreate = (values: CategoryValues): void => {
-    dispatch(createCategory(values)).then(() => history("/categories"));
+    dispatch(createCategory(values))
+      .then(() => {
+        navigate("/categories");
+      })
+      .catch((error) => {
+        console.error("Error creating category:", error);
+      });
   };
 
   return (

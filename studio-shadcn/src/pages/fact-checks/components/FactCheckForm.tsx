@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // Lucide Icons
-import { Check, Clock, PanelRightDashed, X } from "lucide-react";
+import { PanelRightDashed, X } from "lucide-react";
 
 // Shadcn Components
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -34,6 +33,7 @@ import { addErrorNotification } from "@/actions/notifications";
 import { formatDate, getDatefromStringWithoutDay } from "@/utils/date";
 import getJsonValue from "@/utils/getJsonValue";
 import { maker } from "@/utils/sluger";
+import { renderStatusBadge } from "../../../components/statusBadge/index";
 
 // Custom Components
 import ClaimCreateForm from "../../claims/components/ClaimForm";
@@ -378,30 +378,6 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     setValueChange(true); // Ensure Save button is enabled
   };
 
-  // Helper function to get status badge
-  const renderStatusBadge = () => {
-    if (status === "publish") {
-      return (
-        <Badge className="flex gap-1 items-center">
-          <Check className="h-3 w-3" /> Published
-        </Badge>
-      );
-    } else if (status === "draft") {
-      return (
-        <Badge variant="destructive" className="flex gap-1 items-center">
-          <X className="h-3 w-3" /> Draft
-        </Badge>
-      );
-    } else if (status === "ready") {
-      return (
-        <Badge className="flex gap-1 items-center">
-          <Clock className="h-3 w-3" /> Ready to Publish
-        </Badge>
-      );
-    }
-    return null;
-  };
-
   // LEFT SIDE CLAIM PANEL - This is the new component
   const renderLeftClaimPanel = () => {
     if (!claimPopoverOpen) return null;
@@ -509,7 +485,9 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
           {/* Header with Actions */}
           <div className="flex justify-between items-center space-x-2">
             {/* Status Badge - Move it to the left */}
-            <div className="flex justify-start">{renderStatusBadge()}</div>
+            <div className="flex justify-start">
+              {renderStatusBadge(status)}
+            </div>
 
             <div className="flex space-x-2">
               {data.id && (

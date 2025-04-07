@@ -28,10 +28,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getSpaces } from "../../../actions/spaces";
 import { deleteSpace } from "../../../actions/spaces";
 import { spaceSelector } from "../../../selectors/spaces";
 import useNavigation from "../../../utils/useNavigation";
+import EmptyState from "@/components/EmptyState";
 
 // Define types for the space object
 interface Space {
@@ -58,6 +58,7 @@ interface SpaceListProps {
     limit: number;
   };
   setFilters?: (filters: { page: number; limit: number }) => void;
+  isMobile?: boolean;
 }
 
 const LoadingRow: React.FC = () => (
@@ -83,11 +84,25 @@ const LoadingRow: React.FC = () => (
   </TableRow>
 );
 
+const MobileLoadingRow: React.FC = () => (
+  <TableRow>
+    <TableCell>
+      <Skeleton className="h-6 w-[200px]" />
+    </TableCell>
+    <TableCell>
+      <Skeleton className="h-6 w-[80px]" />
+    </TableCell>
+    <TableCell>
+      <Skeleton className="h-8 w-8 rounded-full" />
+    </TableCell>
+  </TableRow>
+);
+
 const SpaceList: React.FC<SpaceListProps> = ({
   searchQuery = "",
   sortOrder = "asc",
   onSortToggle,
-  filters,
+  isMobile = false,
 }) => {
   const dispatch: ThunkDispatch<any, unknown, AnyAction> = useDispatch();
   const { spaces, loading } = useSelector(spaceSelector) as SpaceState;
@@ -101,10 +116,6 @@ const SpaceList: React.FC<SpaceListProps> = ({
   // Date sorting is managed internally
   const [dateSortOrder, setDateSortOrder] = useState<"asc" | "desc">("desc"); // Default newest first
   const [sortBy, setSortBy] = useState<"name" | "date">("name"); // Default sort by name
-
-  const fetchSpaces = () => {
-    dispatch(getSpaces(filters));
-  };
 
   const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
     e.stopPropagation();
@@ -123,7 +134,6 @@ const SpaceList: React.FC<SpaceListProps> = ({
   const handleDelete = async () => {
     if (deleteItemId) {
       await dispatch(deleteSpace(deleteItemId));
-      await fetchSpaces();
       setDialogOpen(false);
       setDeleteItemId(null);
     }
@@ -197,55 +207,210 @@ const SpaceList: React.FC<SpaceListProps> = ({
       }
     });
   }, [spaces, searchQuery, sortBy, currentNameSortOrder, dateSortOrder]);
+  const hasSpacesData = !loading && filteredAndSortedSpaces.length > 0;
 
+  // Mobile view table
+  if (isMobile) {
+    return (
+      <div className="pb-4 overflow-auto">
+        {loading ? (
+          <Table>
+            <TableHeader className="text-[13px]">
+              <TableRow>
+                <TableHead className="w-1/2">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={handleNameSort}
+                  >
+                    Title
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-1/3">ID</TableHead>
+                <TableHead className="w-[50px] text-center">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <MobileLoadingRow />
+              <MobileLoadingRow />
+              <MobileLoadingRow />
+            </TableBody>
+          </Table>
+        ) : hasSpacesData ? (
+          <Table>
+            <TableHeader className="text-[13px]">
+              <TableRow>
+                <TableHead className="w-1/2">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={handleNameSort}
+                  >
+                    Title
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-1/3">ID</TableHead>
+                <TableHead className="w-[50px] text-center">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredAndSortedSpaces.map((space) => (
+                <TableRow
+                  key={space.id}
+                  className="cursor-pointer"
+                  onClick={() => handleRowClick(space.id)}
+                >
+                  <TableCell>
+                    <h3 className="font-normal">{displayValue(space.name)}</h3>
+                  </TableCell>
+                  <TableCell>
+                    <p className="line-clamp-2 font-normal">
+                      {displayValue(space.id).substring(0, 8)}
+                    </p>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        asChild
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Button variant="ghost" size="icon">
+                          <Ellipsis className="h-5 w-5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => handleEditClick(e, space.id)}
+                          className="cursor-pointer"
+                        >
+                          <Pencil className="h-4 w-4 mr-2" />
+                          <span>Edit</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={(e) => handleDeleteClick(e, space.id)}
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                        >
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          <span>Delete</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <EmptyState
+            contentType="spaces"
+            title="No spaces found"
+            description="Your spaces list is empty"
+            isMobile={isMobile}
+          />
+        )}
+
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent
+            className="max-w-sm p-4"
+            onPointerDownOutside={(e) => e.preventDefault()}
+          >
+            <DialogHeader className="space-y-2">
+              <DialogTitle className="text-base">Delete Space</DialogTitle>
+              <DialogDescription className="text-sm">
+                Are you sure you want to delete this space?
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="mt-4 flex justify-end space-x-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setDialogOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button size="sm" variant="destructive" onClick={handleDelete}>
+                Delete
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
+    );
+  }
+
+  // Desktop view table
   return (
     <div className="pb-4 overflow-auto">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-1/4 text-[13px]">
-              <div
-                className="flex items-center cursor-pointer"
-                onClick={handleNameSort}
-              >
-                Title
-                <ChevronsUpDown className="ml-1 h-3 w-3" />
-              </div>
-            </TableHead>
-            <TableHead className="w-1/4 text-[13px]">ID</TableHead>
-            <TableHead className="w-1/6 text-[13px]">Site Title</TableHead>
-            <TableHead className="w-1/6 text-[13px]">Site Address</TableHead>
-            <TableHead className="w-1/7 text-[13px]">
-              <div
-                className="flex items-center cursor-pointer"
-                onClick={handleDateSort}
-              >
-                Created On
-                <ChevronsUpDown className="ml-1 h-3 w-3" />
-              </div>
-            </TableHead>
-            <TableHead className="w-[100px] text-[13px] text-center">
-              Actions
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {loading ? (
-            <>
-              <LoadingRow />
-              <LoadingRow />
-              <LoadingRow />
-              <LoadingRow />
-              <LoadingRow />
-            </>
-          ) : filteredAndSortedSpaces.length === 0 ? (
+      {loading ? (
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={6} className="text-center py-10">
-                No spaces found
-              </TableCell>
+              <TableHead className="w-1/4 text-[13px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleNameSort}
+                >
+                  Title
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-1/4 text-[13px]">ID</TableHead>
+              <TableHead className="w-1/6 text-[13px]">Site Title</TableHead>
+              <TableHead className="w-1/6 text-[13px]">Site Address</TableHead>
+              <TableHead className="w-1/7 text-[13px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleDateSort}
+                >
+                  Created On
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-[100px] text-[13px] text-center">
+                Actions
+              </TableHead>
             </TableRow>
-          ) : (
-            filteredAndSortedSpaces.map((space) => (
+          </TableHeader>
+          <TableBody>
+            <LoadingRow />
+            <LoadingRow />
+            <LoadingRow />
+            <LoadingRow />
+            <LoadingRow />
+          </TableBody>
+        </Table>
+      ) : hasSpacesData ? (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-1/4 text-[13px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleNameSort}
+                >
+                  Title
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-1/4 text-[13px]">ID</TableHead>
+              <TableHead className="w-1/6 text-[13px]">Site Title</TableHead>
+              <TableHead className="w-1/6 text-[13px]">Site Address</TableHead>
+              <TableHead className="w-1/7 text-[13px]">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={handleDateSort}
+                >
+                  Created On
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead className="w-[100px] text-[13px] text-center">
+                Actions
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredAndSortedSpaces.map((space) => (
               <TableRow
                 key={space.id}
                 className="cursor-pointer"
@@ -293,10 +458,17 @@ const SpaceList: React.FC<SpaceListProps> = ({
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <EmptyState
+          contentType="spaces"
+          title="No spaces found"
+          description="Your spaces list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-sm p-4">

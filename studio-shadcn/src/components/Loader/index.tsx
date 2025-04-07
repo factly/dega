@@ -7,7 +7,7 @@ interface LoaderProps {
 
 const Loader: React.FC<LoaderProps> = ({ className }) => {
   return (
-    <div className={`fixed inset-0 flex items-center justify-center p-8 ${className}`}>
+    <div className={`inset-0 flex items-center justify-center p-8 ${className}`}>
       <Loader2 className="h-8 w-8 animate-spin text-primary" />
     </div>
   )

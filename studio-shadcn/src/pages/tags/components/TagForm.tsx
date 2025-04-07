@@ -15,6 +15,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ColorResult {
   hex: string;
@@ -39,6 +40,8 @@ interface TagFormProps {
 }
 
 const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
+  const isMobile = useIsMobile();
+
   // Process meta_fields if they exist
   const initialData = { ...data };
   if (initialData.meta_fields && typeof initialData.meta_fields !== "string") {
@@ -98,22 +101,42 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
   }, [form]);
 
   return (
-    <div className="px-60 max-w-6xl mx-auto">
-      <div className="mb-4 px-4">
-        <h1 className="text-xl font-semibold text-gray-900">Create Tag</h1>
-        <div className="mt-2">
-          <p className="text-gray-600 text-[13px]">
-            Set up a tag to help categorize content by entering the essential
-            details provided below
-          </p>
+    <div className={isMobile ? "px-4" : "px-60 max-w-6xl mx-auto"}>
+      {/* Mobile header */}
+      {isMobile && (
+        <div className="mb-4">
+          <h1 className="text-xl font-semibold">
+            {data && data.id ? "Edit Tag" : "Create Tag"}
+          </h1>
+          <div className="mt-2">
+            <p className="text-gray-600 text-[13px]">
+              Set up a tag to help categorize content by entering the essential
+              details provided below
+            </p>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Desktop header */}
+      {!isMobile && (
+        <div className="mb-6 px-4">
+          <h1 className="text-xl font-semibold text-gray-900">
+            {data && data.id ? "Edit Tag" : "Create Tag"}
+          </h1>
+          <div className="mt-2">
+            <p className="text-gray-600 text-[13px]">
+              Set up a tag to help categorize content by entering the essential
+              details provided below
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="border-t border-gray-200 mb-4"></div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full mx-auto">
-          <div className="w-full">
+          <div className="w-full mb-6">
             <Accordion
               type="multiple"
               defaultValue={["general"]}
@@ -129,13 +152,13 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="grid grid-cols-1 md:grid-cols-12 p-6 bg-white">
-                    <div className="md:col-span-5 space-y-6">
+                  <div className="py-3 bg-white px-4">
+                    <div className="space-y-4">
                       <FormField
                         control={form.control}
                         name="name"
                         render={({ field }) => (
-                          <FormItem className="mb-6">
+                          <FormItem className="mb-4 sm:mb-6">
                             <FormLabel className="text-base">Title</FormLabel>
                             <TitleInput
                               {...field}
@@ -149,7 +172,7 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
                         )}
                       />
 
-                      <div className="mb-6">
+                      <div className="mb-4 sm:mb-6">
                         <SlugInput form={form} />
                       </div>
 
@@ -172,88 +195,86 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
                         )}
                       />
 
-                      <FormItem className="space-y-2 mt-4">
-                        <FormLabel className="text-base">Colour</FormLabel>
-                        <div style={{ position: "relative", width: "100%" }}>
-                          <div
-                            style={{
-                              padding: "5px",
-                              width: "100%",
-                              background: "#fff",
-                              display: "inline-block",
-                              cursor: "pointer",
-                              borderRadius: "4px",
-                              boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
-                            }}
-                            onClick={handleBgClick}
-                          >
-                            <div
-                              style={{
-                                width: "100%",
-                                height: "24px",
-                                borderRadius: "2px",
-                                background: `${
-                                  backgroundColour && backgroundColour.hex
-                                }`,
-                              }}
-                            />
-                          </div>
-                          {displayBgColorPicker ? (
-                            <div
-                              style={{
-                                position: "absolute",
-                                zIndex: "2",
-                                top: 0,
-                                left: "120px",
-                              }}
-                            >
+                      <FormField
+                        control={form.control}
+                        name="background_colour"
+                        render={() => (
+                          <FormItem className="mb-4 sm:mb-6">
+                            <FormLabel className="text-base">Colour</FormLabel>
+                            <div className="relative w-full">
                               <div
-                                style={{
-                                  position: "fixed",
-                                  top: "0px",
-                                  right: "0px",
-                                  bottom: "0px",
-                                  left: "0px",
-                                }}
-                                onClick={handleBgClose}
-                              />
-                              <SketchPicker
-                                color={
-                                  backgroundColour !== null
-                                    ? backgroundColour.hex
-                                    : undefined
-                                }
-                                onChange={(color: ColorResult) => {
-                                  setBackgroundColour(color);
-                                  setValueChange(true);
-                                }}
-                                disableAlpha
-                              />
+                                className="border border-input rounded-md h-9 w-full flex items-center px-3 bg-white shadow-xs cursor-pointer"
+                                onClick={handleBgClick}
+                              >
+                                <div className="flex w-full items-center">
+                                  {backgroundColour?.hex ? (
+                                    <div className="flex items-center gap-2 w-full">
+                                      <div
+                                        className="w-5 h-5 rounded-sm"
+                                        style={{
+                                          background: `${backgroundColour?.hex}`,
+                                        }}
+                                      />
+                                      <span className="text-sm">
+                                        {backgroundColour.hex}
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <span className="text-muted-foreground text-sm">
+                                      Select a colour
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              {displayBgColorPicker ? (
+                                <div
+                                  className={`absolute z-10 ${
+                                    isMobile ? "right-0" : "top-10 left-0"
+                                  }`}
+                                >
+                                  <div
+                                    className="fixed inset-0"
+                                    onClick={handleBgClose}
+                                  />
+                                  <SketchPicker
+                                    color={
+                                      backgroundColour !== null
+                                        ? backgroundColour.hex
+                                        : undefined
+                                    }
+                                    onChange={(color) =>
+                                      setBackgroundColour(color)
+                                    }
+                                    disableAlpha
+                                  />
+                                </div>
+                              ) : null}
                             </div>
-                          ) : null}
-                        </div>
-                      </FormItem>
-                    </div>
+                          </FormItem>
+                        )}
+                      />
 
-                    <div className="md:col-span-7">
+                      {/* Featured Image */}
                       <FormField
                         control={form.control}
                         name="medium_id"
                         render={({ field }) => (
-                          <FormItem className="h-full">
+                          <FormItem className="mt-6">
                             <FormLabel className="text-base mb-2">
                               Featured Image
                             </FormLabel>
-                            <div className="flex justify-center items-start h-full mt-4">
-                              <MediaSelector
-                                value={field.value}
-                                onChange={(value) => {
-                                  field.onChange(value);
-                                  setValueChange(true);
-                                }}
-                                containerStyles={{ justifyContent: "center" }}
-                              />
-                            </div>
+                            <MediaSelector
+                              value={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              containerStyles={{
+                                justifyContent: "center",
+                                width: "100%",
+                                height: isMobile ? "160px" : "220px",
+                              }}
+                            />
                           </FormItem>
                         )}
                       />
@@ -264,24 +285,36 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
             </Accordion>
           </div>
 
-          <div className="w-full mb-8">
-            <MetaForm
-              style={{ marginBottom: 24, background: "#f0f2f5", border: 0 }}
-            />
+          <div className="w-full mb-2">
+            <MetaForm form={form} />
           </div>
 
-          <div className="flex justify-start mb-8 mt-8">
-            <div className="space-x-4">
+          <div
+            className={`flex ${
+              isMobile ? "justify-between" : "justify-start"
+            } mb-8 mt-8`}
+          >
+            <div
+              className={isMobile ? "w-full flex justify-between" : "space-x-4"}
+            >
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleCancel}
-                className="px-6"
+                className={isMobile ? "w-[48%]" : "px-6"}
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={!valueChange} className="px-6">
-                {data && data.id ? "Update" : "Create tag"}
+              <Button
+                type="submit"
+                disabled={!valueChange}
+                className={isMobile ? "w-[48%]" : "px-6"}
+              >
+                {data && data.id
+                  ? "Update"
+                  : isMobile
+                  ? "Create"
+                  : "Create tag"}
               </Button>
             </div>
           </div>

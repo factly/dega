@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
@@ -32,9 +32,9 @@ import { SlugInput } from "../../../components/FormItems/SlugInput";
 import MonacoEditor from "../../../components/MonacoEditor/index";
 import { Building2 } from "lucide-react";
 import { RootState } from "../../../store";
-import { getSpaces } from "../../../actions/spaces";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export interface Space {
   id: string;
@@ -57,6 +57,7 @@ export interface SpaceFormValues {
 
 const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, AnyAction>>();
+  const isMobile = useIsMobile();
 
   const form = useForm<SpaceFormValues>({
     defaultValues: {
@@ -68,10 +69,6 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
       description: "",
     },
   });
-
-  useEffect(() => {
-    dispatch(getSpaces());
-  }, [dispatch]);
 
   const orgs = useSelector((state: RootState) => state.spaces?.orgs || []);
   const loading = useSelector((state: RootState) => state.spaces?.loading);
@@ -95,15 +92,31 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
   const adminOrgs = orgs.filter((o) => o.role === "admin");
 
   return (
-    <div className="bg-white flex justify-center">
-      <div className="w-full max-w-3xl">
-        <div className="mb-3 pb-4 border-b border-gray-200">
-          <h2 className="text-xl font-semibold">Create Space</h2>
-          <p className="text-gray-600 mt-2">
-            Set up a category to help organize by utilizing the advanced options
-            provided below.
-          </p>
-        </div>
+    <div className={isMobile ? "" : "bg-white flex justify-center"}>
+      <div className={isMobile ? "w-full" : "w-full max-w-3xl"}>
+        {/* Mobile header */}
+        {isMobile && (
+          <div className="mb-4">
+            <h1 className="text-xl font-semibold">Create Space</h1>
+            <div className="mt-2">
+              <p className="text-gray-600 text-[13px]">
+                Create a space to help organize your content.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Desktop header */}
+        {!isMobile && (
+          <div className="mb-3 pb-4 border-b border-gray-200 px-4">
+            <h2 className="text-xl font-semibold">Create Space</h2>
+            <p className="text-gray-600 mt-2 text-[13px]">
+              Create a space to help organize your content.
+            </p>
+          </div>
+        )}
+
+        {isMobile && <div className="border-t border-gray-200 mb-4"></div>}
 
         <div className="bg-white">
           <Form {...form}>
@@ -122,7 +135,15 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                   className="rounded-md overflow-hidden mb-2"
                 >
                   <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
-                    <span className="text-lg font-medium">General</span>
+                    <span
+                      className={
+                        isMobile
+                          ? "text-base font-medium"
+                          : "text-lg font-medium"
+                      }
+                    >
+                      General
+                    </span>
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-6 pt-4 px-4 pb-4">
@@ -140,7 +161,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         }}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Title</FormLabel>
+                            <FormLabel className="text-base">Title</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
@@ -164,7 +185,9 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         rules={{ required: "Organisation is required" }}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Organization</FormLabel>
+                            <FormLabel className="text-base">
+                              Organization
+                            </FormLabel>
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
@@ -211,7 +234,9 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         name="description"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Description</FormLabel>
+                            <FormLabel className="text-base">
+                              Description
+                            </FormLabel>
                             <FormControl>
                               <Textarea
                                 {...field}
@@ -234,7 +259,15 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                   className="rounded-md overflow-hidden mb-2"
                 >
                   <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
-                    <span className="text-lg font-medium">Site details</span>
+                    <span
+                      className={
+                        isMobile
+                          ? "text-base font-medium"
+                          : "text-lg font-medium"
+                      }
+                    >
+                      Site details
+                    </span>
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-6 pt-4 px-4 pb-4">
@@ -243,12 +276,30 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         name="site_title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Site Title</FormLabel>
+                            <FormLabel className="text-base">
+                              Site Title
+                            </FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
                                 placeholder="Enter site title"
                                 maxLength={50}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="tag_line"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-base">Tagline</FormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                placeholder="Enter tagline"
+                                maxLength={100}
                               />
                             </FormControl>
                           </FormItem>
@@ -260,7 +311,9 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         name="site_address"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Website URL</FormLabel>
+                            <FormLabel className="text-base">
+                              Website URL
+                            </FormLabel>
                             <FormControl>
                               <div className="flex">
                                 <div className="bg-[#F0F5FF] flex items-center px-3 rounded-l-md border border-r-0 border-input">
@@ -286,7 +339,15 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                   className="rounded-md overflow-hidden mb-2"
                 >
                   <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
-                    <span className="text-lg font-medium">Meta fields</span>
+                    <span
+                      className={
+                        isMobile
+                          ? "text-base font-medium"
+                          : "text-lg font-medium"
+                      }
+                    >
+                      Meta fields
+                    </span>
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-4 pt-4 px-4 pb-4">
@@ -295,6 +356,9 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                         name="meta_fields"
                         render={({ field }) => (
                           <FormItem>
+                            <FormLabel className="text-base">
+                              Metadata
+                            </FormLabel>
                             <FormControl>
                               <div className="border border-input rounded-md overflow-hidden">
                                 <MonacoEditor
@@ -303,6 +367,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                                   language="json"
                                   value={field.value as string}
                                   onChange={field.onChange}
+                                  borderless={true}
                                   options={{
                                     minimap: { enabled: false },
                                     scrollBeyondLastLine: false,
@@ -322,15 +387,24 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
               </Accordion>
 
               {/* Action Buttons */}
-              <div className="flex justify-start gap-3 pt-4 border-t border-gray-100">
+              <div
+                className={
+                  isMobile
+                    ? "flex justify-between mb-8 mt-8"
+                    : "flex justify-start gap-3 pt-4 border-t border-gray-100"
+                }
+              >
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => window.history.back()}
+                  className={isMobile ? "w-[48%]" : ""}
                 >
                   Cancel
                 </Button>
-                <Button type="submit">Create space</Button>
+                <Button type="submit" className={isMobile ? "w-[48%]" : ""}>
+                  {isMobile ? "Create" : "Create space"}
+                </Button>
               </div>
             </form>
           </Form>

@@ -27,6 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import EmptyState from "@/components/EmptyState";
 
 interface Claimant {
   id: string;
@@ -50,12 +51,14 @@ interface ClaimantListProps {
   fetchClaimants: () => void;
   sortOrder?: "asc" | "desc";
   onSortToggle?: () => void;
+  isMobile?: boolean;
 }
 
 function ClaimantList({
   data,
   fetchClaimants,
   onSortToggle,
+  isMobile,
 }: ClaimantListProps) {
   const dispatch = useAppDispatch();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
@@ -111,28 +114,31 @@ function ClaimantList({
     [history]
   );
 
+  // Check if there are any claimants to display
+  const hasClaimantsData = data.claimants && data.claimants.length > 0;
+
   return (
     <div className="pb-4 overflow-auto">
-      <div className="rounded-md">
-        <Table>
-          <TableHeader className="w-1/2 text-[13px]">
-            <TableRow>
-              <TableHead className="w-1/2">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={onSortToggle}
-                >
-                  Title
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              <TableHead className="w-2/5">Tag Line</TableHead>
-              <TableHead className="w-[150px] text-center">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.claimants && data.claimants.length > 0 ? (
-              data.claimants.map((claimant) => (
+      {hasClaimantsData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="w-1/2 text-[13px]">
+              <TableRow>
+                <TableHead className="w-1/2">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={onSortToggle}
+                  >
+                    Title
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-2/5">Tag Line</TableHead>
+                <TableHead className="w-[150px] text-center">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.claimants.map((claimant) => (
                 <TableRow
                   key={claimant.id}
                   onClick={() => handleRowClick(claimant.id)}
@@ -181,17 +187,18 @@ function ClaimantList({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={3} className="text-center py-4">
-                  No claimants found
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="claimants"
+          title="No claimants found"
+          description="Your claimants list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-sm p-4">

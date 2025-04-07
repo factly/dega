@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/dialog";
 import { setSelectedSpace, deleteSpace } from "../../actions/spaces";
 import degaImg from "../../assets/dega.png";
-import "./SpaceSelector.css";
 import RecordNotFound from "../ErrorsAndImage/RecordNotFound";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
@@ -56,21 +55,6 @@ interface OrgSpaceListProps {
 }
 
 function SpaceSelector({ onClose }: SpaceSelectorProps) {
-  const [isMobileScreen, setIsMobileScreen] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setIsMobileScreen(true);
-      } else {
-        setIsMobileScreen(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   const { orgs, details } = useSelector((state: RootState) => {
     // orgs with spaces
     const orgsSpaces = state.spaces.orgs.filter((org) => org.spaces.length > 0);
@@ -236,11 +220,7 @@ function SpaceSelector({ onClose }: SpaceSelectorProps) {
 
   const renderSpaceSelector = () => {
     return (
-      <div
-        className={`flex flex-col items-center justify-center ${
-          isMobileScreen ? "w-[90vw]" : "w-[45.27vw] self-start"
-        }`}
-      >
+      <div className={`flex flex-col items-center justify-center`}>
         <div className="w-full mb-4">
           <Input
             value={searchQuery}
@@ -274,7 +254,6 @@ function SpaceSelector({ onClose }: SpaceSelectorProps) {
               <span className="font-bold">Back</span>
             </Button>
           </div>
-          {!isMobileScreen && renderSpaceSelector()}
           <div>
             <Link to="/spaces/create" onClick={onClose}>
               <Button
@@ -288,9 +267,7 @@ function SpaceSelector({ onClose }: SpaceSelectorProps) {
             </Link>
           </div>
         </div>
-        <div className="flex justify-center items-center mt-8 w-full">
-          {isMobileScreen && renderSpaceSelector()}
-        </div>
+        <div className="flex justify-center items-center mt-8 w-full"></div>
       </div>
 
       {/* Delete Confirmation Dialog */}

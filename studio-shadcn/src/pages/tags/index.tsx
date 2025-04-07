@@ -1,20 +1,20 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import TagList from "./components/TagList";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import deepEqual from "deep-equal";
 import { Helmet } from "react-helmet";
 import { RootState } from "../../store/index";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import { getTags } from "../../actions/tags";
-import getUrlParams from "../../utils/getUrlParams";
 import Loader from "../../components/Loader";
-import Filters from "../../utils/filters";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import Pagination from "../../components/Pagination";
+import { useSidebar } from "@/components/ui/sidebar";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 
 interface FilterParams {
   q?: string;
@@ -30,65 +30,48 @@ interface TagNode {
   total: number;
 }
 
-interface TagsState {
-  tags: {
-    req: TagNode[];
-    details: Record<number, any>;
-    loading: boolean;
-  };
-}
-
 function Tags(): React.ReactElement {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const location = useLocation();
+  const { state: sidebarState } = useSidebar();
+  const isMobile = useIsMobile();
+
+  // State for search and filters
   const [searchText, setSearchText] = useState<string>("");
+  const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  // Use useMemo to get URL params to avoid re-calculations
-  const urlParams = useMemo(
-    () => getUrlParams(new URLSearchParams(location.search)),
-    [location.search]
-  );
-
-  // Initialize filters from URL params
+  // Initialize filters with a state to prevent unnecessary reloads
   const [filters, setFilters] = useState<FilterParams>({
-    ...urlParams,
-    page: parseInt(urlParams.page as string) || 1,
-    limit: parseInt(urlParams.limit as string) || 10,
+    page: 1,
+    limit: 10,
   });
 
-  const [isMobileScreen, setIsMobileScreen] = useState<boolean>(false);
-
-  // Detect mobile screen
+  // Handle responsive UI changes
   useEffect(() => {
-    setIsMobileScreen(window.innerWidth <= 768);
-  }, []);
+    setShowSearch(!isMobile);
+  }, [isMobile]);
 
-  // Initialize search text from URL if present
+  // Fetch tags when filters change - key improvement from categories page
   useEffect(() => {
-    if (urlParams.q) {
-      setSearchText(urlParams.q as string);
-    }
-  }, [urlParams.q]);
+    fetchTags();
+  }, [filters]);
 
-  const form = React.useRef<HTMLFormElement>(null);
-
-  // Get data from Redux using the URL parameters directly
+  // Get data from Redux store
   const { tags, total, loading } = useSelector((state: RootState) => {
     // Ensure state.tags and state.tags.req exist
     if (!state.tags || !state.tags.req) {
       return { tags: [], total: 0, loading: false };
     }
 
+    // Adjust the query to match current filters for proper cache lookup
     const node = (state.tags.req as TagNode[]).find((item) => {
-      return deepEqual(item.query, urlParams);
+      return deepEqual(item.query, filters);
     });
 
     if (node && state.tags.details) {
       // Make sure data is available and mapped correctly
       const tagData = node.data
-        .filter((id) => state.tags.details && state.tags.details[id]) // Filter out undefined items
+        .filter((id) => state.tags.details && state.tags.details[id])
         .map((element) => state.tags.details[element]);
 
       return {
@@ -100,239 +83,278 @@ function Tags(): React.ReactElement {
     return { tags: [], total: 0, loading: state.tags.loading || false };
   });
 
-  // Get sidebar state from Redux store
-  const isCollapsed = useSelector(
-    (state: RootState) => state.sidebar?.collapsed ?? false
-  );
-
-  // Calculate left margin based on sidebar state
-  const sidebarWidth = isCollapsed ? "89px" : "265px";
-
-  // Define the header height (including padding)
-  const headerHeight = "calc(1.5rem + 2.5rem + 1rem)"; // top padding + height + bottom padding
-
   // Filter tags locally based on search text
   const filteredTags = useMemo(() => {
-    let filtered = tags;
-
-    // Filter tags based on search text
-    if (searchText.trim()) {
-      filtered = tags.filter((tag: any) => {
-        const searchLower = searchText.toLowerCase();
-        const nameMatch =
-          typeof tag.name === "string"
-            ? tag.name.toLowerCase().includes(searchLower)
-            : false;
-
-        // Check if description exists and is a string before calling toLowerCase
-        const descriptionMatch =
-          typeof tag.description === "string"
-            ? tag.description.toLowerCase().includes(searchLower)
-            : false;
-
-        // Add any other fields you want to search
-        const slugMatch =
-          typeof tag.slug === "string"
-            ? tag.slug.toLowerCase().includes(searchLower)
-            : false;
-
-        return nameMatch || descriptionMatch || slugMatch;
-      });
+    if (!searchText.trim()) {
+      return tags;
     }
 
-    // Apply sorting
-    return [...filtered].sort((a, b) => {
+    return tags.filter((tag: any) => {
+      const searchLower = searchText.toLowerCase();
+      const nameMatch =
+        typeof tag.name === "string"
+          ? tag.name.toLowerCase().includes(searchLower)
+          : false;
+
+      const descriptionMatch =
+        typeof tag.description === "string"
+          ? tag.description.toLowerCase().includes(searchLower)
+          : false;
+
+      const slugMatch =
+        typeof tag.slug === "string"
+          ? tag.slug.toLowerCase().includes(searchLower)
+          : false;
+
+      return nameMatch || descriptionMatch || slugMatch;
+    });
+  }, [tags, searchText]);
+
+  // Sort tags based on sort order
+  const sortedTags = useMemo(() => {
+    return [...filteredTags].sort((a, b) => {
       if (sortOrder === "asc") {
         return a.name?.localeCompare(b.name || "") || 0;
       } else {
         return b.name?.localeCompare(a.name || "") || 0;
       }
     });
-  }, [tags, searchText, sortOrder]);
+  }, [filteredTags, sortOrder]);
+
+  const fetchTags = useCallback(() => {
+    dispatch(getTags(filters));
+  }, [dispatch, filters]);
 
   const handleSortToggle = useCallback(() => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   }, []);
 
-  const updateURLParams = useCallback(
-    (newParams: Record<string, any>) => {
-      const searchParams = new URLSearchParams();
-      const combinedParams = {
-        ...urlParams,
-        ...newParams,
-      };
-
-      Object.entries(combinedParams).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== "") {
-          if (
-            (key === "page" && value === 1) ||
-            (key === "limit" && value === 10)
-          ) {
-            return;
-          }
-          searchParams.set(key, String(value));
-        }
-      });
-
-      navigate(
-        {
-          pathname: location.pathname,
-          search: searchParams.toString(),
-        },
-        { replace: true }
-      );
-    },
-    [urlParams, navigate, location.pathname]
-  );
-
-  useEffect(() => {
-    // Initialize form with filters
-    if (form.current) {
-      try {
-        const formFilters = new Filters(urlParams);
-        const formElements = form.current.elements;
-        for (const key in formFilters) {
-          if (formElements[key] && formFilters[key] !== undefined) {
-            (formElements[key] as HTMLInputElement).value = formFilters[key];
-          }
-        }
-      } catch (error) {
-        console.error("Error initializing form:", error);
-      }
-    }
-  }, [urlParams]);
-
-  useEffect(() => {
-    fetchTags();
-  }, [location.search]);
-
-  const fetchTags = useCallback(() => {
-    const paramsToUse = {
-      ...urlParams,
-      page: urlParams.page || 1,
-      limit: urlParams.limit || 10,
-    };
-
-    dispatch(getTags(paramsToUse));
-  }, [dispatch, urlParams]);
-
-  const handleSortChange = (value: string) => {
-    updateURLParams({ sort: value });
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
   };
-  const handleSearchSubmit = () => {
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFilters((prev) => ({ ...prev, q: searchText, page: 1 }));
+
+    // Update URL for shareable links, but don't depend on it for data fetching
     updateURLParams({ q: searchText, page: 1 });
   };
 
-  // Pagination handlers
-  const handlePageChange = useCallback(
-    (page: number) => {
-      updateURLParams({ page });
-    },
-    [updateURLParams]
-  );
+  // Toggle search on mobile
+  const toggleSearch = useCallback(() => {
+    setShowSearch((prev) => !prev);
+    if (showSearch) {
+      setSearchText("");
+    }
+  }, [showSearch]);
 
-  const handlePageSizeChange = useCallback(
-    (size: number) => {
-      updateURLParams({ limit: size, page: 1 });
-    },
-    [updateURLParams]
-  );
+  // Pagination handlers
+  const handlePageChange = useCallback((page: number) => {
+    setFilters((prev) => ({ ...prev, page }));
+    updateURLParams({ page });
+  }, []);
+
+  const handlePageSizeChange = useCallback((size: number) => {
+    setFilters((prev) => ({ ...prev, limit: size, page: 1 }));
+    updateURLParams({ limit: size, page: 1 });
+  }, []);
+
+  // URL params update function - now decoupled from data fetching
+  const updateURLParams = useCallback((newParams: Record<string, any>) => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    Object.entries(newParams).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        if (
+          (key === "page" && value === 1) ||
+          (key === "limit" && value === 10)
+        ) {
+          searchParams.delete(key);
+        } else {
+          searchParams.set(key, String(value));
+        }
+      } else {
+        searchParams.delete(key);
+      }
+    });
+
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}${
+        searchParams.toString() ? `?${searchParams.toString()}` : ""
+      }`
+    );
+  }, []);
 
   // Calculate total pages
-  const totalPages = Math.max(1, Math.ceil(total / (filters.limit || 10)));
+  const pageSize = filters.limit || 10;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  return loading ? (
-    <Loader />
-  ) : (
-    <div className="flex flex-col h-full w-full">
+  const isCollapsed = sidebarState === "collapsed" && !isMobile;
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  return (
+    <div className="flex flex-col h-full">
       <Helmet title={"Tags"} />
 
-      {/* Header */}
+      {/* Mobile Breadcrumb */}
+      {isMobile && (
+        <MobileBreadcrumb
+          currentPage="Tags"
+          parentPath="/"
+          parentLabel="Core"
+        />
+      )}
+
       <div
-        className="fixed top-0 z-10 bg-white"
-        style={{
-          left: sidebarWidth,
-          right: 0,
-          height: headerHeight,
-          transition: "left 0.3s ease",
-        }}
+        className={`${isMobile ? "sticky top-0" : "fixed"} z-10 bg-white`}
+        style={
+          !isMobile
+            ? {
+                left: isCollapsed ? "89px" : "265px",
+                right: 0,
+                transition: "left 0.3s ease",
+              }
+            : undefined
+        }
       >
-        <div className="flex justify-between items-center h-full px-6 pt-1">
-          <form
-            ref={form}
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSearchSubmit();
-            }}
-            className="flex items-center gap-4 flex-1"
-          >
-            <div className="relative flex-1 max-w-xs">
-              <Input
-                name="q"
-                placeholder="Search tags..."
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                className="h-10"
-              />
-            </div>
-          </form>
-          <div>
-            <Link to="/tags/create">
-              <Button size="lg" className="flex items-center gap-2 py-2">
-                <PlusCircle className="h-4 w-4" />
-                Create tag
+        <div
+          className={`flex justify-between items-center ${
+            isMobile ? "pb-3 pt-1" : "px-3 pt-1 h-full"
+          }`}
+        >
+          {/* Title */}
+          {isMobile && <h1 className="text-xl font-semibold">Tags</h1>}
+
+          {/* Desktop search bar */}
+          {!isMobile && (
+            <form
+              onSubmit={handleSearchSubmit}
+              className="flex items-center gap-4 flex-1"
+            >
+              <div className="relative flex-1 max-w-xs">
+                <Input
+                  placeholder="Search tags..."
+                  value={searchText}
+                  onChange={handleSearchChange}
+                  className="h-10"
+                />
+              </div>
+            </form>
+          )}
+
+          {/* Action buttons */}
+          <div className={`${isMobile ? "flex items-center gap-2" : ""}`}>
+            {isMobile && (
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={toggleSearch}
+                className="h-9 w-9 text-gray-500"
+              >
+                <SearchIcon className="h-5 w-5" />
               </Button>
+            )}
+
+            <Link to="/tags/create">
+              {isMobile ? (
+                <Button size="icon" className="h-9 w-9">
+                  <PlusCircle className="h-5 w-5" />
+                </Button>
+              ) : (
+                <Button size="lg" className="flex items-center gap-2 py-2">
+                  <PlusCircle className="h-4 w-4" />
+                  Create tag
+                </Button>
+              )}
             </Link>
           </div>
         </div>
+
+        {/* Mobile search bar */}
+        {isMobile && showSearch && (
+          <div className="px-4 pb-3">
+            <form onSubmit={handleSearchSubmit}>
+              <Input
+                placeholder="Search tags..."
+                value={searchText}
+                onChange={handleSearchChange}
+                className="h-9 w-full"
+                autoFocus
+              />
+            </form>
+          </div>
+        )}
       </div>
 
-      {/* Content */}
       <div
-        className="absolute overflow-auto"
-        style={{
-          top: headerHeight,
-          left: sidebarWidth,
-          right: 0,
-          bottom: "64px",
-          paddingLeft: "1.5rem",
-          paddingRight: "1.5rem",
-          paddingBottom: "1.5rem",
-          paddingTop: "1rem",
-          transition: "left 0.3s ease, top 0.3s ease",
-        }}
+        className={
+          isMobile
+            ? "flex-1 pb-16 pt-1 overflow-auto"
+            : "absolute overflow-auto"
+        }
+        style={
+          !isMobile
+            ? {
+                top: "calc(1.5rem + 2.5rem + 1rem)",
+                left: 0,
+                right: 0,
+                bottom: "64px",
+                paddingLeft: "1.5rem",
+                paddingRight: "1.5rem",
+                paddingBottom: "1.5rem",
+                paddingTop: "1rem",
+                transition: "left 0.3s ease, top 0.3s ease",
+              }
+            : undefined
+        }
       >
         <TagList
           data={{
-            tags: filteredTags,
+            tags: sortedTags,
             total: total,
             loading,
           }}
           filters={filters}
-          setFilters={updateURLParams}
+          setFilters={(newParams) => {
+            setFilters((prev) => ({ ...prev, ...newParams }));
+            updateURLParams(newParams);
+          }}
           fetchTags={fetchTags}
           sortOrder={sortOrder}
           onSortToggle={handleSortToggle}
+          isMobile={isMobile}
         />
       </div>
 
-      {/* Footer with Pagination */}
       <div
-        className="fixed bottom-0 z-10 bg-white"
-        style={{
-          left: sidebarWidth,
-          right: 0,
-          height: "64px",
-          transition: "left 0.3s ease",
-        }}
+        className={`${
+          isMobile ? "fixed bottom-0 left-0 right-0 py-3" : "fixed bottom-0"
+        } z-10 bg-white`}
+        style={
+          !isMobile
+            ? {
+                left: isCollapsed ? "89px" : "265px",
+                right: 0,
+                height: "64px",
+                transition: "left 0.3s ease",
+              }
+            : undefined
+        }
       >
         <Pagination
           currentPage={filters.page || 1}
           totalPages={totalPages}
           totalItems={total}
-          pageSize={filters.limit || 10}
+          pageSize={pageSize}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
+          isMobile={isMobile}
         />
       </div>
     </div>

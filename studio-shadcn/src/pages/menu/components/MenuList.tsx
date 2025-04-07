@@ -1,12 +1,9 @@
 import React, { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { Trash2, Ellipsis, Pencil, ChevronsUpDown } from "lucide-react";
+import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteMenu } from "../../../actions/menu";
 import useNavigation from "../../../utils/useNavigation";
-import { AppDispatch } from "../../../store";
-
-// shadcn components
+import { useAppDispatch } from "@/hooks/reduxHooks";
+// Shadcn components
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -29,9 +26,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import EmptyState from "@/components/EmptyState";
 
-// Define types
+// Types
 interface Menu {
   id: string | number;
   name: string;
@@ -54,6 +53,7 @@ interface MenuListProps {
   fetchMenus: () => void;
   sortOrder?: "asc" | "desc";
   onSortToggle?: () => void;
+  isMobile?: boolean;
 }
 
 const MenuList: React.FC<MenuListProps> = ({
@@ -61,44 +61,14 @@ const MenuList: React.FC<MenuListProps> = ({
   data,
   fetchMenus,
   onSortToggle,
+  isMobile,
 }) => {
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [deleteItemId, setDeleteItemId] = useState<string | number | null>(
+  const dispatch = useAppDispatch();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [deleteItemID, setDeleteItemID] = useState<string | number | null>(
     null
   );
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigation();
-
-  // Memoize handlers to prevent unnecessary re-renders
-  const handleDeleteClick = useCallback(
-    (e: React.MouseEvent, id: string | number) => {
-      e.stopPropagation();
-      setDialogOpen(true);
-      setDeleteItemId(id);
-    },
-    []
-  );
-
-  const handleDeleteConfirm = useCallback(() => {
-    if (deleteItemId) {
-      dispatch(deleteMenu(deleteItemId))
-        .then(() => {
-          fetchMenus();
-          setDialogOpen(false);
-          setDeleteItemId(null);
-        })
-        .catch((error) => {
-          console.error("Error deleting menu:", error);
-          setDialogOpen(false);
-        });
-    }
-  }, [deleteItemId, dispatch, fetchMenus]);
-
-  const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setDialogOpen(false);
-    setDeleteItemId(null);
-  }, []);
 
   const handleRowClick = useCallback(
     (id: string | number) => {
@@ -107,49 +77,83 @@ const MenuList: React.FC<MenuListProps> = ({
     [navigate]
   );
 
+  const handleEditClick = useCallback(
+    (e: React.MouseEvent, id: string | number) => {
+      e.stopPropagation();
+      navigate(`/settings/website/menus/${id}/edit`);
+    },
+    [navigate]
+  );
+
+  const handleDeleteClick = useCallback(
+    (e: React.MouseEvent, id: string | number) => {
+      e.stopPropagation();
+      setDeleteDialogOpen(true);
+      setDeleteItemID(id);
+    },
+    []
+  );
+
+  const handleDeleteConfirm = useCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (deleteItemID) {
+        try {
+          const result = await dispatch(deleteMenu(deleteItemID));
+          fetchMenus();
+        } catch (error) {
+          console.error("Error deleting menu:", error);
+        } finally {
+          setDeleteItemID(null);
+          setDeleteDialogOpen(false);
+        }
+      }
+    },
+    [deleteItemID, dispatch, fetchMenus]
+  );
+
+  const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDeleteItemID(null);
+    setDeleteDialogOpen(false);
+  }, []);
+
   const isDeleteAllowed =
     actions.includes("admin") || actions.includes("delete");
 
+  // Check if there are any menus to display
+  const hasMenusData = data.menus && data.menus.length > 0;
+
   return (
     <div className="pb-4 overflow-auto">
-      <div className="rounded-md">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-full">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={onSortToggle}
-                >
-                  Name
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              <TableHead className="w-[150px] text-center">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.menus.length === 0 ? (
+      {hasMenusData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="text-[13px]">
               <TableRow>
-                <TableCell colSpan={2} className="text-center py-6">
-                  No menus found
-                </TableCell>
+                <TableHead className="w-full">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={onSortToggle}
+                  >
+                    Name
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-[150px] text-center">Action</TableHead>
               </TableRow>
-            ) : (
-              data.menus.map((menu) => (
+            </TableHeader>
+            <TableBody>
+              {data.menus.map((menu) => (
                 <TableRow
                   key={menu.id}
                   onClick={() => handleRowClick(menu.id)}
                   className="cursor-pointer"
                 >
                   <TableCell>
-                    <Link
-                      to={`/settings/website/menus/${menu.id}/edit`}
-                      className="font-normal"
-                      onClick={(e) => e.stopPropagation()}
-                    >
+                    <h3 className="font-normal">
                       {menu.name || "Unnamed Menu"}
-                    </Link>
+                    </h3>
                   </TableCell>
                   <TableCell className="text-center">
                     <DropdownMenu>
@@ -163,15 +167,13 @@ const MenuList: React.FC<MenuListProps> = ({
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleRowClick(menu.id);
-                          }}
+                          onClick={(e) => handleEditClick(e, menu.id)}
                           className="cursor-pointer"
                         >
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => handleDeleteClick(e, menu.id)}
                           className="cursor-pointer text-red-600 focus:text-red-600"
@@ -184,15 +186,25 @@ const MenuList: React.FC<MenuListProps> = ({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="menus"
+          title="No menus found"
+          description="Your menus list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-sm p-4">
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent
+          className="max-w-sm p-4"
+          onPointerDownOutside={(e) => e.preventDefault()}
+        >
           <DialogHeader className="space-y-2">
             <DialogTitle className="text-base">Delete Menu</DialogTitle>
             <DialogDescription className="text-sm">
@@ -200,13 +212,22 @@ const MenuList: React.FC<MenuListProps> = ({
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4 flex justify-end space-x-2">
-            <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={(e) => {
+                handleDeleteCancel(e);
+              }}
+            >
               Cancel
             </Button>
             <Button
               size="sm"
               variant="destructive"
-              onClick={handleDeleteConfirm}
+              onClick={(e) => {
+                handleDeleteConfirm(e);
+              }}
+              type="button"
               disabled={!isDeleteAllowed}
             >
               Delete

@@ -9,7 +9,7 @@ import {
   FormMessage,
   Form,
 } from "@/components/ui/form";
-import { Plus, MinusCircle } from "lucide-react";
+import { MinusCircle, PlusCircle } from "lucide-react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -149,7 +149,7 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
 
   return (
     <div className="bg-background">
-      <div className="mb-4">
+      <div className="mb-4 px-4">
         <h1 className="text-xl font-semibold text-gray-900">
           {data && data.id ? "Edit Menu" : "Create Menu"}
         </h1>
@@ -189,7 +189,7 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
                   if (addMenu.current) addMenu.current();
                 }}
               >
-                <Plus className="h-4 w-4" /> Add menu
+                <PlusCircle className="h-4 w-4" /> Add menu
               </Button>
             </div>
           </div>

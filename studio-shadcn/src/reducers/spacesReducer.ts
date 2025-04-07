@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   SET_SELECTED_SPACE,
   GET_SPACES_SUCCESS,
@@ -30,6 +31,8 @@ export interface SpacesState {
   loading: boolean;
   selected: string;
   org_role: string;
+  lastFetched: number | null;
+  hasAttemptedFetch: boolean;
 }
 
 // Define action interfaces
@@ -84,6 +87,8 @@ const initialState: SpacesState = {
   loading: true,
   selected: storedSpaceId,
   org_role: "",
+  lastFetched: null,
+  hasAttemptedFetch: false,
 };
 
 export function spaces(
@@ -121,7 +126,7 @@ export function spaces(
         Object.keys(space_details).length > 0
           ? space_details[spaceID]
             ? spaceID // Use stored space if it exists
-            : space_details[Object.keys(space_details)[0]].id // Otherwise use first space
+            : Object.keys(space_details)[0] // Otherwise use first space
           : "";
 
       // Use the current selected space if it exists in space_details, otherwise use defaultSpace
@@ -131,6 +136,11 @@ export function spaces(
 
       // Store the selected space ID in localStorage
       localStorage.setItem("space", setSpaceID);
+
+      // Update header with space ID
+      if (setSpaceID) {
+        axios.defaults.headers.common["X-Space"] = setSpaceID;
+      }
 
       return {
         ...state,
@@ -146,6 +156,9 @@ export function spaces(
         org_role: space_details[setSpaceID]
           ? space_details[setSpaceID].org_role || ""
           : "",
+        // Add timestamp to track when spaces were last fetched
+        lastFetched: Date.now(),
+        hasAttemptedFetch: true, // Mark that we've attempted the fetch
       };
     }
 
@@ -169,6 +182,9 @@ export function spaces(
 
       localStorage.setItem("space", newSpace.id);
 
+      // Update header with new space ID
+      axios.defaults.headers.common["X-Space"] = newSpace.id;
+
       return {
         ...state,
         loading: false,
@@ -178,12 +194,16 @@ export function spaces(
         },
         orgs: org_copy,
         selected: newSpace.id,
+        hasAttemptedFetch: true,
       };
     }
 
     case SET_SELECTED_SPACE: {
       const { id } = action.payload as { id: string };
       localStorage.setItem("space", id);
+
+      // Update header with selected space ID
+      axios.defaults.headers.common["X-Space"] = id;
 
       return {
         ...state,
@@ -208,7 +228,10 @@ export function spaces(
     }
 
     case DELETE_SPACE_SUCCESS:
-      return initialState;
+      return {
+        ...initialState,
+        hasAttemptedFetch: true,
+      };
 
     default:
       return state;

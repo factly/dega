@@ -27,7 +27,7 @@ interface Description {
 }
 
 interface Category {
-  id: number;
+  id: string | number;
   name: string;
   description?: any;
   description_html?: string;
@@ -36,7 +36,7 @@ interface Category {
 }
 
 interface CategoryWithProcessedFields {
-  id: number;
+  id: string | number; // Allow both string and number IDs
   name: string;
   description: Description;
   medium?: number | null;
@@ -97,7 +97,7 @@ type CategoryActionTypes =
   | UpdateCategoryAction;
 
 type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
+  Promise<ReturnType>,
   RootState,
   unknown,
   AnyAction
@@ -105,7 +105,7 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 // Helper function to process category data
 const processCategory = (category: Category): CategoryWithProcessedFields => {
-  const { medium, description_html, ...rest } = category;
+  const { medium, description_html, parent_category, ...rest } = category;
 
   return {
     ...rest,
@@ -114,14 +114,32 @@ const processCategory = (category: Category): CategoryWithProcessedFields => {
       html: description_html || "",
     },
     medium: medium?.id || null,
+    // Preserve parent_category data for use in UI
+    parent_category: parent_category
+      ? {
+          id: parent_category.id,
+          name: parent_category.name,
+        }
+      : undefined,
   };
+};
+
+// Helper to ensure the ID is properly formatted for API calls
+const ensureValidId = (id: string | number): string => {
+  // If it's already a string, just return it
+  if (typeof id === "string") {
+    return id;
+  }
+
+  // If it's a number, convert to string
+  return String(id);
 };
 
 // action to fetch all categories
 export const getCategories = (
   query: GetCategoriesQuery,
   setLoading: boolean = true
-): AppThunk => {
+): AppThunk<any> => {
   return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
     if (currentSpaceID === 0) {
@@ -147,7 +165,7 @@ export const getCategories = (
           dispatch(addMedia(mediaItems));
         }
 
-        // Process and add categories
+        // Process and add categories with parent data
         const processedCategories = response.data.nodes.map(processCategory);
         dispatch(addCategoriesList(processedCategories));
 
@@ -173,22 +191,25 @@ export const getCategories = (
 };
 
 // action to fetch category by id
-export const getCategory = (id: number): AppThunk => {
+export const getCategory = (id: string | number): AppThunk<any> => {
   return (dispatch) => {
     // Validate id before making the API call
-    if (!id || id <= 0) {
+    if (!id) {
       dispatch(addErrorNotification("Invalid category ID"));
       return Promise.reject(new Error("Invalid category ID"));
     }
 
+    const validId = ensureValidId(id);
+
     dispatch(loadingCategories());
     return axios
-      .get<Category>(`${CATEGORIES_API}/${id}`)
+      .get<Category>(`${CATEGORIES_API}/${validId}`)
       .then((response) => {
         if (response.data.medium) {
           dispatch(addMedia([response.data.medium]));
         }
 
+        // Preserve the original ID format from the response
         const processedCategory = processCategory(response.data);
         dispatch(addCategory(GET_CATEGORY, processedCategory));
         return response;
@@ -202,7 +223,7 @@ export const getCategory = (id: number): AppThunk => {
 };
 
 // action to create category
-export const createCategory = (data: Partial<Category>): AppThunk => {
+export const createCategory = (data: Partial<Category>): AppThunk<any> => {
   return (dispatch) => {
     dispatch(loadingCategories());
     return axios
@@ -210,7 +231,7 @@ export const createCategory = (data: Partial<Category>): AppThunk => {
       .then((response) => {
         dispatch(resetCategories());
         dispatch(addSuccessNotification("Category created"));
-        return response;
+        return response; // Important: Return the response for proper Promise chaining
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -221,25 +242,28 @@ export const createCategory = (data: Partial<Category>): AppThunk => {
 };
 
 // action to update category by id
-export const updateCategory = (data: Category): AppThunk => {
+export const updateCategory = (data: Category): AppThunk<any> => {
   return (dispatch) => {
     if (!data.id) {
       dispatch(addErrorNotification("Category ID is required for update"));
       return Promise.reject(new Error("Category ID is required"));
     }
 
+    const validId = ensureValidId(data.id);
+
     dispatch(loadingCategories());
     return axios
-      .put<Category>(`${CATEGORIES_API}/${data.id}`, data)
+      .put<Category>(`${CATEGORIES_API}/${validId}`, data)
       .then((response) => {
         if (response.data.medium) {
           dispatch(addMedia([response.data.medium]));
         }
 
+        // Preserve the original ID format from the response
         const processedCategory = processCategory(response.data);
         dispatch(addCategory(UPDATE_CATEGORY, processedCategory));
         dispatch(addSuccessNotification("Category updated"));
-        return response;
+        return response; // Important: Return the response for proper Promise chaining
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -249,17 +273,18 @@ export const updateCategory = (data: Category): AppThunk => {
   };
 };
 
-// action to delete category by id
-export const deleteCategory = (id: number): AppThunk => {
+export const deleteCategory = (id: string | number): AppThunk<any> => {
   return (dispatch) => {
-    if (!id || id <= 0) {
+    if (!id) {
       dispatch(addErrorNotification("Invalid category ID"));
       return Promise.reject(new Error("Invalid category ID"));
     }
 
+    const validId = ensureValidId(id);
+
     dispatch(loadingCategories());
     return axios
-      .delete(`${CATEGORIES_API}/${id}`)
+      .delete(`${CATEGORIES_API}/${validId}`)
       .then((response) => {
         dispatch(resetCategories());
         dispatch(addSuccessNotification("Category deleted"));
@@ -269,11 +294,13 @@ export const deleteCategory = (id: number): AppThunk => {
         dispatch(addErrorNotification(getError(error)));
         return Promise.reject(error); // Propagate the error
       })
-      .finally(() => dispatch(stopCategoriesLoading()));
+      .finally(() => {
+        dispatch(stopCategoriesLoading());
+      });
   };
 };
 
-export const addCategories = (categories: Category[]): AppThunk => {
+export const addCategories = (categories: Category[]): AppThunk<any> => {
   return (dispatch) => {
     const mediaItems = categories
       .filter((category): category is Category & { medium: Medium } =>

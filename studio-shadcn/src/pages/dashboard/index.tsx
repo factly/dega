@@ -1,84 +1,29 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-
-// ShadcN UI components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// Lucide icons
 import { FileText, Check, Clock, FileEdit, FileClock } from "lucide-react";
-
-// Redux actions
 import { getInfo } from "../../actions/info";
-
-// Components
 import Loader from "../../components/Loader";
-
-// Define types for Redux state
-interface RootState {
-  spaces: {
-    selected: string;
-  };
-  info: {
-    article: {
-      publish?: string | number;
-      draft?: string | number;
-      ready?: string | number;
-      future?: string | number;
-    };
-    factCheck: {
-      publish?: string | number;
-      draft?: string | number;
-      ready?: string | number;
-      future?: string | number;
-    };
-    loading: boolean;
-  };
-}
-
-// Statistic card component
-const StatisticCard: React.FC<{
-  title: string;
-  value: number;
-  loading: boolean;
-  icon?: React.ReactNode;
-  href: string;
-}> = ({ title, value, loading, icon, href }) => {
-  return (
-    <Link to={href} className="block">
-      <Card className="hover:bg-muted/50 transition-colors h-full">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-medium flex items-center gap-2">
-            {icon}
-            {title}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {loading ? (
-            <div className="h-6 w-12 bg-muted animate-pulse rounded" />
-          ) : (
-            <span className="text-2xl font-bold">{value}</span>
-          )}
-        </CardContent>
-      </Card>
-    </Link>
-  );
-};
+import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+import StatisticCard from "./components/StatisticCard";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { RootState } from "./types";
 
 const Dashboard: React.FC = () => {
   const { spaces, info } = useSelector((state: RootState) => ({
     spaces: state.spaces,
     info: state.info,
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    if (spaces.selected !== "") fetchInfo();
-  }, [spaces.selected]);
-
-  const fetchInfo = () => {
-    dispatch(getInfo());
-  };
+    if (spaces.selected !== "") {
+      dispatch(getInfo());
+    }
+  }, [spaces.selected, dispatch]);
 
   const { article = {}, factCheck = {}, loading } = info;
   const articlePublish = Number(article.publish) || 0;
@@ -94,7 +39,7 @@ const Dashboard: React.FC = () => {
     return <Loader />;
   }
 
-  const renderStatsSection = (
+  const renderStats = (
     title: string,
     totalCount: number,
     publishCount: number,
@@ -104,45 +49,56 @@ const Dashboard: React.FC = () => {
     baseUrl: string
   ) => (
     <Card className="bg-[#F0F5FF] border border-gray-200 shadow-sm">
-      <CardHeader className="pb-2 border-b">
-        <CardTitle className="text-lg">{title}</CardTitle>
+      <CardHeader className={`pb-2 border-b ${isMobile ? "p-3" : ""}`}>
+        <CardTitle className={`${isMobile ? "text-base" : "text-lg"}`}>
+          {title}
+        </CardTitle>
       </CardHeader>
-      <CardContent className="pt-4">
-        <div className="grid grid-cols-5 gap-4">
+      <CardContent className={`${isMobile ? "p-3 pt-3" : "pt-4"}`}>
+        <div
+          className={`grid ${
+            isMobile ? "grid-cols-2 gap-2" : "grid-cols-5 gap-4"
+          }`}
+        >
           <StatisticCard
             title="Total"
             value={totalCount}
             loading={loading}
-            icon={<FileText size={16} />}
+            icon={<FileText size={isMobile ? 14 : 16} />}
             href={baseUrl}
+            isMobile={isMobile}
           />
           <StatisticCard
             title="Published"
             value={publishCount}
             loading={loading}
-            icon={<Check size={16} />}
+            icon={<Check size={isMobile ? 14 : 16} />}
             href={`${baseUrl}?status=publish`}
+            isMobile={isMobile}
           />
           <StatisticCard
             title="Future publish"
             value={futureCount}
             loading={loading}
-            icon={<Clock size={16} />}
+            icon={<Clock size={isMobile ? 14 : 16} />}
             href={`${baseUrl}?status=future`}
+            isMobile={isMobile}
           />
           <StatisticCard
             title="Draft"
             value={draftCount}
             loading={loading}
-            icon={<FileEdit size={16} />}
+            icon={<FileEdit size={isMobile ? 14 : 16} />}
             href={`${baseUrl}?status=draft`}
+            isMobile={isMobile}
           />
           <StatisticCard
             title="Ready to publish"
             value={readyCount}
             loading={loading}
-            icon={<FileClock size={16} />}
+            icon={<FileClock size={isMobile ? 14 : 16} />}
             href={`${baseUrl}?status=ready`}
+            isMobile={isMobile}
           />
         </div>
       </CardContent>
@@ -150,32 +106,52 @@ const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <>
       <Helmet title={"Dashboard"} />
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
-      <div className="space-y-6">
-        {renderStatsSection(
-          "Posts",
-          articlePublish + articleDraft + articleReady + articleFuture,
-          articlePublish,
-          articleFuture,
-          articleDraft,
-          articleReady,
-          "/posts"
-        )}
+      {/* Mobile Breadcrumb */}
+      {isMobile && (
+        <MobileBreadcrumb currentPage="Home" parentLabel="Dashboard" />
+      )}
 
-        {renderStatsSection(
-          "Fact Checks",
-          factCheckPublish + factCheckDraft + factCheckReady + factCheckFuture,
-          factCheckPublish,
-          factCheckFuture,
-          factCheckDraft,
-          factCheckReady,
-          "/fact-checks"
-        )}
+      <div className={`${isMobile ? "" : "p-6"}`}>
+        <div
+          className="container mx-auto"
+          style={{
+            maxWidth: isMobile ? "100%" : "1200px",
+          }}
+        >
+          {isMobile && (
+            <h1 className="text-xl font-semibold mb-4">Dashboard</h1>
+          )}
+
+          <div className={`space-y-${isMobile ? "4" : "6"}`}>
+            {renderStats(
+              "Posts",
+              articlePublish + articleDraft + articleReady + articleFuture,
+              articlePublish,
+              articleFuture,
+              articleDraft,
+              articleReady,
+              "/posts"
+            )}
+
+            {renderStats(
+              "Fact Checks",
+              factCheckPublish +
+                factCheckDraft +
+                factCheckReady +
+                factCheckFuture,
+              factCheckPublish,
+              factCheckFuture,
+              factCheckDraft,
+              factCheckReady,
+              "/fact-checks"
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

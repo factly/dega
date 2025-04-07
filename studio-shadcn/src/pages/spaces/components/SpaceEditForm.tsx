@@ -33,6 +33,7 @@ import MonacoEditor from "../../../components/MonacoEditor";
 import getJsonValue from "../../../utils/getJsonValue";
 import { SlugInput } from "../../../components/FormItems";
 import { RootState } from "../../../types";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export interface Space {
   id: string;
@@ -64,6 +65,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
   data = {},
 }) => {
   const [valueChange, setValueChange] = useState<boolean>(false);
+  const isMobile = useIsMobile();
   const orgs: Organization[] = useSelector(
     (state: RootState) => state.spaces.orgs
   );
@@ -114,24 +116,31 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
   const adminOrgs = orgs.filter((o) => o.role === "admin");
 
   return (
-    <div className="bg-white flex justify-center">
-      <div className="w-full max-w-3xl">
-        <div className="mb-3 pb-4 border-b border-gray-200 flex justify-between items-center">
-          <div>
-            <h2 className="text-xl font-bold">Edit Space</h2>
-            <p className="text-gray-600 mt-2">
+    <div className={isMobile ? "" : "bg-white flex justify-center"}>
+      <div className={isMobile ? "w-full" : "w-full max-w-3xl"}>
+        {/* Mobile header */}
+        {isMobile && (
+          <div className="mb-4">
+            <h1 className="text-xl font-semibold">Edit Space</h1>
+            <div className="mt-2">
+              <p className="text-gray-600 text-[13px]">
+                Update your space settings and information.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Desktop header */}
+        {!isMobile && (
+          <div className="mb-3 pb-4 border-b border-gray-200 px-4">
+            <h2 className="text-xl font-semibold">Edit Space</h2>
+            <p className="text-gray-600 mt-2 text-[13px]">
               Update your space settings and information.
             </p>
           </div>
-          <Button
-            disabled={!valueChange}
-            type="submit"
-            form="edit-space-form"
-            className="flex items-center gap-2"
-          >
-            Update
-          </Button>
-        </div>
+        )}
+
+        {isMobile && <div className="border-t border-gray-200 mb-4"></div>}
 
         <div className="bg-white">
           <Form {...form}>
@@ -143,23 +152,34 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
             >
               <Accordion
                 type="multiple"
-                defaultValue={["general", "site-details", "meta-fields"]}
+                defaultValue={["general"]}
                 className="w-full"
               >
                 {/* General Section */}
-                <AccordionItem value="general">
-                  <AccordionTrigger className="hover:no-underline">
-                    <span className="text-lg font-semibold">General</span>
+                <AccordionItem
+                  value="general"
+                  className="rounded-md overflow-hidden mb-2"
+                >
+                  <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                    <span
+                      className={
+                        isMobile
+                          ? "text-base font-medium"
+                          : "text-lg font-medium"
+                      }
+                    >
+                      General
+                    </span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-6 pt-4">
+                    <div className="space-y-6 pt-4 px-4 pb-4">
                       {/* Name */}
                       <FormField
                         control={form.control}
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Title</FormLabel>
+                            <FormLabel className="text-base">Title</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
@@ -178,7 +198,9 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="organisation_id"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Organization</FormLabel>
+                            <FormLabel className="text-base">
+                              Organization
+                            </FormLabel>
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
@@ -221,7 +243,9 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="description"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Description</FormLabel>
+                            <FormLabel className="text-base">
+                              Description
+                            </FormLabel>
                             <FormControl>
                               <Textarea
                                 {...field}
@@ -239,18 +263,31 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                 </AccordionItem>
 
                 {/* Site Details Section */}
-                <AccordionItem value="site-details">
-                  <AccordionTrigger className="hover:no-underline">
-                    <span className="text-lg font-semibold">Site details</span>
+                <AccordionItem
+                  value="site-details"
+                  className="rounded-md overflow-hidden mb-2"
+                >
+                  <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                    <span
+                      className={
+                        isMobile
+                          ? "text-base font-medium"
+                          : "text-lg font-medium"
+                      }
+                    >
+                      Site details
+                    </span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-6 pt-4">
+                    <div className="space-y-6 pt-4 px-4 pb-4">
                       <FormField
                         control={form.control}
                         name="site_title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Site Title</FormLabel>
+                            <FormLabel className="text-base">
+                              Site Title
+                            </FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
@@ -267,7 +304,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="tag_line"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Tagline</FormLabel>
+                            <FormLabel className="text-base">Tagline</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
@@ -284,10 +321,12 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                         name="site_address"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Website URL</FormLabel>
+                            <FormLabel className="text-base">
+                              Website URL
+                            </FormLabel>
                             <FormControl>
                               <div className="flex">
-                                <div className="bg-gray-100 flex items-center px-3 rounded-l-md border border-r-0 border-input">
+                                <div className="bg-[#F0F5FF] flex items-center px-3 rounded-l-md border border-r-0 border-input">
                                   https://
                                 </div>
                                 <Input
@@ -305,17 +344,31 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                 </AccordionItem>
 
                 {/* Meta Fields Section */}
-                <AccordionItem value="meta-fields">
-                  <AccordionTrigger className="hover:no-underline">
-                    <span className="text-lg font-semibold">Meta fields</span>
+                <AccordionItem
+                  value="meta-fields"
+                  className="rounded-md overflow-hidden mb-2"
+                >
+                  <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
+                    <span
+                      className={
+                        isMobile
+                          ? "text-base font-medium"
+                          : "text-lg font-medium"
+                      }
+                    >
+                      Meta fields
+                    </span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-4 pt-4">
+                    <div className="space-y-4 pt-4 px-4 pb-4">
                       <FormField
                         control={form.control}
                         name="meta_fields"
                         render={({ field }) => (
                           <FormItem>
+                            <FormLabel className="text-base">
+                              Metadata
+                            </FormLabel>
                             <FormControl>
                               <div className="border border-input rounded-md overflow-hidden">
                                 <MonacoEditor
@@ -341,6 +394,31 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+
+              {/* Action Buttons */}
+              <div
+                className={
+                  isMobile
+                    ? "flex justify-between mb-8 mt-8"
+                    : "flex justify-start gap-3 pt-4 border-t border-gray-100"
+                }
+              >
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => window.history.back()}
+                  className={isMobile ? "w-[48%]" : ""}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={!valueChange}
+                  className={isMobile ? "w-[48%]" : ""}
+                >
+                  Update
+                </Button>
+              </div>
             </form>
           </Form>
         </div>

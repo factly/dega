@@ -143,7 +143,7 @@ const QuickEdit: React.FC<QuickEditProps> = ({
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         onChange={() => setValueChange(true)}
-        className="space-y-4 mt-4"
+        className="space-y-4 mt-4 hover:bg-white"
       >
         <FormField
           control={form.control}

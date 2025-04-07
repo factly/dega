@@ -8,9 +8,27 @@ import useNavigation from "../../utils/useNavigation";
 // Define the interface for tag values
 interface TagValues {
   name: string;
-  color?: string;
-  description?: string;
-  // Add other properties as needed
+  slug?: string;
+  is_featured?: boolean;
+  background_colour?: any;
+  description_html?: string;
+  medium_id?: string;
+  meta_fields?: any;
+  meta?: {
+    canonical_URL?: string;
+    facebook?: {
+      title?: string;
+      canonical_URL?: string;
+    };
+    twitter?: {
+      title?: string;
+      canonical_URL?: string;
+    };
+    google?: {
+      title?: string;
+      canonical_URL?: string;
+    };
+  };
 }
 
 const CreateTag: React.FC = () => {

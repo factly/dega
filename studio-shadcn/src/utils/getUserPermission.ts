@@ -24,10 +24,19 @@ interface Spaces {
   };
 }
 
+interface SpacesState {
+  loading: boolean;
+  orgs: Array<{ role: string; [key: string]: any }>;
+  selected: string;
+  details: {
+    [key: string]: SpaceDetails;
+  };
+}
+
 interface GetUserPermissionParams {
   resource: ResourceType;
   action: ActionType;
-  spaces: Spaces;
+  spaces: SpacesState;
 }
 
 // Permission requirements mapping
@@ -100,9 +109,14 @@ function getUserPermission({
   spaces,
 }: GetUserPermissionParams): ActionType[] {
   const { selected, details } = spaces;
-  const selectedSpace = details[selected];
+
+  const selectedSpace = details && details[selected];
+
+  // Get user permissions with proper fallback
   const userPermission: SpacePermission[] =
     selectedSpace && selectedSpace.permissions ? selectedSpace.permissions : [];
+
+  // Get org_role with proper fallback
   const org_role = selectedSpace && selectedSpace.org_role;
 
   if (org_role === "admin") {

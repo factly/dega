@@ -1,29 +1,13 @@
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { Loader, AlertCircle } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
-// Define types for our state and props
-interface Space {
-  analytics?: {
-    plausible?: {
-      embed_code?: string;
-    };
-  };
-}
-
-interface SpacesState {
-  details: Record<string, Space>;
-  selected: string;
-  loading: boolean;
-}
-
-interface RootState {
-  spaces: SpacesState;
-}
+import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
+import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { RootState } from "./types";
 
 function Analytics(): React.ReactElement {
   const { space, loading } = useSelector(({ spaces }: RootState) => {
@@ -32,6 +16,8 @@ function Analytics(): React.ReactElement {
       loading: spaces.loading,
     };
   });
+
+  const isMobile = useIsMobile();
 
   if (loading) {
     return (
@@ -43,7 +29,10 @@ function Analytics(): React.ReactElement {
 
   if (!space) {
     return (
-      <Alert variant="destructive" className="max-w-md mx-auto my-8">
+      <Alert
+        variant="destructive"
+        className={`${isMobile ? "mx-4 my-4" : "max-w-md mx-auto my-8"}`}
+      >
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>No space found</AlertTitle>
         <AlertDescription className="mt-2">
@@ -57,23 +46,45 @@ function Analytics(): React.ReactElement {
   }
 
   return (
-    <div className="space-y-4">
+    <>
       <Helmet title={"Analytics"} />
-      {space.analytics?.plausible?.embed_code ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: space.analytics.plausible.embed_code,
-          }}
-        />
-      ) : (
-        <Card className="max-w-md mx-auto">
-          <CardContent className="pt-6 text-center">
-            <AlertCircle className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-medium">No analytics found</h3>
-          </CardContent>
-        </Card>
+
+      {/* Mobile Breadcrumb */}
+      {isMobile && (
+        <MobileBreadcrumb currentPage="Analytics" parentLabel="Dashboard" />
       )}
-    </div>
+
+      <div className={`${isMobile ? "" : "p-6"}`}>
+        <div
+          className="container mx-auto"
+          style={{
+            maxWidth: isMobile ? "100%" : "1200px",
+          }}
+        >
+          {isMobile && (
+            <h1 className="text-xl font-semibold mb-4">Analytics</h1>
+          )}
+
+          <div className={`space-y-4 ${isMobile ? "px-4" : ""}`}>
+            {space.analytics?.plausible?.embed_code ? (
+              <div
+                className={`${isMobile ? "overflow-x-auto" : ""}`}
+                dangerouslySetInnerHTML={{
+                  __html: space.analytics.plausible.embed_code,
+                }}
+              />
+            ) : (
+              <RecordNotFound
+                status="Info"
+                title="No analytics found for this space."
+                entity="Analytics"
+                link="/settings/website/analytics"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

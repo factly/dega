@@ -13,6 +13,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PaginationProps {
   currentPage: number;
@@ -21,90 +22,174 @@ interface PaginationProps {
   pageSize: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
+  isMobile?: boolean;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
-  totalItems,
   pageSize,
   onPageChange,
   onPageSizeChange,
+  isMobile: forceMobile,
 }) => {
+  const detectedMobile = useIsMobile();
+  const isMobile = forceMobile !== undefined ? forceMobile : detectedMobile;
   const pageSizeOptions = [10, 20, 50, 100];
 
   const handlePageSizeChange = (value: string) => {
     onPageSizeChange(Number(value));
   };
 
-  return (
-    <div className="flex items-center justify-between px-4 py-3">
-      {/* Left section - Rows per page */}
-      <div className="flex items-center gap-2 text-sm text-gray-700">
-        <span>Rows per page:</span>
-        <Select
-          value={pageSize.toString()}
-          onValueChange={handlePageSizeChange}
-        >
-          <SelectTrigger className="h-8 w-16">
-            <SelectValue placeholder={pageSize.toString()} />
-          </SelectTrigger>
-          <SelectContent>
-            {pageSizeOptions.map((size) => (
-              <SelectItem key={size} value={size.toString()}>
-                {size}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Right section - Pagination controls */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center text-sm text-gray-700">
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
+  // Mobile layout
+  if (isMobile) {
+    return (
+      <div className="flex flex-col w-full py-2 px-4">
+        {/* Top row - Rows per page */}
+        <div className="flex justify-end mb-3">
+          <div className="flex items-center gap-2 text-sm text-gray-700">
+            <span>Rows per page:</span>
+            <Select
+              value={pageSize.toString()}
+              onValueChange={handlePageSizeChange}
+            >
+              <SelectTrigger className="h-8 w-16">
+                <SelectValue placeholder={pageSize.toString()} />
+              </SelectTrigger>
+              <SelectContent>
+                {pageSizeOptions.map((size) => (
+                  <SelectItem key={size} value={size.toString()}>
+                    {size}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
-        {/* Navigation buttons */}
-        <div className="flex items-center gap-1">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => onPageChange(1)}
-            disabled={currentPage === 1}
-            className="h-8 w-8"
+        {/* Bottom row - Page indicator and navigation */}
+        <div className="flex justify-between items-center">
+          {/* Page indicator */}
+          <div className="flex items-center text-sm text-gray-700">
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+          </div>
+
+          {/* Navigation buttons */}
+          <div className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(1)}
+              disabled={currentPage === 1}
+              className="h-8 w-8"
+            >
+              <ChevronsLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="h-8 w-8"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="h-8 w-8"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="h-8 w-8"
+            >
+              <ChevronsRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop layout
+  return (
+    <div className="flex items-center justify-between py-3 gap-6 w-full px-4">
+      <div className="flex items-center justify-between w-full">
+        <div className="flex items-center gap-2 text-sm text-gray-700">
+          <span>Rows per page:</span>
+          <Select
+            value={pageSize.toString()}
+            onValueChange={handlePageSizeChange}
           >
-            <ChevronsLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => onPageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="h-8 w-8"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="h-8 w-8"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => onPageChange(totalPages)}
-            disabled={currentPage === totalPages}
-            className="h-8 w-8"
-          >
-            <ChevronsRight className="h-4 w-4" />
-          </Button>
+            <SelectTrigger className="h-8 w-16">
+              <SelectValue placeholder={pageSize.toString()} />
+            </SelectTrigger>
+            <SelectContent>
+              {pageSizeOptions.map((size) => (
+                <SelectItem key={size} value={size.toString()}>
+                  {size}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Right section - Pagination controls */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center text-sm text-gray-700">
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+          </div>
+
+          {/* Navigation buttons */}
+          <div className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(1)}
+              disabled={currentPage === 1}
+              className="h-8 w-8"
+            >
+              <ChevronsLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="h-8 w-8"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="h-8 w-8"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => onPageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="h-8 w-8"
+            >
+              <ChevronsRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle, CardFooter } from "@/components/ui/card";
@@ -7,42 +7,16 @@ import { addDefaultFormats, getFormats } from "../../../actions/formats";
 import { addDefaultPolicies, getPolicies } from "../../../actions/policies";
 import { addDefaultRatings, getRatings } from "../../../actions/ratings";
 import useNavigation from "../../../utils/useNavigation";
-
-// Define TypeScript interfaces for Redux state
-interface RootState {
-  ratings: {
-    details: Record<string, any>;
-    loading: boolean;
-  };
-  formats: {
-    details: Record<string, any>;
-    loading: boolean;
-  };
-  policies: {
-    details: Record<string, any>;
-    loading: boolean;
-  };
-  events: {
-    details: Record<string, any>;
-    loading: boolean;
-  };
-  spaces: {
-    selected: string;
-    loading: boolean;
-  };
-}
-
-interface SelectedSpace {
-  space_id: string;
-}
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { RootState } from "../types";
 
 const Features: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigation();
 
-  const selectedSpace = useSelector<RootState, SelectedSpace>((state) => ({
-    space_id: state.spaces.selected,
-  }));
+  const selectedSpace = useSelector<RootState, string>(
+    (state) => state.spaces.selected
+  );
 
   const {
     ratings,
@@ -66,9 +40,9 @@ const Features: React.FC = () => {
 
   const fetchEntities = () => {
     if (!loadingServices) {
-      dispatch(getRatings());
-      dispatch(getFormats());
-      dispatch(getPolicies());
+      dispatch(getRatings({}));
+      dispatch(getFormats({}));
+      dispatch(getPolicies({}));
     }
   };
 
@@ -99,7 +73,7 @@ const Features: React.FC = () => {
             <CardFooter>
               <Button
                 onClick={() => {
-                  dispatch(addDefaultRatings()).then(() =>
+                  dispatch(addDefaultRatings({})).then(() =>
                     navigate("/ratings")
                   );
                 }}
@@ -123,7 +97,8 @@ const Features: React.FC = () => {
             <CardFooter>
               <Button
                 onClick={() => {
-                  dispatch(addDefaultFormats(selectedSpace));
+                  const query = { space_id: selectedSpace };
+                  dispatch(addDefaultFormats(query));
                 }}
                 className="w-full"
               >
@@ -145,7 +120,8 @@ const Features: React.FC = () => {
             <CardFooter>
               <Button
                 onClick={() => {
-                  dispatch(addDefaultPolicies()).then(() =>
+                  // Passing empty object as query parameter
+                  dispatch(addDefaultPolicies({})).then(() =>
                     navigate("settings/members/policies")
                   );
                 }}

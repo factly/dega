@@ -3,50 +3,42 @@ import PostEditForm from "./components/PostForm";
 import { useSelector } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
 import { updatePost, getPost } from "../../actions/posts";
-import { useAppDispatch } from "@/hooks/reduxHooks";
 import { useParams } from "react-router-dom";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import getUserPermission from "../../utils/getUserPermission";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { RootState } from "../../store/index";
 
-// Define interfaces for the component props and state
 interface Format {
   id: string;
-  [key: string]: any;
-}
-
-interface Formats {
-  article: Format;
-  loading: boolean;
-  [key: string]: any;
-}
-
-interface Post {
-  id: string;
-  title: string;
-  format: string;
-  [key: string]: any;
+  article: any;
 }
 
 interface EditPostProps {
-  formats: Formats;
-}
-
-interface RootState {
-  posts: {
-    details: {
-      [key: string]: Post;
-    };
+  formats: {
+    article: Format;
     loading: boolean;
   };
-  spaces: any;
+}
+
+interface Post {
+  id: number | string;
+  title: string;
+  format: string;
+  [key: string]: any; // For other post properties
+}
+
+interface Space {
+  // Define your space interface structure
+  [key: string]: any;
 }
 
 function EditPost({ formats }: EditPostProps): JSX.Element {
   const history = useNavigation();
   const { id } = useParams<{ id: string }>();
-  const spaces = useSelector((state: any) => state.spaces);
+  const spaces = useSelector((state: RootState) => state.spaces) as Space[];
   const actions = getUserPermission({
     resource: "posts",
     action: "get",
@@ -57,7 +49,9 @@ function EditPost({ formats }: EditPostProps): JSX.Element {
 
   const { post, loading } = useSelector((state: RootState) => {
     return {
-      post: state.posts.details[id] ? state.posts.details[id] : null,
+      post: state.posts.details[id as string]
+        ? state.posts.details[id as string]
+        : null,
       loading: state.posts.loading,
     };
   });
@@ -71,10 +65,10 @@ function EditPost({ formats }: EditPostProps): JSX.Element {
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-3/4" />
+      <div className="flex flex-col gap-4">
+        <Skeleton className="h-12 w-full" />
+        <Skeleton className="h-24 w-full" />
+        <Skeleton className="h-12 w-3/4" />
       </div>
     );
   }
@@ -83,6 +77,7 @@ function EditPost({ formats }: EditPostProps): JSX.Element {
     return <RecordNotFound />;
   }
 
+  // Check if the post's format matches the current format
   if (
     post &&
     post.id &&

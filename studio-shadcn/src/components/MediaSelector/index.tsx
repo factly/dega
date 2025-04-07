@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Trash2, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import MediaUploader from "./UploadMedium";
@@ -10,6 +15,7 @@ import MediaList from "./MediaList";
 import { getMedium } from "../../actions/media";
 import ImagePlaceholder from "../ErrorsAndImage/PlaceholderImage";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Medium {
   id: string;
@@ -39,6 +45,7 @@ function MediaSelector({
   const [selected, setSelected] = useState<Medium | null>(null);
   const [tab, setTab] = useState<"upload" | "library">("upload");
   const dispatch = useAppDispatch();
+  const isMobile = useIsMobile();
 
   const medium = useSelector((state: any) => {
     return state.media.details[value] || null;
@@ -68,10 +75,42 @@ function MediaSelector({
     setSelected(medium);
   };
 
+  // Calculate responsive container styles
+  const responsiveContainerStyles = {
+    ...containerStyles,
+    width: isMobile ? "100%" : containerStyles.width || "100%",
+    height: isMobile ? "160px" : containerStyles.height || "220px",
+  };
+
+  // Handle button click to prevent form submission
+  const handleMediaButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    e.preventDefault(); // Prevent form submission
+    setShow(true);
+  };
+
+  // Handle trash button click to prevent form submission
+  const handleTrashButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    e.preventDefault(); // Prevent form submission
+    onChange(null);
+    setSelected(null);
+  };
+
   return (
     <>
       <Dialog open={show} onOpenChange={(open) => setShow(open)}>
-        <DialogContent className="sm:max-w-[800px]">
+        <DialogContent
+          className={`${
+            isMobile ? "w-[95vw] max-w-[95vw] p-4" : "sm:max-w-[800px]"
+          }`}
+        >
+          <DialogTitle className="text-lg font-medium">
+            Select Media
+          </DialogTitle>
+
           <div className="flex flex-col space-y-4">
             <RadioGroup
               defaultValue={tab}
@@ -100,8 +139,13 @@ function MediaSelector({
             )}
           </div>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShow(false)}>
+          <DialogFooter className={isMobile ? "flex-col space-y-2 mt-4" : ""}>
+            <Button
+              variant="outline"
+              onClick={() => setShow(false)}
+              className={isMobile ? "w-full" : ""}
+              type="button"
+            >
               Cancel
             </Button>
             <Button
@@ -109,6 +153,8 @@ function MediaSelector({
                 setShow(false);
                 selected ? onChange(selected.id) : onChange(null);
               }}
+              className={isMobile ? "w-full" : ""}
+              type="button"
             >
               Ok
             </Button>
@@ -116,16 +162,17 @@ function MediaSelector({
         </DialogContent>
       </Dialog>
 
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-4 w-full">
         <div
           className="flex flex-col justify-center items-center"
-          style={containerStyles}
+          style={responsiveContainerStyles}
         >
-          <div className="relative w-full max-w-xl mx-auto">
+          <div className="relative w-full h-full mx-auto">
             <Button
+              type="button"
               variant="outline"
-              className="h-auto w-full py-4 px-8 block border-dashed bg-transparent hover:bg-gray-50"
-              onClick={() => setShow(true)}
+              className="h-full w-full py-4 px-4 block border-dashed bg-transparent hover:bg-gray-50"
+              onClick={handleMediaButtonClick}
             >
               <div className="flex flex-col items-center space-y-3">
                 {medium ? (
@@ -139,17 +186,23 @@ function MediaSelector({
                         ]
                       }
                       alt={medium.alt_text || "Selected media"}
-                      className="w-3/4 max-h-32 object-contain"
+                      className="max-w-full max-h-32 object-contain"
                     />
                   </div>
                 ) : (
                   <>
                     <div className="flex justify-center w-full">
-                      <ImagePlaceholder maxWidth={maxWidth || "120px"} />
+                      <ImagePlaceholder
+                        maxWidth={isMobile ? "80px" : maxWidth || "120px"}
+                      />
                     </div>
-                    <div className="flex items-center space-x-2 text-gray-500">
+                    <div className="flex items-center space-x-2 text-gray-500 text-center">
                       <Upload className="h-4 w-4" />
-                      <span>Choose from uploads or drag and drop</span>
+                      <span className={isMobile ? "text-sm" : ""}>
+                        {isMobile
+                          ? "Choose media"
+                          : "Choose from uploads or drag and drop"}
+                      </span>
                     </div>
                   </>
                 )}
@@ -157,12 +210,10 @@ function MediaSelector({
             </Button>
             {medium && (
               <Button
+                type="button"
                 variant="outline"
-                className="absolute bottom-0 left-0 max-w-[52px]"
-                onClick={() => {
-                  onChange(null);
-                  setSelected(null);
-                }}
+                className="absolute bottom-2 left-2 max-w-[42px] h-8 p-0"
+                onClick={handleTrashButtonClick}
               >
                 <Trash2 className="h-4 w-4" />
               </Button>

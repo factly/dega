@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Trash2, Eye } from "lucide-react";
-
+import React, { useState, useCallback } from "react";
+import { Trash2, Pencil, Ellipsis, ChevronsUpDown, Eye } from "lucide-react";
+import { deletePolicy } from "../../../actions/policies";
+import useNavigation from "../../../utils/useNavigation";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+// Shadcn components
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -18,13 +21,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Pagination } from "@/components/ui/pagination";
-import { useAppDispatch } from "@/hooks/reduxHooks";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import EmptyState from "@/components/EmptyState";
 
-import { deletePolicy } from "../../../actions/policies";
-import useNavigation from "../../../utils/useNavigation";
-
+// Types
 interface Policy {
   id: string;
   name: string;
@@ -32,7 +38,7 @@ interface Policy {
 }
 
 interface PolicyListProps {
-  actions?: string[];
+  actions: string[];
   data: {
     policies: Policy[];
     loading: boolean;
@@ -41,217 +47,225 @@ interface PolicyListProps {
   filters: {
     page: number;
     limit: number;
+    [key: string]: any;
   };
-  setFilters: (filters: { page: number; limit: number }) => void;
+  setFilters: (filters: any) => void;
   fetchPolicies: () => void;
+  sortOrder?: "asc" | "desc";
+  onSortToggle?: () => void;
+  isMobile?: boolean;
 }
 
-function PolicyList({
+const PolicyList: React.FC<PolicyListProps> = ({
+  actions,
   data,
-  filters,
-  setFilters,
   fetchPolicies,
-}: PolicyListProps) {
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
-
+  sortOrder,
+  onSortToggle,
+  isMobile,
+}) => {
   const dispatch = useAppDispatch();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [deleteItemID, setDeleteItemID] = useState<string | null>(null);
   const navigate = useNavigation();
 
-  const handleDelete = (e: React.MouseEvent) => {
+  const handleRowClick = useCallback(
+    (id: string) => {
+      navigate(`/settings/members/policies/${id}/edit`);
+    },
+    [navigate]
+  );
+
+  const handleEditClick = useCallback(
+    (e: React.MouseEvent, id: string) => {
+      e.stopPropagation();
+      navigate(`/settings/members/policies/${id}/edit`);
+    },
+    [navigate]
+  );
+
+  const handleViewClick = useCallback(
+    (e: React.MouseEvent, id: string) => {
+      e.stopPropagation();
+      navigate(`/settings/members/policies/${id}/view`);
+    },
+    [navigate]
+  );
+
+  const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
     e.stopPropagation();
+    setDeleteDialogOpen(true);
+    setDeleteItemID(id);
+  }, []);
 
-    if (deleteItemId) {
-      dispatch(deletePolicy(deleteItemId)).then(() => fetchPolicies());
-      setDialogOpen(false);
-      setDeleteItemId(null);
-    }
-  };
+  const handleDeleteConfirm = useCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (deleteItemID) {
+        try {
+          await dispatch(deletePolicy(deleteItemID));
+          fetchPolicies();
+        } catch (error) {
+          console.error("Error deleting policy:", error);
+        } finally {
+          setDeleteItemID(null);
+          setDeleteDialogOpen(false);
+        }
+      }
+    },
+    [deleteItemID, dispatch, fetchPolicies]
+  );
 
-  const handleRowClick = (id: string) => {
-    navigate(`/settings/members/policies/${id}/edit`);
-  };
+  const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDeleteItemID(null);
+    setDeleteDialogOpen(false);
+  }, []);
+
+  const isDeleteAllowed =
+    actions.includes("admin") || actions.includes("delete");
+
+  // Check if there are any policies to display
+  const hasPoliciesData = data.policies && data.policies.length > 0;
 
   return (
-    <div className="w-full">
-      <>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[200px] min-w-[200px]">Name</TableHead>
-              <TableHead className="w-[400px] min-w-[400px]">
-                Description
-              </TableHead>
-              <TableHead className="text-center w-[200px] min-w-[200px]">
-                Action
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.loading ? (
+    <div className="pb-4 overflow-auto">
+      {hasPoliciesData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="text-[13px]">
               <TableRow>
-                <TableCell colSpan={3} className="text-center py-6">
-                  Loading...
-                </TableCell>
+                <TableHead className="w-full">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={onSortToggle}
+                  >
+                    Name
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                {!isMobile && (
+                  <TableHead className="w-[400px] min-w-[400px]">
+                    Description
+                  </TableHead>
+                )}
+                <TableHead className="w-[150px] text-center">Action</TableHead>
               </TableRow>
-            ) : data.policies.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={3} className="text-center py-6">
-                  No policies found
-                </TableCell>
-              </TableRow>
-            ) : (
-              data.policies.map((policy) => (
+            </TableHeader>
+            <TableBody>
+              {data.policies.map((policy) => (
                 <TableRow
                   key={policy.id}
-                  className="cursor-pointer"
                   onClick={() => handleRowClick(policy.id)}
+                  className="cursor-pointer"
                 >
                   <TableCell>
-                    <Link
-                      to={`/settings/members/policies/${policy.id}/edit`}
-                      className="font-medium text-base"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {policy.name}
-                    </Link>
+                    <h3 className="font-normal">
+                      {policy.name || "Unnamed Policy"}
+                    </h3>
+                    {isMobile && policy.description && (
+                      <p className="text-sm text-gray-500 line-clamp-1 mt-1">
+                        {policy.description}
+                      </p>
+                    )}
                   </TableCell>
-                  <TableCell>
-                    <div className="font-medium text-base line-clamp-2">
-                      {policy.description}
-                    </div>
-                  </TableCell>
+                  {!isMobile && (
+                    <TableCell>
+                      <div className="font-normal line-clamp-2">
+                        {policy.description}
+                      </div>
+                    </TableCell>
+                  )}
                   <TableCell className="text-center">
-                    <div className="flex justify-center space-x-2">
-                      <Link
-                        to={`/settings/members/policies/${policy.id}/view`}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        asChild
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-9 w-9"
-                        >
-                          <Eye className="h-5 w-5 text-gray-500" />
+                        <Button variant="ghost" size="icon">
+                          <Ellipsis className="h-5 w-5" />
                         </Button>
-                      </Link>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-9 w-9"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setDialogOpen(true);
-                          setDeleteItemId(policy.id);
-                        }}
-                      >
-                        <Trash2 className="h-5 w-5 text-gray-500" />
-                      </Button>
-                    </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => handleViewClick(e, policy.id)}
+                          className="cursor-pointer"
+                        >
+                          <Eye className="h-4 w-4 mr-2" />
+                          <span>View</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={(e) => handleEditClick(e, policy.id)}
+                          className="cursor-pointer"
+                        >
+                          <Pencil className="h-4 w-4 mr-2" />
+                          <span>Edit</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={(e) => handleDeleteClick(e, policy.id)}
+                          className="cursor-pointer text-red-600 focus:text-red-600"
+                          disabled={!isDeleteAllowed}
+                        >
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          <span>Delete</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="policies"
+          title="No policies found"
+          description="Your policies list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
-      <div className="flex items-center justify-end py-4">
-        <Pagination>
-          <div className="flex items-center justify-between w-full px-2">
-            <div className="text-sm text-muted-foreground">
-              {data.total > 0 &&
-                `${(filters.page - 1) * filters.limit + 1}-${Math.min(
-                  filters.page * filters.limit,
-                  data.total
-                )} of ${data.total} results`}
-            </div>
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium">Rows per page:</span>
-                <select
-                  className="h-8 w-16 rounded-md border border-input bg-background px-2"
-                  value={filters.limit}
-                  onChange={(e) =>
-                    setFilters({
-                      ...filters,
-                      limit: Number(e.target.value),
-                      page: 1,
-                    })
-                  }
-                >
-                  {[10, 15, 20].map((pageSize) => (
-                    <option key={pageSize} value={pageSize}>
-                      {pageSize}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() =>
-                    setFilters({
-                      ...filters,
-                      page: Math.max(1, filters.page - 1),
-                    })
-                  }
-                  disabled={filters.page <= 1}
-                >
-                  <span className="sr-only">Previous page</span>
-                  &larr;
-                </Button>
-                <div className="text-sm">
-                  Page {filters.page} of {Math.ceil(data.total / filters.limit)}
-                </div>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() =>
-                    setFilters({
-                      ...filters,
-                      page: Math.min(
-                        Math.ceil(data.total / filters.limit),
-                        filters.page + 1
-                      ),
-                    })
-                  }
-                  disabled={
-                    filters.page >= Math.ceil(data.total / filters.limit)
-                  }
-                >
-                  <span className="sr-only">Next page</span>
-                  &rarr;
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Pagination>
-      </div>
-
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete this?
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent
+          className="max-w-sm p-4"
+          onPointerDownOutside={(e) => e.preventDefault()}
+        >
+          <DialogHeader className="space-y-2">
+            <DialogTitle className="text-base">Delete Policy</DialogTitle>
+            <DialogDescription className="text-sm">
+              Are you sure you want to delete this policy?
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="sm:justify-start">
-            <div className="flex space-x-2 w-full justify-end">
-              <Button variant="outline" onClick={() => setDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button variant="destructive" onClick={handleDelete}>
-                Delete
-              </Button>
-            </div>
+          <DialogFooter className="mt-4 flex justify-end space-x-2">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={(e) => {
+                handleDeleteCancel(e);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={(e) => {
+                handleDeleteConfirm(e);
+              }}
+              type="button"
+              disabled={!isDeleteAllowed}
+            >
+              Delete
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
   );
-}
+};
 
 export default PolicyList;

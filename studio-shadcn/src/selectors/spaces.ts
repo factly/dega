@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 interface Space {
   id: string;
   name: string;
@@ -20,6 +22,7 @@ interface SpacesState {
   details: Record<string, Space>;
   loading: boolean;
   org_role: string;
+  hasAttemptedFetch: boolean;
 }
 
 interface RootState {
@@ -29,33 +32,42 @@ interface RootState {
 interface SelectorOutput {
   loading: boolean;
   spaces: Space[];
+  total: number;
+  hasAttemptedFetch: boolean;
 }
 
-export const spaceSelector = (state: RootState): SelectorOutput => {
-  if (!state.spaces) {
+const getSpacesState = (state: RootState) => state.spaces;
+
+export const spaceSelector = createSelector(
+  [getSpacesState],
+  (spacesState): SelectorOutput => {
+    if (!spacesState) {
+      return {
+        loading: false,
+        spaces: [],
+        total: 0,
+        hasAttemptedFetch: false,
+      };
+    }
+
+    // Find the organization that contains the selected space
+    const selectedOrg = spacesState.orgs.find((item) =>
+      item.spaces.includes(spacesState.selected)
+    );
+
+    let spaces: Space[] = [];
+
+    if (selectedOrg) {
+      spaces = selectedOrg.spaces
+        .map((s) => spacesState.details[s])
+        .filter(Boolean);
+    }
+
     return {
-      loading: false,
-      spaces: [],
-      total: 0,
+      loading: spacesState.loading,
+      spaces: spaces,
+      total: spaces.length,
+      hasAttemptedFetch: spacesState.hasAttemptedFetch || false,
     };
   }
-
-  // Find the organization that contains the selected space
-  const selectedOrg = state.spaces.orgs.find((item) =>
-    item.spaces.includes(state.spaces.selected)
-  );
-
-  let spaces: Space[] = [];
-
-  if (selectedOrg) {
-    spaces = selectedOrg.spaces
-      .map((s) => state.spaces.details[s])
-      .filter(Boolean);
-  }
-
-  return {
-    loading: state.spaces.loading,
-    spaces: spaces,
-    total: spaces.length, // Add the total count based on the filtered spaces
-  };
-};
+);
