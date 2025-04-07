@@ -10,7 +10,6 @@ export interface PaginationFooterProps {
   pageSize: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
-  selectedItems: number;
 }
 
 const PaginationFooter = ({
@@ -64,7 +63,6 @@ const PaginationFooter = ({
           currentPage={currentPage}
           totalPages={totalPages}
           totalItems={totalItems}
-          selectedItems={selectedItems}
           pageSize={pageSize}
           onPageChange={onPageChange}
           onPageSizeChange={onPageSizeChange}

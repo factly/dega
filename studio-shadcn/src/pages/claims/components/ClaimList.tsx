@@ -102,12 +102,12 @@ function ClaimList({
   };
 
   return (
-    <div className="pb-4 overflow-auto">
+    <div className="pb-4 overflow-scroll">
       <div className="rounded-md">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="min-w-[200px] text-[13px]">
+              <TableHead className=" text-[13px]">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={handleSortByClaimToggle}
@@ -116,13 +116,13 @@ function ClaimList({
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
-              <TableHead className="min-w-[200px] text-[13px]">
+              <TableHead className=" text-[13px]">
                 Claimant
               </TableHead>
-              <TableHead className="min-w-[200px] text-[13px]">
+              <TableHead className=" text-[13px]">
                 Rating
               </TableHead>
-              <TableHead className="min-w-[200px] text-[13px]">
+              <TableHead className=" text-[13px]">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={handleSortByDateToggle}
