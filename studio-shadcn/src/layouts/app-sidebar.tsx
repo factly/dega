@@ -129,7 +129,7 @@ export default function AppSidebar(): React.ReactNode {
   };
 
   return (
-    <Sidebar className={cn("border-r")} collapsible="icon">
+    <Sidebar className={cn("border-r bg-white")} collapsible="icon">
       <SidebarContent
         className={cn("p-2 md:py-6", isCollapsed ? "items-center" : "")}
       >
