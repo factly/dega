@@ -116,14 +116,7 @@ export interface FiltersPopoverProps {
   onSave: (values: FilterParams) => void;
 }
 
-export interface StatusTabsProps {
-  status: string;
-  handleStatusChange: (value: string) => void;
-  isMobile: boolean;
-  form: any;
-  onSave: (values: FilterParams) => void;
-  children: React.ReactNode;
-}
+
 
 export interface PaginationFooterProps {
   currentPage: number;

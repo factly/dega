@@ -25,9 +25,9 @@ import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 
 // Custom Components
 import SearchInput from "../../components/SearchInput";
-import SearchButton from "./components/SearchButton";
-import FiltersPopover from "./components/FiltersPopover";
-import StatusTabs from "./components/StatusTabs";
+import SearchButton from "@/components/SearchButton";
+import FiltersPopover from "@/components/FiltersPopover";
+import StatusTabs from "@/components/StatusTabs";
 import PaginationFooter from "@/components/PaginationFooter";
 
 // Utils and actions
@@ -76,7 +76,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
     if (searchText && isMobile && !isSearchExpanded) {
       setIsSearchExpanded(true);
     }
-  }, [searchText, isMobile]);
+  }, [searchText, isMobile, isSearchExpanded]);
 
   // Fetch pages when search changes
   useEffect(() => {
@@ -288,7 +288,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
         </div>
       )}
       {/* Search input row - appears when expanded */}
-      {isSearchExpanded && (
+      {(isSearchExpanded && isMobile) && (
         <div className="w-full">
           <SearchInput
             searchText={searchText}
@@ -326,8 +326,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       <PaginationFooter
         currentPage={Number(filters.page) || 1}
         totalPages={totalPages}
-        // todo - add selectedItems
-        selectedItems={0}
         totalItems={total}
         pageSize={Number(filters.limit) || 10}
         onPageChange={handlePageChange}

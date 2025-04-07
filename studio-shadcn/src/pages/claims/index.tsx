@@ -1,6 +1,6 @@
 // Claims.tsx
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { PlusCircle } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -28,10 +28,14 @@ import { useClaimsPagination } from "./hooks/useClaimsPagination";
 
 // Types
 import { ClaimFilters, FormValues } from "./types";
+import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+import SearchButton from "@/components/SearchButton";
 
 function Claims() {
   const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
+  const { search, pathname } = useLocation();
+  const query = new URLSearchParams(search);
 
   // Local state
   const [searchText, setSearchText] = useState("");
@@ -44,6 +48,14 @@ function Claims() {
     sort: "desc",
     sortBy: "date",
   });
+  const [isSearchExpanded, setIsSearchExpanded] = useState(!!query.get("q"));
+
+  // If we have search text, make sure search is expanded on mobile
+  useEffect(() => {
+    if (searchText && isMobile && !isSearchExpanded) {
+      setIsSearchExpanded(true);
+    }
+  }, [searchText, isMobile, isSearchExpanded]);
 
   // Initialize form
   const form = useForm<FormValues>({
@@ -63,16 +75,16 @@ function Claims() {
     dispatch(getRatings());
   }, [dispatch, filters]);
 
+  const toggleSearch = () => {
+    setIsSearchExpanded(!isSearchExpanded);
+  };
+
   // Use custom hooks
   const { claimantsCount, ratingsCount, claimantsLoading, ratingsLoading } = useClaimsStatus();
   const { claims, total, loading } = useClaimsData(filters, searchText);
   const { totalPages, handlePageChange, handlePageSizeChange, onPagination } =
     useClaimsPagination(filters, setFilters, total);
 
-  // Handler functions
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
 
   const clearSearch = () => {
     setSearchText("");
@@ -149,17 +161,14 @@ function Claims() {
 
       {/* Header */}
       {isMobile ? (
-        <div className="space-y-4">
-          {/* Mobile Header */}
-          <div className="flex justify-between items-center">
-            <div className="flex-1">
-              <SearchInput
-                searchText={searchText}
-                setSearchText={setSearchText}
-                handleSearchSubmit={() => {}}
-                clearSearch={clearSearch}
-                autoFocus={false}
-              />
+        <div className="space-y-4 flex justify-between items-center">
+          {/* First row */}
+          {isMobile && (
+            <MobileBreadcrumb currentPage="Pages" parentLabel="Core" />
+          )}
+          <div className="flex gap-2 items-center">
+            <div>
+              <SearchButton onClick={toggleSearch} />
             </div>
             <div className="flex items-center gap-2 ml-2">
               <FiltersPopover
@@ -183,7 +192,7 @@ function Claims() {
             <SearchInput
               searchText={searchText}
               setSearchText={setSearchText}
-              handleSearchSubmit={() => {}}
+              handleSearchSubmit={() => { }}
               clearSearch={clearSearch}
               autoFocus={false}
             />
@@ -203,9 +212,21 @@ function Claims() {
           </Link>
         </div>
       )}
+      {/* Search input row - appears when expanded */}
+      {(isSearchExpanded && isMobile) && (
+        <div className="w-full">
+          <SearchInput
+            searchText={searchText}
+            setSearchText={setSearchText}
+            handleSearchSubmit={() => { }}
+            clearSearch={clearSearch}
+            autoFocus={true}
+          />
+        </div>
+      )}
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-scroll">
         <ClaimList
           data={{
             claims,

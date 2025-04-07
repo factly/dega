@@ -7,8 +7,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { pageStatusItems } from "../../../components/statusBadge/index";
-import { StatusTabsProps } from "../types";
+import { pageStatusItems } from "@/components/statusBadge/index";
+import { FilterParams } from "@/pages/pages/types";
+
+export interface StatusTabsProps {
+  status: string;
+  handleStatusChange: (value: string) => void;
+  isMobile: boolean;
+  form: any;
+  onSave: (values: FilterParams) => void;
+  children: React.ReactNode;
+}
 
 const StatusTabs: React.FC<StatusTabsProps> = ({
   status,
