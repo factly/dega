@@ -187,7 +187,7 @@ export default function AppSidebar(): React.ReactNode {
                       asChild
                       size="lg"
                       className={cn(
-                        "flex items-center gap-3 rounded-md hover:bg-[#DCEFEB]",
+                        "flex items-center gap-3 rounded-md hover:bg-[#DCEFEB] text-md",
                         isCollapsed
                           ? "justify-center px-2 py-2 w-10 h-10"
                           : "px-3 py-2",
@@ -290,7 +290,7 @@ function CollapsibleOrPopoverMenuItem({
             <SidebarMenuButton
               className={cn(
                 "flex items-center justify-center rounded-md hover:bg-[#DCEFEB]",
-                "px-2 py-2 w-10 h-10",
+                "px-2 py-2 w-10 h-10 text-md",
                 isActive && "bg-[#DCEFEB] text-[#0D1D2D] font-medium"
               )}
               size="lg"
@@ -325,7 +325,7 @@ function CollapsibleOrPopoverMenuItem({
         <CollapsibleTrigger asChild>
           <SidebarMenuButton
             className={cn(
-              "flex items-center justify-between gap-3 px-3 py-2 w-full rounded-md hover:bg-[#DCEFEB]"
+              "flex items-center justify-between gap-3 px-3 py-2 w-full rounded-md hover:bg-[#DCEFEB] text-md"
             )}
             size="lg"
             aria-expanded={isOpen}
@@ -355,7 +355,7 @@ function CollapsibleOrPopoverMenuItem({
               <SidebarMenuButton
                 asChild
                 size="lg"
-                className={`hover:bg-[#DCEFEB] text-[#0D1D2D]   pl-9
+                className={`hover:bg-[#DCEFEB] text-[#0D1D2D] text-md  pl-9
                   ${
                     isItemActiveCallback(subItem.url) &&
                     "bg-[#DCEFEB] text-[#0D1D2D] font-medium"

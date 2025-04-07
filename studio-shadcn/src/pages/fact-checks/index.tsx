@@ -265,8 +265,11 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
       {isMobile ? (
         <div className="space-y-4 flex justify-between items-center">
           {/* First row */}
-          {isMobile && (
-            <MobileBreadcrumb currentPage="Fact Checks" parentLabel="Fact Checking" />
+           {isMobile && (
+             <div className="flex flex-col">
+              <MobileBreadcrumb currentPage="Fact Checks" parentLabel="Fact Checking" />
+              <h1 className="text-xl font-semibold">Fact Checks</h1>
+            </div>
           )}
           <div className="flex justify-between items-center gap-2">
             <div>
