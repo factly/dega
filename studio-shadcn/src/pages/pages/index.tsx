@@ -228,7 +228,10 @@ function Pages({ formats }: PagesProps): React.ReactElement {
         <div className="space-y-4 flex justify-between items-center">
           {/* First row */}
           {isMobile && (
-            <MobileBreadcrumb currentPage="Pages" parentLabel="Core" />
+            <div className="flex flex-col">
+              <MobileBreadcrumb currentPage="Pages" parentLabel="Core" />
+              {isMobile && <h1 className="text-xl font-semibold">Pages</h1>}
+            </div>
           )}
           <div className="flex gap-2 items-center">
             <div>

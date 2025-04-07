@@ -164,7 +164,10 @@ function Claims() {
         <div className="space-y-4 flex justify-between items-center">
           {/* First row */}
           {isMobile && (
-            <MobileBreadcrumb currentPage="Pages" parentLabel="Core" />
+            <div className="flex flex-col">
+              <MobileBreadcrumb currentPage="Claims" parentLabel="Fact Checking" />
+              {isMobile && <h1 className="text-xl font-semibold">Claims</h1>}
+            </div>
           )}
           <div className="flex gap-2 items-center">
             <div>

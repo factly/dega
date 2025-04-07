@@ -554,8 +554,10 @@ const Posts: React.FC<PostsProps> = ({ formats }) => {
       {isMobile ? (
         <div className="space-y-4 flex justify-between items-center">
           {/* Breadcrumb */}
-          <MobileBreadcrumb currentPage="Posts" parentLabel="Core" />
-
+          <div className="flex flex-col">
+            <MobileBreadcrumb currentPage="Posts" parentLabel="Core" />
+            <h1 className="text-xl font-semibold">Posts</h1>
+          </div>
           <div className="flex gap-2 items-center">
             {/* Search Button */}
             <div>
