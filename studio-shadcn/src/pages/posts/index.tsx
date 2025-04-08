@@ -71,6 +71,12 @@ function Posts({ formats }: PostsProps): React.ReactElement {
   // Calculate sidebar width based on sidebar state
   const sidebarWidth = isCollapsed ? "89px" : "265px";
 
+  // Sorting state
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
+    query.get("sort") === "asc" ? "asc" : "desc"
+  );
+  const [sortBy, setSortBy] = useState<string>(query.get("sortBy") || "date");
+
   // If we have search text, make sure search is expanded on mobile
   useEffect(() => {
     if (searchText && isMobile && !isSearchExpanded) {
@@ -89,6 +95,7 @@ function Posts({ formats }: PostsProps): React.ReactElement {
       "limit",
       "q",
       "sort",
+      "sortBy",
       "tag",
       "category",
       "author",
@@ -156,6 +163,41 @@ function Posts({ formats }: PostsProps): React.ReactElement {
     });
   };
 
+  // Sorting handlers
+  const handleSortToggle = () => {
+    const newSort = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newSort);
+
+    const newQuery = new URLSearchParams(query.toString());
+    newQuery.set("sort", newSort);
+
+    navigate({
+      pathname,
+      search: "?" + newQuery.toString(),
+    });
+  };
+
+  const handleSortByChange = (column: string) => {
+    // Apply a default order based on the column
+    let newSort = sortOrder;
+    if (column !== sortBy) {
+      // Default date to newest first, default title to alphabetical (A-Z)
+      newSort = column === "date" ? "desc" : "asc";
+      setSortOrder(newSort);
+    }
+
+    setSortBy(column);
+
+    const newQuery = new URLSearchParams(query.toString());
+    newQuery.set("sortBy", column);
+    newQuery.set("sort", newSort);
+
+    navigate({
+      pathname,
+      search: "?" + newQuery.toString(),
+    });
+  };
+
   const onSave = (values: FilterParams) => {
     const searchFilter = new URLSearchParams();
 
@@ -166,6 +208,10 @@ function Posts({ formats }: PostsProps): React.ReactElement {
 
     // Add status filter
     if (status !== "all") searchFilter.set("status", status);
+
+    // Add sort and sortBy params
+    searchFilter.set("sort", sortOrder);
+    searchFilter.set("sortBy", sortBy);
 
     Object.keys(values).forEach((key) => {
       if (values[key]) {
@@ -319,9 +365,17 @@ function Posts({ formats }: PostsProps): React.ReactElement {
       <PostList
         format={formats.article}
         data={{ posts, total, loading, tags, categories, authors }}
-        filters={filters}
+        filters={{
+          ...filters,
+          sort: sortOrder,
+          sortBy: sortBy,
+        }}
         onPagination={onPagination}
         fetchPosts={fetchPosts}
+        sortOrder={sortOrder}
+        onSortToggle={handleSortToggle}
+        sortBy={sortBy}
+        onSortByChange={handleSortByChange}
       />
       {/* Footer with Pagination */}
       <PaginationFooter

@@ -144,9 +144,6 @@ function PostForm({
       finalData.published_date = null;
     }
 
-    console.log("Saving post with status:", finalStatus);
-    console.log("Published date:", finalData.published_date);
-
     try {
       onCreate(finalData);
       // Close panel if open

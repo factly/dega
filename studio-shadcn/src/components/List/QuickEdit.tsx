@@ -75,15 +75,15 @@ const QuickEdit: React.FC<QuickEditProps> = ({
     title: data?.title || "",
     slug: data?.slug || "",
     status: data?.status || "draft",
-    published_date: data?.published_date 
-      ? new Date(data.published_date) 
+    published_date: data?.published_date
+      ? new Date(data.published_date)
       : undefined,
     categories: data?.categories || [],
     tags: data?.tags || [],
     authors: data?.authors || [],
     claims: data?.claims || [],
     // Include any other fields from data
-    ...data
+    ...data,
   };
 
   const form = useForm({
@@ -133,6 +133,11 @@ const QuickEdit: React.FC<QuickEditProps> = ({
     }
   };
 
+  // Format the created date for display in the input field
+  const formattedCreatedDate = createdAt
+    ? dayjs(createdAt).format("YYYY-MM-DD")
+    : "N/A";
+
   // If form is not properly initialized, show a loading state
   if (!form.formState) {
     return <div>Loading form...</div>;
@@ -143,15 +148,15 @@ const QuickEdit: React.FC<QuickEditProps> = ({
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         onChange={() => setValueChange(true)}
-        className="space-y-4 mt-4 hover:bg-white"
+        className="space-y-6 mt-4 hover:bg-white"
       >
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="grid grid-cols-12 items-center gap-4">
-              <FormLabel className="col-span-3">Title</FormLabel>
-              <FormControl className="col-span-9">
+            <FormItem className="flex flex-col space-y-2">
+              <FormLabel>Title</FormLabel>
+              <FormControl>
                 <Textarea
                   {...field}
                   onChange={(e) => {
@@ -170,28 +175,28 @@ const QuickEdit: React.FC<QuickEditProps> = ({
           control={form.control}
           name="slug"
           render={({ field }) => (
-            <FormItem className="grid grid-cols-12 items-center gap-4">
-              <FormLabel className="col-span-3">Slug</FormLabel>
-              <FormControl className="col-span-9">
+            <FormItem className="flex flex-col space-y-2">
+              <FormLabel>Slug</FormLabel>
+              <FormControl>
                 <Input {...field} />
               </FormControl>
             </FormItem>
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem className="grid grid-cols-12 items-center gap-4">
-              <FormLabel className="col-span-3">Status</FormLabel>
-              <div className="col-span-9">
+        <div className="grid grid-cols-3 gap-6">
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem className="flex flex-col space-y-2">
+                <FormLabel>Status</FormLabel>
                 <Select
                   value={field.value}
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl className="w-full">
+                  <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
@@ -202,18 +207,16 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                     <SelectItem value="ready">Ready to Publish</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-            </FormItem>
-          )}
-        />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="published_date"
-          render={({ field }) => (
-            <FormItem className="grid grid-cols-12 items-center gap-4">
-              <FormLabel className="col-span-3">Published Date</FormLabel>
-              <div className="col-span-9">
+          <FormField
+            control={form.control}
+            name="published_date"
+            render={({ field }) => (
+              <FormItem className="flex flex-col space-y-2">
+                <FormLabel>Published Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -237,16 +240,18 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                     />
                   </PopoverContent>
                 </Popover>
-              </div>
-            </FormItem>
-          )}
-        />
+              </FormItem>
+            )}
+          />
 
-        <div className="grid grid-cols-12 items-center gap-4">
-          <FormLabel className="col-span-3">Created Date</FormLabel>
-          <div className="col-span-9">
-            <p>{createdAt ? dayjs(createdAt).format("YYYY-MM-DD") : "N/A"}</p>
-          </div>
+          <FormItem className="flex flex-col space-y-2">
+            <FormLabel>Created Date</FormLabel>
+            <Input
+              value={formattedCreatedDate}
+              readOnly
+              className="cursor-not-allowed"
+            />
+          </FormItem>
         </div>
 
         {slug === "fact-check" ? (
@@ -254,32 +259,30 @@ const QuickEdit: React.FC<QuickEditProps> = ({
             control={form.control}
             name="claims"
             render={({ field }) => (
-              <FormItem className="grid grid-cols-12 items-center gap-4">
-                <FormLabel className="col-span-3">Claims</FormLabel>
-                <div className="col-span-9 w-full">
-                  <FormControl>
-                    <Selector
-                      mode="multiple"
-                      display="claim"
-                      action="Claims"
-                      value={field.value || []}
-                      onChange={field.onChange}
-                      style={{ width: "100%" }}
-                    />
-                  </FormControl>
-                </div>
+              <FormItem className="flex flex-col space-y-2">
+                <FormLabel>Claims</FormLabel>
+                <FormControl>
+                  <Selector
+                    mode="multiple"
+                    display="claim"
+                    action="Claims"
+                    value={field.value || []}
+                    onChange={field.onChange}
+                    style={{ width: "100%" }}
+                  />
+                </FormControl>
               </FormItem>
             )}
           />
         ) : null}
 
-        <FormField
-          control={form.control}
-          name="categories"
-          render={({ field }) => (
-            <FormItem className="grid grid-cols-12 items-center gap-4">
-              <FormLabel className="col-span-3">Categories</FormLabel>
-              <div className="col-span-9 w-full">
+        <div className="grid grid-cols-3 gap-6">
+          <FormField
+            control={form.control}
+            name="categories"
+            render={({ field }) => (
+              <FormItem className="flex flex-col space-y-2">
+                <FormLabel>Categories</FormLabel>
                 <FormControl>
                   <Selector
                     mode="multiple"
@@ -290,18 +293,16 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                     style={{ width: "100%" }}
                   />
                 </FormControl>
-              </div>
-            </FormItem>
-          )}
-        />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="tags"
-          render={({ field }) => (
-            <FormItem className="grid grid-cols-12 items-center gap-4">
-              <FormLabel className="col-span-3">Tags</FormLabel>
-              <div className="col-span-9 w-full">
+          <FormField
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <FormItem className="flex flex-col space-y-2">
+                <FormLabel>Tags</FormLabel>
                 <FormControl>
                   <Selector
                     mode="multiple"
@@ -312,18 +313,16 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                     style={{ width: "100%" }}
                   />
                 </FormControl>
-              </div>
-            </FormItem>
-          )}
-        />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="authors"
-          render={({ field }) => (
-            <FormItem className="grid grid-cols-12 items-center gap-4">
-              <FormLabel className="col-span-3">Authors</FormLabel>
-              <div className="col-span-9 w-full">
+          <FormField
+            control={form.control}
+            name="authors"
+            render={({ field }) => (
+              <FormItem className="flex flex-col space-y-2">
+                <FormLabel>Authors</FormLabel>
                 <FormControl>
                   <Selector
                     mode="multiple"
@@ -334,12 +333,12 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                     style={{ width: "100%" }}
                   />
                 </FormControl>
-              </div>
-            </FormItem>
-          )}
-        />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        <div className="flex justify-center gap-4 mt-6">
+        <div className="flex justify-end gap-4 mt-6">
           <Button
             variant="outline"
             onClick={() => {
@@ -351,7 +350,7 @@ const QuickEdit: React.FC<QuickEditProps> = ({
             Cancel
           </Button>
           <Button type="submit" disabled={!valueChange}>
-            Update
+            Update Changes
           </Button>
         </div>
       </form>

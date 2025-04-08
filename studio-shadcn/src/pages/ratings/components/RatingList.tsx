@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteRating } from "../../../actions/ratings";
 import useNavigation from "../../../utils/useNavigation";
-import { useAppDispatch } from "@/hooks/reduxHooks";
-
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -12,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -28,45 +27,49 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import EmptyState from "@/components/EmptyState";
+import { AppThunkDispatch } from "../../../store/types";
 
-// Types
+// Type definitions
 interface Rating {
   id: string;
   name: string;
-  value: number;
-  // Add any other properties that ratings might have
+  numeric_value: number;
+  background_colour?: {
+    hex: string;
+  };
+  text_colour?: {
+    hex: string;
+  };
 }
 
-interface RatingsListProps {
+interface RatingListProps {
+  actions: string[];
   data: {
-    ratings: Rating[] | null;
+    ratings: Rating[];
     loading: boolean;
     total: number;
   };
   filters: {
-    page?: number;
-    limit?: number;
-    [key: string]: any;
+    page: number;
+    limit: number;
   };
-  setFilters: (filters: any) => void;
+  setFilters: (filters: { page: number; limit: number }) => void;
   fetchRatings: () => void;
   sortOrder?: "asc" | "desc";
   onSortToggle?: () => void;
   isMobile?: boolean;
 }
 
-function RatingsList({
-  fetchRatings,
+const RatingList: React.FC<RatingListProps> = ({
   data,
+  fetchRatings,
   onSortToggle,
-  isMobile,
-}: RatingsListProps) {
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
-  const [deleteItemID, setDeleteItemID] = useState<string | null>(null);
-
-  const dispatch = useAppDispatch();
+  isMobile = false,
+}) => {
   const navigate = useNavigation();
+  const dispatch = useDispatch<AppThunkDispatch>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [ratingToDelete, setRatingToDelete] = useState<Rating | null>(null);
 
   const handleRowClick = useCallback(
     (id: string) => {
@@ -83,77 +86,117 @@ function RatingsList({
     [navigate]
   );
 
-  const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
-    e.stopPropagation();
-    setDeleteDialogOpen(true);
-    setDeleteItemID(id);
-  }, []);
+  const handleDeleteClick = useCallback(
+    (e: React.MouseEvent, rating: Rating) => {
+      e.stopPropagation();
+      setModalOpen(true);
+      setRatingToDelete(rating);
+    },
+    []
+  );
 
   const handleDeleteConfirm = useCallback(
     async (e: React.MouseEvent) => {
       e.stopPropagation();
-      if (deleteItemID) {
+
+      if (ratingToDelete && ratingToDelete.id) {
         try {
-          await dispatch(deleteRating(deleteItemID));
+          await dispatch(deleteRating(ratingToDelete.id));
           fetchRatings();
         } catch (error) {
           console.error("Error deleting rating:", error);
         } finally {
-          setDeleteItemID(null);
-          setDeleteDialogOpen(false);
+          setModalOpen(false);
+          setRatingToDelete(null);
         }
       }
     },
-    [deleteItemID, dispatch, fetchRatings]
+    [ratingToDelete, dispatch, fetchRatings]
   );
 
   const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    setDeleteItemID(null);
-    setDeleteDialogOpen(false);
+    setModalOpen(false);
+    setRatingToDelete(null);
   }, []);
-
-  // Safely access data
-  const ratings = data?.ratings || [];
-  const hasRatingsData = ratings && ratings.length > 0;
 
   return (
     <div className="pb-4 overflow-auto">
-      {hasRatingsData ? (
-        <div className="rounded-md">
-          <Table>
-            <TableHeader className="w-1/2 text-[13px]">
+      <div className="rounded-md">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead
+                className={`min-w-[200px] text-[13px] ${
+                  isMobile ? "w-2/5" : ""
+                }`}
+              >
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={onSortToggle}
+                >
+                  Title
+                  <ChevronsUpDown className="ml-1 h-3 w-3" />
+                </div>
+              </TableHead>
+              <TableHead
+                className={`${
+                  isMobile ? "w-2/5" : "min-w-[250px]"
+                } text-[13px]`}
+              >
+                Preview
+              </TableHead>
+              <TableHead
+                className={`min-w-[100px] text-[13px] ${
+                  isMobile ? "w-1/5" : ""
+                }`}
+              >
+                Value
+              </TableHead>
+              <TableHead
+                className={`text-center text-[13px] ${
+                  isMobile ? "w-[80px]" : "min-w-[100px]"
+                }`}
+              >
+                Action
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.ratings.length === 0 ? (
               <TableRow>
-                <TableHead className="w-1/2">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={onSortToggle}
-                  >
-                    Name
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
-                </TableHead>
-                <TableHead className="w-2/5">Value</TableHead>
-                <TableHead className="w-[150px] text-center">Action</TableHead>
+                <TableCell colSpan={4} className="text-center py-10">
+                  No ratings found
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {ratings.map((rating) => (
+            ) : (
+              data.ratings.map((rating) => (
                 <TableRow
                   key={rating.id}
                   onClick={() => handleRowClick(rating.id)}
                   className="cursor-pointer"
                 >
                   <TableCell>
-                    <h3 className="font-normal">
-                      {rating.name || "Unnamed Rating"}
-                    </h3>
+                    <h3 className="text-[#101828]">{rating.name}</h3>
                   </TableCell>
                   <TableCell>
-                    <p className="line-clamp-2 font-normal">
-                      {rating.value || "---"}
-                    </p>
+                    <div
+                      className={`text-center text-sm rounded-xl ${
+                        isMobile ? "w-auto text-xs" : "w-28"
+                      }`}
+                      style={{
+                        color: rating.text_colour?.hex,
+                        backgroundColor: rating.background_colour?.hex,
+                        padding: isMobile ? "0.15rem" : "0.25rem",
+                      }}
+                    >
+                      {rating.name}
+                    </div>
                   </TableCell>
+                  <TableCell>
+                    <h3 className="text-[#101828]">{rating.numeric_value}</h3>
+                  </TableCell>
+
                   <TableCell className="text-center">
                     <DropdownMenu>
                       <DropdownMenuTrigger
@@ -161,7 +204,7 @@ function RatingsList({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button variant="ghost" size="icon">
-                          <Ellipsis className="h-5 w-5" />
+                          <Ellipsis className="h-5 w-5 text-[#858585]" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -174,7 +217,7 @@ function RatingsList({
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          onClick={(e) => handleDeleteClick(e, rating.id)}
+                          onClick={(e) => handleDeleteClick(e, rating)}
                           className="cursor-pointer text-red-600 focus:text-red-600"
                         >
                           <Trash2 className="h-4 w-4 mr-2" />
@@ -184,21 +227,13 @@ function RatingsList({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      ) : (
-        <EmptyState
-          contentType="ratings"
-          title="No ratings found"
-          description="Your ratings list is empty"
-          isMobile={isMobile}
-        />
-      )}
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
-      {/* Delete Confirmation Dialog */}
-      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent
           className="max-w-sm p-4"
           onPointerDownOutside={(e) => e.preventDefault()}
@@ -210,22 +245,13 @@ function RatingsList({
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4 flex justify-end space-x-2">
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={(e) => {
-                handleDeleteCancel(e);
-              }}
-            >
+            <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
               Cancel
             </Button>
             <Button
               size="sm"
               variant="destructive"
-              onClick={(e) => {
-                handleDeleteConfirm(e);
-              }}
-              type="button"
+              onClick={handleDeleteConfirm}
             >
               Delete
             </Button>
@@ -234,6 +260,6 @@ function RatingsList({
       </Dialog>
     </div>
   );
-}
+};
 
-export default RatingsList;
+export default RatingList;

@@ -1,13 +1,10 @@
-// utils/statusBadge.tsx
-import { Badge } from "@/components/ui/badge";
 import { AlertCircle, CheckCircle, Clock, Calendar } from "lucide-react";
 
-// Define consistent status items for the entire application
 export const statusItems = [
-  { value: "publish", label: "Published", icon: CheckCircle, color: "green" },
-  { value: "future", label: "Future Publish", icon: Calendar, color: "blue" },
-  { value: "ready", label: "Ready to Publish", icon: Clock, color: "yellow" },
-  { value: "draft", label: "Draft", icon: AlertCircle, color: "gray" },
+  { value: "publish", label: "ACTIVE", icon: CheckCircle, color: "green" },
+  { value: "future", label: "FUTURE", icon: Calendar, color: "blue" },
+  { value: "ready", label: "READY", icon: Clock, color: "amber" },
+  { value: "draft", label: "DRAFT", icon: AlertCircle, color: "gray" },
 ];
 
 // Dropdown/Select status items with "All" option included
@@ -27,33 +24,35 @@ export const renderStatusBadge = (status: string | undefined) => {
   );
 
   if (!statusItem) {
-    return <Badge variant="outline">{status || "Unknown"}</Badge>;
+    return (
+      <div className="inline-flex items-center justify-center h-8 px-4 py-2 text-sm font-medium rounded-full border border-gray-300">
+        {status || "Unknown"}
+      </div>
+    );
   }
 
   const Icon = statusItem.icon;
 
   // Consistent badge styling based on status
-  let badgeClass = "";
+  let badgeClass =
+    "inline-flex items-center justify-center h-8 px-4 py-2 text-sm font-medium rounded-full ";
+
   switch (statusItem.value) {
     case "publish":
-      badgeClass = "bg-green-50 text-green-700 border-green-200";
+      badgeClass += "bg-white text-green-600 border border-green-500";
       break;
     case "future":
-      badgeClass = "bg-blue-50 text-blue-700 border-blue-200";
+      badgeClass += "bg-white text-blue-600 border border-blue-500";
       break;
     case "ready":
-      badgeClass = "bg-amber-50 text-amber-700 border-amber-200";
+      badgeClass += "bg-white text-amber-600 border border-amber-500";
       break;
     case "draft":
-      badgeClass = "bg-gray-50 text-gray-700 border-gray-200";
+      badgeClass += "bg-white text-gray-600 border border-gray-500";
       break;
     default:
-      badgeClass = "";
+      badgeClass += "bg-white text-gray-700 border border-gray-300";
   }
 
-  return (
-    <Badge variant="outline" className={badgeClass}>
-      <Icon className="h-3 w-3 mr-1" /> {statusItem.label}
-    </Badge>
-  );
+  return <div className={badgeClass}>{statusItem.label}</div>;
 };

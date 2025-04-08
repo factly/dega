@@ -208,7 +208,9 @@ function PageList({
                 return (
                   <React.Fragment key={item.id}>
                     <TableRow
-                      className="cursor-pointer hover:bg-blue-50"
+                      className={`cursor-pointer ${
+                        isOpen ? "bg-[#F0F5FF]" : "hover:bg-blue-50"
+                      }`}
                       onClick={() => navigate(`/pages/${item.id}/edit`)}
                     >
                       <TableCell className="py-3">
@@ -269,7 +271,7 @@ function PageList({
                     {isOpen && (
                       <TableRow>
                         <TableCell colSpan={4} className="p-0">
-                          <div className="p-4">
+                          <div className="p-4 bg-white hover:bg-white">
                             <QuickEdit
                               data={item}
                               page={true}

@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Trash2, Edit, Ellipsis, Pencil } from "lucide-react";
+import { Trash2, Edit, Ellipsis, Pencil, ChevronsUpDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { deletePost } from "../../actions/posts";
 import { Link } from "react-router-dom";
 import QuickEdit from "../../components/List/QuickEdit";
@@ -41,6 +42,8 @@ interface Post {
   published_date?: string;
   tag_ids?: number[];
   category_ids?: number[];
+  author_ids?: number[];
+  authors?: number[] | Array<{ id: number; display_name: string }>;
   [key: string]: any;
 }
 
@@ -84,20 +87,28 @@ interface PostListProps {
     tag?: string[];
     category?: string[];
     author?: string[];
+    sort?: string;
+    sortBy?: string;
     [key: string]: any;
   };
   onPagination: (page: number, limit: number) => void;
   fetchPosts: () => void;
   isMobile?: boolean;
+  sortOrder?: "asc" | "desc";
+  onSortToggle?: () => void;
+  sortBy?: string;
+  onSortByChange?: (column: string) => void;
 }
 
 function PostList({
   format,
   data,
-  filters,
-  onPagination,
   fetchPosts,
   isMobile,
+  sortOrder = "desc",
+  onSortToggle,
+  sortBy = "date",
+  onSortByChange,
 }: PostListProps) {
   const dispatch = useAppDispatch();
   const [id, setID] = useState<number>(0);
@@ -145,7 +156,7 @@ function PostList({
 
   // Function to format date - simplified for example
   const formatDate = (dateString?: string) => {
-    if (!dateString) return "-";
+    if (!dateString) return "---";
     try {
       const date = new Date(dateString);
       return new Intl.DateTimeFormat("en-US", {
@@ -178,41 +189,135 @@ function PostList({
     }
   };
 
+  // Function to render author names
+  const renderAuthors = (post: Post) => {
+    if (
+      Array.isArray(post.authors) &&
+      post.authors.length > 0 &&
+      typeof post.authors[0] === "object"
+    ) {
+      const authorNames = post.authors
+        .map((author: any) => author.display_name || author.name)
+        .filter(Boolean);
+
+      if (authorNames.length > 0) {
+        return <div>{authorNames.join(", ")}</div>;
+      }
+    }
+
+    if (
+      Array.isArray(post.authors) &&
+      post.authors.length > 0 &&
+      typeof post.authors[0] !== "object"
+    ) {
+      const authorNames = post.authors
+        .map((id) => {
+          const author = data.authors[id];
+          return author ? author.display_name : null;
+        })
+        .filter(Boolean);
+
+      if (authorNames.length > 0) {
+        return <div>{authorNames.join(", ")}</div>;
+      }
+    }
+
+    // No author information found
+    return "---";
+  };
+
+  // Sort handlers
+  const handleSortByTitleToggle = () => {
+    if (onSortByChange) {
+      onSortByChange("title");
+    }
+    if (sortBy === "title" && onSortToggle) {
+      onSortToggle();
+    }
+  };
+
+  const handleSortByDateToggle = () => {
+    if (onSortByChange) {
+      onSortByChange("date");
+    }
+    if (sortBy === "date" && onSortToggle) {
+      onSortToggle();
+    }
+  };
+
   // Check if there are any posts to display and if we're not loading
   const hasPostsData = !data.loading && data.posts && data.posts.length > 0;
 
   return (
     <div className="space-y-4 pb-4 overflow-auto">
       {data.loading ? (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="min-w-[250px] w-[40%]">Title</TableHead>
-              <TableHead className="w-[15%]">Status</TableHead>
-              <TableHead className="w-[25%]">Last Modified</TableHead>
-              <TableHead className="w-[20%] text-center">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell colSpan={4} className="text-center py-10">
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="animate-spin rounded-full h-5 w-5"></div>
-                  <span>Loading...</span>
-                </div>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="text-[13px]">
+              <TableRow>
+                <TableHead className="min-w-[250px] w-[30%]">Title</TableHead>
+                <TableHead className="w-[15%]">Author</TableHead>
+                <TableHead className="w-[10%]">Status</TableHead>
+                <TableHead className="w-[25%]">Published Date</TableHead>
+                <TableHead className="w-[20%] text-center">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-4/5" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-20" />
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex flex-col space-y-2">
+                      <Skeleton className="h-6 w-32" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       ) : hasPostsData ? (
         <div className="rounded-md">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="min-w-[250px] w-[40%]">Title</TableHead>
-                <TableHead className="w-[15%]">Status</TableHead>
-                <TableHead className="w-[25%]">Last Modified</TableHead>
-                <TableHead className="w-[20%] text-center">Actions</TableHead>
+                <TableHead className="min-w-[250px] w-[30%] text-[13px]">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={handleSortByTitleToggle}
+                  >
+                    Title
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-[15%] text-[13px]">Author</TableHead>
+                <TableHead className="w-[10%] text-[13px]">Status</TableHead>
+                <TableHead className="w-[25%] text-[13px]">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={handleSortByDateToggle}
+                  >
+                    Published Date
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-[20%] text-center text-[13px]">
+                  Actions
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -225,7 +330,9 @@ function PostList({
                 return (
                   <React.Fragment key={item.id}>
                     <TableRow
-                      className="cursor-pointer hover:bg-blue-50"
+                      className={`cursor-pointer ${
+                        isOpen ? "bg-[#F0F5FF]" : "hover:bg-blue-50"
+                      }`}
                       onClick={() => navigate(`/posts/${item.id}/edit`)}
                     >
                       <TableCell className="py-3">
@@ -236,11 +343,13 @@ function PostList({
                           {item.title}
                         </Link>
                       </TableCell>
+                      <TableCell>{renderAuthors(item)}</TableCell>
                       <TableCell>{renderStatusBadge(item.status)}</TableCell>
                       <TableCell>
                         <div className="flex flex-col">
-                          <span>{formatDate(item.updated_at)}</span>
-                          <span className="text-gray-500 text-sm">
+                          <span>{formatDate(item.published_date)}</span>
+                          <span className="text-gray-400 text-[13px]">
+                            Last modified:{" "}
                             {getDifferenceInModifiedTime(item.updated_at)}
                           </span>
                         </div>
@@ -285,13 +394,14 @@ function PostList({
                     </TableRow>
                     {isOpen && (
                       <TableRow>
-                        <TableCell colSpan={4} className="p-0">
+                        <TableCell colSpan={5} className="p-0">
                           <div className="p-4 bg-white">
                             <QuickEdit
                               data={item}
                               page={false}
                               setID={setID}
                               slug={format.slug}
+                              createdAt={item.created_at}
                               onQuickEditUpdate={() => setExpandedRowKeys([])}
                             />
                           </div>

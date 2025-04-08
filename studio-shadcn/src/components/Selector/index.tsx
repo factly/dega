@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-
 // Import the useAppDispatch hook
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
@@ -474,6 +473,7 @@ function Selector({
         <PopoverTrigger asChild>
           <Button
             variant="outline"
+            size="sm"
             role="combobox"
             aria-expanded={open}
             className="w-full justify-between relative h-auto min-h-10"

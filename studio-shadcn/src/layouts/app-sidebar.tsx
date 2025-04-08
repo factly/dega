@@ -140,11 +140,13 @@ export default function AppSidebar(): React.ReactNode {
           )}
         >
           {!isMobile && (
-            <img
-              src={isCollapsed ? degaLogoShort : degaLogoLetters}
-              alt="Dega"
-              className="h-8 cursor-pointer"
-            />
+            <Link to="/" aria-label="Go to home page">
+              <img
+                src={isCollapsed ? degaLogoShort : degaLogoLetters}
+                alt="Dega"
+                className="h-8 cursor-pointer"
+              />
+            </Link>
           )}
           {!isCollapsed && !isMobile && (
             <Button
@@ -266,6 +268,7 @@ interface CollapsibleOrPopoverMenuItemProps {
   title: string;
   icon: LucideIcon;
   isActive: boolean;
+  isItemActiveCallback: (path: string) => boolean;
   submenuItems: NavSubItem[];
 }
 
