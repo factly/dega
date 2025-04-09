@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Trash2, Edit, Ellipsis, Pencil } from "lucide-react";
+import { Trash2, Edit, Ellipsis, Pencil, ChevronsUpDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,6 +31,7 @@ import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { renderStatusBadge } from "../../../components/statusBadge/index";
 import EmptyState from "@/components/EmptyState";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Page {
   id: number;
@@ -75,11 +76,17 @@ interface PageListProps {
     limit?: number;
     tag?: string[];
     category?: string[];
+    sort?: string;
+    sortBy?: string;
     [key: string]: any;
   };
   onPagination: (page: number, limit: number) => void;
   fetchPages: () => void;
   isMobile?: boolean;
+  sortOrder?: "asc" | "desc";
+  onSortToggle?: () => void;
+  sortBy?: string;
+  onSortByChange?: (column: string) => void;
 }
 
 function PageList({
@@ -89,6 +96,10 @@ function PageList({
   onPagination,
   fetchPages,
   isMobile = false,
+  sortOrder = "desc",
+  onSortToggle,
+  sortBy = "date",
+  onSortByChange,
 }: PageListProps) {
   const dispatch = useAppDispatch();
   const [id, setID] = useState<number>(0);
@@ -134,6 +145,25 @@ function PageList({
     }
   }, [deleteItemID, dispatch, fetchPages]);
 
+  // Sort handlers
+  const handleSortByTitleToggle = () => {
+    if (onSortByChange) {
+      onSortByChange("title");
+    }
+    if (sortBy === "title" && onSortToggle) {
+      onSortToggle();
+    }
+  };
+
+  const handleSortByDateToggle = () => {
+    if (onSortByChange) {
+      onSortByChange("date");
+    }
+    if (sortBy === "date" && onSortToggle) {
+      onSortToggle();
+    }
+  };
+
   // Function to format date - simplified for example
   const formatDate = (dateString?: string) => {
     if (!dateString) return "-";
@@ -175,27 +205,68 @@ function PageList({
   return (
     <div className="space-y-4 pb-4 overflow-auto">
       {data.loading ? (
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell colSpan={4} className="text-center py-10">
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="animate-spin rounded-full h-5 w-5"></div>
-                  <span>Loading...</span>
-                </div>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      ) : hasPagesData ? (
         <div className="rounded-md">
           <Table>
-            <TableHeader>
+            <TableHeader className="text-[13px]">
               <TableRow>
                 <TableHead className="min-w-[250px] w-[40%]">Title</TableHead>
                 <TableHead className="w-[15%]">Status</TableHead>
                 <TableHead className="w-[25%]">Last Modified</TableHead>
                 <TableHead className="w-[20%] text-center">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-20" />
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex flex-col space-y-2">
+                      <Skeleton className="h-6 w-32" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : hasPagesData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="min-w-[250px] w-[40%] text-[13px]">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={handleSortByTitleToggle}
+                  >
+                    Title
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-[15%] text-[13px]">Status</TableHead>
+                <TableHead className="w-[25%] text-[13px]">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={handleSortByDateToggle}
+                  >
+                    Last Modified
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-[20%] text-center text-[13px]">
+                  Actions
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -225,7 +296,7 @@ function PageList({
                       <TableCell>
                         <div className="flex flex-col">
                           <span>{formatDate(item.updated_at)}</span>
-                          <span className="text-gray-500 text-sm">
+                          <span className="text-gray-400 text-[13px]">
                             {getDifferenceInModifiedTime(item.updated_at)}
                           </span>
                         </div>

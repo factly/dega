@@ -415,10 +415,10 @@ function Selector({
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full p-0" style={{ width: style?.width }}>
+        <PopoverContent className="w-full p-0" >
           <Command>
             <CommandList>
-              <ScrollArea className="h-64" onScrollCapture={handleScroll}>
+              <ScrollArea  onScrollCapture={handleScroll}>
                 <CommandEmpty>
                   {loading ? (
                     <div className="p-2 text-center text-sm">Loading...</div>
@@ -506,10 +506,10 @@ function Selector({
             <ChevronsUpDown className="absolute right-3 top-3 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full p-0" style={{ width: style?.width }}>
-          <Command>
+        <PopoverContent className="w-fit p-0" >
+          <Command >
             <CommandList>
-              <ScrollArea className="h-64" onScrollCapture={handleScroll}>
+              <ScrollArea onScrollCapture={handleScroll}>
                 <CommandEmpty>
                   {loading ? (
                     <div className="p-2 text-center text-sm">Loading...</div>
@@ -521,7 +521,7 @@ function Selector({
                       {createEntity && (
                         <Button
                           variant="outline"
-                          className="w-full mt-2"
+                          className="mt-2"
                           onClick={handleCreateEntity}
                         >
                           Create a new {createEntity}
@@ -530,7 +530,7 @@ function Selector({
                     </>
                   )}
                 </CommandEmpty>
-                <CommandGroup>
+                <CommandGroup style={{ width: '26vw' }}>
                   {filteredDetails.map((item) => (
                     <CommandItem
                       key={`${entity}-${item?.id}`}
