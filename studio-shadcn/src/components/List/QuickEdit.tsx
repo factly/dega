@@ -263,6 +263,7 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                 <FormLabel>Claims</FormLabel>
                 <FormControl>
                   <Selector
+                    isQuickEdit
                     mode="multiple"
                     display="claim"
                     action="Claims"
@@ -285,6 +286,7 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                 <FormLabel>Categories</FormLabel>
                 <FormControl>
                   <Selector
+                    isQuickEdit
                     mode="multiple"
                     action="Categories"
                     createEntity="Category"
@@ -305,6 +307,7 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                 <FormLabel>Tags</FormLabel>
                 <FormControl>
                   <Selector
+                    isQuickEdit
                     mode="multiple"
                     action="Tags"
                     createEntity="Tag"
@@ -325,6 +328,7 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                 <FormLabel>Authors</FormLabel>
                 <FormControl>
                   <Selector
+                    isQuickEdit
                     mode="multiple"
                     display="display_name"
                     action="Authors"

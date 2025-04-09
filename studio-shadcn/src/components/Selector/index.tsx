@@ -85,6 +85,7 @@ function Selector({
   display = "name",
   placeholder,
   style,
+  isQuickEdit = false,
 }: SelectorProps) {
   const originalValueType = typeof value;
 
@@ -530,7 +531,7 @@ function Selector({
                     </>
                   )}
                 </CommandEmpty>
-                <CommandGroup style={{ width: '26vw' }}>
+                <CommandGroup style={{ width: isQuickEdit && "26vw" }} className="min-w-[80vw] sm:min-w-[23rem]">
                   {filteredDetails.map((item) => (
                     <CommandItem
                       key={`${entity}-${item?.id}`}
