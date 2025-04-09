@@ -298,7 +298,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
 
       {/* Templates Dialog */}
       <Dialog open={templatesOpen} onOpenChange={setTemplatesOpen}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>Templates</DialogTitle>
           </DialogHeader>
