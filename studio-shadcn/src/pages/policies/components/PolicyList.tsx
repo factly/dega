@@ -57,10 +57,8 @@ interface PolicyListProps {
 }
 
 const PolicyList: React.FC<PolicyListProps> = ({
-  actions,
   data,
   fetchPolicies,
-  sortOrder,
   onSortToggle,
   isMobile,
 }) => {
@@ -122,9 +120,6 @@ const PolicyList: React.FC<PolicyListProps> = ({
     setDeleteDialogOpen(false);
   }, []);
 
-  const isDeleteAllowed =
-    actions.includes("admin") || actions.includes("delete");
-
   // Check if there are any policies to display
   const hasPoliciesData = data.policies && data.policies.length > 0;
 
@@ -135,7 +130,7 @@ const PolicyList: React.FC<PolicyListProps> = ({
           <Table>
             <TableHeader className="text-[13px]">
               <TableRow>
-                <TableHead className="w-full">
+                <TableHead className="w-[45%]">
                   <div
                     className="flex items-center cursor-pointer"
                     onClick={onSortToggle}
@@ -145,11 +140,11 @@ const PolicyList: React.FC<PolicyListProps> = ({
                   </div>
                 </TableHead>
                 {!isMobile && (
-                  <TableHead className="w-[400px] min-w-[400px]">
+                  <TableHead className="w-[45%] min-w-[400px]">
                     Description
                   </TableHead>
                 )}
-                <TableHead className="w-[150px] text-center">Action</TableHead>
+                <TableHead className="w-[10%] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -206,7 +201,6 @@ const PolicyList: React.FC<PolicyListProps> = ({
                         <DropdownMenuItem
                           onClick={(e) => handleDeleteClick(e, policy.id)}
                           className="cursor-pointer text-red-600 focus:text-red-600"
-                          disabled={!isDeleteAllowed}
                         >
                           <Trash2 className="h-4 w-4 mr-2" />
                           <span>Delete</span>
@@ -257,7 +251,6 @@ const PolicyList: React.FC<PolicyListProps> = ({
                 handleDeleteConfirm(e);
               }}
               type="button"
-              disabled={!isDeleteAllowed}
             >
               Delete
             </Button>

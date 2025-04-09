@@ -383,7 +383,7 @@ const SpaceList: React.FC<SpaceListProps> = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-1/4 text-[13px]">
+              <TableHead className="w-[20%] text-[13px]">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={handleNameSort}
@@ -392,10 +392,12 @@ const SpaceList: React.FC<SpaceListProps> = ({
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
-              <TableHead className="w-1/4 text-[13px]">ID</TableHead>
-              <TableHead className="w-1/6 text-[13px]">Site Title</TableHead>
-              <TableHead className="w-1/6 text-[13px]">Site Address</TableHead>
-              <TableHead className="w-1/7 text-[13px]">
+              <TableHead className="w-[20%] text-[13px]">ID</TableHead>
+              <TableHead className="w-[15%] text-[13px]">Site Title</TableHead>
+              <TableHead className="w-[20%] text-[13px]">
+                Site Address
+              </TableHead>
+              <TableHead className="w-[15%] text-[13px]">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={handleDateSort}
@@ -404,7 +406,7 @@ const SpaceList: React.FC<SpaceListProps> = ({
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
-              <TableHead className="w-[100px] text-[13px] text-center">
+              <TableHead className="w-[10%] text-[13px] text-center">
                 Actions
               </TableHead>
             </TableRow>

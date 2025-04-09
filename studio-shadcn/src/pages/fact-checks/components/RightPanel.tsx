@@ -68,13 +68,18 @@ const RightPanel: React.FC<RightPanelProps> = ({
                   onSubmit={form.handleSubmit(onSave)}
                   className="space-y-4"
                 >
-                  <Accordion type="single" collapsible defaultValue="details">
+                  <Accordion
+                    type="single"
+                    collapsible
+                    defaultValue="details"
+                    className="w-full space-y-3"
+                  >
                     {/* Details Section */}
-                    <AccordionItem value="details">
+                    <AccordionItem value="details" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
                         General
                       </AccordionTrigger>
-                      <AccordionContent>
+                      <AccordionContent className="pt-4">
                         <div className="space-y-4">
                           {/* Creation and update info (moved status info to top of title) */}
                           <div className="space-y-1">
@@ -181,11 +186,11 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     </AccordionItem>
 
                     {/* Other Details Section */}
-                    <AccordionItem value="other-details">
+                    <AccordionItem value="other-details" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
                         Other Details
                       </AccordionTrigger>
-                      <AccordionContent>
+                      <AccordionContent className="pt-4">
                         <div className="space-y-4">
                           {/* Excerpt */}
                           <FormField
@@ -220,11 +225,11 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     </AccordionItem>
 
                     {/* Categories Section */}
-                    <AccordionItem value="categories">
+                    <AccordionItem value="categories" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
                         Categories
                       </AccordionTrigger>
-                      <AccordionContent>
+                      <AccordionContent className="pt-4">
                         <FormField
                           control={form.control}
                           name="categories"
@@ -245,11 +250,11 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     </AccordionItem>
 
                     {/* Tags Section */}
-                    <AccordionItem value="tags">
+                    <AccordionItem value="tags" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
                         Tags
                       </AccordionTrigger>
-                      <AccordionContent>
+                      <AccordionContent className="pt-4">
                         <FormField
                           control={form.control}
                           name="tags"
@@ -338,7 +343,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           <>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">Post Meta Data</h3>
-              <Button variant="ghost" size="icon" onClick={closePanel}>
+              <Button variant="outline" size="icon" onClick={closePanel}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
@@ -365,7 +370,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     name="meta.title"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Meta Title</FormLabel>
+                        <FormLabel className="text-base">Meta Title</FormLabel>
                         <Input {...field} />
                       </FormItem>
                     )}
@@ -376,7 +381,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     name="meta.description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Meta Description</FormLabel>
+                        <FormLabel className="text-base">
+                          Meta Description
+                        </FormLabel>
                         <Textarea {...field} className="resize-none" rows={4} />
                       </FormItem>
                     )}
@@ -387,7 +394,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     name="meta.canonical_URL"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Canonical URL</FormLabel>
+                        <FormLabel className="text-base">
+                          Canonical URL
+                        </FormLabel>
                         <Input {...field} />
                       </FormItem>
                     )}
@@ -415,7 +424,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
                   <Button
                     type="button"
                     variant="ghost"
-                    className="flex items-center gap-1"
+                    className="flex justify-start gap-1"
                     onClick={() => setActivePanel("main")}
                   >
                     <ChevronLeft className="h-4 w-4" />

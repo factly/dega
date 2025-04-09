@@ -122,9 +122,9 @@ function ClaimantList({
       {hasClaimantsData ? (
         <div className="rounded-md">
           <Table>
-            <TableHeader className="w-1/2 text-[13px]">
+            <TableHeader className="w-[30%] text-[13px]">
               <TableRow>
-                <TableHead className="w-1/2">
+                <TableHead className="w-[30%]">
                   <div
                     className="flex items-center cursor-pointer"
                     onClick={onSortToggle}
@@ -133,8 +133,8 @@ function ClaimantList({
                     <ChevronsUpDown className="ml-1 h-3 w-3" />
                   </div>
                 </TableHead>
-                <TableHead className="w-2/5">Tag Line</TableHead>
-                <TableHead className="w-[150px] text-center">Action</TableHead>
+                <TableHead className="w-[30%]">Tag Line</TableHead>
+                <TableHead className="w-[10%] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

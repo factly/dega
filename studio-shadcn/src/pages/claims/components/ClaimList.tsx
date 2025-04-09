@@ -107,7 +107,7 @@ function ClaimList({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className=" text-[13px]">
+              <TableHead className="w-[30%] text-[13px]">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={handleSortByClaimToggle}
@@ -116,23 +116,23 @@ function ClaimList({
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
-              <TableHead className=" text-[13px]">
+              <TableHead className="w-[20%] text-[13px]">
                 Claimant
               </TableHead>
-              <TableHead className=" text-[13px]">
+              <TableHead className="w-[20%] text-[13px]">
                 Rating
               </TableHead>
-              <TableHead className=" text-[13px]">
+              <TableHead className="w-[20%] text-[13px]">
                 <div
-                  className="flex items-center cursor-pointer"
+                  className="flex text-[13px] items-center cursor-pointer"
                   onClick={handleSortByDateToggle}
                 >
                   Claim Date
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
-              <TableHead className="min-w-[150px] text-center">
-                Action
+              <TableHead className="w-[10%] text-[13px] text-center">
+                Actions
               </TableHead>
             </TableRow>
           </TableHeader>

@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { getToken, getUserInfo } from "./index";
+import { getToken } from "./index";
+import { getUserInfo } from "../../actions/session";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader";
 

@@ -136,7 +136,7 @@ function PostSidePanel({
       className="p-0 mb-4"
       onClick={() => setActiveSubPanel(null)}
     >
-      <ArrowLeft className="h-4 w-4 mr-2" />
+      <ArrowLeft className="h-4 w-4" />
       Back
     </Button>
   );
@@ -288,16 +288,19 @@ function PostSidePanel({
     // Main panel (default view)
     return (
       <div className="space-y-4">
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full space-y-3">
           {/* Details section */}
-          <AccordionItem value="details" defaultChecked>
+          <AccordionItem value="details" defaultChecked className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
-              Details
+              <div className="flex items-center">
+                <FileEdit className="h-4 w-4 mr-2" />
+                Details
+              </div>
             </AccordionTrigger>
-            <AccordionContent>
-              <div className="space-y-4 pt-2">
+            <AccordionContent className="pt-4">
+              <div className="space-y-4">
                 {/* Creation and update info */}
-                <div className="space-y-1">
+                <div>
                   {data?.created_at && (
                     <p className="text-sm text-muted-foreground">
                       <span className="font-medium text-foreground">
@@ -396,7 +399,7 @@ function PostSidePanel({
                   control={form.control}
                   name="is_featured"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <FormItem className="flex flex-row items-center justify-between p-3">
                       <div className="space-y-0.5">
                         <FormLabel>Mark as Featured</FormLabel>
                       </div>
@@ -414,7 +417,7 @@ function PostSidePanel({
                   control={form.control}
                   name="is_exclude_from_homepage"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <FormItem className="flex flex-row items-center justify-between p-3">
                       <div className="space-y-0.5">
                         <FormLabel>Exclude from Homepage</FormLabel>
                       </div>
@@ -432,15 +435,15 @@ function PostSidePanel({
           </AccordionItem>
 
           {/* Other Details section */}
-          <AccordionItem value="other-details">
+          <AccordionItem value="other-details" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
               <div className="flex items-center">
                 <FileEdit className="h-4 w-4 mr-2" />
                 Other Details
               </div>
             </AccordionTrigger>
-            <AccordionContent>
-              <div className="space-y-4 pt-2">
+            <AccordionContent className="pt-4">
+              <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="subtitle"
@@ -488,15 +491,15 @@ function PostSidePanel({
           </AccordionItem>
 
           {/* Categories section */}
-          <AccordionItem value="categories">
+          <AccordionItem value="categories" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
               <div className="flex items-center">
                 <FolderClosed className="h-4 w-4 mr-2" />
                 Categories
               </div>
             </AccordionTrigger>
-            <AccordionContent>
-              <div className="pt-2">
+            <AccordionContent className="pt-4">
+              <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="categories"
@@ -520,15 +523,15 @@ function PostSidePanel({
           </AccordionItem>
 
           {/* Tags section */}
-          <AccordionItem value="tags">
+          <AccordionItem value="tags" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
               <div className="flex items-center">
                 <Tags className="h-4 w-4 mr-2" />
                 Tags
               </div>
             </AccordionTrigger>
-            <AccordionContent>
-              <div className="pt-2">
+            <AccordionContent className="pt-4">
+              <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="tags"
@@ -552,17 +555,18 @@ function PostSidePanel({
           </AccordionItem>
 
           {/* Others section */}
-          <AccordionItem value="others">
+          <AccordionItem value="others" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
               <div className="flex items-center">
                 <MoreHorizontal className="h-4 w-4 mr-2" />
                 Others
               </div>
             </AccordionTrigger>
-            <AccordionContent>
-              <div className="space-y-3 pt-2">
+            <AccordionContent className="pt-4">
+              <div className="space-y-4">
                 <Button
                   variant="outline"
+                  size="lg"
                   className="w-full justify-start"
                   onClick={() => setActiveSubPanel("seo")}
                 >
@@ -572,6 +576,7 @@ function PostSidePanel({
 
                 <Button
                   variant="outline"
+                  size="lg"
                   className="w-full justify-start"
                   onClick={() => setActiveSubPanel("code")}
                 >
@@ -581,6 +586,7 @@ function PostSidePanel({
 
                 <Button
                   variant="outline"
+                  size="lg"
                   className="w-full justify-start"
                   onClick={() => setActiveSubPanel("meta_fields")}
                 >

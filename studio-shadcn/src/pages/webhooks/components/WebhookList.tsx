@@ -107,7 +107,7 @@ const WebhookList: React.FC<WebhookListProps> = ({
             <TableHead className="w-[60%] min-w-[200px]">Name</TableHead>
             <TableHead className="w-[200px] min-w-[200px]">Enabled</TableHead>
             <TableHead className="w-[150px] min-w-[150px] text-center">
-              Action
+              Actions
             </TableHead>
           </TableRow>
         </TableHeader>

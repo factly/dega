@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../types";
-import { Toaster, toast } from "sonner"; // Import your preferred toast library
+import { Toaster, toast } from "sonner";
 
 export const Notifications: React.FC = () => {
   const notification = useSelector((state: RootState) => state.notifications);

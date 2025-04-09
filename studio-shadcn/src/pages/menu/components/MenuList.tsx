@@ -140,7 +140,7 @@ const MenuList: React.FC<MenuListProps> = ({
                     <ChevronsUpDown className="ml-1 h-3 w-3" />
                   </div>
                 </TableHead>
-                <TableHead className="w-[150px] text-center">Action</TableHead>
+                <TableHead className="w-[150px] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

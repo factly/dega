@@ -127,8 +127,6 @@ function MediumList({ data, actions = [] }: MediumListProps) {
           contentType="media"
           title="No media items found"
           description="Your media library is empty"
-          actionText="Upload Media"
-          actionLink="/media/upload"
           isMobile={isMobile}
         />
       )}
