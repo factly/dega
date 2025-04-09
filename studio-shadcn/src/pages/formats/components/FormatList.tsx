@@ -130,7 +130,7 @@ function FormatList({
       ) : hasFormatsData ? (
         <div className="rounded-md">
           <Table>
-            <TableHeader className="text-[13px]">
+            <TableHeader className="w-[45%] text-[13px]">
               <TableRow>
                 <TableHead className={isMobile ? "w-full" : "w-[200px]"}>
                   <div
@@ -142,9 +142,9 @@ function FormatList({
                   </div>
                 </TableHead>
                 {!isMobile && (
-                  <TableHead className="w-[400px]">Description</TableHead>
+                  <TableHead className="w-[45%]">Description</TableHead>
                 )}
-                <TableHead className="w-[150px] text-center">Action</TableHead>
+                <TableHead className="w-[10%] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

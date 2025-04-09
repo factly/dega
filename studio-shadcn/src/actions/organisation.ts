@@ -15,6 +15,19 @@ interface SearchResponse {
   result: Member[];
 }
 
+interface OrganisationResult {
+  result?: any[];
+}
+
+// User information interface for getRole function
+interface UserInfo {
+  [key: string]: {
+    [role: string]: {
+      [orgId: string]: boolean;
+    };
+  };
+}
+
 export const searchMembers = async (): Promise<SearchResponse> => {
   const response = await fetch(
     `${
@@ -61,4 +74,45 @@ export const removeMember = async (userId: string): Promise<Response> => {
   }
 
   return response;
+};
+
+export const getOrganisations = (): Promise<any[]> => {
+  return fetch(
+    `${
+      import.meta.env.VITE_ZITADEL_AUTHORITY
+    }/auth/v1/global/projectorgs/_search`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("sessionToken")}`,
+      },
+      credentials: "include",
+    }
+  )
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json() as Promise<OrganisationResult>;
+      } else {
+        throw response;
+      }
+    })
+    .then((data) => {
+      return data.result || [];
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const getRole = (orgId: string, userInfo: UserInfo): string => {
+  const roleKey = `urn:zitadel:iam:org:project:${
+    import.meta.env.VITE_ZITADEL_PROJECT_ID
+  }:roles`;
+
+  const roles = userInfo[roleKey];
+
+  if (roles?.["admin"]?.[orgId]) return "admin";
+  if (roles?.["member"]?.[orgId]) return "member";
+  return "";
 };

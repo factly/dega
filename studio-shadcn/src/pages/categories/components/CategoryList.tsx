@@ -132,7 +132,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
       {hasCategoriesData ? (
         <div className="rounded-md">
           <Table>
-            <TableHeader className="w-1/2 text-[13px]">
+            <TableHeader className="w-[40%] text-[13px]">
               <TableRow>
                 <TableHead className="w-2/5">
                   <div
@@ -143,9 +143,9 @@ const CategoryList: React.FC<CategoryListProps> = ({
                     <ChevronsUpDown className="ml-1 h-3 w-3" />
                   </div>
                 </TableHead>
-                <TableHead className="w-2/5">Slug</TableHead>
-                <TableHead className="w-1/5">Parent Category</TableHead>
-                <TableHead className="w-[100px] text-center">Action</TableHead>
+                <TableHead className="w-[25%]">Slug</TableHead>
+                <TableHead className="w-[25%]">Parent Category</TableHead>
+                <TableHead className="w-[10%] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

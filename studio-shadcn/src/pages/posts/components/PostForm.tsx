@@ -198,151 +198,159 @@ function PostForm({
 
   return (
     <>
-      <Form {...form}>
-        <form
-          ref={formRef}
-          onSubmit={form.handleSubmit((values) => onSave(values))}
-          onChange={() => {
-            setShouldBlockNavigation(true);
-            setValueChange(true);
-          }}
-          className="w-full max-w-full edit-form"
-        >
-          <div className="space-y-4 relative">
-            <div className="flex justify-end mb-4">
-              <div className="space-x-2 flex items-center">
-                {data.id && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={createTemplate}
-                  >
-                    Create Template
-                  </Button>
-                )}
-
-                <DropdownMenu>
-                  <div className="flex">
+      <div
+        className={`transition-all duration-300 ${
+          activePanel ? "blur-sm pointer-events-none" : ""
+        }`}
+      >
+        <Form {...form}>
+          <form
+            ref={formRef}
+            onSubmit={form.handleSubmit((values) => onSave(values))}
+            onChange={() => {
+              setShouldBlockNavigation(true);
+              setValueChange(true);
+            }}
+            className="w-full max-w-full edit-form"
+          >
+            <div className="space-y-4 relative">
+              <div className="flex justify-end mb-4">
+                <div className="space-x-2 flex items-center">
+                  {data.id && (
                     <Button
-                      className="rounded-r-none"
-                      disabled={!valueChange}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const newStatus = "publish";
-                        setStatus(newStatus);
-                        form.handleSubmit((values) =>
-                          onSave(values, newStatus)
-                        )();
-                      }}
+                      type="button"
+                      variant="outline"
+                      onClick={createTemplate}
                     >
-                      <span className="w-24 text-center">
-                        {data.id && status === "publish" ? "Update" : "Publish"}
-                      </span>
+                      Create Template
                     </Button>
-
-                    <DropdownMenuTrigger asChild>
-                      <Button className="rounded-l-none border-l px-2">
-                        <ChevronDown className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                  </div>
-
-                  <DropdownMenuContent>
-                    <DropdownMenuItem
-                      disabled={!valueChange}
-                      onClick={() => {
-                        const newStatus = "draft";
-                        setStatus(newStatus);
-                        form.handleSubmit((values) =>
-                          onSave(values, newStatus)
-                        )();
-                      }}
-                    >
-                      Save Draft
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      disabled={!valueChange}
-                      onClick={() => {
-                        const newStatus = "ready";
-                        setStatus(newStatus);
-                        form.handleSubmit((values) =>
-                          onSave(values, newStatus)
-                        )();
-                      }}
-                    >
-                      Ready to Publish
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      disabled={!valueChange}
-                      onClick={() => {
-                        const newStatus = "future";
-                        setStatus(newStatus);
-                        form.handleSubmit((values) =>
-                          onSave(values, newStatus)
-                        )();
-                      }}
-                    >
-                      Future Publish
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                {/* Settings button */}
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActivePanel("main");
-                  }}
-                  type="button"
-                >
-                  <PanelRightDashed className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1">
-              <div className="mx-auto w-full lg:w-2/3 xl:w-1/2">
-                <FormField
-                  control={form.control}
-                  name="title"
-                  rules={{
-                    required: "Please input the title!",
-                    maxLength: {
-                      value: 500,
-                      message: "Title must be maximum 500 characters.",
-                    },
-                  }}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          placeholder={`Add title for the ${
-                            page ? "page" : "post"
-                          }`}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            onTitleChange(e.target.value);
-                          }}
-                          className="text-4xl font-bold text-center resize-none border-none"
-                          style={{ minHeight: "80px" }}
-                        />
-                      </FormControl>
-                    </FormItem>
                   )}
-                />
 
-                {/* Status badge */}
-                <div className="flex justify-center mt-4">
-                  {renderStatusBadge(status)}
+                  <DropdownMenu>
+                    <div className="flex">
+                      <Button
+                        className="rounded-r-none"
+                        disabled={!valueChange}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const newStatus = "publish";
+                          setStatus(newStatus);
+                          form.handleSubmit((values) =>
+                            onSave(values, newStatus)
+                          )();
+                        }}
+                      >
+                        <span className="w-24 text-center">
+                          {data.id && status === "publish"
+                            ? "Update"
+                            : "Publish"}
+                        </span>
+                      </Button>
+
+                      <DropdownMenuTrigger asChild>
+                        <Button className="rounded-l-none border-l px-2">
+                          <ChevronDown className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                    </div>
+
+                    <DropdownMenuContent>
+                      <DropdownMenuItem
+                        disabled={!valueChange}
+                        onClick={() => {
+                          const newStatus = "draft";
+                          setStatus(newStatus);
+                          form.handleSubmit((values) =>
+                            onSave(values, newStatus)
+                          )();
+                        }}
+                      >
+                        Save Draft
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        disabled={!valueChange}
+                        onClick={() => {
+                          const newStatus = "ready";
+                          setStatus(newStatus);
+                          form.handleSubmit((values) =>
+                            onSave(values, newStatus)
+                          )();
+                        }}
+                      >
+                        Ready to Publish
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        disabled={!valueChange}
+                        onClick={() => {
+                          const newStatus = "future";
+                          setStatus(newStatus);
+                          form.handleSubmit((values) =>
+                            onSave(values, newStatus)
+                          )();
+                        }}
+                      >
+                        Future Publish
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
+                  {/* Settings button */}
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActivePanel("main");
+                    }}
+                    type="button"
+                  >
+                    <PanelRightDashed className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1">
+                <div className="mx-auto w-full lg:w-2/3 xl:w-1/2">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    rules={{
+                      required: "Please input the title!",
+                      maxLength: {
+                        value: 500,
+                        message: "Title must be maximum 500 characters.",
+                      },
+                    }}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            placeholder={`Add title for the ${
+                              page ? "page" : "post"
+                            }`}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              onTitleChange(e.target.value);
+                            }}
+                            className="text-4xl font-bold text-center resize-none border-none"
+                            style={{ minHeight: "80px" }}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Status badge */}
+                  <div className="flex justify-center mt-4">
+                    {renderStatusBadge(status)}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
-      </Form>
+          </form>
+        </Form>
+      </div>
 
       {/* Side Panel Component */}
       {activePanel && (

@@ -210,9 +210,9 @@ function PageList({
             <TableHeader className="text-[13px]">
               <TableRow>
                 <TableHead className="min-w-[250px] w-[40%]">Title</TableHead>
-                <TableHead className="w-[15%]">Status</TableHead>
-                <TableHead className="w-[25%]">Last Modified</TableHead>
-                <TableHead className="w-[20%] text-center">Actions</TableHead>
+                <TableHead className="w-[20%]">Status</TableHead>
+                <TableHead className="w-[30%]">Last Modified</TableHead>
+                <TableHead className="w-[10%] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

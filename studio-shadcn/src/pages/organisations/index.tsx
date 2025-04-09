@@ -248,7 +248,9 @@ function Organisations() {
                 <TableHead className="w-[30%] text-[13px]">Name</TableHead>
                 <TableHead className="w-[40%] text-[13px]">Email</TableHead>
                 <TableHead className="w-[20%] text-[13px]">Role</TableHead>
-                <TableHead className="w-[10%] text-[13px]">Actions</TableHead>
+                <TableHead className="w-[10%] text-[13px] text-center">
+                  Actions
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -257,7 +259,7 @@ function Organisations() {
                   <TableCell>{member.displayName || "---"}</TableCell>
                   <TableCell>{member.email || "---"}</TableCell>
                   <TableCell>{member.roles?.join(", ") || "---"}</TableCell>
-                  <TableCell>
+                  <TableCell className="text-center">
                     <Button
                       variant="destructive"
                       size="sm"

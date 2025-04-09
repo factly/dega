@@ -126,11 +126,7 @@ const RatingList: React.FC<RatingListProps> = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead
-                className={`min-w-[200px] text-[13px] ${
-                  isMobile ? "w-2/5" : ""
-                }`}
-              >
+              <TableHead className="w-[40%] text-[13px]">
                 <div
                   className="flex items-center cursor-pointer"
                   onClick={onSortToggle}
@@ -139,26 +135,10 @@ const RatingList: React.FC<RatingListProps> = ({
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
-              <TableHead
-                className={`${
-                  isMobile ? "w-2/5" : "min-w-[250px]"
-                } text-[13px]`}
-              >
-                Preview
-              </TableHead>
-              <TableHead
-                className={`min-w-[100px] text-[13px] ${
-                  isMobile ? "w-1/5" : ""
-                }`}
-              >
-                Value
-              </TableHead>
-              <TableHead
-                className={`text-center text-[13px] ${
-                  isMobile ? "w-[80px]" : "min-w-[100px]"
-                }`}
-              >
-                Action
+              <TableHead className="w-[25%] text-[13px]">Preview</TableHead>
+              <TableHead className="w-[25%] text-[13px]">Value</TableHead>
+              <TableHead className="w-[10%] text-center text-[13px]">
+                Actions
               </TableHead>
             </TableRow>
           </TableHeader>

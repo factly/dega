@@ -1,10 +1,8 @@
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { ADD_SESSION, SET_SESSIONS_LOADING } from "../constants/session";
-import { getUserInfo } from "../utils/zitadel";
 import {
   SessionData,
-  UserInfoResponse,
   AddSessionAction,
   SetLoadingAction,
   SessionActionTypes,
@@ -17,7 +15,45 @@ export interface GetSessionResponse {
   noToken?: boolean;
 }
 
+export interface UserInfoResponse {
+  data?: any;
+  error?: string;
+}
+
 // Action creators
+export const getUserInfo = async (): Promise<UserInfoResponse> => {
+  try {
+    const token = localStorage.getItem("sessionToken");
+    if (!token) {
+      return { error: "No session token found" };
+    }
+
+    const response = await fetch(
+      `${import.meta.env.VITE_ZITADEL_AUTHORITY}/oidc/v1/userinfo`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      }
+    );
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return { data };
+    }
+
+    return { error: `Request failed with status: ${response.status}` };
+  } catch (error) {
+    console.error("UserInfo error:", error);
+    return {
+      error:
+        error instanceof Error ? error.message : "Error fetching user info",
+    };
+  }
+};
+
 export const getSession = (): ThunkAction<
   Promise<GetSessionResponse>,
   RootState,

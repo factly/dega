@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { pageStatusItems } from "@/components/statusBadge/index";
+import { tabsItems } from "@/components/statusBadge/index";
 import { FilterParams } from "@/pages/pages/types";
 
 export interface StatusTabsProps {
@@ -24,8 +24,6 @@ const StatusTabs: React.FC<StatusTabsProps> = ({
   handleStatusChange,
   children,
   isMobile,
-  form,
-  onSave,
 }) => {
   return (
     <Tabs
@@ -36,7 +34,7 @@ const StatusTabs: React.FC<StatusTabsProps> = ({
       {!isMobile ? (
         <div className="flex items-center">
           <TabsList className="grid grid-cols-5 flex-1">
-            {pageStatusItems.map((item) => (
+            {tabsItems.map((item) => (
               <TabsTrigger key={item.value} value={item.value}>
                 {item.label}
               </TabsTrigger>
@@ -54,7 +52,7 @@ const StatusTabs: React.FC<StatusTabsProps> = ({
               <SelectValue placeholder={status} />
             </SelectTrigger>
             <SelectContent>
-              {pageStatusItems.map((item) => (
+              {tabsItems.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.label}
                 </SelectItem>

@@ -148,6 +148,9 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     data.claims && data.claims.length > 0 ? data.claim_order || [] : []
   );
 
+  // Track when any panel is open to apply blur effect
+  const isPanelOpen = activePanel !== null || claimPopoverOpen;
+
   // Redux selectors
   const { details, loading } = useSelector((state: any) => ({
     details: state.claims.details,
@@ -410,7 +413,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
   };
 
   return (
-    <>
+    <div className="relative">
       {/* Schema Modal */}
       <Dialog open={schemaModalOpen} onOpenChange={setSchemaModalOpen}>
         <DialogContent>
@@ -475,190 +478,197 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
         />
       )}
 
-      {/* Main Form */}
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSave)}
-          onChange={() => setValueChange(true)}
-          className="edit-form space-y-6"
-        >
-          {/* Header with Actions */}
-          <div className="flex justify-between items-center space-x-2">
-            {/* Status Badge - Move it to the left */}
-            <div className="flex justify-start">
-              {renderStatusBadge(status)}
-            </div>
+      {/* Main Form with blur effect when panel is open */}
+      <div
+        className={`transition-all duration-300 ${
+          isPanelOpen ? "filter blur-sm pointer-events-none" : ""
+        }`}
+      >
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSave)}
+            onChange={() => setValueChange(true)}
+            className="edit-form space-y-6"
+          >
+            {/* Header with Actions */}
+            <div className="flex justify-between items-center space-x-2">
+              {/* Status Badge - Move it to the left */}
+              <div className="flex justify-start">
+                {renderStatusBadge(status)}
+              </div>
 
-            <div className="flex space-x-2">
-              {data.id && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={createTemplate}
-                >
-                  Create Template
-                </Button>
-              )}
-              <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setActivePanel("main");
-                }}
-              >
-                <PanelRightDashed className="h-4 w-4" />
-              </Button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+              <div className="flex space-x-2">
+                {data.id && (
                   <Button
                     type="button"
                     variant="outline"
-                    disabled={!valueChange}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setStatus(status === "ready" ? "ready" : "draft");
-                      form.handleSubmit(onSave)(e);
-                    }}
+                    onClick={createTemplate}
                   >
-                    Save
+                    Create Template
                   </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setReadyFlag()}>
-                    <div className="flex items-center justify-between w-full">
-                      <span>Ready to Publish</span>
-                      <Switch
-                        checked={status === "ready"}
-                        onCheckedChange={setReadyFlag}
-                      />
-                    </div>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <Button
-                type="button"
-                className="bg-[#DCEFEB] text-normal"
-                onClick={(e) => {
-                  e.preventDefault();
+                )}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setActivePanel("main");
+                  }}
+                >
+                  <PanelRightDashed className="h-4 w-4" />
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={!valueChange}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setStatus(status === "ready" ? "ready" : "draft");
+                        form.handleSubmit(onSave)(e);
+                      }}
+                    >
+                      Save
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setReadyFlag()}>
+                      <div className="flex items-center justify-between w-full">
+                        <span>Ready to Publish</span>
+                        <Switch
+                          checked={status === "ready"}
+                          onCheckedChange={setReadyFlag}
+                        />
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Button
+                  type="button"
+                  className="bg-[#DCEFEB] text-normal"
+                  onClick={(e) => {
+                    e.preventDefault();
 
-                  // Basic check for required fields
-                  const currentValues = form.getValues();
+                    // Basic check for required fields
+                    const currentValues = form.getValues();
 
-                  if (!currentValues.title || !currentValues.slug) {
-                    dispatch(
-                      addErrorNotification(
-                        "Title and slug are required fields."
-                      )
-                    );
-                    return;
-                  }
-
-                  // Check for authors before attempting to publish
-                  const authors = currentValues.authors || [];
-                  if (authors.length === 0) {
-                    dispatch(
-                      addErrorNotification(
-                        "At least one author must be assigned before publishing."
-                      )
-                    );
-                    return;
-                  }
-
-                  // Bypass form validation and directly prepare publish data
-                  setStatus("publish");
-
-                  // Manually prepare the data instead of using form.handleSubmit
-                  const processedValues = { ...currentValues };
-
-                  // Format the data correctly
-                  if (processedValues.meta_fields) {
-                    processedValues.meta_fields = getJsonValue(
-                      processedValues.meta_fields
-                    );
-                  }
-
-                  processedValues.category_ids =
-                    processedValues.categories || [];
-                  processedValues.tag_ids = processedValues.tags || [];
-                  processedValues.format_id = format.id;
-                  processedValues.author_ids = processedValues.authors || [];
-                  processedValues.claim_ids = processedValues.claims
-                    ? claimOrder
-                    : [];
-                  processedValues.claim_order = processedValues.claim_ids;
-                  processedValues.status = "publish";
-
-                  // Format publish date
-                  processedValues.published_date =
-                    processedValues.published_date
-                      ? dayjs(processedValues.published_date).format(
-                          "YYYY-MM-DDTHH:mm:ssZ"
+                    if (!currentValues.title || !currentValues.slug) {
+                      dispatch(
+                        addErrorNotification(
+                          "Title and slug are required fields."
                         )
-                      : getCurrentDate();
+                      );
+                      return;
+                    }
 
-                  console.log("Publishing with values:", processedValues);
+                    // Check for authors before attempting to publish
+                    const authors = currentValues.authors || [];
+                    if (authors.length === 0) {
+                      dispatch(
+                        addErrorNotification(
+                          "At least one author must be assigned before publishing."
+                        )
+                      );
+                      return;
+                    }
 
-                  // Directly call onCreate
-                  onCreate(processedValues);
-                  setValueChange(false);
-                }}
-              >
-                {data?.id && status === "publish"
-                  ? "Update Fact-Check"
-                  : "Publish Fact-Check"}
-              </Button>
-            </div>
-          </div>
+                    // Bypass form validation and directly prepare publish data
+                    setStatus("publish");
 
-          {/* Main Content Area */}
-          <div className="max-w-4xl mx-auto">
-            {/* Title */}
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <Textarea
-                    {...field}
-                    className="border text-4xl font-bold text-start resize-none"
-                    placeholder="Add title for the fact-check"
-                    onChange={(e) => {
-                      field.onChange(e);
-                      onTitleChange(e.target.value);
-                    }}
-                    rows={2}
-                  />
-                </FormItem>
-              )}
-            />
+                    // Manually prepare the data instead of using form.handleSubmit
+                    const processedValues = { ...currentValues };
 
-            {/* Last Updated */}
-            {data?.updated_at && (
-              <p className="text-lg text-muted-foreground text-center">
-                Last updated on: {getDatefromStringWithoutDay(data.updated_at)}
-              </p>
-            )}
+                    // Format the data correctly
+                    if (processedValues.meta_fields) {
+                      processedValues.meta_fields = getJsonValue(
+                        processedValues.meta_fields
+                      );
+                    }
 
-            {/* Claims List */}
-            {form.watch("claims")?.length > 0 && !loading && (
-              <div className="my-4">
-                <ClaimList
-                  ids={form.getValues("claims")}
-                  setClaimID={setClaimID}
-                  showModal={() => setClaimPopoverOpen(true)}
-                  details={details}
-                  claimOrder={claimOrder}
-                  setClaimOrder={setClaimOrder}
-                />
+                    processedValues.category_ids =
+                      processedValues.categories || [];
+                    processedValues.tag_ids = processedValues.tags || [];
+                    processedValues.format_id = format.id;
+                    processedValues.author_ids = processedValues.authors || [];
+                    processedValues.claim_ids = processedValues.claims
+                      ? claimOrder
+                      : [];
+                    processedValues.claim_order = processedValues.claim_ids;
+                    processedValues.status = "publish";
+
+                    // Format publish date
+                    processedValues.published_date =
+                      processedValues.published_date
+                        ? dayjs(processedValues.published_date).format(
+                            "YYYY-MM-DDTHH:mm:ssZ"
+                          )
+                        : getCurrentDate();
+
+                    console.log("Publishing with values:", processedValues);
+
+                    // Directly call onCreate
+                    onCreate(processedValues);
+                    setValueChange(false);
+                  }}
+                >
+                  {data?.id && status === "publish"
+                    ? "Update Fact-Check"
+                    : "Publish Fact-Check"}
+                </Button>
               </div>
-            )}
-          </div>
-        </form>
-      </Form>
-    </>
+            </div>
+
+            {/* Main Content Area */}
+            <div className="max-w-4xl mx-auto">
+              {/* Title */}
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <Textarea
+                      {...field}
+                      className="border text-4xl font-bold text-start resize-none"
+                      placeholder="Add title for the fact-check"
+                      onChange={(e) => {
+                        field.onChange(e);
+                        onTitleChange(e.target.value);
+                      }}
+                      rows={2}
+                    />
+                  </FormItem>
+                )}
+              />
+
+              {/* Last Updated */}
+              {data?.updated_at && (
+                <p className="text-lg text-muted-foreground text-center">
+                  Last updated on:{" "}
+                  {getDatefromStringWithoutDay(data.updated_at)}
+                </p>
+              )}
+
+              {/* Claims List */}
+              {form.watch("claims")?.length > 0 && !loading && (
+                <div className="my-4">
+                  <ClaimList
+                    ids={form.getValues("claims")}
+                    setClaimID={setClaimID}
+                    showModal={() => setClaimPopoverOpen(true)}
+                    details={details}
+                    claimOrder={claimOrder}
+                    setClaimOrder={setClaimOrder}
+                  />
+                </div>
+              )}
+            </div>
+          </form>
+        </Form>
+      </div>
+    </div>
   );
 };
 

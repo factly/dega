@@ -7,8 +7,13 @@ export const statusItems = [
   { value: "draft", label: "DRAFT", icon: AlertCircle, color: "gray" },
 ];
 
-// Dropdown/Select status items with "All" option included
-export const pageStatusItems = [{ value: "all", label: "All" }, ...statusItems];
+export const tabsItems = [
+  { value: "all", label: "All" },
+  { value: "publish", label: "Published" },
+  { value: "future", label: "Future Publish" },
+  { value: "ready", label: "Ready to Publish" },
+  { value: "draft", label: "Drafts" },
+];
 
 // Consistent status badge renderer for use across components
 export const renderStatusBadge = (status: string | undefined) => {

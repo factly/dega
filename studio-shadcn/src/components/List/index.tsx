@@ -257,9 +257,9 @@ function PostList({
               <TableRow>
                 <TableHead className="min-w-[250px] w-[30%]">Title</TableHead>
                 <TableHead className="w-[15%]">Author</TableHead>
-                <TableHead className="w-[10%]">Status</TableHead>
-                <TableHead className="w-[25%]">Published Date</TableHead>
-                <TableHead className="w-[20%] text-center">Actions</TableHead>
+                <TableHead className="w-[15%]">Status</TableHead>
+                <TableHead className="w-[30%]">Published Date</TableHead>
+                <TableHead className="w-[10%] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -305,8 +305,8 @@ function PostList({
                   </div>
                 </TableHead>
                 <TableHead className="w-[15%] text-[13px]">Author</TableHead>
-                <TableHead className="w-[10%] text-[13px]">Status</TableHead>
-                <TableHead className="w-[25%] text-[13px]">
+                <TableHead className="w-[15%] text-[13px]">Status</TableHead>
+                <TableHead className="w-[30%] text-[13px]">
                   <div
                     className="flex items-center cursor-pointer"
                     onClick={handleSortByDateToggle}
@@ -315,7 +315,7 @@ function PostList({
                     <ChevronsUpDown className="ml-1 h-3 w-3" />
                   </div>
                 </TableHead>
-                <TableHead className="w-[20%] text-center text-[13px]">
+                <TableHead className="w-[10%] text-center text-[13px]">
                   Actions
                 </TableHead>
               </TableRow>

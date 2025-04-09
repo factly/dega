@@ -70,13 +70,11 @@ export default function TokenList({
         <Table>
           <TableHeader className="text-[13px]">
             <TableRow>
-              <TableHead className="w-[30%]">Name</TableHead>
+              <TableHead className="w-[45%]">Name</TableHead>
               {!isMobile && (
-                <TableHead className="w-[40%]">Description</TableHead>
+                <TableHead className="w-[45%]">Description</TableHead>
               )}
-              <TableHead className={isMobile ? "text-right" : "text-center"}>
-                Action
-              </TableHead>
+              <TableHead>Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -93,12 +91,12 @@ export default function TokenList({
                   </div>
                 </TableCell>
                 {!isMobile && <TableCell>{token.description}</TableCell>}
-                <TableCell className={isMobile ? "text-right" : "text-center"}>
+                <TableCell>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
                         variant="destructive"
-                        size={isMobile ? "sm" : "sm"}
+                        size="sm"
                         className={isMobile ? "h-8 px-3" : ""}
                       >
                         Revoke

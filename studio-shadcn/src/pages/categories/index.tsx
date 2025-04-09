@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import deepEqual from "deep-equal";
@@ -14,6 +13,7 @@ import Pagination from "../../components/Pagination";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+import SecuredButton from "@/components/SecuredButton";
 
 interface Category {
   id: string;
@@ -151,6 +151,11 @@ function Categories() {
     }
   }, [showSearch]);
 
+  // Handle navigation to create category page
+  const handleCreateCategory = () => {
+    window.location.href = "/categories/create";
+  };
+
   const pageSize = filters.limit || 10;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
@@ -216,18 +221,26 @@ function Categories() {
               </Button>
             )}
 
-            <Link to="/categories/create">
-              {isMobile ? (
-                <Button size="icon" className="h-9 w-9">
-                  <PlusCircle className="h-5 w-5" />
-                </Button>
-              ) : (
-                <Button size="lg" className="flex items-center gap-2 py-2">
-                  <PlusCircle className="h-4 w-4" />
-                  Create category
-                </Button>
-              )}
-            </Link>
+            {isMobile ? (
+              <SecuredButton 
+                className="h-9 w-9"
+                size="icon"
+                onClick={handleCreateCategory}
+                unauthorizedMessage="You need admin privileges to create categories."
+              >
+                <PlusCircle className="h-5 w-5" />
+              </SecuredButton>
+            ) : (
+              <SecuredButton 
+                className="flex items-center gap-2 py-2"
+                size="lg"
+                onClick={handleCreateCategory}
+                unauthorizedMessage="You need admin privileges to create categories."
+              >
+                <PlusCircle className="h-4 w-4" />
+                Create category
+              </SecuredButton>
+            )}
           </div>
         </div>
 

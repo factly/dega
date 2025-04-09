@@ -106,7 +106,7 @@ export default function ViewPolicy(): React.ReactElement {
             <TableHeader>
               <TableRow>
                 <TableHead>Resource</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -127,7 +127,7 @@ function TagList({ fetchTags, data, onSortToggle, isMobile }: TagListProps) {
                   </div>
                 </TableHead>
                 <TableHead className="w-2/5">Slug</TableHead>
-                <TableHead className="w-[150px] text-center">Action</TableHead>
+                <TableHead className="w-[150px] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

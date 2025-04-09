@@ -13,11 +13,6 @@ interface TokenResponse {
   error?: string;
 }
 
-interface UserInfoResponse {
-  data?: any;
-  error?: string;
-}
-
 export const login = async (): Promise<LoginResponse> => {
   try {
     const d = await getOpenIDConfiguration();
@@ -139,37 +134,6 @@ export const getToken = async (
     console.error("Token error:", error);
     return {
       error: error instanceof Error ? error.message : "Error fetching token",
-    };
-  }
-};
-
-export const getUserInfo = async (): Promise<UserInfoResponse> => {
-  try {
-    const token = localStorage.getItem("sessionToken");
-    if (!token) {
-      return { error: "No session token found" };
-    }
-
-    const response = await fetch(
-      `${import.meta.env.VITE_ZITADEL_AUTHORITY}/oidc/v1/userinfo`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-      }
-    );
-
-    if (response.status === 200) {
-      const data = await response.json();
-      return { data };
-    }
-  } catch (error) {
-    console.error("UserInfo error:", error);
-    return {
-      error:
-        error instanceof Error ? error.message : "Error fetching user info",
     };
   }
 };
