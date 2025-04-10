@@ -1,79 +1,76 @@
-import React, { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import degaLogoLetters from "@/assets/dega.png";
+import React, { useEffect, useState } from "react";
 import Lock from "@/assets/lock.png";
+import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // Define props interface for UnauthorizedOverlay
 interface UnauthorizedOverlayProps {
-  onDismiss: () => void;
+  onClose?: () => void;
+  isOpen?: boolean;
   customMessage?: string;
 }
 
 const UnauthorizedOverlay: React.FC<UnauthorizedOverlayProps> = ({
-  onDismiss,
+  onClose = () => {},
+  isOpen = true,
   customMessage,
 }) => {
-  const handleGoBack = () => {
-    // Clear the error state
-    onDismiss();
-  };
+  const [isVisible, setIsVisible] = useState(isOpen);
 
-  const handleRequestAccess = () => {
-    window.open(
-      "https://forms.gle/kyJzcsDjMY5mKSqt9",
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
+  // Update visibility when isOpen prop changes
+  useEffect(() => {
+    setIsVisible(isOpen);
+  }, [isOpen]);
 
   useEffect(() => {
-    document.body.classList.add("modal-open");
+    if (isVisible) {
+      document.body.classList.add("modal-open");
+    }
+
     // Clean up function
     return () => {
       document.body.classList.remove("modal-open");
     };
-  }, []);
+  }, [isVisible]);
+
+  // Handler for closing the overlay
+  const handleClose = () => {
+    setIsVisible(false);
+    onClose();
+  };
+
+  // Don't render anything if not visible
+  if (!isVisible) return null;
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center">
       <div className="absolute inset-0 bg-white/30 backdrop-blur-sm" />
       <div className="fixed inset-0 bg-transparent pointer-events-none" />
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center space-y-6 text-center p-6 rounded-md -mt-40 bg-white/80 shadow-lg">
-        <div className="w-32 h-19">
-          <img src={degaLogoLetters} className="mx-auto mt-4" alt="Logo" />
+      <div className="relative z-10 flex flex-col items-center space-y-8 text-center p-10 rounded-lg -mt-40 bg-white/80 shadow-lg max-w-md w-full mx-auto">
+        {/* Close button */}
+        <Button
+          onClick={handleClose}
+          variant="outline"
+          size="sm"
+          className="absolute top-3 right-3 h-8 w-8 p-0"
+          aria-label="Close"
+        >
+          <X className="h-6 w-6" />
+        </Button>
+
+        <div className="rounded-full overflow-hidden w-24 h-24 bg-gray-100 flex items-center justify-center">
+          <img src={Lock} width={96} height={96} alt="Lock" />
         </div>
 
-        <div className="rounded-full overflow-hidden w-20 h-20 bg-gray-100 flex items-center justify-center">
-          <img src={Lock} width={80} height={80} alt="Lock" />
-        </div>
-
-        <h2 className="text-2xl font-semibold text-gray-800">
+        <h2 className="text-3xl font-semibold text-gray-800">
           Unauthorized Access
         </h2>
-        <div className="space-y-2">
-          {customMessage ? (
-            <p className="text-neutral-900">{customMessage}</p>
-          ) : (
-            <>
-              <p className="text-neutral-900">
-                Currently we are only allowing early access to our platform.
-              </p>
-              <p className="text-neutral-900">
-                If you want to get early access, please drop us a request.
-              </p>
-            </>
-          )}
-        </div>
 
-        <div className="flex w-full gap-4 mt-4">
-          <Button variant="outline" onClick={handleGoBack} className="w-1/2">
-            Go back
-          </Button>
-          <Button onClick={handleRequestAccess} className="w-1/2">
-            Request access
-          </Button>
-        </div>
+        {/* Subheading */}
+        <p className="text-lg text-gray-600 px-6">
+          {customMessage || "Please contact your administrator for access"}
+        </p>
       </div>
     </div>
   );

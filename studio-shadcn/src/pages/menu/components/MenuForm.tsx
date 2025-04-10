@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,15 +9,21 @@ import {
   FormMessage,
   Form,
 } from "@/components/ui/form";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import MenuField from "./MenuField";
-import Submenu from "./Submenu";
 import MonacoEditor from "../../../components/MonacoEditor";
 import getJsonValue from "../../../utils/getJsonValue";
 import { useNavigate } from "react-router-dom";
+import Submenu from "./Submenu";
+import MenuField from "./MenuField";
 
 // Define TypeScript interfaces
 interface MenuItem {
@@ -80,9 +86,13 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
     }
   }
 
+  // Initialize menu array with one default item if empty
+  if (!initialData.menu || initialData.menu.length === 0) {
+    initialData.menu = [{ name: "", title: "", url: "" }];
+  }
+
   const [valueChange, setValueChange] = useState(false);
   const [isMobileScreen, setIsMobileScreen] = useState(false);
-  const addMenu = useRef<() => void | null>(null);
 
   // Initialize form with react-hook-form
   const form = useForm<FormValues>({
@@ -140,139 +150,213 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
     onReset();
   };
 
-  // Set addMenu ref to append function
-  useEffect(() => {
-    if (append) {
-      addMenu.current = () => append({ name: "" });
-    }
-  }, [append]);
-
   return (
-    <div className="bg-background">
-      <div className="mb-4 px-4">
-        <h1 className="text-xl font-semibold text-gray-900">
+    <div className="bg-background px-2 md:px-0">
+      <div className="mb-4 px-2 md:px-4">
+        <h1 className="text-lg md:text-xl font-semibold text-gray-900">
           {data && data.id ? "Edit Menu" : "Create Menu"}
         </h1>
-        <div className="mt-2">
-          <p className="text-gray-600 text-[13px]">
-            Manage your website navigation by creating and organizing menu items
+        <div className="mt-1 md:mt-2">
+          <p className="text-gray-600 text-xs md:text-sm">
+            Set up a menu to help organize by utilizing the advanced options
+            provided below.
           </p>
         </div>
       </div>
 
       <div className="border-t border-gray-200 mb-4"></div>
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           onChange={() => setValueChange(true)}
+          className="px-2 md:px-0"
         >
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6">
-            <div className="md:col-span-6">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="md:col-span-6 flex items-end">
-              <Button
-                type="button"
-                onClick={() => {
-                  if (addMenu.current) addMenu.current();
-                }}
+          <div className="space-y-3 md:space-y-4">
+            {/* General Accordion */}
+            <Accordion
+              type="multiple"
+              defaultValue={["general"]}
+              className="w-full"
+            >
+              <AccordionItem
+                value="general"
+                className="rounded-md overflow-hidden mb-2"
               >
-                <PlusCircle className="h-4 w-4" /> Add menu
-              </Button>
-            </div>
-          </div>
+                <AccordionTrigger className="hover:no-underline px-3 md:px-4 py-2 md:py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white text-sm md:text-base">
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-sm md:text-base font-medium">
+                      General
+                    </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="py-2 md:py-3 bg-white px-3 md:px-4">
+                    <div className="space-y-4 md:space-y-6">
+                      {/* Name Field */}
+                      <div className="w-full md:w-2/3">
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm md:text-base font-medium">
+                                Name
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="Menu Name"
+                                  className="text-sm"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage className="text-xs" />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
 
-          <div className="w-full">
-            {fields.map((field, index) => (
-              <div
-                key={field.id}
-                className="bg-muted/40 mt-4 w-full p-4 rounded-md"
+                      {/* Meta Fields */}
+                      <div className="w-full md:w-2/3">
+                        <FormField
+                          control={form.control}
+                          name="meta_fields"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm md:text-base font-medium">
+                                Meta Fields
+                              </FormLabel>
+                              <FormControl>
+                                <MonacoEditor
+                                  language="json"
+                                  width={"100%"}
+                                  height={isMobileScreen ? 150 : 200}
+                                  value={field.value || ""}
+                                  onChange={field.onChange}
+                                />
+                              </FormControl>
+                              <FormMessage className="text-xs" />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            {/* Menu Sections Accordion */}
+            <Accordion
+              type="multiple"
+              defaultValue={["menu-sections"]}
+              className="w-full"
+            >
+              <AccordionItem
+                value="menu-sections"
+                className="rounded-md overflow-hidden mb-2"
               >
-                <div className="flex flex-col items-center gap-4 mb-4">
-                  <div className="w-1/2 ">
-                    <MenuField
-                      field={{
-                        name: index,
-                        fieldKey: index,
-                        key: index,
-                      }}
-                      formFieldPath={`menu.${index}`}
-                    />
-                    <div className="mt-4">
+                <AccordionTrigger className="hover:no-underline px-3 md:px-4 py-2 md:py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white text-sm md:text-base">
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-sm md:text-base font-medium">
+                      Menu Sections
+                    </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="py-2 md:py-3 bg-white px-3 md:px-4">
+                    {/* Menu Items */}
+                    <div className="space-y-3 md:space-y-4">
+                      {fields.map((field, index) => (
+                        <div key={field.id} className="space-y-2">
+                          <div className="border border-gray-200 rounded-md w-full md:w-2/3">
+                            <div>
+                              <MenuField
+                                field={{
+                                  name: index,
+                                  fieldKey: index,
+                                  key: index,
+                                }}
+                                formFieldPath={`menu.${index}`}
+                              />
+
+                              {/* Submenu Section */}
+                              <div className="mt-2 md:mt-4">
+                                <FormItem>
+                                  <FormLabel className="text-sm md:text-base font-medium ml-3 md:ml-4">
+                                    Submenu
+                                  </FormLabel>
+                                  <div className="px-3 md:px-4">
+                                    <Submenu
+                                      fieldKey={`menu.${index}`}
+                                      isMobileScreen={isMobileScreen}
+                                      depth={0}
+                                    />
+                                  </div>
+                                </FormItem>
+                              </div>
+
+                              {/* Remove Button */}
+                              <div className="p-3 md:p-4">
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  onClick={() => remove(index)}
+                                  className="text-red-500 text-xs md:text-sm w-full md:w-auto"
+                                  size={isMobileScreen ? "sm" : "default"}
+                                >
+                                  <MinusCircle className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
+                                  Remove Menu Item
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-3 md:mt-4 mb-3 md:mb-6 w-full md:w-2/3">
                       <Button
                         type="button"
+                        onClick={() => append({ name: "" })}
                         variant="outline"
-                        onClick={() => remove(index)}
+                        className="w-full py-3 md:py-6 text-xs md:text-sm border-2 border-gray-300 hover:border-gray-400 flex items-center justify-center"
                       >
-                        <MinusCircle className="h-4 w-4" /> Remove menu
+                        <PlusCircle className="h-4 w-4 md:h-5 md:w-5 mr-1 md:mr-2" />{" "}
+                        Add Menu Item
                       </Button>
                     </div>
                   </div>
-                </div>
-                <div className="ml-6">
-                  <Submenu
-                    fieldKey={`menu.${index}`}
-                    isMobileScreen={isMobileScreen}
-                  />
-                </div>
-              </div>
-            ))}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
 
-          <div className="mt-6">
-            <div className="md:w-2/3">
-              <FormField
-                control={form.control}
-                name="meta_fields"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Metafields</FormLabel>
-                    <FormControl>
-                      <MonacoEditor
-                        language="json"
-                        width={"100%"}
-                        value={field.value || ""}
-                        onChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+          {/* Form Actions */}
+          <div className="flex justify-start mt-4 md:mt-6 space-x-3 md:space-x-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleCancel}
+              className="px-3 md:px-6 text-xs md:text-sm py-1 md:py-2"
+              size={isMobileScreen ? "sm" : "default"}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              onClick={form.handleSubmit(onSubmit)}
+              disabled={!valueChange}
+              className={`text-xs md:text-sm py-1 md:py-2 ${
+                !valueChange ? "opacity-50" : ""
+              }`}
+              size={isMobileScreen ? "sm" : "default"}
+            >
+              {data && data.id ? "Save Changes" : "Save Changes"}
+            </Button>
           </div>
         </form>
       </Form>
-      <div className="flex justify-start mt-6 space-x-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={handleCancel}
-          className="px-6"
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          onClick={form.handleSubmit(onSubmit)}
-          disabled={!valueChange}
-          className={!valueChange ? "opacity-50" : ""}
-        >
-          {data && data.id ? "Update" : "Save"}
-        </Button>
-      </div>
     </div>
   );
 }

@@ -53,8 +53,8 @@ const SecuredButton: React.FC<SecuredButtonProps> = ({
 
       {showOverlay && (
         <UnauthorizedOverlay
-          onDismiss={() => setShowOverlay(false)}
-          customMessage={unauthorizedMessage}
+          onClose={() => setShowOverlay(false)}
+          isOpen={showOverlay}
         />
       )}
     </>

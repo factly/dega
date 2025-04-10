@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import React, { useRef } from "react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 
 interface FieldData {
@@ -17,13 +17,11 @@ interface FieldData {
 
 interface MenuFieldProps {
   field: FieldData;
-  formFieldPath?: string; // Add form field path for react-hook-form integration
+  formFieldPath?: string;
 }
 
 const MenuField: React.FC<MenuFieldProps> = ({ field, formFieldPath }) => {
-  const { register, watch } = useFormContext();
-  const [panelHeader, setPanelHeader] = useState<string>("Menu");
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const { control, watch } = useFormContext();
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   // Create full field paths for each input
@@ -37,67 +35,75 @@ const MenuField: React.FC<MenuFieldProps> = ({ field, formFieldPath }) => {
     ? `${formFieldPath}.url`
     : `menu.${field.name}.url`;
 
-  // Watch for changes to name field
-  const nameValue = watch(nameFieldPath);
-
-  // Update panel header when name changes
-  useEffect(() => {
-    if (nameValue) {
-      setPanelHeader(nameValue);
-    }
-  }, [nameValue]);
-
   return (
-    <Collapsible
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      className="min-w-56 max-w-96 bg-slate-100 rounded-md overflow-hidden"
-    >
-      <CollapsibleTrigger className="flex w-full items-center justify-between p-4 font-medium">
-        <span>{panelHeader || "Menu"}</span>
-        {isOpen ? (
-          <ChevronDown className="h-4 w-4" />
-        ) : (
-          <ChevronRight className="h-4 w-4" />
-        )}
-      </CollapsibleTrigger>
+    <div className="bg-white rounded-md overflow-hidden">
+      <div className="p-4 space-y-4 md:space-y-6">
+        {/* Navigation */}
+        <FormField
+          control={control}
+          name={nameFieldPath}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm md:text-base font-medium">
+                Navigation Label <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  ref={nameInputRef}
+                  placeholder="Enter Label"
+                  className="mt-1 text-sm"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-xs" />
+            </FormItem>
+          )}
+        />
 
-      <CollapsibleContent className="p-4 pt-0 space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor={`${nameFieldPath}`} className="text-sm font-medium">
-            Navigation Label <span className="text-red-500">*</span>
-          </Label>
-          <Input
-            id={`${nameFieldPath}`}
-            ref={nameInputRef}
-            placeholder="Enter Label"
-            {...register(nameFieldPath, { required: true })}
-          />
-        </div>
+        {/* Title */}
+        <FormField
+          control={control}
+          name={titleFieldPath}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm md:text-base font-medium">
+                Title Attribute
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter Title"
+                  className="mt-1 text-sm"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-xs" />
+            </FormItem>
+          )}
+        />
 
-        <div className="space-y-2">
-          <Label htmlFor={`${titleFieldPath}`} className="text-sm font-medium">
-            Title Attribute
-          </Label>
-          <Input
-            id={`${titleFieldPath}`}
-            placeholder="Enter Title"
-            {...register(titleFieldPath)}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor={`${urlFieldPath}`} className="text-sm font-medium">
-            URL
-          </Label>
-          <Input
-            id={`${urlFieldPath}`}
-            placeholder="Enter URL"
-            {...register(urlFieldPath)}
-          />
-        </div>
-      </CollapsibleContent>
-    </Collapsible>
+        {/* URL */}
+        <FormField
+          control={control}
+          name={urlFieldPath}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm md:text-base font-medium">
+                URL
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter URL"
+                  className="mt-1 text-sm"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-xs" />
+            </FormItem>
+          )}
+        />
+      </div>
+    </div>
   );
 };
 

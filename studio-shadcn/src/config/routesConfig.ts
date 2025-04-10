@@ -35,7 +35,7 @@ import EditCategory from "../pages/categories/EditCategory";
 
 //Post
 import Posts from "../pages/posts";
-import CreatePost from "../pages/posts/CreatePost";
+import CreatePost from "../pages/posts/createpost";
 import EditPost from "../pages/posts/EditPost";
 
 //Fact Checks
@@ -57,7 +57,6 @@ import EditClaim from "../pages/claims/EditClaim";
 
 // Users & Permissions
 import Users from "../pages/users";
-import PermissionList from "../pages/users/PermissionList";
 
 // Menu
 import Menu from "../pages/menu";
@@ -105,11 +104,9 @@ import Webhooks from "../pages/webhooks";
 import CreateWebhook from "../pages/webhooks/CreateWebhook";
 import EditWebhook from "../pages/webhooks/EditWebhook";
 
-// Import necessary components for the extractV6RouteObject function
+// Import necessary components
 import { BasicLayout } from "../layouts/basic";
 import Authwrapper from "../components/AuthWrapper";
-import ProtectedRoute from "../components/ProtectedRoute";
-import AdminRoute from "../components/AdminRoute";
 
 export interface Route {
   path: string;
@@ -691,16 +688,6 @@ export const routes = {
     Component: Users,
     title: "Users",
   },
-  usersPermission: {
-    path: "/settings/members/:id/permissions",
-    menuKey: "/members",
-    Component: PermissionList,
-    title: "Users Permission ",
-    permission: {
-      resource: "users",
-      action: "get",
-    },
-  },
   // Not Found route - add this at the end
   noMatch: {
     path: "*",
@@ -764,8 +751,7 @@ export function extractV6RouteObject(
   // Loop through the original routes object and convert each route to v6 format
   for (const routeKey in routes) {
     const route = routes[routeKey as keyof typeof routes];
-    const { path, Component, title, permission, isAdmin, isOwner, menuKey } =
-      route;
+    const { path, Component, menuKey, } = route;
 
     if (!Component) continue; // Skip routes without components
 
@@ -783,62 +769,6 @@ export function extractV6RouteObject(
         null,
         React.createElement(Component, { formats })
       );
-    } else if (permission) {
-      v6RouteElement = React.createElement(
-        Authwrapper,
-        null,
-        React.createElement(
-          BasicLayout,
-          { formats, setReloadFlag, reloadFlag },
-          // React.createElement(ProtectedRoute, {
-          //   component: Component,
-          //   permission,
-          //   formats,
-          //   setReloadFlag,
-          //   reloadFlag,
-          //   path,
-          //   title,
-          //   isAdmin,
-          //   isOwner,
-          //   menuKey,
-          // })
-          React.createElement(Component, {
-            formats,
-            setReloadFlag,
-            reloadFlag,
-            permission,
-            path,
-            title,
-            isAdmin,
-            isOwner,
-            menuKey,
-          })
-        )
-      );
-    } else if (isAdmin) {
-      v6RouteElement = React.createElement(
-        Authwrapper,
-        null,
-        React.createElement(
-          BasicLayout,
-          { formats, setReloadFlag, reloadFlag },
-          // React.createElement(AdminRoute, {
-          //   component: Component,
-          //   formats,
-          //   path,
-          //   title,
-          //   menuKey,
-          // })
-          React.createElement(Component, {
-            formats,
-            setReloadFlag,
-            reloadFlag,
-            path,
-            title,
-            menuKey,
-          })
-        )
-      );
     } else {
       v6RouteElement = React.createElement(
         Authwrapper,
@@ -850,6 +780,8 @@ export function extractV6RouteObject(
             formats,
             setReloadFlag,
             reloadFlag,
+            path,
+            menuKey,
           })
         )
       );
@@ -859,10 +791,7 @@ export function extractV6RouteObject(
     const v6Route: V6RouteObject = {
       path,
       element: v6RouteElement,
-      title,
-      ...(permission && { permission }),
-      ...(isAdmin && { isAdmin }),
-      ...(isOwner && { isOwner }),
+
     };
 
     // Add menuKey if it exists

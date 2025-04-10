@@ -226,7 +226,6 @@ function Categories() {
                 className="h-9 w-9"
                 size="icon"
                 onClick={handleCreateCategory}
-                unauthorizedMessage="You need admin privileges to create categories."
               >
                 <PlusCircle className="h-5 w-5" />
               </SecuredButton>
@@ -235,7 +234,6 @@ function Categories() {
                 className="flex items-center gap-2 py-2"
                 size="lg"
                 onClick={handleCreateCategory}
-                unauthorizedMessage="You need admin privileges to create categories."
               >
                 <PlusCircle className="h-4 w-4" />
                 Create category

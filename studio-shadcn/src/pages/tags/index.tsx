@@ -266,7 +266,6 @@ function Tags(): React.ReactElement {
                 className="h-9 w-9"
                 size="icon"
                 onClick={handleCreateTag}
-                unauthorizedMessage="You need admin privileges to create tags."
               >
                 <PlusCircle className="h-5 w-5" />
               </SecuredButton>
@@ -275,7 +274,6 @@ function Tags(): React.ReactElement {
                 className="flex items-center gap-2 py-2"
                 size="lg"
                 onClick={handleCreateTag}
-                unauthorizedMessage="You need admin privileges to create tags."
               >
                 <PlusCircle className="h-4 w-4" />
                 Create tag
