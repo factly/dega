@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { PlusCircle, X } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 
 // Custom components
 import FactCheckList from "../../components/List";

@@ -3,6 +3,7 @@ import { getToken } from "./index";
 import { getUserInfo } from "../../actions/session";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader";
+import { Button } from "@/components/ui/button";
 
 const Callback: FC = () => {
   const location = useLocation();
@@ -68,12 +69,12 @@ const Callback: FC = () => {
           Authentication Error
         </div>
         <p className="mt-2 text-center text-gray-700">{error}</p>
-        <button
+        <Button
           className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           onClick={() => navigate("/auth/login", { replace: true })}
         >
           Back to Login
-        </button>
+        </Button>
       </div>
     );
   }

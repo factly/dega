@@ -37,14 +37,13 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     title: "Home",
     menuKey: "/",
   });
-
-  // Add a ref to track if spaces have been fetched
-  const hasAttemptedSpacesFetch = useRef(false);
+  // Add local state to track if we've initiated a space fetch in this component instance
+  const [hasInitiatedFetch, setHasInitiatedFetch] = useState(false);
 
   // Get session and spaces state from Redux
   const session = useSelector((state: RootState) => state.session);
   const spaces = useSelector((state: RootState) => state.spaces);
-  const { selected, loading, orgs } = spaces;
+  const { selected, loading, orgs, hasAttemptedFetch } = spaces;
 
   // Get notification data from Redux
   const notification = useSelector((state: RootState) => state.notifications);
@@ -129,18 +128,20 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Modified space fetching logic to avoid infinite loading
   useEffect(() => {
+    // If session is ready and we haven't initiated a fetch yet
     if (
       session.details &&
-      !session.loading &&
       Object.keys(session.details).length > 0 &&
-      !hasAttemptedSpacesFetch.current &&
-      !loading
+      !hasInitiatedFetch
     ) {
-      hasAttemptedSpacesFetch.current = true;
+      // Mark that we've initiated a fetch
+      setHasInitiatedFetch(true);
+      // Dispatch the action to get spaces
       dispatch(getSpaces());
     }
-  }, [dispatch, session.details, session.loading, loading]);
+  }, [dispatch, session.details, hasInitiatedFetch]);
 
   const shouldHideSidebar = hiddenSidebarPaths.some((path) =>
     location.pathname.startsWith(path)
@@ -158,7 +159,20 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
   const isPublicPath = publicPaths.some((path) =>
     location.pathname.startsWith(path)
   );
-  const shouldRenderContent = isPublicPath || (!session.loading && !loading);
+  const shouldRenderContent =
+    isPublicPath || hasAttemptedFetch || hasInitiatedFetch;
+
+  // Add a timeout to handle cases where loading gets stuck
+  useEffect(() => {
+    // If loading persists for more than 5 seconds, force render the content
+    const timeoutId = setTimeout(() => {
+      if (!shouldRenderContent) {
+        setHasInitiatedFetch(true);
+      }
+    }, 5000);
+
+    return () => clearTimeout(timeoutId);
+  }, [shouldRenderContent]);
 
   return (
     <SidebarProvider>

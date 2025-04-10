@@ -88,7 +88,7 @@ const initialState: SpacesState = {
   selected: storedSpaceId,
   org_role: "",
   lastFetched: null,
-  hasAttemptedFetch: false,
+  hasAttemptedFetch: !!storedSpaceId,
 };
 
 export function spaces(
@@ -106,6 +106,7 @@ export function spaces(
         ...state,
         loading:
           action.payload === undefined ? false : (action.payload as boolean),
+        hasAttemptedFetch: state.hasAttemptedFetch,
       };
 
     case GET_SPACES_SUCCESS: {

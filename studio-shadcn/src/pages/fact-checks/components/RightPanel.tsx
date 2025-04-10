@@ -278,14 +278,14 @@ const RightPanel: React.FC<RightPanelProps> = ({
                   <Separator />
 
                   {/* SEO Button */}
-                  <button
+                  <Button
                     type="button"
                     className="flex items-center w-full text-left"
                     onClick={() => setActivePanel("meta")}
                   >
                     <FileSearch className="h-4 w-4 mr-2" />
                     <span className="font-medium">SEO</span>
-                  </button>
+                  </Button>
 
                   <Separator />
 

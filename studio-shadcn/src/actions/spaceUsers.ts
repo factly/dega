@@ -107,12 +107,6 @@ export const getSpaceUsers = (query: SpaceUserQuery) => {
               total: res.data.total || 0,
             })
           );
-
-          // Log success for debugging
-          console.log(
-            `Successfully fetched ${res.data.nodes.length} users for query`,
-            normalizedQuery
-          );
         } else {
           console.warn(
             "Received empty or invalid response from space users API",
@@ -139,7 +133,7 @@ export const updateSpaceUsers = (data: { ids: string[] }) => {
     return axios
       .put("/core/spaces/users", data)
       .then((response) => {
-        dispatch(addSuccessNotification("Users Added Successfully"));
+        dispatch(addSuccessNotification("User(s) Added Successfully"));
         const refreshParams = { page: 1, limit: 10 };
         return dispatch(getSpaceUsers(refreshParams));
       })
@@ -164,7 +158,7 @@ export const addSpaceUser = (
       .then((res) => {
         if (setUser) setUser(res.data.user);
         if (setShowModal) setShowModal(true);
-        dispatch(addSuccessNotification("Users Added Successfully"));
+        dispatch(addSuccessNotification("User(s) Added Successfully"));
         return res.data.user;
       })
       .catch((error: Error | AxiosError) => {

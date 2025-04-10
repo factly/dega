@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
@@ -46,10 +46,34 @@ function Posts({ formats }: PostsProps): React.ReactElement {
   const query = new URLSearchParams(search);
   const isMobile = useIsMobile();
   const isCollapsed = useSelector((state) => state.sidebar.collapsed);
+  const initialRenderRef = useRef(true);
 
   // State
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(!!query.get("q"));
+  const [loadingTimeout, setLoadingTimeout] = useState(false);
+  const timeoutRef = useRef<number | null>(null);
+
+  // Check localStorage for cached format on initial render only
+  // Use ref to avoid state updates during render
+  const hasCachedFormatRef = useRef(false);
+
+  useEffect(() => {
+    if (initialRenderRef.current) {
+      try {
+        const savedFormats = localStorage.getItem("cachedFormats");
+        if (savedFormats) {
+          const parsedFormats = JSON.parse(savedFormats);
+          if (parsedFormats.article) {
+            hasCachedFormatRef.current = true;
+          }
+        }
+      } catch (error) {
+        console.error("Error checking cached formats:", error);
+      }
+      initialRenderRef.current = false;
+    }
+  }, []);
 
   // Custom hooks for post functionality
   const {
@@ -88,6 +112,29 @@ function Posts({ formats }: PostsProps): React.ReactElement {
   useEffect(() => {
     fetchPosts();
   }, [search]);
+
+  // Set a timeout to prevent infinite loading
+  useEffect(() => {
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      window.clearTimeout(timeoutRef.current);
+    }
+
+    // If formats are loading, set a timeout to continue rendering anyway
+    if (formats.loading) {
+      timeoutRef.current = window.setTimeout(() => {
+        setLoadingTimeout(true);
+      }, 5000); // 5 seconds timeout
+    } else {
+      setLoadingTimeout(false);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [formats.loading]);
 
   const fetchPosts = () => {
     const params = getUrlParams(query, [
@@ -241,11 +288,22 @@ function Posts({ formats }: PostsProps): React.ReactElement {
     });
   };
 
-  // Loading state
-  if (formats.loading) return <Loader />;
+  // Continue rendering even if formats.loading is true but we've waited too long
+  // This prevents infinite loading screens
+  const shouldContinueRendering =
+    !formats.loading || loadingTimeout || hasCachedFormatRef.current;
 
-  // Format not found state
-  if (!formats.article) {
+  // Loading state - show for a maximum of 5 seconds
+  if (formats.loading && !loadingTimeout && !hasCachedFormatRef.current) {
+    return <Loader />;
+  }
+
+  // Format not found state - but only check if we're sure formats are loaded or timeout occurred
+  if (
+    shouldContinueRendering &&
+    !formats.article &&
+    !hasCachedFormatRef.current
+  ) {
     return (
       <FormatNotFound
         status="info"
