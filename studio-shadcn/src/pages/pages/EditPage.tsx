@@ -1,6 +1,7 @@
 import React from 'react';
 import PageEditForm from '../posts/components/PostForm';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import { Skeleton } from '@/components/ui/skeleton';
 import { updatePage, getPage } from '../../actions/pages';
 import { useParams } from 'react-router-dom';
@@ -9,10 +10,7 @@ import getUserPermission from '../../utils/getUserPermission';
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
 import { RootState } from '../../store/index';
-
-interface Format {
-  article: any; // Update with proper type when available
-}
+import { Page, Format } from "./types";
 
 interface EditPageProps {
   formats: {
@@ -20,24 +18,18 @@ interface EditPageProps {
   };
 }
 
-interface Page {
-  id: number | string;
-  title: string;
-  [key: string]: any; // For other page properties
-}
-
 interface Space {
   // Define your space interface structure
   [key: string]: any;
 }
 
-function EditPage({ formats }: EditPageProps): JSX.Element {
+function EditPage({ formats }: EditPageProps): React.ReactElement {
+  const dispatch = useAppDispatch();
   const history = useNavigation();
   const { id } = useParams<{ id: string }>();
-  const spaces = useSelector((state: RootState) => state.spaces) as Space[];
+  const spaces = useSelector((state: RootState) => state.spaces);
   const actions = getUserPermission({ resource: 'pages', action: 'get', spaces });
 
-  const dispatch = useDispatch();
 
   const { page, loading } = useSelector((state: RootState) => {
     return {
@@ -47,8 +39,8 @@ function EditPage({ formats }: EditPageProps): JSX.Element {
   });
 
   React.useEffect(() => {
-    if (id) {
-      dispatch(getPage(id));
+    if (id && !Number.isNaN(Number(id))) {
+      dispatch(getPage((Number(id))));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -68,7 +60,16 @@ function EditPage({ formats }: EditPageProps): JSX.Element {
   }
 
   const onUpdate = (values: Partial<Page>) => {
-    dispatch(updatePage({ ...page, ...values })).then(() => {
+    // Specify Promise<void> explicitly
+    const promisifiedDispatch = () => {
+      return new Promise<void>((resolve) => {
+        dispatch(updatePage({ ...page, ...values }));
+        // Now TypeScript knows this is a Promise that resolves with no value
+        resolve();
+      });
+    };
+
+    promisifiedDispatch().then(() => {
       history(`/pages/${id}/edit`);
     });
   };
@@ -79,7 +80,7 @@ function EditPage({ formats }: EditPageProps): JSX.Element {
       <PageEditForm
         data={page}
         onCreate={onUpdate}
-        actions={actions}
+        // actions={actions}
         format={formats.article}
         page={true}
       />

@@ -6,18 +6,28 @@ import {
     SET_PAGES_LOADING,
   } from '../constants/pages';
   import deepEqual from 'deep-equal';
-  
+
   // Define interfaces for the state and payload objects
-  interface Page {
-    id: string;
+  export interface Page {
+    id: number;
+    title: string;
+    slug: string;
+    status: "publish" | "draft" | "ready";
+    featured_medium_id?: number;
+    medium?: any;
+    published_date: string | null;
+    categories?: number[];
+    tags?: number[];
+    authors?: number[];
+    claims?: number[];
     [key: string]: any;
   }
-  
+
   interface PagesRequest {
     query: any;
     [key: string]: any;
   }
-  
+
   interface PagesState {
     req: PagesRequest[];
     details: {
@@ -25,32 +35,32 @@ import {
     };
     loading: boolean;
   }
-  
+
   // Define types for the various actions
   interface ResetPagesAction {
     type: typeof RESET_PAGES;
   }
-  
+
   interface SetPagesLoadingAction {
     type: typeof SET_PAGES_LOADING;
     payload: boolean;
   }
-  
+
   interface AddPagesRequestAction {
     type: typeof ADD_PAGES_REQUEST;
     payload: PagesRequest;
   }
-  
+
   interface AddPagesAction {
     type: typeof ADD_PAGES;
     payload: Page[];
   }
-  
+
   interface AddPageAction {
     type: typeof ADD_PAGE;
     payload: Page;
   }
-  
+
   // Union type for all possible action types
   type PagesActionTypes =
     | ResetPagesAction
@@ -58,13 +68,13 @@ import {
     | AddPagesRequestAction
     | AddPagesAction
     | AddPageAction;
-  
+
   const initialState: PagesState = {
     req: [],
     details: {},
     loading: true,
   };
-  
+
   export default function pagesReducer(
     state: PagesState = initialState,
     action: PagesActionTypes = {} as PagesActionTypes
@@ -98,7 +108,7 @@ import {
           details: {
             ...state.details,
             ...action.payload.reduce(
-              (obj, item) => Object.assign(obj, { [item.id]: item }), 
+              (obj, item) => Object.assign(obj, { [item.id]: item }),
               {} as { [key: string]: Page }
             ),
           },

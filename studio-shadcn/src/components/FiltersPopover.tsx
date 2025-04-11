@@ -13,8 +13,29 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import Selector from "./Selector";
-import { FiltersPopoverProps } from "../pages/fact-checks/types";
 import { useIsMobile } from "@/hooks/use-mobile";
+
+interface FilterValues {
+  page?: number;
+  limit?: number;
+  q?: string;
+  sort?: string;
+  status?: string;
+  tag?: string[];
+  category?: string[];
+  author?: string[];
+  format?: string;
+  [key: string]: any;
+}
+
+export interface FiltersPopoverProps {
+  form: any;
+  isOpen?: boolean;
+  setIsOpen?: (open: boolean) => void;
+  onSave: (values: FilterValues) => void;
+  hasActiveFilters?: boolean;
+}
+
 
 const FiltersPopover = ({
   form,

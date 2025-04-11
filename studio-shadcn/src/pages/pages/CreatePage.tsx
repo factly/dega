@@ -1,10 +1,11 @@
 import PageForm from '../posts/components/PostForm';
-import { useDispatch, useSelector } from 'react-redux';
 import { addPage } from '../../actions/pages';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 import { Helmet } from 'react-helmet';
 import useNavigation from '../../utils/useNavigation';
+import { Page } from './types';
 
 interface Format {
   id: number;
@@ -30,20 +31,19 @@ interface CreatePageProps {
   formats: FormatState;
 }
 
-interface PageValues {
-  [key: string]: any;
-}
 
 function CreatePage({ formats }: CreatePageProps): React.ReactElement {
   const history = useNavigation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const onCreate = (values: PageValues): void => {
+
+  const onCreate = (values: Page): void => {
+    // @ts-expect-error TODO: Fix this type error
     dispatch(addPage(values)).then((page: { id: number } | undefined) => {
       if (page && page.id) history(`/pages/${page.id}/edit`);
     });
   };
-  
+
   if (!formats.loading && formats.article) {
     return (
       <>
@@ -52,7 +52,7 @@ function CreatePage({ formats }: CreatePageProps): React.ReactElement {
       </>
     );
   }
-  
+
   return <FormatNotFound status="info" title="Article format not found" link="/formats" />;
 }
 

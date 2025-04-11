@@ -35,16 +35,24 @@ export interface Format {
 }
 
 export interface PostData {
-  id?: number;
-  title?: string;
-  slug?: string;
-  status?: string;
-  published_date?: string | null;
   author_ids?: number[];
-  authors?: number[];
   created_at?: string;
   updated_at?: string;
   format_id?: number;
+  id: number;
+  title: string;
+  slug: string;
+  status?: "publish" | "draft" | "ready";
+  featured_medium_id?: number;
+  medium?: any;
+  published_date: string | null;
+  categories?: number[];
+  tags?: number[];
+  authors?: number[];
+  claims?: number[];
+  description?: any;
+  format?: number;
+  [key: string]: any;
 }
 
 interface PostFormProps {

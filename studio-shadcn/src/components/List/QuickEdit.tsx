@@ -254,6 +254,9 @@ const QuickEdit: React.FC<QuickEditProps> = ({
           </FormItem>
         </div>
 
+
+
+        <div className="grid grid-cols-3 gap-6">
         {slug === "fact-check" ? (
           <FormField
             control={form.control}
@@ -276,8 +279,6 @@ const QuickEdit: React.FC<QuickEditProps> = ({
             )}
           />
         ) : null}
-
-        <div className="grid grid-cols-3 gap-6">
           <FormField
             control={form.control}
             name="categories"

@@ -49,16 +49,20 @@ interface PageRequestData {
 }
 
 interface PageFormData {
-  id?: number;
+  id: number;
   title: string;
   slug: string;
-  description: any;
-  status: string;
-  medium?: number | null;
-  categories: number[];
-  tags: number[];
-  authors: number[];
-  format: number;
+  status?: "publish" | "draft" | "ready";
+  featured_medium_id?: number;
+  medium?: any;
+  published_date: string | null;
+  categories?: number[];
+  tags?: number[];
+  authors?: number[];
+  claims?: number[];
+  description?: any;
+  format?: number;
+  [key: string]: any;
 }
 
 export const getPages = (query: PageQueryParams): AppThunk => {

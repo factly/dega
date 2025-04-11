@@ -46,7 +46,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   const navigate = useNavigate();
   const query = new URLSearchParams(search);
   const isMobile = useIsMobile();
-  const isCollapsed = useSelector((state) => state.sidebar.collapsed);
 
   // State
   const [templatesOpen, setTemplatesOpen] = useState(false);
@@ -74,8 +73,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   const { handlePageChange, handlePageSizeChange, totalPages, onPagination } =
     usePagination(filters, setFilters, total, navigate, pathname, query);
 
-  // Calculate sidebar width based on sidebar state
-  const sidebarWidth = isCollapsed ? "89px" : "265px";
 
   // If we have search text, make sure search is expanded on mobile
   useEffect(() => {
@@ -100,7 +97,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       "category",
       "author",
       "status",
-    ]) as FilterParams;
+    ]);
 
     dispatch(getPages(params));
   };
@@ -232,7 +229,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
     });
 
     if (formats && !formats.loading && formats.article) {
-      searchFilter.set("format", formats.article.id);
+      searchFilter.set("format", String(formats.article.id));
     }
 
     navigate({
