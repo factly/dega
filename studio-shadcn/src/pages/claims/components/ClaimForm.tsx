@@ -19,52 +19,17 @@ import {
 import { useForm, useFieldArray } from "react-hook-form";
 import Selector from "../../../components/Selector/index";
 import { maker } from "../../../utils/sluger";
-import { useWindowSizeWithQuery } from "@/hooks/use-mobile";
 import getJsonValue from "../../../utils/getJsonValue";
 import { MetaForm, SlugInput } from "../../../components/FormItems";
 import { useNavigate } from "react-router-dom";
 import SourcesSection from "./SourcesSection";
-
-interface ClaimSource {
-  url: string;
-  description: string;
-}
-
-interface ReviewSource {
-  url: string;
-  description: string;
-}
-
-interface ClaimFormValues {
-  id?: number | string;
-  claim: string;
-  slug: string;
-  fact?: string;
-  claimant: number;
-  claimant_id?: number;
-  rating: number;
-  rating_id?: number;
-  claim_date?: Date | null;
-  checked_date?: Date | null;
-  description_html?: string;
-  claim_sources?: ClaimSource[];
-  review_sources?: ReviewSource[];
-  meta_fields?: string;
-}
-
-interface FormattedClaimValues
-  extends Omit<ClaimFormValues, "claim_date" | "checked_date"> {
-  claim_date?: string | null;
-  checked_date?: string | null;
-}
-
-interface ClaimFormProps {
-  onCreate: (values: FormattedClaimValues) => void;
-  data?: Partial<ClaimFormValues>;
-}
+import {
+  ClaimFormValues,
+  FormattedClaimValues,
+  ClaimFormProps,
+} from "../types";
 
 const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
-  const isMobileScreen = useWindowSizeWithQuery("(max-width: 768px)");
   const [valueChange, setValueChange] = useState<boolean>(false);
   const [activeKeys, setActiveKeys] = useState<string[]>([
     "general",
@@ -79,7 +44,6 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
   }
 
   const handleCancel = () => {
-    // Go back to previous page instead of a fixed route
     navigate(-1);
   };
 
@@ -106,17 +70,13 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
   };
 
   const onSave = (values: ClaimFormValues) => {
-    // Create a new object without the date properties first
     const { claim_date, checked_date, ...rest } = values;
-
-    // Initialize formattedValues without the date properties
     const formattedValues: FormattedClaimValues = {
       ...rest,
       claimant_id: values.claimant || 0,
       rating_id: values.rating || 0,
     };
 
-    // Add the date properties as strings
     if (claim_date) {
       const date = new Date(claim_date);
       formattedValues.claim_date = date.toISOString();

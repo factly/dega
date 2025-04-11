@@ -28,6 +28,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { AppThunkDispatch } from "../../../store/types";
+import EmptyState from "@/components/EmptyState";
 
 // Type definitions
 interface Rating {
@@ -120,37 +121,34 @@ const RatingList: React.FC<RatingListProps> = ({
     setRatingToDelete(null);
   }, []);
 
+  // Check if there are any ratings to display
+  const hasRatingsData = data.ratings && data.ratings.length > 0;
+
   return (
     <div className="pb-4 overflow-auto">
-      <div className="rounded-md">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[40%] text-[13px]">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={onSortToggle}
-                >
-                  Title
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              <TableHead className="w-[25%] text-[13px]">Preview</TableHead>
-              <TableHead className="w-[25%] text-[13px]">Value</TableHead>
-              <TableHead className="w-[10%] text-center text-[13px]">
-                Actions
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.ratings.length === 0 ? (
+      {hasRatingsData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={4} className="text-center py-10">
-                  No ratings found
-                </TableCell>
+                <TableHead className="w-[40%] text-[13px]">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={onSortToggle}
+                  >
+                    Title
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-[25%] text-[13px]">Preview</TableHead>
+                <TableHead className="w-[25%] text-[13px]">Value</TableHead>
+                <TableHead className="w-[10%] text-center text-[13px]">
+                  Actions
+                </TableHead>
               </TableRow>
-            ) : (
-              data.ratings.map((rating) => (
+            </TableHeader>
+            <TableBody>
+              {data.ratings.map((rating) => (
                 <TableRow
                   key={rating.id}
                   onClick={() => handleRowClick(rating.id)}
@@ -207,11 +205,18 @@ const RatingList: React.FC<RatingListProps> = ({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="ratings"
+          title="No ratings found"
+          description="Your ratings list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent

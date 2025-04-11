@@ -65,7 +65,7 @@ const menuItems: MenuItem[] = [
     ],
   },
   {
-    title: "Fact checking",
+    title: "Fact Checking",
     icon: ListCheck,
     children: [
       { title: "Fact-Checks", path: "/fact-checks" },

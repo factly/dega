@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ClaimantEditForm from "./components/ClaimantForm";
 import { useSelector } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -7,14 +7,8 @@ import { useParams } from "react-router-dom";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
-import { RootState } from "../../store/index";
+import { RootState, Claimant, ClaimantFormValues } from "./types";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-
-interface Claimant {
-  id: string;
-  name: string;
-  [key: string]: any;
-}
 
 function EditClaimant(): React.ReactElement {
   const history = useNavigation();
@@ -30,7 +24,7 @@ function EditClaimant(): React.ReactElement {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (id) {
       // Check if id is numeric and parse it, otherwise use as string
       const parsedId = /^\d+$/.test(id) ? parseInt(id, 10) : id;
@@ -38,14 +32,20 @@ function EditClaimant(): React.ReactElement {
     }
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton className="h-48 w-full" />; // Add dimensions for better UX
+  if (loading) return <Skeleton className="h-48 w-full" />;
 
   if (!claimant) {
     return <RecordNotFound />;
   }
 
-  const onUpdate = (values: Partial<Claimant>): void => {
-    dispatch(updateClaimant({ ...claimant, ...values }))
+  const onUpdate = (values: ClaimantFormValues): void => {
+    const updatedClaimant: Claimant = {
+      ...claimant,
+      ...values,
+      id: claimant.id,
+    };
+
+    dispatch(updateClaimant(updatedClaimant))
       .then(() => {
         // Navigate only after successful update
         history(`/claimants/${id}/edit`);

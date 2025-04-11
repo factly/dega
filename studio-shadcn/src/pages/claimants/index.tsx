@@ -1,10 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ClaimantList from "./components/ClaimantList";
-import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { getClaimants } from "../../actions/claimants";
-import deepEqual from "deep-equal";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
@@ -15,42 +12,19 @@ import Pagination from "../../components/Pagination";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
-
-interface ClaimantType {
-  id: string;
-  name: string;
-  tag_line: string;
-  [key: string]: any;
-}
-
-interface ClaimantState {
-  req: {
-    query: Record<string, any>;
-    data: string[];
-    total: number;
-  }[];
-  details: Record<string, ClaimantType>;
-  loading: boolean;
-}
-
-interface RootState {
-  claimants: ClaimantState;
-  sidebar: {
-    collapsed: boolean;
-  };
-}
+import { ClaimantFilters } from "./types";
+import { useClaimantsData } from "./hooks/useClaimantsData";
+import { useClaimantsPagination } from "./hooks/useClaimantsPagination";
 
 function Claimants() {
   const dispatch = useAppDispatch();
-  const location = useLocation();
   const { state: sidebarState } = useSidebar();
   const isMobile = useIsMobile();
-
   // State for search and filters
   const [searchText, setSearchText] = useState<string>("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<ClaimantFilters>({
     page: 1,
     limit: 10,
   });
@@ -60,54 +34,22 @@ function Claimants() {
     setShowSearch(!isMobile);
   }, [isMobile]);
 
-  // Get data from Redux
-  const { claimants, total, loading } = useSelector((state: RootState) => {
-    const node = state.claimants.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
+  // Use custom hooks for data and pagination
+  const { claimants, total, loading } = useClaimantsData(
+    filters,
+    searchText,
+    sortOrder
+  );
+  const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
+    useClaimantsPagination(filters, setFilters, total);
 
-    if (node)
-      return {
-        claimants: node.data.map((element) => state.claimants.details[element]),
-        total: node.total,
-        loading: state.claimants.loading,
-      };
-    return { claimants: [], total: 0, loading: state.claimants.loading };
-  });
-
-  // Filter and sort claimants locally based on search text and sort order
-  const filteredClaimants = useMemo(() => {
-    let filtered = claimants;
-
-    // Apply search filter
-    if (searchText.trim()) {
-      filtered = claimants.filter(
-        (claimant) =>
-          claimant.name?.toLowerCase().includes(searchText.toLowerCase()) ||
-          claimant.tag_line?.toLowerCase().includes(searchText.toLowerCase())
-      );
-    }
-
-    // Apply sorting
-    return [...filtered].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.name?.localeCompare(b.name || "") || 0;
-      } else {
-        return b.name?.localeCompare(a.name || "") || 0;
-      }
-    });
-  }, [claimants, searchText, sortOrder]);
-
+  // Handle sort toggle
   const handleSortToggle = useCallback(() => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   }, []);
 
+  // Fetch claimants when filters change
   useEffect(() => {
-    fetchClaimants();
-  }, [filters]);
-
-  // Fetch claimants function
-  const fetchClaimants = useCallback(() => {
     dispatch(getClaimants(filters));
   }, [dispatch, filters]);
 
@@ -124,18 +66,10 @@ function Claimants() {
     }
   }, [showSearch]);
 
-  // Pagination handlers
-  const handlePageChange = useCallback((page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
-  }, []);
-
-  const handlePageSizeChange = useCallback((size: number) => {
-    setFilters({ page: 1, limit: size });
-  }, []);
-
-  // Calculate total pages
-  const pageSize = filters.limit || 10;
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  // Fetch claimants function for the list component
+  const fetchClaimants = useCallback(() => {
+    dispatch(getClaimants(filters));
+  }, [dispatch, filters]);
 
   // Get sidebar state
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
@@ -148,11 +82,7 @@ function Claimants() {
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Claimants"
-          parentPath="/"
-          parentLabel="Core"
-        />
+        <MobileBreadcrumb currentPage="Claimants" parentLabel="Fact Checking" />
       )}
 
       <div
@@ -253,8 +183,8 @@ function Claimants() {
       >
         <ClaimantList
           data={{
-            claimants: filteredClaimants,
-            total: total,
+            claimants,
+            total,
             loading,
           }}
           filters={filters}

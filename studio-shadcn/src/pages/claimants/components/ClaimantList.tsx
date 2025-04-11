@@ -28,31 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
-
-interface Claimant {
-  id: string;
-  name: string;
-  tag_line: string;
-}
-
-interface ClaimantListProps {
-  actions?: string[];
-  data: {
-    claimants: Claimant[];
-    loading: boolean;
-    total: number;
-  };
-  filters: {
-    page: number;
-    limit: number;
-    [key: string]: any;
-  };
-  setFilters: (filters: any) => void;
-  fetchClaimants: () => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
-  isMobile?: boolean;
-}
+import { ClaimantListProps } from "../types";
 
 function ClaimantList({
   data,

@@ -4,12 +4,13 @@ import { createClaimant } from "../../actions/claimants";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import { ClaimantFormValues } from "./types";
 
 const CreateClaimant: React.FC = () => {
   const history = useNavigation();
   const dispatch = useAppDispatch();
 
-  const onCreate = (values: any) => {
+  const onCreate = (values: ClaimantFormValues) => {
     dispatch(createClaimant(values))
       .then(() => {
         // Navigate only after successful creation
@@ -23,7 +24,7 @@ const CreateClaimant: React.FC = () => {
 
   return (
     <>
-      <Helmet title={"Create Claimants"} />
+      <Helmet title={"Create Claimant"} />
       <ClaimantCreateForm onCreate={onCreate} />
     </>
   );

@@ -3,22 +3,20 @@ import { useSelector } from "react-redux";
 import deepEqual from "deep-equal";
 import { ClaimFilters, ClaimListData } from "../types";
 
-export const useClaimsData = (filters: ClaimFilters, searchText: string): ClaimListData => {
+export const useClaimsData = (
+  filters: ClaimFilters,
+  searchText: string
+): ClaimListData => {
   const { claims, total, loading } = useSelector((state: any) => {
     const node = state.claims.req.find((item: any) => {
       return deepEqual(item.query, filters);
     });
 
     if (node) {
-      // Create a new array with copied and enriched claim objects
       const list = node.data.map((element: string) => {
-        // Get the original claim from state
         const originalClaim = state.claims.details[element];
-
-        // Don't mutate the original claim - create a new object
         return {
           ...originalClaim,
-          // Add the formatted claimant and rating names instead of mutating
           claimant:
             state.claimants.details[originalClaim.claimant_id]?.name || "",
           rating: state.ratings.details[originalClaim.rating_id]?.name || "",
@@ -37,11 +35,7 @@ export const useClaimsData = (filters: ClaimFilters, searchText: string): ClaimL
   // Filter and sort claims based on parameters
   const sortedClaims = useMemo(() => {
     if (!claims) return [];
-
-    // First create a copy of the claims array to sort
     const sortableClaims = [...claims];
-
-    // Sort based on sortBy param
     return sortableClaims.sort((a, b) => {
       if (filters.sortBy === "claim") {
         // Sort alphabetically by claim text
@@ -60,7 +54,6 @@ export const useClaimsData = (filters: ClaimFilters, searchText: string): ClaimL
     });
   }, [claims, filters.sort, filters.sortBy]);
 
-  // Filter claims locally based on search text
   const filteredClaims = useMemo(() => {
     if (!searchText.trim()) {
       return sortedClaims;
@@ -77,6 +70,6 @@ export const useClaimsData = (filters: ClaimFilters, searchText: string): ClaimL
   return {
     claims: filteredClaims,
     total: total,
-    loading: loading
+    loading: loading,
   };
 };
