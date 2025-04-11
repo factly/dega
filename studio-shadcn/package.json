@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@factly/scooter-claim": "^0.0.46",
-    "@factly/scooter-code-block": "^0.0.46",
-    "@factly/scooter-core": "^0.0.46",
-    "@factly/scooter-embed": "^0.0.46",
-    "@factly/scooter-table": "^0.0.46",
+    "@factly/scooter-claim": "^0.0.48",
+    "@factly/scooter-code-block": "^0.0.48",
+    "@factly/scooter-core": "^0.0.48",
+    "@factly/scooter-embed": "^0.0.48",
+    "@factly/scooter-table": "^0.0.48",
     "@hookform/resolvers": "^4.1.0",
     "@monaco-editor/react": "^4.7.0",
     "@radix-ui/react-accordion": "^1.2.3",
