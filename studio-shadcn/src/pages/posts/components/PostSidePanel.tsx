@@ -51,7 +51,7 @@ import MediaSelector from "../../../components/MediaSelector";
 import { formatDate } from "../../../utils/date";
 import { addErrorNotification } from "../../../actions/notifications";
 import { maker } from "../../../utils/sluger";
-import { PostData } from "./PostForm";
+import { Post as PostData } from "../types";
 
 // Import languages data
 import languages from "../../../utils/languages.json";
@@ -60,11 +60,11 @@ interface PostSidePanelProps {
   form: UseFormReturn<PostData>;
   data: PostData;
   status: string;
-  setStatus: Dispatch<SetStateAction<string>>;
+  setStatus: Dispatch<SetStateAction<'draft' | 'publish' | 'ready' | 'future'>>;
   valueChange: boolean;
   publishedDate: Date | undefined;
   setPublishedDate: Dispatch<SetStateAction<Date | undefined>>;
-  onSave: (values: PostData, statusOverride?: string) => void;
+  onSave: (values: PostData, statusOverride?: 'draft' | 'publish' | 'ready' | 'future') => void;
   onClose: () => void;
 }
 

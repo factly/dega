@@ -17,7 +17,7 @@ export interface Space {
 }
 
 
-interface Post {
+export interface Post {
   updated_at?: string;
   created_at?: string;
   published_date?: string;
@@ -28,7 +28,7 @@ interface Post {
   id: number;
   title: string;
   slug: string;
-  status: "publish" | "draft" | "ready";
+  status: "publish" | "draft" | "ready" | 'future';
   categories?: number[];
   tags?: number[];
   claims?: number[];

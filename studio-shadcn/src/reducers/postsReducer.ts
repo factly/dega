@@ -12,21 +12,24 @@ interface Description {
   html: string;
 }
 // Define interfaces for the state and actions
-interface Post {
-  updated_at?: string;
-  created_at?: string;
-  published_date?: string;
-  tag_ids?: number[];
-  category_ids?: number[];
+export interface PostData {
   author_ids?: number[];
-  authors?: number[] | Array<{ id: number; display_name: string }>;
+  created_at?: string;
+  updated_at?: string;
+  format_id?: number;
   id: number;
   title: string;
   slug: string;
-  status: "publish" | "draft" | "ready";
+  status?: "publish" | "draft" | "ready";
+  featured_medium_id?: number;
+  medium?: any;
+  published_date: string | null;
   categories?: number[];
   tags?: number[];
+  authors?: number[];
   claims?: number[];
+  description?: any;
+  format?: number;
   [key: string]: any;
 }
 

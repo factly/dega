@@ -10,11 +10,8 @@ import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { RootState } from "../../store/index";
+import { Post, Format } from "./types";
 
-interface Format {
-  id: string;
-  article: any;
-}
 
 interface EditPostProps {
   formats: {
@@ -23,23 +20,6 @@ interface EditPostProps {
   };
 }
 
-interface Post {
-  updated_at?: string;
-  created_at?: string;
-  published_date?: string;
-  tag_ids?: number[];
-  category_ids?: number[];
-  author_ids?: number[];
-  authors?: number[] | Array<{ id: number; display_name: string }>;
-  id: number;
-  title: string;
-  slug: string;
-  status: "publish" | "draft" | "ready";
-  categories?: number[];
-  tags?: number[];
-  claims?: number[];
-  [key: string]: any;
-}
 
 interface Space {
   // Define your space interface structure
