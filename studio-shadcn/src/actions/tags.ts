@@ -54,7 +54,7 @@ export const getTags = (query: any): AppThunk => {
     getState: () => RootState
   ) => {
     const currentSpaceID = getState().spaces?.selected;
-    if (currentSpaceID === 0) {
+    if (currentSpaceID === "" || currentSpaceID === "0") {
       return;
     }
     dispatch(loadingTags());
@@ -67,7 +67,7 @@ export const getTags = (query: any): AppThunk => {
           response.data.nodes.forEach((tag) => {
             tag.description = {
               json: tag.description,
-              html: tag.description_html,
+              html: tag.description_html || "",
             };
           });
         }

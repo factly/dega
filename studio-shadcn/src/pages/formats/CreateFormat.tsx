@@ -2,16 +2,10 @@ import React from "react";
 import { createFormat } from "../../actions/formats";
 import { Helmet } from "react-helmet";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import useNavigation from "../../utils/useNavigation";
 import FormatCreateForm from "./components/FormatForm";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-
-interface CreateFormatProps {
-  setReloadFlag: React.Dispatch<React.SetStateAction<boolean>>;
-  reloadFlag: boolean;
-}
+import { CreateFormatProps, FormatFormValues, Format } from "./types";
 
 function CreateFormat({
   setReloadFlag,
@@ -20,8 +14,10 @@ function CreateFormat({
   const history = useNavigation();
   const dispatch = useAppDispatch();
 
-  const onCreate = (values: any): void => {
-    dispatch(createFormat(values))
+  const onCreate = (values: FormatFormValues): void => {
+    const formatData = values as Format;
+
+    dispatch(createFormat(formatData))
       .then(() => {
         history("/settings/advanced/formats");
         setReloadFlag(!reloadFlag);

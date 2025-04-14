@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import MenuList from "./components/MenuList";
 import { Link, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getMenus } from "../../actions/menu";
-import deepEqual from "deep-equal";
 import getUserPermission from "../../utils/getUserPermission";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
@@ -14,33 +13,10 @@ import { Input } from "@/components/ui/input";
 import Pagination from "../../components/Pagination";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
-
-// Define types for our state and props
-interface Menu {
-  id: string;
-  name: string;
-}
-
-interface MenuState {
-  details: Record<string, Menu>;
-  loading: boolean;
-  req: Array<{
-    query: MenuFilters;
-    data: string[];
-    total: number;
-  }>;
-}
-
-interface RootState {
-  menus: MenuState;
-  spaces: any;
-}
-
-interface MenuFilters {
-  page: number;
-  limit: number;
-  [key: string]: any; // For any additional filters
-}
+import { MenuFilters, RootState } from "./types";
+import { useMenusData } from "./hooks/useMenusData";
+import { useMenusPagination } from "./hooks/useMenusPagination";
+import { useSidebar } from "@/components/ui/sidebar";
 
 const Menu: React.FC = () => {
   const spaces = useSelector((state: RootState) => state.spaces);
@@ -51,6 +27,7 @@ const Menu: React.FC = () => {
   });
   const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
+  const { state: sidebarState } = useSidebar();
   const [searchParams, setSearchParams] = useSearchParams();
 
   // State for search and filters
@@ -73,51 +50,29 @@ const Menu: React.FC = () => {
     setSearchParams(newParams);
   }, [filters, setSearchParams]);
 
-  // Fetch menus when filters change
+  // Handle responsive UI changes
   useEffect(() => {
-    fetchMenus();
-  }, [filters]);
+    setShowSearch(!isMobile);
+  }, [isMobile]);
 
-  const { menus, total, loading } = useSelector((state: RootState) => {
-    const node = state.menus.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
+  // Use custom hooks for data and pagination
+  const { menus, total, loading } = useMenusData(
+    filters,
+    searchText,
+    sortOrder
+  );
+  const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
+    useMenusPagination(filters, setFilters, total);
 
-    if (node) {
-      return {
-        menus: node.data.map((element) => state.menus.details[element]),
-        total: node.total,
-        loading: state.menus.loading,
-      };
-    }
-
-    return { menus: [], total: 0, loading: state.menus.loading };
-  });
-
-  // Filter menus locally based on search text
-  const filteredMenus = useMemo(() => {
-    if (!searchText.trim()) {
-      return menus;
-    }
-
-    return menus.filter((menu) =>
-      menu.name?.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }, [menus, searchText]);
-
-  const sortedMenus = useMemo(() => {
-    return [...filteredMenus].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.name?.localeCompare(b.name || "") || 0;
-      } else {
-        return b.name?.localeCompare(a.name || "") || 0;
-      }
-    });
-  }, [filteredMenus, sortOrder]);
-
+  // Fetch menus function
   const fetchMenus = useCallback(() => {
     dispatch(getMenus(filters));
   }, [dispatch, filters]);
+
+  // Fetch menus when filters change
+  useEffect(() => {
+    fetchMenus();
+  }, [fetchMenus]);
 
   // Handle search input changes
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,15 +84,6 @@ const Menu: React.FC = () => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   }, []);
 
-  // Pagination handlers
-  const handlePageChange = useCallback((page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
-  }, []);
-
-  const handlePageSizeChange = useCallback((size: number) => {
-    setFilters((prev) => ({ ...prev, limit: size, page: 1 }));
-  }, []);
-
   // Toggle search on mobile
   const toggleSearch = useCallback(() => {
     setShowSearch((prev) => !prev);
@@ -146,8 +92,8 @@ const Menu: React.FC = () => {
     }
   }, [showSearch]);
 
-  const pageSize = filters.limit || 10;
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  // Get sidebar state for layout
+  const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
   if (loading) return <Loader />;
 
@@ -157,11 +103,7 @@ const Menu: React.FC = () => {
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Menus"
-          parentPath="/settings/website"
-          parentLabel="Website Settings"
-        />
+        <MobileBreadcrumb currentPage="Menus" parentLabel="Website Settings" />
       )}
 
       <div
@@ -169,8 +111,9 @@ const Menu: React.FC = () => {
         style={
           !isMobile
             ? {
-                left: "265px",
+                left: isCollapsed ? "89px" : "265px",
                 right: 0,
+                transition: "left 0.3s ease",
               }
             : undefined
         }
@@ -259,13 +202,14 @@ const Menu: React.FC = () => {
           !isMobile
             ? {
                 top: "calc(1.5rem + 2.5rem + 1rem)",
-                left: "265px",
+                left: 0,
                 right: 0,
                 bottom: "64px",
                 paddingLeft: "1.5rem",
                 paddingRight: "1.5rem",
                 paddingBottom: "1.5rem",
                 paddingTop: "1rem",
+                transition: "left 0.3s ease, top 0.3s ease",
               }
             : undefined
         }
@@ -273,8 +217,8 @@ const Menu: React.FC = () => {
         <MenuList
           actions={actions}
           data={{
-            menus: sortedMenus,
-            total: total,
+            menus,
+            total,
             loading,
           }}
           filters={filters}
@@ -293,9 +237,10 @@ const Menu: React.FC = () => {
         style={
           !isMobile
             ? {
-                left: "265px",
+                left: isCollapsed ? "89px" : "265px",
                 right: 0,
                 height: "64px",
+                transition: "left 0.3s ease",
               }
             : undefined
         }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Dispatch } from "redux";
+import { Dispatch, AnyAction } from "redux";
 
 import {
   ADD_FORMATS,
@@ -28,7 +28,7 @@ interface FormatRequest {
 
 // action to fetch default formats
 export const addDefaultFormats = (query: any) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<AnyAction>) => {
     dispatch(loadingFormats());
     return axios
       .post(`${FORMATS_API}/default`)
@@ -51,7 +51,7 @@ export const addDefaultFormats = (query: any) => {
 
 // action to fetch all formats
 export const getFormats = (query: any) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<AnyAction>) => {
     dispatch(loadingFormats());
     return axios
       .get(FORMATS_API, {
@@ -77,7 +77,7 @@ export const getFormats = (query: any) => {
 
 // action to fetch format by id
 export const getFormat = (id: string) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<AnyAction>) => {
     dispatch(loadingFormats());
     return axios
       .get(`${FORMATS_API}/${id}`)
@@ -93,7 +93,7 @@ export const getFormat = (id: string) => {
 
 // action to create format
 export const createFormat = (data: Format) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<AnyAction>) => {
     dispatch(loadingFormats());
     return axios
       .post(FORMATS_API, data)
@@ -109,7 +109,7 @@ export const createFormat = (data: Format) => {
 
 // action to update format by id
 export const updateFormat = (data: Format) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<AnyAction>) => {
     dispatch(loadingFormats());
     return axios
       .put(`${FORMATS_API}/${data.id}`, data)
@@ -126,7 +126,7 @@ export const updateFormat = (data: Format) => {
 
 // action to delete format by id
 export const deleteFormat = (id: string) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<AnyAction>) => {
     dispatch(loadingFormats());
     return axios
       .delete(`${FORMATS_API}/${id}`)

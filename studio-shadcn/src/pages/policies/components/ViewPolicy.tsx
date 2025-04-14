@@ -18,27 +18,8 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getPolicy } from "../../../actions/policies";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-
-interface Permission {
-  resource: string;
-  actions: string[];
-}
-
-interface Policy {
-  id: string;
-  name: string;
-  description?: string;
-  permissions?: Permission[];
-}
-
-interface RootState {
-  policies: {
-    details: {
-      [key: string]: Policy;
-    };
-    loading: boolean;
-  };
-}
+import { RootState } from "../types";
+import EmptyState from "@/components/EmptyState";
 
 export default function ViewPolicy(): React.ReactElement {
   const { policyID } = useParams<{ policyID: string }>();
@@ -128,7 +109,12 @@ export default function ViewPolicy(): React.ReactElement {
           </Table>
         </div>
       ) : (
-        <p className="text-muted-foreground">No permissions found</p>
+        <EmptyState
+          contentType="permissions"
+          title="No permissions found"
+          description="This policy doesn't have any permissions assigned"
+          isMobile={false}
+        />
       )}
     </div>
   );

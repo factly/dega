@@ -3,9 +3,7 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import PolicyList from "./components/PolicyList";
 import { Link, useSearchParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { getPolicies } from "../../actions/policies";
-import deepEqual from "deep-equal";
 import getUserPermission from "../../utils/getUserPermission";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
@@ -14,35 +12,10 @@ import { Input } from "@/components/ui/input";
 import Pagination from "../../components/Pagination";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
-
-// Define types for our state and props
-interface Policy {
-  id: string;
-  name: string;
-  description?: string;
-  // Add other policy properties as needed
-}
-
-interface PolicyState {
-  details: Record<string, Policy>;
-  loading: boolean;
-  req: Array<{
-    query: PolicyFilters;
-    data: string[];
-    total: number;
-  }>;
-}
-
-interface RootState {
-  policies: PolicyState;
-  spaces: any;
-}
-
-interface PolicyFilters {
-  page: number;
-  limit: number;
-  [key: string]: any; // For any additional filters
-}
+import { PolicyFilters, RootState } from "./types";
+import { usePoliciesData } from "./hooks/usePoliciesData";
+import { usePoliciesPagination } from "./hooks/usePoliciesPagination";
+import { useSelector } from "react-redux";
 
 const Policies: React.FC = () => {
   const spaces = useSelector((state: RootState) => state.spaces);
@@ -75,48 +48,20 @@ const Policies: React.FC = () => {
     setSearchParams(newParams);
   }, [filters, setSearchParams]);
 
+  // Use custom hooks for data and pagination
+  const { policies, total, loading } = usePoliciesData(
+    filters,
+    searchText,
+    sortOrder
+  );
+
+  const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
+    usePoliciesPagination(filters, setFilters, total);
+
   // Fetch policies when filters change
   useEffect(() => {
     fetchPolicies();
   }, [filters]);
-
-  const { policies, total, loading } = useSelector((state: RootState) => {
-    const node = state.policies.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-
-    if (node) {
-      return {
-        policies: node.data.map((element) => state.policies.details[element]),
-        total: node.total,
-        loading: state.policies.loading,
-      };
-    }
-
-    return { policies: [], total: 0, loading: state.policies.loading };
-  });
-
-  // Filter policies locally based on search text
-  const filteredPolicies = React.useMemo(() => {
-    if (!searchText.trim()) {
-      return policies;
-    }
-
-    return policies.filter((policy) =>
-      policy.name?.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }, [policies, searchText]);
-
-  // Sort policies based on sort order
-  const sortedPolicies = React.useMemo(() => {
-    return [...filteredPolicies].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.name?.localeCompare(b.name || "") || 0;
-      } else {
-        return b.name?.localeCompare(a.name || "") || 0;
-      }
-    });
-  }, [filteredPolicies, sortOrder]);
 
   const fetchPolicies = useCallback(() => {
     dispatch(getPolicies(filters));
@@ -132,15 +77,6 @@ const Policies: React.FC = () => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   }, []);
 
-  // Pagination handlers
-  const handlePageChange = useCallback((page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
-  }, []);
-
-  const handlePageSizeChange = useCallback((size: number) => {
-    setFilters((prev) => ({ ...prev, limit: size, page: 1 }));
-  }, []);
-
   // Toggle search on mobile
   const toggleSearch = useCallback(() => {
     setShowSearch((prev) => !prev);
@@ -148,9 +84,6 @@ const Policies: React.FC = () => {
       setSearchText("");
     }
   }, [showSearch]);
-
-  const pageSize = filters.limit || 10;
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
   if (loading) return <Loader />;
 
@@ -162,7 +95,6 @@ const Policies: React.FC = () => {
       {isMobile && (
         <MobileBreadcrumb
           currentPage="Policies"
-          parentPath="/settings/members"
           parentLabel="Member Settings"
         />
       )}
@@ -276,8 +208,8 @@ const Policies: React.FC = () => {
         <PolicyList
           actions={actions}
           data={{
-            policies: sortedPolicies,
-            total: total,
+            policies,
+            total,
             loading,
           }}
           filters={filters}

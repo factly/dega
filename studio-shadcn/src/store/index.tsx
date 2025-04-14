@@ -15,6 +15,8 @@ const store = configureStore({
       loading: true,
       selected: localStorage.getItem("space") || "",
       org_role: "",
+      lastFetched: null,
+      hasAttemptedFetch: false,
     },
   },
 });

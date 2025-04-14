@@ -7,7 +7,8 @@ import SpaceEditForm from "./components/SpaceEditForm";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
-import { AppDispatch, RootState } from "../../types";
+import { RootState } from "../../store";
+import { AppThunkDispatch } from "../../store/types";
 
 export interface Space {
   id: string;
@@ -25,8 +26,7 @@ export interface Space {
 const EditSpace: React.FC = () => {
   const history = useNavigation();
   const { id } = useParams<{ id: string }>();
-  const dispatch = useDispatch<AppDispatch>();
-
+  const dispatch = useDispatch<AppThunkDispatch>();
   const { space, loading } = useSelector((state: RootState) => {
     return {
       space: state.spaces.details[id as string],

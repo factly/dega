@@ -153,18 +153,14 @@ export const createSession = async (
   return response.json();
 };
 
-export const registerUser = async (
-  userData: {
-    email: string;
-    given_name: string;
-    family_name: string;
-    name: string;
-    email_verified: boolean;
-    sub: string;
-  },
-  intentId: string,
-  token: string
-): Promise<ApiResponse<any>> => {
+export const registerUser = async (userData: {
+  email: string;
+  given_name: string;
+  family_name: string;
+  name: string;
+  email_verified: boolean;
+  sub: string;
+}): Promise<ApiResponse<any>> => {
   const registrationData: HumanUserRegistration = {
     username: userData.email,
     profile: {

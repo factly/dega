@@ -32,33 +32,8 @@ import { Building2 } from "lucide-react";
 import MonacoEditor from "../../../components/MonacoEditor";
 import getJsonValue from "../../../utils/getJsonValue";
 import { SlugInput } from "../../../components/FormItems";
-import { RootState } from "../../../types";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-export interface Space {
-  id: string;
-  name: string;
-  site_address: string;
-  site_title: string;
-  tag_line: string;
-  description?: string;
-  slug?: string;
-  organisation_id: string;
-  meta_fields?: string | Record<string, any>;
-  org_role?: string;
-}
-
-export interface Organization {
-  id: string;
-  title: string;
-  role: string;
-  spaces: string[];
-}
-
-interface SpaceEditFormProps {
-  onCreate: (values: Partial<Space>) => void;
-  data?: Partial<Space>;
-}
+import { RootState, SpaceEditFormProps } from "../types";
 
 const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
   onCreate,
@@ -66,9 +41,7 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
 }) => {
   const [valueChange, setValueChange] = useState<boolean>(false);
   const isMobile = useIsMobile();
-  const orgs: Organization[] = useSelector(
-    (state: RootState) => state.spaces.orgs
-  );
+  const orgs = useSelector((state: RootState) => state.spaces.orgs);
 
   // Initialize data
   const initialData = { ...data };
@@ -377,10 +350,6 @@ const SpaceEditForm: React.FC<SpaceEditFormProps> = ({
                                   language="json"
                                   value={field.value as string}
                                   onChange={field.onChange}
-                                  options={{
-                                    minimap: { enabled: false },
-                                    scrollBeyondLastLine: false,
-                                  }}
                                 />
                               </div>
                             </FormControl>

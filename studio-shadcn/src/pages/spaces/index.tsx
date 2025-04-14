@@ -5,51 +5,19 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import SpaceList from "./components/SpaceList";
-import {
-  RefreshCw,
-  PlusCircle,
-  FolderPlus,
-  Search as SearchIcon,
-} from "lucide-react";
+import { RefreshCw, PlusCircle, Search as SearchIcon } from "lucide-react";
 import Pagination from "../../components/Pagination";
 import { getSpaces } from "../../actions/spaces";
 import { spaceSelector } from "../../selectors/spaces";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebar } from "@/components/ui/sidebar";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
-
-// Define types for the Redux state
-interface SpaceDetails {
-  org_role?: string;
-}
-
-interface SpacesState {
-  selected: string;
-  details: {
-    [key: string]: SpaceDetails;
-  };
-}
-
-interface RootState {
-  spaces?: SpacesState;
-  sidebar: {
-    collapsed: boolean;
-  };
-}
-
-interface RoleState {
-  role: string;
-}
-
-interface SpaceState {
-  spaces: any[];
-  loading: boolean;
-  total: number | null;
-  hasAttemptedFetch: boolean;
-}
+import { SpaceFilters, SpaceState, RootState, RoleState } from "./types";
+import { useSpacesPagination } from "./hooks/useSpacesPagination";
+import { AppThunkDispatch } from "../../store/types";
 
 const Spaces: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppThunkDispatch>();
   const location = useLocation();
   const { state: sidebarState } = useSidebar();
   const isMobile = useIsMobile();
@@ -57,7 +25,7 @@ const Spaces: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<SpaceFilters>({
     page: 1,
     limit: isMobile ? 10 : 20,
   });
@@ -68,6 +36,10 @@ const Spaces: React.FC = () => {
     total = 0,
     hasAttemptedFetch = false,
   } = useSelector(spaceSelector) as SpaceState;
+
+  // Pagination
+  const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
+    useSpacesPagination(filters, setFilters, total);
 
   // Handle responsive UI changes
   useEffect(() => {
@@ -112,16 +84,6 @@ const Spaces: React.FC = () => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
 
-  // Handle page change
-  const handlePageChange = (page: number) => {
-    setFilters({ ...filters, page });
-  };
-
-  // Handle page size change
-  const handlePageSizeChange = (size: number) => {
-    setFilters({ page: 1, limit: size });
-  };
-
   // Toggle search on mobile
   const toggleSearch = useCallback(() => {
     setShowSearch((prev) => !prev);
@@ -139,35 +101,12 @@ const Spaces: React.FC = () => {
     // You can add search functionality if needed here
   };
 
-  // Calculate total pages
-  const totalPages = Math.max(1, Math.ceil((total || 0) / filters.limit));
-
-  // Empty state component when no spaces exist
-  const EmptySpacesState = () => (
-    <div className="flex flex-col items-center justify-center h-full mt-16">
-      <div className="bg-gray-50 rounded-full p-6 mb-4">
-        <FolderPlus className="h-16 w-16 text-gray-400" />
-      </div>
-      <h3 className="text-xl font-medium mb-2">No spaces found</h3>
-      <p className="text-gray-500 mb-6 text-center max-w-md">
-        Spaces help you organize your content. Create your first space to get
-        started.
-      </p>
-    </div>
-  );
-
   return (
     <div className="flex flex-col h-full">
       <Helmet title={"Spaces"} />
 
       {/* Mobile Breadcrumb */}
-      {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Spaces"
-          parentPath="/"
-          parentLabel="Core"
-        />
-      )}
+      {isMobile && <MobileBreadcrumb currentPage="Spaces" parentLabel="Core" />}
 
       <div
         className={`${isMobile ? "sticky top-0" : "fixed"} z-10 bg-white`}
@@ -292,8 +231,6 @@ const Spaces: React.FC = () => {
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
           </div>
-        ) : spaces.length === 0 ? (
-          <EmptySpacesState />
         ) : (
           <SpaceList
             searchQuery={searchText}
@@ -325,8 +262,8 @@ const Spaces: React.FC = () => {
           <Pagination
             currentPage={filters.page}
             totalPages={totalPages}
-            totalItems={total}
-            pageSize={filters.limit}
+            totalItems={total || 0}
+            pageSize={pageSize}
             onPageChange={handlePageChange}
             onPageSizeChange={handlePageSizeChange}
             isMobile={isMobile}

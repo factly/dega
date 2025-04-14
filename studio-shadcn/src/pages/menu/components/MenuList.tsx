@@ -3,7 +3,6 @@ import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteMenu } from "../../../actions/menu";
 import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-// Shadcn components
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -29,32 +28,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import EmptyState from "@/components/EmptyState";
-
-// Types
-interface Menu {
-  id: string | number;
-  name: string;
-  [key: string]: any;
-}
-
-interface MenuListProps {
-  actions: string[];
-  data: {
-    menus: Menu[];
-    loading: boolean;
-    total: number;
-  };
-  filters: {
-    page: number;
-    limit: number;
-    [key: string]: any;
-  };
-  setFilters: (filters: any) => void;
-  fetchMenus: () => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
-  isMobile?: boolean;
-}
+import { MenuListProps } from "../types";
 
 const MenuList: React.FC<MenuListProps> = ({
   actions,
@@ -99,7 +73,7 @@ const MenuList: React.FC<MenuListProps> = ({
       e.stopPropagation();
       if (deleteItemID) {
         try {
-          const result = await dispatch(deleteMenu(deleteItemID));
+          await dispatch(deleteMenu(deleteItemID));
           fetchMenus();
         } catch (error) {
           console.error("Error deleting menu:", error);
