@@ -56,18 +56,20 @@ interface Description {
 }
 
 interface Post {
+  updated_at?: string;
+  created_at?: string;
+  published_date?: string;
+  tag_ids?: number[];
+  category_ids?: number[];
+  author_ids?: number[];
+  authors?: number[] | Array<{ id: number; display_name: string }>;
   id: number;
   title: string;
   slug: string;
-  description: Description;
-  description_html?: string;
-  status: "publish" | "draft" | "ready" | "future";
-  categories: Category[] | number[];
-  tags: Tag[] | number[];
-  authors: Author[] | number[];
-  claims: Claim[] | number[];
-  format: Format | number;
-  medium?: Medium | number;
+  status: "publish" | "draft" | "ready";
+  categories?: number[];
+  tags?: number[];
+  claims?: number[];
   [key: string]: any;
 }
 

@@ -34,9 +34,6 @@ import { renderStatusBadge } from "../../components/statusBadge/index";
 import EmptyState from "@/components/EmptyState";
 
 interface Post {
-  id: number;
-  title: string;
-  status: string;
   updated_at?: string;
   created_at?: string;
   published_date?: string;
@@ -44,6 +41,13 @@ interface Post {
   category_ids?: number[];
   author_ids?: number[];
   authors?: number[] | Array<{ id: number; display_name: string }>;
+  id: number;
+  title: string;
+  slug: string;
+  status: "publish" | "draft" | "ready";
+  categories?: number[];
+  tags?: number[];
+  claims?: number[];
   [key: string]: any;
 }
 
@@ -65,8 +69,9 @@ interface Author {
   [key: string]: any;
 }
 
-interface Format {
-  id: string;
+export interface Format {
+  id: number;
+  name: string;
   slug: string;
   [key: string]: any;
 }

@@ -24,10 +24,21 @@ interface EditPostProps {
 }
 
 interface Post {
-  id: number | string;
+  updated_at?: string;
+  created_at?: string;
+  published_date?: string;
+  tag_ids?: number[];
+  category_ids?: number[];
+  author_ids?: number[];
+  authors?: number[] | Array<{ id: number; display_name: string }>;
+  id: number;
   title: string;
-  format: string;
-  [key: string]: any; // For other post properties
+  slug: string;
+  status: "publish" | "draft" | "ready";
+  categories?: number[];
+  tags?: number[];
+  claims?: number[];
+  [key: string]: any;
 }
 
 interface Space {
@@ -35,10 +46,10 @@ interface Space {
   [key: string]: any;
 }
 
-function EditPost({ formats }: EditPostProps): JSX.Element {
+function EditPost({ formats }: EditPostProps): React.ReactElement {
   const history = useNavigation();
   const { id } = useParams<{ id: string }>();
-  const spaces = useSelector((state: RootState) => state.spaces) as Space[];
+  const spaces = useSelector((state: RootState) => state.spaces) ;
   const actions = getUserPermission({
     resource: "posts",
     action: "get",
@@ -107,3 +118,5 @@ function EditPost({ formats }: EditPostProps): JSX.Element {
 }
 
 export default EditPost;
+
+

@@ -45,7 +45,6 @@ function Posts({ formats }: PostsProps): React.ReactElement {
   const navigate = useNavigate();
   const query = new URLSearchParams(search);
   const isMobile = useIsMobile();
-  const isCollapsed = useSelector((state) => state.sidebar.collapsed);
 
   // State
   const [templatesOpen, setTemplatesOpen] = useState(false);
@@ -68,8 +67,6 @@ function Posts({ formats }: PostsProps): React.ReactElement {
   const { handlePageChange, handlePageSizeChange, totalPages, onPagination } =
     usePagination(filters, setFilters, total, navigate, pathname, query);
 
-  // Calculate sidebar width based on sidebar state
-  const sidebarWidth = isCollapsed ? "89px" : "265px";
 
   // Sorting state
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
@@ -100,7 +97,7 @@ function Posts({ formats }: PostsProps): React.ReactElement {
       "category",
       "author",
       "status",
-    ]) as FilterParams;
+    ]);
 
     dispatch(getPosts(params));
   };
@@ -232,7 +229,7 @@ function Posts({ formats }: PostsProps): React.ReactElement {
     });
 
     if (formats && !formats.loading && formats.article) {
-      searchFilter.set("format", formats.article.id);
+      searchFilter.set("format", (formats.article.id).toString());
     }
 
     navigate({

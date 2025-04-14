@@ -41,10 +41,10 @@ interface PostData {
   title: string;
   slug: string;
   status: "publish" | "draft" | "ready";
-  published_date: string | null;
+  published_date?: string;
   categories?: number[];
   tags?: number[];
-  authors?: number[];
+  authors?: number[] | Array<{ id: number; display_name: string }>;
   claims?: number[];
   [key: string]: any;
 }

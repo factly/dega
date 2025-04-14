@@ -7,9 +7,26 @@ import {
 } from "../constants/posts";
 import deepEqual from "deep-equal";
 
+interface Description {
+  json: any;
+  html: string;
+}
 // Define interfaces for the state and actions
 interface Post {
-  id: string | number;
+  updated_at?: string;
+  created_at?: string;
+  published_date?: string;
+  tag_ids?: number[];
+  category_ids?: number[];
+  author_ids?: number[];
+  authors?: number[] | Array<{ id: number; display_name: string }>;
+  id: number;
+  title: string;
+  slug: string;
+  status: "publish" | "draft" | "ready";
+  categories?: number[];
+  tags?: number[];
+  claims?: number[];
   [key: string]: any;
 }
 
