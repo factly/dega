@@ -9,29 +9,12 @@ import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import { FormattedClaimValues } from "./types";
 
 // Define types for the claim and state
 interface Claim {
   id: string;
-  // Add other claim properties based on your application
   [key: string]: any;
-}
-
-interface FormattedClaimValues {
-  id?: string | number;
-  claim: string;
-  slug: string;
-  fact?: string;
-  claimant: number;
-  claimant_id?: number;
-  rating: number;
-  rating_id?: number;
-  claim_date?: string | null;
-  checked_date?: string | null;
-  description_html?: string;
-  claim_sources?: Array<{ url: string; description: string }>;
-  review_sources?: Array<{ url: string; description: string }>;
-  meta_fields?: string;
 }
 
 interface RootState {
@@ -54,16 +37,14 @@ function EditClaim(): React.ReactElement {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
 
-  const { claim, loading, claimantsLoading, ratingsLoading } = useSelector(
-    (state: RootState) => {
-      return {
-        claim: id && state.claims.details[id] ? state.claims.details[id] : null,
-        loading: state.claims.loading,
-        claimantsLoading: state.claimants.loading,
-        ratingsLoading: state.ratings.loading,
-      };
-    }
-  );
+  const { claim, loading } = useSelector((state: RootState) => {
+    return {
+      claim: id && state.claims.details[id] ? state.claims.details[id] : null,
+      loading: state.claims.loading,
+      claimantsLoading: state.claimants.loading,
+      ratingsLoading: state.ratings.loading,
+    };
+  });
 
   useEffect(() => {
     if (id) {
@@ -90,14 +71,17 @@ function EditClaim(): React.ReactElement {
 
   const onUpdate = (values: FormattedClaimValues) => {
     if (id) {
-      // Ensure we convert the id to string if it's a number
       const updatedValues = {
         ...claim,
         ...values,
         id: id, // Ensure we're using the string id from the URL params
+        // Convert numeric values to string to match the expected types
+        claimant: values.claimant ? String(values.claimant) : claim.claimant,
+        rating: values.rating ? String(values.rating) : claim.rating,
       };
 
       const result = dispatch(updateClaim(updatedValues));
+
       if (result && typeof result.then === "function") {
         result.then(() => {
           // Navigate back to the previous page instead of a fixed route

@@ -7,8 +7,8 @@ export const useClaimsPagination = (
   total: number
 ) => {
   // Calculate total pages
-  const totalPages = useMemo(() =>
-    Math.max(1, Math.ceil(total / filters.limit)),
+  const totalPages = useMemo(
+    () => Math.max(1, Math.ceil(total / filters.limit)),
     [total, filters.limit]
   );
 
@@ -22,12 +22,11 @@ export const useClaimsPagination = (
   const handlePageSizeChange = (limit: number) => {
     setFilters({
       ...filters,
-      page: 1, // Reset to first page when changing page size
+      page: 1,
       limit,
     });
   };
 
-  // Legacy pagination function for compatibility
   const onPagination = (page: number, limit: number) => {
     handlePageChange(page);
     if (limit !== filters.limit) {
@@ -39,6 +38,6 @@ export const useClaimsPagination = (
     totalPages,
     handlePageChange,
     handlePageSizeChange,
-    onPagination
+    onPagination,
   };
 };

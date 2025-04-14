@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import EmptyState from "@/components/EmptyState";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 
 // Define types for component props and data
 interface MediaItem {
@@ -87,9 +88,9 @@ function MediumList({ data, actions = [] }: MediumListProps) {
                     >
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <button className="p-1 rounded-md bg-white/90 hover:bg-white">
+                          <Button className="p-1 rounded-md bg-white/90 hover:bg-white">
                             <MoreHorizontal className="h-5 w-5" />
-                          </button>
+                          </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-40">
                           <DropdownMenuItem asChild>

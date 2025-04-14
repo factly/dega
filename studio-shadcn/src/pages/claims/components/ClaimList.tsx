@@ -27,35 +27,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-// Define the types for the props and data
-interface Claim {
-  id: string;
-  claim: string;
-  claimant: string;
-  claimant_id: string;
-  rating: string;
-  rating_id: string;
-  claim_date: string;
-}
-
-interface ClaimListProps {
-  data: {
-    claims: Claim[];
-    loading: boolean;
-    total: number;
-  };
-  filters: {
-    page: number;
-    limit: number;
-  };
-  fetchClaims: () => void;
-  onPagination: (pageNumber: number, pageSize: number) => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
-  sortBy?: string;
-  onSortByChange?: (column: string) => void;
-}
+import EmptyState from "@/components/EmptyState";
+import { ClaimListProps } from "../types";
 
 function ClaimList({
   data,
@@ -63,6 +36,7 @@ function ClaimList({
   onSortToggle,
   sortBy = "date",
   onSortByChange,
+  isMobile = false,
 }: ClaimListProps) {
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -101,53 +75,46 @@ function ClaimList({
     }
   };
 
+  // Check if there are any claims to display
+  const hasClaimsData = data.claims && data.claims.length > 0;
+
   return (
     <div className="pb-4 overflow-scroll">
-      <div className="rounded-md">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[30%] text-[13px]">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={handleSortByClaimToggle}
-                >
-                  Claim
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              <TableHead className="w-[20%] text-[13px]">
-                Claimant
-              </TableHead>
-              <TableHead className="w-[20%] text-[13px]">
-                Rating
-              </TableHead>
-              <TableHead className="w-[20%] text-[13px]">
-                <div
-                  className="flex text-[13px] items-center cursor-pointer"
-                  onClick={handleSortByDateToggle}
-                >
-                  Claim Date
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
-              <TableHead className="w-[10%] text-[13px] text-center">
-                Actions
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.claims.length === 0 ? (
+      {hasClaimsData ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-10">
-                  No claims found
-                </TableCell>
+                <TableHead className="w-[30%] text-[13px]">
+                  <div
+                    className="flex items-center cursor-pointer"
+                    onClick={handleSortByClaimToggle}
+                  >
+                    Claim
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-[20%] text-[13px]">Claimant</TableHead>
+                <TableHead className="w-[20%] text-[13px]">Rating</TableHead>
+                <TableHead className="w-[20%] text-[13px]">
+                  <div
+                    className="flex text-[13px] items-center cursor-pointer"
+                    onClick={handleSortByDateToggle}
+                  >
+                    Claim Date
+                    <ChevronsUpDown className="ml-1 h-3 w-3" />
+                  </div>
+                </TableHead>
+                <TableHead className="w-[10%] text-[13px] text-center">
+                  Actions
+                </TableHead>
               </TableRow>
-            ) : (
-              data.claims.map((record) => (
+            </TableHeader>
+            <TableBody>
+              {data.claims.map((record) => (
                 <TableRow
-                  key={record.id}
-                  onClick={() => handleRowClick(record.id)}
+                  key={record.id.toString()}
+                  onClick={() => handleRowClick(record.id.toString())}
                   className="cursor-pointer"
                 >
                   <TableCell>
@@ -206,7 +173,7 @@ function ClaimList({
                           onClick={(e) => {
                             e.stopPropagation();
                             setModalOpen(true);
-                            setDeleteItemId(record.id);
+                            setDeleteItemId(record.id.toString());
                           }}
                           className="cursor-pointer text-red-600 focus:text-red-600"
                         >
@@ -217,11 +184,18 @@ function ClaimList({
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <EmptyState
+          contentType="claims"
+          title="No claims found"
+          description="Your claims list is empty"
+          isMobile={isMobile}
+        />
+      )}
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   ADD_PAGE,
   ADD_PAGES,
@@ -6,15 +6,15 @@ import {
   RESET_PAGES,
   SET_PAGES_LOADING,
   PAGES_API,
-} from '../constants/pages';
-import { addErrorNotification, addSuccessNotification } from './notifications';
-import { addMedia } from './media';
-import { addAuthors } from './authors';
-import { addTags } from './tags';
-import { addCategories } from './categories';
-import { addFormats } from './formats';
-import getError from '../utils/getError';
-import { AppThunk } from '../store/types';
+} from "../constants/pages";
+import { addErrorNotification, addSuccessNotification } from "./notifications";
+import { addMedia } from "./media";
+import { addAuthors } from "./authors";
+import { addTags } from "./tags";
+import { addCategories } from "./categories";
+import { addFormats } from "./formats";
+import getError from "../utils/getError";
+import { AppThunk } from "../store/types";
 
 interface PageQueryParams {
   category?: string[];
@@ -34,7 +34,7 @@ interface PageData {
   slug: string;
   description: any;
   description_html?: string;
-  status: 'publish' | 'draft' | 'future' | string;
+  status: "publish" | "draft" | "future" | string;
   medium?: { id: number } | null;
   categories: Array<{ id: number }>;
   tags: Array<{ id: number }>;
@@ -75,31 +75,31 @@ export const getPages = (query: PageQueryParams): AppThunk => {
     const params = new URLSearchParams();
 
     if (query.category && query.category.length > 0) {
-      query.category.map((each) => params.append('category', each));
+      query.category.map((each) => params.append("category", each));
     }
     if (query.tag && query.tag.length > 0) {
-      query.tag.map((each) => params.append('tag', each));
+      query.tag.map((each) => params.append("tag", each));
     }
     if (query.format && query.format.length > 0) {
-      query.format.map((each) => params.append('format', each));
+      query.format.map((each) => params.append("format", each));
     }
     if (query.page) {
-      params.append('page', query.page.toString());
+      params.append("page", query.page.toString());
     }
     if (query.limit) {
-      params.append('limit', query.limit.toString());
+      params.append("limit", query.limit.toString());
     }
     if (query.sort) {
-      params.append('sort', query.sort);
+      params.append("sort", query.sort);
     }
     if (query.q) {
-      params.append('q', query.q);
+      params.append("q", query.q);
     }
     if (query.status) {
-      params.append('status', query.status);
+      params.append("status", query.status);
     }
     if (query.author) {
-      query.author.map((each) => params.append('author', each));
+      query.author.map((each) => params.append("author", each));
     }
 
     return axios
@@ -114,8 +114,8 @@ export const getPages = (query: PageQueryParams): AppThunk => {
               .map((page: any) => {
                 return page.authors;
               })
-              .flat(1),
-          ),
+              .flat(1)
+          )
         );
         dispatch(
           addTags(
@@ -124,8 +124,8 @@ export const getPages = (query: PageQueryParams): AppThunk => {
               .map((page: any) => {
                 return page.tags;
               })
-              .flat(1),
-          ),
+              .flat(1)
+          )
         );
         dispatch(
           addCategories(
@@ -134,8 +134,8 @@ export const getPages = (query: PageQueryParams): AppThunk => {
               .map((page: any) => {
                 return page.categories;
               })
-              .flat(1),
-          ),
+              .flat(1)
+          )
         );
         dispatch(
           addFormats(
@@ -144,16 +144,23 @@ export const getPages = (query: PageQueryParams): AppThunk => {
               .map((page: any) => {
                 return page.format;
               })
-              .flat(1),
-          ),
+              .flat(1)
+          )
         );
         dispatch(
-          addMedia(response.data.nodes.filter((page: any) => page.medium).map((page: any) => page.medium)),
+          addMedia(
+            response.data.nodes
+              .filter((page: any) => page.medium)
+              .map((page: any) => page.medium)
+          )
         );
         dispatch(
           addPagesList(
             response.data.nodes.map((page: any) => {
-              page.description = { json: page.description, html: page.description_html };
+              page.description = {
+                json: page.description,
+                html: page.description_html,
+              };
               return {
                 ...page,
                 medium: page.medium?.id,
@@ -162,19 +169,26 @@ export const getPages = (query: PageQueryParams): AppThunk => {
                 authors: page.authors.map((author: any) => author.id),
                 format: page.format.id,
               };
-            }),
-          ),
+            })
+          )
         );
         dispatch(
           addPagesRequest({
             data: response.data.nodes.map((item: any) => item.id),
             query: query,
             total: response.data.total,
-          }),
+          })
         );
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+        dispatch(
+          addPagesRequest({
+            data: [],
+            query: query,
+            total: 0,
+          })
+        );
       })
       .finally(() => dispatch(stopPagesLoading()));
   };
@@ -187,7 +201,10 @@ export const getPage = (id: number): AppThunk => {
       .get(`${PAGES_API}/${id}`)
       .then((response) => {
         let page = response.data;
-        page.description = { json: page.description, html: page.description_html };
+        page.description = {
+          json: page.description,
+          html: page.description_html,
+        };
         dispatch(addTags(page.tags));
         dispatch(addAuthors(page.authors));
         dispatch(addCategories(page.categories));
@@ -200,7 +217,7 @@ export const getPage = (id: number): AppThunk => {
             categories: page.categories.map((category: any) => category.id),
             tags: page.tags.map((tag: any) => tag.id),
             medium: page.medium?.id,
-          }),
+          })
         );
       })
       .catch((error) => {
@@ -217,20 +234,27 @@ export const addPage = (data: PageFormData): AppThunk => {
       .post(PAGES_API, data)
       .then((response) => {
         let page = response.data;
-        page.description = { json: page.description, html: page.description_html };
+        page.description = {
+          json: page.description,
+          html: page.description_html,
+        };
         dispatch(addTags(page.tags));
         dispatch(addCategories(page.categories));
         dispatch(addAuthors(page.authors));
         if (page.medium) dispatch(addMedia([page.medium]));
 
         dispatch(resetPages());
-        page.status === 'publish'
+        page.status === "publish"
           ? dispatch(addSuccessNotification(`Page Published`))
-          : page.status === 'future'
-          ? dispatch(addSuccessNotification('Page added & Scheduled for future publish'))
-          : page.status === 'draft'
-          ? dispatch(addSuccessNotification('Page added'))
-          : dispatch(addSuccessNotification('Page added & Ready to Publish'));
+          : page.status === "future"
+          ? dispatch(
+              addSuccessNotification(
+                "Page added & Scheduled for future publish"
+              )
+            )
+          : page.status === "draft"
+          ? dispatch(addSuccessNotification("Page added"))
+          : dispatch(addSuccessNotification("Page added & Ready to Publish"));
         return page;
       })
       .catch((error) => {
@@ -246,7 +270,10 @@ export const updatePage = (data: PageFormData): AppThunk => {
       .put(`${PAGES_API}/${data.id}`, data)
       .then((response) => {
         let page = response.data;
-        page.description = { json: page.description, html: page.description_html };
+        page.description = {
+          json: page.description,
+          html: page.description_html,
+        };
         dispatch(addTags(page.tags));
         dispatch(addCategories(page.categories));
         dispatch(addAuthors(page.authors));
@@ -259,15 +286,19 @@ export const updatePage = (data: PageFormData): AppThunk => {
             categories: page.categories.map((category: any) => category.id),
             tags: page.tags.map((tag: any) => tag.id),
             medium: page.medium?.id,
-          }),
+          })
         );
-        page.status === 'publish'
+        page.status === "publish"
           ? dispatch(addSuccessNotification(`Page Published`))
-          : page.status === 'future'
-          ? dispatch(addSuccessNotification('Page saved & Scheduled for future publish'))
-          : page.status === 'draft'
-          ? dispatch(addSuccessNotification('Draft Saved'))
-          : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));
+          : page.status === "future"
+          ? dispatch(
+              addSuccessNotification(
+                "Page saved & Scheduled for future publish"
+              )
+            )
+          : page.status === "draft"
+          ? dispatch(addSuccessNotification("Draft Saved"))
+          : dispatch(addSuccessNotification("Draft saved & Ready to Publish"));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -283,7 +314,7 @@ export const deletePage = (id: number): AppThunk => {
       .delete(`${PAGES_API}/${id}`)
       .then(() => {
         dispatch(resetPages());
-        dispatch(addSuccessNotification('Page deleted'));
+        dispatch(addSuccessNotification("Page deleted"));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));

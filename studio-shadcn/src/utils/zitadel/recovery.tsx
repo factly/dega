@@ -121,7 +121,7 @@ const RecoveryPage: React.FC = () => {
                           {...field}
                           className="pr-10"
                         />
-                        <button
+                        <Button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-1/2 -translate-y-1/2"
@@ -131,7 +131,7 @@ const RecoveryPage: React.FC = () => {
                           ) : (
                             <Eye size={16} />
                           )}
-                        </button>
+                        </Button>
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -152,7 +152,7 @@ const RecoveryPage: React.FC = () => {
                           {...field}
                           className="pr-10"
                         />
-                        <button
+                        <Button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-1/2 -translate-y-1/2"
@@ -162,7 +162,7 @@ const RecoveryPage: React.FC = () => {
                           ) : (
                             <Eye size={16} />
                           )}
-                        </button>
+                        </Button>
                       </div>
                     </FormControl>
                     <FormMessage />

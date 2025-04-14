@@ -16,67 +16,37 @@ import { MetaForm, SlugInput, TitleInput } from "../../../components/FormItems";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-interface ClaimantData {
-  id?: number;
-  name?: string;
-  slug?: string;
-  is_featured?: boolean;
-  tag_line?: string;
-  medium_id?: number;
-  description_html?: string;
-  meta_fields?: string;
-}
-
-interface ClaimantFormProps {
-  onCreate: (values: ClaimantData) => void;
-  data?: ClaimantData;
-}
+import { ClaimantFormProps, ClaimantFormValues } from "../types";
 
 const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-
   // Handle meta_fields conversion
   const initialData = { ...data };
   if (initialData.meta_fields && typeof initialData.meta_fields !== "string") {
     initialData.meta_fields = JSON.stringify(initialData.meta_fields);
   }
-
-  const methods = useForm({
+  const methods = useForm<ClaimantFormValues>({
     defaultValues: initialData,
   });
-
   const [valueChange, setValueChange] = useState(false);
-
-  const onReset = () => {
-    methods.reset(initialData);
-  };
-
   const handleCancel = () => {
     navigate(-1);
   };
-
   const onTitleChange = (title: string) => {
     methods.setValue("slug", maker(title));
     setValueChange(true);
   };
-
-  const onSubmit = (values: ClaimantData) => {
-    // Create a new object to avoid modifying the form values directly
+  const onSubmit = (values: ClaimantFormValues) => {
     const submissionValues = { ...values };
-
     // Always preserve the original ID format from the data
     if (data.id !== undefined) {
       submissionValues.id = data.id;
     }
-
     // Process meta_fields
     if (submissionValues.meta_fields) {
       submissionValues.meta_fields = getJsonValue(submissionValues.meta_fields);
     }
-
-    // Call the onCreate prop function and let the parent component handle navigation
     onCreate(submissionValues);
   };
 

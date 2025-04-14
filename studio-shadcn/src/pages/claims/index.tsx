@@ -1,14 +1,10 @@
-// Claims.tsx
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { PlusCircle } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-// Shadcn components
 import { Button } from "@/components/ui/button";
-
 // Custom components
 import ClaimList from "./components/ClaimList";
 import Loader from "@/components/Loader";
@@ -16,7 +12,6 @@ import SearchInput from "@/components/SearchInput";
 import FiltersPopover from "./components/FiltersPopover";
 import PaginationFooter from "@/components/PaginationFooter";
 import MissingRequirementsAlert from "./components/MissingRequirementsAlert";
-
 // Actions and hooks
 import { getClaims } from "../../actions/claims";
 import { getRatings } from "../../actions/ratings";
@@ -25,8 +20,6 @@ import { useForm } from "react-hook-form";
 import { useClaimsData } from "./hooks/useClaimsData";
 import { useClaimsStatus } from "./hooks/useClaimsStatus";
 import { useClaimsPagination } from "./hooks/useClaimsPagination";
-
-// Types
 import { ClaimFilters, FormValues } from "./types";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 import SearchButton from "@/components/SearchButton";
@@ -34,10 +27,8 @@ import SearchButton from "@/components/SearchButton";
 function Claims() {
   const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
-  const { search, pathname } = useLocation();
+  const { search } = useLocation();
   const query = new URLSearchParams(search);
-
-  // Local state
   const [searchText, setSearchText] = useState("");
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [filters, setFilters] = useState<ClaimFilters>({
@@ -50,7 +41,6 @@ function Claims() {
   });
   const [isSearchExpanded, setIsSearchExpanded] = useState(!!query.get("q"));
 
-  // If we have search text, make sure search is expanded on mobile
   useEffect(() => {
     if (searchText && isMobile && !isSearchExpanded) {
       setIsSearchExpanded(true);
@@ -71,8 +61,8 @@ function Claims() {
   // Fetch initial data
   useEffect(() => {
     dispatch(getClaims(filters));
-    dispatch(getClaimants());
-    dispatch(getRatings());
+    dispatch(getClaimants({ limit: 100 }));
+    dispatch(getRatings({ limit: 100 }));
   }, [dispatch, filters]);
 
   const toggleSearch = () => {
@@ -80,11 +70,11 @@ function Claims() {
   };
 
   // Use custom hooks
-  const { claimantsCount, ratingsCount, claimantsLoading, ratingsLoading } = useClaimsStatus();
+  const { claimantsCount, ratingsCount, claimantsLoading, ratingsLoading } =
+    useClaimsStatus();
   const { claims, total, loading } = useClaimsData(filters, searchText);
   const { totalPages, handlePageChange, handlePageSizeChange, onPagination } =
     useClaimsPagination(filters, setFilters, total);
-
 
   const clearSearch = () => {
     setSearchText("");
@@ -150,7 +140,6 @@ function Claims() {
     );
   }
 
-  // Show loader while loading
   if (loading) {
     return <Loader />;
   }
@@ -162,10 +151,12 @@ function Claims() {
       {/* Header */}
       {isMobile ? (
         <div className="space-y-4 flex justify-between items-center">
-          {/* First row */}
           {isMobile && (
             <div className="flex flex-col">
-              <MobileBreadcrumb currentPage="Claims" parentLabel="Fact Checking" />
+              <MobileBreadcrumb
+                currentPage="Claims"
+                parentLabel="Fact Checking"
+              />
               {isMobile && <h1 className="text-xl font-semibold">Claims</h1>}
             </div>
           )}
@@ -195,7 +186,7 @@ function Claims() {
             <SearchInput
               searchText={searchText}
               setSearchText={setSearchText}
-              handleSearchSubmit={() => { }}
+              handleSearchSubmit={() => {}}
               clearSearch={clearSearch}
               autoFocus={false}
             />
@@ -215,13 +206,12 @@ function Claims() {
           </Link>
         </div>
       )}
-      {/* Search input row - appears when expanded */}
-      {(isSearchExpanded && isMobile) && (
+      {isSearchExpanded && isMobile && (
         <div className="w-full">
           <SearchInput
             searchText={searchText}
             setSearchText={setSearchText}
-            handleSearchSubmit={() => { }}
+            handleSearchSubmit={() => {}}
             clearSearch={clearSearch}
             autoFocus={true}
           />

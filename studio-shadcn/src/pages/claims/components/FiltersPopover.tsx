@@ -1,4 +1,3 @@
-// components/FiltersPopover.tsx
 import { Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -6,12 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import Selector from "../../../components/Selector";
 import { FiltersPopoverProps } from "../types";
 
@@ -20,7 +14,7 @@ const FiltersPopover = ({
   onSave,
   hasActiveFilters,
   isOpen,
-  setIsOpen
+  setIsOpen,
 }: FiltersPopoverProps) => {
   return (
     <Form {...form}>

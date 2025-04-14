@@ -102,7 +102,6 @@ const SourcesSection = ({
             </div>
           ))}
 
-          {/* Add new claim source button and inputs */}
           {showClaimInputs ? (
             <div className="mt-2 bg-gray-50 p-3 rounded-md">
               <div className="space-y-2">
@@ -170,7 +169,6 @@ const SourcesSection = ({
         <div>
           <h3 className="font-medium mb-4">Review Sources</h3>
 
-          {/* Display existing review sources */}
           {reviewSourcesArray.fields.map((field, index) => (
             <div key={field.id} className="mb-3 bg-gray-50 p-3 rounded-md">
               <div className="flex justify-between items-start mb-2">
@@ -230,7 +228,6 @@ const SourcesSection = ({
             </div>
           ))}
 
-          {/* Add new review source button and inputs */}
           {showReviewInputs ? (
             <div className="mt-2 bg-gray-50 p-3 rounded-md">
               <div className="space-y-2">

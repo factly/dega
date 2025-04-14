@@ -40,8 +40,6 @@ interface SelectorProps {
   display?: string;
   placeholder?: string;
   style?: React.CSSProperties;
-  isQuickEdit: boolean;
-  popoverClass?: string;
 }
 
 // Define type for entity detail object
@@ -283,12 +281,6 @@ function Selector({
       actionFn = selectorType[actionName];
     }
 
-    // Safety check if the action creator doesn't exist
-    if (!actionFn) {
-      console.error(`Action creator for ${entity} not found`);
-      return;
-    }
-
     if (!setLoading) {
       dispatch(actionFn(query, setLoading));
       return;
@@ -332,8 +324,7 @@ function Selector({
   };
 
   // Handle removal of a single item from selection
-  const handleRemoveItem = (e: React.MouseEvent, itemId: string | number) => {
-    e.stopPropagation(); // Prevent opening the dropdown
+  const handleRemoveItem = (itemId: string | number) => {
     if (mode) {
       const newValue = normalizedValue.filter((id) => id !== itemId);
       handleSelectionChange(newValue);
@@ -420,7 +411,7 @@ function Selector({
         <PopoverContent className="p-0 w-[var(--radix-popover-trigger-width)]">
           <Command>
             <CommandList>
-              <ScrollArea  onScrollCapture={handleScroll}>
+              <ScrollArea onScrollCapture={handleScroll}>
                 <CommandEmpty>
                   {loading ? (
                     <div className="p-2 text-center text-sm">Loading...</div>
@@ -483,23 +474,24 @@ function Selector({
             <div className="flex flex-wrap gap-1 py-1 pr-8">
               {selectedItems.length > 0 ? (
                 selectedItems.map((item) => (
-                  <Badge
+                  <div
                     key={`selected-${item.id}`}
-                    variant="secondary"
-                    className="flex items-center gap-1 mr-1 mb-1"
+                    className="flex items-center gap-1 mr-1 mb-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 px-2 py-1 rounded-md"
                   >
                     <span className="max-w-[100px] truncate">
                       {getDisplayValue(item)}
                     </span>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={(e) => handleRemoveItem(e, item.id)}
-                      className="h-4 w-4 p-0 rounded-full ml-1 hover:bg-slate-300"
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemoveItem(item.id);
+                      }}
+                      className="cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600 rounded-full p-1 ml-1"
+                      aria-label="Remove item"
                     >
                       <CircleX className="h-3 w-3" />
-                    </Button>
-                  </Badge>
+                    </span>
+                  </div>
                 ))
               ) : (
                 <span className="text-muted-foreground">{placeholder}</span>

@@ -27,7 +27,7 @@ interface Medium {
 }
 
 interface MediaSelectorProps {
-  value?: string | null;
+  value?: string | number | null;
   onChange: (value: string | null) => void;
   maxWidth?: number | string;
   containerStyles?: React.CSSProperties;
@@ -48,7 +48,9 @@ function MediaSelector({
   const isMobile = useIsMobile();
 
   const medium = useSelector((state: any) => {
-    return state.media.details[value] || null;
+    // Convert number to string if needed for lookup
+    const lookupId = value !== null ? String(value) : null;
+    return lookupId ? state.media.details[lookupId] || null : null;
   });
 
   const setValue = (): void => {
@@ -66,7 +68,7 @@ function MediaSelector({
   // Load medium details when value is provided
   useEffect(() => {
     if (value) {
-      dispatch(getMedium(value, profile));
+      dispatch(getMedium(String(value), profile));
     }
   }, [value, dispatch, profile]);
 
@@ -151,7 +153,11 @@ function MediaSelector({
             <Button
               onClick={() => {
                 setShow(false);
-                selected ? onChange(selected.id) : onChange(null);
+                if (selected) {
+                  onChange(selected.id);
+                } else {
+                  onChange(null);
+                }
               }}
               className={isMobile ? "w-full" : ""}
               type="button"

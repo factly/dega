@@ -1,5 +1,5 @@
 // Main Pages Component
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
@@ -46,10 +46,34 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   const navigate = useNavigate();
   const query = new URLSearchParams(search);
   const isMobile = useIsMobile();
+  const initialRenderRef = useRef(true);
 
   // State
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(!!query.get("q"));
+  const [loadingTimeout, setLoadingTimeout] = useState(false);
+  const timeoutRef = useRef<number | null>(null);
+
+  // Use ref to avoid state updates during render
+  const hasCachedFormatRef = useRef(false);
+
+  // Check localStorage for cached format on initial render
+  useEffect(() => {
+    if (initialRenderRef.current) {
+      try {
+        const savedFormats = localStorage.getItem("cachedFormats");
+        if (savedFormats) {
+          const parsedFormats = JSON.parse(savedFormats);
+          if (parsedFormats.article) {
+            hasCachedFormatRef.current = true;
+          }
+        }
+      } catch (error) {
+        console.error("Error checking cached formats:", error);
+      }
+      initialRenderRef.current = false;
+    }
+  }, []);
 
   // Sorting state
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
@@ -85,6 +109,29 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   useEffect(() => {
     fetchPages();
   }, [search]);
+
+  // Set a timeout to prevent infinite loading
+  useEffect(() => {
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      window.clearTimeout(timeoutRef.current);
+    }
+
+    // If formats are loading, set a timeout to continue rendering anyway
+    if (formats.loading) {
+      timeoutRef.current = window.setTimeout(() => {
+        setLoadingTimeout(true);
+      }, 5000); // 5 seconds timeout
+    } else {
+      setLoadingTimeout(false);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [formats.loading]);
 
   const fetchPages = () => {
     const params = getUrlParams(query, [
@@ -237,17 +284,25 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       search: "?" + searchFilter.toString(),
     });
   };
+  const shouldContinueRendering =
+    !formats.loading || loadingTimeout || hasCachedFormatRef.current;
 
-  // Loading state
-  if (formats.loading) return <Loader />;
+  // Loading state - show for a maximum of 5 seconds
+  if (formats.loading && !loadingTimeout && !hasCachedFormatRef.current) {
+    return <Loader />;
+  }
 
-  // Format not found state
-  if (!formats.article) {
+  // Format not found state - but only check if we're sure formats are loaded or timeout occurred
+  if (
+    shouldContinueRendering &&
+    !formats.article &&
+    !hasCachedFormatRef.current
+  ) {
     return (
       <FormatNotFound
         status="info"
         title="Article format not found"
-        link="/advanced/formats/create"
+        link="/settings/advanced/formats/create"
       />
     );
   }
