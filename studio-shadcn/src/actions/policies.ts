@@ -183,4 +183,5 @@ export const addPoliciesRequest = (
 
 export const resetPolicies = (): PolicyAction => ({
   type: RESET_POLICIES,
+  payload: [],
 });

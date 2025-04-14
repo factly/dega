@@ -18,8 +18,8 @@ interface GoogleFactChecksResponse {
   nextPage?: string;
 }
 
-interface Query {
-  [key: string]: string | number | boolean;
+export interface Query {
+  [key: string]: string | number | boolean | undefined;
 }
 
 interface RequestPayload {

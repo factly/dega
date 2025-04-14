@@ -23,37 +23,9 @@ import {
 import MediaSelector from "../../components/MediaSelector";
 import { updateSpace } from "../../actions/spaces";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
-import { Space } from "../../actions/spaces";
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-
-interface SocialMediaUrls {
-  facebook?: string;
-  twitter?: string;
-  instagram?: string;
-  github?: string;
-  youtube?: string;
-  linkedin?: string;
-  pinterest?: string;
-}
-
-interface BrandingFormValues extends Partial<Space> {
-  logo_id?: string | null;
-  logo_mobile_id?: string | null;
-  fav_icon_id?: string | null;
-  mobile_icon_id?: string | null;
-  social_media_urls?: SocialMediaUrls;
-}
-
-interface RootState {
-  spaces: {
-    selected: string;
-    details: {
-      [key: string]: Space;
-    };
-    loading: boolean;
-  };
-}
+import { RootState, BrandingFormValues } from "./types";
 
 function Branding() {
   const dispatch = useAppDispatch();

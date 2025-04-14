@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
 import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteRating } from "../../../actions/ratings";
 import useNavigation from "../../../utils/useNavigation";
@@ -27,39 +26,9 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { AppThunkDispatch } from "../../../store/types";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
-
-// Type definitions
-interface Rating {
-  id: string;
-  name: string;
-  numeric_value: number;
-  background_colour?: {
-    hex: string;
-  };
-  text_colour?: {
-    hex: string;
-  };
-}
-
-interface RatingListProps {
-  actions: string[];
-  data: {
-    ratings: Rating[];
-    loading: boolean;
-    total: number;
-  };
-  filters: {
-    page: number;
-    limit: number;
-  };
-  setFilters: (filters: { page: number; limit: number }) => void;
-  fetchRatings: () => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
-  isMobile?: boolean;
-}
+import { Rating, RatingListProps } from "../types";
 
 const RatingList: React.FC<RatingListProps> = ({
   data,
@@ -68,10 +37,11 @@ const RatingList: React.FC<RatingListProps> = ({
   isMobile = false,
 }) => {
   const navigate = useNavigation();
-  const dispatch = useDispatch<AppThunkDispatch>();
+  const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [ratingToDelete, setRatingToDelete] = useState<Rating | null>(null);
 
+  // Memoize handlers to prevent unnecessary re-renders
   const handleRowClick = useCallback(
     (id: string) => {
       navigate(`/ratings/${id}/edit`);
@@ -103,7 +73,8 @@ const RatingList: React.FC<RatingListProps> = ({
       if (ratingToDelete && ratingToDelete.id) {
         try {
           await dispatch(deleteRating(ratingToDelete.id));
-          fetchRatings();
+          // Only fetch after the delete is complete
+          setTimeout(() => fetchRatings(), 100);
         } catch (error) {
           console.error("Error deleting rating:", error);
         } finally {

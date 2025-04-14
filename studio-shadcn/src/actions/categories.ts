@@ -142,7 +142,7 @@ export const getCategories = (
 ): AppThunk<any> => {
   return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
-    if (currentSpaceID === 0) {
+    if (currentSpaceID === "" || currentSpaceID === "0") {
       return Promise.resolve();
     }
 

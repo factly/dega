@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Search } from "lucide-react";
-import { getGoogleFactChecks } from "../../actions/googleFactChecks";
+import { getGoogleFactChecks, Query } from "../../actions/googleFactChecks";
 import deepEqual from "deep-equal";
 import { languageCode } from "../fact-checks/LanguageCode";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -39,7 +39,7 @@ interface FactCheck {
   claimReview: ClaimReview[];
 }
 
-interface FilterState {
+interface FilterState extends Query {
   page: number;
   query: string;
   pageToken?: string;
@@ -141,9 +141,11 @@ function GoogleFactCheck(): React.ReactElement {
     if (indexPointer === null) {
       setIndexPointer(0);
     } else {
-      indexPointer + 1 === paginationStack.length
-        ? setIndexPointer(paginationStack.length)
-        : setIndexPointer(indexPointer + 1);
+      if (indexPointer + 1 === paginationStack.length) {
+        setIndexPointer(paginationStack.length);
+      } else {
+        setIndexPointer(indexPointer + 1);
+      }
     }
 
     setCurrPageToken(nextPage);

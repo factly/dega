@@ -13,29 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { useForm } from "react-hook-form";
 import Selector from "../../../components/Selector";
 import { TitleInput } from "../../../components/FormItems";
-
-interface Permission {
-  resource: string;
-  actions: string[];
-}
-
-interface PolicyFormData {
-  id?: string;
-  name: string;
-  users: string[];
-  description?: string;
-  permissions: Record<string, string[]>;
-}
-
-interface PolicyFormProps {
-  data?: PolicyFormData;
-  onCreate: (values: {
-    name: string;
-    users: string[];
-    description?: string;
-    permissions: Permission[];
-  }) => void;
-}
+import { PolicyFormProps, PolicyFormData } from "../types";
 
 type OptionType = {
   label: string;

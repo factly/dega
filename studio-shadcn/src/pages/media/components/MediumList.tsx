@@ -88,7 +88,7 @@ function MediumList({ data, actions = [] }: MediumListProps) {
                     >
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button className="p-1 rounded-md bg-white/90 hover:bg-white">
+                          <Button variant="outline" className="p-1 rounded-md">
                             <MoreHorizontal className="h-5 w-5" />
                           </Button>
                         </DropdownMenuTrigger>

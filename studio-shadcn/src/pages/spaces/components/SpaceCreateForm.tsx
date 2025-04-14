@@ -31,32 +31,11 @@ import getJsonValue from "../../../utils/getJsonValue";
 import { SlugInput } from "../../../components/FormItems/SlugInput";
 import MonacoEditor from "../../../components/MonacoEditor/index";
 import { Building2 } from "lucide-react";
-import { RootState } from "../../../store";
-import { ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-export interface Space {
-  id: string;
-  name: string;
-}
-
-interface SpaceCreateFormProps {
-  onCreate: (values: SpaceFormValues) => void;
-}
-
-export interface SpaceFormValues {
-  organisation_id: string;
-  name: string;
-  slug: string;
-  site_title?: string;
-  site_address?: string;
-  description?: string;
-  meta_fields?: Record<string, any>;
-}
+import { RootState, SpaceCreateFormProps, SpaceFormValues } from "../types";
 
 const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
-  const dispatch = useDispatch<ThunkDispatch<RootState, unknown, AnyAction>>();
+  const dispatch = useDispatch();
   const isMobile = useIsMobile();
 
   const form = useForm<SpaceFormValues>({
@@ -368,10 +347,7 @@ const SpaceCreateForm: React.FC<SpaceCreateFormProps> = ({ onCreate }) => {
                                   value={field.value as string}
                                   onChange={field.onChange}
                                   borderless={true}
-                                  options={{
-                                    minimap: { enabled: false },
-                                    scrollBeyondLastLine: false,
-                                  }}
+                                  className="border-none"
                                 />
                               </div>
                             </FormControl>

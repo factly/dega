@@ -1,89 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import TokenList from "./components/TokenList";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
-import { useSelector } from "react-redux";
 import { getSpaceTokens } from "../../actions/tokens";
-import deepEqual from "deep-equal";
 import Pagination from "../../components/Pagination";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { Input } from "@/components/ui/input";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
-
-interface TokensState {
-  details: Record<string, any>;
-  loading: boolean;
-  req: {
-    data: string[];
-    query: Record<string, any>;
-    total: number;
-  }[];
-}
-
-interface RootState {
-  tokens: TokensState;
-  sidebar: {
-    collapsed: boolean;
-  };
-}
+import { Helmet } from "react-helmet";
+import { useSidebar } from "@/components/ui/sidebar";
+import { TokenFilters } from "./types";
+import { useTokensData } from "./hooks/useTokensData";
+import { useTokensPagination } from "./hooks/useTokensPagination";
 
 const Tokens: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { state: sidebarState } = useSidebar();
   const isMobile = useIsMobile();
+
+  // State for search and filters
   const [searchText, setSearchText] = useState<string>("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
-
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<TokenFilters>({
     page: 1,
     limit: 10,
   });
 
-  // Get data from Redux
-  const { tokens, total, loading } = useSelector((state: RootState) => {
-    const node = state.tokens.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
+  // Handle responsive UI changes
+  useEffect(() => {
+    setShowSearch(!isMobile);
+  }, [isMobile]);
 
-    if (node)
-      return {
-        tokens: node.data.map((element) => state.tokens.details[element]),
-        total: node.total,
-        loading: state.tokens.loading,
-      };
-    return { tokens: [], total: 0, loading: state.tokens.loading };
-  });
+  // Use custom hooks for data and pagination
+  const { tokens, total, loading } = useTokensData(filters, searchText);
+  const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
+    useTokensPagination(filters, setFilters, total);
 
-  // Filter tokens locally based on search text
-  const filteredTokens = searchText.trim()
-    ? tokens.filter(
-        (token) =>
-          token.name?.toLowerCase().includes(searchText.toLowerCase()) ||
-          token.description?.toLowerCase().includes(searchText.toLowerCase())
-      )
-    : tokens;
-
+  // Fetch tokens when filters change
   useEffect(() => {
     fetchTokens();
   }, [filters]);
 
-  // Fetch tokens function
-  const fetchTokens = () => {
+  // Fetch tokens function for the list component
+  const fetchTokens = useCallback(() => {
     dispatch(getSpaceTokens(filters));
-  };
-
-  // Pagination handlers
-  const handlePageChange = (page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
-  };
-
-  const handlePageSizeChange = (size: number) => {
-    setFilters({ page: 1, limit: size });
-  };
-
-  // Calculate total pages
-  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+  }, [dispatch, filters]);
 
   // Handle search input changes
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,28 +54,24 @@ const Tokens: React.FC = () => {
   };
 
   // Toggle search on mobile
-  const toggleSearch = () => {
+  const toggleSearch = useCallback(() => {
     setShowSearch((prev) => !prev);
     if (showSearch) {
       setSearchText("");
     }
-  };
+  }, [showSearch]);
 
-  // Get sidebar state from Redux store
-  const isCollapsed = useSelector(
-    (state: RootState) => state.sidebar.collapsed
-  );
-
-  // Calculate left margin based on sidebar state
-  const sidebarWidth = isCollapsed ? "89px" : "265px";
+  // Get sidebar state
+  const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
   return (
     <div className="flex flex-col h-full">
+      <Helmet title={"API Tokens"} />
+
       {/* Mobile Breadcrumb */}
       {isMobile && (
         <MobileBreadcrumb
           currentPage="API Tokens"
-          parentPath="/settings/advanced"
           parentLabel="Advanced Settings"
         />
       )}
@@ -122,7 +81,7 @@ const Tokens: React.FC = () => {
         style={
           !isMobile
             ? {
-                left: sidebarWidth,
+                left: isCollapsed ? "89px" : "265px",
                 right: 0,
                 transition: "left 0.3s ease",
               }
@@ -201,23 +160,26 @@ const Tokens: React.FC = () => {
           !isMobile
             ? {
                 top: "calc(1.5rem + 2.5rem + 1rem)",
-                left: sidebarWidth,
+                left: 0,
                 right: 0,
                 bottom: "64px",
                 paddingLeft: "1.5rem",
                 paddingRight: "1.5rem",
                 paddingBottom: "1.5rem",
                 paddingTop: "1rem",
-                transition: "left 0.3s ease",
+                transition: "left 0.3s ease, top 0.3s ease",
               }
             : undefined
         }
       >
         <TokenList
-          tokens={filteredTokens}
-          total={total}
-          loading={loading}
+          data={{
+            tokens,
+            total,
+            loading,
+          }}
           filters={filters}
+          setFilters={setFilters}
           fetchTokens={fetchTokens}
           isMobile={isMobile}
         />
@@ -230,7 +192,7 @@ const Tokens: React.FC = () => {
         style={
           !isMobile
             ? {
-                left: sidebarWidth,
+                left: isCollapsed ? "89px" : "265px",
                 right: 0,
                 height: "64px",
                 transition: "left 0.3s ease",
@@ -242,7 +204,7 @@ const Tokens: React.FC = () => {
           currentPage={filters.page}
           totalPages={totalPages}
           totalItems={total}
-          pageSize={filters.limit}
+          pageSize={pageSize}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
           isMobile={isMobile}

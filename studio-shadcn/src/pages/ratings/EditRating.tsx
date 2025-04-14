@@ -1,31 +1,25 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import RatingEditForm from "./components/RatingForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
 import { updateRating, getRating } from "../../actions/ratings";
 import { useParams } from "react-router-dom";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
-import { AppDispatch, RootState } from "../../types/index";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { RootState, RatingFormValues } from "./types";
 
-// Type for form values that will be passed to onUpdate
-interface RatingFormValues {
-  name?: string;
-  [key: string]: any;
-}
-
-function EditRating(): JSX.Element {
+function EditRating(): React.ReactElement {
   const history = useNavigation();
   const { id } = useParams<{ id: string }>();
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const { rating, loading } = useSelector((state: RootState) => {
     return {
-      rating: state.ratings.details[id as string]
-        ? state.ratings.details[id as string]
-        : null,
+      rating:
+        id && state.ratings.details[id] ? state.ratings.details[id] : null,
       loading: state.ratings.loading,
     };
   });
@@ -36,18 +30,29 @@ function EditRating(): JSX.Element {
     }
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton className="w-full h-64" />;
+  if (loading) return <Skeleton className="h-48 w-full" />;
 
   if (!rating) {
     return <RecordNotFound />;
   }
 
   const onUpdate = (values: RatingFormValues): void => {
-    dispatch(updateRating({ ...rating, ...values })).then(() => {
-      if (id) {
+    const updatedRating = {
+      ...rating,
+      ...values,
+      id: rating.id,
+      description: rating.description,
+    };
+
+    dispatch(updateRating(updatedRating))
+      .then(() => {
+        // Navigate only after successful update
         history(`/ratings/${id}/edit`);
-      }
-    });
+      })
+      .catch((error) => {
+        // Error is already handled in the action creator
+        console.error("Update failed:", error);
+      });
   };
 
   return (

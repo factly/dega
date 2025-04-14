@@ -29,32 +29,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import EmptyState from "@/components/EmptyState";
-
-// Types
-interface Policy {
-  id: string;
-  name: string;
-  description?: string;
-}
-
-interface PolicyListProps {
-  actions: string[];
-  data: {
-    policies: Policy[];
-    loading: boolean;
-    total: number;
-  };
-  filters: {
-    page: number;
-    limit: number;
-    [key: string]: any;
-  };
-  setFilters: (filters: any) => void;
-  fetchPolicies: () => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
-  isMobile?: boolean;
-}
+import { PolicyListProps } from "../types";
 
 const PolicyList: React.FC<PolicyListProps> = ({
   data,

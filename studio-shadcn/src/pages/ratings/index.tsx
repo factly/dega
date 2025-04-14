@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import RatingList from "./components/RatingList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import deepEqual from "deep-equal";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
@@ -14,47 +12,9 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 import { getRatings } from "../../actions/ratings";
-
-// Type definitions
-interface Permission {
-  actions: string[];
-}
-
-interface RatingFilters {
-  page: number;
-  limit: number;
-}
-
-interface Rating {
-  id: string;
-  name: string;
-  numeric_value: number;
-  background_colour?: {
-    hex: string;
-  };
-  text_colour?: {
-    hex: string;
-  };
-}
-
-interface RatingsState {
-  req: {
-    query: RatingFilters;
-    data: string[];
-    total: number;
-  }[];
-  details: {
-    [key: string]: Rating;
-  };
-  loading: boolean;
-}
-
-interface RootState {
-  ratings: RatingsState;
-  sidebar: {
-    collapsed: boolean;
-  };
-}
+import { Permission, RatingFilters } from "./types";
+import { useRatingsData } from "./hooks/useRatingsData";
+import { useRatingsPagination } from "./hooks/useRatingsPagination";
 
 function Ratings({
   permission = { actions: [] },
@@ -70,79 +30,39 @@ function Ratings({
   const [searchText, setSearchText] = useState<string>("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-
   const [filters, setFilters] = useState<RatingFilters>({
     page: 1,
     limit: isMobile ? 10 : 20,
   });
 
-  // Handle responsive UI changes without triggering data reload
+  // Handle responsive UI changes
   useEffect(() => {
-    // Just update the UI state for search visibility
     setShowSearch(!isMobile);
   }, [isMobile]);
 
-  const { ratings, total, loading } = useSelector((state: RootState) => {
-    const node = state.ratings.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-
-    if (node)
-      return {
-        ratings: node.data.map((element) => state.ratings.details[element]),
-        total: node.total,
-        loading: state.ratings.loading,
-      };
-    return { ratings: [], total: 0, loading: state.ratings.loading };
-  });
-
-  useEffect(() => {
-    fetchRatings();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchRatings = useCallback(() => {
-    dispatch(getRatings(filters));
-  }, [dispatch, filters]);
-
-  // Filter ratings based on search text
-  const filteredRatings = useMemo(() => {
-    if (!searchText.trim()) {
-      return ratings;
-    }
-
-    return ratings.filter((rating) =>
-      rating.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }, [ratings, searchText]);
-
-  // Sort ratings based on sort order
-  const sortedRatings = useMemo(() => {
-    return [...filteredRatings].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.name.localeCompare(b.name);
-      } else {
-        return b.name.localeCompare(a.name);
-      }
-    });
-  }, [filteredRatings, sortOrder]);
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
+  // Use custom hooks for data and pagination
+  const { ratings, total, loading } = useRatingsData(
+    filters,
+    searchText,
+    sortOrder
+  );
+  const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
+    useRatingsPagination(filters, setFilters, total);
 
   // Handle sort toggle
   const handleSortToggle = useCallback(() => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   }, []);
 
-  const handlePageChange = useCallback((page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
-  }, []);
+  // Fetch ratings when filters change
+  useEffect(() => {
+    dispatch(getRatings(filters));
+  }, [dispatch, filters]);
 
-  const handlePageSizeChange = useCallback((size: number) => {
-    setFilters((prev) => ({ ...prev, limit: size, page: 1 }));
-  }, []);
+  // Handle search input changes
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
 
   // Toggle search on mobile
   const toggleSearch = useCallback(() => {
@@ -152,8 +72,10 @@ function Ratings({
     }
   }, [showSearch]);
 
-  // Calculate total pages
-  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+  // Fetch ratings function for the list component
+  const fetchRatings = useCallback(() => {
+    dispatch(getRatings(filters));
+  }, [dispatch, filters]);
 
   // Get sidebar state
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
@@ -166,11 +88,7 @@ function Ratings({
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Ratings"
-          parentPath="/"
-          parentLabel="Core"
-        />
+        <MobileBreadcrumb currentPage="Ratings" parentLabel="Fact Checking" />
       )}
 
       <div
@@ -272,7 +190,7 @@ function Ratings({
         <RatingList
           actions={actions}
           data={{
-            ratings: sortedRatings,
+            ratings,
             total,
             loading,
           }}
@@ -304,7 +222,7 @@ function Ratings({
           currentPage={filters.page}
           totalPages={totalPages}
           totalItems={total}
-          pageSize={filters.limit}
+          pageSize={pageSize}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
           isMobile={isMobile}
