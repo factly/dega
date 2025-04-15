@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from "react";
+// components/TagList.tsx
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteTag } from "../../../actions/tags";
-import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-
 import {
   Table,
   TableBody,
@@ -26,98 +26,46 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import EmptyState from "@/components/EmptyState";
+import { TagListProps } from "../types";
 
-interface Tag {
-  id: string;
-  name: string;
-  slug: string;
-}
-
-interface TagListProps {
-  filters: {
-    page?: number;
-    limit?: number;
-    [key: string]: any;
-  };
-  setFilters: (filters: any) => void;
-  fetchTags: () => void;
-  data: {
-    tags: Tag[] | null;
-    loading: boolean;
-    total: number;
-  };
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
-  isMobile?: boolean;
-}
-
-function TagList({ fetchTags, data, onSortToggle, isMobile }: TagListProps) {
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
-  const [deleteItemID, setDeleteItemID] = useState<string | null>(null);
-
+function TagList({
+  data,
+  fetchTags,
+  onSortToggle,
+  isMobile = false,
+}: TagListProps) {
   const dispatch = useAppDispatch();
-  const navigate = useNavigation();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  const handleRowClick = useCallback(
-    (id: string) => {
-      navigate(`/tags/${id}/edit`);
-    },
-    [navigate]
-  );
-
-  const handleEditClick = useCallback(
-    (e: React.MouseEvent, id: string) => {
-      e.stopPropagation();
-      navigate(`/tags/${id}/edit`);
-    },
-    [navigate]
-  );
-
-  const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
+  const handleDelete = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    setDeleteDialogOpen(true);
-    setDeleteItemID(id);
-  }, []);
+    if (deleteItemId && !Number.isNaN(Number(deleteItemId))) {
+      await dispatch(deleteTag(Number(deleteItemId)));
+      fetchTags();
+      setModalOpen(false);
+      setDeleteItemId(null);
+    }
+  };
 
-  const handleDeleteConfirm = useCallback(
-    async (e: React.MouseEvent) => {
-      e.stopPropagation();
-      if (deleteItemID) {
-        try {
-          await dispatch(deleteTag(deleteItemID));
-          fetchTags();
-        } catch (error) {
-          console.error("Error deleting tag:", error);
-        } finally {
-          setDeleteItemID(null);
-          setDeleteDialogOpen(false);
-        }
-      }
-    },
-    [deleteItemID, dispatch, fetchTags]
-  );
+  const handleRowClick = (id: string) => {
+    navigate(`/tags/${id}/edit`);
+  };
 
-  const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setDeleteItemID(null);
-    setDeleteDialogOpen(false);
-  }, []);
-
-  // Safely access data
-  const tags = data?.tags || [];
-  const hasTagsData = tags && tags.length > 0;
+  // Check if there are any tags to display
+  const hasTagsData = data.tags && data.tags.length > 0;
 
   return (
-    <div className="pb-4 overflow-auto">
+    <div className="pb-4 overflow-scroll">
       {hasTagsData ? (
         <div className="rounded-md">
           <Table>
-            <TableHeader className="w-1/2 text-[13px]">
+            <TableHeader>
               <TableRow>
-                <TableHead className="w-1/2">
+                <TableHead className="w-[50%] text-[13px]">
                   <div
                     className="flex items-center cursor-pointer"
                     onClick={onSortToggle}
@@ -126,24 +74,31 @@ function TagList({ fetchTags, data, onSortToggle, isMobile }: TagListProps) {
                     <ChevronsUpDown className="ml-1 h-3 w-3" />
                   </div>
                 </TableHead>
-                <TableHead className="w-2/5">Slug</TableHead>
-                <TableHead className="w-[150px] text-center">Actions</TableHead>
+                <TableHead className="w-[40%] text-[13px]">Slug</TableHead>
+                <TableHead className="w-[10%] text-[13px] text-center">
+                  Actions
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {tags.map((tag) => (
+              {data.tags.map((tag) => (
                 <TableRow
                   key={tag.id}
-                  onClick={() => handleRowClick(tag.id)}
+                  onClick={() => handleRowClick(tag.id.toString())}
                   className="cursor-pointer"
                 >
                   <TableCell>
-                    <h3 className="font-normal">{tag.name || "Unnamed Tag"}</h3>
+                    <Link
+                      to={`/tags/${tag.id}/edit`}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {tag.name || "Unnamed Tag"}
+                    </Link>
                   </TableCell>
                   <TableCell>
-                    <p className="line-clamp-2 font-normal">
-                      {tag.slug || "---"}
-                    </p>
+                    <span className="line-clamp-2">
+                      {tag.slug || "—"}
+                    </span>
                   </TableCell>
                   <TableCell className="text-center">
                     <DropdownMenu>
@@ -152,20 +107,26 @@ function TagList({ fetchTags, data, onSortToggle, isMobile }: TagListProps) {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button variant="ghost" size="icon">
-                          <Ellipsis className="h-5 w-5" />
+                          <Ellipsis className="h-5 w-5 text-[#858585]" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem
-                          onClick={(e) => handleEditClick(e, tag.id)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/tags/${tag.id}/edit`);
+                          }}
                           className="cursor-pointer"
                         >
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          onClick={(e) => handleDeleteClick(e, tag.id)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setModalOpen(true);
+                            setDeleteItemId(tag.id.toString());
+                          }}
                           className="cursor-pointer text-red-600 focus:text-red-600"
                         >
                           <Trash2 className="h-4 w-4 mr-2" />
@@ -189,11 +150,8 @@ function TagList({ fetchTags, data, onSortToggle, isMobile }: TagListProps) {
       )}
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent
-          className="max-w-sm p-4"
-          onPointerDownOutside={(e) => e.preventDefault()}
-        >
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+        <DialogContent className="max-w-sm p-4">
           <DialogHeader className="space-y-2">
             <DialogTitle className="text-base">Delete Tag</DialogTitle>
             <DialogDescription className="text-sm">
@@ -205,19 +163,14 @@ function TagList({ fetchTags, data, onSortToggle, isMobile }: TagListProps) {
               size="sm"
               variant="outline"
               onClick={(e) => {
-                handleDeleteCancel(e);
+                e.stopPropagation();
+                setModalOpen(false);
+                setDeleteItemId(null);
               }}
             >
               Cancel
             </Button>
-            <Button
-              size="sm"
-              variant="destructive"
-              onClick={(e) => {
-                handleDeleteConfirm(e);
-              }}
-              type="button"
-            >
+            <Button size="sm" variant="destructive" onClick={handleDelete}>
               Delete
             </Button>
           </DialogFooter>

@@ -1,12 +1,11 @@
+// components/TagForm.tsx
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { maker } from "../../../utils/sluger";
-import getJsonValue from "../../../utils/getJsonValue";
 import MediaSelector from "../../../components/MediaSelector";
 import { SketchPicker } from "react-color";
+import getJsonValue from "../../../utils/getJsonValue";
 import { MetaForm, SlugInput, TitleInput } from "../../../components/FormItems";
 import { Button } from "@/components/ui/button";
-import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Switch } from "@/components/ui/switch";
 import {
   Accordion,
@@ -14,8 +13,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { TagFormProps, TagFormValues } from "../types";
 
 interface ColorResult {
   hex: string;
@@ -23,26 +25,17 @@ interface ColorResult {
   hsl: { h: number; s: number; l: number; a?: number };
 }
 
-interface TagFormValues {
-  name: string;
-  slug: string;
-  is_featured: boolean;
-  background_colour?: ColorResult | null;
-  description_html?: string;
-  medium_id?: string;
-  meta_fields?: string;
-  id?: string;
-}
-
-interface TagFormProps {
-  onCreate: (values: any) => void;
-  data?: Partial<TagFormValues>;
-}
-
 const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
   const isMobile = useIsMobile();
+  const [valueChange, setValueChange] = useState<boolean>(false);
+  const [activeKeys, setActiveKeys] = useState<string[]>(["general"]);
+  const [backgroundColour, setBackgroundColour] = useState<ColorResult | null>(
+    data.background_colour ? data.background_colour : null
+  );
+  const [displayBgColorPicker, setDisplayBgColorPicker] = useState<boolean>(false);
+  const navigate = useNavigate();
 
-  // Process meta_fields if they exist
+  // Handle meta_fields conversion
   const initialData = { ...data };
   if (initialData.meta_fields && typeof initialData.meta_fields !== "string") {
     initialData.meta_fields = JSON.stringify(initialData.meta_fields);
@@ -52,13 +45,17 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
     defaultValues: initialData as TagFormValues,
   });
 
-  const [valueChange, setValueChange] = useState<boolean>(false);
-  const [backgroundColour, setBackgroundColour] = useState<ColorResult | null>(
-    data.background_colour ? (data.background_colour as ColorResult) : null
-  );
-  const [displayBgColorPicker, setDisplayBgColorPicker] =
-    useState<boolean>(false);
-  const navigate = useNavigate();
+  // Reset the form when data changes (important for edit mode)
+  useEffect(() => {
+    if (data && Object.keys(data).length > 0) {
+      form.reset(initialData);
+      setBackgroundColour(data.background_colour || null);
+    }
+  }, [data, form]);
+
+  const handleCancel = () => {
+    navigate(-1);
+  };
 
   const handleBgClick = () => {
     setDisplayBgColorPicker((prev) => !prev);
@@ -69,257 +66,222 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
     setDisplayBgColorPicker(false);
   };
 
-  const onReset = () => {
-    form.reset();
-  };
-
-  const handleCancel = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent form submission
-    navigate(-1); // Navigate to the previous page
-  };
-
-  const onTitleChange = (value: string) => {
-    form.setValue("slug", maker(value));
+  const onTitleChange = (title: string) => {
+    const slug = maker(title);
+    form.setValue("slug", slug);
     setValueChange(true);
   };
 
   const onSubmit = (values: TagFormValues) => {
-    const submitValues = { ...values };
+    // Create a new object to avoid modifying the form values directly
+    const submissionValues = { ...values };
 
-    if (submitValues.meta_fields) {
-      submitValues.meta_fields = getJsonValue(submitValues.meta_fields);
+    // Always preserve the original ID format from the data
+    if (data.id !== undefined) {
+      submissionValues.id = data.id;
     }
 
-    submitValues.background_colour = backgroundColour;
-    onCreate(submitValues);
-    onReset();
+    // Process meta_fields
+    if (submissionValues.meta_fields) {
+      submissionValues.meta_fields = getJsonValue(
+        submissionValues.meta_fields as string
+      );
+    }
+
+    // Add background color
+    submissionValues.background_colour = backgroundColour;
+
+    // Call the onCreate prop function
+    onCreate(submissionValues);
   };
 
-  useEffect(() => {
-    const subscription = form.watch(() => setValueChange(true));
-    return () => subscription.unsubscribe();
-  }, [form]);
-
   return (
-    <div className={isMobile ? "px-4" : "px-60 max-w-6xl mx-auto"}>
-      {/* Mobile header */}
-      {isMobile && (
-        <div className="mb-4">
-          <h1 className="text-xl font-semibold">
+    <div className="w-full flex justify-center">
+      <div className="max-w-3xl w-full px-4">
+        <div className="text-start mb-4">
+          <h1 className="text-xl font-semibold mb-2">
             {data && data.id ? "Edit Tag" : "Create Tag"}
           </h1>
-          <div className="mt-2">
-            <p className="text-gray-600 text-[13px]">
-              Set up a tag to help categorize content by entering the essential
-              details provided below
-            </p>
-          </div>
+          <p className="text-[#666] text-[13px]">
+            Set up a tag to help categorize content by entering the essential details provided below.
+          </p>
         </div>
-      )}
 
-      {/* Desktop header */}
-      {!isMobile && (
-        <div className="mb-6 px-4">
-          <h1 className="text-xl font-semibold text-gray-900">
-            {data && data.id ? "Edit Tag" : "Create Tag"}
-          </h1>
-          <div className="mt-2">
-            <p className="text-gray-600 text-[13px]">
-              Set up a tag to help categorize content by entering the essential
-              details provided below
-            </p>
-          </div>
-        </div>
-      )}
-
-      <div className="border-t border-gray-200 mb-4"></div>
-
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full mx-auto">
-          <div className="w-full mb-6">
+        <Form {...form}>
+          <form
+            className="space-y-4 border-t pt-4"
+            onSubmit={form.handleSubmit(onSubmit)}
+            onKeyDown={(e) => {
+              if (
+                e.key === "Enter" &&
+                e.target instanceof HTMLTextAreaElement === false
+              ) {
+                e.preventDefault();
+              }
+            }}
+          >
             <Accordion
               type="multiple"
-              defaultValue={["general"]}
+              value={activeKeys}
+              onValueChange={setActiveKeys}
               className="w-full"
             >
               <AccordionItem
                 value="general"
-                className="rounded-md overflow-hidden mb-2"
+                className="rounded-md overflow-hidden mb-4"
               >
                 <AccordionTrigger className="hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
                   <div className="flex items-center justify-between w-full">
                     <span className="text-base font-medium">General</span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
-                  <div className="py-3 bg-white px-4">
-                    <div className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem className="mb-4 sm:mb-6">
-                            <FormLabel className="text-base">Title</FormLabel>
-                            <TitleInput
-                              {...field}
-                              placeholder="Tag name"
-                              onChange={(e) => {
-                                field.onChange(e);
-                                onTitleChange(e.target.value);
-                              }}
-                            />
-                          </FormItem>
-                        )}
-                      />
+                <AccordionContent className="px-4 pt-4 pb-4">
+                  <div className="grid gap-4">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      rules={{
+                        required: "Please input the Tag name!",
+                        maxLength: {
+                          value: 100,
+                          message: "Name must be maximum 100 characters.",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="after:content-['*'] after:ml-0.5 after:text-red-500">
+                            Name
+                          </FormLabel>
+                          <TitleInput
+                            {...field}
+                            placeholder="Tag name"
+                            onChange={(e) => {
+                              field.onChange(e);
+                              onTitleChange(e.target.value);
+                            }}
+                          />
+                        </FormItem>
+                      )}
+                    />
 
-                      <div className="mb-4 sm:mb-6">
-                        <SlugInput form={form} />
-                      </div>
+                    <SlugInput form={form} required={true} />
 
-                      <FormField
-                        control={form.control}
-                        name="is_featured"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-center justify-between">
-                            <FormLabel className="text-base">
-                              Featured
-                            </FormLabel>
-                            <Switch
-                              checked={field.value}
-                              onCheckedChange={(value) => {
-                                field.onChange(value);
-                                setValueChange(true);
-                              }}
-                            />
-                          </FormItem>
-                        )}
-                      />
+                    <FormField
+                      control={form.control}
+                      name="is_featured"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-center justify-between">
+                          <FormLabel>Featured</FormLabel>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={(value) => {
+                              field.onChange(value);
+                              setValueChange(true);
+                            }}
+                          />
+                        </FormItem>
+                      )}
+                    />
 
-                      <FormField
-                        control={form.control}
-                        name="background_colour"
-                        render={() => (
-                          <FormItem className="mb-4 sm:mb-6">
-                            <FormLabel className="text-base">Colour</FormLabel>
-                            <div className="relative w-full">
-                              <div
-                                className="border border-input rounded-md h-9 w-full flex items-center px-3 bg-white shadow-xs cursor-pointer"
-                                onClick={handleBgClick}
-                              >
-                                <div className="flex w-full items-center">
-                                  {backgroundColour?.hex ? (
-                                    <div className="flex items-center gap-2 w-full">
-                                      <div
-                                        className="w-5 h-5 rounded-sm"
-                                        style={{
-                                          background: `${backgroundColour?.hex}`,
-                                        }}
-                                      />
-                                      <span className="text-sm">
-                                        {backgroundColour.hex}
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    <span className="text-muted-foreground text-sm">
-                                      Select a colour
+                    <FormField
+                      control={form.control}
+                      name="background_colour"
+                      render={() => (
+                        <FormItem>
+                          <FormLabel>Colour</FormLabel>
+                          <div className="relative w-full">
+                            <div
+                              className="border border-input rounded-md h-9 w-full flex items-center px-3 bg-white shadow-xs cursor-pointer"
+                              onClick={handleBgClick}
+                            >
+                              <div className="flex w-full items-center">
+                                {backgroundColour?.hex ? (
+                                  <div className="flex items-center gap-2 w-full">
+                                    <div
+                                      className="w-5 h-5 rounded-sm"
+                                      style={{
+                                        background: `${backgroundColour?.hex}`,
+                                      }}
+                                    />
+                                    <span className="text-sm">
+                                      {backgroundColour.hex}
                                     </span>
-                                  )}
-                                </div>
+                                  </div>
+                                ) : (
+                                  <span className="text-muted-foreground text-sm">
+                                    Select a colour
+                                  </span>
+                                )}
                               </div>
-                              {displayBgColorPicker ? (
-                                <div
-                                  className={`absolute z-10 ${
-                                    isMobile ? "right-0" : "top-10 left-0"
-                                  }`}
-                                >
-                                  <div
-                                    className="fixed inset-0"
-                                    onClick={handleBgClose}
-                                  />
-                                  <SketchPicker
-                                    color={
-                                      backgroundColour !== null
-                                        ? backgroundColour.hex
-                                        : undefined
-                                    }
-                                    onChange={(color) =>
-                                      setBackgroundColour(color)
-                                    }
-                                    disableAlpha
-                                  />
-                                </div>
-                              ) : null}
                             </div>
-                          </FormItem>
-                        )}
-                      />
+                            {displayBgColorPicker ? (
+                              <div
+                                className={`absolute z-10 ${
+                                  isMobile ? "right-0" : "top-10 left-0"
+                                }`}
+                              >
+                                <div
+                                  className="fixed inset-0"
+                                  onClick={handleBgClose}
+                                />
+                                <SketchPicker
+                                  color={
+                                    backgroundColour !== null
+                                      ? backgroundColour.hex
+                                      : undefined
+                                  }
+                                  onChange={(color) => {
+                                    setBackgroundColour(color);
+                                    setValueChange(true);
+                                  }}
+                                  disableAlpha
+                                />
+                              </div>
+                            ) : null}
+                          </div>
+                        </FormItem>
+                      )}
+                    />
 
-                      {/* Featured Image */}
-                      <FormField
-                        control={form.control}
-                        name="medium_id"
-                        render={({ field }) => (
-                          <FormItem className="mt-6">
-                            <FormLabel className="text-base mb-2">
-                              Featured Image
-                            </FormLabel>
-                            <MediaSelector
-                              value={field.value}
-                              onChange={(value) => {
-                                field.onChange(value);
-                                setValueChange(true);
-                              }}
-                              containerStyles={{
-                                justifyContent: "center",
-                                width: "100%",
-                                height: isMobile ? "160px" : "220px",
-                              }}
-                            />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                    <FormField
+                      control={form.control}
+                      name="medium_id"
+                      render={({ field }) => (
+                        <FormItem className="mt-4">
+                          <FormLabel>Featured Image</FormLabel>
+                          <MediaSelector
+                            value={field.value}
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setValueChange(true);
+                            }}
+                            containerStyles={{
+                              justifyContent: "center",
+                              width: "100%",
+                              height: isMobile ? "160px" : "220px",
+                            }}
+                          />
+                        </FormItem>
+                      )}
+                    />
                   </div>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-          </div>
 
-          <div className="w-full mb-2">
-            <MetaForm form={form} />
-          </div>
+            <MetaForm onChange={() => setValueChange(true)} />
 
-          <div
-            className={`flex ${
-              isMobile ? "justify-between" : "justify-start"
-            } mb-8 mt-8`}
-          >
-            <div
-              className={isMobile ? "w-full flex justify-between" : "space-x-4"}
-            >
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleCancel}
-                className={isMobile ? "w-[48%]" : "px-6"}
-              >
+            <div className="flex justify-start space-x-4 pt-2">
+              <Button type="button" variant="outline" onClick={handleCancel}>
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                disabled={!valueChange}
-                className={isMobile ? "w-[48%]" : "px-6"}
-              >
-                {data && data.id
-                  ? "Update"
-                  : isMobile
-                  ? "Create"
-                  : "Create tag"}
+              <Button disabled={!valueChange} type="submit">
+                {data && data.id ? "Update" : "Create Tag"}
               </Button>
             </div>
-          </div>
-        </form>
-      </Form>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };
