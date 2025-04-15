@@ -66,18 +66,17 @@ interface PostSidePanelProps {
   setPublishedDate: Dispatch<SetStateAction<Date | undefined>>;
   onSave: (values: PostData, statusOverride?: string) => void;
   onClose: () => void;
+  isVisible: boolean;
 }
 
 function PostSidePanel({
   form,
   data,
   status,
-  setStatus,
-  valueChange,
   publishedDate,
   setPublishedDate,
-  onSave,
   onClose,
+  isVisible,
 }: PostSidePanelProps) {
   const dispatch = useDispatch();
 
@@ -651,7 +650,12 @@ function PostSidePanel({
   };
 
   return (
-    <div className="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background border-l shadow-lg transform transition-transform duration-300 overflow-y-auto">
+    <div
+      className={`fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background border-l shadow-lg overflow-y-auto
+      transform transition-transform duration-500 ease-in-out ${
+        isVisible ? "translate-x-0" : "translate-x-full"
+      }`}
+    >
       <div className="p-4 h-full flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold">

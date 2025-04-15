@@ -3,7 +3,6 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import debounce from "lodash/debounce";
-
 // UI Components
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +12,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { PlusCircle } from "lucide-react";
-
 // Custom components
 import FactCheckList from "../../components/List";
 import FormatNotFound from "../../components/ErrorsAndImage/RecordNotFound";
@@ -25,7 +23,6 @@ import StatusTabs from "@/components/StatusTabs";
 import FiltersPopover from "@/components/FiltersPopover";
 import PaginationFooter from "../../components/PaginationFooter";
 import SecuredButton from "@/components/SecuredButton";
-
 // Hooks and utils
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -35,7 +32,6 @@ import { getPosts } from "../../actions/posts";
 import { useFactCheckFilters } from "./hooks/useFactCheckFilters";
 import { useFactCheckData } from "./hooks/useFactCheckData";
 import { useFactCheckPagination } from "./hooks/useFactCheckPagination";
-
 // Types
 import { FactCheckProps, FilterValues } from "./types";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
@@ -225,7 +221,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
 
   // Handle applying filters from the filter popover
   const onSave = (values: FilterValues) => {
-    let searchFilter = new URLSearchParams();
+    const searchFilter = new URLSearchParams();
 
     // Preserve existing search text if present
     if (searchText.trim()) {
@@ -366,7 +362,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
       ) : (
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4 flex-1">
-            {/* Search Input - Always visible on desktop */}
+            {/* Search Input  */}
             <SearchInput
               searchText={searchText}
               setSearchText={handleSearch}
@@ -395,7 +391,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
           </div>
         </div>
       )}
-      {/* Search input row - appears when expanded */}
+      {/* Search input row  */}
       {isSearchExpanded && (
         <div className="w-full">
           <SearchInput
@@ -416,11 +412,10 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
             isMobile={isMobile}
             form={form}
             onSave={onSave}
-            children={null} // We moved the children outside the StatusTabs component
+            children={null}
           />
         </div>
         <div className="flex items-center">
-          {/* Keep only this instance of FiltersPopover, which will be shown in both mobile and desktop views */}
           <FiltersPopover
             form={form}
             isOpen={isFiltersOpen}

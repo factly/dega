@@ -291,7 +291,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
 
   // Handle navigation to create page
   const handleCreatePage = () => {
-    window.location.href = "/pages/create";
+    navigate("/pages/create");
   };
 
   const shouldContinueRendering =

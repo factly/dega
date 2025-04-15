@@ -53,6 +53,8 @@ export interface PostData {
     description?: string;
     canonical_URL?: string;
   };
+  schemas?: any[];
+  language?: string;
 }
 
 interface PostFormProps {
@@ -80,6 +82,8 @@ function PostForm({
   const [publishedDate, setPublishedDate] = useState<Date | undefined>(
     data.published_date ? new Date(data.published_date) : undefined
   );
+
+  const [isPanelVisible, setIsPanelVisible] = useState<boolean>(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
 
   // Initialize form with serialized dates
@@ -155,7 +159,7 @@ function PostForm({
     try {
       onCreate(finalData);
       // Close panel if open
-      setActivePanel(null);
+      handlePanelClose();
     } finally {
       // Reset the submitting state after a short delay
       setTimeout(() => {
@@ -178,6 +182,25 @@ function PostForm({
         }
       );
     }
+  };
+
+  // Handle opening and closing the panel with animation
+  const handlePanelOpen = (panelName: string) => {
+    // First set the panel without making it visible
+    setActivePanel(panelName);
+
+    // Add a small delay before making it visible to ensure the DOM is updated
+    setTimeout(() => {
+      setIsPanelVisible(true);
+    }, 50);
+  };
+
+  const handlePanelClose = () => {
+    setIsPanelVisible(false);
+    // Delay removing the panel from DOM until animation completes
+    setTimeout(() => {
+      setActivePanel(null);
+    }, 500); // Match this with transition duration
   };
 
   useEffect(() => {
@@ -240,7 +263,7 @@ function PostForm({
                     size="icon"
                     onClick={(e) => {
                       e.preventDefault();
-                      setActivePanel("main");
+                      handlePanelOpen("main");
                     }}
                     type="button"
                   >
@@ -376,7 +399,6 @@ function PostForm({
         </Form>
       </div>
 
-      {/* Side Panel Component */}
       {activePanel && (
         <PostSidePanel
           form={form}
@@ -387,7 +409,8 @@ function PostForm({
           publishedDate={publishedDate}
           setPublishedDate={setPublishedDate}
           onSave={onSave}
-          onClose={() => setActivePanel(null)}
+          onClose={handlePanelClose}
+          isVisible={isPanelVisible}
         />
       )}
     </>
