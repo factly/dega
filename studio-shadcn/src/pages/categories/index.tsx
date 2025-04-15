@@ -1,163 +1,72 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { useSelector } from "react-redux";
+// index.tsx
+import { useEffect, useState, useCallback } from "react";
 import { Helmet } from "react-helmet";
-import deepEqual from "deep-equal";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import CategoryList from "./components/CategoryList";
-import Loader from "../../components/Loader";
-import { getCategories } from "../../actions/categories";
-import Pagination from "../../components/Pagination";
-import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+// Custom components
+import CategoryList from "./components/CategoryList";
+import Loader from "@/components/Loader";
+import PaginationFooter from "@/components/PaginationFooter";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+// Actions and hooks
+import { getCategories } from "../../actions/categories";
+import { useCategoriesData } from "./hooks/useCategoriesData";
+import { useCategoriesPagination } from "./hooks/useCategoriesPagination";
+import { CategoryFilters } from "./types";
+import { useSidebar } from "@/components/ui/sidebar";
 import SecuredButton from "@/components/SecuredButton";
-
-interface Category {
-  id: string;
-  [key: string]: any;
-}
-
-interface CategoryState {
-  req: Array<{
-    query: Record<string, any>;
-    data: string[];
-    total: number;
-  }>;
-  details: Record<string, Category>;
-  loading: boolean;
-}
-
-interface RootState {
-  categories: CategoryState;
-  sidebar: {
-    collapsed: boolean;
-  };
-}
-
-interface FilterParams {
-  q?: string;
-  sort?: string;
-  page?: number;
-  limit?: number;
-  [key: string]: string | number | undefined;
-}
 
 function Categories() {
   const dispatch = useAppDispatch();
-  const { state: sidebarState } = useSidebar();
   const isMobile = useIsMobile();
-
-  // State for search and filters
-  const [searchText, setSearchText] = useState<string>("");
-  const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-
-  // Initialize filters with a ref to prevent unnecessary reloads
-  const [filters, setFilters] = useState<FilterParams>({
+  const { state: sidebarState } = useSidebar();
+  const [searchText, setSearchText] = useState("");
+  const [isSearchExpanded, setIsSearchExpanded] = useState(!isMobile);
+  const [filters, setFilters] = useState<CategoryFilters>({
     page: 1,
-    limit: 10, // Use a consistent value initially
+    limit: 10,
+    sort: "desc",
   });
 
-  // Handle responsive UI changes without triggering data reload
+  // Handle responsive UI changes
   useEffect(() => {
-    // Just update the UI state for search visibility
-    setShowSearch(!isMobile);
-
-    // We don't update filters.limit here anymore to prevent data reload
+    setIsSearchExpanded(!isMobile);
   }, [isMobile]);
 
-  // Fetch categories only when filters are intentionally changed
+  // Fetch initial data
   useEffect(() => {
-    fetchCategories();
-  }, [filters]);
-
-  // Get data from Redux store
-  const { categories, total, loading } = useSelector((state: RootState) => {
-    // Adjust the query to match current device type for proper cache lookup
-    const adjustedQuery = {
-      ...filters,
-    };
-
-    const node = state.categories.req.find((item) => {
-      return deepEqual(item.query, adjustedQuery);
-    });
-
-    if (node)
-      return {
-        categories: node.data.map(
-          (element) => state.categories.details[element]
-        ),
-        total: node.total,
-        loading: state.categories.loading,
-      };
-    return { categories: [], total: 0, loading: state.categories.loading };
-  });
-
-  // Filter categories locally based on search text
-  const filteredCategories = useMemo(() => {
-    if (!searchText.trim()) {
-      return categories;
-    }
-
-    return categories.filter(
-      (category) =>
-        category.name?.toLowerCase().includes(searchText.toLowerCase()) ||
-        category.slug?.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }, [categories, searchText]);
-
-  // Sort categories based on sort order
-  const sortedCategories = useMemo(() => {
-    return [...filteredCategories].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.name?.localeCompare(b.name || "") || 0;
-      } else {
-        return b.name?.localeCompare(a.name || "") || 0;
-      }
-    });
-  }, [filteredCategories, sortOrder]);
-
-  const fetchCategories = useCallback(() => {
     dispatch(getCategories(filters));
   }, [dispatch, filters]);
 
-  // Handle search input changes - dynamic search
+  // Use custom hooks
+  const { categories, total, loading } = useCategoriesData(filters, searchText);
+  const { totalPages, handlePageChange, handlePageSizeChange, onPagination } =
+    useCategoriesPagination(filters, setFilters, total);
+
+  const toggleSearch = () => {
+    setIsSearchExpanded(!isSearchExpanded);
+    if (isSearchExpanded) {
+      setSearchText("");
+    }
+  };
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
-  // Handle sort toggle
   const handleSortToggle = useCallback(() => {
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+    setFilters(prev => ({
+      ...prev,
+      sort: prev.sort === "asc" ? "desc" : "asc"
+    }));
   }, []);
 
-  // Pagination handlers
-  const handlePageChange = useCallback((page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
-  }, []);
-
-  const handlePageSizeChange = useCallback((size: number) => {
-    setFilters((prev) => ({ ...prev, limit: size, page: 1 }));
-  }, []);
-
-  // Toggle search on mobile
-  const toggleSearch = useCallback(() => {
-    setShowSearch((prev) => !prev);
-    if (showSearch) {
-      setSearchText("");
-    }
-  }, [showSearch]);
-
-  // Handle navigation to create category page
   const handleCreateCategory = () => {
     window.location.href = "/categories/create";
   };
-
-  const pageSize = filters.limit || 10;
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
@@ -174,9 +83,10 @@ function Categories() {
       </div>
     );
   }
+
   return (
     <div className="flex flex-col h-full">
-      <Helmet title={"Categories"} />
+      <Helmet title="Categories" />
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
@@ -250,7 +160,7 @@ function Categories() {
         </div>
 
         {/* Mobile search bar */}
-        {isMobile && showSearch && (
+        {isMobile && isSearchExpanded && (
           <div className="px-4 pb-3">
             <Input
               placeholder="Search categories..."
@@ -287,14 +197,17 @@ function Categories() {
       >
         <CategoryList
           data={{
-            categories: sortedCategories,
-            total: total,
+            categories,
+            total,
             loading,
           }}
-          filters={filters}
+          filters={{
+            page: filters.page,
+            limit: filters.limit,
+          }}
           setFilters={setFilters}
-          fetchCategories={fetchCategories}
-          sortOrder={sortOrder}
+          fetchCategories={() => dispatch(getCategories(filters))}
+          sortOrder={filters.sort as "asc" | "desc"}
           onSortToggle={handleSortToggle}
           isMobile={isMobile}
         />
@@ -315,14 +228,13 @@ function Categories() {
             : undefined
         }
       >
-        <Pagination
+        <PaginationFooter
           currentPage={filters.page}
           totalPages={totalPages}
           totalItems={total}
-          pageSize={pageSize}
+          pageSize={filters.limit}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
-          isMobile={isMobile}
         />
       </div>
     </div>

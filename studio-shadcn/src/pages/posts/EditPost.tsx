@@ -10,11 +10,8 @@ import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { RootState } from "../../store/index";
+import { Post, Format } from "./types";
 
-interface Format {
-  id: string;
-  article: any;
-}
 
 interface EditPostProps {
   formats: {
@@ -23,22 +20,16 @@ interface EditPostProps {
   };
 }
 
-interface Post {
-  id: number | string;
-  title: string;
-  format: string;
-  [key: string]: any; // For other post properties
-}
 
 interface Space {
   // Define your space interface structure
   [key: string]: any;
 }
 
-function EditPost({ formats }: EditPostProps): JSX.Element {
+function EditPost({ formats }: EditPostProps): React.ReactElement {
   const history = useNavigation();
   const { id } = useParams<{ id: string }>();
-  const spaces = useSelector((state: RootState) => state.spaces) as Space[];
+  const spaces = useSelector((state: RootState) => state.spaces) ;
   const actions = getUserPermission({
     resource: "posts",
     action: "get",
@@ -107,3 +98,5 @@ function EditPost({ formats }: EditPostProps): JSX.Element {
 }
 
 export default EditPost;
+
+

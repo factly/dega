@@ -41,10 +41,10 @@ interface PostData {
   title: string;
   slug: string;
   status: "publish" | "draft" | "ready";
-  published_date: string | null;
+  published_date?: string;
   categories?: number[];
   tags?: number[];
-  authors?: number[];
+  authors?: number[] | Array<{ id: number; display_name: string }>;
   claims?: number[];
   [key: string]: any;
 }
@@ -254,6 +254,9 @@ const QuickEdit: React.FC<QuickEditProps> = ({
           </FormItem>
         </div>
 
+
+
+        <div className="grid grid-cols-3 gap-6">
         {slug === "fact-check" ? (
           <FormField
             control={form.control}
@@ -276,8 +279,6 @@ const QuickEdit: React.FC<QuickEditProps> = ({
             )}
           />
         ) : null}
-
-        <div className="grid grid-cols-3 gap-6">
           <FormField
             control={form.control}
             name="categories"

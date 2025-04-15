@@ -40,7 +40,6 @@ interface SelectorProps {
   display?: string;
   placeholder?: string;
   style?: React.CSSProperties;
-  isQuickEdit?: boolean;
 }
 
 // Define type for entity detail object
@@ -86,7 +85,6 @@ function Selector({
   display = "name",
   placeholder,
   style,
-  isQuickEdit = false,
 }: SelectorProps) {
   const originalValueType = typeof value;
 
@@ -410,7 +408,7 @@ function Selector({
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full p-0">
+        <PopoverContent className="p-0 w-[var(--radix-popover-trigger-width)]">
           <Command>
             <CommandList>
               <ScrollArea onScrollCapture={handleScroll}>
@@ -502,8 +500,8 @@ function Selector({
             <ChevronsUpDown className="absolute right-3 top-3 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-fit p-0">
-          <Command>
+        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" >
+          <Command >
             <CommandList>
               <ScrollArea onScrollCapture={handleScroll}>
                 <CommandEmpty>
@@ -526,10 +524,7 @@ function Selector({
                     </>
                   )}
                 </CommandEmpty>
-                <CommandGroup
-                  style={{ width: isQuickEdit && "26vw" }}
-                  className="min-w-[80vw] sm:min-w-[23rem]"
-                >
+                <CommandGroup>
                   {filteredDetails.map((item) => (
                     <CommandItem
                       key={`${entity}-${item?.id}`}

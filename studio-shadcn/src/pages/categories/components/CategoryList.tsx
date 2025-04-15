@@ -1,10 +1,9 @@
-import React, { useState, useCallback } from "react";
+// components/CategoryList.tsx
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteCategory } from "../../../actions/categories";
-import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-// Shadcn components
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -13,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -26,115 +26,54 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import EmptyState from "@/components/EmptyState";
+import { CategoryListProps } from "../types";
 
-// Types
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  parent_id?: string | number;
-  parent_category?: {
-    id: string | number;
-    name: string;
-  };
-}
-
-interface CategoryListProps {
-  data: {
-    categories: Category[];
-    loading: boolean;
-    total: number;
-  };
-  filters: {
-    page?: number;
-    limit?: number;
-    [key: string]: any;
-  };
-  setFilters: (filters: any) => void;
-  fetchCategories: () => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
-  isMobile?: boolean;
-}
-
-const CategoryList: React.FC<CategoryListProps> = ({
+function CategoryList({
   data,
   fetchCategories,
   onSortToggle,
-  isMobile,
-}) => {
+  isMobile = false,
+}: CategoryListProps) {
   const dispatch = useAppDispatch();
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
-  const [deleteItemID, setDeleteItemID] = useState<string | null>(null);
-  const navigate = useNavigation();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  const handleRowClick = useCallback(
-    (id: string) => {
-      navigate(`/categories/${id}/edit`);
-    },
-    [navigate]
-  );
-
-  const handleEditClick = useCallback(
-    (e: React.MouseEvent, id: string) => {
-      e.stopPropagation();
-      navigate(`/categories/${id}/edit`);
-    },
-    [navigate]
-  );
-
-  const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
+  const handleDelete = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    setDeleteDialogOpen(true);
-    setDeleteItemID(id);
-  }, []);
+    if (deleteItemId) {
+      await dispatch(deleteCategory(deleteItemId));
+      fetchCategories();
+      setModalOpen(false);
+      setDeleteItemId(null);
+    }
+  };
 
-  const handleDeleteConfirm = useCallback(
-    async (e: React.MouseEvent) => {
-      e.stopPropagation();
-      if (deleteItemID) {
-        try {
-          await dispatch(deleteCategory(deleteItemID));
-          fetchCategories();
-        } catch (error) {
-          console.error("Error deleting category:", error);
-        } finally {
-          setDeleteItemID(null);
-          setDeleteDialogOpen(false);
-        }
-      }
-    },
-    [deleteItemID, dispatch, fetchCategories]
-  );
+  const handleRowClick = (id: string) => {
+    navigate(`/categories/${id}/edit`);
+  };
 
-  const handleDeleteCancel = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setDeleteItemID(null);
-    setDeleteDialogOpen(false);
-  }, []);
-
-  // Helper function to get parent category name
-  const getParentCategoryName = useCallback((category: Category): string => {
+  // Get parent category name helper
+  const getParentCategoryName = (category: any): string => {
     if (category.parent_category?.name) {
       return category.parent_category.name;
     }
     return "---";
-  }, []);
+  };
 
   // Check if there are any categories to display
   const hasCategoriesData = data.categories && data.categories.length > 0;
 
   return (
-    <div className="pb-4 overflow-auto">
+    <div className="pb-4 overflow-scroll">
       {hasCategoriesData ? (
         <div className="rounded-md">
           <Table>
-            <TableHeader className="w-[40%] text-[13px]">
+            <TableHeader>
               <TableRow>
-                <TableHead className="w-2/5">
+                <TableHead className="w-[40%] text-[13px]">
                   <div
                     className="flex items-center cursor-pointer"
                     onClick={onSortToggle}
@@ -143,32 +82,37 @@ const CategoryList: React.FC<CategoryListProps> = ({
                     <ChevronsUpDown className="ml-1 h-3 w-3" />
                   </div>
                 </TableHead>
-                <TableHead className="w-[25%]">Slug</TableHead>
-                <TableHead className="w-[25%]">Parent Category</TableHead>
-                <TableHead className="w-[10%] text-center">Actions</TableHead>
+                <TableHead className="w-[25%] text-[13px]">Slug</TableHead>
+                <TableHead className="w-[25%] text-[13px]">Parent Category</TableHead>
+                <TableHead className="w-[10%] text-[13px] text-center">
+                  Actions
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {data.categories.map((category) => (
                 <TableRow
                   key={category.id}
-                  onClick={() => handleRowClick(category.id)}
+                  onClick={() => handleRowClick(category.id.toString())}
                   className="cursor-pointer"
                 >
                   <TableCell>
-                    <h3 className="font-normal">
+                    <Link
+                      to={`/categories/${category.id}/edit`}
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       {category.name || "Unnamed Category"}
-                    </h3>
+                    </Link>
                   </TableCell>
                   <TableCell>
-                    <p className="line-clamp-2 font-normal">
+                    <span className="line-clamp-2">
                       {category.slug || "—"}
-                    </p>
+                    </span>
                   </TableCell>
                   <TableCell>
-                    <p className="line-clamp-2 font-normal">
+                    <span className="line-clamp-2">
                       {getParentCategoryName(category)}
-                    </p>
+                    </span>
                   </TableCell>
                   <TableCell className="text-center">
                     <DropdownMenu>
@@ -177,20 +121,26 @@ const CategoryList: React.FC<CategoryListProps> = ({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button variant="ghost" size="icon">
-                          <Ellipsis className="h-5 w-5" />
+                          <Ellipsis className="h-5 w-5 text-[#858585]" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem
-                          onClick={(e) => handleEditClick(e, category.id)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/categories/${category.id}/edit`);
+                          }}
                           className="cursor-pointer"
                         >
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          onClick={(e) => handleDeleteClick(e, category.id)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setModalOpen(true);
+                            setDeleteItemId(category.id.toString());
+                          }}
                           className="cursor-pointer text-red-600 focus:text-red-600"
                         >
                           <Trash2 className="h-4 w-4 mr-2" />
@@ -214,11 +164,8 @@ const CategoryList: React.FC<CategoryListProps> = ({
       )}
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent
-          className="max-w-sm p-4"
-          onPointerDownOutside={(e) => e.preventDefault()}
-        >
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+        <DialogContent className="max-w-sm p-4">
           <DialogHeader className="space-y-2">
             <DialogTitle className="text-base">Delete Category</DialogTitle>
             <DialogDescription className="text-sm">
@@ -230,19 +177,14 @@ const CategoryList: React.FC<CategoryListProps> = ({
               size="sm"
               variant="outline"
               onClick={(e) => {
-                handleDeleteCancel(e);
+                e.stopPropagation();
+                setModalOpen(false);
+                setDeleteItemId(null);
               }}
             >
               Cancel
             </Button>
-            <Button
-              size="sm"
-              variant="destructive"
-              onClick={(e) => {
-                handleDeleteConfirm(e);
-              }}
-              type="button"
-            >
+            <Button size="sm" variant="destructive" onClick={handleDelete}>
               Delete
             </Button>
           </DialogFooter>
@@ -250,6 +192,6 @@ const CategoryList: React.FC<CategoryListProps> = ({
       </Dialog>
     </div>
   );
-};
+}
 
 export default CategoryList;

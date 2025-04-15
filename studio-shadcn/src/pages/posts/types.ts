@@ -1,6 +1,7 @@
 // types.ts
 export interface Format {
-  id: string;
+  id: number;
+  name: string;
   slug: string;
   [key: string]: any;
 }
@@ -15,15 +16,22 @@ export interface Space {
   [key: string]: any;
 }
 
+
 export interface Post {
+  updated_at?: string;
+  created_at?: string;
+  published_date?: string;
+  tag_ids?: number[];
+  category_ids?: number[];
+  author_ids?: number[];
+  authors?: number[] | Array<{ id: number; display_name: string }>;
   id: number;
   title: string;
   slug: string;
-  status: string;
-  featured_medium_id?: number;
-  medium?: any;
-  published_date?: string;
-  excerpt?: string;
+  status: "publish" | "draft" | "ready" | 'future';
+  categories?: number[];
+  tags?: number[];
+  claims?: number[];
   [key: string]: any;
 }
 

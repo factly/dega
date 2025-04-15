@@ -8,8 +8,18 @@ import {
 import deepEqual from "deep-equal";
 
 // Define interfaces for the state and payload objects
-interface Page {
-  id: string;
+export interface Page {
+  id: number;
+  title: string;
+  slug: string;
+  status: "publish" | "draft" | "ready";
+  featured_medium_id?: number;
+  medium?: any;
+  published_date: string | null;
+  categories?: number[];
+  tags?: number[];
+  authors?: number[];
+  claims?: number[];
   [key: string]: any;
 }
 

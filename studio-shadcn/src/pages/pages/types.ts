@@ -1,8 +1,9 @@
 // types.ts
 export interface Format {
-  id: string;
+  id: number;
   slug: string;
   [key: string]: any;
+  name: string;
 }
 
 export interface FormatState {
@@ -19,9 +20,16 @@ export interface Page {
   id: number;
   title: string;
   slug: string;
-  status: string;
+  status?: "publish" | "draft" | "ready";
   featured_medium_id?: number;
   medium?: any;
+  published_date: string | null;
+  categories?: number[];
+  tags?: number[];
+  authors?: number[];
+  claims?: number[];
+  description?: any;
+  format?: number;
   [key: string]: any;
 }
 

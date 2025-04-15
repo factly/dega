@@ -23,6 +23,8 @@ import { addTemplate } from "../../../actions/posts";
 import useNavigation from "../../../utils/useNavigation";
 import PostSidePanel from "./PostSidePanel";
 import { renderStatusBadge } from "../../../components/statusBadge/index";
+import { Post as PostData, Format } from "../types";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import { DescriptionInput } from "../../../components/FormItems";
 import { formatDate } from "../../../utils/date";
 
@@ -32,48 +34,23 @@ export interface Author {
   display_name: string;
 }
 
-export interface Format {
-  id: number;
-}
-
-export interface PostData {
-  id?: number;
-  title?: string;
-  slug?: string;
-  status?: string;
-  published_date?: string | null;
-  author_ids?: number[];
-  authors?: number[];
-  created_at?: string;
-  updated_at?: string;
-  format_id?: number;
-  description_html?: string; // Added for rich text editor content
-  meta?: {
-    title?: string;
-    description?: string;
-    canonical_URL?: string;
-  };
-  schemas?: any[];
-  language?: string;
-}
-
 interface PostFormProps {
-  onCreate: (data: PostData) => void;
-  data?: PostData;
+  onCreate: (data: Partial<PostData>) => void;
+  data: PostData;
   format: Format;
   page?: boolean;
 }
 
 function PostForm({
   onCreate,
-  data = {},
+  data,
   format,
   page = false,
 }: PostFormProps) {
   const navigate = useNavigation();
   const formRef = useRef<HTMLFormElement>(null);
-  const [status, setStatus] = useState<string>(data.status || "draft");
-  const dispatch = useDispatch();
+  const [status, setStatus] = useState<'draft' | 'publish' | 'ready' | 'future'>(data.status || "draft");
+  const dispatch = useAppDispatch();
   const [valueChange, setValueChange] = useState<boolean>(false);
   const [shouldBlockNavigation, setShouldBlockNavigation] =
     useState<boolean>(false);
@@ -93,6 +70,7 @@ function PostForm({
   if (
     formData.published_date &&
     typeof formData.published_date === "object" &&
+    // @ts-expect-error -- todo: fix this type error
     formData.published_date.$d
   ) {
     formData.published_date = dayjs(formData.published_date).format(
@@ -112,7 +90,7 @@ function PostForm({
   // Add a flag to prevent duplicate submissions
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const onSave = (values: PostData, statusOverride?: string) => {
+  const onSave = (values: PostData, statusOverride?: 'draft' | 'publish' | 'ready' | 'future') => {
     // Prevent duplicate submissions
     if (isSubmitting) {
       console.log("Preventing duplicate submission");
@@ -141,8 +119,10 @@ function PostForm({
 
     setShouldBlockNavigation(false);
     finalData.format_id = format.id;
-    finalData.author_ids = finalData.authors || [];
+    // @ts-expect-error -- todo: fix this type error
+    finalData.author_ids = finalData.authors;
     finalData.status = finalStatus;
+
 
     if (finalStatus === "publish") {
       finalData.published_date = publishedDate
@@ -151,9 +131,9 @@ function PostForm({
     } else if (finalStatus === "future") {
       finalData.published_date = publishedDate
         ? dayjs(publishedDate).format("YYYY-MM-DDTHH:mm:ssZ")
-        : null;
+        : undefined;
     } else {
-      finalData.published_date = null;
+      finalData.published_date = undefined;
     }
 
     try {
@@ -178,7 +158,11 @@ function PostForm({
     if (data && data.id) {
       dispatch(addTemplate({ post_id: parseInt(data.id.toString()) })).then(
         () => {
-          page ? navigate("/pages") : navigate("/posts");
+          if (page) {
+            navigate("/pages")
+            return
+          }
+          navigate("/posts");
         }
       );
     }
@@ -230,9 +214,8 @@ function PostForm({
   return (
     <>
       <div
-        className={`transition-all duration-300 ${
-          activePanel ? "blur-sm pointer-events-none" : ""
-        }`}
+        className={`transition-all duration-300 ${activePanel ? "blur-sm pointer-events-none" : ""
+          }`}
       >
         <Form {...form}>
           <form
@@ -369,9 +352,8 @@ function PostForm({
                         <FormControl>
                           <Textarea
                             {...field}
-                            placeholder={`Add title for the ${
-                              page ? "page" : "post"
-                            }`}
+                            placeholder={`Add title for the ${page ? "page" : "post"
+                              }`}
                             onChange={(e) => {
                               field.onChange(e);
                               onTitleChange(e.target.value);

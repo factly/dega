@@ -1,49 +1,28 @@
-import React from "react";
+// CreateTag.tsx
+import { FC } from "react";
+import TagForm from "./components/TagForm";
 import { createTag } from "../../actions/tags";
-import { useAppDispatch } from "@/hooks/reduxHooks";
-import TagCreateForm from "./components/TagForm";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { TagFormValues } from "./types";
 
-// Define the interface for tag values
-interface TagValues {
-  name: string;
-  slug?: string;
-  is_featured?: boolean;
-  background_colour?: any;
-  description_html?: string;
-  medium_id?: string;
-  meta_fields?: any;
-  meta?: {
-    canonical_URL?: string;
-    facebook?: {
-      title?: string;
-      canonical_URL?: string;
-    };
-    twitter?: {
-      title?: string;
-      canonical_URL?: string;
-    };
-    google?: {
-      title?: string;
-      canonical_URL?: string;
-    };
-  };
-}
-
-const CreateTag: React.FC = () => {
-  const history = useNavigation();
+const CreateTag: FC = () => {
+  const navigate = useNavigation();
   const dispatch = useAppDispatch();
 
-  const onCreate = async (values: TagValues): Promise<void> => {
-    await dispatch(createTag(values));
-    history("/tags");
+  const onCreate = (values: TagFormValues) => {
+    Promise.resolve(dispatch(createTag(values))).then(() => {
+      navigate("/tags");
+    }).catch((error) => {
+      console.error("Error creating tag:", error);
+    });
   };
 
   return (
     <>
       <Helmet title={"Create Tag"} />
-      <TagCreateForm onCreate={onCreate} />
+      <TagForm onCreate={onCreate} />
     </>
   );
 };

@@ -23,9 +23,6 @@ interface CreatePageProps {
   formats: FormatState;
 }
 
-interface PageValues {
-  [key: string]: any;
-}
 
 function CreatePage({ formats }: CreatePageProps): React.ReactElement {
   const history = useNavigation();
@@ -61,7 +58,9 @@ function CreatePage({ formats }: CreatePageProps): React.ReactElement {
     };
   }, []);
 
-  const onCreate = (values: PageValues): void => {
+
+  const onCreate = (values: Page): void => {
+    // @ts-expect-error TODO: Fix this type error
     dispatch(addPage(values)).then((page: { id: number } | undefined) => {
       if (page && page.id) history(`/pages/${page.id}/edit`);
     });

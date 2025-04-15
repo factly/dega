@@ -36,11 +36,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 interface Page {
   id: number;
   title: string;
-  status: string;
-  updated_at?: string;
-  created_at?: string;
-  tag_ids?: number[];
-  category_ids?: number[];
+  slug: string;
+  status: "publish" | "draft" | "ready";
+  featured_medium_id?: number;
+  medium?: any;
+  published_date: string | null;
+  categories?: number[];
+  tags?: number[];
+  authors?: number[];
+  claims?: number[];
   [key: string]: any;
 }
 
@@ -57,7 +61,8 @@ interface Category {
 }
 
 interface Format {
-  id: string;
+  id: number;
+  name: string;
   slug: string;
   [key: string]: any;
 }
@@ -92,11 +97,8 @@ interface PageListProps {
 function PageList({
   format,
   data,
-  filters,
-  onPagination,
   fetchPages,
   isMobile = false,
-  sortOrder = "desc",
   onSortToggle,
   sortBy = "date",
   onSortByChange,
