@@ -20,7 +20,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MetaForm, SlugInput, TitleInput } from "../../../components/FormItems";
+import {
+  MetaForm,
+  SlugInput,
+  TitleInput,
+  DescriptionInput,
+} from "../../../components/FormItems";
 import { Rating, RatingFormProps, ColorResult } from "../types";
 import MediaSelector from "../../../components/MediaSelector";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -51,6 +56,7 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
       slug: initialData.slug || "",
       numeric_value: initialData.numeric_value,
       medium_id: initialData.medium_id,
+      description_html: initialData.description_html || "",
       ...initialData,
       meta_fields: initialData.meta_fields as string,
     },
@@ -175,7 +181,7 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="py-3 bg-white">
+                  <div className="py-3 bg-white px-4">
                     <div className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <FormField
@@ -234,6 +240,35 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
                       <div className="mb-4 sm:mb-6">
                         <SlugInput form={form} />
                       </div>
+
+                      <FormField
+                        control={form.control}
+                        name="description_html"
+                        render={({ field }) => (
+                          <div className="mb-4 sm:mb-6">
+                            <FormLabel className="text-base block mb-2">
+                              Description
+                            </FormLabel>
+                            <DescriptionInput
+                              initialValue={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              noLabel={true}
+                              rows={5}
+                              inputProps={{
+                                placeholder: "Enter Description...",
+                                style: {
+                                  minHeight: "92px",
+                                  borderRadius: "0.25rem",
+                                  border: "1px solid rgba(0, 0, 0, 0.15)",
+                                },
+                              }}
+                            />
+                          </div>
+                        )}
+                      />
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <FormField

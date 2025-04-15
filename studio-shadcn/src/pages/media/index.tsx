@@ -12,6 +12,7 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+import SecuredButton from "@/components/SecuredButton";
 
 // Define types
 interface MediaItem {
@@ -86,20 +87,31 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
-  if (loading) return <Loader />;
+  // Handle navigation to create media page
+  const handleCreateMedia = () => {
+    window.location.href = "/media/upload";
+  };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title={"Media"} />
+        {isMobile && (
+          <MobileBreadcrumb currentPage="Media" parentLabel="Core" />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">
       <Helmet title={"Media"} />
 
       {/* Mobile Breadcrumb */}
-      {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Media"
-          parentPath="/"
-          parentLabel="Core"
-        />
-      )}
+      {isMobile && <MobileBreadcrumb currentPage="Media" parentLabel="Core" />}
 
       <div
         className={`${isMobile ? "sticky top-0" : "fixed"} z-10 bg-white`}
@@ -123,18 +135,24 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
 
           {/* Action buttons */}
           <div className={`${isMobile ? "flex items-center gap-2" : ""}`}>
-            <Link to="/media/upload">
-              {isMobile ? (
-                <Button size="icon" className="h-9 w-9">
-                  <PlusCircle className="h-5 w-5" />
-                </Button>
-              ) : (
-                <Button size="lg" className="flex items-center gap-2 py-2">
-                  <PlusCircle className="h-4 w-4" />
-                  New Media
-                </Button>
-              )}
-            </Link>
+            {isMobile ? (
+              <SecuredButton
+                className="h-9 w-9"
+                size="icon"
+                onClick={handleCreateMedia}
+              >
+                <PlusCircle className="h-5 w-5" />
+              </SecuredButton>
+            ) : (
+              <SecuredButton
+                className="flex items-center gap-2 py-2"
+                size="lg"
+                onClick={handleCreateMedia}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Create Media
+              </SecuredButton>
+            )}
           </div>
         </div>
       </div>

@@ -15,6 +15,7 @@ import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 import { SpaceFilters, SpaceState, RootState, RoleState } from "./types";
 import { useSpacesPagination } from "./hooks/useSpacesPagination";
 import { AppThunkDispatch } from "../../store/types";
+import Loader from "@/components/Loader";
 
 const Spaces: React.FC = () => {
   const dispatch = useDispatch<AppThunkDispatch>();
@@ -100,6 +101,20 @@ const Spaces: React.FC = () => {
     e.preventDefault();
     // You can add search functionality if needed here
   };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title="Spaces" />
+        {isMobile && (
+          <MobileBreadcrumb currentPage="Spaces" parentLabel="Core" />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -227,20 +242,14 @@ const Spaces: React.FC = () => {
             : undefined
         }
       >
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
-          </div>
-        ) : (
-          <SpaceList
-            searchQuery={searchText}
-            sortOrder={sortOrder}
-            onSortToggle={handleSortToggle}
-            filters={filters}
-            setFilters={setFilters}
-            isMobile={isMobile}
-          />
-        )}
+        <SpaceList
+          searchQuery={searchText}
+          sortOrder={sortOrder}
+          onSortToggle={handleSortToggle}
+          filters={filters}
+          setFilters={setFilters}
+          isMobile={isMobile}
+        />
       </div>
 
       {spaces.length > 0 && (

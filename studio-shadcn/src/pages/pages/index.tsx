@@ -22,6 +22,7 @@ import Loader from "../../components/Loader";
 import Template from "../../components/Template";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+import SecuredButton from "@/components/SecuredButton";
 
 // Custom Components
 import SearchInput from "../../components/SearchInput";
@@ -287,12 +288,28 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       search: "?" + searchFilter.toString(),
     });
   };
+
+  // Handle navigation to create page
+  const handleCreatePage = () => {
+    window.location.href = "/pages/create";
+  };
+
   const shouldContinueRendering =
     !formats.loading || loadingTimeout || hasCachedFormatRef.current;
 
   // Loading state - show for a maximum of 5 seconds
   if (formats.loading && !loadingTimeout && !hasCachedFormatRef.current) {
-    return <Loader />;
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title="Pages" />
+        {isMobile && (
+          <MobileBreadcrumb currentPage="Pages" parentLabel="Core" />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
   }
 
   // Format not found state - but only check if we're sure formats are loaded or timeout occurred
@@ -350,12 +367,13 @@ function Pages({ formats }: PagesProps): React.ReactElement {
                 <span>Templates</span>
               </Button>
 
-              {/* Create Page Button */}
-              <Link to="/pages/create">
-                <Button size="sm" className="flex items-center gap-1">
-                  <PlusCircle className="h-4 w-4" />
-                </Button>
-              </Link>
+              <SecuredButton
+                size="sm"
+                className="flex items-center gap-1"
+                onClick={handleCreatePage}
+              >
+                <PlusCircle className="h-4 w-4" />
+              </SecuredButton>
             </div>
           </div>
         </div>
@@ -381,13 +399,14 @@ function Pages({ formats }: PagesProps): React.ReactElement {
               <span>Explore Templates</span>
             </Button>
 
-            {/* Create Page Button */}
-            <Link to="/pages/create">
-              <Button size="lg" className="flex items-center gap-2 py-2">
-                <PlusCircle className="h-4 w-4" />
-                <span>Create Page</span>
-              </Button>
-            </Link>
+            <SecuredButton
+              size="lg"
+              className="flex items-center gap-2 py-2"
+              onClick={handleCreatePage}
+            >
+              <PlusCircle className="h-4 w-4" />
+              <span>Create Page</span>
+            </SecuredButton>
           </div>
         </div>
       )}

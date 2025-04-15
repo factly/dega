@@ -17,6 +17,7 @@ import { MenuFilters, RootState } from "./types";
 import { useMenusData } from "./hooks/useMenusData";
 import { useMenusPagination } from "./hooks/useMenusPagination";
 import { useSidebar } from "@/components/ui/sidebar";
+import SecuredButton from "@/components/SecuredButton";
 
 const Menu: React.FC = () => {
   const spaces = useSelector((state: RootState) => state.spaces);
@@ -92,6 +93,11 @@ const Menu: React.FC = () => {
     }
   }, [showSearch]);
 
+  // Handle navigation to create menu page
+  const handleCreateMenu = () => {
+    window.location.href = "/settings/website/menus/create";
+  };
+
   // Get sidebar state for layout
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
@@ -151,30 +157,24 @@ const Menu: React.FC = () => {
               </Button>
             )}
 
-            <Link to="/settings/website/menus/create">
-              {isMobile ? (
-                <Button
-                  size="icon"
-                  className="h-9 w-9"
-                  disabled={
-                    !(actions.includes("admin") || actions.includes("create"))
-                  }
-                >
-                  <PlusCircle className="h-5 w-5" />
-                </Button>
-              ) : (
-                <Button
-                  size="lg"
-                  className="flex items-center gap-2 py-2"
-                  disabled={
-                    !(actions.includes("admin") || actions.includes("create"))
-                  }
-                >
-                  <PlusCircle className="h-4 w-4" />
-                  New Menu
-                </Button>
-              )}
-            </Link>
+            {isMobile ? (
+              <SecuredButton
+                className="h-9 w-9"
+                size="icon"
+                onClick={handleCreateMenu}
+              >
+                <PlusCircle className="h-5 w-5" />
+              </SecuredButton>
+            ) : (
+              <SecuredButton
+                className="flex items-center gap-2 py-2"
+                size="lg"
+                onClick={handleCreateMenu}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Create Menu
+              </SecuredButton>
+            )}
           </div>
         </div>
 

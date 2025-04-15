@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -28,6 +28,7 @@ import SearchButton from "@/components/SearchButton";
 import FiltersPopover from "@/components/FiltersPopover";
 import StatusTabs from "@/components/StatusTabs";
 import PaginationFooter from "@/components/PaginationFooter";
+import SecuredButton from "@/components/SecuredButton";
 
 // Utils and actions
 import getUrlParams from "../../utils/getUrlParams";
@@ -288,6 +289,11 @@ function Posts({ formats }: PostsProps): React.ReactElement {
     });
   };
 
+  // Handle navigation to create post page
+  const handleCreatePost = () => {
+    navigate("/posts/create");
+  };
+
   // Continue rendering even if formats.loading is true but we've waited too long
   // This prevents infinite loading screens
   const shouldContinueRendering =
@@ -295,7 +301,17 @@ function Posts({ formats }: PostsProps): React.ReactElement {
 
   // Loading state - show for a maximum of 5 seconds
   if (formats.loading && !loadingTimeout && !hasCachedFormatRef.current) {
-    return <Loader />;
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title="Posts" />
+        {isMobile && (
+          <MobileBreadcrumb currentPage="Posts" parentLabel="Core" />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
   }
 
   // Format not found state - but only check if we're sure formats are loaded or timeout occurred
@@ -351,12 +367,13 @@ function Posts({ formats }: PostsProps): React.ReactElement {
                 <span>Templates</span>
               </Button>
 
-              {/* Create Post Button */}
-              <Link to="/posts/create">
-                <Button size="sm" className="flex items-center gap-1">
-                  <PlusCircle className="h-4 w-4" />
-                </Button>
-              </Link>
+              <SecuredButton
+                size="icon"
+                className="h-9 w-9"
+                onClick={handleCreatePost}
+              >
+                <PlusCircle className="h-4 w-4" />
+              </SecuredButton>
             </div>
           </div>
         </div>
@@ -382,13 +399,14 @@ function Posts({ formats }: PostsProps): React.ReactElement {
               <span>Explore Templates</span>
             </Button>
 
-            {/* Create Post Button */}
-            <Link to="/posts/create">
-              <Button size="lg" className="flex items-center gap-2 py-2">
-                <PlusCircle className="h-4 w-4" />
-                <span>Create Post</span>
-              </Button>
-            </Link>
+            <SecuredButton
+              size="lg"
+              className="flex items-center gap-2 py-2"
+              onClick={handleCreatePost}
+            >
+              <PlusCircle className="h-4 w-4" />
+              <span>Create Post</span>
+            </SecuredButton>
           </div>
         </div>
       )}

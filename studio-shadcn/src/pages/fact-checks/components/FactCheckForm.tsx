@@ -42,6 +42,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import RightPanel from "./RightPanel";
+import { DescriptionInput } from "../../../components/FormItems";
 
 // TypeScript Interfaces
 interface Claim {
@@ -491,12 +492,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
             className="edit-form space-y-6"
           >
             {/* Header with Actions */}
-            <div className="flex justify-between items-center space-x-2">
-              {/* Status Badge - Move it to the left */}
-              <div className="flex justify-start">
-                {renderStatusBadge(status)}
-              </div>
-
+            <div className="flex justify-end space-x-2 pb-4 border-b">
               <div className="flex space-x-2">
                 {data.id && (
                   <Button
@@ -606,9 +602,6 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                             "YYYY-MM-DDTHH:mm:ssZ"
                           )
                         : getCurrentDate();
-
-                    console.log("Publishing with values:", processedValues);
-
                     // Directly call onCreate
                     onCreate(processedValues);
                     setValueChange(false);
@@ -623,6 +616,10 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
 
             {/* Main Content Area */}
             <div className="max-w-4xl mx-auto">
+              {/* Status Badge */}
+              <div className="flex justify-start pb-4">
+                {renderStatusBadge(status)}
+              </div>
               {/* Title */}
               <FormField
                 control={form.control}
@@ -664,6 +661,15 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                   />
                 </div>
               )}
+
+              {/* Description Editor */}
+              <div className="mt-6">
+                <DescriptionInput
+                  initialValue={data.description_html}
+                  noLabel
+                  formItemProps={{ className: "post-description" }}
+                />
+              </div>
             </div>
           </form>
         </Form>

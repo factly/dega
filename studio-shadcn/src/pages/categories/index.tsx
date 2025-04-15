@@ -161,19 +161,26 @@ function Categories() {
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
-  if (loading) return <Loader />;
-
+  if (loading) {
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title={"Categories"} />
+        {isMobile && (
+          <MobileBreadcrumb currentPage="Categories" parentLabel="Core" />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col h-full">
       <Helmet title={"Categories"} />
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Categories"
-          parentPath="/"
-          parentLabel="Core"
-        />
+        <MobileBreadcrumb currentPage="Categories" parentLabel="Core" />
       )}
 
       <div
@@ -222,7 +229,7 @@ function Categories() {
             )}
 
             {isMobile ? (
-              <SecuredButton 
+              <SecuredButton
                 className="h-9 w-9"
                 size="icon"
                 onClick={handleCreateCategory}
@@ -230,7 +237,7 @@ function Categories() {
                 <PlusCircle className="h-5 w-5" />
               </SecuredButton>
             ) : (
-              <SecuredButton 
+              <SecuredButton
                 className="flex items-center gap-2 py-2"
                 size="lg"
                 onClick={handleCreateCategory}

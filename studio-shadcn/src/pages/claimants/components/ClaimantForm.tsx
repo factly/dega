@@ -12,7 +12,12 @@ import {
 import { maker } from "../../../utils/sluger";
 import MediaSelector from "../../../components/MediaSelector";
 import getJsonValue from "../../../utils/getJsonValue";
-import { MetaForm, SlugInput, TitleInput } from "../../../components/FormItems";
+import {
+  MetaForm,
+  SlugInput,
+  TitleInput,
+  DescriptionInput,
+} from "../../../components/FormItems";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -164,6 +169,35 @@ const ClaimantForm: React.FC<ClaimantFormProps> = ({ onCreate, data = {} }) => {
                               className="min-h-24"
                             />
                           </FormItem>
+                        )}
+                      />
+
+                      {/* Description Input */}
+                      <FormField
+                        control={methods.control}
+                        name="description_html"
+                        render={({ field }) => (
+                          <div className="mb-4 sm:mb-6">
+                            <FormLabel className="text-base block mb-2">
+                              Description
+                            </FormLabel>
+                            <DescriptionInput
+                              initialValue={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              noLabel={true}
+                              inputProps={{
+                                placeholder: "Enter Description...",
+                                style: {
+                                  minHeight: "92px",
+                                  borderRadius: "0.25rem",
+                                  border: "1px solid rgba(0, 0, 0, 0.15)",
+                                },
+                              }}
+                            />
+                          </div>
                         )}
                       />
 

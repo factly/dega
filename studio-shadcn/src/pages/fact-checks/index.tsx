@@ -1,4 +1,3 @@
-// FactCheck.tsx
 import { useEffect, useState, useCallback } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,6 +24,7 @@ import SearchButton from "../../components/SearchButton";
 import StatusTabs from "@/components/StatusTabs";
 import FiltersPopover from "@/components/FiltersPopover";
 import PaginationFooter from "../../components/PaginationFooter";
+import SecuredButton from "@/components/SecuredButton";
 
 // Hooks and utils
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -146,6 +146,11 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
       pathname,
       search: "?" + newQuery.toString(),
     });
+  };
+
+  // Handler for creating a new fact check
+  const handleCreateFactCheck = () => {
+    navigate("/fact-checks/create");
   };
 
   // Debounced search function to update URL
@@ -279,7 +284,20 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
   };
 
   if (formats.loading) {
-    return <Loader />;
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title="Fact-checks" />
+        {isMobile && (
+          <MobileBreadcrumb
+            currentPage="Fact Checks"
+            parentLabel="Fact Checking"
+          />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
   }
 
   if (!formats.factcheck) {
@@ -335,12 +353,13 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
                 <span>Templates</span>
               </Button>
 
-              {/* Create Fact-Check Button */}
-              <Link to="/fact-checks/create">
-                <Button size="sm" className="flex items-center gap-1">
-                  <PlusCircle className="h-4 w-4" />
-                </Button>
-              </Link>
+              <SecuredButton
+                size="sm"
+                className="flex items-center gap-1"
+                onClick={handleCreateFactCheck}
+              >
+                <PlusCircle className="h-4 w-4" />
+              </SecuredButton>
             </div>
           </div>
         </div>
@@ -365,13 +384,14 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
               <span>Explore Templates</span>
             </Button>
 
-            {/* Create Fact-Check Button */}
-            <Link to="/fact-checks/create">
-              <Button size="lg" className="flex items-center gap-2 py-2">
-                <PlusCircle className="h-4 w-4" />
-                <span>Create Fact-Check</span>
-              </Button>
-            </Link>
+            <SecuredButton
+              size="lg"
+              className="flex items-center gap-2 py-2"
+              onClick={handleCreateFactCheck}
+            >
+              <PlusCircle className="h-4 w-4" />
+              <span>Create Fact-Check</span>
+            </SecuredButton>
           </div>
         </div>
       )}

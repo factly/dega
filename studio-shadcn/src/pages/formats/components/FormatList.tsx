@@ -30,6 +30,7 @@ import {
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
 import { FormatListProps } from "../types";
+import Loader from "@/components/Loader";
 
 function FormatList({
   data,
@@ -98,7 +99,7 @@ function FormatList({
   return (
     <div className="pb-4 overflow-auto">
       {data.loading ? (
-        <div className="text-center py-4">Loading...</div>
+        <Loader />
       ) : hasFormatsData ? (
         <div className="rounded-md">
           <Table>

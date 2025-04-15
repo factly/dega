@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import SecuredButton from "@/components/SecuredButton";
 
 interface MissingRequirementsAlertProps {
   claimantsCount: number;
@@ -16,6 +16,7 @@ const MissingRequirementsAlert = ({
   claimantsLoading,
   ratingsLoading,
 }: MissingRequirementsAlertProps) => {
+  const navigate = useNavigate();
   const isRatingsCountZero = !ratingsLoading && ratingsCount === 0;
   const isClaimantsCountZero = !claimantsLoading && claimantsCount === 0;
 
@@ -32,6 +33,10 @@ const MissingRequirementsAlert = ({
       : isClaimantsCountZero
       ? "Create claimants first to create claims"
       : "Create ratings first to create claims";
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <Card className="w-full max-w-md mx-auto mt-16 text-center">
@@ -50,25 +55,33 @@ const MissingRequirementsAlert = ({
       <CardFooter className="flex justify-center space-x-4">
         {isClaimantsCountZero && isRatingsCountZero ? (
           <>
-            <Link to="/claimants/create">
-              <Button className="flex items-center gap-2">
-                Create claimant
-              </Button>
-            </Link>
-            <Link to="/ratings/create">
-              <Button className="flex items-center gap-2">
-                Create Ratings
-              </Button>
-            </Link>
+            <SecuredButton
+              className="flex items-center gap-2"
+              onClick={() => handleNavigate("/claimants/create")}
+            >
+              Create claimant
+            </SecuredButton>
+            <SecuredButton
+              className="flex items-center gap-2"
+              onClick={() => handleNavigate("/ratings/create")}
+            >
+              Create Ratings
+            </SecuredButton>
           </>
         ) : isClaimantsCountZero ? (
-          <Link to="/claimants/create">
-            <Button className="flex items-center gap-2">Create claimant</Button>
-          </Link>
+          <SecuredButton
+            className="flex items-center gap-2"
+            onClick={() => handleNavigate("/claimants/create")}
+          >
+            Create claimant
+          </SecuredButton>
         ) : (
-          <Link to="/ratings/create">
-            <Button className="flex items-center gap-2">Create Ratings</Button>
-          </Link>
+          <SecuredButton
+            className="flex items-center gap-2"
+            onClick={() => handleNavigate("/ratings/create")}
+          >
+            Create Ratings
+          </SecuredButton>
         )}
       </CardFooter>
     </Card>
