@@ -41,6 +41,7 @@ interface RightPanelProps {
   data: any;
   onSave: (values: any) => void;
   setActivePanel: (panel: string) => void;
+  isVisible: boolean; // New prop to control animation
 }
 
 const RightPanel: React.FC<RightPanelProps> = ({
@@ -50,9 +51,15 @@ const RightPanel: React.FC<RightPanelProps> = ({
   data,
   onSave,
   setActivePanel,
+  isVisible,
 }) => {
   return (
-    <div className="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background border-l shadow-lg transform transition-transform duration-300 overflow-y-auto">
+    <div
+      className={`fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background border-l shadow-lg overflow-y-auto
+      transform transition-transform duration-500 ease-in-out ${
+        isVisible ? "translate-x-0" : "translate-x-full"
+      }`}
+    >
       <div className="p-4 h-full flex flex-col">
         {activePanel === "main" && (
           <>
@@ -176,7 +183,6 @@ const RightPanel: React.FC<RightPanelProps> = ({
                             type="button"
                             onClick={() => {
                               closePanel();
-                              // This would need to be handled by the parent component
                             }}
                           >
                             Add Claim
@@ -276,25 +282,23 @@ const RightPanel: React.FC<RightPanelProps> = ({
                   </Accordion>
 
                   <Separator />
-
-                  {/* SEO Button */}
-                  <Button
-                    type="button"
-                    className="flex items-center w-full text-left"
-                    onClick={() => setActivePanel("meta")}
-                  >
-                    <FileSearch className="h-4 w-4 mr-2" />
-                    <span className="font-medium">SEO</span>
-                  </Button>
-
-                  <Separator />
-
                   {/* Others Section */}
                   <Collapsible>
                     <CollapsibleTrigger className="flex items-center w-full text-left">
                       <MoreHorizontal className="h-4 w-4 mr-2" />
                       <span className="font-medium">Others</span>
                     </CollapsibleTrigger>
+                    <CollapsibleContent className="space-y-2 pt-2">
+                      {/* SEO Button */}
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="flex items-center w-full text-left"
+                        onClick={() => setActivePanel("meta")}
+                      >
+                        <span className="font-medium">SEO Settings</span>
+                      </Button>
+                    </CollapsibleContent>
                     <CollapsibleContent className="space-y-2 pt-2">
                       <Button
                         type="button"

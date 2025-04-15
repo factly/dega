@@ -14,9 +14,8 @@ function App() {
   const dispatch = useAppDispatch();
   const formatsFetchedRef = useRef(false);
 
-  // State to hold cached formats to prevent "Format not found" during reloads
+  // State to hold cached formats
   const [cachedFormats, setCachedFormats] = useState<any>(null);
-  const cachedFormatsRef = useRef<any>(null);
 
   // Load cached formats from localStorage once on component mount
   useEffect(() => {
@@ -25,7 +24,6 @@ function App() {
       if (savedFormats) {
         const parsedFormats = JSON.parse(savedFormats);
         setCachedFormats(parsedFormats);
-        cachedFormatsRef.current = parsedFormats;
       }
     } catch (error) {
       console.error("Error loading cached formats:", error);
@@ -60,38 +58,37 @@ function App() {
           loading: state.formats.loading,
           hasAttemptedFetch: state.formats.hasAttemptedFetch,
         };
-      }
-    }
 
-    return {
-      // Use cached formats from ref if needed (not direct state to avoid render loops)
-      formats:
-        formatsData.article || formatsData.factcheck
-          ? formatsData
-          : cachedFormatsRef.current || formatsData,
-      selected: state.spaces.selected,
-      session: state.session,
-    };
-  });
-
-  // Cache formats to localStorage when they change, but use a separate effect
-  // and check to avoid infinite updates
-  useEffect(() => {
-    if (formats.article || formats.factcheck) {
-      // Only update if there's actual change
-      if (
-        JSON.stringify(formats) !== JSON.stringify(cachedFormatsRef.current)
-      ) {
+        // Update localStorage with latest format data whenever we have valid formats
         try {
-          localStorage.setItem("cachedFormats", JSON.stringify(formats));
-          // Update the ref but not the state to avoid render loops
-          cachedFormatsRef.current = formats;
+          localStorage.setItem("cachedFormats", JSON.stringify(formatsData));
         } catch (error) {
           console.error("Error saving cached formats:", error);
         }
       }
     }
-  }, [formats.article, formats.factcheck]);
+
+    // If there's no format data in Redux, but we have cached data, use that
+    if (!formatsData.article && !formatsData.factcheck && cachedFormats) {
+      if (cachedFormats.article || cachedFormats.factcheck) {
+        return {
+          formats: {
+            ...formatsData,
+            article: cachedFormats.article || null,
+            factcheck: cachedFormats.factcheck || null,
+          },
+          selected: state.spaces.selected,
+          session: state.session,
+        };
+      }
+    }
+
+    return {
+      formats: formatsData,
+      selected: state.spaces.selected,
+      session: state.session,
+    };
+  });
 
   // Effect to fetch formats when selected space changes
   useEffect(() => {
@@ -127,12 +124,7 @@ function App() {
   };
 
   // Extract routes using our function and pass necessary props
-  const routeObjects = extractV6RouteObject(
-    // Use formats directly, with the useSelector handling caching
-    formats,
-    setReloadFlag,
-    reloadFlag
-  );
+  const routeObjects = extractV6RouteObject(formats, setReloadFlag, reloadFlag);
 
   // Create the router with these route objects
   const router = createBrowserRouter(routeObjects);

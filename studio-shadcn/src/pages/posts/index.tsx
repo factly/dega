@@ -55,10 +55,12 @@ function Posts({ formats }: PostsProps): React.ReactElement {
   const [loadingTimeout, setLoadingTimeout] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
-  // Check localStorage for cached format on initial render only
-  // Use ref to avoid state updates during render
-  const hasCachedFormatRef = useRef(false);
+  // Cache state
+  const [cachedArticleFormat, setCachedArticleFormat] = useState<Format | null>(
+    null
+  );
 
+  // Check localStorage for cached format on initial render only
   useEffect(() => {
     if (initialRenderRef.current) {
       try {
@@ -66,7 +68,7 @@ function Posts({ formats }: PostsProps): React.ReactElement {
         if (savedFormats) {
           const parsedFormats = JSON.parse(savedFormats);
           if (parsedFormats.article) {
-            hasCachedFormatRef.current = true;
+            setCachedArticleFormat(parsedFormats.article);
           }
         }
       } catch (error) {
@@ -279,8 +281,14 @@ function Posts({ formats }: PostsProps): React.ReactElement {
       }
     });
 
-    if (formats && !formats.loading && formats.article) {
-      searchFilter.set("format", formats.article.id);
+    // Use either the current format or cached format
+    const formatId =
+      formats && !formats.loading && formats.article
+        ? formats.article.id
+        : cachedArticleFormat?.id;
+
+    if (formatId) {
+      searchFilter.set("format", formatId);
     }
 
     navigate({
@@ -294,13 +302,15 @@ function Posts({ formats }: PostsProps): React.ReactElement {
     navigate("/posts/create");
   };
 
-  // Continue rendering even if formats.loading is true but we've waited too long
-  // This prevents infinite loading screens
-  const shouldContinueRendering =
-    !formats.loading || loadingTimeout || hasCachedFormatRef.current;
+  // Determine if we have access to format data
+  const hasFormatData =
+    !formats.loading ||
+    formats.article ||
+    cachedArticleFormat ||
+    loadingTimeout;
 
   // Loading state - show for a maximum of 5 seconds
-  if (formats.loading && !loadingTimeout && !hasCachedFormatRef.current) {
+  if (formats.loading && !loadingTimeout && !cachedArticleFormat) {
     return (
       <div className="flex flex-col h-full relative">
         <Helmet title="Posts" />
@@ -314,12 +324,7 @@ function Posts({ formats }: PostsProps): React.ReactElement {
     );
   }
 
-  // Format not found state - but only check if we're sure formats are loaded or timeout occurred
-  if (
-    shouldContinueRendering &&
-    !formats.article &&
-    !hasCachedFormatRef.current
-  ) {
+  if (hasFormatData && !formats.article && !cachedArticleFormat) {
     return (
       <FormatNotFound
         status="info"
@@ -328,6 +333,9 @@ function Posts({ formats }: PostsProps): React.ReactElement {
       />
     );
   }
+
+  // Use either the current format or cached format
+  const formatToUse = formats.article || cachedArticleFormat;
 
   return (
     <div className="flex flex-col h-full gap-6">
@@ -339,7 +347,7 @@ function Posts({ formats }: PostsProps): React.ReactElement {
           <DialogHeader>
             <DialogTitle>Templates</DialogTitle>
           </DialogHeader>
-          {formats.article && <Template format={formats.article} />}
+          {formatToUse && <Template format={formatToUse} />}
         </DialogContent>
       </Dialog>
 
@@ -439,7 +447,7 @@ function Posts({ formats }: PostsProps): React.ReactElement {
         </div>
       </div>
       <PostList
-        format={formats.article}
+        format={formatToUse}
         data={{ posts, total, loading, tags, categories, authors }}
         filters={{
           ...filters,
