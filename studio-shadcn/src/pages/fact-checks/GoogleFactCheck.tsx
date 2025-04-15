@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
+import Loader from "@/components/Loader";
 
 // Define types
 interface LanguageCode {
@@ -220,7 +221,7 @@ function GoogleFactCheck(): React.ReactElement {
       <div className="border rounded-md">
         {loading ? (
           <div className="flex justify-center items-center h-40">
-            <p>Loading...</p>
+            <Loader />
           </div>
         ) : (
           <>

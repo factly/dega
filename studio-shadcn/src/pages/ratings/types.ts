@@ -28,6 +28,7 @@ export interface Rating {
   text_colour?: {
     hex: string;
   };
+  description_html?: string;
   meta_fields?: string | Record<string, any>;
   [key: string]: any;
 }
@@ -45,6 +46,7 @@ export interface RatingFormValues {
   text_colour?: {
     hex: string;
   };
+  description_html?: string;
   meta_fields?: string | Record<string, any>;
 }
 

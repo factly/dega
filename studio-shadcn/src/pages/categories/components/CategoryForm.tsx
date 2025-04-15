@@ -4,7 +4,12 @@ import MediaSelector from "../../../components/MediaSelector";
 import { SketchPicker } from "react-color";
 import Selector from "../../../components/Selector";
 import getJsonValue from "../../../utils/getJsonValue";
-import { MetaForm, SlugInput, TitleInput } from "../../../components/FormItems";
+import {
+  MetaForm,
+  SlugInput,
+  TitleInput,
+  DescriptionInput,
+} from "../../../components/FormItems";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -320,6 +325,34 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
                               ) : null}
                             </div>
                           </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={methods.control}
+                        name="description_html"
+                        render={({ field }) => (
+                          <div className="mb-4 sm:mb-6">
+                            <FormLabel className="text-base block mb-2">
+                              Description
+                            </FormLabel>
+                            <DescriptionInput
+                              initialValue={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              noLabel={true}
+                              rows={5}
+                              inputProps={{
+                                placeholder: "Enter Description...",
+                                style: {
+                                  minHeight: "92px",
+                                  borderRadius: "0.25rem",
+                                  border: "1px solid rgba(0, 0, 0, 0.15)",
+                                },
+                              }}
+                            />
+                          </div>
                         )}
                       />
 

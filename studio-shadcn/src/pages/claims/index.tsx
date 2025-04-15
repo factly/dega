@@ -23,6 +23,7 @@ import { useClaimsPagination } from "./hooks/useClaimsPagination";
 import { ClaimFilters, FormValues } from "./types";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 import SearchButton from "@/components/SearchButton";
+import SecuredButton from "@/components/SecuredButton";
 
 function Claims() {
   const dispatch = useAppDispatch();
@@ -125,6 +126,10 @@ function Claims() {
     );
   };
 
+  const handleCreateClaim = () => {
+    window.location.href = "/claims/create";
+  };
+
   // Show missing requirements alert if needed
   if (
     (!loading && !claimantsLoading && claimantsCount === 0) ||
@@ -141,7 +146,17 @@ function Claims() {
   }
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title="Claims" />
+        {isMobile && (
+          <MobileBreadcrumb currentPage="Claims" parentLabel="Fact Checking" />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -172,11 +187,13 @@ function Claims() {
                 isOpen={isFiltersOpen}
                 setIsOpen={setIsFiltersOpen}
               />
-              <Link to="/claims/create">
-                <Button size="sm" className="flex items-center">
-                  <PlusCircle className="h-4 w-4" />
-                </Button>
-              </Link>
+              <SecuredButton
+                size="sm"
+                className="flex items-center"
+                onClick={handleCreateClaim}
+              >
+                <PlusCircle className="h-4 w-4" />
+              </SecuredButton>
             </div>
           </div>
         </div>
@@ -198,12 +215,14 @@ function Claims() {
               setIsOpen={setIsFiltersOpen}
             />
           </div>
-          <Link to="/claims/create">
-            <Button size="lg" className="flex items-center gap-2 py-2">
-              <PlusCircle className="h-4 w-4" />
-              <span>Create Claim</span>
-            </Button>
-          </Link>
+          <SecuredButton
+            size="lg"
+            className="flex items-center gap-2 py-2"
+            onClick={handleCreateClaim}
+          >
+            <PlusCircle className="h-4 w-4" />
+            <span>Create Claim</span>
+          </SecuredButton>
         </div>
       )}
       {isSearchExpanded && isMobile && (

@@ -15,6 +15,7 @@ import { getRatings } from "../../actions/ratings";
 import { Permission, RatingFilters } from "./types";
 import { useRatingsData } from "./hooks/useRatingsData";
 import { useRatingsPagination } from "./hooks/useRatingsPagination";
+import SecuredButton from "@/components/SecuredButton";
 
 function Ratings({
   permission = { actions: [] },
@@ -77,10 +78,27 @@ function Ratings({
     dispatch(getRatings(filters));
   }, [dispatch, filters]);
 
+  // Handle navigation to create rating page
+  const handleCreateRating = () => {
+    window.location.href = "/ratings/create";
+  };
+
   // Get sidebar state
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title="Ratings" />
+        {isMobile && (
+          <MobileBreadcrumb currentPage="Ratings" parentLabel="Fact Checking" />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -136,18 +154,24 @@ function Ratings({
               </Button>
             )}
 
-            <Link to="/ratings/create">
-              {isMobile ? (
-                <Button size="icon" className="h-9 w-9">
-                  <PlusCircle className="h-5 w-5" />
-                </Button>
-              ) : (
-                <Button size="lg" className="flex items-center gap-2 py-2">
-                  <PlusCircle className="h-4 w-4" />
-                  Create Rating
-                </Button>
-              )}
-            </Link>
+            {isMobile ? (
+              <SecuredButton
+                size="icon"
+                className="h-9 w-9"
+                onClick={handleCreateRating}
+              >
+                <PlusCircle className="h-5 w-5" />
+              </SecuredButton>
+            ) : (
+              <SecuredButton
+                size="lg"
+                className="flex items-center gap-2 py-2"
+                onClick={handleCreateRating}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Create Rating
+              </SecuredButton>
+            )}
           </div>
         </div>
 

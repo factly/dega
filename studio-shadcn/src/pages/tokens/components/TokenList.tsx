@@ -23,6 +23,7 @@ import { Loader2 } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
 import { TokenListProps } from "../types";
+import Loader from "@/components/Loader";
 
 function TokenList({ data, fetchTokens, isMobile }: TokenListProps) {
   const dispatch = useAppDispatch();
@@ -32,11 +33,7 @@ function TokenList({ data, fetchTokens, isMobile }: TokenListProps) {
   };
 
   if (data.loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
+    return <Loader />;
   }
 
   const hasTokens = data.tokens && data.tokens.length > 0;

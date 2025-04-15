@@ -16,6 +16,7 @@ import { PolicyFilters, RootState } from "./types";
 import { usePoliciesData } from "./hooks/usePoliciesData";
 import { usePoliciesPagination } from "./hooks/usePoliciesPagination";
 import { useSelector } from "react-redux";
+import SecuredButton from "@/components/SecuredButton";
 
 const Policies: React.FC = () => {
   const spaces = useSelector((state: RootState) => state.spaces);
@@ -85,6 +86,11 @@ const Policies: React.FC = () => {
     }
   }, [showSearch]);
 
+  // Handle navigation to create policy page
+  const handleCreatePolicy = () => {
+    window.location.href = "/settings/members/policies/create";
+  };
+
   if (loading) return <Loader />;
 
   return (
@@ -143,30 +149,24 @@ const Policies: React.FC = () => {
               </Button>
             )}
 
-            <Link to="/settings/members/policies/create">
-              {isMobile ? (
-                <Button
-                  size="icon"
-                  className="h-9 w-9"
-                  disabled={
-                    !(actions.includes("admin") || actions.includes("create"))
-                  }
-                >
-                  <PlusCircle className="h-5 w-5" />
-                </Button>
-              ) : (
-                <Button
-                  size="lg"
-                  className="flex items-center gap-2 py-2"
-                  disabled={
-                    !(actions.includes("admin") || actions.includes("create"))
-                  }
-                >
-                  <PlusCircle className="h-4 w-4" />
-                  New Policy
-                </Button>
-              )}
-            </Link>
+            {isMobile ? (
+              <SecuredButton
+                size="icon"
+                className="h-9 w-9"
+                onClick={handleCreatePolicy}
+              >
+                <PlusCircle className="h-5 w-5" />
+              </SecuredButton>
+            ) : (
+              <SecuredButton
+                size="lg"
+                className="flex items-center gap-2 py-2"
+                onClick={handleCreatePolicy}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Create Policy
+              </SecuredButton>
+            )}
           </div>
         </div>
 

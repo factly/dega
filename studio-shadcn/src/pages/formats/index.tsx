@@ -3,7 +3,7 @@ import FormatList from "./components/FormatList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { getFormats } from "../../actions/formats";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { FormatFilters, RootState } from "./types";
 import { useFormatsData } from "./hooks/useFormatsData";
 import { useFormatsPagination } from "./hooks/useFormatsPagination";
+import SecuredButton from "@/components/SecuredButton";
 
 function Formats() {
   const dispatch = useAppDispatch();
@@ -80,6 +81,11 @@ function Formats() {
       setSearchText("");
     }
   }, [showSearch]);
+
+  // Handle navigation to create format page
+  const handleCreateFormat = () => {
+    window.location.href = "/settings/advanced/formats/create";
+  };
 
   // Get sidebar state from Redux store
   const isCollapsed = useSelector(
@@ -156,18 +162,24 @@ function Formats() {
               </Button>
             )}
 
-            <Link to="/settings/advanced/formats/create">
-              {isMobile ? (
-                <Button size="icon" className="h-9 w-9">
-                  <PlusCircle className="h-5 w-5" />
-                </Button>
-              ) : (
-                <Button size="lg" className="flex items-center gap-2 py-2">
-                  <PlusCircle className="h-4 w-4" />
-                  New Format
-                </Button>
-              )}
-            </Link>
+            {isMobile ? (
+              <SecuredButton
+                className="h-9 w-9"
+                size="icon"
+                onClick={handleCreateFormat}
+              >
+                <PlusCircle className="h-5 w-5" />
+              </SecuredButton>
+            ) : (
+              <SecuredButton
+                className="flex items-center gap-2 py-2"
+                size="lg"
+                onClick={handleCreateFormat}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Create Format
+              </SecuredButton>
+            )}
           </div>
         </div>
 

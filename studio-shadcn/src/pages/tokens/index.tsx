@@ -14,6 +14,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { TokenFilters } from "./types";
 import { useTokensData } from "./hooks/useTokensData";
 import { useTokensPagination } from "./hooks/useTokensPagination";
+import SecuredButton from "@/components/SecuredButton";
 
 const Tokens: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -60,6 +61,11 @@ const Tokens: React.FC = () => {
       setSearchText("");
     }
   }, [showSearch]);
+
+  // Handle navigation to create token page
+  const handleCreateToken = () => {
+    window.location.href = "/settings/advanced/tokens/create";
+  };
 
   // Get sidebar state
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
@@ -121,18 +127,24 @@ const Tokens: React.FC = () => {
               </Button>
             )}
 
-            <Link to="/settings/advanced/tokens/create">
-              {isMobile ? (
-                <Button size="icon" className="h-9 w-9">
-                  <PlusCircle className="h-5 w-5" />
-                </Button>
-              ) : (
-                <Button variant="default" className="flex items-center gap-2">
-                  <PlusCircle className="h-4 w-4" />
-                  Generate new token
-                </Button>
-              )}
-            </Link>
+            {isMobile ? (
+              <SecuredButton
+                size="icon"
+                className="h-9 w-9"
+                onClick={handleCreateToken}
+              >
+                <PlusCircle className="h-5 w-5" />
+              </SecuredButton>
+            ) : (
+              <SecuredButton
+                variant="default"
+                className="flex items-center gap-2"
+                onClick={handleCreateToken}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Generate New token
+              </SecuredButton>
+            )}
           </div>
         </div>
 

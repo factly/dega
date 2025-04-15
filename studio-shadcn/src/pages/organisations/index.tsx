@@ -19,6 +19,8 @@ import { Member } from "../../actions/organisation";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+import SecuredButton from "@/components/SecuredButton";
+import Loader from "@/components/Loader";
 
 interface Profile {
   id: string;
@@ -117,7 +119,18 @@ function Organisations() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-full">Loading...</div>
+      <div className="flex flex-col h-full relative">
+        <Helmet title="Organization members" />
+        {isMobile && (
+          <MobileBreadcrumb
+            currentPage="Organisation"
+            parentLabel="Administration"
+          />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
     );
   }
 
@@ -183,22 +196,22 @@ function Organisations() {
             )}
 
             {isMobile ? (
-              <Button
+              <SecuredButton
                 size="icon"
                 className="h-9 w-9"
                 onClick={() => navigate("/settings/organisations/addusers")}
               >
                 <PlusCircle className="h-5 w-5" />
-              </Button>
+              </SecuredButton>
             ) : (
-              <Button
+              <SecuredButton
                 size="lg"
                 className="flex items-center gap-2 py-2"
                 onClick={() => navigate("/settings/organisations/addusers")}
               >
                 <PlusCircle className="h-4 w-4" />
                 Add New User
-              </Button>
+              </SecuredButton>
             )}
           </div>
         </div>

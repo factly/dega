@@ -435,12 +435,6 @@ function Users() {
                 : "Your users list is empty"
             }
             isMobile={isMobile}
-            actionText="Add user"
-            onActionClick={() => {
-              if (isMobile) {
-                form.handleSubmit(handleAddUsers)();
-              }
-            }}
           />
         )}
       </div>
