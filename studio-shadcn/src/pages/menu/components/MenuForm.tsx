@@ -24,26 +24,7 @@ import getJsonValue from "../../../utils/getJsonValue";
 import { useNavigate } from "react-router-dom";
 import Submenu from "./Submenu";
 import MenuField from "./MenuField";
-
-// Define TypeScript interfaces
-interface MenuItem {
-  name?: string;
-  title?: string;
-  url?: string;
-  menu?: MenuItem[];
-}
-
-interface MenuData {
-  id?: string;
-  name?: string;
-  menu?: MenuItem[];
-  meta_fields?: string | Record<string, any>;
-}
-
-interface MenuFormProps {
-  onCreate: (values: MenuData) => void;
-  data?: MenuData;
-}
+import { MenuFormProps } from "../types";
 
 // Create a schema for form validation with recursive menu items
 const menuItemSchema = z.object({
@@ -230,7 +211,7 @@ function MenuForm({ onCreate, data = {} }: MenuFormProps) {
                                 <MonacoEditor
                                   language="json"
                                   width={"100%"}
-                                  height={isMobileScreen ? 150 : 200}
+                                  height={isMobileScreen ? "150px" : "200px"}
                                   value={field.value || ""}
                                   onChange={field.onChange}
                                 />

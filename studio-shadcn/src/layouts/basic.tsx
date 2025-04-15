@@ -16,6 +16,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import degaLogoLetters from "@/assets/dega.png";
 import { cn } from "@/lib/utils";
+import Loader from "@/components/Loader";
 
 interface BasicLayoutProps {
   children?: ReactNode;
@@ -200,8 +201,10 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
             {children}
           </div>
         ) : (
-          <div className="flex items-center justify-center p-8">
-            <div className="animate-spin h-10 w-10 border-4 border-primary rounded-full border-t-transparent"></div>
+          <div className="flex flex-col h-full relative">
+            <div className="flex-1 flex items-center justify-center">
+              <Loader className="relative inset-auto" />
+            </div>
           </div>
         )}
       </SidebarInset>

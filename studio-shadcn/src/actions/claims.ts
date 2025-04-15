@@ -14,6 +14,7 @@ import { addClaimants } from "./claimants";
 import getError from "../utils/getError";
 import { ThunkAction } from "redux-thunk";
 import { AnyAction } from "redux";
+import { Rating as RatingFromRatings } from "./ratings";
 
 // Types
 interface Claimant {
@@ -21,11 +22,7 @@ interface Claimant {
   [key: string]: any;
 }
 
-interface Rating {
-  id: string;
-  [key: string]: any;
-}
-
+type Rating = RatingFromRatings;
 interface Description {
   json: any;
   html: string;
@@ -36,7 +33,7 @@ interface Claim {
   description?: Description;
   description_html?: string;
   claimant: string | Claimant;
-  rating: string | Rating;
+  rating: string | Rating | number;
   [key: string]: any;
 }
 
@@ -71,7 +68,7 @@ interface ClaimsRequest {
 }
 
 type AppThunk<ReturnType = void> = ThunkAction<
-  Promise<ReturnType> | void,
+  ReturnType,
   unknown,
   unknown,
   AnyAction
@@ -194,7 +191,7 @@ export const getClaims = (query: ClaimsQuery): AppThunk => {
                 },
                 claimant: claim.claimant.id,
                 rating: claim.rating.id,
-              };
+              } as Claim;
             })
           )
         );
@@ -244,10 +241,10 @@ export const getClaim = (id: string): AppThunk => {
   };
 };
 
-// action to create claim
+// Fixed createClaim function
 export const createClaim = (
   data: Omit<Claim, "id">
-): AppThunk<Promise<Claim | undefined>> => {
+): ThunkAction<Promise<Claim | undefined>, unknown, unknown, AnyAction> => {
   return (dispatch) => {
     dispatch(loadingClaims());
     return axios
@@ -263,6 +260,7 @@ export const createClaim = (
 
         dispatch(resetClaims());
         dispatch(addSuccessNotification("Claim created"));
+        dispatch(stopClaimsLoading());
         return {
           ...claim,
           description,
@@ -276,6 +274,7 @@ export const createClaim = (
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+        dispatch(stopClaimsLoading());
         return undefined;
       });
   };
@@ -352,7 +351,7 @@ export const addClaims = (claims: ClaimNode[]): AppThunk => {
                 : claim.claimant,
             rating:
               typeof claim.rating === "object" ? claim.rating.id : claim.rating,
-          };
+          } as Claim;
         })
       )
     );

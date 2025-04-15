@@ -8,20 +8,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
-
-interface FieldData {
-  name: number;
-  fieldKey: number;
-  key: number;
-}
-
-interface MenuFieldProps {
-  field: FieldData;
-  formFieldPath?: string;
-}
+import { MenuFieldProps } from "../types";
 
 const MenuField: React.FC<MenuFieldProps> = ({ field, formFieldPath }) => {
-  const { control, watch } = useFormContext();
+  const { control } = useFormContext();
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   // Create full field paths for each input
@@ -43,7 +33,7 @@ const MenuField: React.FC<MenuFieldProps> = ({ field, formFieldPath }) => {
           control={control}
           name={nameFieldPath}
           rules={{ required: true }}
-          render={({ field }) => (
+          render={({ field: formField }) => (
             <FormItem>
               <FormLabel className="text-sm md:text-base font-medium">
                 Navigation Label <span className="text-red-500">*</span>
@@ -53,7 +43,11 @@ const MenuField: React.FC<MenuFieldProps> = ({ field, formFieldPath }) => {
                   ref={nameInputRef}
                   placeholder="Enter Label"
                   className="mt-1 text-sm"
-                  {...field}
+                  value={formField.value}
+                  onChange={formField.onChange}
+                  onBlur={formField.onBlur}
+                  name={formField.name}
+                  disabled={formField.disabled}
                 />
               </FormControl>
               <FormMessage className="text-xs" />

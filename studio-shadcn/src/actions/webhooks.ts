@@ -91,7 +91,7 @@ export const getWebhook = (id: string) => {
     return axios
       .get(`${API_BASE_URL}${API_PATH}/${id}`)
       .then((response) => {
-        let webhook: Webhook = response.data;
+        const webhook: Webhook = response.data;
         dispatch(addEvents(webhook.events as Event[]));
         dispatch(
           getWebhookByID({
@@ -115,7 +115,7 @@ export const addWebhook = (data: Omit<Webhook, "id">) => {
     return axios
       .post(`${API_BASE_URL}${API_PATH}`, data)
       .then((response) => {
-        let webhook: Webhook = response.data;
+        const webhook: Webhook = response.data;
         dispatch(addEvents(webhook.events as Event[]));
         dispatch(resetWebhooks());
         dispatch(addSuccessNotification("Webhook added"));
@@ -133,7 +133,7 @@ export const updateWebhook = (data: Webhook) => {
     return axios
       .put(`${API_BASE_URL}${API_PATH}/${data.id}`, data)
       .then((response) => {
-        let webhook: Webhook = response.data;
+        const webhook: Webhook = response.data;
         dispatch(addEvents(webhook.events as Event[]));
         dispatch(
           getWebhookByID({
@@ -194,4 +194,5 @@ export const addWebhookRequest = (data: WebhookRequestData): WebhookAction => ({
 
 export const resetWebhooks = (): WebhookAction => ({
   type: RESET_WEBHOOKS,
+  payload: [],
 });

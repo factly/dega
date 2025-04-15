@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ADD_INFO, INFO_API, SET_INFO_LOADING } from "../constants/info";
 import getError from "../utils/getError";
-import { addErrorNotification } from "./notifications";
+import { addErrorNotification, NotificationAction } from "./notifications";
 import { Dispatch, Action } from "redux";
 
 // Define types for our actions
@@ -16,7 +16,10 @@ interface SetInfoLoadingAction extends Action {
 }
 
 // Union type for all info actions
-type InfoActionTypes = AddInfoAction | SetInfoLoadingAction;
+type InfoActionTypes =
+  | AddInfoAction
+  | SetInfoLoadingAction
+  | NotificationAction;
 
 // Thunk action creator type
 type ThunkResult<R> = (dispatch: Dispatch<InfoActionTypes>) => R;

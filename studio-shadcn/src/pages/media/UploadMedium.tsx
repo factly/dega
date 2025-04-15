@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import UppyUploader from "../../components/Uppy";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import Loader from "@/components/Loader";
 
 // Types
 interface UploadItem {
@@ -68,13 +69,7 @@ function UploadMedium(): React.ReactElement {
           </Alert>
         )}
 
-        {isUploading ? (
-          <div className="flex justify-center items-center py-8">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          </div>
-        ) : (
-          <UppyUploader onUpload={onUpload} />
-        )}
+        {isUploading ? <Loader /> : <UppyUploader onUpload={onUpload} />}
       </div>
     </>
   );

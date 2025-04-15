@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Search } from "lucide-react";
-import { getGoogleFactChecks } from "../../actions/googleFactChecks";
+import { getGoogleFactChecks, Query } from "../../actions/googleFactChecks";
 import deepEqual from "deep-equal";
 import { languageCode } from "../fact-checks/LanguageCode";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
+import Loader from "@/components/Loader";
 
 // Define types
 interface LanguageCode {
@@ -39,7 +40,7 @@ interface FactCheck {
   claimReview: ClaimReview[];
 }
 
-interface FilterState {
+interface FilterState extends Query {
   page: number;
   query: string;
   pageToken?: string;
@@ -141,9 +142,11 @@ function GoogleFactCheck(): React.ReactElement {
     if (indexPointer === null) {
       setIndexPointer(0);
     } else {
-      indexPointer + 1 === paginationStack.length
-        ? setIndexPointer(paginationStack.length)
-        : setIndexPointer(indexPointer + 1);
+      if (indexPointer + 1 === paginationStack.length) {
+        setIndexPointer(paginationStack.length);
+      } else {
+        setIndexPointer(indexPointer + 1);
+      }
     }
 
     setCurrPageToken(nextPage);
@@ -218,7 +221,7 @@ function GoogleFactCheck(): React.ReactElement {
       <div className="border rounded-md">
         {loading ? (
           <div className="flex justify-center items-center h-40">
-            <p>Loading...</p>
+            <Loader />
           </div>
         ) : (
           <>

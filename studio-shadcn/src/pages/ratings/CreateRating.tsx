@@ -1,24 +1,31 @@
-import React from 'react';
-import RatingCreateForm from './components/RatingForm';
-import { useDispatch } from 'react-redux';
-import { createRating } from '../../actions/ratings';
-import { Helmet } from 'react-helmet';
-import useNavigation from '../../utils/useNavigation';
-import { AppDispatch, Rating } from '../../types';
+import React from "react";
+import RatingCreateForm from "./components/RatingForm";
+import { createRating } from "../../actions/ratings";
+import { Helmet } from "react-helmet";
+import useNavigation from "../../utils/useNavigation";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { Rating } from "./types";
 
 const CreateRating: React.FC = () => {
   const history = useNavigation();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
-  const handleCreate = async (values: Rating) => {
-    await dispatch(createRating(values));
-    history('/ratings');
+  const onCreate = (values: Rating) => {
+    dispatch(createRating(values))
+      .then(() => {
+        // Navigate only after successful creation
+        history("/ratings");
+      })
+      .catch((error) => {
+        // Error is already handled in the action creator
+        console.error("Creation failed:", error);
+      });
   };
 
   return (
     <>
       <Helmet title="Create Rating" />
-      <RatingCreateForm onCreate={handleCreate} />
+      <RatingCreateForm onCreate={onCreate} />
     </>
   );
 };

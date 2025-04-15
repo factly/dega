@@ -36,7 +36,17 @@ const Dashboard: React.FC = () => {
   const factCheckFuture = Number(factCheck.future) || 0;
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title="Dashboard" />
+        {isMobile && (
+          <MobileBreadcrumb currentPage="Home" parentLabel="Dashboard" />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
   }
 
   const renderStats = (

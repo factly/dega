@@ -20,49 +20,23 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
-import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
+import { TokenListProps } from "../types";
+import Loader from "@/components/Loader";
 
-// Define interfaces
-interface Token {
-  id: string;
-  name: string;
-  description: string;
-  [key: string]: any;
-}
-
-interface TokenListProps {
-  tokens: Token[];
-  total: number;
-  loading: boolean;
-  filters: {
-    page: number;
-    limit: number;
-  };
-  fetchTokens: () => void;
-  isMobile?: boolean;
-}
-
-export default function TokenList({
-  tokens,
-  loading,
-  fetchTokens,
-  isMobile,
-}: TokenListProps) {
+function TokenList({ data, fetchTokens, isMobile }: TokenListProps) {
   const dispatch = useAppDispatch();
 
   const onDelete = (id: string) => {
     dispatch(deleteSpaceToken(id)).then(() => fetchTokens());
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
+  if (data.loading) {
+    return <Loader />;
   }
-  const hasTokens = tokens && tokens.length > 0;
+
+  const hasTokens = data.tokens && data.tokens.length > 0;
 
   return (
     <div className="pb-4 overflow-auto">
@@ -78,7 +52,7 @@ export default function TokenList({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tokens.map((token: Token) => (
+            {data.tokens.map((token) => (
               <TableRow key={token.id}>
                 <TableCell>
                   <div>
@@ -104,7 +78,6 @@ export default function TokenList({
                     </AlertDialogTrigger>
                     <AlertDialogContent
                       className={isMobile ? "max-w-[90%] p-4 rounded-lg" : ""}
-                      onPointerDownOutside={(e) => e.preventDefault()}
                     >
                       <AlertDialogHeader>
                         <AlertDialogTitle className="text-base">
@@ -148,3 +121,5 @@ export default function TokenList({
     </div>
   );
 }
+
+export default TokenList;

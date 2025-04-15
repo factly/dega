@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@factly/scooter-claim": "^0.0.48",
-    "@factly/scooter-code-block": "^0.0.48",
+    "@factly/scooter-code-block": "^0.0.480",
     "@factly/scooter-core": "^0.0.48",
     "@factly/scooter-embed": "^0.0.48",
     "@factly/scooter-table": "^0.0.48",

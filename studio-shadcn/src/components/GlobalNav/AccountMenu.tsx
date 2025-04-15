@@ -172,7 +172,10 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-[--radix-dropdown-menu-trigger-width] p-0">
+      <DropdownMenuContent
+        align="end"
+        className="w-[--radix-dropdown-menu-trigger-width] p-0"
+      >
         {/* Search input */}
         <div className="p-2">
           <div className="relative">

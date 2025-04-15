@@ -2,8 +2,6 @@ import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
-import { ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
 import {
   Table,
   TableBody,
@@ -32,34 +30,7 @@ import { deleteSpace } from "../../../actions/spaces";
 import { spaceSelector } from "../../../selectors/spaces";
 import useNavigation from "../../../utils/useNavigation";
 import EmptyState from "@/components/EmptyState";
-
-// Define types for the space object
-interface Space {
-  id: string;
-  name: string;
-  site_address: string;
-  site_title: string;
-  created_at: string;
-}
-
-// Define type for the space selector return
-interface SpaceState {
-  spaces: Space[];
-  loading: boolean;
-}
-
-// Define props type for the component
-interface SpaceListProps {
-  searchQuery?: string;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
-  filters?: {
-    page: number;
-    limit: number;
-  };
-  setFilters?: (filters: { page: number; limit: number }) => void;
-  isMobile?: boolean;
-}
+import { AppDispatch, SpaceListProps, SpaceState } from "../types";
 
 const LoadingRow: React.FC = () => (
   <TableRow>
@@ -104,7 +75,7 @@ const SpaceList: React.FC<SpaceListProps> = ({
   onSortToggle,
   isMobile = false,
 }) => {
-  const dispatch: ThunkDispatch<any, unknown, AnyAction> = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { spaces, loading } = useSelector(spaceSelector) as SpaceState;
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
@@ -161,7 +132,7 @@ const SpaceList: React.FC<SpaceListProps> = ({
   };
 
   // Format the date to show only the date part
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString?: string) => {
     if (!dateString) return "-";
     try {
       const date = new Date(dateString);
@@ -199,8 +170,8 @@ const SpaceList: React.FC<SpaceListProps> = ({
         return currentNameSortOrder === "asc" ? comparison : -comparison;
       } else {
         // Sort by date
-        const dateA = new Date(a.created_at || "").getTime();
-        const dateB = new Date(b.created_at || "").getTime();
+        const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
         return dateSortOrder === "asc"
           ? dateA - dateB // Oldest first
           : dateB - dateA; // Newest first
@@ -362,7 +333,7 @@ const SpaceList: React.FC<SpaceListProps> = ({
                   className="flex items-center cursor-pointer"
                   onClick={handleDateSort}
                 >
-                  Created On
+                  Created on
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>
@@ -402,7 +373,7 @@ const SpaceList: React.FC<SpaceListProps> = ({
                   className="flex items-center cursor-pointer"
                   onClick={handleDateSort}
                 >
-                  Created On
+                  Created on
                   <ChevronsUpDown className="ml-1 h-3 w-3" />
                 </div>
               </TableHead>

@@ -168,4 +168,5 @@ export const addEventsRequest = (payload: EventRequestData): EventAction => ({
 
 export const resetEvents = (): EventAction => ({
   type: RESET_EVENTS,
+  payload: [],
 });

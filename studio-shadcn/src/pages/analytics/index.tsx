@@ -1,9 +1,6 @@
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import { Loader, AlertCircle } from "lucide-react";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Loader } from "lucide-react";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -21,27 +18,26 @@ function Analytics(): React.ReactElement {
 
   if (loading) {
     return (
-      <div className="w-full h-48 flex items-center justify-center">
-        <Loader className="h-8 w-8 animate-spin text-muted-foreground" />
+      <div className="flex flex-col h-full relative">
+        <Helmet title={"Analytics"} />
+        {isMobile && (
+          <MobileBreadcrumb currentPage="Analytics" parentLabel="Home" />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
       </div>
     );
   }
 
   if (!space) {
     return (
-      <Alert
-        variant="destructive"
-        className={`${isMobile ? "mx-4 my-4" : "max-w-md mx-auto my-8"}`}
-      >
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>No space found</AlertTitle>
-        <AlertDescription className="mt-2">
-          <p>You need to create a space first.</p>
-          <Button className="mt-4">
-            <Link to="/spaces/create">Create Space</Link>
-          </Button>
-        </AlertDescription>
-      </Alert>
+      <RecordNotFound
+        status="Info"
+        title="No space found"
+        entity="Space"
+        link="/spaces/create"
+      />
     );
   }
 

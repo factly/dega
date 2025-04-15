@@ -25,6 +25,8 @@ import PostSidePanel from "./PostSidePanel";
 import { renderStatusBadge } from "../../../components/statusBadge/index";
 import { Post as PostData, Format } from "../types";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import { DescriptionInput } from "../../../components/FormItems";
+import { formatDate } from "../../../utils/date";
 
 // TypeScript interfaces
 export interface Author {
@@ -57,6 +59,8 @@ function PostForm({
   const [publishedDate, setPublishedDate] = useState<Date | undefined>(
     data.published_date ? new Date(data.published_date) : undefined
   );
+
+  const [isPanelVisible, setIsPanelVisible] = useState<boolean>(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
 
   // Initialize form with serialized dates
@@ -135,7 +139,7 @@ function PostForm({
     try {
       onCreate(finalData);
       // Close panel if open
-      setActivePanel(null);
+      handlePanelClose();
     } finally {
       // Reset the submitting state after a short delay
       setTimeout(() => {
@@ -162,6 +166,25 @@ function PostForm({
         }
       );
     }
+  };
+
+  // Handle opening and closing the panel with animation
+  const handlePanelOpen = (panelName: string) => {
+    // First set the panel without making it visible
+    setActivePanel(panelName);
+
+    // Add a small delay before making it visible to ensure the DOM is updated
+    setTimeout(() => {
+      setIsPanelVisible(true);
+    }, 50);
+  };
+
+  const handlePanelClose = () => {
+    setIsPanelVisible(false);
+    // Delay removing the panel from DOM until animation completes
+    setTimeout(() => {
+      setActivePanel(null);
+    }, 500); // Match this with transition duration
   };
 
   useEffect(() => {
@@ -205,7 +228,7 @@ function PostForm({
             className="w-full max-w-full edit-form"
           >
             <div className="space-y-4 relative">
-              <div className="flex justify-end mb-4">
+              <div className="flex justify-end mb-4 pb-4 border-b">
                 <div className="space-x-2 flex items-center">
                   {data.id && (
                     <Button
@@ -217,13 +240,52 @@ function PostForm({
                     </Button>
                   )}
 
+                  {/* Settings button (PanelRightDashed) */}
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handlePanelOpen("main");
+                    }}
+                    type="button"
+                  >
+                    <PanelRightDashed className="h-4 w-4" />
+                  </Button>
+
+                  {/* Save as Draft button */}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={!valueChange}
+                    onClick={() => {
+                      const newStatus = "draft";
+                      setStatus(newStatus);
+                      form.handleSubmit((values) =>
+                        onSave(values, newStatus)
+                      )();
+                    }}
+                  >
+                    Save as Draft
+                  </Button>
+
+                  {/* Publish dropdown button */}
                   <DropdownMenu>
-                    <div className="flex">
-                      <Button
-                        className="rounded-r-none"
+                    <DropdownMenuTrigger asChild>
+                      <Button disabled={!valueChange}>
+                        <span>
+                          {data.id && status === "publish"
+                            ? "Update Post"
+                            : "Publish Post"}
+                        </span>
+                        <ChevronDown className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent>
+                      <DropdownMenuItem
                         disabled={!valueChange}
-                        onClick={(e) => {
-                          e.preventDefault();
+                        onClick={() => {
                           const newStatus = "publish";
                           setStatus(newStatus);
                           form.handleSubmit((values) =>
@@ -231,32 +293,7 @@ function PostForm({
                           )();
                         }}
                       >
-                        <span className="w-24 text-center">
-                          {data.id && status === "publish"
-                            ? "Update"
-                            : "Publish"}
-                        </span>
-                      </Button>
-
-                      <DropdownMenuTrigger asChild>
-                        <Button className="rounded-l-none border-l px-2">
-                          <ChevronDown className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                    </div>
-
-                    <DropdownMenuContent>
-                      <DropdownMenuItem
-                        disabled={!valueChange}
-                        onClick={() => {
-                          const newStatus = "draft";
-                          setStatus(newStatus);
-                          form.handleSubmit((values) =>
-                            onSave(values, newStatus)
-                          )();
-                        }}
-                      >
-                        Save Draft
+                        Publish
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         disabled={!valueChange}
@@ -284,24 +321,22 @@ function PostForm({
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-
-                  {/* Settings button */}
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActivePanel("main");
-                    }}
-                    type="button"
-                  >
-                    <PanelRightDashed className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
 
               <div className="grid grid-cols-1">
-                <div className="mx-auto w-full lg:w-2/3 xl:w-1/2">
+                <div className="mx-auto w-full lg:w-2/3">
+                  {/* Status badge and Last Updated */}
+                  <div className="flex justify-between items-center pb-4">
+                    <div>{renderStatusBadge(status)}</div>
+                    {data.updated_at && (
+                      <div className="text-sm text-muted-foreground">
+                        Last updated on:{" "}
+                        {formatDate(data.updated_at, "DD MMM YYYY")}
+                      </div>
+                    )}
+                  </div>
+
                   <FormField
                     control={form.control}
                     name="title"
@@ -323,17 +358,21 @@ function PostForm({
                               field.onChange(e);
                               onTitleChange(e.target.value);
                             }}
-                            className="text-4xl font-bold text-center resize-none border-none"
-                            style={{ minHeight: "80px" }}
+                            className="text-4xl font-bold text-start resize-none border"
+                            style={{ minHeight: "60px" }}
                           />
                         </FormControl>
                       </FormItem>
                     )}
                   />
 
-                  {/* Status badge */}
-                  <div className="flex justify-center mt-4">
-                    {renderStatusBadge(status)}
+                  {/* Description Editor */}
+                  <div className="mt-6">
+                    <DescriptionInput
+                      initialValue={data.description_html}
+                      noLabel
+                      formItemProps={{ className: "post-description" }}
+                    />
                   </div>
                 </div>
               </div>
@@ -342,7 +381,6 @@ function PostForm({
         </Form>
       </div>
 
-      {/* Side Panel Component */}
       {activePanel && (
         <PostSidePanel
           form={form}
@@ -353,7 +391,8 @@ function PostForm({
           publishedDate={publishedDate}
           setPublishedDate={setPublishedDate}
           onSave={onSave}
-          onClose={() => setActivePanel(null)}
+          onClose={handlePanelClose}
+          isVisible={isPanelVisible}
         />
       )}
     </>

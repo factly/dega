@@ -91,7 +91,15 @@ function Tags() {
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title={"Tags"} />
+        {isMobile && <MobileBreadcrumb currentPage="Tags" parentLabel="Core" />}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
   }
 
   return (

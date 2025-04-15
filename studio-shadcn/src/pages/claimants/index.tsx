@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 import ClaimantList from "./components/ClaimantList";
-import { Link } from "react-router-dom";
 import { getClaimants } from "../../actions/claimants";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
@@ -15,6 +14,7 @@ import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 import { ClaimantFilters } from "./types";
 import { useClaimantsData } from "./hooks/useClaimantsData";
 import { useClaimantsPagination } from "./hooks/useClaimantsPagination";
+import SecuredButton from "@/components/SecuredButton";
 
 function Claimants() {
   const dispatch = useAppDispatch();
@@ -71,10 +71,30 @@ function Claimants() {
     dispatch(getClaimants(filters));
   }, [dispatch, filters]);
 
+  // Handle navigation to create claimant page
+  const handleCreateClaimant = () => {
+    window.location.href = "/claimants/create";
+  };
+
   // Get sidebar state
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title={"Claimants"} />
+        {isMobile && (
+          <MobileBreadcrumb
+            currentPage="Claimants"
+            parentLabel="Fact Checking"
+          />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -130,18 +150,24 @@ function Claimants() {
               </Button>
             )}
 
-            <Link to="/claimants/create">
-              {isMobile ? (
-                <Button size="icon" className="h-9 w-9">
-                  <PlusCircle className="h-5 w-5" />
-                </Button>
-              ) : (
-                <Button size="lg" className="flex items-center gap-2 py-2">
-                  <PlusCircle className="h-4 w-4" />
-                  Create claimant
-                </Button>
-              )}
-            </Link>
+            {isMobile ? (
+              <SecuredButton
+                className="h-9 w-9"
+                size="icon"
+                onClick={handleCreateClaimant}
+              >
+                <PlusCircle className="h-5 w-5" />
+              </SecuredButton>
+            ) : (
+              <SecuredButton
+                className="flex items-center gap-2 py-2"
+                size="lg"
+                onClick={handleCreateClaimant}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Create claimant
+              </SecuredButton>
+            )}
           </div>
         </div>
 

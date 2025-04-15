@@ -26,7 +26,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { addSpaceToken } from "../../../actions/tokens";
 import { toast } from "sonner";
-import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { Helmet } from "react-helmet";
+import { TokenFormValues } from "../types";
 
 // Define the form schema using Zod
 const formSchema = z.object({
@@ -37,10 +39,7 @@ const formSchema = z.object({
   description: z.string().min(1, { message: "Description is required." }),
 });
 
-// Type for the form data
-type FormValues = z.infer<typeof formSchema>;
-
-const CreateSpaceTokenForm: React.FC = () => {
+const CreateToken: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -48,7 +47,7 @@ const CreateSpaceTokenForm: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   // Initialize form
-  const form = useForm<FormValues>({
+  const form = useForm<TokenFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -56,7 +55,7 @@ const CreateSpaceTokenForm: React.FC = () => {
     },
   });
 
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = (values: TokenFormValues) => {
     dispatch(addSpaceToken(values, setToken, setShowModal));
     form.reset();
   };
@@ -76,6 +75,7 @@ const CreateSpaceTokenForm: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-5">
+      <Helmet title={"Create API Token"} />
       <Card className="w-1/2 mx-auto">
         <CardHeader>
           <CardTitle>Create Space Token</CardTitle>
@@ -156,4 +156,4 @@ const CreateSpaceTokenForm: React.FC = () => {
   );
 };
 
-export default CreateSpaceTokenForm;
+export default CreateToken;

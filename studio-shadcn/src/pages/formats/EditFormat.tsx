@@ -8,27 +8,7 @@ import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-
-// Define types for the format and state
-interface Format {
-  id: string;
-  name: string;
-  slug?: string;
-  is_featured?: boolean;
-  description?: string;
-  medium_id?: number | string;
-  meta_fields?: string | Record<string, unknown>;
-  [key: string]: any; // For other properties
-}
-
-interface RootState {
-  formats: {
-    details: {
-      [key: string]: Format;
-    };
-    loading: boolean;
-  };
-}
+import { Format, FormatFormValues, RootState } from "./types";
 
 function EditFormat(): React.ReactElement {
   const history = useNavigation();
@@ -63,9 +43,15 @@ function EditFormat(): React.ReactElement {
     return <RecordNotFound />;
   }
 
-  const onUpdate = (values: Partial<Format>): void => {
+  const onUpdate = (values: FormatFormValues): void => {
     if (id) {
-      dispatch(updateFormat({ ...format, ...values }));
+      const updatedFormat: Format = {
+        ...format,
+        ...values,
+        id: format.id,
+      };
+
+      dispatch(updateFormat(updatedFormat));
       history(`/settings/advanced/formats/${id}/edit`);
     } else {
       console.error("Format ID is undefined");

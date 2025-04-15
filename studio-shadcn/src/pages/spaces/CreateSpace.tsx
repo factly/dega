@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { getSpaces, addSpace } from "../../actions/spaces";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
-import { SpaceFormValues } from "./components/SpaceCreateForm";
+import { SpaceFormValues } from "./types";
 import { AppDispatch } from "../../store/index";
 
 function CreateSpace(): React.ReactElement {
@@ -15,10 +15,10 @@ function CreateSpace(): React.ReactElement {
     try {
       // First add the space
       await dispatch(addSpace(values));
-      
+
       // Then fetch all spaces (including the new one)
       await dispatch(getSpaces());
-      
+
       // Navigate to spaces list
       history("/admin/spaces");
     } catch (error) {

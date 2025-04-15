@@ -106,7 +106,7 @@ export const getPosts = (
     getState: () => RootState
   ): Promise<void> | void => {
     const currentSpaceID = getState().spaces?.selected;
-    if (currentSpaceID === 0) {
+    if (currentSpaceID === "" || currentSpaceID === "0") {
       return;
     }
     dispatch(loadingPosts());
