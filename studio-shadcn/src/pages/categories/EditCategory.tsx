@@ -1,5 +1,6 @@
-import React from "react";
-import CategoryEditForm from "./components/CategoryForm";
+// EditCategory.tsx
+import { useEffect } from "react";
+import CategoryForm from "./components/CategoryForm";
 import { useSelector } from "react-redux";
 import { updateCategory, getCategory } from "../../actions/categories";
 import { useParams, useNavigate } from "react-router-dom";
@@ -7,18 +8,13 @@ import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import { CategoryFormValues, Category } from "./types";
 
-// Define TypeScript interfaces
-interface Category {
-  id: number | string;
-  name: string;
-  [key: string]: any;
-}
-
+// Define RootState interface
 interface RootState {
   categories: {
     details: {
-      [key: string]: Category;
+      [id: string]: Category | null;
     };
     loading: boolean;
   };
@@ -27,38 +23,28 @@ interface RootState {
 function EditCategory(): React.ReactElement {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-
   const dispatch = useAppDispatch();
 
   const { category, loading } = useSelector((state: RootState) => {
-    // First try to get the category using the exact ID string from params
-    if (state.categories.details[id as string]) {
-      return {
-        category: state.categories.details[id as string],
-        loading: state.categories.loading,
-      };
-    }
-
-    // If not found, return null category and loading state
     return {
-      category: null,
+      category: id && state.categories.details[id] ? state.categories.details[id] : null,
       loading: state.categories.loading,
     };
   });
 
-  React.useEffect(() => {
-    // Only fetch if ID is valid
+  useEffect(() => {
     if (id) {
       dispatch(getCategory(id));
     }
-  }, [dispatch, id]);
+  }, [id, dispatch]);
 
+  // Show loading state while fetching category data
   if (loading) {
     return (
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-3/4" />
-        <Skeleton className="h-4 w-1/2" />
+      <div className="flex flex-col items-center justify-center p-6">
+        <Skeleton className="h-12 w-full" />
+        <Skeleton className="h-12 w-full mt-4" />
+        <Skeleton className="h-12 w-full mt-4" />
       </div>
     );
   }
@@ -67,27 +53,34 @@ function EditCategory(): React.ReactElement {
     return <RecordNotFound />;
   }
 
-  const onUpdate = (values: Partial<Category>) => {
-    const updatedCategory = {
-      ...category,
-      ...values,
-      id: category.id,
-    };
+  const onUpdate = (values: CategoryFormValues) => {
+    if (id) {
+      const updatedValues = {
+        ...category,
+        ...values,
+        id: id, // Ensure we're using the string id from the URL params
+      };
 
-    dispatch(updateCategory(updatedCategory))
-      .then(() => {
-        // Navigate to the categories list after update
+      const result = dispatch(updateCategory(updatedValues));
+
+      if (result && typeof result.then === "function") {
+        result.then(() => {
+          // Navigate back to the categories list
+          navigate("/categories");
+        }).catch((error) => {
+          console.error("Error updating category:", error);
+        });
+      } else {
+        // If it's not a Promise, navigate directly back
         navigate("/categories");
-      })
-      .catch((error) => {
-        console.error("Error updating category:", error);
-      });
+      }
+    }
   };
 
   return (
     <>
-      <Helmet title={`${category?.name} - Edit Category`} />
-      <CategoryEditForm data={category} onCreate={onUpdate} />
+      <Helmet title={`${category?.name || 'Edit'} - Category`} />
+      <CategoryForm data={category} onCreate={onUpdate} />
     </>
   );
 }

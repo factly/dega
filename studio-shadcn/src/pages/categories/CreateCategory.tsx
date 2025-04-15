@@ -1,32 +1,29 @@
-import React from "react";
-import CategoryCreateForm from "./components/CategoryForm";
+// CreateCategory.tsx
+import { FC } from "react";
+import CategoryForm from "./components/CategoryForm";
 import { createCategory } from "../../actions/categories";
-import { useAppDispatch } from "@/hooks/reduxHooks";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { CategoryFormValues } from "./types";
 
-interface CategoryValues {
-  name: string;
-}
-
-const CreateCategory: React.FC = () => {
+const CreateCategory: FC = () => {
   const navigate = useNavigation();
   const dispatch = useAppDispatch();
 
-  const onCreate = (values: CategoryValues): void => {
-    dispatch(createCategory(values))
-      .then(() => {
-        navigate("/categories");
-      })
-      .catch((error) => {
-        console.error("Error creating category:", error);
-      });
+  const onCreate = (values: CategoryFormValues) => {
+    // Use Promise.resolve to handle the dispatch result consistently
+    Promise.resolve(dispatch(createCategory(values))).then(() => {
+      navigate("/categories");
+    }).catch((error) => {
+      console.error("Error creating category:", error);
+    });
   };
 
   return (
     <>
       <Helmet title={"Create Category"} />
-      <CategoryCreateForm onCreate={onCreate} />
+      <CategoryForm onCreate={onCreate} />
     </>
   );
 };

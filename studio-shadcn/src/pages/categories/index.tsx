@@ -1,323 +1,189 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { useSelector } from "react-redux";
+// index.tsx
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import deepEqual from "deep-equal";
-import { PlusCircle, Search as SearchIcon } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import CategoryList from "./components/CategoryList";
-import Loader from "../../components/Loader";
-import { getCategories } from "../../actions/categories";
-import Pagination from "../../components/Pagination";
-import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
+// Custom components
+import CategoryList from "./components/CategoryList";
+import Loader from "@/components/Loader";
+import SearchInput from "@/components/SearchInput";
+import FiltersPopover from "./components/FiltersPopover";
+import PaginationFooter from "@/components/PaginationFooter";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
-import SecuredButton from "@/components/SecuredButton";
-
-interface Category {
-  id: string;
-  [key: string]: any;
-}
-
-interface CategoryState {
-  req: Array<{
-    query: Record<string, any>;
-    data: string[];
-    total: number;
-  }>;
-  details: Record<string, Category>;
-  loading: boolean;
-}
-
-interface RootState {
-  categories: CategoryState;
-  sidebar: {
-    collapsed: boolean;
-  };
-}
-
-interface FilterParams {
-  q?: string;
-  sort?: string;
-  page?: number;
-  limit?: number;
-  [key: string]: string | number | undefined;
-}
+import SearchButton from "@/components/SearchButton";
+// Actions and hooks
+import { getCategories } from "../../actions/categories";
+import { useForm } from "react-hook-form";
+import { useCategoriesData } from "./hooks/useCategoriesData";
+import { useCategoriesPagination } from "./hooks/useCategoriesPagination";
+import { CategoryFilters, FormValues } from "./types";
+import { useSidebar } from "@/components/ui/sidebar";
 
 function Categories() {
   const dispatch = useAppDispatch();
-  const { state: sidebarState } = useSidebar();
   const isMobile = useIsMobile();
-
-  // State for search and filters
-  const [searchText, setSearchText] = useState<string>("");
-  const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-
-  // Initialize filters with a ref to prevent unnecessary reloads
-  const [filters, setFilters] = useState<FilterParams>({
+  const { state: sidebarState } = useSidebar();
+  const [searchText, setSearchText] = useState("");
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [filters, setFilters] = useState<CategoryFilters>({
     page: 1,
-    limit: 10, // Use a consistent value initially
+    limit: 10,
+    sort: "desc",
   });
 
-  // Handle responsive UI changes without triggering data reload
   useEffect(() => {
-    // Just update the UI state for search visibility
-    setShowSearch(!isMobile);
-
-    // We don't update filters.limit here anymore to prevent data reload
-  }, [isMobile]);
-
-  // Fetch categories only when filters are intentionally changed
-  useEffect(() => {
-    fetchCategories();
-  }, [filters]);
-
-  // Get data from Redux store
-  const { categories, total, loading } = useSelector((state: RootState) => {
-    // Adjust the query to match current device type for proper cache lookup
-    const adjustedQuery = {
-      ...filters,
-    };
-
-    const node = state.categories.req.find((item) => {
-      return deepEqual(item.query, adjustedQuery);
-    });
-
-    if (node)
-      return {
-        categories: node.data.map(
-          (element) => state.categories.details[element]
-        ),
-        total: node.total,
-        loading: state.categories.loading,
-      };
-    return { categories: [], total: 0, loading: state.categories.loading };
-  });
-
-  // Filter categories locally based on search text
-  const filteredCategories = useMemo(() => {
-    if (!searchText.trim()) {
-      return categories;
+    if (searchText && isMobile && !isSearchExpanded) {
+      setIsSearchExpanded(true);
     }
+  }, [searchText, isMobile, isSearchExpanded]);
 
-    return categories.filter(
-      (category) =>
-        category.name?.toLowerCase().includes(searchText.toLowerCase()) ||
-        category.slug?.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }, [categories, searchText]);
+  // Initialize form
+  const form = useForm<FormValues>({
+    defaultValues: {
+      q: "",
+      sort: filters.sort,
+    },
+  });
 
-  // Sort categories based on sort order
-  const sortedCategories = useMemo(() => {
-    return [...filteredCategories].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.name?.localeCompare(b.name || "") || 0;
-      } else {
-        return b.name?.localeCompare(a.name || "") || 0;
-      }
-    });
-  }, [filteredCategories, sortOrder]);
-
-  const fetchCategories = useCallback(() => {
+  // Fetch initial data
+  useEffect(() => {
     dispatch(getCategories(filters));
   }, [dispatch, filters]);
 
-  // Handle search input changes - dynamic search
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+  const toggleSearch = () => {
+    setIsSearchExpanded(!isSearchExpanded);
   };
 
-  // Handle sort toggle
-  const handleSortToggle = useCallback(() => {
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
-  }, []);
+  // Use custom hooks
+  const { categories, total, loading } = useCategoriesData(filters, searchText);
+  const { totalPages, handlePageChange, handlePageSizeChange, onPagination } =
+    useCategoriesPagination(filters, setFilters, total);
 
-  // Pagination handlers
-  const handlePageChange = useCallback((page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
-  }, []);
-
-  const handlePageSizeChange = useCallback((size: number) => {
-    setFilters((prev) => ({ ...prev, limit: size, page: 1 }));
-  }, []);
-
-  // Toggle search on mobile
-  const toggleSearch = useCallback(() => {
-    setShowSearch((prev) => !prev);
-    if (showSearch) {
-      setSearchText("");
-    }
-  }, [showSearch]);
-
-  // Handle navigation to create category page
-  const handleCreateCategory = () => {
-    window.location.href = "/categories/create";
+  const clearSearch = () => {
+    setSearchText("");
   };
 
-  const pageSize = filters.limit || 10;
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const onSave = (values: FormValues) => {
+    // Update local state with form values
+    setFilters({
+      ...filters,
+      page: 1, // Reset to page 1 when applying new filters
+      sort: values.sort || "desc",
+    });
+    setIsFiltersOpen(false);
+  };
+
+  const handleSortToggle = () => {
+    setFilters({
+      ...filters,
+      sort: filters.sort === "asc" ? "desc" : "asc",
+    });
+  };
+
+  // Check if any filters are applied
+  const hasActiveFilters = () => {
+    return !!(filters.sort !== "desc");
+  };
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
-    <div className="flex flex-col h-full">
-      <Helmet title={"Categories"} />
+    <div className="flex flex-col h-full gap-6">
+      <Helmet title="Categories" />
 
-      {/* Mobile Breadcrumb */}
-      {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Categories"
-          parentPath="/"
-          parentLabel="Core"
-        />
-      )}
-
-      <div
-        className={`${isMobile ? "sticky top-0" : "fixed"} z-10 bg-white`}
-        style={
-          !isMobile
-            ? {
-                left: isCollapsed ? "89px" : "265px",
-                right: 0,
-                transition: "left 0.3s ease",
-              }
-            : undefined
-        }
-      >
-        <div
-          className={`flex justify-between items-center ${
-            isMobile ? "pb-3" : "px-4 pr-5 h-full"
-          }`}
-        >
-          {/* Title */}
-          {isMobile && <h1 className="text-xl font-semibold">Categories</h1>}
-
-          {/* Desktop search bar */}
-          {!isMobile && (
-            <div className="flex-1 max-w-xs">
-              <Input
-                placeholder="Search categories..."
-                value={searchText}
-                onChange={handleSearchChange}
-                className="h-10"
+      {/* Header */}
+      {isMobile ? (
+        <div className="space-y-4 flex justify-between items-center">
+          {isMobile && (
+            <div className="flex flex-col">
+              <MobileBreadcrumb
+                currentPage="Categories"
+                parentLabel="Core"
               />
+              {isMobile && <h1 className="text-xl font-semibold">Categories</h1>}
             </div>
           )}
-
-          {/* Action buttons */}
-          <div className={`${isMobile ? "flex items-center gap-2" : ""}`}>
-            {isMobile && (
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={toggleSearch}
-                className="h-9 w-9 text-gray-500"
-              >
-                <SearchIcon className="h-5 w-5" />
-              </Button>
-            )}
-
-            {isMobile ? (
-              <SecuredButton 
-                className="h-9 w-9"
-                size="icon"
-                onClick={handleCreateCategory}
-              >
-                <PlusCircle className="h-5 w-5" />
-              </SecuredButton>
-            ) : (
-              <SecuredButton 
-                className="flex items-center gap-2 py-2"
-                size="lg"
-                onClick={handleCreateCategory}
-              >
-                <PlusCircle className="h-4 w-4" />
-                Create category
-              </SecuredButton>
-            )}
+          <div className="flex gap-2 items-center">
+            <div>
+              <SearchButton onClick={toggleSearch} />
+            </div>
+            <div className="flex items-center gap-2 ml-2">
+              <Link to="/categories/create">
+                <Button size="sm" className="flex items-center">
+                  <PlusCircle className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
-
-        {/* Mobile search bar */}
-        {isMobile && showSearch && (
-          <div className="px-4 pb-3">
-            <Input
-              placeholder="Search categories..."
-              value={searchText}
-              onChange={handleSearchChange}
-              className="h-9 w-full"
-              autoFocus
+      ) : (
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4 flex-1">
+            <SearchInput
+              searchText={searchText}
+              setSearchText={setSearchText}
+              handleSearchSubmit={() => {}}
+              clearSearch={clearSearch}
+              autoFocus={false}
             />
           </div>
-        )}
-      </div>
+          <Link to="/categories/create">
+            <Button size="lg" className="flex items-center gap-2 py-2">
+              <PlusCircle className="h-4 w-4" />
+              <span>Create Category</span>
+            </Button>
+          </Link>
+        </div>
+      )}
+      {isSearchExpanded && isMobile && (
+        <div className="w-full">
+          <SearchInput
+            searchText={searchText}
+            setSearchText={setSearchText}
+            handleSearchSubmit={() => {}}
+            clearSearch={clearSearch}
+            autoFocus={true}
+          />
+        </div>
+      )}
 
-      <div
-        className={
-          isMobile
-            ? "flex-1 pb-16 pt-1 overflow-auto"
-            : "absolute overflow-auto"
-        }
-        style={
-          !isMobile
-            ? {
-                top: "calc(1.5rem + 2.5rem + 1rem)",
-                left: 0,
-                right: 0,
-                bottom: "64px",
-                paddingLeft: "1.5rem",
-                paddingRight: "1.5rem",
-                paddingBottom: "1.5rem",
-                paddingTop: "1rem",
-                transition: "left 0.3s ease, top 0.3s ease",
-              }
-            : undefined
-        }
-      >
+      {/* Content */}
+      <div className="flex-1 overflow-scroll">
         <CategoryList
           data={{
-            categories: sortedCategories,
-            total: total,
+            categories,
+            total,
             loading,
           }}
-          filters={filters}
-          setFilters={setFilters}
-          fetchCategories={fetchCategories}
-          sortOrder={sortOrder}
+          filters={{
+            page: filters.page,
+            limit: filters.limit,
+          }}
+          fetchCategories={() => dispatch(getCategories(filters))}
+          onPagination={onPagination}
+          sortOrder={filters.sort as "asc" | "desc"}
           onSortToggle={handleSortToggle}
           isMobile={isMobile}
         />
       </div>
 
-      <div
-        className={`${
-          isMobile ? "fixed bottom-0 left-0 right-0 py-3" : "fixed bottom-0"
-        } z-10 bg-white`}
-        style={
-          !isMobile
-            ? {
-                left: isCollapsed ? "89px" : "265px",
-                right: 0,
-                height: "64px",
-                transition: "left 0.3s ease",
-              }
-            : undefined
-        }
-      >
-        <Pagination
-          currentPage={filters.page}
-          totalPages={totalPages}
-          totalItems={total}
-          pageSize={pageSize}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
-          isMobile={isMobile}
-        />
-      </div>
+      {/* Footer with Pagination */}
+      <PaginationFooter
+        currentPage={filters.page}
+        totalPages={totalPages}
+        totalItems={total}
+        pageSize={filters.limit}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+      />
     </div>
   );
 }
