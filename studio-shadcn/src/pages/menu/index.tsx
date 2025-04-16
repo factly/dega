@@ -34,7 +34,6 @@ const Menu: React.FC = () => {
   // State for search and filters
   const [searchText, setSearchText] = useState<string>("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   // Initialize filters from URL params or defaults
   const [filters, setFilters] = useState<MenuFilters>({
@@ -57,11 +56,7 @@ const Menu: React.FC = () => {
   }, [isMobile]);
 
   // Use custom hooks for data and pagination
-  const { menus, total, loading } = useMenusData(
-    filters,
-    searchText,
-    sortOrder
-  );
+  const { menus, total, loading } = useMenusData(filters, searchText);
   const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
     useMenusPagination(filters, setFilters, total);
 
@@ -79,11 +74,6 @@ const Menu: React.FC = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
-
-  // Handle sort toggle
-  const handleSortToggle = useCallback(() => {
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
-  }, []);
 
   // Toggle search on mobile
   const toggleSearch = useCallback(() => {
@@ -202,7 +192,7 @@ const Menu: React.FC = () => {
           !isMobile
             ? {
                 top: "calc(1.5rem + 2.5rem + 1rem)",
-                left: 0,
+                left: "254px",
                 right: 0,
                 bottom: "64px",
                 paddingLeft: "1.5rem",
@@ -224,8 +214,6 @@ const Menu: React.FC = () => {
           filters={filters}
           setFilters={setFilters}
           fetchMenus={fetchMenus}
-          sortOrder={sortOrder}
-          onSortToggle={handleSortToggle}
           isMobile={isMobile}
         />
       </div>

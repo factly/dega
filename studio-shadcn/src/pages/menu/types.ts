@@ -43,8 +43,6 @@ export interface MenuListProps {
     filters: MenuFilters | ((prev: MenuFilters) => MenuFilters)
   ) => void;
   fetchMenus: () => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   isMobile?: boolean;
 }
 

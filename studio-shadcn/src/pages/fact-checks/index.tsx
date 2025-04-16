@@ -52,9 +52,6 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
   const [isSearchExpanded, setIsSearchExpanded] = useState(!!query.get("q"));
 
   // Sorting state
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
-    query.get("sort") === "asc" ? "asc" : "desc"
-  );
   const [sortBy, setSortBy] = useState<string>(query.get("sortBy") || "date");
 
   // Custom hooks
@@ -75,7 +72,6 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
     "page",
     "limit",
     "q",
-    "sort",
     "sortBy",
     "tag",
     "category",
@@ -109,34 +105,11 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
     }
   }, [searchText, isMobile, isSearchExpanded]);
 
-  // Sorting handlers
-  const handleSortToggle = () => {
-    const newSort = sortOrder === "asc" ? "desc" : "asc";
-    setSortOrder(newSort);
-
-    const newQuery = new URLSearchParams(query.toString());
-    newQuery.set("sort", newSort);
-
-    navigate({
-      pathname,
-      search: "?" + newQuery.toString(),
-    });
-  };
-
   const handleSortByChange = (column: string) => {
-    // Apply a default order based on the column
-    let newSort = sortOrder;
-    if (column !== sortBy) {
-      // Default date to newest first, default title to alphabetical (A-Z)
-      newSort = column === "date" ? "desc" : "asc";
-      setSortOrder(newSort);
-    }
-
     setSortBy(column);
 
     const newQuery = new URLSearchParams(query.toString());
     newQuery.set("sortBy", column);
-    newQuery.set("sort", newSort);
 
     navigate({
       pathname,
@@ -233,8 +206,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
       searchFilter.set("status", status);
     }
 
-    // Add sort and sortBy params
-    searchFilter.set("sort", sortOrder);
+    // Add sortBy param
     searchFilter.set("sortBy", sortBy);
 
     // Add all other filter values
@@ -438,13 +410,10 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
         }}
         filters={{
           ...params,
-          sort: sortOrder,
           sortBy: sortBy,
         }}
         fetchPosts={fetchPosts}
         query={status}
-        sortOrder={sortOrder}
-        onSortToggle={handleSortToggle}
         sortBy={sortBy}
         onSortByChange={handleSortByChange}
       />

@@ -21,7 +21,7 @@ import AuthLayout from "./AuthLayout";
 import degaImage from "../../assets/dega-1.png";
 import AuthHeader from "./AuthHeader";
 import PasswordInput from "@/components/PasswordInput";
-import {RegistrationData, SessionData, TOTPData, FormValues} from "./types";
+import { RegistrationData, SessionData, TOTPData, FormValues } from "./types";
 
 const RegistrationForm: React.FC = () => {
   const [error, setError] = useState<string>("");
@@ -52,7 +52,6 @@ const RegistrationForm: React.FC = () => {
     step: googleStep,
     totpUri: googleTotpUri,
     totpSecret: googleTotpSecret,
-    handleGoogleSkipMfa,
     handleMfaSetup: handleGoogleMfaSetup,
     handleMfaVerify: handleGoogleMfaVerify,
   } = useGoogleSignIn();
@@ -93,6 +92,7 @@ const RegistrationForm: React.FC = () => {
       password: {
         password: formValues.password,
       },
+      confirmPassword: formValues.confirmPassword,
     };
 
     try {
@@ -100,19 +100,36 @@ const RegistrationForm: React.FC = () => {
       setUserId(registerData.userId);
       localStorage.setItem("userId", registerData.userId);
 
-      const sessionData: SessionData = await createSession(formValues.email);
+      // Create a properly typed SessionData object
+      const sessionResponse = await createSession(formValues.email);
+
+      // Ensure all required properties exist before creating SessionData
+      if (!sessionResponse.sessionId || !sessionResponse.sessionToken) {
+        throw new Error("Invalid session response");
+      }
+
+      const sessionData: SessionData = {
+        sessionId: sessionResponse.sessionId,
+        sessionToken: sessionResponse.sessionToken,
+        token: sessionResponse.sessionToken, // Adding token to satisfy SessionData interface
+      };
+
       setSessionId(sessionData.sessionId);
       setSessionToken(sessionData.sessionToken);
 
-      const verificationData = await verifyPassword(
+      const verificationResponse = await verifyPassword(
         sessionData.sessionId,
         sessionData.sessionToken,
         formValues.password
       );
-      setSessionToken(verificationData.sessionToken);
+
+      // Only set sessionToken if it's defined
+      if (verificationResponse.sessionToken) {
+        setSessionToken(verificationResponse.sessionToken);
+        localStorage.setItem("sessionToken", verificationResponse.sessionToken);
+      }
 
       localStorage.setItem("sessionId", sessionData.sessionId);
-      localStorage.setItem("sessionToken", verificationData.sessionToken);
 
       setStep("mfa-choice");
     } catch (error) {

@@ -34,12 +34,19 @@ interface SelectorProps {
   setLoading?: boolean;
   mode?: "multiple" | "tags" | undefined;
   createEntity?: string;
-  value: string[] | string | number | number[] | undefined;
+  value:
+    | string[]
+    | string
+    | number
+    | number[]
+    | { id: number; [key: string]: any }[]
+    | undefined;
   onChange: (values: string[] | string | number | number[]) => void;
   action: string;
   display?: string;
   placeholder?: string;
   style?: React.CSSProperties;
+  isQuickEdit?: boolean;
 }
 
 // Define type for entity detail object
@@ -143,9 +150,17 @@ function Selector({
   if (!value) {
     normalizedValue = [];
   } else if (!mode && value) {
-    normalizedValue = Array.isArray(value) ? value.map((v) => v) : [value];
+    normalizedValue = Array.isArray(value)
+      ? value.map((v) =>
+          typeof v === "object" && v !== null && "id" in v ? v.id : v
+        )
+      : [value];
   } else {
-    normalizedValue = Array.isArray(value) ? value : [value];
+    normalizedValue = Array.isArray(value)
+      ? value.map((v) =>
+          typeof v === "object" && v !== null && "id" in v ? v.id : v
+        )
+      : [value];
   }
 
   if (!placeholder) {
@@ -500,8 +515,8 @@ function Selector({
             <ChevronsUpDown className="absolute right-3 top-3 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" >
-          <Command >
+        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+          <Command>
             <CommandList>
               <ScrollArea onScrollCapture={handleScroll}>
                 <CommandEmpty>

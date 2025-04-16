@@ -25,7 +25,7 @@ interface State {
 }
 
 interface SelectorResult {
-  [key: string]: any[];
+  [key: string]: any[] | number | boolean;
   total: number;
   loading: boolean;
 }
@@ -55,17 +55,17 @@ export const entitySelector = (
     const result: SelectorResult = {
       total: node.total,
       loading: state[entity].loading,
+      [entity]: [],
     };
 
     // Map the entity data and store it with the entity name as key
-    const entityData = node.data
+    result[entity] = node.data
       .map((element) => {
         // Make sure the element exists in details before returning it
         return state[entity].details[element] || null;
       })
       .filter(Boolean); // Remove any null values
 
-    result[entity] = entityData;
     return result;
   }
 

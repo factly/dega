@@ -19,7 +19,9 @@ interface WebhookFilters {
 
 interface Webhook {
   id: string;
-  // Add other webhook properties as needed
+  name: string;
+  enabled: boolean;
+  events: string[];
 }
 
 interface WebhooksState {

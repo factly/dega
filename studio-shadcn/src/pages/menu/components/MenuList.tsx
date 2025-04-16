@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
+import { Trash2, Pencil, Ellipsis } from "lucide-react";
 import { deleteMenu } from "../../../actions/menu";
 import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -34,7 +34,6 @@ const MenuList: React.FC<MenuListProps> = ({
   actions,
   data,
   fetchMenus,
-  onSortToggle,
   isMobile,
 }) => {
   const dispatch = useAppDispatch();
@@ -105,15 +104,7 @@ const MenuList: React.FC<MenuListProps> = ({
           <Table>
             <TableHeader className="text-[13px]">
               <TableRow>
-                <TableHead className="w-full">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={onSortToggle}
-                  >
-                    Name
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
-                </TableHead>
+                <TableHead className="w-full">Name</TableHead>
                 <TableHead className="w-[150px] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>

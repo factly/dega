@@ -12,9 +12,27 @@ import useNavigation from "../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // Define types for your Redux state and webhook data
+interface Event {
+  id: string;
+  [key: string]: any;
+}
+
 interface Webhook {
   id: string;
+  events: Event[] | string[];
+  name?: string;
+  url?: string;
+  enabled?: boolean;
   [key: string]: any; // Add specific properties as needed
+}
+
+interface WebhookFormData {
+  id?: string;
+  name?: string;
+  url?: string;
+  enabled?: boolean;
+  events?: string[];
+  event_ids?: string[];
 }
 
 interface WebhooksState {
@@ -61,8 +79,29 @@ function EditWebhook(): React.ReactElement {
     return <RecordNotFound />;
   }
 
-  const onUpdate = (values: Partial<Webhook>) => {
-    dispatch(updateWebhook({ ...webhook, ...values }));
+  // Convert webhook to WebhookFormData format for the form component
+  const webhookFormData: WebhookFormData = {
+    id: webhook.id,
+    name: webhook.name,
+    url: webhook.url,
+    enabled: webhook.enabled,
+    events: Array.isArray(webhook.events)
+      ? webhook.events.map((event) =>
+          typeof event === "string" ? event : event.id
+        )
+      : (webhook.events as string[]),
+  };
+
+  const onUpdate = (values: WebhookFormData) => {
+    // Make sure to preserve the webhook's original structure
+    const updatedWebhook: Webhook = {
+      ...webhook,
+      name: values.name,
+      url: values.url,
+      enabled: values.enabled,
+      events: values.events || [],
+    };
+    dispatch(updateWebhook(updatedWebhook));
     history(`/settings/advanced/webhooks/${id}/edit`);
   };
 
@@ -73,7 +112,7 @@ function EditWebhook(): React.ReactElement {
         <div className="col-span-8">
           <Card>
             <CardContent className="pt-6">
-              <WebhookEditForm data={webhook} onCreate={onUpdate} />
+              <WebhookEditForm data={webhookFormData} onCreate={onUpdate} />
             </CardContent>
           </Card>
         </div>

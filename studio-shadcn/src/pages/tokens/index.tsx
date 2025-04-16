@@ -34,6 +34,10 @@ const Tokens: React.FC = () => {
     setShowSearch(!isMobile);
   }, [isMobile]);
 
+  const fetchTokens = useCallback(() => {
+    dispatch(getSpaceTokens(filters));
+  }, [dispatch, filters]);
+
   // Use custom hooks for data and pagination
   const { tokens, total, loading } = useTokensData(filters, searchText);
   const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
@@ -42,12 +46,7 @@ const Tokens: React.FC = () => {
   // Fetch tokens when filters change
   useEffect(() => {
     fetchTokens();
-  }, [filters]);
-
-  // Fetch tokens function for the list component
-  const fetchTokens = useCallback(() => {
-    dispatch(getSpaceTokens(filters));
-  }, [dispatch, filters]);
+  }, [filters, fetchTokens]);
 
   // Handle search input changes
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -172,7 +171,7 @@ const Tokens: React.FC = () => {
           !isMobile
             ? {
                 top: "calc(1.5rem + 2.5rem + 1rem)",
-                left: 0,
+                left: "260px",
                 right: 0,
                 bottom: "64px",
                 paddingLeft: "1.5rem",

@@ -1,4 +1,3 @@
-// components/PaginationFooter.tsx
 import Pagination from "@/components/Pagination";
 
 import { useSidebar } from "@/components/ui/sidebar";

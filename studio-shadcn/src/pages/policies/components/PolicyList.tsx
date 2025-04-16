@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Trash2, Pencil, Ellipsis, ChevronsUpDown, Eye } from "lucide-react";
+import { Trash2, Pencil, Ellipsis, Eye } from "lucide-react";
 import { deletePolicy } from "../../../actions/policies";
 import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -34,7 +34,6 @@ import { PolicyListProps } from "../types";
 const PolicyList: React.FC<PolicyListProps> = ({
   data,
   fetchPolicies,
-  onSortToggle,
   isMobile,
 }) => {
   const dispatch = useAppDispatch();
@@ -106,13 +105,7 @@ const PolicyList: React.FC<PolicyListProps> = ({
             <TableHeader className="text-[13px]">
               <TableRow>
                 <TableHead className="w-[45%]">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={onSortToggle}
-                  >
-                    Name
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
+                  <div className="flex items-center">Name</div>
                 </TableHead>
                 {!isMobile && (
                   <TableHead className="w-[45%] min-w-[400px]">

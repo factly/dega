@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Trash2, Edit, Ellipsis, Pencil, ChevronsUpDown } from "lucide-react";
+import { Trash2, Edit, Ellipsis, Pencil } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -81,15 +81,12 @@ interface PageListProps {
     limit?: number;
     tag?: string[];
     category?: string[];
-    sort?: string;
     sortBy?: string;
     [key: string]: any;
   };
   onPagination: (page: number, limit: number) => void;
   fetchPages: () => void;
   isMobile?: boolean;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   sortBy?: string;
   onSortByChange?: (column: string) => void;
 }
@@ -99,7 +96,6 @@ function PageList({
   data,
   fetchPages,
   isMobile = false,
-  onSortToggle,
   sortBy = "date",
   onSortByChange,
 }: PageListProps) {
@@ -152,17 +148,11 @@ function PageList({
     if (onSortByChange) {
       onSortByChange("title");
     }
-    if (sortBy === "title" && onSortToggle) {
-      onSortToggle();
-    }
   };
 
   const handleSortByDateToggle = () => {
     if (onSortByChange) {
       onSortByChange("date");
-    }
-    if (sortBy === "date" && onSortToggle) {
-      onSortToggle();
     }
   };
 
@@ -253,7 +243,6 @@ function PageList({
                     onClick={handleSortByTitleToggle}
                   >
                     Title
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
                   </div>
                 </TableHead>
                 <TableHead className="w-[15%] text-[13px]">Status</TableHead>
@@ -263,7 +252,6 @@ function PageList({
                     onClick={handleSortByDateToggle}
                   >
                     Last Modified
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
                   </div>
                 </TableHead>
                 <TableHead className="w-[20%] text-center text-[13px]">

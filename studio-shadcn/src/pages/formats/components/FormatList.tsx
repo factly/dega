@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
+import { Trash2, Pencil, Ellipsis } from "lucide-react";
 import { deleteFormat } from "../../../actions/formats";
 import useNavigation from "../../../utils/useNavigation";
 
@@ -32,12 +32,7 @@ import EmptyState from "@/components/EmptyState";
 import { FormatListProps } from "../types";
 import Loader from "@/components/Loader";
 
-function FormatList({
-  data,
-  fetchFormats,
-  onSortToggle,
-  isMobile,
-}: FormatListProps) {
+function FormatList({ data, fetchFormats, isMobile }: FormatListProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
 
@@ -106,13 +101,7 @@ function FormatList({
             <TableHeader className="w-[45%] text-[13px]">
               <TableRow>
                 <TableHead className={isMobile ? "w-full" : "w-[200px]"}>
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={onSortToggle}
-                  >
-                    Name
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
+                  Name
                 </TableHead>
                 {!isMobile && (
                   <TableHead className="w-[45%]">Description</TableHead>

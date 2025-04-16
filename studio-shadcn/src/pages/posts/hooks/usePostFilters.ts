@@ -10,19 +10,18 @@ export const usePostFilters = (query: URLSearchParams) => {
     page: Number(query.get("page")) || 1,
     limit: Number(query.get("limit")) || 10,
     q: query.get("q") || "",
-    sort: query.get("sort") || "desc",
     status: query.get("status") || "all",
     tag: query.getAll("tag") || [],
     category: query.getAll("category") || [],
     author: query.getAll("author") || [],
     format: query.get("format") || "",
+    sortBy: query.get("sortBy") || "date",
   });
 
   // Create form
   const form = useForm({
     defaultValues: {
       q: filters.q || "",
-      sort: filters.sort || "desc",
       tag: filters.tag || [],
       category: filters.category || [],
       author: filters.author || [],

@@ -32,7 +32,7 @@ function ClipboardCopy({ text }: ClipboardCopyProps): React.ReactElement {
           setIsCopied(false);
         }, 5000);
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(addErrorNotification("Could not copy token"));
       });
   };

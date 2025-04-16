@@ -92,15 +92,12 @@ interface PostListProps {
     tag?: string[];
     category?: string[];
     author?: string[];
-    sort?: string;
     sortBy?: string;
     [key: string]: any;
   };
   onPagination: (page: number, limit: number) => void;
   fetchPosts: () => void;
   isMobile?: boolean;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   sortBy?: string;
   onSortByChange?: (column: string) => void;
 }
@@ -110,8 +107,6 @@ function PostList({
   data,
   fetchPosts,
   isMobile,
-  sortOrder = "desc",
-  onSortToggle,
   sortBy = "date",
   onSortByChange,
 }: PostListProps) {
@@ -231,22 +226,15 @@ function PostList({
     return "---";
   };
 
-  // Sort handlers
   const handleSortByTitleToggle = () => {
     if (onSortByChange) {
       onSortByChange("title");
-    }
-    if (sortBy === "title" && onSortToggle) {
-      onSortToggle();
     }
   };
 
   const handleSortByDateToggle = () => {
     if (onSortByChange) {
       onSortByChange("date");
-    }
-    if (sortBy === "date" && onSortToggle) {
-      onSortToggle();
     }
   };
 
@@ -301,13 +289,7 @@ function PostList({
             <TableHeader>
               <TableRow>
                 <TableHead className="min-w-[250px] w-[30%] text-[13px]">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={handleSortByTitleToggle}
-                  >
-                    Title
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
+                  <div className="flex items-center cursor-pointer">Title</div>
                 </TableHead>
                 <TableHead className="w-[15%] text-[13px]">Author</TableHead>
                 <TableHead className="w-[15%] text-[13px]">Status</TableHead>

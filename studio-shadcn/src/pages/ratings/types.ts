@@ -68,8 +68,6 @@ export interface RatingListProps {
   ) => void;
   fetchRatings: () => void;
   actions?: string[];
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   isMobile?: boolean;
 }
 

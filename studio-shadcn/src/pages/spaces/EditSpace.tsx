@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
 import { updateSpace } from "../../actions/spaces";
 import SpaceEditForm from "./components/SpaceEditForm";
@@ -8,7 +8,7 @@ import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import { RootState } from "../../store";
-import { AppThunkDispatch } from "../../store/types";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 export interface Space {
   id: string;
@@ -26,7 +26,7 @@ export interface Space {
 const EditSpace: React.FC = () => {
   const history = useNavigation();
   const { id } = useParams<{ id: string }>();
-  const dispatch = useDispatch<AppThunkDispatch>();
+  const dispatch = useAppDispatch();
   const { space, loading } = useSelector((state: RootState) => {
     return {
       space: state.spaces.details[id as string],

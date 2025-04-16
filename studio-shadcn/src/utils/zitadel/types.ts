@@ -251,3 +251,118 @@ export type CheckTOTP = (
 export type InitiateGoogleSignIn = (
   publicUrl: string
 ) => Promise<GoogleSignInResponse>;
+
+export interface ProviderUserData {
+  email: string;
+  given_name: string;
+  family_name: string;
+  name: string;
+  email_verified: boolean;
+  sub: string;
+}
+
+export interface ProviderInformation {
+  idpInformation?: {
+    rawInformation?: {
+      User?: ProviderUserData;
+    };
+  };
+}
+
+export interface UserSearchResult {
+  result: Array<{
+    userId: string;
+    // Add other user fields as needed
+  }>;
+}
+
+export interface ExistingUser {
+  userId: string;
+  // Add other user fields as needed
+}
+
+export interface IdpLinkRequest {
+  idpLink: {
+    idpId: string;
+    userId: string;
+    userName: string;
+  };
+}
+
+export interface SessionRequest {
+  checks: {
+    user: {
+      userId: string;
+    };
+    idpIntent?: {
+      idpIntentId: string;
+      idpIntentToken: string;
+    };
+  };
+}
+
+export interface HumanUserRegistration {
+  username: string;
+  profile: {
+    givenName: string;
+    familyName: string;
+    displayName: string;
+  };
+  email: {
+    email: string;
+    isVerified: boolean;
+  };
+  idpLinks: Array<{
+    idpId: string;
+    idpExternalId: string;
+    userId: string;
+    userName: string;
+  }>;
+}
+
+export interface GoogleSignInRequest {
+  idpId: string;
+  urls: {
+    successUrl: string;
+    failureUrl: string;
+  };
+}
+
+export interface AuthRequestDetails {
+  // Define the structure based on your API response
+  // This is a placeholder, fill in the details
+  id: string;
+  // other fields
+}
+
+export interface AuthRequestFinalization {
+  session: {
+    sessionId: string;
+    sessionToken: string;
+  };
+}
+
+export interface ApiResponse<> {
+  // Generic API response type
+  userId?: string;
+  // Common fields
+  [key: string]: any;
+}
+
+export interface UserQuery {
+  query: {
+    offset: string;
+    limit: number;
+    asc: boolean;
+  };
+  queries: Array<{
+    emailQuery: {
+      emailAddress: string;
+      method: string;
+    };
+  }>;
+}
+
+export interface TOTPVerificationResult {
+  sessionToken: string;
+}

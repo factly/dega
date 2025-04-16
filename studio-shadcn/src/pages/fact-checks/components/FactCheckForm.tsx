@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-import { PanelRightDashed, X, ChevronDown } from "lucide-react";
+import { PanelRightDashed, X, ChevronDown, ArrowLeft } from "lucide-react";
 // Shadcn Components
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -143,6 +143,8 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
 
   // Modal and Popover states
   const [claimPopoverOpen, setClaimPopoverOpen] = useState<boolean>(false);
+  const [isClaimPopoverVisible, setIsClaimPopoverVisible] =
+    useState<boolean>(false);
   const [schemaModalOpen, setSchemaModalOpen] = useState<boolean>(false);
 
   const [claimID, setClaimID] = useState<string>("");
@@ -153,7 +155,9 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
   );
 
   // Track when any panel is open to apply blur effect
-  const isPanelOpen = activePanel !== null || claimPopoverOpen;
+  const isPanelOpen =
+    (activePanel !== null && !claimPopoverOpen) ||
+    (claimPopoverOpen && activePanel === null);
 
   // Redux selectors
   const { details, loading } = useSelector((state: any) => ({
@@ -179,6 +183,11 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     },
   });
 
+  // Handle back button navigation
+  const handleBackNavigation = () => {
+    navigate("/fact-checks");
+  };
+
   // Handle opening and closing the panel with animation
   const handlePanelOpen = (panelName: string) => {
     // First set the panel without making it visible
@@ -196,6 +205,21 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     setTimeout(() => {
       setActivePanel(null);
     }, 500); // Match this with transition duration
+  };
+
+  // Handle opening and closing the claim popover with animation
+  const handleClaimPopoverOpen = () => {
+    setClaimPopoverOpen(true);
+    setTimeout(() => {
+      setIsClaimPopoverVisible(true);
+    }, 50);
+  };
+
+  const handleClaimPopoverClose = () => {
+    setIsClaimPopoverVisible(false);
+    setTimeout(() => {
+      setClaimPopoverOpen(false);
+    }, 500);
   };
 
   // Set up form value change monitoring
@@ -316,6 +340,11 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     if (activePanel) {
       handlePanelClose();
     }
+
+    // Close claim popover if open
+    if (claimPopoverOpen) {
+      handleClaimPopoverClose();
+    }
   };
 
   const onTitleChange = (value: string) => {
@@ -355,7 +384,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     if (claimID && parseInt(claimID, 10) > 0) {
       dispatch(updateClaim({ ...details[claimID], ...values }))
         .then(() => {
-          setClaimPopoverOpen(false);
+          handleClaimPopoverClose();
           setClaimID("");
           setValueChange(true); // Ensure Save button is enabled
         })
@@ -365,7 +394,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     } else {
       dispatch(createClaim(values))
         .then((claim: any) => {
-          setClaimPopoverOpen(false);
+          handleClaimPopoverClose();
           setNewClaim(claim);
           setClaimID("");
           setClaimCreatedFlag(true);
@@ -392,13 +421,13 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     setValueChange(true); // Ensure Save button is enabled
   };
 
-  const renderLeftClaimPanel = () => {
+  const renderRightClaimPanel = () => {
     if (!claimPopoverOpen) return null;
 
     return (
       <div
-        className="fixed inset-y-0 left-0 z-50 w-full max-w-md bg-background border-r shadow-lg transform transition-transform duration-500 overflow-y-auto
-      animate-slide-in-left"
+        className={`fixed inset-y-0 right-0 z-[60] w-full max-w-md bg-background border-l shadow-lg transform transition-transform duration-500 overflow-y-auto
+        ${isClaimPopoverVisible ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="p-4 h-full flex flex-col">
           <div className="flex items-center justify-between mb-4">
@@ -408,7 +437,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
             <Button
               variant="outline"
               size="icon"
-              onClick={() => setClaimPopoverOpen(false)}
+              onClick={handleClaimPopoverClose}
             >
               <X className="h-4 w-4" />
             </Button>
@@ -476,8 +505,8 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
         </DialogContent>
       </Dialog>
 
-      {/* Left side claim panel */}
-      {renderLeftClaimPanel()}
+      {/* Right side claim panel */}
+      {renderRightClaimPanel()}
 
       {/* Right side panel with animation */}
       {activePanel && (
@@ -489,6 +518,8 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
           onSave={onSave}
           setActivePanel={setActivePanel}
           isVisible={isPanelVisible}
+          setClaimPopoverOpen={handleClaimPopoverOpen}
+          setSchemaModalOpen={setSchemaModalOpen}
         />
       )}
 
@@ -505,7 +536,18 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
             className="edit-form space-y-6"
           >
             {/* Header with Actions */}
-            <div className="flex justify-end space-x-2 pb-4 border-b">
+            <div className="flex justify-between pb-4 border-b">
+              {/* Back Button */}
+              <Button
+                type="button"
+                variant="outline"
+                className="flex items-center gap-2"
+                onClick={handleBackNavigation}
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Fact-Checks
+              </Button>
+
               <div className="flex space-x-2">
                 {data.id && (
                   <Button
@@ -702,7 +744,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                       form.getValues("claims")?.map((id) => id.toString()) || []
                     }
                     setClaimID={(id: string) => setClaimID(id)}
-                    showModal={() => setClaimPopoverOpen(true)}
+                    showModal={handleClaimPopoverOpen}
                     details={details}
                     claimOrder={claimOrder}
                     setClaimOrder={(order: string[]) => setClaimOrder(order)}

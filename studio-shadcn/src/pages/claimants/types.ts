@@ -43,8 +43,6 @@ export interface ClaimantListProps {
   setFilters: (filters: any) => void;
   fetchClaimants: () => void;
   actions?: string[];
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   isMobile?: boolean;
 }
 

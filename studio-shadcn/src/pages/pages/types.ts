@@ -98,12 +98,12 @@ export interface FilterParams {
   page?: number;
   limit?: number;
   q?: string;
-  sort?: string;
   status?: string;
   tag?: string[];
   category?: string[];
   author?: string[];
   format?: string;
+  sortBy?: string;
   [key: string]: any;
 }
 
@@ -123,8 +123,6 @@ export interface FiltersPopoverProps {
   form: any;
   onSave: (values: FilterParams) => void;
 }
-
-
 
 export interface PaginationFooterProps {
   currentPage: number;
