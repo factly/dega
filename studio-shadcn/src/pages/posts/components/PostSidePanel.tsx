@@ -55,16 +55,20 @@ import { Post as PostData } from "../types";
 
 // Import languages data
 import languages from "../../../utils/languages.json";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 interface PostSidePanelProps {
   form: UseFormReturn<PostData>;
   data: PostData;
   status: string;
-  setStatus: Dispatch<SetStateAction<'draft' | 'publish' | 'ready' | 'future'>>;
+  setStatus: Dispatch<SetStateAction<"draft" | "publish" | "ready" | "future">>;
   valueChange: boolean;
   publishedDate: Date | undefined;
   setPublishedDate: Dispatch<SetStateAction<Date | undefined>>;
-  onSave: (values: PostData, statusOverride?: 'draft' | 'publish' | 'ready' | 'future') => void;
+  onSave: (
+    values: PostData,
+    statusOverride?: "draft" | "publish" | "ready" | "future"
+  ) => void;
   onClose: () => void;
   isVisible: boolean;
 }
@@ -78,7 +82,7 @@ function PostSidePanel({
   onClose,
   isVisible,
 }: PostSidePanelProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Additional state for subpanels
   const [activeSubPanel, setActiveSubPanel] = useState<string | null>(null);

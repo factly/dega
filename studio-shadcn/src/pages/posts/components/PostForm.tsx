@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
 
@@ -36,17 +35,22 @@ export interface Author {
 
 interface PostFormProps {
   onCreate: (data: Partial<PostData>) => void;
-  data: PostData;
+  data?: Partial<PostData>;
   format: Format;
   page?: boolean;
 }
 
-function PostForm({ onCreate, data, format, page = false }: PostFormProps) {
+function PostForm({
+  onCreate,
+  data = {}, // Provide default empty object
+  format,
+  page = false,
+}: PostFormProps) {
   const navigate = useNavigation();
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<
     "draft" | "publish" | "ready" | "future"
-  >(data.status || "draft");
+  >((data.status as "draft" | "publish" | "ready" | "future") || "draft");
   const dispatch = useAppDispatch();
   const [valueChange, setValueChange] = useState<boolean>(false);
   const [shouldBlockNavigation, setShouldBlockNavigation] =
@@ -77,7 +81,7 @@ function PostForm({ onCreate, data, format, page = false }: PostFormProps) {
 
   // Initialize form
   const form = useForm<PostData>({
-    defaultValues: formData,
+    defaultValues: formData as PostData,
   });
 
   // Handle back button navigation
@@ -109,19 +113,21 @@ function PostForm({ onCreate, data, format, page = false }: PostFormProps) {
     setIsSubmitting(true);
 
     // Create a new object to avoid mutating the original values
-    const finalData: PostData = { ...values };
+    const finalData: Partial<PostData> = { ...values };
 
     // Use the statusOverride if provided, otherwise use the component's status state
     const finalStatus = statusOverride || status;
 
     // Add any missing properties from the original data
-    for (const key in data) {
-      if (
-        Object.prototype.hasOwnProperty.call(data, key) &&
-        key !== "published_date"
-      ) {
-        if (!Object.prototype.hasOwnProperty.call(finalData, key)) {
-          finalData[key as keyof PostData] = data[key as keyof PostData];
+    if (data) {
+      for (const key in data) {
+        if (
+          Object.prototype.hasOwnProperty.call(data, key) &&
+          key !== "published_date"
+        ) {
+          if (!Object.prototype.hasOwnProperty.call(finalData, key)) {
+            finalData[key as keyof PostData] = data[key as keyof PostData];
+          }
         }
       }
     }
@@ -405,7 +411,7 @@ function PostForm({ onCreate, data, format, page = false }: PostFormProps) {
       {activePanel && (
         <PostSidePanel
           form={form}
-          data={data}
+          data={{ ...data, id: data.id ?? 0 } as PostData}
           status={status}
           setStatus={setStatus}
           valueChange={valueChange}

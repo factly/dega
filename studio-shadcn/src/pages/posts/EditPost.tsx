@@ -12,14 +12,12 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import { RootState } from "../../store/index";
 import { Post, Format } from "./types";
 
-
 interface EditPostProps {
   formats: {
     article: Format;
     loading: boolean;
   };
 }
-
 
 interface Space {
   // Define your space interface structure
@@ -29,7 +27,7 @@ interface Space {
 function EditPost({ formats }: EditPostProps): React.ReactElement {
   const history = useNavigation();
   const { id } = useParams<{ id: string }>();
-  const spaces = useSelector((state: RootState) => state.spaces) ;
+  const spaces = useSelector((state: RootState) => state.spaces);
   const actions = getUserPermission({
     resource: "posts",
     action: "get",
@@ -87,16 +85,9 @@ function EditPost({ formats }: EditPostProps): React.ReactElement {
   return (
     <>
       <Helmet title={`${post?.title} - Edit Post`} />
-      <PostEditForm
-        data={post}
-        onCreate={onUpdate}
-        actions={actions}
-        format={formats.article}
-      />
+      <PostEditForm data={post} onCreate={onUpdate} format={formats.article} />
     </>
   );
 }
 
 export default EditPost;
-
-

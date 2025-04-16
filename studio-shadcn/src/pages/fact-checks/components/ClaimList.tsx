@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Edit, ChevronUp, ChevronDown, Trash2 } from "lucide-react";
+import { Edit, ChevronUp, ChevronDown } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import {
   Dialog,
   DialogContent,
@@ -50,7 +51,7 @@ const ClaimList: React.FC<ClaimListProps> = ({
   const [treeData, setTreeData] = useState<TreeNode[]>(
     claimOrder as unknown as TreeNode[]
   );
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [activeKeys, setActiveKeys] = useState<string[]>(["claims"]);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
 
@@ -76,14 +77,8 @@ const ClaimList: React.FC<ClaimListProps> = ({
     newOrder[index + 1] = id;
     newOrder[index] = temp;
     setClaimOrder(newOrder);
-    setUpdateData(true); // Flag to trigger rebuild in useEffect
+    setUpdateData(true);
     setTreeData(buildTreeData(newOrder, ids));
-  };
-
-  const handleDeleteClick = (e: React.MouseEvent, id: string) => {
-    e.stopPropagation();
-    setDialogOpen(true);
-    setDeleteItemId(id);
   };
 
   const handleDeleteConfirm = (e: React.MouseEvent) => {
@@ -161,13 +156,6 @@ const ClaimList: React.FC<ClaimListProps> = ({
                   >
                     <ChevronDown className="h-4 w-4" />
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={(e) => handleDeleteClick(e, id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
             </CardHeader>
@@ -195,29 +183,31 @@ const ClaimList: React.FC<ClaimListProps> = ({
 
   return (
     <>
-      <Collapsible
-        open={isOpen}
-        onOpenChange={setIsOpen}
-        className="w-full border rounded-lg p-4 bg-gray-50 my-6"
+      <Accordion
+        type="multiple"
+        value={activeKeys}
+        onValueChange={setActiveKeys}
+        className="w-full border rounded-lg p-4 my-6"
       >
-        <div className="flex items-center justify-between py-2 px-2">
-          <h2 className="text-xl font-semibold">Claims</h2>
-          <CollapsibleTrigger asChild>
-            <Button variant="outline">{isOpen ? "Close" : "Expand"}</Button>
-          </CollapsibleTrigger>
-        </div>
-        <CollapsibleContent className="mt-4 space-y-4">
-          <div className="space-y-4">
-            {treeData.length === 0 ? (
-              <p className="text-center text-gray-500 py-4">
-                No claims added yet.
-              </p>
-            ) : (
-              treeData.map((node) => <div key={node.key}>{node.title}</div>)
-            )}
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
+        <AccordionItem value="claims" className="border-none">
+          <AccordionTrigger className="hover:no-underline px-2 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
+            <div className="flex items-center justify-between w-full">
+              <span className="text-xl font-semibold">Claims</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="mt-4 space-y-4 px-2">
+            <div className="space-y-4">
+              {treeData.length === 0 ? (
+                <p className="text-center text-gray-500 py-4">
+                  No claims added yet.
+                </p>
+              ) : (
+                treeData.map((node) => <div key={node.key}>{node.title}</div>)
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-sm p-4">
