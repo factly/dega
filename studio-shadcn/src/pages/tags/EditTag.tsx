@@ -33,8 +33,8 @@ function EditTag(): React.ReactElement {
   });
 
   useEffect(() => {
-    if (id && !Number.isNaN(Number(id))) {
-      dispatch(getTag(Number(id)));
+    if (id) {
+      dispatch(getTag(id));
     }
   }, [id, dispatch]);
 

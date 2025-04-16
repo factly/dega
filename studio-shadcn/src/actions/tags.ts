@@ -20,12 +20,18 @@ import { RootState } from "../store/index";
 
 // Define interfaces
 interface Tag {
-  id: number;
-  description: {
+  id: string | number;
+  name: string;
+  slug: string;
+  is_featured?: boolean;
+  background_colour?: any;
+  description_html?: string;
+  medium_id?: string | number;
+	description: {
     json: any;
     html: string;
-  };
-  description_html?: string;
+  } | string;
+  meta_fields?: string | Record<string, any>;
   [key: string]: any;
 }
 
@@ -88,7 +94,7 @@ export const getTags = (query: any): AppThunk => {
 };
 
 // action to fetch tag by id
-export const getTag = (id: number): AppThunk => {
+export const getTag = (id: number | string): AppThunk => {
   return (dispatch: Dispatch<UnknownAction | NotificationAction>) => {
     dispatch(loadingTags());
     return axios
@@ -145,7 +151,7 @@ export const updateTag = (data: Tag): AppThunk => {
 };
 
 // action to delete tag by id
-export const deleteTag = (id: number): AppThunk => {
+export const deleteTag = (id: number | string): AppThunk => {
   return (dispatch: Dispatch<UnknownAction | NotificationAction>) => {
     dispatch(loadingTags());
     return axios

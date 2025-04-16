@@ -43,8 +43,9 @@ function TagList({
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (deleteItemId && !Number.isNaN(Number(deleteItemId))) {
-      await dispatch(deleteTag(Number(deleteItemId)));
+    console.log("Delete item ID:", deleteItemId, Number(deleteItemId));
+    if (deleteItemId) {
+      await dispatch(deleteTag(deleteItemId));
       fetchTags();
       setModalOpen(false);
       setDeleteItemId(null);

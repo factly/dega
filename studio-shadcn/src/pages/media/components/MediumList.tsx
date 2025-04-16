@@ -1,3 +1,4 @@
+// components/MediumList.tsx
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { MoreHorizontal, Download, Trash2 } from "lucide-react";
@@ -8,37 +9,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import EmptyState from "@/components/EmptyState";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
+import { MediaListProps, MediaItem } from "../types";
 
-// Define types for component props and data
-interface MediaItem {
-  id: string | number;
-  name: string;
-  url?: {
-    proxy?: string;
-    raw?: string;
-  };
-}
-
-interface MediaData {
-  media: MediaItem[];
-  total: number;
-  loading: boolean;
-}
-
-interface Filters {
-  [key: string]: any;
-}
-
-interface MediumListProps {
-  data: MediaData;
-  filters: Filters;
-  setFilters: (filters: Filters) => void;
-  actions?: string[];
-}
-
-function MediumList({ data, actions = [] }: MediumListProps) {
+function MediumList({ data, actions = [], isMobile = false }: MediaListProps) {
   // Function to handle download
   const handleDownload = (item: MediaItem) => {
     if (item.url?.raw) {
@@ -50,7 +24,6 @@ function MediumList({ data, actions = [] }: MediumListProps) {
       document.body.removeChild(link);
     }
   };
-  const isMobile = useIsMobile();
 
   // Check if there are any media items to display
   const hasMediaData = data.media && data.media.length > 0;

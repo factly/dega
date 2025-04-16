@@ -15,16 +15,21 @@ import { AppThunk } from "../store/types";
 
 // Types
 export interface Medium {
-  id: string | number;
-  name?: string;
+  id?: string | number;
+  name: string;
   alt_text?: string;
   caption?: string;
   description?: string;
+  meta_fields?: string | Record<string, any>;
   url?: {
     proxy?: string;
-    raw: string;
+    raw?: string;
   };
-  [key: string]: any;
+  dimensions?: string;
+  file_size?: number;
+  slug?: string;
+  title?: string;
+  type?: string;
 }
 
 interface MediaRequestPayload {
