@@ -1,5 +1,6 @@
+// EditMedium.tsx
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getMedium, updateMedium, deleteMedium } from "../../actions/media";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
@@ -8,7 +9,6 @@ import MonacoEditor from "../../components/MonacoEditor";
 import getJsonValue from "../../utils/getJsonValue";
 import { TitleInput } from "../../components/FormItems";
 import { Helmet } from "react-helmet";
-import useNavigation from "../../utils/useNavigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -32,32 +32,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useForm } from "react-hook-form";
 import { Skeleton } from "@/components/ui/skeleton";
-
-// Types
-interface Medium {
-  id: string;
-  name: string;
-  alt_text?: string;
-  caption?: string;
-  description?: string;
-  meta_fields?: string | Record<string, any>;
-  url?: {
-    proxy?: string;
-    raw?: string;
-  };
-}
-
-interface MediumFormValues {
-  name: string;
-  alt_text?: string;
-  caption?: string;
-  description?: string;
-  meta_fields?: string | Record<string, any>;
-}
+import { MediaFormValues, MediaItem } from "./types";
 
 interface RootState {
   media: {
-    details: Record<string, Medium>;
+    details: Record<string, MediaItem>;
     loading: boolean;
   };
   spaces: any;
@@ -79,7 +58,7 @@ function EditMedium(): React.ReactElement {
   }, []);
 
   const { id } = useParams<{ id: string }>();
-  const history = useNavigation();
+  const navigate = useNavigate();
   const spaces = useSelector((state: RootState) => state.spaces);
   const actions = getUserPermission({
     resource: "media",
@@ -96,7 +75,7 @@ function EditMedium(): React.ReactElement {
     };
   });
 
-  const form = useForm<MediumFormValues>({
+  const form = useForm<MediaFormValues>({
     defaultValues: media || {},
   });
 
@@ -121,14 +100,21 @@ function EditMedium(): React.ReactElement {
     }
   }, [media, form]);
 
-  const updateMedia = (values: MediumFormValues): void => {
+  const updateMedia = (values: MediaFormValues): void => {
     if (!id || !media) return;
 
     const data = {
       ...media,
       ...values,
     };
-    dispatch(updateMedium(data));
+
+    Promise.resolve(dispatch(updateMedium(data)))
+      .then(() => {
+        setValueChange(false);
+      })
+      .catch((error) => {
+        console.error("Update error:", error);
+      });
   };
 
   const handleDeleteMedium = (): void => {
@@ -136,9 +122,9 @@ function EditMedium(): React.ReactElement {
 
     setIsDeleting(true);
 
-    dispatch(deleteMedium(id))
+    Promise.resolve(dispatch(deleteMedium(id)))
       .then(() => {
-        history("/media");
+        navigate("/media");
       })
       .catch((error) => {
         console.error("Delete error:", error);
@@ -148,6 +134,7 @@ function EditMedium(): React.ReactElement {
         setIsDeleting(false);
       });
   };
+
   if (loading) return <Skeleton className="w-full h-64" />;
 
   if (!media) {

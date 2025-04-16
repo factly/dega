@@ -7,12 +7,7 @@ import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-
-interface Format {
-  id: number;
-  name: string;
-  [key: string]: any;
-}
+import { Format } from "./types";
 
 interface FormatState {
   loading: boolean;
@@ -71,6 +66,7 @@ function CreatePost({ formats }: CreatePostProps): React.ReactElement {
   }, []);
 
   const onCreate = (values: PostValues): void => {
+    // @ts-expect-error TODO: Fix this type error
     dispatch(addPost(values)).then((post: { id: number } | undefined) => {
       if (post && post.id) history(`/posts/${post.id}/edit`);
     });

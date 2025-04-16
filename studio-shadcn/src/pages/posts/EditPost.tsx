@@ -90,7 +90,6 @@ function EditPost({ formats }: EditPostProps): React.ReactElement {
       <PostEditForm
         data={post}
         onCreate={onUpdate}
-        actions={actions}
         format={formats.article}
       />
     </>

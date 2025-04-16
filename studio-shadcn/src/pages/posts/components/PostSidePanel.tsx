@@ -55,6 +55,7 @@ import { Post as PostData } from "../types";
 
 // Import languages data
 import languages from "../../../utils/languages.json";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 interface PostSidePanelProps {
   form: UseFormReturn<PostData>;
@@ -78,7 +79,7 @@ function PostSidePanel({
   onClose,
   isVisible,
 }: PostSidePanelProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Additional state for subpanels
   const [activeSubPanel, setActiveSubPanel] = useState<string | null>(null);

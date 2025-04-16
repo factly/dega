@@ -14,7 +14,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CopyIcon } from "lucide-react";
 
 interface MonacoEditorProps {
-  value: string;
+  value?: string | Record<string, any>;
   onChange: (value: string | undefined) => void;
   language: string;
   width?: string;
@@ -44,7 +44,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
 
   // Handle copy to clipboard
   const handleCopy = () => {
-    navigator.clipboard.writeText(value);
+    navigator.clipboard.writeText(typeof value === "string" ? value : JSON.stringify(value));
   };
 
   // Handle expand/collapse
@@ -138,7 +138,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
           }}
           onChange={onChange}
           language={currentLanguage}
-          value={value}
+          value={typeof value === "string" ? value : JSON.stringify(value)}
           className="border-none"
         />
       </CardContent>

@@ -12,7 +12,7 @@ interface Description {
   html: string;
 }
 // Define interfaces for the state and actions
-export interface PostData {
+export interface Post {
   author_ids?: number[];
   created_at?: string;
   updated_at?: string;
