@@ -1,41 +1,17 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
+// index.tsx
+import { useEffect, useState } from "react";
 import { PlusCircle } from "lucide-react";
-import { useSelector } from "react-redux";
-import MediumList from "./components/MediumList";
 import { getMedia } from "../../actions/media";
-import { Link, useLocation } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
+import { useMediaData } from "./hooks/useMediaData";
+import { MediaFilters } from "./types";
 import SecuredButton from "@/components/SecuredButton";
-
-// Define types
-interface MediaItem {
-  id: string;
-  [key: string]: any;
-}
-
-interface MediaState {
-  details: Record<string, MediaItem>;
-  loading: boolean;
-  req: Array<{
-    query: Record<string, any>;
-    data: string[];
-    total: number;
-  }>;
-}
-
-interface RootState {
-  media: MediaState;
-  sidebar: {
-    collapsed: boolean;
-  };
-}
+import MediumList from "./components/MediumList";
 
 interface PermissionProps {
   permission?: {
@@ -43,47 +19,23 @@ interface PermissionProps {
   };
 }
 
-function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
+function Media({ permission = { actions: [] } }: PermissionProps): React.ReactElement {
   const { actions } = permission;
   const dispatch = useAppDispatch();
-  const location = useLocation();
   const { state: sidebarState } = useSidebar();
   const isMobile = useIsMobile();
 
-  const params = {
+  const [filters, setFilters] = useState<MediaFilters>({
     sort: "desc",
-  };
-
-  // Get media data from Redux state
-  const { media, total, loading } = useSelector((state: RootState) => {
-    const node = state.media.req.find((item) => {
-      return item.query.sort === params.sort;
-    });
-
-    if (node) {
-      // Map IDs to actual media objects from details
-      return {
-        media: node.data
-          .map((id) => state.media.details[id])
-          // Filter out undefined or null values
-          .filter(Boolean),
-        total: node.total,
-        loading: state.media.loading,
-      };
-    }
-
-    // Return empty data if no cache node found
-    return {
-      media: [],
-      total: 0,
-      loading: state.media.loading,
-    };
   });
 
-  // Fetch data on initial load with simplified params
+  // Fetch data on initial load
   useEffect(() => {
-    dispatch(getMedia(params));
-  }, [dispatch]);
+    dispatch(getMedia(filters));
+  }, [dispatch, filters]);
+
+  // Use custom hook for data
+  const { media, total, loading } = useMediaData(filters);
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
@@ -107,8 +59,8 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <Helmet title={"Media"} />
+    <div className="flex flex-col h-full gap-6">
+      <Helmet title="Media" />
 
       {/* Mobile Breadcrumb */}
       {isMobile && <MobileBreadcrumb currentPage="Media" parentLabel="Core" />}
@@ -157,31 +109,15 @@ function Media({ permission = { actions: [] } }: PermissionProps): JSX.Element {
         </div>
       </div>
 
-      <div
-        className={
-          isMobile
-            ? "flex-1 pb-16 pt-1 overflow-auto px-4"
-            : "absolute overflow-auto"
-        }
-        style={
-          !isMobile
-            ? {
-                top: "calc(1.5rem + 2.5rem + 1rem)",
-                left: 0,
-                right: 0,
-                bottom: "64px",
-                paddingLeft: "1.5rem",
-                paddingRight: "1.5rem",
-                paddingBottom: "1.5rem",
-                paddingTop: "1rem",
-                transition: "left 0.3s ease, top 0.3s ease",
-              }
-            : undefined
-        }
-      >
+      {/* Content */}
+      <div className="flex-1 overflow-scroll">
         <MediumList
           actions={actions}
-          data={{ media: media || [], total: total || 0, loading: loading }}
+          data={{
+            media,
+            total,
+            loading,
+          }}
           isMobile={isMobile}
         />
       </div>

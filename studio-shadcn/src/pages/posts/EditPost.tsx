@@ -85,7 +85,11 @@ function EditPost({ formats }: EditPostProps): React.ReactElement {
   return (
     <>
       <Helmet title={`${post?.title} - Edit Post`} />
-      <PostEditForm data={post} onCreate={onUpdate} format={formats.article} />
+      <PostEditForm
+        data={post}
+        onCreate={onUpdate}
+        format={formats.article}
+      />
     </>
   );
 }

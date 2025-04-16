@@ -54,6 +54,8 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   const [isSearchExpanded, setIsSearchExpanded] = useState(!!query.get("q"));
   const [loadingTimeout, setLoadingTimeout] = useState(false);
   const timeoutRef = useRef<number | null>(null);
+  const [cachedFormat, setCachedFormat] = useState<Format | undefined>(undefined);
+
 
   // Use ref to avoid state updates during render
   const hasCachedFormatRef = useRef(false);
@@ -65,6 +67,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
         const savedFormats = localStorage.getItem("cachedFormats");
         if (savedFormats) {
           const parsedFormats = JSON.parse(savedFormats);
+          setCachedFormat(parsedFormats.article);
           if (parsedFormats.article) {
             hasCachedFormatRef.current = true;
           }
@@ -279,13 +282,10 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       </div>
     );
   }
+  const formatToUse = formats.article || cachedFormat;
 
   // Format not found state - but only check if we're sure formats are loaded or timeout occurred
-  if (
-    shouldContinueRendering &&
-    !formats.article &&
-    !hasCachedFormatRef.current
-  ) {
+  if (!formatToUse) {
     return (
       <FormatNotFound
         status="info"
@@ -407,7 +407,8 @@ function Pages({ formats }: PagesProps): React.ReactElement {
         </div>
       </div>
       <PageList
-        format={formats.article}
+        format={formatToUse}
+        // @ts-expect-error TODO: Fix this type error
         data={{ pages, total, loading, tags, categories }}
         filters={{
           ...filters,

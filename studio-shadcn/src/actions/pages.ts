@@ -52,7 +52,7 @@ interface PageFormData {
   id: number;
   title: string;
   slug: string;
-  status?: "publish" | "draft" | "ready";
+  status?: "publish" | "draft" | "ready" | "future";
   featured_medium_id?: number;
   medium?: any;
   published_date: string | null;
@@ -194,7 +194,7 @@ export const getPages = (query: PageQueryParams): AppThunk => {
   };
 };
 
-export const getPage = (id: number): AppThunk => {
+export const getPage = (id: number | string): AppThunk => {
   return (dispatch) => {
     dispatch(loadingPages());
     return axios

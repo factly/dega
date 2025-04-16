@@ -20,7 +20,7 @@ export interface Space {
 export interface Post {
   updated_at?: string;
   created_at?: string;
-  published_date?: string;
+  published_date: string | null;
   tag_ids?: number[];
   category_ids?: number[];
   author_ids?: number[];

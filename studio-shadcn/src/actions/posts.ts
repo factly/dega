@@ -58,7 +58,7 @@ interface Description {
 interface Post {
   updated_at?: string;
   created_at?: string;
-  published_date?: string;
+  published_date: string | null;
   tag_ids?: number[];
   category_ids?: number[];
   author_ids?: number[];
@@ -66,7 +66,7 @@ interface Post {
   id: number;
   title: string;
   slug: string;
-  status: "publish" | "draft" | "ready";
+  status?: "publish" | "draft" | "ready" | "future";
   categories?: number[];
   tags?: number[];
   claims?: number[];
@@ -251,7 +251,7 @@ export const getPosts = (
   };
 };
 
-export const getPost = (id: number): ThunkResult<Promise<void>> => {
+export const getPost = (id: number | string): ThunkResult<Promise<void>> => {
   return (dispatch: Dispatch): Promise<void> => {
     dispatch(loadingPosts());
     return axios
