@@ -251,7 +251,7 @@ export const getPosts = (
   };
 };
 
-export const getPost = (id: number): ThunkResult<Promise<void>> => {
+export const getPost = (id: number | string): ThunkResult<Promise<void>> => {
   return (dispatch: Dispatch): Promise<void> => {
     dispatch(loadingPosts());
     return axios

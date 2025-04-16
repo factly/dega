@@ -48,8 +48,8 @@ function EditPost({ formats }: EditPostProps): React.ReactElement {
   });
 
   React.useEffect(() => {
-    if (id && !Number.isNaN(Number(id))) {
-      dispatch(getPost(Number(id)));
+    if (id) {
+      dispatch(getPost(id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);

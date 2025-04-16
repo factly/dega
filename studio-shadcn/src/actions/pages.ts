@@ -194,7 +194,7 @@ export const getPages = (query: PageQueryParams): AppThunk => {
   };
 };
 
-export const getPage = (id: number): AppThunk => {
+export const getPage = (id: number | string): AppThunk => {
   return (dispatch) => {
     dispatch(loadingPages());
     return axios

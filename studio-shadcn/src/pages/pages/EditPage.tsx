@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PageEditForm from '../posts/components/PostForm';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -31,7 +31,7 @@ function EditPage({ formats }: EditPageProps): React.ReactElement {
   const spaces = useSelector((state: RootState) => state.spaces);
   const actions = getUserPermission({ resource: 'pages', action: 'get', spaces });
 
-
+  const [cachedFormat, setCachedFormat] = useState<Format | undefined>(undefined);
   const { page, loading } = useSelector((state: RootState) => {
     return {
       page: state.pages.details[id as string]
@@ -57,8 +57,8 @@ function EditPage({ formats }: EditPageProps): React.ReactElement {
   }, []);
 
   React.useEffect(() => {
-    if (id && !Number.isNaN(Number(id))) {
-      dispatch(getPage((Number(id))));
+    if (id) {
+      dispatch(getPage((id)));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -114,7 +114,7 @@ function EditPage({ formats }: EditPageProps): React.ReactElement {
         // @ts-expect-error TODO: Fix this type error
         onCreate={onUpdate}
         // actions={actions}
-        format={formats.article}
+        format={formatToUse}
         page={true}
       />
     </>
