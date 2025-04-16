@@ -21,6 +21,7 @@ interface EmailInputProps {
   setEmail: (email: string) => void;
   onSubmit: (values: { email: string }) => void;
   handleGoogleSignIn: () => void;
+  error:string;
 }
 
 const formSchema = z.object({

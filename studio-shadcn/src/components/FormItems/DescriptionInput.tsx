@@ -51,10 +51,11 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
     : { ...formItemProps, label };
 
   return (
-    <FormItem name={name} {...mergedFormItemProps}>
-      {!noLabel && <FormLabel>{label}</FormLabel>}
+    <FormItem {...mergedFormItemProps}>
+      {!noLabel && <FormLabel htmlFor={name}>{label}</FormLabel>}
       <FormControl>
         <Editor
+          id={name}
           extensions={[FactCheck, Image, Embed, ScooterTable, CodeBlock]}
           menuType="bubble"
           heightStrategy="flexible"
@@ -110,7 +111,7 @@ const DescriptionInput: React.FC<DescriptionInputProps> = ({
                 obj: Record<string, any>
               ): Record<string, any> {
                 for (const key in obj) {
-                  if (obj.hasOwnProperty(key)) {
+                  if (Object.prototype.hasOwnProperty.call(obj, key)) {
                     if (!isNaN(Number(obj[key]))) {
                       obj[key] = Number(obj[key]);
                     }

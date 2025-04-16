@@ -74,8 +74,7 @@ function EditClaim(): React.ReactElement {
       const updatedValues = {
         ...claim,
         ...values,
-        id: id, // Ensure we're using the string id from the URL params
-        // Convert numeric values to string to match the expected types
+        id: id,
         claimant: values.claimant ? String(values.claimant) : claim.claimant,
         rating: values.rating ? String(values.rating) : claim.rating,
       };

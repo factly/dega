@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
+import { Trash2, Pencil, Ellipsis } from "lucide-react";
 import { deleteRating } from "../../../actions/ratings";
 import useNavigation from "../../../utils/useNavigation";
 import { Button } from "@/components/ui/button";
@@ -33,7 +33,6 @@ import { Rating, RatingListProps } from "../types";
 const RatingList: React.FC<RatingListProps> = ({
   data,
   fetchRatings,
-  onSortToggle,
   isMobile = false,
 }) => {
   const navigate = useNavigation();
@@ -102,15 +101,7 @@ const RatingList: React.FC<RatingListProps> = ({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[40%] text-[13px]">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={onSortToggle}
-                  >
-                    Title
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
-                </TableHead>
+                <TableHead className="w-[40%] text-[13px]">Title</TableHead>
                 <TableHead className="w-[25%] text-[13px]">Preview</TableHead>
                 <TableHead className="w-[25%] text-[13px]">Value</TableHead>
                 <TableHead className="w-[10%] text-center text-[13px]">

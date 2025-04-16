@@ -1,7 +1,7 @@
 // components/TagList.tsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
+import { Trash2, Pencil, Ellipsis } from "lucide-react";
 import { deleteTag } from "../../../actions/tags";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import {
@@ -30,12 +30,7 @@ import {
 import EmptyState from "@/components/EmptyState";
 import { TagListProps } from "../types";
 
-function TagList({
-  data,
-  fetchTags,
-  onSortToggle,
-  isMobile = false,
-}: TagListProps) {
+function TagList({ data, fetchTags, isMobile = false }: TagListProps) {
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
@@ -66,15 +61,7 @@ function TagList({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[50%] text-[13px]">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={onSortToggle}
-                  >
-                    Title
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
-                </TableHead>
+                <TableHead className="w-[50%] text-[13px]">Title</TableHead>
                 <TableHead className="w-[40%] text-[13px]">Slug</TableHead>
                 <TableHead className="w-[10%] text-[13px] text-center">
                   Actions
@@ -97,9 +84,7 @@ function TagList({
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <span className="line-clamp-2">
-                      {tag.slug || "—"}
-                    </span>
+                    <span className="line-clamp-2">{tag.slug || "—"}</span>
                   </TableCell>
                   <TableCell className="text-center">
                     <DropdownMenu>

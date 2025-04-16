@@ -26,7 +26,6 @@ function Formats() {
   // State for search and filters
   const [searchText, setSearchText] = useState("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   // Initialize filters from URL or defaults
   const [filters, setFilters] = useState<FormatFilters>({
@@ -39,14 +38,10 @@ function Formats() {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   }, []);
 
-  // Use custom hooks for data and pagination
-  const { formats, total, loading } = useFormatsData(
-    filters,
-    searchText,
-    sortOrder
-  );
-  const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
-    useFormatsPagination(filters, updateFilters, total);
+  // Define fetchFormats first, before it's used in useEffect
+  const fetchFormats = useCallback(() => {
+    dispatch(getFormats(filters));
+  }, [dispatch, filters]);
 
   // Update URL when filters change, but don't cause a re-render
   useEffect(() => {
@@ -63,16 +58,12 @@ function Formats() {
   // Fetch formats when filters change
   useEffect(() => {
     fetchFormats();
-  }, [filters]);
+  }, [filters, fetchFormats]);
 
-  const fetchFormats = useCallback(() => {
-    dispatch(getFormats(filters));
-  }, [dispatch, filters]);
-
-  // Sort toggle handler
-  const handleSortToggle = useCallback(() => {
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
-  }, []);
+  // Use custom hooks for data and pagination
+  const { formats, total, loading } = useFormatsData(filters, searchText);
+  const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
+    useFormatsPagination(filters, updateFilters, total);
 
   // Toggle search on mobile
   const toggleSearch = useCallback(() => {
@@ -225,8 +216,6 @@ function Formats() {
           filters={filters}
           setFilters={updateFilters}
           fetchFormats={fetchFormats}
-          sortOrder={sortOrder}
-          onSortToggle={handleSortToggle}
           isMobile={isMobile}
         />
       </div>

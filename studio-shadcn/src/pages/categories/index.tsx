@@ -1,5 +1,5 @@
 // index.tsx
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -28,7 +28,6 @@ function Categories() {
   const [filters, setFilters] = useState<CategoryFilters>({
     page: 1,
     limit: 10,
-    sort: "desc",
   });
 
   // Handle responsive UI changes
@@ -56,13 +55,6 @@ function Categories() {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
-
-  const handleSortToggle = useCallback(() => {
-    setFilters(prev => ({
-      ...prev,
-      sort: prev.sort === "asc" ? "desc" : "asc"
-    }));
-  }, []);
 
   const handleCreateCategory = () => {
     window.location.href = "/categories/create";
@@ -207,8 +199,6 @@ function Categories() {
           }}
           setFilters={setFilters}
           fetchCategories={() => dispatch(getCategories(filters))}
-          sortOrder={filters.sort as "asc" | "desc"}
-          onSortToggle={handleSortToggle}
           isMobile={isMobile}
         />
       </div>

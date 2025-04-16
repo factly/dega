@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
+import { Trash2, Pencil, Ellipsis } from "lucide-react";
 import { deleteClaimant } from "../../../actions/claimants";
 import useNavigation from "../../../utils/useNavigation";
 import {
@@ -30,12 +30,7 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
 import { ClaimantListProps } from "../types";
 
-function ClaimantList({
-  data,
-  fetchClaimants,
-  onSortToggle,
-  isMobile,
-}: ClaimantListProps) {
+function ClaimantList({ data, fetchClaimants, isMobile }: ClaimantListProps) {
   const dispatch = useAppDispatch();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
@@ -100,15 +95,7 @@ function ClaimantList({
           <Table>
             <TableHeader className="w-[30%] text-[13px]">
               <TableRow>
-                <TableHead className="w-[30%]">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={onSortToggle}
-                  >
-                    Title
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
-                </TableHead>
+                <TableHead className="w-[30%]">Title</TableHead>
                 <TableHead className="w-[30%]">Tag Line</TableHead>
                 <TableHead className="w-[10%] text-center">Actions</TableHead>
               </TableRow>

@@ -69,21 +69,15 @@ const QuickEdit: React.FC<QuickEditProps> = ({
   const [valueChange, setValueChange] = useState(false);
   const dispatch = useDispatch();
 
-  // Ensure data has all required fields with appropriate defaults
   const formData = {
-    id: data?.id || 0,
-    title: data?.title || "",
-    slug: data?.slug || "",
-    status: data?.status || "draft",
-    published_date: data?.published_date
-      ? new Date(data.published_date)
-      : undefined,
+    ...data,
     categories: data?.categories || [],
     tags: data?.tags || [],
     authors: data?.authors || [],
     claims: data?.claims || [],
-    // Include any other fields from data
-    ...data,
+    published_date: data?.published_date
+      ? new Date(data.published_date)
+      : undefined,
   };
 
   const form = useForm({
@@ -104,11 +98,13 @@ const QuickEdit: React.FC<QuickEditProps> = ({
     values.author_ids = values.authors || [];
     values.claim_ids = values.claims || [];
 
-    values.status === "publish"
-      ? (values.published_date = values.published_date
-          ? dayjs(values.published_date).format("YYYY-MM-DDTHH:mm:ssZ")
-          : dayjs(Date.now()).format("YYYY-MM-DDTHH:mm:ssZ"))
-      : (values.published_date = null);
+    if (values.status === "publish") {
+      values.published_date = values.published_date
+        ? dayjs(values.published_date).format("YYYY-MM-DDTHH:mm:ssZ")
+        : dayjs(Date.now()).format("YYYY-MM-DDTHH:mm:ssZ");
+    } else {
+      values.published_date = null;
+    }
 
     if (page) {
       dispatch(
@@ -231,7 +227,7 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="p-0"  align="start">
+                  <PopoverContent className="p-0" align="start">
                     <Calendar
                       mode="single"
                       selected={field.value ? new Date(field.value) : undefined}
@@ -254,31 +250,29 @@ const QuickEdit: React.FC<QuickEditProps> = ({
           </FormItem>
         </div>
 
-
-
         <div className="grid grid-cols-3 gap-6">
-        {slug === "fact-check" ? (
-          <FormField
-            control={form.control}
-            name="claims"
-            render={({ field }) => (
-              <FormItem className="flex flex-col space-y-2">
-                <FormLabel>Claims</FormLabel>
-                <FormControl>
-                  <Selector
-                    isQuickEdit
-                    mode="multiple"
-                    display="claim"
-                    action="Claims"
-                    value={field.value || []}
-                    onChange={field.onChange}
-                    style={{ width: "100%" }}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        ) : null}
+          {slug === "fact-check" ? (
+            <FormField
+              control={form.control}
+              name="claims"
+              render={({ field }) => (
+                <FormItem className="flex flex-col space-y-2">
+                  <FormLabel>Claims</FormLabel>
+                  <FormControl>
+                    <Selector
+                      isQuickEdit
+                      mode="multiple"
+                      display="claim"
+                      action="Claims"
+                      value={field.value || []}
+                      onChange={field.onChange}
+                      style={{ width: "100%" }}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          ) : null}
           <FormField
             control={form.control}
             name="categories"

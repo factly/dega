@@ -110,7 +110,7 @@ import Authwrapper from "../components/AuthWrapper";
 
 export interface Route {
   path: string;
-  title: string;
+  title?: string;
   Component?: React.ComponentType<any>;
   permission?: {
     resource: string;
@@ -751,7 +751,7 @@ export function extractV6RouteObject(
   // Loop through the original routes object and convert each route to v6 format
   for (const routeKey in routes) {
     const route = routes[routeKey as keyof typeof routes];
-    const { path, Component, menuKey, } = route;
+    const { path, Component, menuKey } = route;
 
     if (!Component) continue; // Skip routes without components
 
@@ -767,7 +767,7 @@ export function extractV6RouteObject(
       v6RouteElement = React.createElement(
         Authwrapper,
         null,
-        React.createElement(Component, { formats })
+        React.createElement(Component as React.ComponentType<any>, { formats })
       );
     } else {
       v6RouteElement = React.createElement(
@@ -776,7 +776,7 @@ export function extractV6RouteObject(
         React.createElement(
           BasicLayout,
           { formats, setReloadFlag, reloadFlag },
-          React.createElement(Component, {
+          React.createElement(Component as React.ComponentType<any>, {
             formats,
             setReloadFlag,
             reloadFlag,
@@ -791,7 +791,6 @@ export function extractV6RouteObject(
     const v6Route: V6RouteObject = {
       path,
       element: v6RouteElement,
-
     };
 
     // Add menuKey if it exists

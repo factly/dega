@@ -33,8 +33,6 @@ import { ClaimListProps } from "../types";
 function ClaimList({
   data,
   fetchClaims,
-  onSortToggle,
-  sortBy = "date",
   onSortByChange,
   isMobile = false,
 }: ClaimListProps) {
@@ -61,17 +59,11 @@ function ClaimList({
     if (onSortByChange) {
       onSortByChange("claim");
     }
-    if (sortBy === "claim" && onSortToggle) {
-      onSortToggle();
-    }
   };
 
   const handleSortByDateToggle = () => {
     if (onSortByChange) {
       onSortByChange("date");
-    }
-    if (sortBy === "date" && onSortToggle) {
-      onSortToggle();
     }
   };
 
@@ -86,13 +78,7 @@ function ClaimList({
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[30%] text-[13px]">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={handleSortByClaimToggle}
-                  >
-                    Claim
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
+                  <div className="flex items-center cursor-pointer">Claim</div>
                 </TableHead>
                 <TableHead className="w-[20%] text-[13px]">Claimant</TableHead>
                 <TableHead className="w-[20%] text-[13px]">Rating</TableHead>

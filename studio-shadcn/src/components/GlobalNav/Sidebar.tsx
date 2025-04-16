@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
@@ -195,8 +195,7 @@ export function Sidebar() {
     }
   };
 
-  // Function to get popover position
-  const updatePopoverPosition = () => {
+  const updatePopoverPosition = useCallback(() => {
     if (hoveredItem && isCollapsed) {
       const element = document.querySelector(`[data-section="${hoveredItem}"]`);
       if (element) {
@@ -214,7 +213,7 @@ export function Sidebar() {
         );
       }
     }
-  };
+  }, [hoveredItem, isCollapsed]);
 
   useEffect(() => {
     if (hoveredItem) {
@@ -233,7 +232,7 @@ export function Sidebar() {
         clearInterval(positionInterval);
       };
     }
-  }, [hoveredItem, isPopoverVisible]);
+  }, [hoveredItem, isPopoverVisible, updatePopoverPosition]);
 
   // Handler for mouse leave
   const handleMouseLeave = () => {

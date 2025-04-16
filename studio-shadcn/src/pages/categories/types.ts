@@ -54,14 +54,12 @@ export interface CategoryFormProps {
 export interface CategoryFilters {
   page: number;
   limit: number;
-  sort: string;
   q?: string;
   [key: string]: any;
 }
 
 export interface FormValues {
   q?: string;
-  sort?: string;
   [key: string]: any;
 }
 
@@ -79,9 +77,8 @@ export interface CategoryListProps {
   };
   fetchCategories: () => void;
   onPagination?: (page: number, limit: number) => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   isMobile?: boolean;
+  setFilters?: any;
 }
 
 export interface FiltersPopoverProps {

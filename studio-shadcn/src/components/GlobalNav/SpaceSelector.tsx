@@ -84,7 +84,7 @@ function SpaceSelector({ onClose }: SpaceSelectorProps) {
 
   const filterData = (query: string) => {
     // Initialize an empty array to store the search results
-    let results: Organization[] = [];
+    const results: Organization[] = [];
 
     // Loop through each organization in the `orgs` array
     for (const org of orgs) {
@@ -153,7 +153,7 @@ function SpaceSelector({ onClose }: SpaceSelectorProps) {
                   key={item}
                   className="p-3 hover:bg-gray-50 cursor-pointer transition-colors"
                   onClick={() => {
-                    dispatch(setSelectedSpace(details[item]));
+                    dispatch(setSelectedSpace(item));
                     onClose();
                   }}
                 >
@@ -267,7 +267,9 @@ function SpaceSelector({ onClose }: SpaceSelectorProps) {
             </Link>
           </div>
         </div>
-        <div className="flex justify-center items-center mt-8 w-full"></div>
+        <div className="flex justify-center items-center mt-8 w-full">
+          {renderSpaceSelector()}
+        </div>
       </div>
 
       {/* Delete Confirmation Dialog */}

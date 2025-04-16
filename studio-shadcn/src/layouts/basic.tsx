@@ -57,6 +57,13 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     "/callback",
   ];
 
+  // Creation paths where sidebar should be hidden
+  const hiddenSidebarCreationPaths = [
+    "/posts/create",
+    "/pages/create",
+    "/fact-checks/create",
+  ];
+
   // Public paths that should render children regardless of loading state
   const publicPaths = [
     "/auth/login",
@@ -144,9 +151,9 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     }
   }, [dispatch, session.details, hasInitiatedFetch]);
 
-  const shouldHideSidebar = hiddenSidebarPaths.some((path) =>
-    location.pathname.startsWith(path)
-  );
+  const shouldHideSidebar =
+    hiddenSidebarPaths.some((path) => location.pathname.startsWith(path)) ||
+    hiddenSidebarCreationPaths.includes(location.pathname);
 
   const isSettingsPath = location.pathname.startsWith("/settings");
 
@@ -195,7 +202,8 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
           <div
             className={cn(
               isMobile ? "p-4 h-[calc(100vh-4rem)]" : "p-6 h-screen",
-              isSettingsPath && !isMobile && "ml-[265px]"
+              isSettingsPath && !isMobile && "ml-[265px]",
+              hideSidebar && !isMobile && "ml-0"
             )}
           >
             {children}

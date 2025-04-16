@@ -30,7 +30,6 @@ function Ratings({
   // State for search and filters
   const [searchText, setSearchText] = useState<string>("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [filters, setFilters] = useState<RatingFilters>({
     page: 1,
     limit: isMobile ? 10 : 20,
@@ -42,18 +41,9 @@ function Ratings({
   }, [isMobile]);
 
   // Use custom hooks for data and pagination
-  const { ratings, total, loading } = useRatingsData(
-    filters,
-    searchText,
-    sortOrder
-  );
+  const { ratings, total, loading } = useRatingsData(filters, searchText);
   const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
     useRatingsPagination(filters, setFilters, total);
-
-  // Handle sort toggle
-  const handleSortToggle = useCallback(() => {
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
-  }, []);
 
   // Fetch ratings when filters change
   useEffect(() => {
@@ -221,8 +211,6 @@ function Ratings({
           filters={filters}
           setFilters={setFilters}
           fetchRatings={fetchRatings}
-          sortOrder={sortOrder}
-          onSortToggle={handleSortToggle}
           isMobile={isMobile}
         />
       </div>

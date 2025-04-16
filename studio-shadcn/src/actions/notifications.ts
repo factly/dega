@@ -11,27 +11,39 @@ export interface NotificationPayload {
   time: number;
 }
 
-export interface NotificationAction {
+export interface NotificationAction extends AnyAction {
   type: typeof ADD_NOTIFICATION;
   payload: NotificationPayload;
 }
 
-export const addErrorNotification = (data: string): NotificationAction => ({
+export interface ErrorNotificationData {
+  message: string;
+}
+
+export const addErrorNotification = (
+  data: string | ErrorNotificationData
+): NotificationAction => ({
   type: ADD_NOTIFICATION,
   payload: {
     type: "error",
     title: "Error",
-    message: data,
+    message: typeof data === "string" ? data : data.message,
     time: Date.now(),
   },
 });
 
-export const addSuccessNotification = (data: string): NotificationAction => ({
+export interface SuccessNotificationData {
+  message: string;
+}
+
+export const addSuccessNotification = (
+  data: string | SuccessNotificationData
+): NotificationAction => ({
   type: ADD_NOTIFICATION,
   payload: {
     type: "success",
     title: "Success",
-    message: data,
+    message: typeof data === "string" ? data : data.message,
     time: Date.now(),
   },
 });

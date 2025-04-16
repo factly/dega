@@ -49,7 +49,6 @@ function WebhookLogsList({
   data,
   filters,
   setFilters,
-  fetchWebhooks,
 }: WebhookLogsListProps): React.ReactElement {
   // Calculate pagination values
   const totalPages = Math.ceil(data.total / filters.limit);

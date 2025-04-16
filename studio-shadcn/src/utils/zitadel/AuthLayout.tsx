@@ -10,6 +10,7 @@ interface AuthLayoutProps {
   onBackClick?: () => void;
   logoSrc: string;
   hideHeader?: boolean;
+  title?: string;
 }
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({
@@ -17,6 +18,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
   showBackButton = false,
   onBackClick,
   logoSrc,
+  title,
 }) => {
   const { isMobileScreen } = useWindowSize();
 
@@ -48,6 +50,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
               )}
+              {title && <h1 className="text-2xl font-bold mb-6">{title}</h1>}
               {children}
             </div>
           </div>
@@ -79,6 +82,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
               )}
+              {title && <h1 className="text-2xl font-bold mb-6">{title}</h1>}
               {children}
             </div>
           </div>

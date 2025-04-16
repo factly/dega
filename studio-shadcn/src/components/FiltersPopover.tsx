@@ -1,4 +1,3 @@
-// components/FiltersPopover.tsx
 import { Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -6,12 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import Selector from "./Selector";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -36,7 +30,6 @@ export interface FiltersPopoverProps {
   hasActiveFilters?: boolean;
 }
 
-
 const FiltersPopover = ({
   form,
   isOpen,
@@ -58,7 +51,9 @@ const FiltersPopover = ({
           <span>Filters</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className={isMobile ? "w-[calc(100vw-2rem)] p-3" : "w-80 p-4"}>
+      <PopoverContent
+        className={isMobile ? "w-[calc(100vw-2rem)] p-3" : "w-80 p-4"}
+      >
         <div className="space-y-4">
           <h3 className="font-medium text-sm">Filters</h3>
           <Form {...form}>

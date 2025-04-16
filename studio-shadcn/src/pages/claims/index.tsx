@@ -37,7 +37,6 @@ function Claims() {
     limit: 20,
     rating: [],
     claimant: [],
-    sort: "desc",
     sortBy: "date",
   });
   const [isSearchExpanded, setIsSearchExpanded] = useState(!!query.get("q"));
@@ -52,7 +51,6 @@ function Claims() {
   const form = useForm<FormValues>({
     defaultValues: {
       q: "",
-      sort: filters.sort,
       sortBy: filters.sortBy,
       rating: filters.rating,
       claimant: filters.claimant,
@@ -88,31 +86,15 @@ function Claims() {
       page: 1, // Reset to page 1 when applying new filters
       rating: values.rating || [],
       claimant: values.claimant || [],
-      sort: values.sort || "desc",
       sortBy: values.sortBy || "date",
     });
     setIsFiltersOpen(false);
   };
 
-  const handleSortToggle = () => {
-    setFilters({
-      ...filters,
-      sort: filters.sort === "asc" ? "desc" : "asc",
-    });
-  };
-
   const handleSortByChange = (column: string) => {
-    // Apply a default order based on the column
-    let newSort = filters.sort;
-    if (column !== filters.sortBy) {
-      // Default date to newest first, default claim to alphabetical (A-Z)
-      newSort = column === "date" ? "desc" : "asc";
-    }
-
     setFilters({
       ...filters,
       sortBy: column,
-      sort: newSort,
     });
   };
 
@@ -121,7 +103,6 @@ function Claims() {
     return !!(
       filters.rating.length > 0 ||
       filters.claimant.length > 0 ||
-      filters.sort !== "desc" ||
       filters.sortBy !== "date"
     );
   };
@@ -251,8 +232,6 @@ function Claims() {
           }}
           fetchClaims={() => dispatch(getClaims(filters))}
           onPagination={onPagination}
-          sortOrder={filters.sort as "asc" | "desc"}
-          onSortToggle={handleSortToggle}
           sortBy={filters.sortBy}
           onSortByChange={handleSortByChange}
         />

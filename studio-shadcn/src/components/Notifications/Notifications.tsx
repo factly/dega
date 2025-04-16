@@ -21,7 +21,12 @@ export const Notifications: React.FC = () => {
         });
       }
     }
-  }, [notification.time]); // Use time as dependency to trigger on each new notification
+  }, [
+    notification.message,
+    notification.type,
+    notification.description,
+    notification.time,
+  ]);
 
   return <Toaster />;
 };

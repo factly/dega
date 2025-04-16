@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
+import { Trash2, Pencil, Ellipsis } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -71,8 +71,6 @@ const MobileLoadingRow: React.FC = () => (
 
 const SpaceList: React.FC<SpaceListProps> = ({
   searchQuery = "",
-  sortOrder = "asc",
-  onSortToggle,
   isMobile = false,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -80,13 +78,6 @@ const SpaceList: React.FC<SpaceListProps> = ({
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const history = useNavigation();
-
-  // Name sorting uses the props or parent component control
-  const currentNameSortOrder = sortOrder || "asc";
-
-  // Date sorting is managed internally
-  const [dateSortOrder, setDateSortOrder] = useState<"asc" | "desc">("desc"); // Default newest first
-  const [sortBy, setSortBy] = useState<"name" | "date">("name"); // Default sort by name
 
   const handleDeleteClick = useCallback((e: React.MouseEvent, id: string) => {
     e.stopPropagation();
@@ -117,20 +108,6 @@ const SpaceList: React.FC<SpaceListProps> = ({
     [history]
   );
 
-  // Handle name column sort
-  const handleNameSort = () => {
-    setSortBy("name");
-    if (onSortToggle) {
-      onSortToggle();
-    }
-  };
-
-  // Handle date column sort
-  const handleDateSort = () => {
-    setSortBy("date");
-    setDateSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-  };
-
   // Format the date to show only the date part
   const formatDate = (dateString?: string) => {
     if (!dateString) return "-";
@@ -147,10 +124,9 @@ const SpaceList: React.FC<SpaceListProps> = ({
     return value ? value.trim() : "---";
   };
 
-  // Filter and sort spaces
-  const filteredAndSortedSpaces = React.useMemo(() => {
-    // First filter the spaces based on search query
-    const filtered = spaces.filter(
+  // Filter spaces based on search query
+  const filteredSpaces = React.useMemo(() => {
+    return spaces.filter(
       (space) =>
         space.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         space.id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -159,26 +135,9 @@ const SpaceList: React.FC<SpaceListProps> = ({
         (space.created_at &&
           space.created_at.toLowerCase().includes(searchQuery.toLowerCase()))
     );
+  }, [spaces, searchQuery]);
 
-    // Then sort the filtered spaces
-    return [...filtered].sort((a, b) => {
-      if (sortBy === "name") {
-        // Sort by name
-        const nameA = a.name || "";
-        const nameB = b.name || "";
-        const comparison = nameA.localeCompare(nameB);
-        return currentNameSortOrder === "asc" ? comparison : -comparison;
-      } else {
-        // Sort by date
-        const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
-        const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
-        return dateSortOrder === "asc"
-          ? dateA - dateB // Oldest first
-          : dateB - dateA; // Newest first
-      }
-    });
-  }, [spaces, searchQuery, sortBy, currentNameSortOrder, dateSortOrder]);
-  const hasSpacesData = !loading && filteredAndSortedSpaces.length > 0;
+  const hasSpacesData = !loading && filteredSpaces.length > 0;
 
   // Mobile view table
   if (isMobile) {
@@ -188,15 +147,7 @@ const SpaceList: React.FC<SpaceListProps> = ({
           <Table>
             <TableHeader className="text-[13px]">
               <TableRow>
-                <TableHead className="w-1/2">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={handleNameSort}
-                  >
-                    Title
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
-                </TableHead>
+                <TableHead className="w-1/2">Title</TableHead>
                 <TableHead className="w-1/3">ID</TableHead>
                 <TableHead className="w-[50px] text-center">Action</TableHead>
               </TableRow>
@@ -211,21 +162,13 @@ const SpaceList: React.FC<SpaceListProps> = ({
           <Table>
             <TableHeader className="text-[13px]">
               <TableRow>
-                <TableHead className="w-1/2">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={handleNameSort}
-                  >
-                    Title
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
-                </TableHead>
+                <TableHead className="w-1/2">Title</TableHead>
                 <TableHead className="w-1/3">ID</TableHead>
                 <TableHead className="w-[50px] text-center">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredAndSortedSpaces.map((space) => (
+              {filteredSpaces.map((space) => (
                 <TableRow
                   key={space.id}
                   className="cursor-pointer"
@@ -316,27 +259,11 @@ const SpaceList: React.FC<SpaceListProps> = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-1/4 text-[13px]">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={handleNameSort}
-                >
-                  Title
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
+              <TableHead className="w-1/4 text-[13px]">Title</TableHead>
               <TableHead className="w-1/4 text-[13px]">ID</TableHead>
               <TableHead className="w-1/6 text-[13px]">Site Title</TableHead>
               <TableHead className="w-1/6 text-[13px]">Site Address</TableHead>
-              <TableHead className="w-1/7 text-[13px]">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={handleDateSort}
-                >
-                  Created on
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
+              <TableHead className="w-1/7 text-[13px]">Created on</TableHead>
               <TableHead className="w-[100px] text-[13px] text-center">
                 Actions
               </TableHead>
@@ -354,36 +281,20 @@ const SpaceList: React.FC<SpaceListProps> = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[20%] text-[13px]">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={handleNameSort}
-                >
-                  Title
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
+              <TableHead className="w-[20%] text-[13px]">Title</TableHead>
               <TableHead className="w-[20%] text-[13px]">ID</TableHead>
               <TableHead className="w-[15%] text-[13px]">Site Title</TableHead>
               <TableHead className="w-[20%] text-[13px]">
                 Site Address
               </TableHead>
-              <TableHead className="w-[15%] text-[13px]">
-                <div
-                  className="flex items-center cursor-pointer"
-                  onClick={handleDateSort}
-                >
-                  Created on
-                  <ChevronsUpDown className="ml-1 h-3 w-3" />
-                </div>
-              </TableHead>
+              <TableHead className="w-[15%] text-[13px]">Created on</TableHead>
               <TableHead className="w-[10%] text-[13px] text-center">
                 Actions
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredAndSortedSpaces.map((space) => (
+            {filteredSpaces.map((space) => (
               <TableRow
                 key={space.id}
                 className="cursor-pointer"

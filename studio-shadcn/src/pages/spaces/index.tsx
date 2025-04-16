@@ -25,7 +25,6 @@ const Spaces: React.FC = () => {
 
   const [searchText, setSearchText] = useState("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [filters, setFilters] = useState<SpaceFilters>({
     page: 1,
     limit: isMobile ? 10 : 20,
@@ -79,11 +78,6 @@ const Spaces: React.FC = () => {
 
     return { role: "member" };
   });
-
-  // Handle sort toggle
-  const handleSortToggle = () => {
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
-  };
 
   // Toggle search on mobile
   const toggleSearch = useCallback(() => {
@@ -244,8 +238,6 @@ const Spaces: React.FC = () => {
       >
         <SpaceList
           searchQuery={searchText}
-          sortOrder={sortOrder}
-          onSortToggle={handleSortToggle}
           filters={filters}
           setFilters={setFilters}
           isMobile={isMobile}

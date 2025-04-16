@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import MenuForm from "./components/MenuForm";
 import { useSelector } from "react-redux";
-import { updateMenu, getMenu } from "../../actions/menu";
+import { updateMenu, getMenu, Menu as ActionMenu } from "../../actions/menu";
 import { useParams } from "react-router-dom";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
@@ -39,13 +39,10 @@ function EditMenu(): React.ReactElement {
   }
 
   const onUpdate = (values: MenuFormValues) => {
-    const updatedMenu: Menu = {
-      ...menu,
-      ...values,
-      id: menu.id,
-    };
+    // Transform the menu to ensure it matches the ActionMenu type
+    const transformedMenu = transformMenuForAction(menu, values);
 
-    dispatch(updateMenu(updatedMenu))
+    dispatch(updateMenu(transformedMenu))
       .then(() => {
         // Navigate to the menus list after successful update
         navigate("/settings/website/menus");
@@ -55,6 +52,43 @@ function EditMenu(): React.ReactElement {
         console.error("Update failed:", error);
       });
   };
+
+  // Helper function to transform Menu to ActionMenu
+  function transformMenuForAction(
+    originalMenu: Menu,
+    formValues: MenuFormValues
+  ): ActionMenu {
+    // Create a new object with both original menu data and form values
+    const updatedMenu = {
+      ...originalMenu,
+      ...formValues,
+      id: originalMenu.id,
+    };
+
+    // Process menu items recursively to ensure all items have required properties
+    if (updatedMenu.menu && updatedMenu.menu.length > 0) {
+      updatedMenu.menu = processMenuItems(updatedMenu.menu);
+    }
+
+    return updatedMenu as ActionMenu;
+  }
+
+  // Process menu items recursively to ensure all names are defined
+  function processMenuItems(items: any[]): any[] {
+    return items.map((item) => {
+      const processedItem = {
+        ...item,
+        name: item.name || "",
+      };
+
+      // Process nested menu items recursively
+      if (processedItem.menu && processedItem.menu.length > 0) {
+        processedItem.menu = processMenuItems(processedItem.menu);
+      }
+
+      return processedItem;
+    });
+  }
 
   return (
     <>

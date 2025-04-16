@@ -192,7 +192,7 @@ export const deleteSpace = (id: string): AppThunk => {
 };
 
 export const updateSpace = (
-  data: Space
+  data: Partial<Space> & { id: string }
 ): AppThunk<Promise<Space | undefined>> => {
   return async (dispatch) => {
     dispatch(loadingSpaces(true));

@@ -23,7 +23,6 @@ function Claimants() {
   // State for search and filters
   const [searchText, setSearchText] = useState<string>("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [filters, setFilters] = useState<ClaimantFilters>({
     page: 1,
     limit: 10,
@@ -35,18 +34,9 @@ function Claimants() {
   }, [isMobile]);
 
   // Use custom hooks for data and pagination
-  const { claimants, total, loading } = useClaimantsData(
-    filters,
-    searchText,
-    sortOrder
-  );
+  const { claimants, total, loading } = useClaimantsData(filters, searchText);
   const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
     useClaimantsPagination(filters, setFilters, total);
-
-  // Handle sort toggle
-  const handleSortToggle = useCallback(() => {
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
-  }, []);
 
   // Fetch claimants when filters change
   useEffect(() => {
@@ -217,8 +207,6 @@ function Claimants() {
           setFilters={setFilters}
           fetchClaimants={fetchClaimants}
           actions={["view"]}
-          sortOrder={sortOrder}
-          onSortToggle={handleSortToggle}
           isMobile={isMobile}
         />
       </div>

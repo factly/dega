@@ -56,7 +56,7 @@ function CreateFactCheck({
         window.clearTimeout(timeoutRef.current);
       }
     };
-  }, []);
+  }, [formats.loading]);
 
   // Update timeout state if formats loading state changes
   useEffect(() => {

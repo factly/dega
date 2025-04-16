@@ -32,7 +32,6 @@ const Policies: React.FC = () => {
   // State for search and filters
   const [searchText, setSearchText] = useState<string>("");
   const [showSearch, setShowSearch] = useState<boolean>(!isMobile);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   // Initialize filters from URL params or defaults
   const [filters, setFilters] = useState<PolicyFilters>({
@@ -49,12 +48,12 @@ const Policies: React.FC = () => {
     setSearchParams(newParams);
   }, [filters, setSearchParams]);
 
+  const fetchPolicies = useCallback(() => {
+    dispatch(getPolicies(filters));
+  }, [dispatch, filters]);
+
   // Use custom hooks for data and pagination
-  const { policies, total, loading } = usePoliciesData(
-    filters,
-    searchText,
-    sortOrder
-  );
+  const { policies, total, loading } = usePoliciesData(filters, searchText);
 
   const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
     usePoliciesPagination(filters, setFilters, total);
@@ -62,21 +61,12 @@ const Policies: React.FC = () => {
   // Fetch policies when filters change
   useEffect(() => {
     fetchPolicies();
-  }, [filters]);
-
-  const fetchPolicies = useCallback(() => {
-    dispatch(getPolicies(filters));
-  }, [dispatch, filters]);
+  }, [filters, fetchPolicies]);
 
   // Handle search input changes
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
-
-  // Handle sort toggle
-  const handleSortToggle = useCallback(() => {
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
-  }, []);
 
   // Toggle search on mobile
   const toggleSearch = useCallback(() => {
@@ -215,8 +205,6 @@ const Policies: React.FC = () => {
           filters={filters}
           setFilters={setFilters}
           fetchPolicies={fetchPolicies}
-          sortOrder={sortOrder}
-          onSortToggle={handleSortToggle}
           isMobile={isMobile}
         />
       </div>

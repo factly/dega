@@ -76,7 +76,7 @@ const WebhookForm: React.FC<WebhookFormProps> = ({ onCreate, data = {} }) => {
     let ids: string[] = [];
 
     for (let i = 1; i <= filters.page; i++) {
-      let j = state.events.req.findIndex((item) =>
+      const j = state.events.req.findIndex((item) =>
         deepEqual(item.query, { ...filters, page: i })
       );
       if (j > -1) {
