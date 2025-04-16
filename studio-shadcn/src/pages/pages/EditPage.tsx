@@ -111,6 +111,7 @@ function EditPage({ formats }: EditPageProps): React.ReactElement {
       <Helmet title={`${page?.title} - Edit Page`} />
       <PageEditForm
         data={page}
+        // @ts-expect-error TODO: Fix this type error
         onCreate={onUpdate}
         // actions={actions}
         format={formats.article}

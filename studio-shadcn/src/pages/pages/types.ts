@@ -20,7 +20,7 @@ export interface Page {
   id: number;
   title: string;
   slug: string;
-  status?: "publish" | "draft" | "ready";
+  status?: "publish" | "draft" | "ready" | "future";
   featured_medium_id?: number;
   medium?: any;
   published_date: string | null;

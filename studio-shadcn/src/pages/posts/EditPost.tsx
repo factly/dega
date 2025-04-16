@@ -48,8 +48,8 @@ function EditPost({ formats }: EditPostProps): React.ReactElement {
   });
 
   React.useEffect(() => {
-    if (id) {
-      dispatch(getPost(id));
+    if (id && !Number.isNaN(Number(id))) {
+      dispatch(getPost(Number(id)));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -90,7 +90,6 @@ function EditPost({ formats }: EditPostProps): React.ReactElement {
       <PostEditForm
         data={post}
         onCreate={onUpdate}
-        actions={actions}
         format={formats.article}
       />
     </>
