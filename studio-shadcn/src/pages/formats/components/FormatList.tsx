@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
 import { deleteFormat } from "../../../actions/formats";
 import useNavigation from "../../../utils/useNavigation";
@@ -30,34 +29,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
-
-// Define interfaces for type safety
-interface Format {
-  id: string;
-  name: string;
-  description: string;
-}
-
-interface FormatData {
-  formats: Format[];
-  loading: boolean;
-  total: number;
-}
-
-interface Filters {
-  page: number;
-  limit: number;
-}
-
-interface FormatListProps {
-  data: FormatData;
-  filters: Filters;
-  setFilters: (filters: Partial<Filters>) => void;
-  fetchFormats: () => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
-  isMobile?: boolean;
-}
+import { FormatListProps } from "../types";
+import Loader from "@/components/Loader";
 
 function FormatList({
   data,
@@ -126,7 +99,7 @@ function FormatList({
   return (
     <div className="pb-4 overflow-auto">
       {data.loading ? (
-        <div className="text-center py-4">Loading...</div>
+        <Loader />
       ) : hasFormatsData ? (
         <div className="rounded-md">
           <Table>

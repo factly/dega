@@ -1,4 +1,3 @@
-// types.ts for FactCheck
 export interface Format {
   id: number;
   name: string;

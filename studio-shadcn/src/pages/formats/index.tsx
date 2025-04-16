@@ -1,50 +1,21 @@
-import { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import FormatList from "./components/FormatList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import { getFormats } from "../../actions/formats";
-import deepEqual from "deep-equal";
 import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import Pagination from "../../components/Pagination";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
-
-// Define types for the component props and state
-interface Format {
-  id: string;
-  name: string;
-  description: string;
-  // Add other format properties as needed
-}
-
-interface FiltersState {
-  page: number;
-  limit: number;
-}
-
-interface FormatState {
-  formats: {
-    req: {
-      query: FiltersState;
-      data: string[];
-      total: number;
-    }[];
-    details: Record<string, Format>;
-    loading: boolean;
-  };
-}
-
-interface RootState {
-  formats: FormatState;
-  sidebar: {
-    collapsed: boolean;
-  };
-}
+import { useSelector } from "react-redux";
+import { FormatFilters, RootState } from "./types";
+import { useFormatsData } from "./hooks/useFormatsData";
+import { useFormatsPagination } from "./hooks/useFormatsPagination";
+import SecuredButton from "@/components/SecuredButton";
 
 function Formats() {
   const dispatch = useAppDispatch();
@@ -58,47 +29,24 @@ function Formats() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   // Initialize filters from URL or defaults
-  const [filters, setFilters] = useState<FiltersState>({
+  const [filters, setFilters] = useState<FormatFilters>({
     page: parseInt(searchParams.get("page") || "1", 10),
     limit: parseInt(searchParams.get("limit") || "10", 10),
   });
 
-  const { formats, total, loading } = useSelector((state: RootState) => {
-    const node = state.formats.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
+  // Create a function that matches the expected signature in FormatListProps
+  const updateFilters = useCallback((newFilters: Partial<FormatFilters>) => {
+    setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
+  }, []);
 
-    if (node)
-      return {
-        formats: node.data.map((element) => state.formats.details[element]),
-        total: node.total,
-        loading: state.formats.loading,
-      };
-    return { formats: [], total: 0, loading: state.formats.loading };
-  });
-
-  // Filter and sort formats based on search text and sort order
-  const filteredFormats = useMemo(() => {
-    let filtered = formats;
-
-    // Apply search filter
-    if (searchText.trim()) {
-      filtered = formats.filter(
-        (format) =>
-          format.name?.toLowerCase().includes(searchText.toLowerCase()) ||
-          format.description?.toLowerCase().includes(searchText.toLowerCase())
-      );
-    }
-
-    // Apply sorting
-    return [...filtered].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return (a.name || "").localeCompare(b.name || "");
-      } else {
-        return (b.name || "").localeCompare(a.name || "");
-      }
-    });
-  }, [formats, searchText, sortOrder]);
+  // Use custom hooks for data and pagination
+  const { formats, total, loading } = useFormatsData(
+    filters,
+    searchText,
+    sortOrder
+  );
+  const { pageSize, totalPages, handlePageChange, handlePageSizeChange } =
+    useFormatsPagination(filters, updateFilters, total);
 
   // Update URL when filters change, but don't cause a re-render
   useEffect(() => {
@@ -121,15 +69,6 @@ function Formats() {
     dispatch(getFormats(filters));
   }, [dispatch, filters]);
 
-  // Pagination handlers
-  const handlePageChange = useCallback((page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
-  }, []);
-
-  const handlePageSizeChange = useCallback((size: number) => {
-    setFilters({ page: 1, limit: size });
-  }, []);
-
   // Sort toggle handler
   const handleSortToggle = useCallback(() => {
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
@@ -143,8 +82,10 @@ function Formats() {
     }
   }, [showSearch]);
 
-  // Calculate total pages
-  const totalPages = Math.max(1, Math.ceil(total / filters.limit));
+  // Handle navigation to create format page
+  const handleCreateFormat = () => {
+    window.location.href = "/settings/advanced/formats/create";
+  };
 
   // Get sidebar state from Redux store
   const isCollapsed = useSelector(
@@ -153,6 +94,11 @@ function Formats() {
 
   // Calculate left margin based on sidebar state
   const sidebarWidth = isCollapsed ? "89px" : "265px";
+
+  // Handle responsive UI changes
+  useEffect(() => {
+    setShowSearch(!isMobile);
+  }, [isMobile]);
 
   if (loading && formats.length === 0) {
     return <Loader />;
@@ -166,7 +112,6 @@ function Formats() {
       {isMobile && (
         <MobileBreadcrumb
           currentPage="Formats"
-          parentPath="/settings/advanced"
           parentLabel="Advanced Settings"
         />
       )}
@@ -217,18 +162,24 @@ function Formats() {
               </Button>
             )}
 
-            <Link to="/settings/advanced/formats/create">
-              {isMobile ? (
-                <Button size="icon" className="h-9 w-9">
-                  <PlusCircle className="h-5 w-5" />
-                </Button>
-              ) : (
-                <Button size="lg" className="flex items-center gap-2 py-2">
-                  <PlusCircle className="h-4 w-4" />
-                  New Format
-                </Button>
-              )}
-            </Link>
+            {isMobile ? (
+              <SecuredButton
+                className="h-9 w-9"
+                size="icon"
+                onClick={handleCreateFormat}
+              >
+                <PlusCircle className="h-5 w-5" />
+              </SecuredButton>
+            ) : (
+              <SecuredButton
+                className="flex items-center gap-2 py-2"
+                size="lg"
+                onClick={handleCreateFormat}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Create Format
+              </SecuredButton>
+            )}
           </div>
         </div>
 
@@ -270,9 +221,9 @@ function Formats() {
         }
       >
         <FormatList
-          data={{ formats: filteredFormats, total, loading }}
+          data={{ formats, total, loading }}
           filters={filters}
-          setFilters={setFilters}
+          setFilters={updateFilters}
           fetchFormats={fetchFormats}
           sortOrder={sortOrder}
           onSortToggle={handleSortToggle}
@@ -300,7 +251,7 @@ function Formats() {
           currentPage={filters.page}
           totalPages={totalPages}
           totalItems={total}
-          pageSize={filters.limit}
+          pageSize={pageSize}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
           isMobile={isMobile}

@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/pagination";
 import { getEventName } from "../../../../utils/event";
 import { getDateAndTimeFromString } from "../../../../utils/date";
-import { ClipboardList } from "lucide-react";
+import Loader from "@/components/Loader";
 
 // Define TypeScript interfaces
 interface WebhookLog {
@@ -76,10 +76,7 @@ function WebhookLogsList({
   return (
     <div className="space-y-4">
       {data.loading ? (
-        <div className="flex justify-center items-center py-8">
-          <ClipboardList className="mr-2 h-4 w-4 animate-spin" />
-          <span>Loading...</span>
-        </div>
+        <Loader />
       ) : (
         <>
           <Table>

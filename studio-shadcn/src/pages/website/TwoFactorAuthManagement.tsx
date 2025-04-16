@@ -10,11 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Eye, EyeOff } from "lucide-react";
 import PasswordInput from "../../components/PasswordInput/index";
-
-// Type definitions
-interface AuthMethods {
-  authMethodTypes?: string[];
-}
+import { AuthMethods } from "./types";
 
 const TwoFactorAuthManagement: React.FC = () => {
   const [isSettingUp2FA, setIsSettingUp2FA] = useState<boolean>(false);

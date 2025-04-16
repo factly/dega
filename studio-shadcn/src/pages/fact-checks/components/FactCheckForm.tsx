@@ -3,10 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-
-// Lucide Icons
-import { PanelRightDashed, X } from "lucide-react";
-
+import { PanelRightDashed, X, ChevronDown } from "lucide-react";
 // Shadcn Components
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,7 +13,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogContent,
@@ -25,16 +21,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Form, FormField, FormItem } from "@/components/ui/form";
-
 // Actions and Utils
 import { createClaim, updateClaim } from "@/actions/claims";
 import { addTemplate } from "@/actions/posts";
 import { addErrorNotification } from "@/actions/notifications";
-import { formatDate, getDatefromStringWithoutDay } from "@/utils/date";
+import { getDatefromStringWithoutDay } from "@/utils/date";
 import getJsonValue from "@/utils/getJsonValue";
 import { maker } from "@/utils/sluger";
 import { renderStatusBadge } from "../../../components/statusBadge/index";
-
 // Custom Components
 import ClaimCreateForm from "../../claims/components/ClaimForm";
 import ClaimList from "./ClaimList";
@@ -42,6 +36,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import RightPanel from "./RightPanel";
+import { DescriptionInput } from "../../../components/FormItems";
 
 // TypeScript Interfaces
 interface Claim {
@@ -119,7 +114,13 @@ const factCheckSchema = z.object({
   meta_fields: z.any().optional(),
   header_code: z.string().optional(),
   footer_code: z.string().optional(),
+  status: z.string().optional(),
+  format_id: z.number().optional(),
+  claim_ids: z.array(z.number()).optional(),
+  claim_order: z.array(z.number()).optional(),
 });
+
+type FactCheckFormValues = z.infer<typeof factCheckSchema>;
 
 const FactCheckForm: React.FC<FactCheckFormProps> = ({
   onCreate,
@@ -136,16 +137,19 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     useState<boolean>(false);
   const [isMobileScreen, setIsMobileScreen] = useState<boolean>(false);
 
-  // Panel states - replacing drawers
+  // Panel states with animation controls
   const [activePanel, setActivePanel] = useState<string | null>(null);
+  const [isPanelVisible, setIsPanelVisible] = useState<boolean>(false);
 
   // Modal and Popover states
   const [claimPopoverOpen, setClaimPopoverOpen] = useState<boolean>(false);
   const [schemaModalOpen, setSchemaModalOpen] = useState<boolean>(false);
 
-  const [claimID, setClaimID] = useState<number>(0);
-  const [claimOrder, setClaimOrder] = useState<number[]>(
-    data.claims && data.claims.length > 0 ? data.claim_order || [] : []
+  const [claimID, setClaimID] = useState<string>("");
+  const [claimOrder, setClaimOrder] = useState<string[]>(
+    data.claims && data.claims.length > 0
+      ? (data.claim_order || []).map((id) => id.toString())
+      : []
   );
 
   // Track when any panel is open to apply blur effect
@@ -158,7 +162,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
   }));
 
   // Initialize form with react-hook-form
-  const form = useForm<z.infer<typeof factCheckSchema>>({
+  const form = useForm<FactCheckFormValues>({
     resolver: zodResolver(factCheckSchema),
     defaultValues: {
       ...data,
@@ -171,8 +175,28 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
           : data.meta_fields
           ? JSON.stringify(data.meta_fields)
           : undefined,
+      format_id: format.id, // Add format_id to default values
     },
   });
+
+  // Handle opening and closing the panel with animation
+  const handlePanelOpen = (panelName: string) => {
+    // First set the panel without making it visible
+    setActivePanel(panelName);
+
+    // Add a small delay before making it visible to ensure the DOM is updated
+    setTimeout(() => {
+      setIsPanelVisible(true);
+    }, 50);
+  };
+
+  const handlePanelClose = () => {
+    setIsPanelVisible(false);
+    // Delay removing the panel from DOM until animation completes
+    setTimeout(() => {
+      setActivePanel(null);
+    }, 500); // Match this with transition duration
+  };
 
   // Set up form value change monitoring
   useEffect(() => {
@@ -233,7 +257,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     return dayjs().format("YYYY-MM-DDTHH:mm:ssZ");
   };
 
-  const onSave = (values: z.infer<typeof factCheckSchema>) => {
+  const onSave = (values: FactCheckFormValues) => {
     setShouldBlockNavigation(false);
 
     // Create a new object to avoid mutating the form values
@@ -244,28 +268,26 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
       processedValues.meta_fields = getJsonValue(processedValues.meta_fields);
     }
 
-    // Set all the required IDs correctly
-    processedValues.category_ids = processedValues.categories || [];
-    processedValues.tag_ids = processedValues.tags || [];
-    processedValues.format_id = format.id;
-
-    // Fix: Make sure author_ids is properly set
-    processedValues.author_ids = processedValues.authors || [];
-
-    // Fix: Make sure claim_ids uses the correct order from claimOrder
-    processedValues.claim_ids = processedValues.claims ? claimOrder : [];
-    processedValues.claim_order = processedValues.claim_ids;
-
-    // Set status before validation checks
+    // Set the status explicitly
     processedValues.status = status;
 
+    // Set format_id
+    processedValues.format_id = format.id;
+
+    // Convert claimOrder to numbers and set both claim_ids and claim_order
+    if (claimOrder && claimOrder.length > 0) {
+      const numericClaimIds = claimOrder.map((id) => parseInt(id, 10));
+      processedValues.claim_ids = numericClaimIds;
+      processedValues.claim_order = numericClaimIds;
+    }
+
     // IMPORTANT: Explicit author validation check
-    // This must happen before we proceed with publish or future statuses
-    if (status === "publish" || status === "future") {
+    // This must happen before we proceed with publish status
+    if (status === "publish") {
       if (
-        !processedValues.author_ids ||
-        !Array.isArray(processedValues.author_ids) ||
-        processedValues.author_ids.length === 0
+        !processedValues.authors ||
+        !Array.isArray(processedValues.authors) ||
+        processedValues.authors.length === 0
       ) {
         dispatch(
           addErrorNotification(
@@ -276,35 +298,24 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
       }
     }
 
-    // Future publish date validation
-    if (status === "future" && !processedValues.published_date) {
-      dispatch(
-        addErrorNotification(
-          "Published date is required for future publishing."
-        )
-      );
-      return;
-    }
-
-    // Format publish date
+    // Format publish date - only add date for publish status
     if (status === "publish") {
       processedValues.published_date = processedValues.published_date
         ? dayjs(processedValues.published_date).format("YYYY-MM-DDTHH:mm:ssZ")
         : getCurrentDate();
-    } else if (status === "future") {
-      // Ensure future date is properly formatted
-      processedValues.published_date = dayjs(
-        processedValues.published_date
-      ).format("YYYY-MM-DDTHH:mm:ssZ");
     } else {
+      // For draft and ready status, set published_date to null
       processedValues.published_date = null;
     }
-
-    console.log("Submitting fact check with values:", processedValues);
 
     // Call the onCreate function with the processed values
     onCreate(processedValues);
     setValueChange(false); // Reset value change after save
+
+    // Close panel if open
+    if (activePanel) {
+      handlePanelClose();
+    }
   };
 
   const onTitleChange = (value: string) => {
@@ -341,11 +352,11 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
   };
 
   const handleClaimSubmit = (values: any) => {
-    if (claimID > 0) {
+    if (claimID && parseInt(claimID, 10) > 0) {
       dispatch(updateClaim({ ...details[claimID], ...values }))
         .then(() => {
           setClaimPopoverOpen(false);
-          setClaimID(0);
+          setClaimID("");
           setValueChange(true); // Ensure Save button is enabled
         })
         .catch((error: any) => {
@@ -356,7 +367,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
         .then((claim: any) => {
           setClaimPopoverOpen(false);
           setNewClaim(claim);
-          setClaimID(0);
+          setClaimID("");
           setClaimCreatedFlag(true);
           setValueChange(true); // Ensure Save button is enabled
         })
@@ -381,16 +392,18 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     setValueChange(true); // Ensure Save button is enabled
   };
 
-  // LEFT SIDE CLAIM PANEL - This is the new component
   const renderLeftClaimPanel = () => {
     if (!claimPopoverOpen) return null;
 
     return (
-      <div className="fixed inset-y-0 left-0 z-50 w-full max-w-md bg-background border-r shadow-lg transform transition-transform duration-300 overflow-y-auto">
+      <div
+        className="fixed inset-y-0 left-0 z-50 w-full max-w-md bg-background border-r shadow-lg transform transition-transform duration-500 overflow-y-auto
+      animate-slide-in-left"
+      >
         <div className="p-4 h-full flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">
-              {claimID > 0 ? "Edit Claim" : "Add New Claim"}
+              {claimID ? "Edit Claim" : "Add New Claim"}
             </h3>
             <Button
               variant="outline"
@@ -402,7 +415,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
           </div>
           <div className="overflow-y-auto flex-grow">
             <ClaimCreateForm
-              data={details?.[claimID]}
+              data={claimID ? details?.[claimID] : undefined}
               onCreate={handleClaimSubmit}
               compact={true}
             />
@@ -466,15 +479,16 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
       {/* Left side claim panel */}
       {renderLeftClaimPanel()}
 
-      {/* Right side panel */}
+      {/* Right side panel with animation */}
       {activePanel && (
         <RightPanel
           activePanel={activePanel}
-          closePanel={() => setActivePanel(null)}
+          closePanel={handlePanelClose}
           form={form}
           data={data}
           onSave={onSave}
           setActivePanel={setActivePanel}
+          isVisible={isPanelVisible}
         />
       )}
 
@@ -491,12 +505,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
             className="edit-form space-y-6"
           >
             {/* Header with Actions */}
-            <div className="flex justify-between items-center space-x-2">
-              {/* Status Badge - Move it to the left */}
-              <div className="flex justify-start">
-                {renderStatusBadge(status)}
-              </div>
-
+            <div className="flex justify-end space-x-2 pb-4 border-b">
               <div className="flex space-x-2">
                 {data.id && (
                   <Button
@@ -514,115 +523,149 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    setActivePanel("main");
+                    handlePanelOpen("main");
                   }}
                 >
                   <PanelRightDashed className="h-4 w-4" />
                 </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      disabled={!valueChange}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setStatus(status === "ready" ? "ready" : "draft");
-                        form.handleSubmit(onSave)(e);
-                      }}
-                    >
-                      Save
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => setReadyFlag()}>
-                      <div className="flex items-center justify-between w-full">
-                        <span>Ready to Publish</span>
-                        <Switch
-                          checked={status === "ready"}
-                          onCheckedChange={setReadyFlag}
-                        />
-                      </div>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                {/* Save as Draft button */}
                 <Button
                   type="button"
-                  className="bg-[#DCEFEB] text-normal"
+                  variant="outline"
+                  disabled={!valueChange}
                   onClick={(e) => {
                     e.preventDefault();
 
-                    // Basic check for required fields
+                    // Get current form values
                     const currentValues = form.getValues();
+                    form.setValue("status", "draft");
+                    form.setValue("format_id", format.id);
 
-                    if (!currentValues.title || !currentValues.slug) {
-                      dispatch(
-                        addErrorNotification(
-                          "Title and slug are required fields."
-                        )
+                    if (claimOrder && claimOrder.length > 0) {
+                      const numericClaimIds = claimOrder.map((id) =>
+                        parseInt(id, 10)
                       );
-                      return;
+                      form.setValue("claim_ids", numericClaimIds);
+                      form.setValue("claim_order", numericClaimIds);
                     }
 
-                    // Check for authors before attempting to publish
-                    const authors = currentValues.authors || [];
-                    if (authors.length === 0) {
-                      dispatch(
-                        addErrorNotification(
-                          "At least one author must be assigned before publishing."
-                        )
-                      );
-                      return;
-                    }
+                    // Set published_date to null for draft
+                    form.setValue("published_date", null);
 
-                    // Bypass form validation and directly prepare publish data
-                    setStatus("publish");
-
-                    // Manually prepare the data instead of using form.handleSubmit
-                    const processedValues = { ...currentValues };
-
-                    // Format the data correctly
-                    if (processedValues.meta_fields) {
-                      processedValues.meta_fields = getJsonValue(
-                        processedValues.meta_fields
-                      );
-                    }
-
-                    processedValues.category_ids =
-                      processedValues.categories || [];
-                    processedValues.tag_ids = processedValues.tags || [];
-                    processedValues.format_id = format.id;
-                    processedValues.author_ids = processedValues.authors || [];
-                    processedValues.claim_ids = processedValues.claims
-                      ? claimOrder
-                      : [];
-                    processedValues.claim_order = processedValues.claim_ids;
-                    processedValues.status = "publish";
-
-                    // Format publish date
-                    processedValues.published_date =
-                      processedValues.published_date
-                        ? dayjs(processedValues.published_date).format(
-                            "YYYY-MM-DDTHH:mm:ssZ"
-                          )
-                        : getCurrentDate();
-
-                    console.log("Publishing with values:", processedValues);
-
-                    // Directly call onCreate
-                    onCreate(processedValues);
-                    setValueChange(false);
+                    // Submit the form
+                    form.handleSubmit(onSave)(e);
                   }}
                 >
-                  {data?.id && status === "publish"
-                    ? "Update Fact-Check"
-                    : "Publish Fact-Check"}
+                  Save as Draft
                 </Button>
+                {/* Publish dropdown button */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button disabled={!valueChange}>
+                      <span>
+                        {data?.id && status === "publish"
+                          ? "Update Fact-Check"
+                          : "Publish Fact-Check"}
+                      </span>
+                      <ChevronDown className="h-4 w-4 ml-2" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem
+                      disabled={!valueChange}
+                      onClick={(e) => {
+                        e.preventDefault();
+
+                        // Get current form values for validation
+                        const currentValues = form.getValues();
+
+                        if (!currentValues.title || !currentValues.slug) {
+                          dispatch(
+                            addErrorNotification(
+                              "Title and slug are required fields."
+                            )
+                          );
+                          return;
+                        }
+
+                        // Check for authors before attempting to publish
+                        const authors = currentValues.authors || [];
+                        if (authors.length === 0) {
+                          dispatch(
+                            addErrorNotification(
+                              "At least one author must be assigned before publishing."
+                            )
+                          );
+                          return;
+                        }
+
+                        // Set important fields directly on the form
+                        setStatus("publish");
+                        form.setValue("status", "publish");
+                        form.setValue("format_id", format.id);
+
+                        // Process claim IDs/order
+                        if (claimOrder && claimOrder.length > 0) {
+                          const numericClaimIds = claimOrder.map((id) =>
+                            parseInt(id, 10)
+                          );
+                          form.setValue("claim_ids", numericClaimIds);
+                          form.setValue("claim_order", numericClaimIds);
+                        }
+
+                        // Set published_date
+                        const publishDate = currentValues.published_date
+                          ? dayjs(currentValues.published_date).format(
+                              "YYYY-MM-DDTHH:mm:ssZ"
+                            )
+                          : getCurrentDate();
+                        form.setValue("published_date", publishDate);
+
+                        // Submit the form
+                        form.handleSubmit(onSave)(e);
+                      }}
+                    >
+                      Publish
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      disabled={!valueChange}
+                      onClick={(e) => {
+                        e.preventDefault();
+
+                        // Set important fields directly on the form
+                        setStatus("ready");
+                        form.setValue("status", "ready");
+                        form.setValue("format_id", format.id);
+
+                        // Process claim IDs/order
+                        if (claimOrder && claimOrder.length > 0) {
+                          const numericClaimIds = claimOrder.map((id) =>
+                            parseInt(id, 10)
+                          );
+                          form.setValue("claim_ids", numericClaimIds);
+                          form.setValue("claim_order", numericClaimIds);
+                        }
+
+                        // Set published_date to null for ready status
+                        form.setValue("published_date", null);
+
+                        // Submit the form
+                        form.handleSubmit(onSave)(e);
+                      }}
+                    >
+                      Ready to Publish
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
 
             {/* Main Content Area */}
             <div className="max-w-4xl mx-auto">
+              {/* Status Badge */}
+              <div className="flex justify-start pb-4">
+                {renderStatusBadge(status)}
+              </div>
               {/* Title */}
               <FormField
                 control={form.control}
@@ -655,15 +698,26 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
               {form.watch("claims")?.length > 0 && !loading && (
                 <div className="my-4">
                   <ClaimList
-                    ids={form.getValues("claims")}
-                    setClaimID={setClaimID}
+                    ids={
+                      form.getValues("claims")?.map((id) => id.toString()) || []
+                    }
+                    setClaimID={(id: string) => setClaimID(id)}
                     showModal={() => setClaimPopoverOpen(true)}
                     details={details}
                     claimOrder={claimOrder}
-                    setClaimOrder={setClaimOrder}
+                    setClaimOrder={(order: string[]) => setClaimOrder(order)}
                   />
                 </div>
               )}
+
+              {/* Description Editor */}
+              <div className="mt-6">
+                <DescriptionInput
+                  initialValue={data.description_html}
+                  noLabel
+                  formItemProps={{ className: "post-description" }}
+                />
+              </div>
             </div>
           </form>
         </Form>

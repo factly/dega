@@ -68,20 +68,20 @@ interface PageFormData {
 export const getPages = (query: PageQueryParams): AppThunk => {
   return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
-    if (currentSpaceID === 0) {
+    if (currentSpaceID === "" || currentSpaceID === "0") {
       return;
     }
     dispatch(loadingPages());
     const params = new URLSearchParams();
 
     if (query.category && query.category.length > 0) {
-      query.category.map((each) => params.append("category", each));
+      query.category.forEach((each) => params.append("category", each));
     }
     if (query.tag && query.tag.length > 0) {
-      query.tag.map((each) => params.append("tag", each));
+      query.tag.forEach((each) => params.append("tag", each));
     }
     if (query.format && query.format.length > 0) {
-      query.format.map((each) => params.append("format", each));
+      query.format.forEach((each) => params.append("format", each));
     }
     if (query.page) {
       params.append("page", query.page.toString());
@@ -99,7 +99,7 @@ export const getPages = (query: PageQueryParams): AppThunk => {
       params.append("status", query.status);
     }
     if (query.author) {
-      query.author.map((each) => params.append("author", each));
+      query.author.forEach((each) => params.append("author", each));
     }
 
     return axios
@@ -200,7 +200,7 @@ export const getPage = (id: number): AppThunk => {
     return axios
       .get(`${PAGES_API}/${id}`)
       .then((response) => {
-        let page = response.data;
+        const page = response.data;
         page.description = {
           json: page.description,
           html: page.description_html,
@@ -233,7 +233,7 @@ export const addPage = (data: PageFormData): AppThunk => {
     return axios
       .post(PAGES_API, data)
       .then((response) => {
-        let page = response.data;
+        const page = response.data;
         page.description = {
           json: page.description,
           html: page.description_html,
@@ -244,21 +244,22 @@ export const addPage = (data: PageFormData): AppThunk => {
         if (page.medium) dispatch(addMedia([page.medium]));
 
         dispatch(resetPages());
-        page.status === "publish"
-          ? dispatch(addSuccessNotification(`Page Published`))
-          : page.status === "future"
-          ? dispatch(
-              addSuccessNotification(
-                "Page added & Scheduled for future publish"
-              )
-            )
-          : page.status === "draft"
-          ? dispatch(addSuccessNotification("Page added"))
-          : dispatch(addSuccessNotification("Page added & Ready to Publish"));
+        if (page.status === "publish") {
+          dispatch(addSuccessNotification(`Page Published`));
+        } else if (page.status === "future") {
+          dispatch(
+            addSuccessNotification("Page added & Scheduled for future publish")
+          );
+        } else if (page.status === "draft") {
+          dispatch(addSuccessNotification("Page added"));
+        } else {
+          dispatch(addSuccessNotification("Page added & Ready to Publish"));
+        }
         return page;
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+        throw error;
       });
   };
 };
@@ -269,7 +270,7 @@ export const updatePage = (data: PageFormData): AppThunk => {
     return axios
       .put(`${PAGES_API}/${data.id}`, data)
       .then((response) => {
-        let page = response.data;
+        const page = response.data;
         page.description = {
           json: page.description,
           html: page.description_html,
@@ -288,20 +289,24 @@ export const updatePage = (data: PageFormData): AppThunk => {
             medium: page.medium?.id,
           })
         );
-        page.status === "publish"
-          ? dispatch(addSuccessNotification(`Page Published`))
-          : page.status === "future"
-          ? dispatch(
-              addSuccessNotification(
-                "Page saved & Scheduled for future publish"
-              )
-            )
-          : page.status === "draft"
-          ? dispatch(addSuccessNotification("Draft Saved"))
-          : dispatch(addSuccessNotification("Draft saved & Ready to Publish"));
+
+        if (page.status === "publish") {
+          dispatch(addSuccessNotification(`Page Published`));
+        } else if (page.status === "future") {
+          dispatch(
+            addSuccessNotification("Page saved & Scheduled for future publish")
+          );
+        } else if (page.status === "draft") {
+          dispatch(addSuccessNotification("Draft Saved"));
+        } else {
+          dispatch(addSuccessNotification("Draft saved & Ready to Publish"));
+        }
+
+        return page;
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+        throw error; // Re-throw error to allow further catch handling
       })
       .finally(() => dispatch(stopPagesLoading()));
   };

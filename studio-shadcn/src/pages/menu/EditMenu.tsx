@@ -1,34 +1,19 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import MenuForm from "./components/MenuForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { updateMenu, getMenu } from "../../actions/menu";
 import { useParams } from "react-router-dom";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Loader } from "lucide-react";
-import { AppDispatch } from "../../store";
-
-interface Menu {
-  id: string;
-  name: string;
-  [key: string]: any;
-}
-
-interface RootState {
-  menus: {
-    details: {
-      [key: string]: Menu | null;
-    };
-    loading: boolean;
-  };
-}
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { Menu, MenuFormValues, RootState } from "./types";
 
 function EditMenu(): React.ReactElement {
   const navigate = useNavigation();
   const { id } = useParams<{ id: string }>();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const { menu, loading } = useSelector((state: RootState) => {
     return {
@@ -39,44 +24,43 @@ function EditMenu(): React.ReactElement {
 
   useEffect(() => {
     if (id) {
-      dispatch(getMenu(id));
+      // Check if id is numeric and parse it, otherwise use as string
+      const parsedId = /^\d+$/.test(id) ? parseInt(id, 10) : id;
+      dispatch(getMenu(parsedId));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [dispatch, id]);
 
   if (loading) {
-    return (
-      <div className="flex flex-col space-y-3">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-full" />
-        <div className="flex justify-center items-center mt-4">
-          <Loader className="h-6 w-6 animate-spin text-muted-foreground" />
-        </div>
-      </div>
-    );
+    return <Skeleton className="h-48 w-full" />;
   }
 
   if (!menu) {
     return <RecordNotFound />;
   }
 
-  const onUpdate = (values: Partial<Menu>) => {
-    if (id) {
-      dispatch(updateMenu({ ...menu, ...values })).then(() => {
-        // Navigate to the list view instead of back to the edit page
+  const onUpdate = (values: MenuFormValues) => {
+    const updatedMenu: Menu = {
+      ...menu,
+      ...values,
+      id: menu.id,
+    };
+
+    dispatch(updateMenu(updatedMenu))
+      .then(() => {
+        // Navigate to the menus list after successful update
         navigate("/settings/website/menus");
+      })
+      .catch((error) => {
+        // Error is already handled in the action creator
+        console.error("Update failed:", error);
       });
-    }
   };
 
   return (
     <>
-      <Helmet title={`${menu?.name || "Menu"} - Edit Menu`} />
+      <Helmet title={`${menu?.name || "Unknown"} - Edit Menu`} />
       <div className="w-full max-w-4xl mx-auto">
-        <div>
-          <MenuForm data={menu} onCreate={onUpdate} />
-        </div>
+        <MenuForm data={menu} onCreate={onUpdate} />
       </div>
     </>
   );

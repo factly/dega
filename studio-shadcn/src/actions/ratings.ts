@@ -12,10 +12,9 @@ import { addErrorNotification, addSuccessNotification } from "./notifications";
 import { addMedia } from "./media";
 import getError from "../utils/getError";
 
-// Define types
-interface Rating {
-  id: number;
-  description: string;
+export interface Rating {
+  id: number | string;
+  description: any;
   description_html?: string;
   medium?: {
     id: number;
@@ -24,9 +23,9 @@ interface Rating {
 }
 
 interface RatingTransformed {
-  id: number;
+  id: number | string;
   description: {
-    json: string;
+    json: any;
     html: string;
   };
   medium?: number | null;
@@ -39,7 +38,7 @@ interface RatingsResponse {
 }
 
 interface RatingsRequestPayload {
-  data: number[];
+  data: (number | string)[];
   query: any;
   total: number;
 }
@@ -137,7 +136,7 @@ export const getRatings = (query: any): ThunkResult<Promise<void>> => {
 };
 
 // action to fetch rating by id
-export const getRating = (id: number): ThunkResult<Promise<void>> => {
+export const getRating = (id: number | string): ThunkResult<Promise<void>> => {
   return (dispatch) => {
     dispatch(loadingRatings());
     return axios
@@ -254,7 +253,14 @@ export const addRatings = (ratings: Rating[]): ThunkResult<void> => {
     dispatch(
       addRatingsList(
         ratings.map((rating) => {
-          return { ...rating, medium: rating.medium?.id || null };
+          return {
+            ...rating,
+            description: {
+              json: rating.description,
+              html: rating.description_html || "",
+            },
+            medium: rating.medium?.id || null,
+          };
         })
       )
     );

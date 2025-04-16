@@ -1,10 +1,8 @@
-// FactCheck.tsx
 import { useEffect, useState, useCallback } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import debounce from "lodash/debounce";
-
 // UI Components
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +12,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { PlusCircle } from "lucide-react";
-
 // Custom components
 import FactCheckList from "../../components/List";
 import FormatNotFound from "../../components/ErrorsAndImage/RecordNotFound";
@@ -25,7 +22,7 @@ import SearchButton from "../../components/SearchButton";
 import StatusTabs from "@/components/StatusTabs";
 import FiltersPopover from "@/components/FiltersPopover";
 import PaginationFooter from "../../components/PaginationFooter";
-
+import SecuredButton from "@/components/SecuredButton";
 // Hooks and utils
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -35,7 +32,6 @@ import { getPosts } from "../../actions/posts";
 import { useFactCheckFilters } from "./hooks/useFactCheckFilters";
 import { useFactCheckData } from "./hooks/useFactCheckData";
 import { useFactCheckPagination } from "./hooks/useFactCheckPagination";
-
 // Types
 import { FactCheckProps, FilterValues } from "./types";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
@@ -148,6 +144,11 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
     });
   };
 
+  // Handler for creating a new fact check
+  const handleCreateFactCheck = () => {
+    navigate("/fact-checks/create");
+  };
+
   // Debounced search function to update URL
   const debouncedSearch = useCallback(
     debounce((value: string) => {
@@ -220,7 +221,7 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
 
   // Handle applying filters from the filter popover
   const onSave = (values: FilterValues) => {
-    let searchFilter = new URLSearchParams();
+    const searchFilter = new URLSearchParams();
 
     // Preserve existing search text if present
     if (searchText.trim()) {
@@ -279,7 +280,20 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
   };
 
   if (formats.loading) {
-    return <Loader />;
+    return (
+      <div className="flex flex-col h-full relative">
+        <Helmet title="Fact-checks" />
+        {isMobile && (
+          <MobileBreadcrumb
+            currentPage="Fact Checks"
+            parentLabel="Fact Checking"
+          />
+        )}
+        <div className="flex-1 flex items-center justify-center">
+          <Loader className="relative inset-auto" />
+        </div>
+      </div>
+    );
   }
 
   if (!formats.factcheck) {
@@ -335,19 +349,20 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
                 <span>Templates</span>
               </Button>
 
-              {/* Create Fact-Check Button */}
-              <Link to="/fact-checks/create">
-                <Button size="sm" className="flex items-center gap-1">
-                  <PlusCircle className="h-4 w-4" />
-                </Button>
-              </Link>
+              <SecuredButton
+                size="sm"
+                className="flex items-center gap-1"
+                onClick={handleCreateFactCheck}
+              >
+                <PlusCircle className="h-4 w-4" />
+              </SecuredButton>
             </div>
           </div>
         </div>
       ) : (
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4 flex-1">
-            {/* Search Input - Always visible on desktop */}
+            {/* Search Input  */}
             <SearchInput
               searchText={searchText}
               setSearchText={handleSearch}
@@ -365,17 +380,18 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
               <span>Explore Templates</span>
             </Button>
 
-            {/* Create Fact-Check Button */}
-            <Link to="/fact-checks/create">
-              <Button size="lg" className="flex items-center gap-2 py-2">
-                <PlusCircle className="h-4 w-4" />
-                <span>Create Fact-Check</span>
-              </Button>
-            </Link>
+            <SecuredButton
+              size="lg"
+              className="flex items-center gap-2 py-2"
+              onClick={handleCreateFactCheck}
+            >
+              <PlusCircle className="h-4 w-4" />
+              <span>Create Fact-Check</span>
+            </SecuredButton>
           </div>
         </div>
       )}
-      {/* Search input row - appears when expanded */}
+      {/* Search input row  */}
       {isSearchExpanded && (
         <div className="w-full">
           <SearchInput
@@ -396,11 +412,10 @@ const FactCheck: React.FC<FactCheckProps> = ({ formats }) => {
             isMobile={isMobile}
             form={form}
             onSave={onSave}
-            children={null} // We moved the children outside the StatusTabs component
+            children={null}
           />
         </div>
         <div className="flex items-center">
-          {/* Keep only this instance of FiltersPopover, which will be shown in both mobile and desktop views */}
           <FiltersPopover
             form={form}
             isOpen={isFiltersOpen}

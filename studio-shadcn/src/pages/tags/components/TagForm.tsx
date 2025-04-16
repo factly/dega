@@ -4,7 +4,12 @@ import { maker } from "../../../utils/sluger";
 import MediaSelector from "../../../components/MediaSelector";
 import { SketchPicker } from "react-color";
 import getJsonValue from "../../../utils/getJsonValue";
-import { MetaForm, SlugInput, TitleInput } from "../../../components/FormItems";
+import {
+  MetaForm,
+  SlugInput,
+  TitleInput,
+  DescriptionInput,
+} from "../../../components/FormItems";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -243,28 +248,61 @@ const TagForm: React.FC<TagFormProps> = ({ onCreate, data = {} }) => {
                       )}
                     />
 
-                    <FormField
-                      control={form.control}
-                      name="medium_id"
-                      render={({ field }) => (
-                        <FormItem className="mt-4">
-                          <FormLabel>Featured Image</FormLabel>
-                          <MediaSelector
-                            value={field.value}
-                            onChange={(value) => {
-                              field.onChange(value);
-                              setValueChange(true);
-                            }}
-                            containerStyles={{
-                              justifyContent: "center",
-                              width: "100%",
-                              height: isMobile ? "160px" : "220px",
-                            }}
-                          />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                      {/* Description Input */}
+                      <FormField
+                        control={form.control}
+                        name="description_html"
+                        render={({ field }) => (
+                          <div className="mb-4 sm:mb-6">
+                            <FormLabel className="text-base block mb-2">
+                              Description
+                            </FormLabel>
+                            <DescriptionInput
+                              initialValue={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              noLabel={true}
+                              rows={5}
+                              inputProps={{
+                                placeholder: "Enter Description...",
+                                style: {
+                                  minHeight: "92px",
+                                  borderRadius: "0.25rem",
+                                  border: "1px solid rgba(0, 0, 0, 0.15)",
+                                },
+                              }}
+                            />
+                          </div>
+                        )}
+                      />
+
+                      {/* Featured Image */}
+                      <FormField
+                        control={form.control}
+                        name="medium_id"
+                        render={({ field }) => (
+                          <FormItem className="mt-6">
+                            <FormLabel className="text-base mb-2">
+                              Featured Image
+                            </FormLabel>
+                            <MediaSelector
+                              value={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              containerStyles={{
+                                justifyContent: "center",
+                                width: "100%",
+                                height: isMobile ? "160px" : "220px",
+                              }}
+                            />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

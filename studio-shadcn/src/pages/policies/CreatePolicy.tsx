@@ -4,20 +4,7 @@ import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import PolicyCreateForm from "./components/PolicyForm";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-
-// Define the policy value interface
-interface PolicyPermission {
-  resource: string;
-  actions: string[];
-}
-
-interface PolicyFormValues {
-  name: string;
-  users: string[];
-  description?: string;
-  permissions?: PolicyPermission[];
-  [key: string]: any;
-}
+import { PolicyFormValues } from "./types";
 
 const CreatePolicy: React.FC = () => {
   const history = useNavigation();

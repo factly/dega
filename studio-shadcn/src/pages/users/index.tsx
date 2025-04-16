@@ -24,43 +24,7 @@ import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Pagination from "../../components/Pagination";
-
-// Type definitions
-interface SpaceUser {
-  id: string;
-  display_name: string;
-  email: string;
-}
-
-interface SpaceUsersState {
-  details: Record<string, SpaceUser>;
-  req: Array<{
-    query: {
-      page: string | null;
-      limit: string | null;
-      q?: string;
-    };
-    data: string[];
-    total: number;
-  }>;
-  loading: boolean;
-}
-
-interface RootState {
-  spaceUsers: SpaceUsersState;
-  sidebar: {
-    collapsed: boolean;
-  };
-}
-
-interface FiltersState {
-  page: number;
-  limit: number;
-}
-
-interface FormValues {
-  users?: string[];
-}
+import { SpaceUser, RootState, FiltersState, FormValues } from "./types";
 
 function Users() {
   const dispatch = useAppDispatch();
@@ -471,12 +435,6 @@ function Users() {
                 : "Your users list is empty"
             }
             isMobile={isMobile}
-            actionText="Add user"
-            onActionClick={() => {
-              if (isMobile) {
-                form.handleSubmit(handleAddUsers)();
-              }
-            }}
           />
         )}
       </div>

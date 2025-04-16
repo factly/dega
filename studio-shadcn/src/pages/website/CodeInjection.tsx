@@ -9,26 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { updateSpace } from "../../actions/spaces";
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../../hooks/reduxHooks";
-
-// Define types for our state and props
-interface Space {
-  id: string;
-  name: string;
-  slug: string;
-  organisation_id: string;
-  header_code?: string;
-  footer_code?: string;
-  [key: string]: any;
-}
-interface RootState {
-  spaces: {
-    selected: string;
-    details: {
-      [key: string]: Space;
-    };
-    loading: boolean;
-  };
-}
+import { Space, RootState } from "./types";
 
 function CodeInjection(): React.ReactElement {
   const id = useSelector((state: RootState) => state.spaces.selected);

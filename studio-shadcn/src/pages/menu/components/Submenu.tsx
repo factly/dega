@@ -3,12 +3,7 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import MenuField from "./MenuField";
-
-interface SubmenuProps {
-  fieldKey: string;
-  isMobileScreen: boolean;
-  depth?: number;
-}
+import { SubmenuProps } from "../types";
 
 const Submenu: React.FC<SubmenuProps> = ({
   fieldKey,

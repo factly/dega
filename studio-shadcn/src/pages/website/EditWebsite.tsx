@@ -5,35 +5,7 @@ import { updateSpace } from "../../actions/spaces";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import WebsiteEditForm from "./components/WebsiteEditForm";
 import { Helmet } from "react-helmet";
-
-// Type definitions
-interface Space {
-  id: string;
-  [key: string]: any; // Additional space properties
-}
-
-interface SpacesState {
-  selected: string;
-  details: Record<string, Space>;
-  loading: boolean;
-}
-
-interface RootState {
-  spaces: SpacesState;
-}
-
-interface WebsiteData {
-  name?: string;
-  site_title?: string;
-  tag_line?: string;
-  description?: string;
-  slug?: string;
-  site_address?: string;
-  organisation_id?: string;
-  space_id?: string;
-  meta_fields?: string | Record<string, any>;
-  [key: string]: any; // Allow for additional properties
-}
+import { RootState, WebsiteData } from "./types";
 
 const EditWebsite: React.FC = () => {
   const id = useSelector((state: RootState) => state.spaces.selected);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { SketchPicker } from "react-color";
 import { maker } from "../../../utils/sluger";
@@ -20,20 +20,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MetaForm, SlugInput, TitleInput } from "../../../components/FormItems";
-import { Rating, ColorResult } from "../../../types";
+import {
+  MetaForm,
+  SlugInput,
+  TitleInput,
+  DescriptionInput,
+} from "../../../components/FormItems";
+import { Rating, RatingFormProps, ColorResult } from "../types";
 import MediaSelector from "../../../components/MediaSelector";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-interface RatingFormProps {
-  onCreate: (values: Rating) => void;
-  data?: Partial<Rating>;
-}
 
 const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-
   const [backgroundColour, setBackgroundColour] = useState<ColorResult | null>(
     data.background_colour || null
   );
@@ -45,17 +44,21 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
   const [previewText, setPreviewText] = useState(data.name || "Sample");
   const [valueChange, setValueChange] = useState(false);
 
+  // Handle meta_fields conversion
+  const initialData = { ...data };
+  if (initialData.meta_fields && typeof initialData.meta_fields !== "string") {
+    initialData.meta_fields = JSON.stringify(initialData.meta_fields);
+  }
+
   const form = useForm<Rating>({
     defaultValues: {
-      name: data.name || "",
-      slug: data.slug || "",
-      numeric_value: data.numeric_value,
-      medium_id: data.medium_id,
-      ...data,
-      meta_fields:
-        typeof data.meta_fields === "string"
-          ? data.meta_fields
-          : JSON.stringify(data.meta_fields),
+      name: initialData.name || "",
+      slug: initialData.slug || "",
+      numeric_value: initialData.numeric_value,
+      medium_id: initialData.medium_id,
+      description_html: initialData.description_html || "",
+      ...initialData,
+      meta_fields: initialData.meta_fields as string,
     },
     mode: "onChange",
   });
@@ -88,13 +91,15 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
   };
 
   const onSubmit = (values: Rating) => {
-    const processedValues = {
+    const processedValues: Rating = {
       ...values,
       meta_fields: values.meta_fields
-        ? getJsonValue(values.meta_fields)
+        ? getJsonValue(values.meta_fields as string)
         : undefined,
-      text_colour: textColour,
-      background_colour: backgroundColour,
+      text_colour: textColour ? { hex: textColour.hex } : undefined,
+      background_colour: backgroundColour
+        ? { hex: backgroundColour.hex }
+        : undefined,
     };
     onCreate(processedValues);
     onReset();
@@ -176,7 +181,7 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="py-3 bg-white">
+                  <div className="py-3 bg-white px-4">
                     <div className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <FormField
@@ -236,7 +241,35 @@ const RatingForm: React.FC<RatingFormProps> = ({ onCreate, data = {} }) => {
                         <SlugInput form={form} />
                       </div>
 
-                      {/* Background Color and Text Color row */}
+                      <FormField
+                        control={form.control}
+                        name="description_html"
+                        render={({ field }) => (
+                          <div className="mb-4 sm:mb-6">
+                            <FormLabel className="text-base block mb-2">
+                              Description
+                            </FormLabel>
+                            <DescriptionInput
+                              initialValue={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              noLabel={true}
+                              rows={5}
+                              inputProps={{
+                                placeholder: "Enter Description...",
+                                style: {
+                                  minHeight: "92px",
+                                  borderRadius: "0.25rem",
+                                  border: "1px solid rgba(0, 0, 0, 0.15)",
+                                },
+                              }}
+                            />
+                          </div>
+                        )}
+                      />
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <FormField
                           control={form.control}

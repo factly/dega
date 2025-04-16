@@ -14,7 +14,8 @@ import { Page, Format } from "./types";
 
 interface EditPageProps {
   formats: {
-    article: Format;
+    article: Format | null;
+    loading: boolean;
   };
 }
 
@@ -33,10 +34,27 @@ function EditPage({ formats }: EditPageProps): React.ReactElement {
 
   const { page, loading } = useSelector((state: RootState) => {
     return {
-      page: state.pages.details[id as string] ? state.pages.details[id as string] : null,
+      page: state.pages.details[id as string]
+        ? state.pages.details[id as string]
+        : null,
       loading: state.pages.loading,
     };
   });
+
+  // Check for cached formats on component mount
+  useEffect(() => {
+    try {
+      const savedFormats = localStorage.getItem("cachedFormats");
+      if (savedFormats) {
+        const parsedFormats = JSON.parse(savedFormats);
+        if (parsedFormats.article) {
+          setCachedFormat(parsedFormats.article);
+        }
+      }
+    } catch (error) {
+      console.error("Error checking cached formats:", error);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (id && !Number.isNaN(Number(id))) {
@@ -57,6 +75,20 @@ function EditPage({ formats }: EditPageProps): React.ReactElement {
 
   if (!page) {
     return <RecordNotFound />;
+  }
+
+  // Use either the format from props or cached format
+  const formatToUse = formats.article || cachedFormat;
+
+  // Check if format is available
+  if (!formatToUse) {
+    return (
+      <RecordNotFound
+        status="info"
+        title="Article format not found"
+        link="/formats"
+      />
+    );
   }
 
   const onUpdate = (values: Partial<Page>) => {

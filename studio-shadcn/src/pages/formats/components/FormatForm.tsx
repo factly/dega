@@ -17,49 +17,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { maker } from "../../../utils/sluger";
 import getJsonValue from "../../../utils/getJsonValue";
 import MediaSelector from "../../../components/MediaSelector";
 import { MetaForm, SlugInput } from "../../../components/FormItems";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-// Define the format data interface
-interface FormatData {
-  id?: string;
-  name?: string;
-  slug?: string;
-  is_featured?: boolean;
-  description?: string;
-  medium_id?: number | string;
-  meta_fields?: string | Record<string, unknown>;
-}
-
-// Define the form schema using zod
-const formatFormSchema = z.object({
-  name: z
-    .string()
-    .min(3, {
-      message: "Name must be minimum 3 characters.",
-    })
-    .max(50, {
-      message: "Name must be maximum 50 characters.",
-    }),
-  slug: z.string(),
-  is_featured: z.boolean().default(false),
-  description: z.string().optional(),
-  medium_id: z.number().optional(),
-  meta_fields: z.union([z.string(), z.record(z.unknown())]).optional(),
-});
-
-type FormatFormValues = z.infer<typeof formatFormSchema>;
-
-interface FormatFormProps {
-  onCreate: (values: FormatData) => void;
-  data?: FormatData;
-}
+import { FormatFormProps, FormatFormValues } from "../types";
 
 const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
   const navigate = useNavigate();
@@ -73,35 +37,28 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
   }
 
   // Initialize the form
-  const form = useForm<FormatFormValues>({
-    resolver: zodResolver(formatFormSchema),
-    defaultValues: initialData as FormatFormValues,
+  const methods = useForm<FormatFormValues>({
+    defaultValues: initialData as Partial<FormatFormValues>,
   });
-
-  // Watch for changes to enable the submit button
-  React.useEffect(() => {
-    const subscription = form.watch(() => setValueChange(true));
-    return () => subscription.unsubscribe();
-  }, [form]);
 
   // Handle title change to generate slug
   const onTitleChange = (value: string) => {
-    form.setValue("slug", maker(value), { shouldDirty: true });
+    methods.setValue("slug", maker(value));
     setValueChange(true);
   };
 
-  const onReset = () => {
-    form.reset(initialData as FormatFormValues);
-  };
-
-  const handleCancel = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent form submission
-    navigate(-1); // Navigate to the previous page
+  const handleCancel = () => {
+    navigate(-1);
   };
 
   // Handle form submission
   const onSubmit = (values: FormatFormValues) => {
     const submissionValues = { ...values };
+
+    // Always preserve the original ID format from the data
+    if (data.id !== undefined) {
+      submissionValues.id = data.id;
+    }
 
     if (submissionValues.meta_fields) {
       submissionValues.meta_fields = getJsonValue(
@@ -110,11 +67,10 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
     }
 
     onCreate(submissionValues);
-    onReset();
   };
 
   return (
-    <div className={isMobile ? "" : "px-60 max-w-6xl mx-auto"}>
+    <div className={isMobile ? "px-4" : "px-60 max-w-6xl mx-auto"}>
       {/* Mobile header */}
       {isMobile && (
         <div className="mb-4">
@@ -146,9 +102,12 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
       {/* Top border */}
       <div className="border-t border-gray-200 mb-4"></div>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full mx-auto">
-          <div className="w-full">
+      <Form {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="w-full mx-auto"
+        >
+          <div className="w-full mb-6">
             <Accordion
               type="multiple"
               defaultValue={["general"]}
@@ -164,13 +123,13 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="py-3 bg-white">
+                  <div className="py-3 bg-white px-4">
                     <div className="space-y-4">
                       <FormField
-                        control={form.control}
+                        control={methods.control}
                         name="name"
                         render={({ field }) => (
-                          <FormItem className="mb-6">
+                          <FormItem className="mb-4 sm:mb-6">
                             <FormLabel className="text-base">Title</FormLabel>
                             <FormControl>
                               <Input
@@ -186,12 +145,12 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
                         )}
                       />
 
-                      <div className="mb-6">
-                        <SlugInput form={form} />
+                      <div className="mb-4 sm:mb-6">
+                        <SlugInput form={methods} />
                       </div>
 
                       <FormField
-                        control={form.control}
+                        control={methods.control}
                         name="is_featured"
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between">
@@ -210,10 +169,10 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
                       />
 
                       <FormField
-                        control={form.control}
+                        control={methods.control}
                         name="description"
                         render={({ field }) => (
-                          <FormItem className="mb-6">
+                          <FormItem className="mb-4 sm:mb-6">
                             <FormLabel className="text-base mb-2">
                               Description
                             </FormLabel>
@@ -230,29 +189,27 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
                         )}
                       />
 
-                      {/* Featured Image - Moved below Description */}
+                      {/* Featured Image */}
                       <FormField
-                        control={form.control}
+                        control={methods.control}
                         name="medium_id"
                         render={({ field }) => (
                           <FormItem className="mt-6">
                             <FormLabel className="text-base mb-2">
                               Featured Image
                             </FormLabel>
-                            <div className="flex justify-center items-start mt-4">
-                              <MediaSelector
-                                value={field.value}
-                                onChange={(value) => {
-                                  field.onChange(value);
-                                  setValueChange(true);
-                                }}
-                                containerStyles={{
-                                  justifyContent: "center",
-                                  width: isMobile ? "84%" : "100%",
-                                  height: isMobile ? "160px" : "220px",
-                                }}
-                              />
-                            </div>
+                            <MediaSelector
+                              value={field.value}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValueChange(true);
+                              }}
+                              containerStyles={{
+                                justifyContent: "center",
+                                width: "100%",
+                                height: isMobile ? "160px" : "220px",
+                              }}
+                            />
                           </FormItem>
                         )}
                       />
@@ -264,7 +221,7 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
           </div>
 
           <div className="w-full mb-2">
-            <MetaForm form={form} />
+            <MetaForm form={methods} />
           </div>
 
           <div
@@ -288,11 +245,7 @@ const FormatForm: React.FC<FormatFormProps> = ({ onCreate, data = {} }) => {
                 disabled={!valueChange}
                 className={isMobile ? "w-[48%]" : "px-6"}
               >
-                {data && data.id
-                  ? "Update"
-                  : isMobile
-                  ? "Create"
-                  : "Create format"}
+                {data && data.id ? "Update" : "Create"}
               </Button>
             </div>
           </div>

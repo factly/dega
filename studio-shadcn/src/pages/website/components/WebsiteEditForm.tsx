@@ -30,24 +30,7 @@ import { SlugInput } from "../../../components/FormItems";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-// Type definitions
-interface Organization {
-  id: string;
-  title: string;
-}
-
-interface WebsiteData {
-  name?: string;
-  site_title?: string;
-  tag_line?: string;
-  description?: string;
-  slug?: string;
-  site_address?: string;
-  organisation_id?: string;
-  space_id?: string;
-  meta_fields?: string | Record<string, any>;
-}
+import { WebsiteData, Organization } from "../types";
 
 interface WebsiteEditFormProps {
   onCreate: (values: WebsiteData) => void;

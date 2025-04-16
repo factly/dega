@@ -21,11 +21,6 @@ import {
   FormDescription,
 } from "@/components/ui/form";
 import { DatePicker } from "@/components/ui/DatePicker";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 
 // Custom Components
 import { SlugInput } from "@/components/FormItems";
@@ -41,6 +36,7 @@ interface RightPanelProps {
   data: any;
   onSave: (values: any) => void;
   setActivePanel: (panel: string) => void;
+  isVisible: boolean; // New prop to control animation
 }
 
 const RightPanel: React.FC<RightPanelProps> = ({
@@ -50,9 +46,15 @@ const RightPanel: React.FC<RightPanelProps> = ({
   data,
   onSave,
   setActivePanel,
+  isVisible,
 }) => {
   return (
-    <div className="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background border-l shadow-lg transform transition-transform duration-300 overflow-y-auto">
+    <div
+      className={`fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background border-l shadow-lg overflow-y-auto
+      transform transition-transform duration-500 ease-in-out ${
+        isVisible ? "translate-x-0" : "translate-x-full"
+      }`}
+    >
       <div className="p-4 h-full flex flex-col">
         {activePanel === "main" && (
           <>
@@ -176,7 +178,6 @@ const RightPanel: React.FC<RightPanelProps> = ({
                             type="button"
                             onClick={() => {
                               closePanel();
-                              // This would need to be handled by the parent component
                             }}
                           >
                             Add Claim
@@ -273,66 +274,64 @@ const RightPanel: React.FC<RightPanelProps> = ({
                         />
                       </AccordionContent>
                     </AccordionItem>
+
+                    {/* Others Section - Changed from Collapsible to AccordionItem */}
+                    <AccordionItem value="others" className="border-b">
+                      <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
+                        <div className="flex items-center">
+                          <MoreHorizontal className="h-4 w-4 mr-2" />
+                          Others
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="pt-4">
+                        <div className="space-y-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="w-full"
+                            onClick={() => setActivePanel("meta")}
+                          >
+                            SEO Settings
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="w-full"
+                            onClick={() => setActivePanel("meta")}
+                          >
+                            Add Meta Data
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="w-full"
+                            onClick={() => setActivePanel("code")}
+                          >
+                            Code Injection
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="w-full"
+                            onClick={() => {
+                              // This would need to be handled by the parent component
+                              closePanel();
+                            }}
+                          >
+                            View Schemas
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="w-full"
+                            onClick={() => setActivePanel("meta-fields")}
+                          >
+                            Add Meta Fields
+                          </Button>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
                   </Accordion>
-
-                  <Separator />
-
-                  {/* SEO Button */}
-                  <Button
-                    type="button"
-                    className="flex items-center w-full text-left"
-                    onClick={() => setActivePanel("meta")}
-                  >
-                    <FileSearch className="h-4 w-4 mr-2" />
-                    <span className="font-medium">SEO</span>
-                  </Button>
-
-                  <Separator />
-
-                  {/* Others Section */}
-                  <Collapsible>
-                    <CollapsibleTrigger className="flex items-center w-full text-left">
-                      <MoreHorizontal className="h-4 w-4 mr-2" />
-                      <span className="font-medium">Others</span>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="space-y-2 pt-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => setActivePanel("meta")}
-                      >
-                        Add Meta Data
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => setActivePanel("code")}
-                      >
-                        Code Injection
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => {
-                          // This would need to be handled by the parent component
-                          closePanel();
-                        }}
-                      >
-                        View Schemas
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => setActivePanel("meta-fields")}
-                      >
-                        Add Meta Fields
-                      </Button>
-                    </CollapsibleContent>
-                  </Collapsible>
                 </form>
               </Form>
             </div>

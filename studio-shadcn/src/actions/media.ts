@@ -49,10 +49,7 @@ const getSpaceId = (): string => {
 };
 
 // Action to fetch media
-export const getMedia = (
-  query: Record<string, any>,
-  profile?: boolean
-): AppThunk => {
+export const getMedia = (query: Record<string, any>): AppThunk => {
   return (dispatch: Dispatch<MediaAction>) => {
     dispatch(loadingMedia());
 
@@ -84,10 +81,7 @@ export const getMedia = (
 };
 
 // Action to fetch medium by id
-export const getMedium = (
-  id: string | number,
-  profile?: boolean
-): AppThunk<Promise<void>> => {
+export const getMedium = (id: string | number): AppThunk<Promise<void>> => {
   return (dispatch: Dispatch<MediaAction>) => {
     dispatch(loadingMedia());
     const spaceId = getSpaceId();

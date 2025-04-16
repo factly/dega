@@ -20,7 +20,11 @@ import { useForm, useFieldArray } from "react-hook-form";
 import Selector from "../../../components/Selector/index";
 import { maker } from "../../../utils/sluger";
 import getJsonValue from "../../../utils/getJsonValue";
-import { MetaForm, SlugInput } from "../../../components/FormItems";
+import {
+  MetaForm,
+  SlugInput,
+  DescriptionInput,
+} from "../../../components/FormItems";
 import { useNavigate } from "react-router-dom";
 import SourcesSection from "./SourcesSection";
 import {
@@ -181,6 +185,35 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
                     />
 
                     <SlugInput form={form} required={true} />
+
+                    <FormField
+                      control={form.control}
+                      name="description_html"
+                      render={({ field }) => (
+                        <div className="mb-4 sm:mb-6">
+                          <FormLabel className="text-base block mb-2">
+                            Description
+                          </FormLabel>
+                          <DescriptionInput
+                            initialValue={field.value}
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setValueChange(true);
+                            }}
+                            noLabel={true}
+                            rows={5}
+                            inputProps={{
+                              placeholder: "Enter Description...",
+                              style: {
+                                minHeight: "92px",
+                                borderRadius: "0.25rem",
+                                border: "1px solid rgba(0, 0, 0, 0.15)",
+                              },
+                            }}
+                          />
+                        </div>
+                      )}
+                    />
 
                     <FormField
                       control={form.control}
