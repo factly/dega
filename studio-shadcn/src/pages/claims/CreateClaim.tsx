@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import useNavigation from "../../utils/useNavigation";
 import { RootState } from "../../store/index";
 import { useAppDispatch } from "@/hooks/reduxHooks";
+import { FormattedClaimValues } from "./types";
 
 const CreateClaim: FC = () => {
   const history = useNavigation();
@@ -36,10 +37,16 @@ const CreateClaim: FC = () => {
     };
   });
 
-  const onCreate = (values: any) => {
-    Promise.resolve(dispatch(createClaim(values))).then(() => {
-      history("/claims");
-    });
+  const onCreate = (values: FormattedClaimValues) => {
+    // Use Promise.resolve to handle the dispatch result properly
+    const result = dispatch(createClaim(values));
+
+    // Check if result exists and is a Promise
+    if (result && typeof result.then === "function") {
+      result.then(() => {
+        history("/claims");
+      });
+    }
   };
 
   return (

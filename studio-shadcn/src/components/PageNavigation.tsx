@@ -1,4 +1,3 @@
-import React from 'react'
 import useWindowSize from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";

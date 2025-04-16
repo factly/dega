@@ -5,22 +5,20 @@ import useNavigation from "../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
 // Define the type for webhook values
-interface WebhookValues {
-  // Add webhook properties based on your application's needs
-  // Common webhook properties might include:
-  url: string;
-  events: string[];
+interface WebhookFormData {
+  id?: string;
   name?: string;
-  description?: string;
-  headers?: Record<string, string>;
-  active?: boolean;
+  url?: string;
+  enabled?: boolean;
+  events?: string[];
+  event_ids?: string[];
 }
 
 function CreateWebhook(): React.ReactElement {
   const history = useNavigation();
   const dispatch = useAppDispatch();
 
-  const onCreate = (values: WebhookValues): void => {
+  const onCreate = (values: WebhookFormData): void => {
     dispatch(addWebhook(values)).then(() =>
       history("/settings/advanced/webhooks")
     );

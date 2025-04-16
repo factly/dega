@@ -281,7 +281,7 @@ export const createClaim = (
 };
 
 // action to update claim by id
-export const updateClaim = (data: Claim): AppThunk => {
+export const updateClaim = (data: Claim): ThunkAction<Promise<Claim | undefined>, unknown, unknown, AnyAction> => {
   return (dispatch) => {
     dispatch(loadingClaims());
     return axios
@@ -304,11 +304,20 @@ export const updateClaim = (data: Claim): AppThunk => {
           })
         );
         dispatch(addSuccessNotification("Claim updated"));
+        
+        // Return the updated claim
+        return {
+          ...claim,
+          description,
+          claimant: typeof claim.claimant === "object" ? claim.claimant.id : claim.claimant,
+          rating: typeof claim.rating === "object" ? claim.rating.id : claim.rating,
+        };
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
-      })
-      .finally(() => dispatch(stopClaimsLoading()));
+        dispatch(stopClaimsLoading());
+        return undefined;
+      });
   };
 };
 

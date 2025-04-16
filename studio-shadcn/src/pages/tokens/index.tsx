@@ -172,7 +172,7 @@ const Tokens: React.FC = () => {
           !isMobile
             ? {
                 top: "calc(1.5rem + 2.5rem + 1rem)",
-                left: 0,
+                left: "260px",
                 right: 0,
                 bottom: "64px",
                 paddingLeft: "1.5rem",

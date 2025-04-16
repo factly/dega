@@ -45,8 +45,6 @@ export interface SpaceEditFormProps {
 
 export interface SpaceListProps {
   searchQuery?: string;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   filters?: {
     page: number;
     limit: number;

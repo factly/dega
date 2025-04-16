@@ -13,7 +13,6 @@ interface EmailVerificationProps {
 
 const EmailVerification: React.FC<EmailVerificationProps> = ({
   userEmail,
-  userId,
   onResendVerification,
   error,
 }) => {

@@ -217,7 +217,6 @@ export function SidebarAlt() {
     </div>
   );
 
-  // For mobile view, use Sheet component
   if (isMobile) {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile}>

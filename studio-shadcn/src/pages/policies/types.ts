@@ -38,8 +38,6 @@ export interface PolicyListProps {
   filters: PolicyFilters;
   setFilters: (filters: any) => void;
   fetchPolicies: () => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   isMobile?: boolean;
 }
 

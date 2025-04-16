@@ -4,7 +4,10 @@ import { useForm } from "react-hook-form";
 import Filters from "../../../utils/filters";
 import { FilterValues, Formats } from "../types";
 
-export const useFactCheckFilters = (query: URLSearchParams, formats: Formats) => {
+export const useFactCheckFilters = (
+  query: URLSearchParams,
+  formats: Formats
+) => {
   const [searchText, setSearchText] = useState(query.get("q") || "");
   const [status, setStatus] = useState(query.get("status") || "all");
   const [filters, setFilters] = useState<FilterValues>({
@@ -12,7 +15,6 @@ export const useFactCheckFilters = (query: URLSearchParams, formats: Formats) =>
     limit: parseInt(query.get("limit") || "10", 10),
     status: query.get("status") || "all",
     q: query.get("q") || "",
-    sort: query.get("sort") || "",
     format:
       formats && !formats.loading && formats.factcheck
         ? [formats.factcheck.id]
@@ -36,7 +38,6 @@ export const useFactCheckFilters = (query: URLSearchParams, formats: Formats) =>
       "page",
       "limit",
       "q",
-      "sort",
       "tag",
       "category",
       "author",
@@ -45,13 +46,21 @@ export const useFactCheckFilters = (query: URLSearchParams, formats: Formats) =>
 
     const params: any = {};
 
-    keys.forEach(key => {
-      if (key === 'tag' || key === 'category' || key === 'author' || key === 'format') {
-        params[key] = query.getAll(key).map(val => parseInt(val, 10));
-      } else if (key === 'page' || key === 'limit') {
-        params[key] = parseInt(query.get(key) || (key === 'page' ? '1' : '10'), 10);
+    keys.forEach((key) => {
+      if (
+        key === "tag" ||
+        key === "category" ||
+        key === "author" ||
+        key === "format"
+      ) {
+        params[key] = query.getAll(key).map((val) => parseInt(val, 10));
+      } else if (key === "page" || key === "limit") {
+        params[key] = parseInt(
+          query.get(key) || (key === "page" ? "1" : "10"),
+          10
+        );
       } else {
-        params[key] = query.get(key) || '';
+        params[key] = query.get(key) || "";
       }
     });
 

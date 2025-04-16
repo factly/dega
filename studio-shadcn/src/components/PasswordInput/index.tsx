@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 interface PasswordInputProps {
-  id: string;
+  id?: string;
   name: string;
   label?: string;
   value: string;
@@ -13,6 +13,7 @@ interface PasswordInputProps {
   placeholder?: string;
   required?: boolean;
   error?: string;
+  type?: string;
 }
 
 const PasswordInput: React.FC<PasswordInputProps> = ({
@@ -49,7 +50,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           type="button"
           variant="ghost"
           onClick={togglePasswordVisibility}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 focus:outline-none"
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 focus:outline-none hover:bg-transparent"
         >
           {showPassword ? (
             <Eye className="h-4 w-4" />

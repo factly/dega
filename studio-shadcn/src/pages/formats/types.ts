@@ -33,11 +33,9 @@ export interface FormatListProps {
     loading: boolean;
     total: number;
   };
-  filters: FormatFilters;
-  setFilters: (filters: Partial<FormatFilters>) => void;
+  filters?: FormatFilters;
+  setFilters?: (filters: Partial<FormatFilters>) => void;
   fetchFormats: () => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   isMobile?: boolean;
 }
 

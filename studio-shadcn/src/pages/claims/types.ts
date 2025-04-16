@@ -42,7 +42,6 @@ export interface ClaimFormProps {
 
 export interface FormValues {
   q?: string;
-  sort?: string;
   rating?: string[];
   claimant?: string[];
   sortBy?: string;
@@ -54,7 +53,6 @@ export interface ClaimFilters {
   limit: number;
   rating: string[];
   claimant: string[];
-  sort: string;
   sortBy: string;
   [key: string]: any;
 }
@@ -84,8 +82,6 @@ export interface ClaimListProps {
   };
   fetchClaims: () => void;
   onPagination: (page: number, limit: number) => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   sortBy?: string;
   onSortByChange?: (column: string) => void;
   isMobile?: boolean;

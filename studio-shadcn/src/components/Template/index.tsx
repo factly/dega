@@ -77,7 +77,7 @@ function Template({ format }: TemplateProps) {
 
   const { posts, loading } = useSelector((state: PostsState) => {
     const node = state.posts.req.find((item) => {
-      let query = {
+      const query = {
         page,
         status: "template",
         format: [format.id],
@@ -118,7 +118,11 @@ function Template({ format }: TemplateProps) {
           category_ids: item.categories,
           status: "draft",
         })
-      ).then((res: { id: string }) => history(`/posts/${res.id}/edit`));
+      ).then((res) => {
+        if (res && "id" in res) {
+          history(`/posts/${res.id}/edit`);
+        }
+      });
     } else if (format.slug === "fact-check") {
       dispatch(
         addPost({
@@ -128,7 +132,12 @@ function Template({ format }: TemplateProps) {
           claim_ids: item.claims,
           status: "draft",
         })
-      ).then((res: { id: string }) => history(`/fact-checks/${res.id}/edit`));
+      ).then((res) => {
+        if (res && "id" in res) {
+          // Check if res exists and has an id property
+          history(`/fact-checks/${res.id}/edit`);
+        }
+      });
     }
   };
 
