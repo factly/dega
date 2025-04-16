@@ -48,6 +48,10 @@ const Policies: React.FC = () => {
     setSearchParams(newParams);
   }, [filters, setSearchParams]);
 
+  const fetchPolicies = useCallback(() => {
+    dispatch(getPolicies(filters));
+  }, [dispatch, filters]);
+
   // Use custom hooks for data and pagination
   const { policies, total, loading } = usePoliciesData(filters, searchText);
 
@@ -57,11 +61,7 @@ const Policies: React.FC = () => {
   // Fetch policies when filters change
   useEffect(() => {
     fetchPolicies();
-  }, [filters]);
-
-  const fetchPolicies = useCallback(() => {
-    dispatch(getPolicies(filters));
-  }, [dispatch, filters]);
+  }, [filters, fetchPolicies]);
 
   // Handle search input changes
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

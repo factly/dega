@@ -1,15 +1,15 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
 import { updateSpace } from "../../actions/spaces";
 import RecordNotFound from "../../components/ErrorsAndImage/RecordNotFound";
 import WebsiteEditForm from "./components/WebsiteEditForm";
 import { Helmet } from "react-helmet";
 import { RootState, WebsiteData } from "./types";
-
+import { useAppDispatch } from "@/hooks/reduxHooks";
 const EditWebsite: React.FC = () => {
   const id = useSelector((state: RootState) => state.spaces.selected);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { space, loading } = useSelector((state: RootState) => {
     return {

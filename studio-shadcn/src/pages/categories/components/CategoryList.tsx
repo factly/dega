@@ -1,7 +1,7 @@
 // components/CategoryList.tsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Trash2, Pencil, Ellipsis, ChevronsUpDown } from "lucide-react";
+import { Trash2, Pencil, Ellipsis } from "lucide-react";
 import { deleteCategory } from "../../../actions/categories";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import {
@@ -33,7 +33,6 @@ import { CategoryListProps } from "../types";
 function CategoryList({
   data,
   fetchCategories,
-  onSortToggle,
   isMobile = false,
 }: CategoryListProps) {
   const dispatch = useAppDispatch();
@@ -73,17 +72,11 @@ function CategoryList({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[40%] text-[13px]">
-                  <div
-                    className="flex items-center cursor-pointer"
-                    onClick={onSortToggle}
-                  >
-                    Name
-                    <ChevronsUpDown className="ml-1 h-3 w-3" />
-                  </div>
-                </TableHead>
+                <TableHead className="w-[40%] text-[13px]">Name</TableHead>
                 <TableHead className="w-[25%] text-[13px]">Slug</TableHead>
-                <TableHead className="w-[25%] text-[13px]">Parent Category</TableHead>
+                <TableHead className="w-[25%] text-[13px]">
+                  Parent Category
+                </TableHead>
                 <TableHead className="w-[10%] text-[13px] text-center">
                   Actions
                 </TableHead>
@@ -105,9 +98,7 @@ function CategoryList({
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <span className="line-clamp-2">
-                      {category.slug || "—"}
-                    </span>
+                    <span className="line-clamp-2">{category.slug || "—"}</span>
                   </TableCell>
                   <TableCell>
                     <span className="line-clamp-2">

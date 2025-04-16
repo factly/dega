@@ -224,7 +224,7 @@ const ClaimList: React.FC<ClaimListProps> = ({
           <DialogHeader className="space-y-2">
             <DialogTitle className="text-base">Delete Claim</DialogTitle>
             <DialogDescription className="text-sm">
-              Are you sure you want to deletejebjnbejnejneknkenkje this claim?
+              Are you sure you want to delete this claim?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4 flex justify-end space-x-2">

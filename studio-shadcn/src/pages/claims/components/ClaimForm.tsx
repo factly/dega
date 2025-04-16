@@ -33,7 +33,15 @@ import {
   ClaimFormProps,
 } from "../types";
 
-const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
+interface ExtendedClaimFormProps extends ClaimFormProps {
+  compact?: boolean;
+}
+
+const ClaimForm: React.FC<ExtendedClaimFormProps> = ({
+  onCreate,
+  data = {},
+  compact = false,
+}) => {
   const [valueChange, setValueChange] = useState<boolean>(false);
   const [activeKeys, setActiveKeys] = useState<string[]>([
     "general",
@@ -48,7 +56,9 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
   }
 
   const handleCancel = () => {
-    navigate(-1);
+    if (!compact) {
+      navigate(-1);
+    }
   };
 
   const form = useForm<ClaimFormValues>({
@@ -103,21 +113,23 @@ const ClaimForm: React.FC<ClaimFormProps> = ({ onCreate, data = {} }) => {
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <div className="max-w-3xl w-full px-4">
-        <div className="text-start mb-4">
-          <h1 className="text-xl font-semibold mb-2">
-            {data && data.id ? "Edit Claim" : "Create Claim"}
-          </h1>
-          <p className="text-[#666] text-[13px]">
-            Set up a claim to help organize by utilizing the advanced options
-            provided below.
-          </p>
-        </div>
+    <div className={`w-full ${!compact ? "flex justify-center" : ""}`}>
+      <div className={`${!compact ? "max-w-3xl w-full px-4" : "w-full"}`}>
+        {!compact && (
+          <div className="text-start mb-4">
+            <h1 className="text-xl font-semibold mb-2">
+              {data && data.id ? "Edit Claim" : "Create Claim"}
+            </h1>
+            <p className="text-[#666] text-[13px]">
+              Set up a claim to help organize by utilizing the advanced options
+              provided below.
+            </p>
+          </div>
+        )}
 
         <Form {...form}>
           <form
-            className="space-y-4 border-t pt-4"
+            className={`${!compact ? "space-y-4 border-t pt-4" : "space-y-3"}`}
             onSubmit={form.handleSubmit((values) => {
               const formValues = { ...values };
               if (formValues.meta_fields) {

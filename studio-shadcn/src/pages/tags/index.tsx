@@ -31,7 +31,6 @@ function Tags() {
   const [filters, setFilters] = useState<TagFilters>({
     page: 1,
     limit: 10,
-    sort: "asc",
   });
 
   useEffect(() => {
@@ -44,7 +43,6 @@ function Tags() {
   const form = useForm<FormValues>({
     defaultValues: {
       q: "",
-      sort: filters.sort,
     },
   });
 
@@ -71,21 +69,8 @@ function Tags() {
     setFilters({
       ...filters,
       page: 1, // Reset to page 1 when applying new filters
-      sort: values.sort || "asc",
     });
     setIsFiltersOpen(false);
-  };
-
-  const handleSortToggle = () => {
-    setFilters({
-      ...filters,
-      sort: filters.sort === "asc" ? "desc" : "asc",
-    });
-  };
-
-  // Check if any filters are applied
-  const hasActiveFilters = () => {
-    return !!(filters.sort !== "asc");
   };
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
@@ -111,10 +96,7 @@ function Tags() {
         <div className="space-y-4 flex justify-between items-center">
           {isMobile && (
             <div className="flex flex-col">
-              <MobileBreadcrumb
-                currentPage="Tags"
-                parentLabel="Core"
-              />
+              <MobileBreadcrumb currentPage="Tags" parentLabel="Core" />
               {isMobile && <h1 className="text-xl font-semibold">Tags</h1>}
             </div>
           )}
@@ -176,8 +158,6 @@ function Tags() {
           }}
           fetchTags={() => dispatch(getTags(filters))}
           onPagination={onPagination}
-          sortOrder={filters.sort as "asc" | "desc"}
-          onSortToggle={handleSortToggle}
           isMobile={isMobile}
         />
       </div>

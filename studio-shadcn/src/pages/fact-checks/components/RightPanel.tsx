@@ -36,7 +36,9 @@ interface RightPanelProps {
   data: any;
   onSave: (values: any) => void;
   setActivePanel: (panel: string) => void;
-  isVisible: boolean; // New prop to control animation
+  isVisible: boolean;
+  setClaimPopoverOpen: (open: boolean) => void;
+  setSchemaModalOpen: (open: boolean) => void;
 }
 
 const RightPanel: React.FC<RightPanelProps> = ({
@@ -47,6 +49,8 @@ const RightPanel: React.FC<RightPanelProps> = ({
   onSave,
   setActivePanel,
   isVisible,
+  setClaimPopoverOpen,
+  setSchemaModalOpen,
 }) => {
   return (
     <div
@@ -177,7 +181,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
                           <Button
                             type="button"
                             onClick={() => {
-                              closePanel();
+                              setClaimPopoverOpen(true);
                             }}
                           >
                             Add Claim
@@ -314,8 +318,8 @@ const RightPanel: React.FC<RightPanelProps> = ({
                             variant="outline"
                             className="w-full"
                             onClick={() => {
-                              // This would need to be handled by the parent component
                               closePanel();
+                              setSchemaModalOpen(true);
                             }}
                           >
                             View Schemas

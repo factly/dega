@@ -8,10 +8,12 @@ export interface Tag {
   background_colour?: any;
   description_html?: string;
   medium_id?: string | number;
-	description: {
-    json: any;
-    html: string;
-  } | string;
+  description:
+    | {
+        json: any;
+        html: string;
+      }
+    | string;
   meta_fields?: string | Record<string, any>;
   [key: string]: any;
 }
@@ -52,14 +54,12 @@ export interface TagFormProps {
 export interface TagFilters {
   page: number;
   limit: number;
-  sort: string;
   q?: string;
   [key: string]: any;
 }
 
 export interface FormValues {
   q?: string;
-  sort?: string;
   [key: string]: any;
 }
 
@@ -77,8 +77,6 @@ export interface TagListProps {
   };
   fetchTags: () => void;
   onPagination?: (page: number, limit: number) => void;
-  sortOrder?: "asc" | "desc";
-  onSortToggle?: () => void;
   isMobile?: boolean;
 }
 

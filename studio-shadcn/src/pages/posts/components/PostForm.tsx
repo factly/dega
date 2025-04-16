@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // Lucide icons
-import { ChevronDown, PanelRightDashed } from "lucide-react";
+import { ChevronDown, PanelRightDashed, ArrowLeft } from "lucide-react";
 
 // Custom components and utilities
 import { maker } from "../../../utils/sluger";
@@ -41,15 +41,12 @@ interface PostFormProps {
   page?: boolean;
 }
 
-function PostForm({
-  onCreate,
-  data,
-  format,
-  page = false,
-}: PostFormProps) {
+function PostForm({ onCreate, data, format, page = false }: PostFormProps) {
   const navigate = useNavigation();
   const formRef = useRef<HTMLFormElement>(null);
-  const [status, setStatus] = useState<'draft' | 'publish' | 'ready' | 'future'>(data.status || "draft");
+  const [status, setStatus] = useState<
+    "draft" | "publish" | "ready" | "future"
+  >(data.status || "draft");
   const dispatch = useAppDispatch();
   const [valueChange, setValueChange] = useState<boolean>(false);
   const [shouldBlockNavigation, setShouldBlockNavigation] =
@@ -83,6 +80,15 @@ function PostForm({
     defaultValues: formData,
   });
 
+  // Handle back button navigation
+  const handleBackNavigation = () => {
+    if (page) {
+      navigate("/pages");
+    } else {
+      navigate("/posts");
+    }
+  };
+
   const getCurrentDate = (): string => {
     return dayjs().format("YYYY-MM-DDTHH:mm:ssZ");
   };
@@ -90,7 +96,10 @@ function PostForm({
   // Add a flag to prevent duplicate submissions
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const onSave = (values: PostData, statusOverride?: 'draft' | 'publish' | 'ready' | 'future') => {
+  const onSave = (
+    values: PostData,
+    statusOverride?: "draft" | "publish" | "ready" | "future"
+  ) => {
     // Prevent duplicate submissions
     if (isSubmitting) {
       console.log("Preventing duplicate submission");
@@ -122,7 +131,6 @@ function PostForm({
     // @ts-expect-error -- todo: fix this type error
     finalData.author_ids = finalData.authors;
     finalData.status = finalStatus;
-
 
     if (finalStatus === "publish") {
       finalData.published_date = publishedDate
@@ -159,8 +167,8 @@ function PostForm({
       dispatch(addTemplate({ post_id: parseInt(data.id.toString()) })).then(
         () => {
           if (page) {
-            navigate("/pages")
-            return
+            navigate("/pages");
+            return;
           }
           navigate("/posts");
         }
@@ -214,8 +222,9 @@ function PostForm({
   return (
     <>
       <div
-        className={`transition-all duration-300 ${activePanel ? "blur-sm pointer-events-none" : ""
-          }`}
+        className={`transition-all duration-300 ${
+          activePanel ? "blur-sm pointer-events-none" : ""
+        }`}
       >
         <Form {...form}>
           <form
@@ -228,7 +237,18 @@ function PostForm({
             className="w-full max-w-full edit-form"
           >
             <div className="space-y-4 relative">
-              <div className="flex justify-end mb-4 pb-4 border-b">
+              <div className="flex justify-between mb-4 pb-4 border-b">
+                {/* Back Button - New Addition */}
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex items-center gap-2"
+                  onClick={handleBackNavigation}
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  {page ? "Pages" : "Posts"}
+                </Button>
+
                 <div className="space-x-2 flex items-center">
                   {data.id && (
                     <Button
@@ -352,8 +372,9 @@ function PostForm({
                         <FormControl>
                           <Textarea
                             {...field}
-                            placeholder={`Add title for the ${page ? "page" : "post"
-                              }`}
+                            placeholder={`Add title for the ${
+                              page ? "page" : "post"
+                            }`}
                             onChange={(e) => {
                               field.onChange(e);
                               onTitleChange(e.target.value);
