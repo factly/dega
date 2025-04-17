@@ -61,6 +61,15 @@ function PostForm({
     data.published_date ? new Date(data.published_date) : undefined
   );
 
+  // Add state for description
+  const [descriptionContent, setDescriptionContent] = useState<{
+    json?: any;
+    html?: string;
+  }>({
+    json: data.description || {},
+    html: data.description_html || "",
+  });
+
   const [isPanelVisible, setIsPanelVisible] = useState<boolean>(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
 
@@ -132,6 +141,9 @@ function PostForm({
       }
     }
 
+    finalData.description = descriptionContent.json;
+    finalData.description_html = descriptionContent.html;
+
     setShouldBlockNavigation(false);
     finalData.format_id = format.id;
     // @ts-expect-error -- todo: fix this type error
@@ -201,6 +213,15 @@ function PostForm({
     }, 500); // Match this with transition duration
   };
 
+  const handleDescriptionChange = (value: any) => {
+    setDescriptionContent({
+      json: value.json || {},
+      html: value.html || "",
+    });
+    setValueChange(true);
+    setShouldBlockNavigation(true);
+  };
+
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (shouldBlockNavigation) {
@@ -244,7 +265,7 @@ function PostForm({
           >
             <div className="space-y-4 relative">
               <div className="flex justify-between mb-4 pb-4 border-b">
-                {/* Back Button - New Addition */}
+                {/* Back Button */}
                 <Button
                   type="button"
                   variant="outline"
@@ -399,6 +420,7 @@ function PostForm({
                       initialValue={data.description_html}
                       noLabel
                       formItemProps={{ className: "post-description" }}
+                      onChange={handleDescriptionChange}
                     />
                   </div>
                 </div>

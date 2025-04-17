@@ -24,23 +24,36 @@ const StatusTabs = <T extends Record<string, any>>({
   children,
   isMobile,
 }: StatusTabsProps<T>) => {
-  return (
-    <Tabs
-      defaultValue={status}
-      onValueChange={handleStatusChange}
-      value={status}
-    >
-      {!isMobile ? (
-        <div className="flex items-center">
-          <TabsList className="grid grid-cols-5 flex-1">
-            {tabsItems.map((item) => (
-              <TabsTrigger key={item.value} value={item.value}>
-                {item.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </div>
-      ) : (
+  // Responsive handling for different screen sizes
+  const [useCompactTabs, setUseCompactTabs] = React.useState(false);
+
+  // Effect to detect medium screen sizes and switch to compact mode
+  React.useEffect(() => {
+    const checkScreenSize = () => {
+      // Check if width is in the problematic range (768px-1045px)
+      const isIntermediateSize =
+        window.innerWidth > 768 && window.innerWidth < 1045;
+      setUseCompactTabs(isIntermediateSize);
+    };
+
+    // Initial check
+    checkScreenSize();
+
+    // Add event listener for resize
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  // Render dropdown for mobile or compact view
+  if (isMobile || useCompactTabs) {
+    return (
+      <Tabs
+        defaultValue={status}
+        onValueChange={handleStatusChange}
+        value={status}
+      >
         <div className="space-y-4 flex justify-between items-center">
           <Select
             defaultValue={status}
@@ -59,7 +72,34 @@ const StatusTabs = <T extends Record<string, any>>({
             </SelectContent>
           </Select>
         </div>
-      )}
+
+        <TabsContent value={status} className="mt-0">
+          {children}
+        </TabsContent>
+      </Tabs>
+    );
+  }
+
+  // Desktop view with full tabs
+  return (
+    <Tabs
+      defaultValue={status}
+      onValueChange={handleStatusChange}
+      value={status}
+    >
+      <div className="flex items-center">
+        <TabsList className="flex w-full">
+          {tabsItems.map((item) => (
+            <TabsTrigger
+              key={item.value}
+              value={item.value}
+              className="flex-1 text-sm whitespace-nowrap px-1"
+            >
+              {item.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
 
       <TabsContent value={status} className="mt-0">
         {children}

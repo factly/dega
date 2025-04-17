@@ -1,12 +1,12 @@
-// components/MediumList.tsx
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { MoreHorizontal, Download, Trash2 } from "lucide-react";
+import { MoreHorizontal, Download, Trash2, Pencil } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import EmptyState from "@/components/EmptyState";
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,7 @@ function MediumList({ data, actions = [], isMobile = false }: MediaListProps) {
   return (
     <div className="flex flex-col space-y-6">
       {hasMediaData ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {data.media.map((item) => (
             <div key={item.id} className="relative group">
               <Card className="overflow-hidden hover:shadow-md transition-all border border-gray-200">
@@ -71,9 +71,12 @@ function MediumList({ data, actions = [], isMobile = false }: MediaListProps) {
                               to={`/media/${item.id}/edit`}
                               className="flex items-center w-full cursor-pointer"
                             >
+                              <Pencil className="h-4 w-4 mr-2" />
+
                               <span>Edit</span>
                             </Link>
                           </DropdownMenuItem>
+                          <DropdownMenuSeparator />
                           <DropdownMenuItem
                             className="flex items-center cursor-pointer"
                             onClick={() => handleDownload(item)}

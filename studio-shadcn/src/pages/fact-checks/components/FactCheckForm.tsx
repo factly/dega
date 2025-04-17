@@ -184,6 +184,12 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     },
   });
 
+  // Function to handle description changes
+  const handleDescriptionChange = () => {
+    setValueChange(true);
+    setShouldBlockNavigation(true);
+  };
+
   // Handle back button navigation
   const handleBackNavigation = () => {
     navigate("/fact-checks");
@@ -859,6 +865,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                   initialValue={data.description_html}
                   noLabel
                   formItemProps={{ className: "post-description" }}
+                  onChange={handleDescriptionChange}
                 />
               </div>
             </div>
