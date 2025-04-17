@@ -5,6 +5,7 @@ import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 // Shadcn components
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -95,11 +96,50 @@ const PolicyList: React.FC<PolicyListProps> = ({
   }, []);
 
   // Check if there are any policies to display
-  const hasPoliciesData = data.policies && data.policies.length > 0;
+  const hasPoliciesData =
+    !data.loading && data.policies && data.policies.length > 0;
 
   return (
     <div className="pb-4 overflow-auto">
-      {hasPoliciesData ? (
+      {data.loading ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="text-[13px]">
+              <TableRow>
+                <TableHead className="w-[45%]">
+                  <div className="flex items-center">Name</div>
+                </TableHead>
+                {!isMobile && (
+                  <TableHead className="w-[45%] min-w-[400px]">
+                    Description
+                  </TableHead>
+                )}
+                <TableHead className="w-[10%] text-center">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    <Skeleton className="h-6 w-full" />
+                    {isMobile && <Skeleton className="h-4 w-3/4 mt-1" />}
+                  </TableCell>
+                  {!isMobile && (
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                  )}
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : hasPoliciesData ? (
         <div className="rounded-md">
           <Table>
             <TableHeader className="text-[13px]">

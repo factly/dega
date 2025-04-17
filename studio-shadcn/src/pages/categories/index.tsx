@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 // Custom components
 import CategoryList from "./components/CategoryList";
-import Loader from "@/components/Loader";
 import PaginationFooter from "@/components/PaginationFooter";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 // Actions and hooks
@@ -61,20 +60,6 @@ function Categories() {
   };
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
-
-  if (loading) {
-    return (
-      <div className="flex flex-col h-full relative">
-        <Helmet title={"Categories"} />
-        {isMobile && (
-          <MobileBreadcrumb currentPage="Categories" parentLabel="Core" />
-        )}
-        <div className="flex-1 flex items-center justify-center">
-          <Loader className="relative inset-auto" />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col h-full">

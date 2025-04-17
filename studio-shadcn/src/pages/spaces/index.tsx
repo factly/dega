@@ -96,26 +96,14 @@ const Spaces: React.FC = () => {
     // You can add search functionality if needed here
   };
 
-  if (loading) {
-    return (
-      <div className="flex flex-col h-full relative">
-        <Helmet title="Spaces" />
-        {isMobile && (
-          <MobileBreadcrumb currentPage="Spaces" parentLabel="Core" />
-        )}
-        <div className="flex-1 flex items-center justify-center">
-          <Loader className="relative inset-auto" />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col h-full">
       <Helmet title={"Spaces"} />
 
       {/* Mobile Breadcrumb */}
-      {isMobile && <MobileBreadcrumb currentPage="Spaces" parentLabel="Core" />}
+      {isMobile && (
+        <MobileBreadcrumb currentPage="Spaces" parentLabel="Administration" />
+      )}
 
       <div
         className={`${isMobile ? "sticky top-0" : "fixed"} z-10 bg-white`}

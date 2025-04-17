@@ -88,13 +88,18 @@ export const AccountMenu = ({ isCollapsed = false }: AccountMenuProps) => {
   const handleSelectSpace = (spaceId: string) => {
     if (spaceId === selectedSpaceId) return;
 
-    // Simply dispatch the action and let Redux handle the rest
+    // Dispatch the action to set the selected space
     dispatch(setSelectedSpace(spaceId));
 
     const dropdownTrigger = document.querySelector('[data-state="open"]');
     if (dropdownTrigger) {
       (dropdownTrigger as HTMLElement).click();
     }
+
+    // Reload the page after a small delay to ensure the Redux state is updated
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   // Handle create space button click

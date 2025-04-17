@@ -4,6 +4,7 @@ import { deleteMenu } from "../../../actions/menu";
 import useNavigation from "../../../utils/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -95,11 +96,36 @@ const MenuList: React.FC<MenuListProps> = ({
     actions.includes("admin") || actions.includes("delete");
 
   // Check if there are any menus to display
-  const hasMenusData = data.menus && data.menus.length > 0;
+  const hasMenusData = !data.loading && data.menus && data.menus.length > 0;
 
   return (
     <div className="pb-4 overflow-auto">
-      {hasMenusData ? (
+      {data.loading ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="text-[13px]">
+              <TableRow>
+                <TableHead className="w-full">Name</TableHead>
+                <TableHead className="w-[150px] text-center">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : hasMenusData ? (
         <div className="rounded-md">
           <Table>
             <TableHeader className="text-[13px]">

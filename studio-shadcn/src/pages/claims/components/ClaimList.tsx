@@ -26,7 +26,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import EmptyState from "@/components/EmptyState";
 import { ClaimListProps } from "../types";
 
@@ -68,11 +70,52 @@ function ClaimList({
   };
 
   // Check if there are any claims to display
-  const hasClaimsData = data.claims && data.claims.length > 0;
+  const hasClaimsData = !data.loading && data.claims && data.claims.length > 0;
 
   return (
     <div className="pb-4 overflow-scroll">
-      {hasClaimsData ? (
+      {data.loading ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[30%] text-[13px]">Claim</TableHead>
+                <TableHead className="w-[20%] text-[13px]">Claimant</TableHead>
+                <TableHead className="w-[20%] text-[13px]">Rating</TableHead>
+                <TableHead className="w-[20%] text-[13px]">
+                  Claim Date
+                </TableHead>
+                <TableHead className="w-[10%] text-[13px] text-center">
+                  Actions
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-28" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-24" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-32" />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : hasClaimsData ? (
         <div className="rounded-md">
           <Table>
             <TableHeader>
@@ -141,7 +184,7 @@ function ClaimList({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button variant="ghost" size="icon">
-                          <Ellipsis className="h-5 w-5 text-[#858585]" />
+                          <Ellipsis className="h-5 w-5" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -155,6 +198,7 @@ function ClaimList({
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => {
                             e.stopPropagation();

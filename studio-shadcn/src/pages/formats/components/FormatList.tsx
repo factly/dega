@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
@@ -30,7 +31,6 @@ import {
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
 import { FormatListProps } from "../types";
-import Loader from "@/components/Loader";
 
 function FormatList({ data, fetchFormats, isMobile }: FormatListProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
@@ -89,16 +89,51 @@ function FormatList({ data, fetchFormats, isMobile }: FormatListProps) {
   );
 
   // Check if there are any formats to display
-  const hasFormatsData = data.formats && data.formats.length > 0;
+  const hasFormatsData =
+    !data.loading && data.formats && data.formats.length > 0;
 
   return (
     <div className="pb-4 overflow-auto">
       {data.loading ? (
-        <Loader />
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="text-[13px]">
+              <TableRow>
+                <TableHead className={isMobile ? "w-full" : "w-[200px]"}>
+                  Name
+                </TableHead>
+                {!isMobile && (
+                  <TableHead className="w-[45%]">Description</TableHead>
+                )}
+                <TableHead className="w-[10%] text-center">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-3">
+                    <Skeleton className="h-6 w-full" />
+                    {isMobile && <Skeleton className="h-4 w-3/4 mt-1" />}
+                  </TableCell>
+                  {!isMobile && (
+                    <TableCell className="min-w-[400px]">
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                  )}
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       ) : hasFormatsData ? (
         <div className="rounded-md">
           <Table>
-            <TableHeader className="w-[45%] text-[13px]">
+            <TableHeader className="text-[13px]">
               <TableRow>
                 <TableHead className={isMobile ? "w-full" : "w-[200px]"}>
                   Name

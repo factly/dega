@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { PlusCircle } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -7,7 +7,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 // Custom components
 import ClaimList from "./components/ClaimList";
-import Loader from "@/components/Loader";
 import SearchInput from "@/components/SearchInput";
 import FiltersPopover from "./components/FiltersPopover";
 import PaginationFooter from "@/components/PaginationFooter";
@@ -123,20 +122,6 @@ function Claims() {
         claimantsLoading={claimantsLoading}
         ratingsLoading={ratingsLoading}
       />
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="flex flex-col h-full relative">
-        <Helmet title="Claims" />
-        {isMobile && (
-          <MobileBreadcrumb currentPage="Claims" parentLabel="Fact Checking" />
-        )}
-        <div className="flex-1 flex items-center justify-center">
-          <Loader className="relative inset-auto" />
-        </div>
-      </div>
     );
   }
 

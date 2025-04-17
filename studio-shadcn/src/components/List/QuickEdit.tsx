@@ -41,7 +41,7 @@ interface PostData {
   title: string;
   slug: string;
   status: "publish" | "draft" | "ready";
-  published_date?: string;
+  published_date?: string | null;
   categories?: number[];
   tags?: number[];
   authors?: number[] | Array<{ id: number; display_name: string }>;

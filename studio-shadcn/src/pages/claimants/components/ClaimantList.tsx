@@ -25,9 +25,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ClaimantListProps } from "../types";
 
 function ClaimantList({ data, fetchClaimants, isMobile }: ClaimantListProps) {
@@ -90,7 +92,36 @@ function ClaimantList({ data, fetchClaimants, isMobile }: ClaimantListProps) {
 
   return (
     <div className="pb-4 overflow-auto">
-      {hasClaimantsData ? (
+      {data.loading ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="w-[30%] text-[13px]">
+              <TableRow>
+                <TableHead className="w-[30%]">Title</TableHead>
+                <TableHead className="w-[30%]">Tag Line</TableHead>
+                <TableHead className="w-[10%] text-center">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : hasClaimantsData ? (
         <div className="rounded-md">
           <Table>
             <TableHeader className="w-[30%] text-[13px]">
@@ -139,6 +170,7 @@ function ClaimantList({ data, fetchClaimants, isMobile }: ClaimantListProps) {
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => handleDeleteClick(e, claimant.id)}
                           className="cursor-pointer text-red-600 focus:text-red-600"

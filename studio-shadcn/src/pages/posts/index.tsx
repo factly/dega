@@ -38,7 +38,7 @@ import { usePostFilters } from "./hooks/usePostFilters";
 import { usePostData } from "./hooks/usePostData";
 
 // Types
-import { Format, FormatState, PostsProps, FilterParams } from "./types";
+import { Format, PostsProps, FilterParams } from "./types";
 
 function Posts({ formats }: PostsProps): React.ReactElement {
   const dispatch = useAppDispatch();
@@ -298,6 +298,13 @@ function Posts({ formats }: PostsProps): React.ReactElement {
   // Use either the current format or cached format
   const formatToUse = formats.article || cachedArticleFormat;
 
+  // Create a fallback format if both are null to prevent type error
+  const safeFormat: Format = formatToUse || {
+    id: 0,
+    name: "Default Format",
+    slug: "default",
+  };
+
   return (
     <div className="flex flex-col h-full gap-6">
       <Helmet title="Posts" />
@@ -408,8 +415,15 @@ function Posts({ formats }: PostsProps): React.ReactElement {
         </div>
       </div>
       <PostList
-        format={formatToUse}
-        data={{ posts, total, loading, tags, categories, authors }}
+        format={safeFormat}
+        data={{
+          posts: posts as any,
+          total,
+          loading,
+          tags,
+          categories,
+          authors,
+        }}
         filters={{
           ...filters,
           sortBy: sortBy,

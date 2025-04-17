@@ -1,4 +1,3 @@
-// EditCategory.tsx
 import { useEffect } from "react";
 import CategoryForm from "./components/CategoryForm";
 import { useSelector } from "react-redux";

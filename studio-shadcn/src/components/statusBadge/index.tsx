@@ -1,7 +1,7 @@
 import { AlertCircle, CheckCircle, Clock, Calendar } from "lucide-react";
 
 export const statusItems = [
-  { value: "publish", label: "ACTIVE", icon: CheckCircle, color: "green" },
+  { value: "publish", label: "PUBLISHED", icon: CheckCircle, color: "green" },
   { value: "future", label: "FUTURE", icon: Calendar, color: "blue" },
   { value: "ready", label: "READY", icon: Clock, color: "amber" },
   { value: "draft", label: "DRAFT", icon: AlertCircle, color: "gray" },

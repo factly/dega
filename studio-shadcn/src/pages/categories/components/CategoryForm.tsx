@@ -1,4 +1,3 @@
-// components/CategoryForm.tsx
 import React, { useState, useEffect } from "react";
 import { maker } from "../../../utils/sluger";
 import MediaSelector from "../../../components/MediaSelector";
@@ -38,7 +37,8 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
   const [backgroundColour, setBackgroundColour] = useState<ColorResult | null>(
     data.background_colour ? data.background_colour : null
   );
-  const [displayBgColorPicker, setDisplayBgColorPicker] = useState<boolean>(false);
+  const [displayBgColorPicker, setDisplayBgColorPicker] =
+    useState<boolean>(false);
   const navigate = useNavigate();
 
   // Handle meta_fields conversion
@@ -253,38 +253,53 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onCreate, data = {} }) => {
                                 )}
                               </div>
                             </div>
-                            </div>
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={methods.control}
-                        name="description_html"
-                        render={({ field }) => (
-                          <div className="mb-4 sm:mb-6">
-                            <FormLabel className="text-base block mb-2">
-                              Description
-                            </FormLabel>
-                            <DescriptionInput
-                              initialValue={field.value}
-                              onChange={(value) => {
-                                field.onChange(value);
-                                setValueChange(true);
-                              }}
-                              noLabel={true}
-                              rows={5}
-                              inputProps={{
-                                placeholder: "Enter Description...",
-                                style: {
-                                  minHeight: "92px",
-                                  borderRadius: "0.25rem",
-                                  border: "1px solid rgba(0, 0, 0, 0.15)",
-                                },
-                              }}
-                            />
+                            {displayBgColorPicker ? (
+                              <div className="absolute z-50 mt-1">
+                                <div
+                                  className="fixed top-0 right-0 bottom-0 left-0"
+                                  onClick={handleBgClose}
+                                />
+                                <SketchPicker
+                                  color={backgroundColour?.hex || "#fff"}
+                                  onChange={(color: ColorResult) => {
+                                    setBackgroundColour(color);
+                                    setValueChange(true);
+                                  }}
+                                />
+                              </div>
+                            ) : null}
                           </div>
-                        )}
-                      />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="description_html"
+                      render={({ field }) => (
+                        <div className="mb-4 sm:mb-6">
+                          <FormLabel className="text-base block mb-2">
+                            Description
+                          </FormLabel>
+                          <DescriptionInput
+                            initialValue={field.value}
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setValueChange(true);
+                            }}
+                            noLabel={true}
+                            rows={5}
+                            inputProps={{
+                              placeholder: "Enter Description...",
+                              style: {
+                                minHeight: "92px",
+                                borderRadius: "0.25rem",
+                                border: "1px solid rgba(0, 0, 0, 0.15)",
+                              },
+                            }}
+                          />
+                        </div>
+                      )}
+                    />
 
                     <FormField
                       control={form.control}

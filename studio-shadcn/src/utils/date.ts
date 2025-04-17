@@ -1,4 +1,5 @@
 import { listOfMonths } from "../constants/date";
+import dayjs from "dayjs";
 
 export const getDatefromString = (dateString: string): string => {
   const dateObj = new Date(Date.parse(dateString));
@@ -15,7 +16,10 @@ export const getDatefromStringWithoutDay = (dateString: string): string => {
   } ${dateObj.getDate()} ${dateObj.getFullYear()}`;
 };
 
-export const formatDate = (dateString: string): string => {
+export const formatDate = (dateString: string, format?: string): string => {
+  if (format) {
+    return dayjs(dateString).format(format);
+  }
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",

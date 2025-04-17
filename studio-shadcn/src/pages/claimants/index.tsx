@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import ClaimantList from "./components/ClaimantList";
 import { getClaimants } from "../../actions/claimants";
-import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -68,23 +67,6 @@ function Claimants() {
 
   // Get sidebar state
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
-
-  if (loading) {
-    return (
-      <div className="flex flex-col h-full relative">
-        <Helmet title={"Claimants"} />
-        {isMobile && (
-          <MobileBreadcrumb
-            currentPage="Claimants"
-            parentLabel="Fact Checking"
-          />
-        )}
-        <div className="flex-1 flex items-center justify-center">
-          <Loader className="relative inset-auto" />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col h-full">

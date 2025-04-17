@@ -24,6 +24,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { deleteSpace } from "../../../actions/spaces";
@@ -331,6 +332,7 @@ const SpaceList: React.FC<SpaceListProps> = ({
                         <Pencil className="h-4 w-4 mr-2" />
                         <span>Edit</span>
                       </DropdownMenuItem>
+                      <DropdownMenuSeparator />
                       <DropdownMenuItem
                         onClick={(e) => handleDeleteClick(e, space.id)}
                         className="cursor-pointer text-red-600 focus:text-red-600"

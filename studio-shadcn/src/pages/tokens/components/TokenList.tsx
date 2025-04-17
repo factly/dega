@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,11 +20,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Loader2 } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
 import { TokenListProps } from "../types";
-import Loader from "@/components/Loader";
 
 function TokenList({ data, fetchTokens, isMobile }: TokenListProps) {
   const dispatch = useAppDispatch();
@@ -32,15 +31,45 @@ function TokenList({ data, fetchTokens, isMobile }: TokenListProps) {
     dispatch(deleteSpaceToken(id)).then(() => fetchTokens());
   };
 
-  if (data.loading) {
-    return <Loader />;
-  }
-
-  const hasTokens = data.tokens && data.tokens.length > 0;
+  const hasTokens = !data.loading && data.tokens && data.tokens.length > 0;
 
   return (
     <div className="pb-4 overflow-auto">
-      {hasTokens ? (
+      {data.loading ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader className="text-[13px]">
+              <TableRow>
+                <TableHead className="w-[45%]">Name</TableHead>
+                {!isMobile && (
+                  <TableHead className="w-[45%]">Description</TableHead>
+                )}
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    <div>
+                      <Skeleton className="h-6 w-full" />
+                      {isMobile && <Skeleton className="h-4 w-3/4 mt-1" />}
+                    </div>
+                  </TableCell>
+                  {!isMobile && (
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                  )}
+                  <TableCell>
+                    <Skeleton className="h-8 w-20" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : hasTokens ? (
         <Table>
           <TableHeader className="text-[13px]">
             <TableRow>

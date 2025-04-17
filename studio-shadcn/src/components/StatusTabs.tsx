@@ -8,23 +8,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { tabsItems } from "@/components/statusBadge/index";
-import { FilterParams } from "@/pages/pages/types";
 
-export interface StatusTabsProps {
+export interface StatusTabsProps<T = any> {
   status: string;
   handleStatusChange: (value: string) => void;
   isMobile: boolean;
   form: any;
-  onSave: (values: FilterParams) => void;
+  onSave: (values: T) => void;
   children: React.ReactNode;
 }
 
-const StatusTabs: React.FC<StatusTabsProps> = ({
+const StatusTabs = <T extends Record<string, any>>({
   status,
   handleStatusChange,
   children,
   isMobile,
-}) => {
+}: StatusTabsProps<T>) => {
   return (
     <Tabs
       defaultValue={status}

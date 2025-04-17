@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -110,10 +109,10 @@ function PostSidePanel({
   };
 
   // Copy schema to clipboard
-  const copySchema = (schemas: any[]) => {
-    if (!schemas || schemas.length === 0) return;
+  const copySchema = () => {
+    if (!data.schemas || data.schemas.length === 0) return;
 
-    const copyText = schemas
+    const copyText = data.schemas
       .map(
         (schema) =>
           `<script type="application/ld+json">${JSON.stringify(
@@ -127,7 +126,8 @@ function PostSidePanel({
       .then(() => {
         dispatch(addErrorNotification("Schema copied to clipboard!"));
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error("Failed to copy schema:", error);
         dispatch(addErrorNotification("Failed to copy schema"));
       });
   };
@@ -139,7 +139,7 @@ function PostSidePanel({
       className="p-0 mb-4"
       onClick={() => setActiveSubPanel(null)}
     >
-      <ArrowLeft className="h-4 w-4" />
+      <ArrowLeft className="h-4 w-4 mr-1" />
       Back
     </Button>
   );
@@ -293,7 +293,7 @@ function PostSidePanel({
       <div className="space-y-4">
         <Accordion type="single" collapsible className="w-full space-y-3">
           {/* Details section */}
-          <AccordionItem value="details" defaultChecked className="border-b">
+          <AccordionItem value="details" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
               <div className="flex items-center">
                 <FileEdit className="h-4 w-4 mr-2" />
@@ -597,16 +597,20 @@ function PostSidePanel({
                   Meta Fields
                 </Button>
 
-                {data.schemas && (
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => setSchemaPanelOpen(true)}
-                  >
-                    <Code className="h-4 w-4 mr-2" />
-                    View Schemas
-                  </Button>
-                )}
+                {/* View Schemas button */}
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full justify-start"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSchemaPanelOpen(true);
+                  }}
+                  type="button"
+                >
+                  <Code className="h-4 w-4 mr-2" />
+                  View Schemas
+                </Button>
               </div>
             </AccordionContent>
           </AccordionItem>
@@ -619,7 +623,7 @@ function PostSidePanel({
               <DialogTitle>View Schemas</DialogTitle>
             </DialogHeader>
             <div className="space-y-2 max-h-96 overflow-y-auto">
-              {data.schemas &&
+              {data.schemas && data.schemas.length > 0 ? (
                 data.schemas.map((schema, index) => (
                   <div
                     key={index}
@@ -629,22 +633,38 @@ function PostSidePanel({
                       {JSON.stringify(schema, null, 2)}
                     </pre>
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className="text-center p-4 text-muted-foreground">
+                  No schemas available for this post.
+                </div>
+              )}
             </div>
             <DialogFooter className="flex justify-between">
               <Button
                 variant="outline"
-                onClick={() => data.schemas && copySchema(data.schemas)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  copySchema();
+                }}
+                type="button"
+                disabled={!data.schemas || data.schemas.length === 0}
               >
                 Copy
               </Button>
               <Button
-                as="a"
-                href="https://search.google.com/test/rich-results"
-                target="_blank"
-                rel="noreferrer noopener"
+                variant="default"
+                type="button" // Explicitly set button type
+                asChild
               >
-                Test in Google Rich Results
+                <a
+                  href="https://search.google.com/test/rich-results"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="flex items-center"
+                >
+                  Test in Google Rich Results
+                </a>
               </Button>
             </DialogFooter>
           </DialogContent>

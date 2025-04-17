@@ -1,6 +1,6 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { ChevronLeft, X, FileSearch, MoreHorizontal } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 
 // Shadcn Components
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Separator } from "@/components/ui/separator";
 import {
   Form,
   FormField,
@@ -54,7 +53,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
 }) => {
   return (
     <div
-      className={`fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background border-l shadow-lg overflow-y-auto
+      className={`fixed inset-y-0 right-0 z-40 w-full max-w-md bg-background border-l shadow-lg overflow-y-auto
       transform transition-transform duration-500 ease-in-out ${
         isVisible ? "translate-x-0" : "translate-x-full"
       }`}
@@ -203,7 +202,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
                             name="excerpt"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Excerpt</FormLabel>
+                                <FormLabel className="text-base">
+                                  Excerpt
+                                </FormLabel>
                                 <Textarea
                                   {...field}
                                   placeholder="Excerpt"
@@ -220,7 +221,9 @@ const RightPanel: React.FC<RightPanelProps> = ({
                             name="subtitle"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Subtitle</FormLabel>
+                                <FormLabel className="text-base">
+                                  Subtitle
+                                </FormLabel>
                                 <Input {...field} placeholder="Subtitle" />
                               </FormItem>
                             )}
@@ -279,13 +282,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
                       </AccordionContent>
                     </AccordionItem>
 
-                    {/* Others Section - Changed from Collapsible to AccordionItem */}
+                    {/* Others Section */}
                     <AccordionItem value="others" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
-                        <div className="flex items-center">
-                          <MoreHorizontal className="h-4 w-4 mr-2" />
-                          Others
-                        </div>
+                        <div className="flex items-center">Others</div>
                       </AccordionTrigger>
                       <AccordionContent className="pt-4">
                         <div className="space-y-2">

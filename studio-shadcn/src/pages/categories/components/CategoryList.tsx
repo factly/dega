@@ -26,8 +26,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import EmptyState from "@/components/EmptyState";
+import { Skeleton } from "@/components/ui/skeleton";
 import { CategoryListProps } from "../types";
 
 function CategoryList({
@@ -67,7 +69,44 @@ function CategoryList({
 
   return (
     <div className="pb-4 overflow-scroll">
-      {hasCategoriesData ? (
+      {data.loading ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[40%] text-[13px]">Name</TableHead>
+                <TableHead className="w-[25%] text-[13px]">Slug</TableHead>
+                <TableHead className="w-[25%] text-[13px]">
+                  Parent Category
+                </TableHead>
+                <TableHead className="w-[10%] text-[13px] text-center">
+                  Actions
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : hasCategoriesData ? (
         <div className="rounded-md">
           <Table>
             <TableHeader>
@@ -112,7 +151,7 @@ function CategoryList({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button variant="ghost" size="icon">
-                          <Ellipsis className="h-5 w-5 text-[#858585]" />
+                          <Ellipsis className="h-5 w-5" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -126,6 +165,7 @@ function CategoryList({
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => {
                             e.stopPropagation();

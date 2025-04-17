@@ -9,34 +9,21 @@ import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import Selector from "./Selector";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-interface FilterValues {
-  page?: number;
-  limit?: number;
-  q?: string;
-  sort?: string;
-  status?: string;
-  tag?: string[];
-  category?: string[];
-  author?: string[];
-  format?: string;
-  [key: string]: any;
-}
-
-export interface FiltersPopoverProps {
+export interface FiltersPopoverProps<T = any> {
   form: any;
   isOpen?: boolean;
   setIsOpen?: (open: boolean) => void;
-  onSave: (values: FilterValues) => void;
+  onSave: (values: T) => void;
   hasActiveFilters?: boolean;
 }
 
-const FiltersPopover = ({
+const FiltersPopover = <T extends Record<string, any>>({
   form,
   isOpen,
   setIsOpen,
   onSave,
   hasActiveFilters,
-}: FiltersPopoverProps) => {
+}: FiltersPopoverProps<T>) => {
   const isMobile = useIsMobile();
 
   return (

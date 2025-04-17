@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { getFormats } from "../../actions/formats";
-import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import Pagination from "../../components/Pagination";
@@ -90,10 +89,6 @@ function Formats() {
   useEffect(() => {
     setShowSearch(!isMobile);
   }, [isMobile]);
-
-  if (loading && formats.length === 0) {
-    return <Loader />;
-  }
 
   return (
     <div className="flex flex-col h-full">

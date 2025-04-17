@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import EmptyState from "@/components/EmptyState";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Rating, RatingListProps } from "../types";
 
 const RatingList: React.FC<RatingListProps> = ({
@@ -96,7 +97,42 @@ const RatingList: React.FC<RatingListProps> = ({
 
   return (
     <div className="pb-4 overflow-auto">
-      {hasRatingsData ? (
+      {data.loading ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[40%] text-[13px]">Title</TableHead>
+                <TableHead className="w-[25%] text-[13px]">Preview</TableHead>
+                <TableHead className="w-[25%] text-[13px]">Value</TableHead>
+                <TableHead className="w-[10%] text-center text-[13px]">
+                  Actions
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-8 w-28 rounded-xl" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-16" />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : hasRatingsData ? (
         <div className="rounded-md">
           <Table>
             <TableHeader>
@@ -144,7 +180,7 @@ const RatingList: React.FC<RatingListProps> = ({
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button variant="ghost" size="icon">
-                          <Ellipsis className="h-5 w-5 text-[#858585]" />
+                          <Ellipsis className="h-5 w-5" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">

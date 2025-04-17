@@ -229,7 +229,7 @@ function Users() {
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
-        <MobileBreadcrumb currentPage="Users" parentLabel="Settings" />
+        <MobileBreadcrumb currentPage="User Settings" parentLabel="Settings" />
       )}
 
       {/* Header */}

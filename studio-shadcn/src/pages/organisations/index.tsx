@@ -20,7 +20,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 import SecuredButton from "@/components/SecuredButton";
-import Loader from "@/components/Loader";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Profile {
   id: string;
@@ -40,7 +40,7 @@ interface Filters {
 function Organisations() {
   const navigate = useNavigate();
   const [members, setMembers] = useState<Member[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [filters, setFilters] = useState<Filters>({
     page: 1,
@@ -117,22 +117,45 @@ function Organisations() {
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
 
-  if (loading) {
+  // Render skeletons when loading
+  const renderSkeletons = () => {
     return (
-      <div className="flex flex-col h-full relative">
-        <Helmet title="Organization members" />
-        {isMobile && (
-          <MobileBreadcrumb
-            currentPage="Organisation"
-            parentLabel="Administration"
-          />
-        )}
-        <div className="flex-1 flex items-center justify-center">
-          <Loader className="relative inset-auto" />
-        </div>
+      <div className="rounded-md">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[30%] text-[13px]">Name</TableHead>
+              <TableHead className="w-[40%] text-[13px]">Email</TableHead>
+              <TableHead className="w-[20%] text-[13px]">Role</TableHead>
+              <TableHead className="w-[10%] text-[13px] text-center">
+                Actions
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <TableRow key={index}>
+                <TableCell>
+                  <Skeleton className="h-6 w-32" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-6 w-48" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-6 w-24" />
+                </TableCell>
+                <TableCell className="text-center">
+                  <div className="flex justify-center">
+                    <Skeleton className="h-8 w-8 rounded-md" />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     );
-  }
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -140,7 +163,10 @@ function Organisations() {
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
-        <MobileBreadcrumb currentPage="Organisations" parentLabel="Settings" />
+        <MobileBreadcrumb
+          currentPage="Organisations"
+          parentLabel="Administration"
+        />
       )}
 
       <div
@@ -254,43 +280,47 @@ function Organisations() {
             : undefined
         }
       >
-        <div className="rounded-md">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[30%] text-[13px]">Name</TableHead>
-                <TableHead className="w-[40%] text-[13px]">Email</TableHead>
-                <TableHead className="w-[20%] text-[13px]">Role</TableHead>
-                <TableHead className="w-[10%] text-[13px] text-center">
-                  Actions
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginatedMembers.map((member) => (
-                <TableRow key={member.userId}>
-                  <TableCell>{member.displayName || "---"}</TableCell>
-                  <TableCell>{member.email || "---"}</TableCell>
-                  <TableCell>{member.roles?.join(", ") || "---"}</TableCell>
-                  <TableCell className="text-center">
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => handleRemoveMember(member.userId)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                      <span className="sr-only">
-                        {member.userId === profileDetails?.id
-                          ? "Leave"
-                          : "Remove"}
-                      </span>
-                    </Button>
-                  </TableCell>
+        {loading ? (
+          renderSkeletons()
+        ) : (
+          <div className="rounded-md">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[30%] text-[13px]">Name</TableHead>
+                  <TableHead className="w-[40%] text-[13px]">Email</TableHead>
+                  <TableHead className="w-[20%] text-[13px]">Role</TableHead>
+                  <TableHead className="w-[10%] text-[13px] text-center">
+                    Actions
+                  </TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+              </TableHeader>
+              <TableBody>
+                {paginatedMembers.map((member) => (
+                  <TableRow key={member.userId}>
+                    <TableCell>{member.displayName || "---"}</TableCell>
+                    <TableCell>{member.email || "---"}</TableCell>
+                    <TableCell>{member.roles?.join(", ") || "---"}</TableCell>
+                    <TableCell className="text-center">
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleRemoveMember(member.userId)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        <span className="sr-only">
+                          {member.userId === profileDetails?.id
+                            ? "Leave"
+                            : "Remove"}
+                        </span>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
       </div>
     </div>
   );

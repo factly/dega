@@ -96,7 +96,6 @@ function PageList({
   data,
   fetchPages,
   isMobile = false,
-  sortBy = "date",
   onSortByChange,
 }: PageListProps) {
   const dispatch = useAppDispatch();

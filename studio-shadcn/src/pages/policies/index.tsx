@@ -5,7 +5,6 @@ import PolicyList from "./components/PolicyList";
 import { Link, useSearchParams } from "react-router-dom";
 import { getPolicies } from "../../actions/policies";
 import getUserPermission from "../../utils/getUserPermission";
-import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { Input } from "@/components/ui/input";
@@ -81,18 +80,13 @@ const Policies: React.FC = () => {
     window.location.href = "/settings/members/policies/create";
   };
 
-  if (loading) return <Loader />;
-
   return (
     <div className="flex flex-col h-full">
       <Helmet title={"Policies"} />
 
       {/* Mobile Breadcrumb */}
       {isMobile && (
-        <MobileBreadcrumb
-          currentPage="Policies"
-          parentLabel="Member Settings"
-        />
+        <MobileBreadcrumb currentPage="Policies" parentLabel="User Settings" />
       )}
 
       <div

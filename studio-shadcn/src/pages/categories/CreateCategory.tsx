@@ -1,4 +1,3 @@
-// CreateCategory.tsx
 import { FC } from "react";
 import CategoryForm from "./components/CategoryForm";
 import { createCategory } from "../../actions/categories";

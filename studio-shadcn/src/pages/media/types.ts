@@ -1,4 +1,3 @@
-// types.ts
 // Media entity interface
 export interface MediaItem {
   id: string | number;

@@ -8,7 +8,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 // Custom components
 import TagList from "./components/TagList";
-import Loader from "@/components/Loader";
 import SearchInput from "@/components/SearchInput";
 import PaginationFooter from "@/components/PaginationFooter";
 import MobileBreadcrumb from "@/components/MobileBreadcrumb";
@@ -74,18 +73,6 @@ function Tags() {
   };
 
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
-
-  if (loading) {
-    return (
-      <div className="flex flex-col h-full relative">
-        <Helmet title={"Tags"} />
-        {isMobile && <MobileBreadcrumb currentPage="Tags" parentLabel="Core" />}
-        <div className="flex-1 flex items-center justify-center">
-          <Loader className="relative inset-auto" />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col h-full gap-6">

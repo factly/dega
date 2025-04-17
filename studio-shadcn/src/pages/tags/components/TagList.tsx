@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
@@ -26,6 +27,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import EmptyState from "@/components/EmptyState";
 import { TagListProps } from "../types";
@@ -52,11 +54,42 @@ function TagList({ data, fetchTags, isMobile = false }: TagListProps) {
   };
 
   // Check if there are any tags to display
-  const hasTagsData = data.tags && data.tags.length > 0;
+  const hasTagsData = !data.loading && data.tags && data.tags.length > 0;
 
   return (
     <div className="pb-4 overflow-scroll">
-      {hasTagsData ? (
+      {data.loading ? (
+        <div className="rounded-md">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[50%] text-[13px]">Title</TableHead>
+                <TableHead className="w-[40%] text-[13px]">Slug</TableHead>
+                <TableHead className="w-[10%] text-[13px] text-center">
+                  Actions
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-3">
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Skeleton className="h-6 w-10" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : hasTagsData ? (
         <div className="rounded-md">
           <Table>
             <TableHeader>
@@ -93,7 +126,7 @@ function TagList({ data, fetchTags, isMobile = false }: TagListProps) {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button variant="ghost" size="icon">
-                          <Ellipsis className="h-5 w-5 text-[#858585]" />
+                          <Ellipsis className="h-5 w-5" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -107,6 +140,7 @@ function TagList({ data, fetchTags, isMobile = false }: TagListProps) {
                           <Pencil className="h-4 w-4 mr-2" />
                           <span>Edit</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={(e) => {
                             e.stopPropagation();

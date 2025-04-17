@@ -5,7 +5,6 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getMenus } from "../../actions/menu";
 import getUserPermission from "../../utils/getUserPermission";
-import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -90,8 +89,6 @@ const Menu: React.FC = () => {
 
   // Get sidebar state for layout
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
-
-  if (loading) return <Loader />;
 
   return (
     <div className="flex flex-col h-full">

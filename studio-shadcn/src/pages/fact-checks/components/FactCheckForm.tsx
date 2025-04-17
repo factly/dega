@@ -118,6 +118,7 @@ const factCheckSchema = z.object({
   format_id: z.number().optional(),
   claim_ids: z.array(z.number()).optional(),
   claim_order: z.array(z.number()).optional(),
+  author_ids: z.array(z.number()).optional(),
 });
 
 type FactCheckFormValues = z.infer<typeof factCheckSchema>;
@@ -150,7 +151,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
   const [claimID, setClaimID] = useState<string>("");
   const [claimOrder, setClaimOrder] = useState<string[]>(
     data.claims && data.claims.length > 0
-      ? (data.claim_order || []).map((id) => id.toString())
+      ? (data.claim_order || data.claims).map((id) => id.toString())
       : []
   );
 
@@ -237,16 +238,26 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     if (claimCreatedFlag && newClaim) {
       if (data && data.id) {
         // For existing records, we'll handle this in the component update
-        data.claims = [...(data.claims || []), newClaim.id];
+        const updatedClaims = [...(data.claims || []), newClaim.id];
+        data.claims = updatedClaims;
+        form.setValue("claims", updatedClaims);
+
+        // Add new claim to claim order
+        const newClaimOrder = [...claimOrder, newClaim.id.toString()];
+        setClaimOrder(newClaimOrder);
       } else {
         // For new records
         const claimList = form.getValues("claims") || [];
-        form.setValue("claims", [...claimList, newClaim.id]);
-        setValueChange(true); // Ensure Save button is enabled
+        const updatedClaims = [...claimList, newClaim.id];
+        form.setValue("claims", updatedClaims);
+
+        const newClaimOrder = [...claimOrder, newClaim.id.toString()];
+        setClaimOrder(newClaimOrder);
       }
+      setValueChange(true); // Ensure Save button is enabled
       setClaimCreatedFlag(false);
     }
-  }, [claimCreatedFlag, newClaim, data, form]);
+  }, [claimCreatedFlag, newClaim, data, form, claimOrder]);
 
   // Window resize handler for responsive design
   useEffect(() => {
@@ -277,8 +288,176 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     };
   }, [shouldBlockNavigation]);
 
+  // Update claimOrder when form claims value changes
+  useEffect(() => {
+    const claims = form.watch("claims") || [];
+    if (
+      claims.length > 0 &&
+      (!claimOrder.length ||
+        !claims.every((id) => claimOrder.includes(id.toString())))
+    ) {
+      // Only update if there's a difference to avoid infinite loops
+      const newOrder = claims.map((id) => id.toString());
+      setClaimOrder(newOrder);
+    }
+  }, [form.watch("claims")]);
+
   const getCurrentDate = () => {
     return dayjs().format("YYYY-MM-DDTHH:mm:ssZ");
+  };
+
+  // Direct submission handlers
+  const directSubmitDraft = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Prepare the values directly from the form
+    const formValues = form.getValues();
+
+    // Set essential fields
+    formValues.status = "draft";
+    formValues.format_id = format.id;
+
+    // Process claims if present
+    if (claimOrder && claimOrder.length > 0) {
+      const numericClaimIds = claimOrder.map((id) => parseInt(id, 10));
+      formValues.claims = numericClaimIds;
+      formValues.claim_ids = numericClaimIds;
+      formValues.claim_order = numericClaimIds;
+    }
+
+    // Set published_date to null for drafts
+    formValues.published_date = null;
+
+    // Ensure meta_fields is properly formatted
+    if (formValues.meta_fields) {
+      formValues.meta_fields = getJsonValue(formValues.meta_fields);
+    }
+
+    // Set author_ids from authors for API compatibility
+    if (formValues.authors && Array.isArray(formValues.authors)) {
+      formValues.author_ids = formValues.authors;
+    }
+
+    console.log("Direct submitting draft with values:", formValues);
+    onCreate(formValues);
+    setValueChange(false);
+    setShouldBlockNavigation(false);
+
+    // Close panels if needed
+    if (activePanel) {
+      handlePanelClose();
+    }
+    if (claimPopoverOpen) {
+      handleClaimPopoverClose();
+    }
+  };
+
+  const directSubmitPublish = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Prepare the values directly from the form
+    const formValues = form.getValues();
+
+    // Validate authors for publishing
+    if (
+      !formValues.authors ||
+      !Array.isArray(formValues.authors) ||
+      formValues.authors.length === 0
+    ) {
+      dispatch(
+        addErrorNotification(
+          "At least one author must be assigned before publishing."
+        )
+      );
+      return;
+    }
+
+    // Set essential fields
+    formValues.status = "publish";
+    formValues.format_id = format.id;
+
+    // Process claims if present
+    if (claimOrder && claimOrder.length > 0) {
+      const numericClaimIds = claimOrder.map((id) => parseInt(id, 10));
+      formValues.claims = numericClaimIds;
+      formValues.claim_ids = numericClaimIds;
+      formValues.claim_order = numericClaimIds;
+    }
+
+    // Set published_date for publish
+    formValues.published_date = formValues.published_date
+      ? dayjs(formValues.published_date).format("YYYY-MM-DDTHH:mm:ssZ")
+      : getCurrentDate();
+
+    // Ensure meta_fields is properly formatted
+    if (formValues.meta_fields) {
+      formValues.meta_fields = getJsonValue(formValues.meta_fields);
+    }
+
+    // Set author_ids from authors for API compatibility
+    if (formValues.authors && Array.isArray(formValues.authors)) {
+      formValues.author_ids = formValues.authors;
+    }
+
+    console.log("Direct submitting publish with values:", formValues);
+    onCreate(formValues);
+    setValueChange(false);
+    setShouldBlockNavigation(false);
+
+    // Close panels if needed
+    if (activePanel) {
+      handlePanelClose();
+    }
+    if (claimPopoverOpen) {
+      handleClaimPopoverClose();
+    }
+  };
+
+  const directSubmitReady = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Prepare the values directly from the form
+    const formValues = form.getValues();
+
+    // Set essential fields
+    formValues.status = "ready";
+    formValues.format_id = format.id;
+
+    // Process claims if present
+    if (claimOrder && claimOrder.length > 0) {
+      const numericClaimIds = claimOrder.map((id) => parseInt(id, 10));
+      formValues.claims = numericClaimIds;
+      formValues.claim_ids = numericClaimIds;
+      formValues.claim_order = numericClaimIds;
+    }
+
+    // Set published_date to null for ready status
+    formValues.published_date = null;
+
+    // Ensure meta_fields is properly formatted
+    if (formValues.meta_fields) {
+      formValues.meta_fields = getJsonValue(formValues.meta_fields);
+    }
+
+    // Set author_ids from authors for API compatibility
+    if (formValues.authors && Array.isArray(formValues.authors)) {
+      formValues.author_ids = formValues.authors;
+    }
+
+    onCreate(formValues);
+    setValueChange(false);
+    setShouldBlockNavigation(false);
+
+    // Close panels if needed
+    if (activePanel) {
+      handlePanelClose();
+    }
+    if (claimPopoverOpen) {
+      handleClaimPopoverClose();
+    }
   };
 
   const onSave = (values: FactCheckFormValues) => {
@@ -301,6 +480,9 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     // Convert claimOrder to numbers and set both claim_ids and claim_order
     if (claimOrder && claimOrder.length > 0) {
       const numericClaimIds = claimOrder.map((id) => parseInt(id, 10));
+
+      // Ensure all related claim fields are properly set
+      processedValues.claims = numericClaimIds;
       processedValues.claim_ids = numericClaimIds;
       processedValues.claim_order = numericClaimIds;
     }
@@ -330,6 +512,11 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     } else {
       // For draft and ready status, set published_date to null
       processedValues.published_date = null;
+    }
+
+    // Set author_ids from authors array to ensure backward compatibility
+    if (processedValues.authors && Array.isArray(processedValues.authors)) {
+      processedValues.author_ids = processedValues.authors;
     }
 
     // Call the onCreate function with the processed values
@@ -394,11 +581,13 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     } else {
       dispatch(createClaim(values))
         .then((claim: any) => {
-          handleClaimPopoverClose();
-          setNewClaim(claim);
-          setClaimID("");
-          setClaimCreatedFlag(true);
-          setValueChange(true); // Ensure Save button is enabled
+          if (claim) {
+            handleClaimPopoverClose();
+            setNewClaim(claim);
+            setClaimID("");
+            setClaimCreatedFlag(true);
+            setValueChange(true);
+          }
         })
         .catch((error: any) => {
           console.error("Error creating claim:", error);
@@ -416,17 +605,12 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     }
   };
 
-  const setReadyFlag = () => {
-    setStatus(status === "ready" ? "draft" : "ready");
-    setValueChange(true); // Ensure Save button is enabled
-  };
-
   const renderRightClaimPanel = () => {
     if (!claimPopoverOpen) return null;
 
     return (
       <div
-        className={`fixed inset-y-0 right-0 z-[60] w-full max-w-md bg-background border-l shadow-lg transform transition-transform duration-500 overflow-y-auto
+        className={`fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background border-l shadow-lg transform transition-transform duration-500 overflow-y-auto
         ${isClaimPopoverVisible ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="p-4 h-full flex flex-col">
@@ -531,7 +715,9 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
       >
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSave)}
+            onSubmit={(e) => {
+              e.preventDefault(); // Prevent default form submission
+            }}
             onChange={() => setValueChange(true)}
             className="edit-form space-y-6"
           >
@@ -575,28 +761,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                   type="button"
                   variant="outline"
                   disabled={!valueChange}
-                  onClick={(e) => {
-                    e.preventDefault();
-
-                    // Get current form values
-                    const currentValues = form.getValues();
-                    form.setValue("status", "draft");
-                    form.setValue("format_id", format.id);
-
-                    if (claimOrder && claimOrder.length > 0) {
-                      const numericClaimIds = claimOrder.map((id) =>
-                        parseInt(id, 10)
-                      );
-                      form.setValue("claim_ids", numericClaimIds);
-                      form.setValue("claim_order", numericClaimIds);
-                    }
-
-                    // Set published_date to null for draft
-                    form.setValue("published_date", null);
-
-                    // Submit the form
-                    form.handleSubmit(onSave)(e);
-                  }}
+                  onClick={directSubmitDraft}
                 >
                   Save as Draft
                 </Button>
@@ -615,85 +780,13 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem
                       disabled={!valueChange}
-                      onClick={(e) => {
-                        e.preventDefault();
-
-                        // Get current form values for validation
-                        const currentValues = form.getValues();
-
-                        if (!currentValues.title || !currentValues.slug) {
-                          dispatch(
-                            addErrorNotification(
-                              "Title and slug are required fields."
-                            )
-                          );
-                          return;
-                        }
-
-                        // Check for authors before attempting to publish
-                        const authors = currentValues.authors || [];
-                        if (authors.length === 0) {
-                          dispatch(
-                            addErrorNotification(
-                              "At least one author must be assigned before publishing."
-                            )
-                          );
-                          return;
-                        }
-
-                        // Set important fields directly on the form
-                        setStatus("publish");
-                        form.setValue("status", "publish");
-                        form.setValue("format_id", format.id);
-
-                        // Process claim IDs/order
-                        if (claimOrder && claimOrder.length > 0) {
-                          const numericClaimIds = claimOrder.map((id) =>
-                            parseInt(id, 10)
-                          );
-                          form.setValue("claim_ids", numericClaimIds);
-                          form.setValue("claim_order", numericClaimIds);
-                        }
-
-                        // Set published_date
-                        const publishDate = currentValues.published_date
-                          ? dayjs(currentValues.published_date).format(
-                              "YYYY-MM-DDTHH:mm:ssZ"
-                            )
-                          : getCurrentDate();
-                        form.setValue("published_date", publishDate);
-
-                        // Submit the form
-                        form.handleSubmit(onSave)(e);
-                      }}
+                      onClick={directSubmitPublish}
                     >
                       Publish
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       disabled={!valueChange}
-                      onClick={(e) => {
-                        e.preventDefault();
-
-                        // Set important fields directly on the form
-                        setStatus("ready");
-                        form.setValue("status", "ready");
-                        form.setValue("format_id", format.id);
-
-                        // Process claim IDs/order
-                        if (claimOrder && claimOrder.length > 0) {
-                          const numericClaimIds = claimOrder.map((id) =>
-                            parseInt(id, 10)
-                          );
-                          form.setValue("claim_ids", numericClaimIds);
-                          form.setValue("claim_order", numericClaimIds);
-                        }
-
-                        // Set published_date to null for ready status
-                        form.setValue("published_date", null);
-
-                        // Submit the form
-                        form.handleSubmit(onSave)(e);
-                      }}
+                      onClick={directSubmitReady}
                     >
                       Ready to Publish
                     </DropdownMenuItem>
@@ -747,7 +840,15 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                     showModal={handleClaimPopoverOpen}
                     details={details}
                     claimOrder={claimOrder}
-                    setClaimOrder={(order: string[]) => setClaimOrder(order)}
+                    setClaimOrder={(order: string[]) => {
+                      setClaimOrder(order);
+                      // Update the form claims field when claim order changes
+                      const numericClaimIds = order.map((id) =>
+                        parseInt(id, 10)
+                      );
+                      form.setValue("claims", numericClaimIds);
+                      setValueChange(true);
+                    }}
                   />
                 </div>
               )}

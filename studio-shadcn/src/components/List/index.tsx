@@ -95,11 +95,13 @@ interface PostListProps {
     sortBy?: string;
     [key: string]: any;
   };
-  onPagination: (page: number, limit: number) => void;
+  onPagination?: (page: number, limit: number) => void;
   fetchPosts: () => void;
   isMobile?: boolean;
   sortBy?: string;
   onSortByChange?: (column: string) => void;
+  query?: string;
+  actions?: any;
 }
 
 function PostList({
@@ -107,7 +109,6 @@ function PostList({
   data,
   fetchPosts,
   isMobile,
-  sortBy = "date",
   onSortByChange,
 }: PostListProps) {
   const dispatch = useAppDispatch();

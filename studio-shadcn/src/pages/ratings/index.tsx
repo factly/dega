@@ -3,7 +3,6 @@ import RatingList from "./components/RatingList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import Loader from "../../components/Loader";
 import { Helmet } from "react-helmet";
 import { PlusCircle, Search as SearchIcon } from "lucide-react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
@@ -75,20 +74,6 @@ function Ratings({
 
   // Get sidebar state
   const isCollapsed = sidebarState === "collapsed" && !isMobile;
-
-  if (loading) {
-    return (
-      <div className="flex flex-col h-full relative">
-        <Helmet title="Ratings" />
-        {isMobile && (
-          <MobileBreadcrumb currentPage="Ratings" parentLabel="Fact Checking" />
-        )}
-        <div className="flex-1 flex items-center justify-center">
-          <Loader className="relative inset-auto" />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col h-full">

@@ -7,6 +7,7 @@ import useNavigation from "../../utils/useNavigation";
 import UppyUploader from "../../components/Uppy";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { UploadItem } from "./types";
+import Loader from "@/components/Loader/index";
 
 function UploadMedium(): React.ReactElement {
   const navigate = useNavigation();
