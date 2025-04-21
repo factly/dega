@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Edit, ChevronUp, ChevronDown } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -47,7 +46,6 @@ const ClaimList: React.FC<ClaimListProps> = ({
   claimOrder,
 }) => {
   const [updateData, setUpdateData] = useState<boolean>(true);
-  const dispatch = useDispatch();
   const [treeData, setTreeData] = useState<TreeNode[]>(
     claimOrder as unknown as TreeNode[]
   );
@@ -65,7 +63,6 @@ const ClaimList: React.FC<ClaimListProps> = ({
     newOrder[index] = temp;
     setClaimOrder(newOrder);
     setUpdateData(true); // Flag to trigger rebuild in useEffect
-    setTreeData(buildTreeData(newOrder, ids));
   };
 
   const moveDown = (id: string): void => {
@@ -78,7 +75,6 @@ const ClaimList: React.FC<ClaimListProps> = ({
     newOrder[index] = temp;
     setClaimOrder(newOrder);
     setUpdateData(true);
-    setTreeData(buildTreeData(newOrder, ids));
   };
 
   const handleDeleteConfirm = (e: React.MouseEvent) => {
@@ -109,6 +105,9 @@ const ClaimList: React.FC<ClaimListProps> = ({
     }
 
     order.forEach((id, index) => {
+      // Skip if we don't have details for this claim
+      if (!details[id]) return;
+
       const node: TreeNode = {
         key: id,
         title: (

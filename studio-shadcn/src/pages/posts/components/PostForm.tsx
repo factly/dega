@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
-
 // Shadcn UI components
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
@@ -12,10 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-// Lucide icons
 import { ChevronDown, PanelRightDashed, ArrowLeft } from "lucide-react";
-
 // Custom components and utilities
 import { maker } from "../../../utils/sluger";
 import { addTemplate } from "../../../actions/posts";
@@ -223,29 +219,6 @@ function PostForm({
     setShouldBlockNavigation(true);
   };
 
-  // Handle clicks outside the panel
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      // Only process this if the panel is visible
-      if (isPanelVisible && panelRef.current && activePanel) {
-        // Check if the click is outside the panel
-        if (!panelRef.current.contains(event.target as Node)) {
-          handlePanelClose();
-        }
-      }
-    };
-
-    // Add event listener when panel is visible
-    if (isPanelVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    // Clean up event listener
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isPanelVisible, activePanel]);
-
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (shouldBlockNavigation) {
@@ -297,7 +270,7 @@ function PostForm({
                   onClick={handleBackNavigation}
                 >
                   <ArrowLeft className="h-4 w-4" />
-                  {page ? "Pages" : "Posts"}
+                  Back
                 </Button>
 
                 <div className="space-x-2 flex items-center">

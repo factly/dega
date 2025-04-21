@@ -521,7 +521,6 @@ function PostSidePanel({
                           placeholder="Select categories"
                           value={field.value}
                           onChange={field.onChange}
-                          createEntity="Category"
                         />
                       </FormControl>
                     </FormItem>

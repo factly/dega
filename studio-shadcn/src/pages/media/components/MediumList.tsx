@@ -45,7 +45,7 @@ function MediumList({ data, actions = [], isMobile = false }: MediaListProps) {
                           className="w-full h-full object-cover"
                           style={{
                             width: isMobile ? "100%" : "468px",
-                            height: isMobile ? "100%" : "468px",
+                            height: isMobile ? "100%" : "368px",
                           }}
                         />
                       )}

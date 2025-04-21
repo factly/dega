@@ -244,7 +244,6 @@ const PolicyForm: React.FC<PolicyFormProps> = ({
                       mode="multiple"
                       display="display_name"
                       action="Users"
-                      createEntity="User"
                       {...field}
                     />
                   </FormControl>

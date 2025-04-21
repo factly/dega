@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 // Actions and Utils
-import { createClaim, updateClaim } from "@/actions/claims";
+import { createClaim, updateClaim, getClaims } from "@/actions/claims";
 import { addTemplate } from "@/actions/posts";
 import { addErrorNotification } from "@/actions/notifications";
 import { getDatefromStringWithoutDay } from "@/utils/date";
@@ -132,6 +132,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
   const dispatch = useAppDispatch();
   const [status, setStatus] = useState<string>(data.status || "draft");
   const [claimCreatedFlag, setClaimCreatedFlag] = useState<boolean>(false);
+  const [claimUpdated, setClaimUpdated] = useState<boolean>(false);
   const [newClaim, setNewClaim] = useState<any>(null);
   const [valueChange, setValueChange] = useState<boolean>(false);
   const [shouldBlockNavigation, setShouldBlockNavigation] =
@@ -233,35 +234,6 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     }, 500);
   };
 
-  // Handle clicks outside the panels
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      // Handle main panel
-      if (isPanelVisible && panelRef.current && activePanel) {
-        if (!panelRef.current.contains(event.target as Node)) {
-          handlePanelClose();
-        }
-      }
-
-      // Handle claim panel
-      if (isClaimPopoverVisible && claimPanelRef.current && claimPopoverOpen) {
-        if (!claimPanelRef.current.contains(event.target as Node)) {
-          handleClaimPopoverClose();
-        }
-      }
-    };
-
-    // Add event listener when any panel is visible
-    if (isPanelVisible || isClaimPopoverVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    // Clean up event listener
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isPanelVisible, activePanel, isClaimPopoverVisible, claimPopoverOpen]);
-
   // Set up form value change monitoring
   useEffect(() => {
     const subscription = form.watch(() => {
@@ -272,31 +244,40 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     return () => subscription.unsubscribe();
   }, [form]);
 
+  // Fetch claims when component mounts or when a new claim is created
+  useEffect(() => {
+    dispatch(getClaims({}));
+  }, [dispatch, claimCreatedFlag]);
+
   // Update form when new claim is created
   useEffect(() => {
     if (claimCreatedFlag && newClaim) {
-      if (data && data.id) {
-        // For existing records, we'll handle this in the component update
-        const updatedClaims = [...(data.claims || []), newClaim.id];
-        data.claims = updatedClaims;
+      // Get the current claims from the form
+      const currentClaims = form.getValues("claims") || [];
+
+      // Add the new claim ID if it's not already there
+      if (!currentClaims.includes(newClaim.id)) {
+        const updatedClaims = [...currentClaims, newClaim.id];
+
+        // Set the claims array in the form
         form.setValue("claims", updatedClaims);
 
-        // Add new claim to claim order
+        // Update claim order
         const newClaimOrder = [...claimOrder, newClaim.id.toString()];
         setClaimOrder(newClaimOrder);
-      } else {
-        // For new records
-        const claimList = form.getValues("claims") || [];
-        const updatedClaims = [...claimList, newClaim.id];
-        form.setValue("claims", updatedClaims);
 
-        const newClaimOrder = [...claimOrder, newClaim.id.toString()];
-        setClaimOrder(newClaimOrder);
+        // Set value change flag to enable save buttons
+        setValueChange(true);
       }
-      setValueChange(true); // Ensure Save button is enabled
+
+      // Reset flags
       setClaimCreatedFlag(false);
+      setNewClaim(null);
+
+      // Set the claim updated flag to trigger a refresh in the RightPanel
+      setClaimUpdated(true);
     }
-  }, [claimCreatedFlag, newClaim, data, form, claimOrder]);
+  }, [claimCreatedFlag, newClaim, form, claimOrder]);
 
   // Window resize handler for responsive design
   useEffect(() => {
@@ -608,16 +589,24 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
 
   const handleClaimSubmit = (values: any) => {
     if (claimID && parseInt(claimID, 10) > 0) {
+      // Updating an existing claim
       dispatch(updateClaim({ ...details[claimID], ...values }))
         .then(() => {
           handleClaimPopoverClose();
           setClaimID("");
           setValueChange(true); // Ensure Save button is enabled
+
+          // Signal that claims have been updated so we can refresh the selector
+          setClaimUpdated(true);
+
+          // Refresh the claims list to get updated data
+          dispatch(getClaims({}));
         })
         .catch((error: any) => {
           console.error("Error updating claim:", error);
         });
     } else {
+      // Creating a new claim
       dispatch(createClaim(values))
         .then((claim: any) => {
           if (claim) {
@@ -626,6 +615,9 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
             setClaimID("");
             setClaimCreatedFlag(true);
             setValueChange(true);
+
+            // Refresh the claims list immediately after creation
+            dispatch(getClaims({}));
           }
         })
         .catch((error: any) => {
@@ -745,6 +737,8 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
             isVisible={isPanelVisible}
             setClaimPopoverOpen={handleClaimPopoverOpen}
             setSchemaModalOpen={setSchemaModalOpen}
+            claimUpdated={claimUpdated}
+            setClaimUpdated={setClaimUpdated}
           />
         </div>
       )}
@@ -773,7 +767,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                 onClick={handleBackNavigation}
               >
                 <ArrowLeft className="h-4 w-4" />
-                Fact-Checks
+                Back
               </Button>
 
               <div className="flex space-x-2">
@@ -878,7 +872,9 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
                     ids={
                       form.getValues("claims")?.map((id) => id.toString()) || []
                     }
-                    setClaimID={(id: string) => setClaimID(id)}
+                    setClaimID={(id: string) => {
+                      setClaimID(id);
+                    }}
                     showModal={handleClaimPopoverOpen}
                     details={details}
                     claimOrder={claimOrder}

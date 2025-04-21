@@ -40,7 +40,6 @@ const FiltersPopover = ({
                     <FormLabel>Claimants</FormLabel>
                     <Selector
                       mode="multiple"
-                      createEntity="Claimant"
                       action="Claimants"
                       value={field.value}
                       onChange={field.onChange}
@@ -57,7 +56,6 @@ const FiltersPopover = ({
                     <FormLabel>Ratings</FormLabel>
                     <Selector
                       mode="multiple"
-                      createEntity="Rating"
                       action="Ratings"
                       value={field.value}
                       onChange={field.onChange}

@@ -284,7 +284,6 @@ const QuickEdit: React.FC<QuickEditProps> = ({
                     isQuickEdit
                     mode="multiple"
                     action="Categories"
-                    createEntity="Category"
                     value={field.value || []}
                     onChange={field.onChange}
                     style={{ width: "100%" }}

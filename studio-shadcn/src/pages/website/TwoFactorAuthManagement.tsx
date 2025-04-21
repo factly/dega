@@ -180,7 +180,7 @@ const TwoFactorAuthManagement: React.FC = () => {
 
   return (
     <div className="w-full h-screen flex justify-center">
-      <div className="w-full max-w-3xl p-8 flex flex-col gap-4 max-h-screen overflow-y-auto">
+      <div className="w-full max-w-3xl p-8 flex flex-col gap-4 max-h-screen">
         <h1 className="text-2xl font-semibold">Security</h1>
 
         {successMessage && (

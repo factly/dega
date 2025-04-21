@@ -260,7 +260,6 @@ const ClaimForm: React.FC<ExtendedClaimFormProps> = ({
                           <FormControl>
                             <Selector
                               action="Claimants"
-                              createEntity="Claimant"
                               value={field.value}
                               onChange={(value) => {
                                 field.onChange(value);
@@ -285,7 +284,6 @@ const ClaimForm: React.FC<ExtendedClaimFormProps> = ({
                           <FormControl>
                             <Selector
                               action="Ratings"
-                              createEntity="Rating"
                               value={field.value}
                               onChange={(value) => {
                                 field.onChange(value);

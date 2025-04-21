@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import {
   ChevronLeft,
@@ -8,13 +8,11 @@ import {
   Tags,
   X,
   FileEdit,
-  FileSearch,
   Code,
-  Settings,
   MessageSquareCode,
   SettingsIcon,
-  FilePlus,
   FilePlus2,
+  PlusCircle,
 } from "lucide-react";
 
 // Shadcn Components
@@ -42,6 +40,8 @@ import MediaSelector from "@/components/MediaSelector";
 import MonacoEditor from "@/components/MonacoEditor";
 import Selector from "@/components/Selector";
 import { formatDate } from "@/utils/date";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { getClaims } from "../../../actions/claims";
 
 interface RightPanelProps {
   activePanel: string;
@@ -53,6 +53,8 @@ interface RightPanelProps {
   isVisible: boolean;
   setClaimPopoverOpen: (open: boolean) => void;
   setSchemaModalOpen: (open: boolean) => void;
+  claimUpdated?: boolean;
+  setClaimUpdated?: (updated: boolean) => void;
 }
 
 const RightPanel: React.FC<RightPanelProps> = ({
@@ -65,7 +67,24 @@ const RightPanel: React.FC<RightPanelProps> = ({
   isVisible,
   setClaimPopoverOpen,
   setSchemaModalOpen,
+  claimUpdated,
+  setClaimUpdated,
 }) => {
+  const dispatch = useAppDispatch();
+
+  // Fetch claims when the panel becomes visible or when claims are updated
+  useEffect(() => {
+    if (isVisible || claimUpdated) {
+      // Fetch the latest claims
+      dispatch(getClaims({}));
+
+      // Reset the claim updated flag
+      if (claimUpdated && setClaimUpdated) {
+        setClaimUpdated(false);
+      }
+    }
+  }, [isVisible, claimUpdated, dispatch, setClaimUpdated]);
+
   return (
     <div
       className={`fixed inset-y-0 right-0 z-40 w-full max-w-md bg-background border-l shadow-lg overflow-y-auto
@@ -96,7 +115,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
                   >
                     {/* Details Section */}
                     <AccordionItem value="details" className="border-b">
-                      <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
+                      <AccordionTrigger className="hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
                         <div className="flex items-center">
                           <FileEdit className="h-4 w-4 mr-2" />
                           Details
@@ -189,6 +208,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
                                   action="Claims"
                                   value={field.value || []}
                                   onChange={field.onChange}
+                                  setLoading={true}
                                 />
                               </FormItem>
                             )}
@@ -197,10 +217,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
                           {/* Add Claim Button */}
                           <Button
                             type="button"
-                            onClick={() => {
-                              setClaimPopoverOpen(true);
-                            }}
+                            onClick={() => setClaimPopoverOpen(true)}
+                            className="flex items-center gap-2"
                           >
+                            <PlusCircle className="h-4 w-4" />
                             Add Claim
                           </Button>
                         </div>
@@ -271,7 +291,6 @@ const RightPanel: React.FC<RightPanelProps> = ({
                               <Selector
                                 mode="multiple"
                                 action="Categories"
-                                createEntity="Category"
                                 value={field.value || []}
                                 onChange={field.onChange}
                               />

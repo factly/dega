@@ -264,7 +264,6 @@ function Users() {
                         mode="multiple"
                         display={"display_name"}
                         action="users"
-                        createEntity="User"
                         value={field.value}
                         onChange={field.onChange}
                         placeholder="Select users"
@@ -333,7 +332,6 @@ function Users() {
                             mode="multiple"
                             display={"display_name"}
                             action="users"
-                            createEntity="User"
                             value={field.value}
                             onChange={field.onChange}
                           />

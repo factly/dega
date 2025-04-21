@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import  { QRCodeCanvas } from "qrcode.react";
+import { QRCodeCanvas } from "qrcode.react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type {
@@ -61,7 +61,7 @@ export const TOTPSetupComponent: React.FC<TOTPSetupComponentProps> = ({
             Scan this QR code with your authenticator app:
           </p>
           <div className="flex justify-center">
-            {/* <QRCodeCanvas value={uri} size={256} /> */}
+            <QRCodeCanvas value={uri} size={256} />
           </div>
         </div>
 

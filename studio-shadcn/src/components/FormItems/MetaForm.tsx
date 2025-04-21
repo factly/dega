@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { FormField, FormItem, FormLabel } from "@/components/ui/form";
+import MonacoEditor from "../MonacoEditor";
 
 interface MetaFormProps {
   formData?: MetaFormData;
@@ -28,7 +29,12 @@ interface MetaFormData {
   meta_fields?: string;
 }
 
-const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
+const MetaForm: React.FC<MetaFormProps> = ({
+  formData,
+  style,
+  form,
+  onChange,
+}) => {
   const [headerCode, setHeaderCode] = React.useState(
     formData?.header_code || ""
   );
@@ -39,30 +45,51 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
     formData?.meta_fields || ""
   );
 
-  const handleMetaFieldsChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setMetaFields(e.target.value);
-    if (form) {
-      form.setValue("meta_fields", e.target.value);
+  const handleMetaFieldsChange = (value: string | undefined) => {
+    if (value !== undefined) {
+      setMetaFields(value);
+      if (form) {
+        form.setValue("meta_fields", value);
+      }
+      if (onChange) {
+        onChange();
+      }
     }
   };
 
-  const handleHeaderCodeChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setHeaderCode(e.target.value);
-    if (form) {
-      form.setValue("header_code", e.target.value);
+  const handleHeaderCodeChange = (value: string | undefined) => {
+    if (value !== undefined) {
+      setHeaderCode(value);
+      if (form) {
+        form.setValue("header_code", value);
+      }
+      if (onChange) {
+        onChange();
+      }
     }
   };
 
-  const handleFooterCodeChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+  const handleFooterCodeChange = (value: string | undefined) => {
+    if (value !== undefined) {
+      setFooterCode(value);
+      if (form) {
+        form.setValue("footer_code", value);
+      }
+      if (onChange) {
+        onChange();
+      }
+    }
+  };
+
+  const handleTextareaChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    fieldName: string
   ) => {
-    setFooterCode(e.target.value);
     if (form) {
-      form.setValue("footer_code", e.target.value);
+      form.setValue(fieldName, e.target.value);
+    }
+    if (onChange) {
+      onChange();
     }
   };
 
@@ -134,6 +161,7 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
                       defaultValue={formData?.meta?.title}
                       placeholder="Enter meta title"
                       className="mt-2"
+                      onChange={() => onChange && onChange()}
                     />
                   </div>
                   <div className="mb-4 sm:mb-6">
@@ -146,6 +174,7 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
                       placeholder="Enter meta description"
                       className="mt-2"
                       rows={4}
+                      onChange={() => onChange && onChange()}
                     />
                   </div>
                   <div className="mb-4 sm:mb-6">
@@ -157,6 +186,7 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
                       defaultValue={formData?.meta?.canonical_URL}
                       placeholder="Enter canonical URL"
                       className="mt-2"
+                      onChange={() => onChange && onChange()}
                     />
                   </div>
                 </>
@@ -184,15 +214,14 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
                     render={({ field }) => (
                       <FormItem className="mb-4 sm:mb-6">
                         <FormLabel className="text-base">Header Code</FormLabel>
-                        <Textarea
-                          {...field}
-                          placeholder="Enter header code"
-                          className="font-mono"
-                          rows={6}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            handleHeaderCodeChange(e);
+                        <MonacoEditor
+                          value={field.value || ""}
+                          onChange={(value) => {
+                            field.onChange(value);
+                            handleHeaderCodeChange(value);
                           }}
+                          language="html"
+                          title="Header Code"
                         />
                       </FormItem>
                     )}
@@ -204,15 +233,14 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
                     render={({ field }) => (
                       <FormItem className="mb-4 sm:mb-6">
                         <FormLabel className="text-base">Footer Code</FormLabel>
-                        <Textarea
-                          {...field}
-                          placeholder="Enter footer code"
-                          className="font-mono"
-                          rows={6}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            handleFooterCodeChange(e);
+                        <MonacoEditor
+                          value={field.value || ""}
+                          onChange={(value) => {
+                            field.onChange(value);
+                            handleFooterCodeChange(value);
                           }}
+                          language="html"
+                          title="Footer Code"
                         />
                       </FormItem>
                     )}
@@ -224,26 +252,22 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
                     <Label htmlFor="header-code" className="text-base">
                       Header Code
                     </Label>
-                    <Textarea
-                      id="header-code"
+                    <MonacoEditor
                       value={headerCode}
                       onChange={handleHeaderCodeChange}
-                      placeholder="Enter header code"
-                      className="font-mono mt-2"
-                      rows={6}
+                      language="html"
+                      title="Header Code"
                     />
                   </div>
                   <div className="mb-4 sm:mb-6">
                     <Label htmlFor="footer-code" className="text-base">
                       Footer Code
                     </Label>
-                    <Textarea
-                      id="footer-code"
+                    <MonacoEditor
                       value={footerCode}
                       onChange={handleFooterCodeChange}
-                      placeholder="Enter footer code"
-                      className="font-mono mt-2"
-                      rows={6}
+                      language="html"
+                      title="Footer Code"
                     />
                   </div>
                 </>
@@ -258,7 +282,7 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
         >
           <AccordionTrigger className="hover:no-underline px-4 py-3 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white">
             <div className="flex items-center justify-between w-full">
-              <span className="text-base font-medium">Meta Data Fields</span>
+              <span className="text-base font-medium">Meta Fields</span>
             </div>
           </AccordionTrigger>
           <AccordionContent>
@@ -269,34 +293,25 @@ const MetaForm: React.FC<MetaFormProps> = ({ formData, style, form }) => {
                   name="meta_fields"
                   render={({ field }) => (
                     <FormItem className="mb-4 sm:mb-6">
-                      <FormLabel className="text-base">
-                        Meta Fields (JSON)
-                      </FormLabel>
-                      <Textarea
-                        {...field}
-                        placeholder="Enter meta fields as JSON"
-                        className="font-mono"
-                        rows={8}
-                        onChange={(e) => {
-                          field.onChange(e);
-                          handleMetaFieldsChange(e);
+                      <MonacoEditor
+                        value={field.value || ""}
+                        onChange={(value) => {
+                          field.onChange(value);
+                          handleMetaFieldsChange(value);
                         }}
+                        language="json"
+                        title="Meta Fields"
                       />
                     </FormItem>
                   )}
                 />
               ) : (
                 <div className="mb-4 sm:mb-6">
-                  <Label htmlFor="meta-fields" className="text-base">
-                    Meta Fields (JSON)
-                  </Label>
-                  <Textarea
-                    id="meta-fields"
+                  <MonacoEditor
                     value={metaFields}
                     onChange={handleMetaFieldsChange}
-                    placeholder="Enter meta fields as JSON"
-                    className="font-mono mt-2"
-                    rows={8}
+                    language="json"
+                    title="Meta Fields"
                   />
                 </div>
               )}

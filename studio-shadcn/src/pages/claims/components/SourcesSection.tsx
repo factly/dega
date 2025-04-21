@@ -130,7 +130,6 @@ const SourcesSection = ({
                     type="button"
                     variant="default"
                     size="sm"
-                    className="bg-blue-600 hover:bg-blue-700"
                     onClick={handleAddClaimSource}
                     disabled={
                       !newClaimSource.url || !newClaimSource.description
@@ -256,7 +255,6 @@ const SourcesSection = ({
                     type="button"
                     variant="default"
                     size="sm"
-                    className="bg-blue-600 hover:bg-blue-700"
                     onClick={handleAddReviewSource}
                     disabled={
                       !newReviewSource.url || !newReviewSource.description

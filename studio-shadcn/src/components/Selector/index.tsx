@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { ChevronDown, CircleX, Plus } from "lucide-react";
+import { ChevronDown, CircleX, Plus, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -627,7 +627,7 @@ function Selector({
                           className="w-full mt-2 flex items-center justify-center"
                           onClick={() => handleCreateEntity()}
                         >
-                          <Plus className="h-4 w-4 mr-2" />
+                          <PlusCircle className="h-4 w-4" />
                           Create new {action} {searchTerm}
                         </Button>
                       )}
