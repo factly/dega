@@ -1,6 +1,21 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { ChevronLeft, X } from "lucide-react";
+import {
+  ChevronLeft,
+  Files,
+  FolderClosed,
+  MoreHorizontal,
+  Tags,
+  X,
+  FileEdit,
+  FileSearch,
+  Code,
+  Settings,
+  MessageSquareCode,
+  SettingsIcon,
+  FilePlus,
+  FilePlus2,
+} from "lucide-react";
 
 // Shadcn Components
 import { Button } from "@/components/ui/button";
@@ -82,7 +97,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     {/* Details Section */}
                     <AccordionItem value="details" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
-                        General
+                        <div className="flex items-center">
+                          <FileEdit className="h-4 w-4 mr-2" />
+                          Details
+                        </div>
                       </AccordionTrigger>
                       <AccordionContent className="pt-4">
                         <div className="space-y-4">
@@ -192,7 +210,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     {/* Other Details Section */}
                     <AccordionItem value="other-details" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
-                        Other Details
+                        <div className="flex items-center">
+                          <Files className="h-4 w-4 mr-2" />
+                          Other Details
+                        </div>
                       </AccordionTrigger>
                       <AccordionContent className="pt-4">
                         <div className="space-y-4">
@@ -235,7 +256,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     {/* Categories Section */}
                     <AccordionItem value="categories" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
-                        Categories
+                        <div className="flex items-center">
+                          <FolderClosed className="h-4 w-4 mr-2" />
+                          Categories
+                        </div>
                       </AccordionTrigger>
                       <AccordionContent className="pt-4">
                         <FormField
@@ -260,7 +284,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     {/* Tags Section */}
                     <AccordionItem value="tags" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
-                        Tags
+                        <div className="flex items-center">
+                          <Tags className="h-4 w-4 mr-2" />
+                          Tags
+                        </div>
                       </AccordionTrigger>
                       <AccordionContent className="pt-4">
                         <FormField
@@ -285,51 +312,64 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     {/* Others Section */}
                     <AccordionItem value="others" className="border-b">
                       <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
-                        <div className="flex items-center">Others</div>
+                        <div className="flex items-center">
+                          <MoreHorizontal className="h-4 w-4 mr-2" />
+                          Others
+                        </div>
                       </AccordionTrigger>
                       <AccordionContent className="pt-4">
-                        <div className="space-y-2">
+                        <div className="space-y-4">
                           <Button
                             type="button"
                             variant="outline"
-                            className="w-full"
+                            size="lg"
+                            className="w-full justify-start"
                             onClick={() => setActivePanel("meta")}
                           >
+                            <SettingsIcon className="h-4 w-4 mr-2" />
                             SEO Settings
                           </Button>
                           <Button
                             type="button"
                             variant="outline"
-                            className="w-full"
+                            size="lg"
+                            className="w-full justify-start"
                             onClick={() => setActivePanel("meta")}
                           >
+                            <FilePlus2 className="h-4 w-4 mr-2" />
                             Add Meta Data
                           </Button>
                           <Button
                             type="button"
                             variant="outline"
-                            className="w-full"
+                            size="lg"
+                            className="w-full justify-start"
                             onClick={() => setActivePanel("code")}
                           >
+                            <Code className="h-4 w-4 mr-2" />
                             Code Injection
                           </Button>
                           <Button
                             type="button"
                             variant="outline"
-                            className="w-full"
+                            size="lg"
+                            className="w-full justify-start"
                             onClick={() => {
                               closePanel();
                               setSchemaModalOpen(true);
                             }}
                           >
+                            <MessageSquareCode className="h-4 w-4 mr-2" />
                             View Schemas
                           </Button>
                           <Button
                             type="button"
                             variant="outline"
-                            className="w-full"
+                            size="lg"
+                            className="w-full justify-start"
                             onClick={() => setActivePanel("meta-fields")}
                           >
+                            <FilePlus2 className="h-4 w-4 mr-2" />
                             Add Meta Fields
                           </Button>
                         </div>
@@ -359,10 +399,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
                   <Button
                     type="button"
                     variant="ghost"
-                    className="flex items-center gap-1"
+                    className="p-0 mb-4"
                     onClick={() => setActivePanel("main")}
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ChevronLeft className="h-4 w-4 mr-1" />
                     Back
                   </Button>
 
@@ -414,7 +454,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           <>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">Code Injection</h3>
-              <Button variant="ghost" size="icon" onClick={closePanel}>
+              <Button variant="outline" size="icon" onClick={closePanel}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
@@ -427,10 +467,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
                   <Button
                     type="button"
                     variant="ghost"
-                    className="flex justify-start gap-1"
+                    className="p-0 mb-4"
                     onClick={() => setActivePanel("main")}
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ChevronLeft className="h-4 w-4 mr-1" />
                     Back
                   </Button>
 
@@ -473,7 +513,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
           <>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">Meta Fields</h3>
-              <Button variant="ghost" size="icon" onClick={closePanel}>
+              <Button variant="outline" size="icon" onClick={closePanel}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
@@ -486,10 +526,10 @@ const RightPanel: React.FC<RightPanelProps> = ({
                   <Button
                     type="button"
                     variant="ghost"
-                    className="flex items-center gap-1"
+                    className="p-0 mb-4"
                     onClick={() => setActivePanel("main")}
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ChevronLeft className="h-4 w-4 mr-1" />
                     Back
                   </Button>
 

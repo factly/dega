@@ -48,6 +48,7 @@ function PostForm({
 }: PostFormProps) {
   const navigate = useNavigation();
   const formRef = useRef<HTMLFormElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<
     "draft" | "publish" | "ready" | "future"
   >((data.status as "draft" | "publish" | "ready" | "future") || "draft");
@@ -221,6 +222,29 @@ function PostForm({
     setValueChange(true);
     setShouldBlockNavigation(true);
   };
+
+  // Handle clicks outside the panel
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Only process this if the panel is visible
+      if (isPanelVisible && panelRef.current && activePanel) {
+        // Check if the click is outside the panel
+        if (!panelRef.current.contains(event.target as Node)) {
+          handlePanelClose();
+        }
+      }
+    };
+
+    // Add event listener when panel is visible
+    if (isPanelVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Clean up event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isPanelVisible, activePanel]);
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -431,18 +455,20 @@ function PostForm({
       </div>
 
       {activePanel && (
-        <PostSidePanel
-          form={form}
-          data={{ ...data, id: data.id ?? 0 } as PostData}
-          status={status}
-          setStatus={setStatus}
-          valueChange={valueChange}
-          publishedDate={publishedDate}
-          setPublishedDate={setPublishedDate}
-          onSave={onSave}
-          onClose={handlePanelClose}
-          isVisible={isPanelVisible}
-        />
+        <div ref={panelRef}>
+          <PostSidePanel
+            form={form}
+            data={{ ...data, id: data.id ?? 0 } as PostData}
+            status={status}
+            setStatus={setStatus}
+            valueChange={valueChange}
+            publishedDate={publishedDate}
+            setPublishedDate={setPublishedDate}
+            onSave={onSave}
+            onClose={handlePanelClose}
+            isVisible={isPanelVisible}
+          />
+        </div>
       )}
     </>
   );

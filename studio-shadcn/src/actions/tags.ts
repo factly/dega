@@ -17,6 +17,7 @@ import getError from "../utils/getError";
 import { Dispatch, AnyAction, UnknownAction } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store/index";
+import { maker } from "../utils/sluger";
 
 // Define interfaces
 interface Tag {
@@ -27,10 +28,12 @@ interface Tag {
   background_colour?: any;
   description_html?: string;
   medium_id?: string | number;
-	description: {
-    json: any;
-    html: string;
-  } | string;
+  description:
+    | {
+        json: any;
+        html: string;
+      }
+    | string;
   meta_fields?: string | Record<string, any>;
   [key: string]: any;
 }
@@ -117,14 +120,37 @@ export const getTag = (id: number | string): AppThunk => {
 export const createTag = (data: Omit<Tag, "id">): AppThunk => {
   return (dispatch: Dispatch<UnknownAction | NotificationAction>) => {
     dispatch(loadingTags());
+
+    const tagData = { ...data };
+
+    if (!tagData.slug && tagData.name) {
+      tagData.slug = maker(tagData.name);
+    }
+
+    if (!tagData.description) {
+      tagData.description = {
+        json: {},
+        html: "",
+      };
+    }
+
     return axios
-      .post(TAGS_API, data)
-      .then(() => {
+      .post(TAGS_API, tagData)
+      .then((response) => {
+        if (response.data) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html || "",
+          };
+          dispatch(addTag(GET_TAG, response.data));
+        }
         dispatch(resetTags());
         dispatch(addSuccessNotification("Tag created"));
+        return response.data;
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+        throw error;
       });
   };
 };

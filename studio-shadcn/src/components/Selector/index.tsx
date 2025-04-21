@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { ChevronsUpDown, CircleX } from "lucide-react";
+import { ChevronDown, CircleX, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
@@ -15,7 +16,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
 // Import the useAppDispatch hook
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
@@ -27,6 +27,7 @@ import * as ratingsActions from "../../actions/ratings";
 import * as categoriesActions from "../../actions/categories";
 import * as claimsActions from "../../actions/claims";
 import * as tagsActions from "../../actions/tags";
+import { maker } from "../../utils/sluger";
 
 // Define types for the Selector component props
 interface SelectorProps {
@@ -59,6 +60,7 @@ interface EntityDetail {
 interface QueryState {
   page: number;
   limit: number;
+  q?: string;
 }
 
 // Define type for entity state
@@ -142,7 +144,11 @@ function Selector({
     page: 1,
     limit: 20,
   });
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
+  const [createdEntityId, setCreatedEntityId] = useState<
+    string | number | null
+  >(null);
   const dispatch = useAppDispatch();
 
   let normalizedValue: (string | number)[] = [];
@@ -195,8 +201,13 @@ function Selector({
         const limitMatch =
           String(item.query.limit) === String(currentQuery.limit) ||
           (!item.query.limit && currentQuery.limit === 20);
+        const searchMatch =
+          (!currentQuery.q && !item.query.q) ||
+          (currentQuery.q &&
+            item.query.q &&
+            item.query.q.includes(currentQuery.q));
 
-        return pageMatch && limitMatch;
+        return pageMatch && limitMatch && searchMatch;
       });
 
       if (matchingReq) {
@@ -226,6 +237,14 @@ function Selector({
         detailsMap.set(id, entityState.details[id]);
       });
 
+    // If we have a created entity ID, make sure to include its details
+    if (createdEntityId && entityState.details[createdEntityId]) {
+      detailsMap.set(createdEntityId, entityState.details[createdEntityId]);
+      if (!ids.includes(createdEntityId)) {
+        ids.push(createdEntityId);
+      }
+    }
+
     // Convert map to array
     details = Array.from(detailsMap.values());
 
@@ -237,26 +256,27 @@ function Selector({
     };
   });
 
-  // Fix the entityCreatedFlag check to ensure ids is not empty
+  // Fix the entityCreatedFlag check to ensure we have the created entity
   useEffect(() => {
-    if (entityCreatedFlag && !loading && entity && ids.length > 0) {
+    if (entityCreatedFlag && !loading && createdEntityId) {
       if (!mode) {
         if (originalValueType === "number") {
-          onChange(Number(ids[0]));
+          onChange(Number(createdEntityId));
         } else {
-          onChange(ids[0]);
+          onChange(createdEntityId);
         }
       } else {
-        const newValue = [...normalizedValue, ids[0]];
+        const newValue = [...normalizedValue, createdEntityId];
         onChange(newValue);
       }
       setEntityCreatedFlag(false);
+      setCreatedEntityId(null);
+      setSearchTerm("");
     }
   }, [
     entityCreatedFlag,
     loading,
-    ids,
-    entity,
+    createdEntityId,
     normalizedValue,
     mode,
     onChange,
@@ -267,6 +287,26 @@ function Selector({
     fetchEntities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
+
+  // Handle search term changes
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    if (value) {
+      setQuery({ ...query, q: value, page: 1 });
+    } else {
+      // Remove q from query when search is cleared
+      const { q, ...rest } = query;
+      setQuery(rest);
+    }
+  };
+
+  // Handle clearing the search input
+  const handleClearSearch = () => {
+    setSearchTerm("");
+    // Remove q from query when search is cleared
+    const { q, ...rest } = query;
+    setQuery(rest);
+  };
 
   const fetchEntities = () => {
     if (!selectorType) return;
@@ -347,8 +387,11 @@ function Selector({
   };
 
   // Handle create entity
-  const handleCreateEntity = () => {
+  const handleCreateEntity = (name?: string) => {
     if (!selectorType || !createEntity) return;
+
+    const entityName = name || searchTerm;
+    if (!entityName || entityName.trim() === "") return;
 
     // Map create action names
     let createFn: any;
@@ -379,18 +422,30 @@ function Selector({
       return;
     }
 
-    const newName = prompt(`Enter name for new ${createEntity}:`);
-    if (!newName || newName.trim() === "") return;
+    // Prepare the data object based on entity type
+    let entityData: any = {
+      name: entityName.trim(),
+    };
 
-    dispatch(
-      createFn({
-        name: newName.trim(),
+    // For tags, also generate a slug
+    if (entity === "tags") {
+      entityData.slug = maker(entityName.trim());
+    }
+
+    dispatch(createFn(entityData))
+      .then((response: any) => {
+        if (response && response.id) {
+          setCreatedEntityId(response.id);
+        } else if (response && response.data && response.data.id) {
+          setCreatedEntityId(response.data.id);
+        }
+        // Set a new query to trigger a refetch
+        setQuery({ page: 1, limit: 20 });
+        setEntityCreatedFlag(true);
       })
-    ).then(() => {
-      // Set a new query to trigger a refetch
-      setQuery({ page: 1, limit: 20 });
-      setEntityCreatedFlag(true);
-    });
+      .catch((error: any) => {
+        console.error(`Error creating ${entity}:`, error);
+      });
   };
 
   // Filtering the details to remove invalid options and handle undefined items
@@ -420,11 +475,30 @@ function Selector({
                   details.find((item) => item?.id === normalizedValue[0])
                 )
               : placeholder}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0 w-[var(--radix-popover-trigger-width)]">
           <Command>
+            <div className="flex items-center px-2 border-b relative">
+              <CommandInput
+                placeholder={`Search ${action}...`}
+                value={searchTerm}
+                onValueChange={handleSearch}
+                className="flex-1"
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClearSearch}
+                  className="h-8 w-8 p-0 absolute right-2"
+                  aria-label="Clear search"
+                >
+                  <CircleX className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
             <CommandList>
               <ScrollArea onScrollCapture={handleScroll}>
                 <CommandEmpty>
@@ -433,15 +507,16 @@ function Selector({
                   ) : (
                     <>
                       <div className="p-2 text-center text-sm">
-                        No items found
+                        No {action} found
                       </div>
-                      {createEntity && (
+                      {createEntity && searchTerm && (
                         <Button
                           variant="outline"
-                          className="w-full mt-2"
-                          onClick={handleCreateEntity}
+                          className="w-full mt-2 flex items-center justify-center"
+                          onClick={() => handleCreateEntity()}
                         >
-                          Create a new {createEntity}
+                          <Plus className="h-4 w-4 mr-2" />
+                          Create "{searchTerm}"
                         </Button>
                       )}
                     </>
@@ -512,11 +587,30 @@ function Selector({
                 <span className="text-muted-foreground">{placeholder}</span>
               )}
             </div>
-            <ChevronsUpDown className="absolute right-3 top-3 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronDown className="absolute right-3 top-3 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
           <Command>
+            <div className="flex items-center px-2 border-b relative">
+              <CommandInput
+                placeholder={`Search ${action}...`}
+                value={searchTerm}
+                onValueChange={handleSearch}
+                className="flex-1"
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClearSearch}
+                  className="h-8 w-8 p-0 absolute right-2"
+                  aria-label="Clear search"
+                >
+                  <CircleX className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
             <CommandList>
               <ScrollArea onScrollCapture={handleScroll}>
                 <CommandEmpty>
@@ -525,15 +619,16 @@ function Selector({
                   ) : (
                     <>
                       <div className="p-2 text-center text-sm">
-                        No items found
+                        No {action} found
                       </div>
-                      {createEntity && (
+                      {createEntity && searchTerm && (
                         <Button
                           variant="outline"
-                          className="mt-2"
-                          onClick={handleCreateEntity}
+                          className="w-full mt-2 flex items-center justify-center"
+                          onClick={() => handleCreateEntity()}
                         >
-                          Create a new {createEntity}
+                          <Plus className="h-4 w-4 mr-2" />
+                          Create new {action} {searchTerm}
                         </Button>
                       )}
                     </>

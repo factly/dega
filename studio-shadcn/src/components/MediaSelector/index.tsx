@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Trash2, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import MediaUploader from "./UploadMedium";
@@ -75,6 +70,8 @@ function MediaSelector({
   // Handle successful upload in the upload tab
   const onUpload = (_values: any, medium: Medium): void => {
     setSelected(medium);
+    onChange(medium.id);
+    setShow(false);
   };
 
   // Calculate responsive container styles
@@ -140,31 +137,6 @@ function MediaSelector({
               <MediaUploader onMediaUpload={onUpload} profile={profile} />
             )}
           </div>
-
-          <DialogFooter className={isMobile ? "flex-col space-y-2 mt-4" : ""}>
-            <Button
-              variant="outline"
-              onClick={() => setShow(false)}
-              className={isMobile ? "w-full" : ""}
-              type="button"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                setShow(false);
-                if (selected) {
-                  onChange(selected.id);
-                } else {
-                  onChange(null);
-                }
-              }}
-              className={isMobile ? "w-full" : ""}
-              type="button"
-            >
-              Ok
-            </Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
 

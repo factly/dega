@@ -57,12 +57,11 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     "/callback",
   ];
 
-  // Creation paths where sidebar should be hidden
-  const hiddenSidebarCreationPaths = [
-    "/posts/create",
-    "/pages/create",
-    "/fact-checks/create",
-  ];
+  const isEditPath = () => {
+    // Check for paths like /posts/{id}/edit, /fact-checks/{id}/edit, etc.
+    const editPathRegex = /^\/(posts|pages|fact-checks)\/[^/]+\/edit$/;
+    return editPathRegex.test(location.pathname);
+  };
 
   // Public paths that should render children regardless of loading state
   const publicPaths = [
@@ -151,18 +150,19 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
     }
   }, [dispatch, session.details, hasInitiatedFetch]);
 
+  // Creation paths where sidebar should be hidden
+  const hiddenSidebarCreationPaths = [
+    "/posts/create",
+    "/pages/create",
+    "/fact-checks/create",
+  ];
+
   const shouldHideSidebar =
     hiddenSidebarPaths.some((path) => location.pathname.startsWith(path)) ||
-    hiddenSidebarCreationPaths.includes(location.pathname);
+    hiddenSidebarCreationPaths.includes(location.pathname) ||
+    isEditPath();
 
   const isSettingsPath = location.pathname.startsWith("/settings");
-
-  const hideSidebar =
-    (location.pathname.includes("posts") ||
-      location.pathname.includes("fact-checks") ||
-      location.pathname.includes("pages")) &&
-    (location.pathname.includes("edit") ||
-      location.pathname.includes("create"));
 
   const isPublicPath = publicPaths.some((path) =>
     location.pathname.startsWith(path)
@@ -203,7 +203,7 @@ export const BasicLayout: FC<BasicLayoutProps> = ({ children }) => {
             className={cn(
               isMobile ? "p-4 h-[calc(100vh-4rem)]" : "p-6 h-screen",
               isSettingsPath && !isMobile && "ml-[265px]",
-              hideSidebar && !isMobile && "ml-0"
+              shouldHideSidebar && !isMobile && "ml-0"
             )}
           >
             {children}

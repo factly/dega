@@ -22,6 +22,10 @@ import {
   Settings,
   MoreHorizontal,
   ArrowLeft,
+  Files,
+  MessageSquareCode,
+  FilePlus2,
+  SettingsIcon,
 } from "lucide-react";
 import {
   Accordion,
@@ -288,10 +292,14 @@ function PostSidePanel({
       );
     }
 
-    // Main panel (default view)
     return (
       <div className="space-y-4">
-        <Accordion type="single" collapsible className="w-full space-y-3">
+        <Accordion
+          type="single"
+          collapsible
+          defaultValue="details"
+          className="w-full space-y-3"
+        >
           {/* Details section */}
           <AccordionItem value="details" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
@@ -436,12 +444,11 @@ function PostSidePanel({
               </div>
             </AccordionContent>
           </AccordionItem>
-
           {/* Other Details section */}
           <AccordionItem value="other-details" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
               <div className="flex items-center">
-                <FileEdit className="h-4 w-4 mr-2" />
+                <Files className="h-4 w-4 mr-2" />
                 Other Details
               </div>
             </AccordionTrigger>
@@ -492,7 +499,6 @@ function PostSidePanel({
               </div>
             </AccordionContent>
           </AccordionItem>
-
           {/* Categories section */}
           <AccordionItem value="categories" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
@@ -524,7 +530,6 @@ function PostSidePanel({
               </div>
             </AccordionContent>
           </AccordionItem>
-
           {/* Tags section */}
           <AccordionItem value="tags" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
@@ -556,7 +561,6 @@ function PostSidePanel({
               </div>
             </AccordionContent>
           </AccordionItem>
-
           {/* Others section */}
           <AccordionItem value="others" className="border-b">
             <AccordionTrigger className="text-base font-medium hover:no-underline px-4 data-[state=open]:bg-[#F0F5FF] data-[state=closed]:bg-white rounded-md">
@@ -573,7 +577,7 @@ function PostSidePanel({
                   className="w-full justify-start"
                   onClick={() => setActiveSubPanel("seo")}
                 >
-                  <FileSearch className="h-4 w-4 mr-2" />
+                  <SettingsIcon className="h-4 w-4 mr-2" />
                   SEO Settings
                 </Button>
 
@@ -593,8 +597,8 @@ function PostSidePanel({
                   className="w-full justify-start"
                   onClick={() => setActiveSubPanel("meta_fields")}
                 >
-                  <Settings className="h-4 w-4 mr-2" />
-                  Meta Fields
+                  <FilePlus2 className="h-4 w-4 mr-2" />
+                  Add Meta Fields
                 </Button>
 
                 {/* View Schemas button */}
@@ -608,7 +612,7 @@ function PostSidePanel({
                   }}
                   type="button"
                 >
-                  <Code className="h-4 w-4 mr-2" />
+                  <MessageSquareCode className="h-4 w-4 mr-2" />
                   View Schemas
                 </Button>
               </div>

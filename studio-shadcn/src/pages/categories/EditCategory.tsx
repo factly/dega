@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import CategoryForm from "./components/CategoryForm";
 import { useSelector } from "react-redux";
 import { updateCategory, getCategory } from "../../actions/categories";
@@ -23,22 +23,30 @@ function EditCategory(): React.ReactElement {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
+  // Add a ref to track if we've already fetched this category
+  const fetchedRef = useRef<string | null>(null);
 
   const { category, loading } = useSelector((state: RootState) => {
     return {
-      category: id && state.categories.details[id] ? state.categories.details[id] : null,
+      category:
+        id && state.categories.details[id]
+          ? state.categories.details[id]
+          : null,
       loading: state.categories.loading,
     };
   });
 
   useEffect(() => {
-    if (id) {
+    // Only fetch if we have an ID and haven't already fetched this specific ID
+    if (id && fetchedRef.current !== id) {
       dispatch(getCategory(id));
+      // Update our ref to remember we've fetched this ID
+      fetchedRef.current = id;
     }
   }, [id, dispatch]);
 
   // Show loading state while fetching category data
-  if (loading) {
+  if (loading && !category) {
     return (
       <div className="flex flex-col items-center justify-center p-6">
         <Skeleton className="h-12 w-full" />
@@ -63,12 +71,14 @@ function EditCategory(): React.ReactElement {
       const result = dispatch(updateCategory(updatedValues));
 
       if (result && typeof result.then === "function") {
-        result.then(() => {
-          // Navigate back to the categories list
-          navigate("/categories");
-        }).catch((error) => {
-          console.error("Error updating category:", error);
-        });
+        result
+          .then(() => {
+            // Navigate back to the categories list
+            navigate("/categories");
+          })
+          .catch((error) => {
+            console.error("Error updating category:", error);
+          });
       } else {
         // If it's not a Promise, navigate directly back
         navigate("/categories");
@@ -78,7 +88,7 @@ function EditCategory(): React.ReactElement {
 
   return (
     <>
-      <Helmet title={`${category?.name || 'Edit'} - Category`} />
+      <Helmet title={`${category?.name || "Edit"} - Category`} />
       <CategoryForm data={category} onCreate={onUpdate} />
     </>
   );

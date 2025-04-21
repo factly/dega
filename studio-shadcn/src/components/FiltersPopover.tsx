@@ -71,6 +71,7 @@ const FiltersPopover = <T extends Record<string, any>>({
                       mode="multiple"
                       action="Categories"
                       placeholder="Filter Categories"
+                      createEntity="Category"
                       {...field}
                     />
                   </FormItem>

@@ -1,7 +1,6 @@
 // Main Pages Component
 import { useEffect, useState, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
@@ -25,8 +24,6 @@ import MobileBreadcrumb from "@/components/MobileBreadcrumb";
 import SecuredButton from "@/components/SecuredButton";
 
 // Custom Components
-import SearchInput from "../../components/SearchInput";
-import SearchButton from "@/components/SearchButton";
 import FiltersPopover from "@/components/FiltersPopover";
 import StatusTabs from "@/components/StatusTabs";
 import PaginationFooter from "@/components/PaginationFooter";
@@ -51,11 +48,11 @@ function Pages({ formats }: PagesProps): React.ReactElement {
 
   // State
   const [templatesOpen, setTemplatesOpen] = useState(false);
-  const [isSearchExpanded, setIsSearchExpanded] = useState(!!query.get("q"));
   const [loadingTimeout, setLoadingTimeout] = useState(false);
   const timeoutRef = useRef<number | null>(null);
-  const [cachedFormat, setCachedFormat] = useState<Format | undefined>(undefined);
-
+  const [cachedFormat, setCachedFormat] = useState<Format | undefined>(
+    undefined
+  );
 
   // Use ref to avoid state updates during render
   const hasCachedFormatRef = useRef(false);
@@ -80,27 +77,13 @@ function Pages({ formats }: PagesProps): React.ReactElement {
   }, []);
 
   // Custom hooks for page functionality
-  const {
-    filters,
-    setFilters,
-    searchText,
-    setSearchText,
-    status,
-    setStatus,
-    form,
-  } = usePageFilters(query);
+  const { filters, setFilters, status, setStatus, form } =
+    usePageFilters(query);
 
   const { pages, total, loading, tags, categories } = usePageData(query);
 
   const { handlePageChange, handlePageSizeChange, totalPages, onPagination } =
     usePagination(filters, setFilters, total, navigate, pathname, query);
-
-  // If we have search text, make sure search is expanded on mobile
-  useEffect(() => {
-    if (searchText && isMobile && !isSearchExpanded) {
-      setIsSearchExpanded(true);
-    }
-  }, [searchText, isMobile, isSearchExpanded]);
 
   // Fetch pages when search changes
   useEffect(() => {
@@ -134,7 +117,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
     const params = getUrlParams(query, [
       "page",
       "limit",
-      "q",
       "sortBy",
       "tag",
       "category",
@@ -143,45 +125,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
     ]);
 
     dispatch(getPages(params));
-  };
-
-  // Handler functions
-  const handleSearchSubmit = () => {
-    const newQuery = new URLSearchParams(query.toString());
-
-    if (searchText.trim()) {
-      newQuery.set("q", searchText);
-    } else {
-      newQuery.delete("q");
-    }
-
-    // Reset page when searching
-    newQuery.set("page", "1");
-
-    navigate({
-      pathname,
-      search: "?" + newQuery.toString(),
-    });
-  };
-
-  const clearSearch = () => {
-    setSearchText("");
-    const newQuery = new URLSearchParams(query.toString());
-    newQuery.delete("q");
-
-    navigate({
-      pathname,
-      search: "?" + newQuery.toString(),
-    });
-
-    // If on mobile, collapse the search input
-    if (isMobile) {
-      setIsSearchExpanded(false);
-    }
-  };
-
-  const toggleSearch = () => {
-    setIsSearchExpanded(!isSearchExpanded);
   };
 
   const handleStatusChange = (value: string) => {
@@ -220,11 +163,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
 
   const onSave = (values: FilterParams) => {
     const searchFilter = new URLSearchParams();
-
-    // Preserve search text if present
-    if (searchText.trim()) {
-      searchFilter.set("q", searchText);
-    }
 
     // Add status filter
     if (status !== "all") searchFilter.set("status", status);
@@ -320,10 +258,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
             </div>
           )}
           <div className="flex gap-2 items-center">
-            <div>
-              <SearchButton onClick={toggleSearch} />
-            </div>
-
             <div className="flex items-center gap-2">
               {/* Templates Button */}
               <Button
@@ -348,15 +282,7 @@ function Pages({ formats }: PagesProps): React.ReactElement {
       ) : (
         /* Desktop Header */
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4 flex-1">
-            {/* Search Input - Always visible on desktop */}
-            <SearchInput
-              searchText={searchText}
-              setSearchText={setSearchText}
-              handleSearchSubmit={handleSearchSubmit}
-              clearSearch={clearSearch}
-            />
-          </div>
+          <div className="flex-1"></div>
           <div className="flex items-center gap-4 ">
             {/* Templates Button */}
             <Button
@@ -376,18 +302,6 @@ function Pages({ formats }: PagesProps): React.ReactElement {
               <span>Create Page</span>
             </SecuredButton>
           </div>
-        </div>
-      )}
-      {/* Search input row - appears when expanded */}
-      {isSearchExpanded && isMobile && (
-        <div className="w-full">
-          <SearchInput
-            searchText={searchText}
-            setSearchText={setSearchText}
-            handleSearchSubmit={handleSearchSubmit}
-            clearSearch={clearSearch}
-            autoFocus={true}
-          />
         </div>
       )}
       <div className="flex justify-between items-center">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
@@ -148,6 +148,10 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
     useState<boolean>(false);
   const [schemaModalOpen, setSchemaModalOpen] = useState<boolean>(false);
 
+  // Refs for click-outside functionality
+  const panelRef = useRef<HTMLDivElement>(null);
+  const claimPanelRef = useRef<HTMLDivElement>(null);
+
   const [claimID, setClaimID] = useState<string>("");
   const [claimOrder, setClaimOrder] = useState<string[]>(
     data.claims && data.claims.length > 0
@@ -228,6 +232,35 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
       setClaimPopoverOpen(false);
     }, 500);
   };
+
+  // Handle clicks outside the panels
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Handle main panel
+      if (isPanelVisible && panelRef.current && activePanel) {
+        if (!panelRef.current.contains(event.target as Node)) {
+          handlePanelClose();
+        }
+      }
+
+      // Handle claim panel
+      if (isClaimPopoverVisible && claimPanelRef.current && claimPopoverOpen) {
+        if (!claimPanelRef.current.contains(event.target as Node)) {
+          handleClaimPopoverClose();
+        }
+      }
+    };
+
+    // Add event listener when any panel is visible
+    if (isPanelVisible || isClaimPopoverVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Clean up event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isPanelVisible, activePanel, isClaimPopoverVisible, claimPopoverOpen]);
 
   // Set up form value change monitoring
   useEffect(() => {
@@ -616,6 +649,7 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
 
     return (
       <div
+        ref={claimPanelRef}
         className={`fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background border-l shadow-lg transform transition-transform duration-500 overflow-y-auto
         ${isClaimPopoverVisible ? "translate-x-0" : "translate-x-full"}`}
       >
@@ -700,17 +734,19 @@ const FactCheckForm: React.FC<FactCheckFormProps> = ({
 
       {/* Right side panel with animation */}
       {activePanel && (
-        <RightPanel
-          activePanel={activePanel}
-          closePanel={handlePanelClose}
-          form={form}
-          data={data}
-          onSave={onSave}
-          setActivePanel={setActivePanel}
-          isVisible={isPanelVisible}
-          setClaimPopoverOpen={handleClaimPopoverOpen}
-          setSchemaModalOpen={setSchemaModalOpen}
-        />
+        <div ref={panelRef}>
+          <RightPanel
+            activePanel={activePanel}
+            closePanel={handlePanelClose}
+            form={form}
+            data={data}
+            onSave={onSave}
+            setActivePanel={setActivePanel}
+            isVisible={isPanelVisible}
+            setClaimPopoverOpen={handleClaimPopoverOpen}
+            setSchemaModalOpen={setSchemaModalOpen}
+          />
+        </div>
       )}
 
       {/* Main Form with blur effect when panel is open */}
