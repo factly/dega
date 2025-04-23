@@ -1,2 +1,0 @@
-export const SET_SESSIONS_LOADING = 'SET_SESSIONS_LOADING';
-export const ADD_SESSION = 'ADD_SESSION';
