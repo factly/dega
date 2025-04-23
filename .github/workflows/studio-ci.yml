@@ -2,12 +2,12 @@ name: Studio CI
 on:
   pull_request:
     branches: [develop, master]
-    paths: 
-    - 'studio/**'
+    paths:
+      - "studio/**"
   push:
     branches: [develop, master]
-    paths: 
-    - 'studio/**'
+    paths:
+      - "studio/**"
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache node-modules
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -28,7 +28,7 @@ jobs:
       - name: Use NodeJS
         uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: "14.x"
       - run: npm ci
         working-directory: ${{env.working-directory}}
       - run: npm run format:check

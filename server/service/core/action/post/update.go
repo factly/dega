@@ -212,6 +212,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+	relatedURLsJSON, _ := json.Marshal(post.RelatedURLs)
 
 	updateMap := map[string]interface{}{
 		"created_at":         post.CreatedAt,
@@ -236,6 +237,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"migrated_html":      post.MigratedHTML,
 		"language":           post.Language,
 		"custom_format":      post.CustomFormat,
+		"related_urls":       postgres.Jsonb{RawMessage: relatedURLsJSON},
 	}
 
 	if post.MigrationID != nil {

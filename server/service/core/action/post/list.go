@@ -230,6 +230,7 @@ func publicList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	q := r.URL.Query().Get("q")
 	sortBy := r.URL.Query().Get("sort_by")
 	sortOrder := r.URL.Query().Get("sort_order")
 	formatIDs := r.URL.Query()["format_ids"]
@@ -368,6 +369,11 @@ func publicList(w http.ResponseWriter, r *http.Request) {
 
 	if isFeaturedPost {
 		tx = tx.Where("is_featured = ?", isFeaturedPost)
+	}
+
+	if q != "" {
+		queryStr := fmt.Sprintf("%%%s%%", q)
+		tx = tx.Where("title ILIKE ? or subtitle ILIKE  ? or excerpt ILIKE ?", queryStr, queryStr, queryStr)
 	}
 
 	if len(categoryUUIDs) > 0 || len(categorySlugs) > 0 {

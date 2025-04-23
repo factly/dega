@@ -43,6 +43,7 @@ type Post struct {
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`
 	CustomFormat     string         `gorm:"column:custom_format" json:"custom_format"`
+	RelatedURLs      postgres.Jsonb `gorm:"column:related_urls" json:"related_urls"`
 }
 
 // PostAuthor model

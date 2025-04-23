@@ -171,6 +171,8 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		}
 	}
 
+	relatedURLsJSON, _ := json.Marshal(post.RelatedURLs)
+
 	result.Post = model.Post{
 		Base: config.Base{
 			CreatedAt: post.CreatedAt,
@@ -198,6 +200,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		Language:         post.Language,
 		CustomFormat:     post.CustomFormat,
 		IsFeatured:       post.IsFeatured,
+		RelatedURLs:      postgres.Jsonb{RawMessage: relatedURLsJSON},
 	}
 
 	if post.MigrationID != nil {
