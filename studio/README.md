@@ -1,31 +1,50 @@
-# Dega Admin Portal
+# React + TypeScript + Vite
 
-### Setup:
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Clone the repo: `git clone https://github.com/factly/dega-studio.git`<br />
-Install dependencies: `npm i`
+Currently, two official plugins are available:
 
-### To start the development server:<br />
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-`npm start` from the root of the folder <br />
-Opens in [http://localhost:3000](http://localhost:3000)
+## Expanding the ESLint configuration
 
-### To run tests:<br />
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-`npm test`
+- Configure the top-level `parserOptions` property like this:
 
-### To generate test coverage:<br />
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-`npm test -- --coverage`<br />
-Generates a `coverage` folder. Open `index.html` in browser.
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-### To build code for production:<br />
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-`npm run build`<br />
-Bundles React in production mode and optimizes the build for the best performance.
-
-**Releasability:** [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=alert_status)](https://sonarcloud.io/dashboard?id=factly_dega-studio)  
-**Reliability:** [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=factly_dega-studio) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=bugs)](https://sonarcloud.io/dashboard?id=factly_dega-studio)  
-**Security:** [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=security_rating)](https://sonarcloud.io/dashboard?id=factly_dega-studio) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=factly_dega-studio)  
-**Maintainability:** [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=factly_dega-studio) [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=sqale_index)](https://sonarcloud.io/dashboard?id=factly_dega-studio) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=code_smells)](https://sonarcloud.io/dashboard?id=factly_dega-studio)  
-**Other:** [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=ncloc)](https://sonarcloud.io/dashboard?id=factly_dega-studio) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=factly_dega-studio) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-studio&metric=coverage)](https://sonarcloud.io/dashboard?id=factly_dega-studio)
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```

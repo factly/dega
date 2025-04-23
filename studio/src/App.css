@@ -1,16 +1,23 @@
-.ant-form {
-  max-width: 100%;
+body.modal-open::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 9000;
+  pointer-events: none;
+}
+body.modal-open .fixed {
+  position: relative;
+  z-index: auto !important;
 }
 
-.search-box-hide {
-  opacity: 0 !important;
-  width: 0 !important;
-  height: 0 !important;
-  transition: all 0s ease-in-out;
+body.modal-open .z-\[9999\] {
+  position: fixed;
+  z-index: 9999 !important;
 }
 
-.search-box-expand {
-  width: 100%;
-  height: auto;
-  transition: all 0.5s ease-in-out;
-}
