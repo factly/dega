@@ -85,6 +85,9 @@ function PostForm({
     );
   }
 
+  if (!data.related_urls) {
+    formData.related_urls = [];
+  }
   // Initialize form
   const form = useForm<PostData>({
     defaultValues: formData as PostData,
@@ -138,7 +141,7 @@ function PostForm({
       }
     }
 
-    finalData.description = descriptionContent
+    finalData.description = descriptionContent;
     finalData.description_html = descriptionContent.html;
 
     setShouldBlockNavigation(false);
@@ -160,9 +163,8 @@ function PostForm({
     }
 
     try {
-      console.log({finalData})
       onCreate(finalData);
-    
+
       // Close panel if open
       handlePanelClose();
     } finally {
@@ -213,7 +215,6 @@ function PostForm({
   };
 
   const handleDescriptionChange = (value: any) => {
-    console.log({value})
     setDescriptionContent({
       json: value.json || {},
       html: value.html || "",

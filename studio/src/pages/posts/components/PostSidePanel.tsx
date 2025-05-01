@@ -7,6 +7,7 @@ import {
   FormItem,
   FormLabel,
   FormControl,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,14 +19,14 @@ import {
   Tags,
   FolderClosed,
   Code,
-  FileSearch,
-  Settings,
   MoreHorizontal,
   ArrowLeft,
   Files,
   MessageSquareCode,
   FilePlus2,
   SettingsIcon,
+  Trash2,
+  Plus,
 } from "lucide-react";
 import {
   Accordion,
@@ -53,7 +54,6 @@ import Selector from "../../../components/Selector";
 import MediaSelector from "../../../components/MediaSelector";
 import { formatDate } from "../../../utils/date";
 import { addErrorNotification } from "../../../actions/notifications";
-import { maker } from "../../../utils/sluger";
 import { Post as PostData } from "../types";
 
 // Import languages data
@@ -90,9 +90,6 @@ function PostSidePanel({
   // Additional state for subpanels
   const [activeSubPanel, setActiveSubPanel] = useState<string | null>(null);
   const [schemaPanelOpen, setSchemaPanelOpen] = useState<boolean>(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<string>(
-    form.getValues("language") || "English"
-  );
 
   // Language options
   const languageOptions = languages.map((language: string) => ({
@@ -103,13 +100,6 @@ function PostSidePanel({
   // Handler for date selection to ensure it updates the parent component
   const handleDateSelect = (date: Date | undefined) => {
     setPublishedDate(date);
-  };
-
-  // Handle title change to update slug
-  const onTitleChange = (value: string) => {
-    if (status !== "publish") {
-      form.setValue("slug", maker(value));
-    }
   };
 
   // Copy schema to clipboard
@@ -370,7 +360,6 @@ function PostSidePanel({
                         value={field.value || "English"}
                         onValueChange={(value) => {
                           field.onChange(value);
-                          setSelectedLanguage(value);
                         }}
                       >
                         <SelectTrigger>
@@ -405,6 +394,57 @@ function PostSidePanel({
                   )}
                 />
 
+                {/* Related URLs */}
+                <FormField
+                  control={form.control}
+                  name="related_urls"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Related URLs</FormLabel>
+                      <div className="space-y-2">
+                        {(field?.value ?? []).map((url, index) => (
+                          <div key={index} className="flex gap-2 items-center">
+                            <Input
+                              value={url}
+                              onChange={(e) => {
+                                const updatedUrls = [...(field.value || [])];
+                                updatedUrls[index] = e.target.value;
+                                field.onChange(updatedUrls);
+                              }}
+                              placeholder="https://degacms.com/posts"
+                              className="flex-1"
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              onClick={() => {
+                                const updatedUrls = (field.value || []).filter(
+                                  (_, i) => i !== index
+                                );
+                                field.onChange(updatedUrls);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            field.onChange([...(field.value || []), ""]);
+                          }}
+                          className="mt-2"
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add URL
+                        </Button>
+                      </div>
+                    </FormItem>
+                  )}
+                />
                 {/* Featured Toggle */}
                 <FormField
                   control={form.control}

@@ -16,7 +16,6 @@ export interface Space {
   [key: string]: any;
 }
 
-
 export interface Post {
   updated_at?: string;
   created_at?: string;
@@ -28,10 +27,11 @@ export interface Post {
   id: number;
   title: string;
   slug: string;
-  status: "publish" | "draft" | "ready" | 'future';
+  status: "publish" | "draft" | "ready" | "future";
   categories?: number[];
   tags?: number[];
   claims?: number[];
+  related_urls: string[] | null;
   [key: string]: any;
 }
 
