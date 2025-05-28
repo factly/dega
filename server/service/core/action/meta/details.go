@@ -29,13 +29,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	metaType := r.URL.Query().Get("type")
-	iframelyAPIKey := viper.GetString("iframely_api_key")
 
 	var path string
 	if metaType == "oembed" || metaType == "link" {
-		path = fmt.Sprintf("/oembed?url=%s&omit_script=1&api_key="+iframelyAPIKey, url)
+		path = fmt.Sprintf("/oembed?url=%s&omit_script=1", url)
 	} else if metaType == "iframely" {
-		path = fmt.Sprintf("/iframely?url=%s&omit_script=1&api_key="+iframelyAPIKey, url)
+		path = fmt.Sprintf("/iframely?url=%s&omit_script=1", url)
 	} else {
 		errorx.Render(w, errorx.Parser(errorx.GetMessage("please pass valid type query parameter", http.StatusBadRequest)))
 		return
