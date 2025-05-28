@@ -7,7 +7,6 @@ import (
 
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/viper"
 
@@ -69,16 +68,9 @@ func main() {
 		cache.SetupCache(viper.GetString("redis_url"), viper.GetString("redis_password"), time.Duration(cacheExpiration)*time.Second, 0)
 	}
 
-	if config.SearchEnabled() {
-		err := meilisearchx.SetupMeiliSearch(viper.GetString("meilisearch_index"), []string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "status", "space_id"})
-		if err != nil {
-			log.Println(err)
-		}
-	}
-
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	r := router.With(validator.CheckSpace(), validator.CheckOrganisation())
+	r := router.With(validator.CheckSpace())
 
 	if cache.IsEnabled() {
 		r = r.With(cache.CachingMiddleware(), cache.RespMiddleware)

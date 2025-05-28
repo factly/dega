@@ -4,18 +4,17 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // update - Update category by id
@@ -33,14 +32,7 @@ import (
 // @Router /core/categories/{category_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -48,13 +40,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	categoryID := chi.URLParam(r, "category_id")
-	id, err := strconv.Atoi(categoryID)
+	id, err := uuid.Parse(categoryID)
 
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
-
 	}
 
 	category := &service.Category{}
@@ -75,22 +66,22 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	// check record exists or not
 	categoryService := service.GetCategoryService()
-	_, err = categoryService.GetById(sID, int(id))
+	_, err = categoryService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
-	if category.ParentID != 0 {
+	if category.ParentID != uuid.Nil {
 		// Check if parent category exist or not
-		_, err = categoryService.GetById(sID, int(category.ParentID))
+		_, err = categoryService.GetById(authCtx.SpaceID, category.ParentID)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category does not exist", http.StatusUnprocessableEntity)))
 			return
 		}
 	}
-	result, serviceErr := categoryService.Update(sID, uID, id, category)
+	result, serviceErr := categoryService.Update(authCtx.SpaceID, id, authCtx.UserID, category)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -98,8 +89,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id":                result.ID,
-		"kind":              "category",
+		"id": result.ID,
+
 		"name":              result.Name,
 		"slug":              result.Slug,
 		"description":       result.Description,
@@ -109,11 +100,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearch.UpdateDocument(meiliIndex, meiliObj)
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("category.updated", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("category.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("category.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

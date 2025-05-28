@@ -10,14 +10,11 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/google/uuid"
 )
 
 func (r *ratingResolver) ID(ctx context.Context, obj *models.Rating) (string, error) {
 	return fmt.Sprint(obj.ID), nil
-}
-
-func (r *ratingResolver) SpaceID(ctx context.Context, obj *models.Rating) (int, error) {
-	return int(obj.SpaceID), nil
 }
 
 func (r *ratingResolver) Description(ctx context.Context, obj *models.Rating) (interface{}, error) {
@@ -53,14 +50,14 @@ func (r *ratingResolver) FooterCode(ctx context.Context, obj *models.Rating) (*s
 }
 
 func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
-	if obj.MediumID == 0 {
+	if obj.MediumID == uuid.Nil {
 		return nil, nil
 	}
 
 	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
-func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error) {
+func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -88,7 +85,7 @@ func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, li
 
 	var total int64
 	tx.Where(&models.Rating{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Preload("Medium").Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)

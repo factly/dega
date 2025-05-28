@@ -12,14 +12,11 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/google/uuid"
 )
 
 func (r *claimResolver) ID(ctx context.Context, obj *models.Claim) (string, error) {
 	return fmt.Sprint(obj.ID), nil
-}
-
-func (r *claimResolver) SpaceID(ctx context.Context, obj *models.Claim) (int, error) {
-	return int(obj.SpaceID), nil
 }
 
 func (r *claimResolver) Description(ctx context.Context, obj *models.Claim) (interface{}, error) {
@@ -75,14 +72,14 @@ func (r *claimResolver) FooterCode(ctx context.Context, obj *models.Claim) (*str
 }
 
 func (r *claimResolver) Medium(ctx context.Context, obj *models.Claim) (*models.Medium, error) {
-	if obj.MediumID == 0 {
+	if obj.MediumID == uuid.Nil {
 		return nil, nil
 	}
 
 	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
-func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error) {
+func (r *queryResolver) Claims(ctx context.Context, ids []string, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -110,19 +107,23 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 
 	filterStr := ""
 
+	if len(ids) > 0 {
+		filterStr = filterStr + fmt.Sprint("de_claim.id IN (", strings.Trim(strings.Replace(fmt.Sprint(ids), " ", ",", -1), "[]"), ") AND ")
+	}
+
 	if len(ratings) > 0 {
-		filterStr = filterStr + fmt.Sprint("claims.rating_id IN (", strings.Trim(strings.Replace(fmt.Sprint(ratings), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("de_claim.rating_id IN (", strings.Trim(strings.Replace(fmt.Sprint(ratings), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	if len(claimants) > 0 {
-		filterStr = filterStr + fmt.Sprint("claims.claimant_id IN (", strings.Trim(strings.Replace(fmt.Sprint(claimants), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("de_claim.claimant_id IN (", strings.Trim(strings.Replace(fmt.Sprint(claimants), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	filterStr = strings.Trim(filterStr, " AND")
 
 	var total int64
 	tx.Where(&models.Claim{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Where(filterStr).Preload("Claimant").Preload("Rating").Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)

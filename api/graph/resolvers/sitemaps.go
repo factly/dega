@@ -2,17 +2,14 @@ package resolvers
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"net/http"
 	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
-	"github.com/factly/dega-api/util/httpx"
-	"github.com/spf13/viper"
+	"github.com/factly/dega-api/util"
 )
 
 func (r *queryResolver) Sitemap(ctx context.Context) (*models.Sitemaps, error) {
@@ -72,22 +69,6 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 		return nil, nil
 	}
 
-	post := &models.Post{}
-	post.SpaceID = sID
-
-	err = config.DB.First(post).Error
-	if err != nil {
-		return nil, nil
-	}
-
-	postAuthor := &models.PostAuthor{}
-	postAuthor.PostID = post.ID
-
-	err = config.DB.First(postAuthor).Error
-	if err != nil {
-		return nil, nil
-	}
-
 	space := &models.Space{}
 	space.ID = sID
 
@@ -96,26 +77,18 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 		return nil, nil
 	}
 
-	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")
+	// Get space members
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return nil, nil
+	spaceMember := []models.SpaceUser{}
+	config.DB.Model(&models.SpaceUser{}).Where("space_id = ?", sID).Find(&spaceMember)
+
+	// Get user ids
+	userIDs := make([]string, 0)
+	for _, member := range spaceMember {
+		userIDs = append(userIDs, member.UserID)
 	}
 
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-User", fmt.Sprint(postAuthor.AuthorID))
-	client := httpx.CustomHttpClient()
-	resp, err := client.Do(req)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	defer resp.Body.Close()
-
-	users := []*models.User{}
-	err = json.NewDecoder(resp.Body).Decode(&users)
+	users, err := util.GetSpaceMembers(userIDs)
 
 	if err != nil {
 		return nil, nil
@@ -125,10 +98,8 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 
 	for _, user := range users {
 		sitemap := &models.Sitemap{
-			ID:        fmt.Sprint(user.ID),
-			Slug:      fmt.Sprint(user.ID),
-			CreatedAt: user.CreatedAt,
-			UpdatedAt: user.UpdatedAt,
+			ID:   fmt.Sprint(user.ID),
+			Slug: user.Human.Profile.DisplayName,
 		}
 		nodes = append(nodes, sitemap)
 	}

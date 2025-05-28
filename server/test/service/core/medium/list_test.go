@@ -66,16 +66,6 @@ func TestMediumList(t *testing.T) {
 			SpaceID:     TestSpaceID,
 		}
 		config.DB.Create(&insertData)
-		insertSpacePermission := &model.SpacePermission{
-			SpaceID:   1,
-			FactCheck: true,
-			Media:     10,
-			Posts:     10,
-			Podcast:   true,
-			Episodes:  10,
-			Videos:    10,
-		}
-		config.DB.Create(insertSpacePermission)
 
 		e.GET(basePath).
 			WithHeaders(headers).

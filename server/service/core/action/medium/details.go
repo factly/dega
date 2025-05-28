@@ -2,14 +2,14 @@ package medium
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/service/core/service"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // details - Get medium by id
@@ -24,8 +24,7 @@ import (
 // @Success 200 {object} model.Medium
 // @Router /core/media/{medium_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
-
-	sID, err := middlewarex.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -33,7 +32,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	mediumID := chi.URLParam(r, "medium_id")
-	id, err := strconv.Atoi(mediumID)
+	id, err := uuid.Parse(mediumID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -43,7 +42,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	mediumService := service.GetMediumService()
 
-	result, err := mediumService.GetById(sID, id)
+	result, err := mediumService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))

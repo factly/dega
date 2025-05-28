@@ -2,17 +2,14 @@ package podcast
 
 import (
 	"net/http"
-	"strconv"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // delete - Delete podcast by id
@@ -27,7 +24,7 @@ import (
 // @Router /podcasts/{podcast_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -35,7 +32,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	podcastID := chi.URLParam(r, "podcast_id")
-	id, err := strconv.Atoi(podcastID)
+	id, err := uuid.Parse(podcastID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -45,20 +42,20 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	podcastService := service.GetPodcastService()
 
-	result, serviceErr := podcastService.GetById(sID, id)
+	result, serviceErr := podcastService.GetById(authCtx.SpaceID, id)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
 	}
 
-	_ = podcastService.Delete(sID, id, result)
+	_ = podcastService.Delete(authCtx.SpaceID, id, result)
 
-	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "podcast")
-	}
+	// if config.SearchEnabled() {
+	// 	_ = meilisearch.DeleteDocument(meiliIndex, result.ID, "podcast")
+	// }
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("podcast.deleted", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("podcast.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("podcast.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

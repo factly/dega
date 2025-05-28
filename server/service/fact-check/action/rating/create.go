@@ -3,16 +3,14 @@ package rating
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 )
 
@@ -31,14 +29,7 @@ import (
 // @Router /fact-check/ratings [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -54,19 +45,18 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ratingService := service.GetRatingService()
-	result, serviceErr := ratingService.Create(r.Context(), sID, uID, rating)
+	result, serviceErr := ratingService.Create(r.Context(), authCtx.SpaceID, authCtx.UserID, rating)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
 	}
 
-	// TODO: HANDLE ERROR
 	if config.SearchEnabled() {
 		_ = insertIntoMeili(result)
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("rating.created", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("rating.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("rating.created", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -80,8 +70,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 func insertIntoMeili(rating model.Rating) error {
 	meiliObj := map[string]interface{}{
-		"id":                rating.ID,
-		"kind":              "rating",
+		"id":                rating.ID.String(),
 		"name":              rating.Name,
 		"background_colour": rating.BackgroundColour,
 		"text_colour":       rating.TextColour,
@@ -91,5 +80,5 @@ func insertIntoMeili(rating model.Rating) error {
 		"space_id":          rating.SpaceID,
 	}
 
-	return meilisearchx.AddDocument("dega", meiliObj)
+	return meilisearch.AddDocument(meiliIndex, meiliObj)
 }

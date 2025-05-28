@@ -3,13 +3,14 @@ package models
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
 // Claim model
 type Claim struct {
-	ID              uint            `gorm:"primary_key" json:"id"`
+	ID              uuid.UUID       `gorm:"primary_key" json:"id"`
 	CreatedAt       time.Time       `json:"created_at"`
 	UpdatedAt       time.Time       `json:"updated_at"`
 	DeletedAt       *gorm.DeletedAt `sql:"index" json:"deleted_at"`
@@ -20,11 +21,11 @@ type Claim struct {
 	ClaimSources    postgres.Jsonb  `gorm:"column:claim_sources" json:"claim_sources"`
 	Description     postgres.Jsonb  `gorm:"column:description" json:"description"`
 	DescriptionHTML string          `gorm:"column:description_html" json:"description_html"`
-	ClaimantID      uint            `gorm:"column:claimant_id" json:"claimant_id"`
+	ClaimantID      uuid.UUID       `gorm:"column:claimant_id" json:"claimant_id"`
 	Claimant        *Claimant       `gorm:"foreignKey:claimant_id" json:"claimant,omitempty"`
-	RatingID        uint            `gorm:"column:rating_id" json:"rating_id"`
+	RatingID        uuid.UUID       `gorm:"column:rating_id" json:"rating_id"`
 	Rating          *Rating         `gorm:"foreignKey:rating_id" json:"rating,omitempty"`
-	MediumID        uint            `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
+	MediumID        uuid.UUID       `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
 	Medium          *Medium         `json:"medium"`
 	Fact            string          `gorm:"column:fact" json:"fact"`
 	ReviewSources   postgres.Jsonb  `gorm:"column:review_sources" json:"review_sources"`
@@ -34,7 +35,7 @@ type Claim struct {
 	FooterCode      string          `gorm:"column:footer_code" json:"footer_code"`
 	EndTime         int             `gorm:"column:end_time" json:"end_time"`
 	StartTime       int             `gorm:"column:start_time" json:"start_time"`
-	SpaceID         uint            `gorm:"column:space_id" json:"space_id"`
+	SpaceID         uuid.UUID       `gorm:"column:space_id" json:"space_id"`
 }
 
 // ClaimsPaging model

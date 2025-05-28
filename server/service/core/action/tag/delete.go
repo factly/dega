@@ -2,17 +2,16 @@ package tag
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // delete - Delete tag by id
@@ -27,9 +26,8 @@ import (
 // @Failure 400 {array} string
 // @Router  /core/tags/{tag_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
-
 	tagID := chi.URLParam(r, "tag_id")
-	id, err := strconv.Atoi(tagID)
+	id, err := uuid.Parse(tagID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -37,7 +35,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -48,14 +46,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tagService := service.GetTagService()
 
 	// check record exists or not
-	result, err := tagService.GetById(sID, id)
+	result, err := tagService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	serviceErr := tagService.Delete(sID, id)
+	serviceErr := tagService.Delete(authCtx.SpaceID, id)
 	if serviceErr != nil {
 		loggerx.Error(err)
 		errorx.Render(w, serviceErr)
@@ -63,11 +61,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "tag")
+		_ = meilisearch.DeleteDocument(meiliIndex, result.ID.String())
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("tag.deleted", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("tag.deleted", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("tag.deleted", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

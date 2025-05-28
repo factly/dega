@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/service/fact-check/service"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
@@ -24,9 +24,8 @@ import (
 // @Param all query string false "all"
 // @Success 200 {object} paging
 // @Router /fact-check/ratings [get]
-func list(w http.ResponseWriter, r *http.Request) {
-	sID, err := middlewarex.GetSpace(r.Context())
-
+func List(w http.ResponseWriter, r *http.Request) {
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -39,7 +38,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	ratingService := service.GetRatingService()
 
-	result, serviceErr := ratingService.List(int64(sID), offset, limit, all, sort)
+	result, serviceErr := ratingService.List(authCtx.SpaceID, offset, limit, all, sort)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

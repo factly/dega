@@ -5,19 +5,15 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
-	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
@@ -36,14 +32,7 @@ import (
 // @Router /core/formats [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -69,10 +58,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var formatSlug string
-	if format.Slug != "" && slugx.Check(format.Slug) {
+	if format.Slug != "" && util.CheckSlug(format.Slug) {
 		formatSlug = format.Slug
 	} else {
-		formatSlug = slugx.Make(format.Name)
+		formatSlug = util.MakeSlug(format.Name)
 	}
 
 	// Get table name
@@ -80,30 +69,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	_ = stmt.Parse(&model.Format{})
 	tableName := stmt.Schema.Table
 
-	if formatSlug == "fact-check" && viper.GetBool("create_super_organisation") {
-		permission := model.SpacePermission{}
-		err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
-			SpaceID: uint(sID),
-		}).First(&permission).Error
-
-		if err != nil || !permission.FactCheck {
-			loggerx.Error(errors.New(`does not have permission to create fact-check`))
-			errorx.Render(w, errorx.Parser(errorx.GetMessage(`does not have permission to create fact-check`, http.StatusUnprocessableEntity)))
-			return
-		}
-	}
-
 	// Check if format with same name exist
-	if util.CheckName(uint(sID), format.Name, tableName) {
+	if util.CheckName(authCtx.SpaceID, format.Name, tableName) {
 		loggerx.Error(errors.New(`format with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
 	}
 
 	mediumID := &format.MediumID
-	if format.MediumID == 0 {
-		mediumID = nil
-	}
 
 	result := &model.Format{
 		Base: config.Base{
@@ -112,16 +85,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		},
 		Name:        format.Name,
 		Description: format.Description,
-		Slug:        slugx.Approve(&config.DB, formatSlug, sID, tableName),
+		Slug:        util.ApproveSlug(formatSlug, authCtx.SpaceID, tableName),
 		MetaFields:  format.MetaFields,
 		Meta:        format.Meta,
 		HeaderCode:  format.HeaderCode,
 		FooterCode:  format.FooterCode,
-		SpaceID:     uint(sID),
+		SpaceID:     authCtx.SpaceID,
 		MediumID:    mediumID,
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 	err = tx.Model(&model.Format{}).Create(&result).Error
 
 	if err != nil {
@@ -140,7 +113,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("format.created", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("format.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("format.created", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -155,13 +128,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 func insertIntoMeili(format model.Format) error {
 	meiliObj := map[string]interface{}{
-		"id":          format.ID,
-		"kind":        "format",
+		"id":          format.ID.String(),
 		"name":        format.Name,
 		"slug":        format.Slug,
 		"description": format.Description,
 		"space_id":    format.SpaceID,
 	}
 
-	return meilisearchx.AddDocument("dega", meiliObj)
+	return meilisearch.AddDocument(meiliIndex, meiliObj)
 }

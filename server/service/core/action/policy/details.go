@@ -1,19 +1,17 @@
 package policy
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	httpx "github.com/factly/dega-server/util/http"
+	"github.com/factly/dega-server/util/zitadel"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
-	"github.com/spf13/viper"
+	"github.com/google/uuid"
 )
 
 // details - Get policy by ID
@@ -29,73 +27,116 @@ import (
 // @Success 200 {object} model.Policy
 // @Router /core/policies/{policy_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
-	spaceID, err := middlewarex.GetSpace(r.Context())
+	policyId := chi.URLParam(r, "policy_id")
+	pID, err := uuid.Parse(policyId)
 
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	userID, err := middlewarex.GetUser(r.Context())
+	orgRole := authCtx.OrgRole
 
-	if err != nil {
-		loggerx.Error(err)
+	if orgRole != "admin" {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	organisationID, err := util.GetOrganisation(r.Context())
+	policy := model.Policy{
+		Base: config.Base{ID: pID},
+	}
+
+	err = config.DB.Model(&model.Policy{}).Where(&model.Policy{
+		SpaceID: authCtx.SpaceID,
+	}).First(&policy).Error
 
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
-	applicationID, err := util.GetApplicationID(uint(userID), "dega")
+	permissions := make([]model.Permission, 0)
+
+	err = config.DB.Model(&model.Permission{}).Where(&model.Permission{
+		PolicyID: pID,
+	}).Find(&permissions).Error
+
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
-	policyID := chi.URLParam(r, "policy_id")
+	policyUsers := make([]model.PolicyUser, 0)
 
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy/%s", organisationID, applicationID, spaceID, policyID)
-	req, err := http.NewRequest("GET", reqURL, nil)
+	err = config.DB.Model(&model.PolicyUser{}).Where(&model.PolicyUser{
+		PolicyID: pID,
+	}).Find(&policyUsers).Error
+
 	if err != nil {
 		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	uIDs := make([]string, 0)
+
+	for _, policyUser := range policyUsers {
+		uIDs = append(uIDs, policyUser.UserID)
+	}
+
+	res, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorisation"), authCtx.OrganisationID, uIDs, nil)
+
+	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
-	req.Header.Set("Content-Type", "application/json")
 
-	client := httpx.CustomHttpClient()
-	resp, err := client.Do(req)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-		return
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		loggerx.Error(err)
+	if int(res.Total) != len(uIDs) {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	policy := model.KavachPolicy{}
-	err = json.NewDecoder(resp.Body).Decode(&policy)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-		return
+	p := make([]permission, 0)
+
+	resourceMap := make(map[string][]string)
+
+	for _, permission := range permissions {
+		if _, found := resourceMap[permission.Resource]; !found {
+			resourceMap[permission.Resource] = make([]string, 0)
+		}
+		resourceMap[permission.Resource] = append(resourceMap[permission.Resource], permission.Action)
 	}
 
-	renderx.JSON(w, http.StatusOK, policy)
+	for key, value := range resourceMap {
+		p = append(p, permission{
+			Resource: key,
+			Actions:  value,
+		})
+	}
+
+	result := policyRes{
+		ID:          policy.ID,
+		Name:        policy.Name,
+		Description: policy.Description,
+		Permissions: p,
+		Users:       []policyUser{},
+	}
+
+	for _, user := range res.Result {
+		result.Users = append(result.Users, policyUser{
+			UserID:      user.ID,
+			DisplayName: user.Human.Profile.DisplayName,
+		})
+	}
+
+	renderx.JSON(w, http.StatusOK, result)
 }

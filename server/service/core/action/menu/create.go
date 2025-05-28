@@ -3,16 +3,15 @@ package menu
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/x/loggerx"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
+
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 )
 
@@ -31,14 +30,7 @@ import (
 // @Router /core/menus [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -56,7 +48,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	menuService := service.GetMenuService()
-	result, serviceErr := menuService.Create(r.Context(), sID, uID, menu)
+	result, serviceErr := menuService.Create(r.Context(), authCtx.SpaceID, authCtx.UserID, menu)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -64,8 +56,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
-		"id":       result.ID,
-		"kind":     "menu",
+		"id":       result.ID.String(),
 		"name":     result.Name,
 		"slug":     result.Slug,
 		"menu":     result.Menu,
@@ -73,11 +64,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		_ = meilisearch.AddDocument(meiliIndex, meiliObj)
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("menu.created", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("menu.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("menu.created", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

@@ -3,16 +3,13 @@ package episode
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/dega-server/util"
-
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 )
 
@@ -31,14 +28,7 @@ import (
 // @Router /podcast/episodes [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -57,7 +47,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	episodeService := service.GetEpisodeService()
 
-	result, serviceErr := episodeService.Create(r.Context(), sID, uID, episode)
+	result, serviceErr := episodeService.Create(r.Context(), authCtx.SpaceID, authCtx.UserID, authCtx.OrganisationID, r.Header.Get("Authorization"), episode)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
@@ -71,8 +61,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	meiliObj := map[string]interface{}{
-		"id":             result.Episode.ID,
-		"kind":           "episode",
+		"id":             result.Episode.ID.String(),
 		"title":          result.Title,
 		"slug":           result.Slug,
 		"season":         result.Season,
@@ -86,11 +75,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		_ = meilisearch.AddDocument(meiliIndex, meiliObj)
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("episode.created", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("episode.created", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("episode.created", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

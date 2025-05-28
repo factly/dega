@@ -28,7 +28,6 @@ func TestPostUpdate(t *testing.T) {
 	config.DB.Exec("DELETE FROM formats")
 	var insertArthorData model.Author
 	var insertMediumData model.Medium
-	var insertSpacePermission model.SpacePermission
 	var insertFormatData model.Format
 	var insertPostAuthorData model.PostAuthor
 	var insertData model.Post
@@ -74,15 +73,7 @@ func TestPostUpdate(t *testing.T) {
 		MetaFields: TestMetaFields,
 		SpaceID:    TestSpaceID,
 	}
-	insertSpacePermission = model.SpacePermission{
-		SpaceID:   1,
-		FactCheck: true,
-		Media:     10,
-		Posts:     10,
-		Podcast:   true,
-		Episodes:  10,
-		Videos:    10,
-	}
+
 	insertFormatData = model.Format{
 		Name:        "Create Format Test",
 		Slug:        "create-format-test",
@@ -90,21 +81,14 @@ func TestPostUpdate(t *testing.T) {
 		SpaceID:     TestSpaceID,
 	}
 	insertFormatData.ID = TestFormatID
-	insertSpaceSettings := model.SpaceSettings{
-		SpaceID: TestSpaceID,
-	}
-	if err := config.DB.Create(&insertSpaceSettings).Error; err != nil {
-		log.Fatal(err)
-	}
+
 	if err := config.DB.Create(&insertFormatData).Error; err != nil {
 		log.Fatal(err)
 	}
 	if err := config.DB.Create(&insertMediumData).Error; err != nil {
 		log.Fatal(err)
 	}
-	if err := config.DB.Create(&insertSpacePermission).Error; err != nil {
-		log.Fatal(err)
-	}
+
 	if err := config.DB.Create(&insertData).Error; err != nil {
 		log.Fatal(err)
 	}

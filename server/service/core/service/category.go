@@ -10,10 +10,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/arrays"
+	"github.com/factly/dega-server/util/meilisearch"
+	"github.com/google/uuid"
+
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
@@ -26,8 +28,8 @@ type Category struct {
 	Slug             string         `json:"slug"`
 	BackgroundColour postgres.Jsonb `json:"background_colour" validate:"required" swaggertype:"primitive,string"`
 	Description      postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
-	ParentID         uint           `json:"parent_id"`
-	MediumID         uint           `json:"medium_id"`
+	ParentID         uuid.UUID      `json:"parent_id"`
+	MediumID         uuid.UUID      `json:"medium_id"`
 	IsFeatured       bool           `json:"is_featured"`
 	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 	Meta             postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
@@ -35,19 +37,18 @@ type Category struct {
 	FooterCode       string         `json:"footer_code"`
 }
 
-var userCategoryContext config.ContextKey = "category_user"
-
 type pagingCategory struct {
 	Total int64            `json:"total"`
 	Nodes []model.Category `json:"nodes"`
 }
 
 type ICategoryService interface {
-	GetById(sID, id int) (model.Category, error)
-	List(sID uint, offset, limit int, searchQuery, sort string) (pagingCategory, []errorx.Message)
-	Create(ctx context.Context, sID, uID int, category *Category) (model.Category, []errorx.Message)
-	Update(sID, uID, id int, category *Category) (model.Category, []errorx.Message)
-	Delete(sID, id int) []errorx.Message
+	GetById(sID, id uuid.UUID) (model.Category, error)
+	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (pagingCategory, []errorx.Message)
+	PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder, metafieldsKey, metafieldsValue string, ids []uuid.UUID, isFeatured bool) (pagingCategory, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message)
+	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
 type CategoryService struct {
@@ -60,19 +61,19 @@ func GetCategoryService() ICategoryService {
 	}
 }
 
-func (cs CategoryService) GetById(sID, id int) (model.Category, error) {
+func (cs CategoryService) GetById(sID, id uuid.UUID) (model.Category, error) {
 	result := &model.Category{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	err := config.DB.Model(&model.Category{}).Preload("Medium").Preload("ParentCategory").Where(&model.Category{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	return *result, err
 }
 
-func (cs CategoryService) List(sID uint, offset, limit int, searchQuery, sort string) (pagingCategory, []errorx.Message) {
+func (cs CategoryService) List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (pagingCategory, []errorx.Message) {
 	result := pagingCategory{}
 	result.Nodes = make([]model.Category, 0)
 
@@ -81,7 +82,7 @@ func (cs CategoryService) List(sID uint, offset, limit int, searchQuery, sort st
 	}
 
 	tx := config.DB.Model(&model.Category{}).Preload("Medium").Preload("ParentCategory").Where(&model.Category{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Order("created_at " + sort)
 
 	if searchQuery != "" {
@@ -90,14 +91,14 @@ func (cs CategoryService) List(sID uint, offset, limit int, searchQuery, sort st
 			filters := fmt.Sprint("space_id=", sID)
 			var hits []interface{}
 
-			hits, err := meilisearchx.SearchWithQuery("dega", searchQuery, filters, "category")
+			hits, err := meilisearch.SearchWithQuery("category", searchQuery, filters)
 
 			if err != nil {
 				loggerx.Error(err)
 				return pagingCategory{}, errorx.Parser(errorx.NetworkError())
 			}
 
-			filteredCategoryIDs := meilisearchx.GetIDArray(hits)
+			filteredCategoryIDs := meilisearch.GetIDArray(hits)
 			if len(filteredCategoryIDs) == 0 {
 				return result, nil
 			} else {
@@ -136,7 +137,47 @@ func (cs CategoryService) List(sID uint, offset, limit int, searchQuery, sort st
 	}
 }
 
-func (cs CategoryService) Create(ctx context.Context, sID, uID int, category *Category) (model.Category, []errorx.Message) {
+func (cs CategoryService) PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder, metafieldsKey, metafieldsValue string, ids []uuid.UUID, isFeatured bool) (pagingCategory, []errorx.Message) {
+	result := pagingCategory{}
+	result.Nodes = make([]model.Category, 0)
+
+	columns := []string{"created_at", "updated_at", "name", "slug"}
+	pageSortBy := "created_at"
+	pageSortOrder := "desc"
+
+	if sortOrder != "" && sortOrder == "asc" {
+		pageSortOrder = "asc"
+	}
+
+	if sortBy != "" && arrays.ColumnValidator(sortBy, columns) {
+		pageSortBy = sortBy
+	}
+
+	order := pageSortBy + " " + pageSortOrder
+
+	tx := config.DB.Model(&model.Category{})
+
+	if len(ids) > 0 {
+		tx = tx.Model(&model.Category{}).Where(ids)
+	}
+
+	if searchQuery != "" {
+		tx = tx.Model(&model.Category{}).Where("name ILIKE ?", "%"+searchQuery+"%")
+	}
+
+	if metafieldsKey != "" && metafieldsValue != "" {
+		tx.Model(&model.Post{}).Where("meta_fields @> ?", fmt.Sprintf(`{"%s": "%s"}`, metafieldsKey, metafieldsValue))
+	}
+
+	tx.Where(&model.Category{
+		SpaceID: sID,
+	}).Preload("Medium").Count(&result.Total).Order(order).Offset(offset).Limit(limit).Find(&result.Nodes)
+
+	return result, nil
+
+}
+
+func (cs CategoryService) Create(ctx context.Context, sID uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message) {
 	validationError := validationx.Check(category)
 
 	if validationError != nil {
@@ -145,10 +186,10 @@ func (cs CategoryService) Create(ctx context.Context, sID, uID int, category *Ca
 	}
 
 	var categorySlug string
-	if category.Slug != "" && slugx.Check(category.Slug) {
+	if category.Slug != "" && util.CheckSlug(category.Slug) {
 		categorySlug = category.Slug
 	} else {
-		categorySlug = slugx.Make(category.Name)
+		categorySlug = util.MakeSlug(category.Name)
 	}
 
 	// Get table name
@@ -157,18 +198,18 @@ func (cs CategoryService) Create(ctx context.Context, sID, uID int, category *Ca
 	tableName := stmt.Schema.Table
 
 	// Check if category with same name exist
-	if util.CheckName(uint(sID), category.Name, tableName) {
+	if util.CheckName(sID, category.Name, tableName) {
 		loggerx.Error(errors.New(`category with same name exist`))
 		return model.Category{}, errorx.Parser(errorx.SameNameExist())
 	}
 
 	mediumID := &category.MediumID
-	if category.MediumID == 0 {
+	if category.MediumID == uuid.Nil {
 		mediumID = nil
 	}
 
 	parentID := &category.ParentID
-	if category.ParentID == 0 {
+	if category.ParentID == uuid.Nil {
 		parentID = nil
 	}
 
@@ -200,17 +241,17 @@ func (cs CategoryService) Create(ctx context.Context, sID, uID int, category *Ca
 		Description:      jsonDescription,
 		BackgroundColour: category.BackgroundColour,
 		DescriptionHTML:  descriptionHTML,
-		Slug:             slugx.Approve(&config.DB, categorySlug, sID, tableName),
+		Slug:             util.ApproveSlug(categorySlug, sID, tableName),
 		ParentID:         parentID,
 		MediumID:         mediumID,
-		SpaceID:          uint(sID),
+		SpaceID:          sID,
 		IsFeatured:       category.IsFeatured,
 		MetaFields:       category.MetaFields,
 		Meta:             category.Meta,
 		HeaderCode:       category.HeaderCode,
 		FooterCode:       category.FooterCode,
 	}
-	tx := config.DB.WithContext(context.WithValue(ctx, userCategoryContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err := tx.Model(&model.Category{}).Create(result).Error
 
 	if err != nil {
@@ -224,9 +265,9 @@ func (cs CategoryService) Create(ctx context.Context, sID, uID int, category *Ca
 	return *result, nil
 }
 
-func (cs CategoryService) Update(sID, uID, id int, category *Category) (model.Category, []errorx.Message) {
+func (cs CategoryService) Update(sID, id uuid.UUID, uID string, category *Category) (model.Category, []errorx.Message) {
 	result := model.Category{}
-	result.ID = uint(id)
+	result.ID = id
 
 	if result.ID == category.ParentID {
 		loggerx.Error(errors.New("cannot add itself as parent"))
@@ -241,14 +282,14 @@ func (cs CategoryService) Update(sID, uID, id int, category *Category) (model.Ca
 
 	if result.Slug == category.Slug {
 		categorySlug = result.Slug
-	} else if category.Slug != "" && slugx.Check(category.Slug) {
-		categorySlug = slugx.Approve(&config.DB, category.Slug, sID, tableName)
+	} else if category.Slug != "" && util.CheckSlug(category.Slug) {
+		categorySlug = util.ApproveSlug(category.Slug, sID, tableName)
 	} else {
-		categorySlug = slugx.Approve(&config.DB, slugx.Make(category.Name), sID, tableName)
+		categorySlug = util.ApproveSlug(util.MakeSlug(category.Name), sID, tableName)
 	}
 
 	// Check if category with same name exist
-	if category.Name != result.Name && util.CheckName(uint(sID), category.Name, tableName) {
+	if category.Name != result.Name && util.CheckName(sID, category.Name, tableName) {
 		loggerx.Error(errors.New(`category with same name exist`))
 		return model.Category{}, errorx.Parser(errorx.SameNameExist())
 	}
@@ -289,11 +330,11 @@ func (cs CategoryService) Update(sID, uID, id int, category *Category) (model.Ca
 		"footer_code":       category.FooterCode,
 		"background_colour": category.BackgroundColour,
 	}
-	if category.MediumID == 0 {
+	if category.MediumID == uuid.Nil {
 		updateMap["medium_id"] = nil
 	}
 
-	if category.ParentID == 0 {
+	if category.ParentID == uuid.Nil {
 		updateMap["parent_id"] = nil
 	}
 
@@ -317,14 +358,14 @@ func (cs CategoryService) Update(sID, uID, id int, category *Category) (model.Ca
 	return result, nil
 }
 
-func (cs CategoryService) Delete(sID, id int) []errorx.Message {
+func (cs CategoryService) Delete(sID, id uuid.UUID) []errorx.Message {
 	result := &model.Category{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	// check if the category is associated with posts
 	category := new(model.Category)
-	category.ID = uint(id)
+	category.ID = id
 	totAssociated := config.DB.Model(category).Association("Posts").Count()
 
 	if totAssociated != 0 {
@@ -335,7 +376,7 @@ func (cs CategoryService) Delete(sID, id int) []errorx.Message {
 	tx := config.DB.Begin()
 	// Updates all children categories
 	err := tx.Model(&model.Category{}).Where(&model.Category{
-		SpaceID:  uint(sID),
+		SpaceID:  sID,
 		ParentID: &result.ID,
 	}).UpdateColumn("parent_id", nil).Error
 
@@ -351,5 +392,6 @@ func (cs CategoryService) Delete(sID, id int) []errorx.Message {
 		loggerx.Error(err)
 		return errorx.Parser(errorx.DBError())
 	}
+	tx.Commit()
 	return nil
 }

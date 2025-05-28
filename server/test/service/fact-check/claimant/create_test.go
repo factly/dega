@@ -38,15 +38,6 @@ func TestClaimantCreate(t *testing.T) {
 	}
 
 	config.DB.Model(&model.Claimant{}).Create(&insertData)
-	var insertSpacePermissionData = coreModel.SpacePermission{
-		SpaceID:   TestSpaceID,
-		FactCheck: true,
-		Media:     100,
-		Posts:     100,
-		Podcast:   true,
-		Episodes:  100,
-		Videos:    100,
-	}
 
 	var insertMediumData = coreModel.Medium{
 		Name:    "Test Medium",
@@ -54,7 +45,6 @@ func TestClaimantCreate(t *testing.T) {
 		SpaceID: TestSpaceID,
 	}
 
-	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
 	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
 
 	e := httpexpect.New(t, testServer.URL)

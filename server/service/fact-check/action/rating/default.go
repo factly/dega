@@ -9,9 +9,9 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/service/fact-check/service"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 )
 
@@ -31,14 +31,7 @@ var DataFile = "./data/ratings.json"
 // @Failure 400 {array} string
 // @Router /fact-check/ratings/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -65,7 +58,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ratingService := service.GetRatingService()
-	result, serviceErr := ratingService.Default(r.Context(), sID, uID, ratings)
+	result, serviceErr := ratingService.Default(r.Context(), authCtx.SpaceID, authCtx.UserID, ratings)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

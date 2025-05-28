@@ -6,16 +6,16 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
-	"strconv"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/requestx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 	"github.com/spf13/viper"
 )
 
@@ -33,14 +33,7 @@ import (
 // @Failure 400 {array} string
 // @Router /core/webhooks [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	uID, err := middlewarex.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	sID, err := middlewarex.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -62,16 +55,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// append app and space tag even if not provided
-	if err = AddTags(webhook, sID); err != nil {
+	if err = AddTags(webhook, authCtx.SpaceID); err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + strconv.Itoa(sID)
+	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + authCtx.SpaceID.String()
 
 	resp, err := requestx.Request("POST", hukzURL, webhook, map[string]string{
-		"X-User": fmt.Sprint(uID),
+		"X-User": fmt.Sprint(authCtx.UserID),
 	})
 
 	if err != nil {
@@ -95,7 +88,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusCreated, webhookRes)
 }
 
-func AddTags(webhook *webhook, sID int) error {
+func AddTags(webhook *webhook, sID uuid.UUID) error {
 	tags := make(map[string]string)
 	if len(webhook.Tags.RawMessage) > 0 && !reflect.DeepEqual(webhook.Tags, test.NilJsonb()) {
 		err := json.Unmarshal(webhook.Tags.RawMessage, &tags)

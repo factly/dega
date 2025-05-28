@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 
 	"gorm.io/gorm"
 
@@ -14,23 +13,15 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/google/uuid"
 )
 
 func (r *categoryResolver) ID(ctx context.Context, obj *models.Category) (string, error) {
 	return fmt.Sprint(obj.ID), nil
 }
 
-func (r *categoryResolver) ParentID(ctx context.Context, obj *models.Category) (*int, error) {
-	dummyID := int(obj.ParentID)
-	return &dummyID, nil
-}
-
-func (r *categoryResolver) SpaceID(ctx context.Context, obj *models.Category) (int, error) {
-	return int(obj.SpaceID), nil
-}
-
 func (r *categoryResolver) Medium(ctx context.Context, obj *models.Category) (*models.Medium, error) {
-	if obj.MediumID == 0 {
+	if obj.MediumID == uuid.Nil {
 		return nil, nil
 	}
 
@@ -96,7 +87,7 @@ func (r *categoryResolver) Posts(ctx context.Context, obj *models.Category) (*mo
 	return response, nil
 }
 
-func (r *queryResolver) Category(ctx context.Context, id *int, slug *string) (*models.Category, error) {
+func (r *queryResolver) Category(ctx context.Context, id *string, slug *string) (*models.Category, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -106,10 +97,18 @@ func (r *queryResolver) Category(ctx context.Context, id *int, slug *string) (*m
 		return nil, errors.New("please provide either id or slug")
 	}
 
+	cID := uuid.UUID{}
+	if id != nil {
+		cID, err = uuid.Parse(*id)
+		if err != nil {
+			return nil, errors.New("please provide valid id")
+		}
+	}
+
 	result := &models.Category{}
 	if id != nil {
 		err = config.DB.Model(&models.Category{}).Where(&models.Category{
-			ID:      uint(*id),
+			ID:      cID,
 			SpaceID: sID,
 		}).Preload("Medium").First(&result).Error
 	} else {
@@ -146,9 +145,8 @@ func (r *queryResolver) FeaturedCategories(ctx context.Context, featuredCount in
 	return result, nil
 }
 
-func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error) {
+func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error) {
 
-	log.Println(" categories resolver entry")
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -183,7 +181,7 @@ func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int,
 
 	var total int64
 	tx.Where(&models.Category{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Preload("Medium").Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)

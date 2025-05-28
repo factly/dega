@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -13,7 +14,7 @@ import (
 
 // Medium model
 type Medium struct {
-	ID          uint            `gorm:"primary_key" json:"id"`
+	ID          uuid.UUID       `gorm:"primary_key" json:"id"`
 	CreatedAt   time.Time       `json:"created_at"`
 	UpdatedAt   time.Time       `json:"updated_at"`
 	DeletedAt   *gorm.DeletedAt `sql:"index" json:"deleted_at"`
@@ -28,7 +29,7 @@ type Medium struct {
 	URL         postgres.Jsonb  `gorm:"column:url" json:"url"`
 	Dimensions  string          `gorm:"column:dimensions" json:"dimensions"`
 	MetaFields  postgres.Jsonb  `gorm:"column:meta_fields" json:"meta_fields"`
-	SpaceID     uint            `gorm:"column:space_id" json:"space_id"`
+	SpaceID     uuid.UUID       `gorm:"column:space_id" json:"space_id"`
 }
 
 // AfterFind hook

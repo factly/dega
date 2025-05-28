@@ -1,14 +1,16 @@
 package util
 
-import "strconv"
+import (
+	"github.com/google/uuid"
+)
 
 // Converter - string to int slice
-func Converter(arr []string) []uint {
-	ids := make([]uint, 0)
+func Converter(arr []string) []uuid.UUID {
+	ids := make([]uuid.UUID, 0)
 	for _, each := range arr {
-		id, err := strconv.Atoi(each)
+		id, err := uuid.Parse(each)
 		if err == nil {
-			ids = append(ids, uint(id))
+			ids = append(ids, id)
 		}
 	}
 	return ids

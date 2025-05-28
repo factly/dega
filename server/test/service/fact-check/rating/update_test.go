@@ -40,23 +40,12 @@ func TestRatingUpdate(t *testing.T) {
 		HeaderCode:       TestHeaderCode,
 	}
 
-	var insertSpacePermissionData = coreModel.SpacePermission{
-		SpaceID:   TestSpaceID,
-		FactCheck: true,
-		Media:     100,
-		Posts:     100,
-		Podcast:   true,
-		Episodes:  100,
-		Videos:    100,
-	}
-
 	var insertMediumData = coreModel.Medium{
 		Name:    "Test Medium",
 		Slug:    "test-medium",
 		SpaceID: TestSpaceID,
 	}
 
-	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
 	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
 	if err := config.DB.Model(&model.Rating{}).Create(&insertData).Error; err != nil {
 		log.Fatal(err)

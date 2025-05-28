@@ -26,17 +26,6 @@ func TestPodcastList(t *testing.T) {
 	config.DB.Exec("DELETE FROM categories")
 	config.DB.Exec("DELETE FROM podcasts")
 
-	var insertSpacePermissionData = coreModel.SpacePermission{
-		SpaceID:   TestSpaceID,
-		FactCheck: true,
-		Media:     100,
-		Posts:     100,
-		Podcast:   true,
-		Episodes:  100,
-		Videos:    100,
-	}
-	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
-
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("get empty list of podcasts", func(t *testing.T) {

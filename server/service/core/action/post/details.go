@@ -3,17 +3,17 @@ package post
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 // details - Get post by id
@@ -29,7 +29,7 @@ import (
 // @Router /core/posts/{post_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -37,7 +37,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	postID := chi.URLParam(r, "post_id")
-	id, err := strconv.Atoi(postID)
+	id, err := uuid.Parse(postID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -51,10 +51,10 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	postAuthors := []model.PostAuthor{}
 	postClaims := []factCheckModel.PostClaim{}
-	result.ID = uint(id)
+	result.ID = id
 
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
-		SpaceID: uint(sID),
+		SpaceID: authCtx.SpaceID,
 	}).Where("is_page = ?", false).First(&result.Post).Error
 
 	if err != nil {
@@ -65,10 +65,10 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	if result.Format.Slug == "fact-check" {
 		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
-			PostID: uint(id),
+			PostID: id,
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
-		result.ClaimOrder = make([]uint, len(postClaims))
+		result.ClaimOrder = make([]uuid.UUID, len(postClaims))
 
 		// appending all post claims
 		for _, postClaim := range postClaims {
@@ -79,19 +79,95 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	// fetch all authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
+		PostID: id,
 	}).Find(&postAuthors)
 
+	authorIDs := make([]string, 0)
+
+	for _, postAuthor := range postAuthors {
+		authorIDs = append(authorIDs, postAuthor.AuthorID)
+	}
+
 	// Adding author
-	authors, err := author.All(r.Context())
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, authorIDs, nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+	}
+	for _, postAuthor := range postAuthors {
+		aID := fmt.Sprint(postAuthor.AuthorID)
+		if author, found := authors[aID]; found {
+			result.Authors = append(result.Authors, author)
+		}
+	}
+
+	renderx.JSON(w, http.StatusOK, result)
+}
+
+func publicDetails(w http.ResponseWriter, r *http.Request) {
+	authCtx, err := util.GetAuthCtx(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	postIDOrSlug := chi.URLParam(r, "post_id")
+	id, _ := uuid.Parse(postIDOrSlug)
+
+	result := postData{}
+
+	err = config.DB.Model(&model.Post{}).
+		Where("status = ? AND de_post.space_id = ?", "publish", authCtx.SpaceID).
+		Where("de_post.id = ? OR de_post.slug = ?", id, postIDOrSlug).
+		Preload("Categories").
+		Preload("Tags").
+		Preload("Medium").
+		First(&result.Post).Error
+
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+			return
+		}
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	// Fetch author IDs for all posts
+	postAuthors := make([]model.PostAuthor, 0)
+
+	err = config.DB.
+		Where("post_id = ?", result.ID).
+		Find(&postAuthors).Error
+
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-	for _, postAuthor := range postAuthors {
-		aID := fmt.Sprint(postAuthor.AuthorID)
-		if author, found := authors[aID]; found {
+
+	authorIDs := make([]string, 0)
+	for _, pa := range postAuthors {
+		authorIDs = append(authorIDs, pa.AuthorID)
+	}
+
+	// Fetch author details from external service
+	authors := make(map[string]model.Author)
+	if len(authorIDs) > 0 {
+		authors, err = util.GetAuthors("", "", authorIDs, nil)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+	}
+
+	// Add authors to post
+
+	for _, authorID := range authorIDs {
+		if author, ok := authors[authorID]; ok {
 			result.Authors = append(result.Authors, author)
 		}
 	}

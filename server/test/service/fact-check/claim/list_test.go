@@ -8,7 +8,6 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -28,17 +27,6 @@ func TestClaimList(t *testing.T) {
 	config.DB.Exec("DELETE FROM claims")
 	config.DB.Exec("DELETE FROM media")
 	config.DB.Exec("DELETE FROM ratings")
-
-	var insertSpacePermissionData = coreModel.SpacePermission{
-		SpaceID:   TestSpaceID,
-		FactCheck: true,
-		Media:     100,
-		Posts:     100,
-		Podcast:   true,
-		Episodes:  100,
-		Videos:    100,
-	}
-	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
 
 	t.Run("get empty list of claim", func(t *testing.T) {
 		e.GET(basePath).

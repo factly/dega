@@ -2,7 +2,7 @@ package model
 
 import "github.com/factly/dega-server/config"
 
-//Migration - core models
+// Migration - core models
 func Migration() {
 	_ = config.DB.AutoMigrate(
 		&Medium{},
@@ -11,11 +11,12 @@ func Migration() {
 		&Format{},
 		&Post{},
 		&PostAuthor{},
-		&OrganisationPermission{},
-		&SpacePermission{},
-		&OrganisationPermissionRequest{},
-		&SpacePermissionRequest{},
+		&Space{},
+		&SpaceUser{},
+		&SpaceToken{},
 		&Menu{},
-		&SpaceSettings{},
+		&Policy{},
+		&PolicyUser{},
+		&Permission{},
 	)
 }

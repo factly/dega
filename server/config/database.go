@@ -6,11 +6,11 @@ import (
 	"time"
 
 	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -31,12 +31,7 @@ func SetupDB() {
 
 	var err error
 
-	var dialector gorm.Dialector
-	if Sqlite() {
-		dialector = sqlite.Open(viper.GetString("sqlite_db_path"))
-	} else {
-		dialector = postgres.Open(dbString)
-	}
+	dialector := postgres.Open(dbString)
 
 	DB, err = gorm.Open(dialector, &gorm.Config{
 		Logger: loggerx.NewGormLogger(logger.Config{
@@ -44,6 +39,10 @@ func SetupDB() {
 			LogLevel:      logger.Info,
 			Colorful:      true,
 		}),
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix:   "de_",
+			SingularTable: true,
+		},
 	})
 
 	if err != nil {

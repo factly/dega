@@ -7,9 +7,9 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/requestx"
 	"github.com/go-chi/chi"
@@ -37,7 +37,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -47,7 +47,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	hukzURL := viper.GetString("hukz_url") + "/events/" + fmt.Sprint(id)
 
 	resp, err := requestx.Request("GET", hukzURL, nil, map[string]string{
-		"X-User": fmt.Sprint(uID),
+		"X-User": authCtx.UserID,
 	})
 	if err != nil {
 		loggerx.Error(err)

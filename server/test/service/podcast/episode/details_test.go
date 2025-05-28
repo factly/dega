@@ -29,16 +29,6 @@ func TestEpisodDetails(t *testing.T) {
 	config.DB.Exec("DELETE FROM podcasts")
 	config.DB.Exec("DELETE FROM episode_authors")
 
-	var insertSpacePermissionData = coreModel.SpacePermission{
-		SpaceID:   TestSpaceID,
-		FactCheck: true,
-		Media:     100,
-		Posts:     100,
-		Podcast:   true,
-		Episodes:  100,
-		Videos:    100,
-	}
-	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
 	insertCategoryData := coreModel.Category{
 		Name:    "Category",
 		Slug:    "category",

@@ -2,20 +2,13 @@ package loaders
 
 import (
 	"context"
-	"encoding/json"
-	"errors"
-	"fmt"
-	"log"
 	"net/http"
 	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
-	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
-	"github.com/factly/x/requestx"
-	"github.com/spf13/viper"
 )
 
 type contextKey string
@@ -42,32 +35,29 @@ func (v values) Get(key string) interface{} {
 // DataloaderMiddleware to add middleware in main
 func DataloaderMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Println(" DataloaderMiddleware entry")
 		ratingloader := RatingLoader{
 			maxBatch: 100,
 			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Rating, []error) {
-				keys := util.Converter(ids)
-
 				ratings := make([]*models.Rating, 0)
 
-				err := config.DB.Model(&models.Rating{}).Where(keys).Find(&ratings).Error
+				err := config.DB.Model(&models.Rating{}).Where("id IN ? ", ids).Find(&ratings).Error
 
 				if err != nil {
 					logger.Error(err)
 					return nil, nil
 				}
 
-				ratingsMap := map[uint]*models.Rating{}
+				ratingsMap := map[string]*models.Rating{}
 
 				for _, rating := range ratings {
-					ratingsMap[rating.ID] = rating
+					ratingsMap[rating.ID.String()] = rating
 				}
 
 				result := make([]*models.Rating, 0)
 
-				for _, key := range keys {
-					m, found := ratingsMap[key]
+				for _, id := range ids {
+					m, found := ratingsMap[id]
 					if found {
 						result = append(result, m)
 					} else {
@@ -83,27 +73,26 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			maxBatch: 100,
 			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Claimant, []error) {
-				keys := util.Converter(ids)
 
 				claimants := make([]*models.Claimant, 0)
 
-				err := config.DB.Model(&models.Claimant{}).Where(keys).Find(&claimants).Error
+				err := config.DB.Model(&models.Claimant{}).Where("id IN ? ", ids).Find(&claimants).Error
 
 				if err != nil {
 					logger.Error(err)
 					return nil, nil
 				}
 
-				claimantsMap := map[uint]*models.Claimant{}
+				claimantsMap := map[string]*models.Claimant{}
 
 				for _, claimant := range claimants {
-					claimantsMap[claimant.ID] = claimant
+					claimantsMap[claimant.ID.String()] = claimant
 				}
 
 				result := make([]*models.Claimant, 0)
 
-				for _, key := range keys {
-					m, found := claimantsMap[key]
+				for _, id := range ids {
+					m, found := claimantsMap[id]
 					if found {
 						result = append(result, m)
 					} else {
@@ -119,27 +108,26 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			maxBatch: 100,
 			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Medium, []error) {
-				keys := util.Converter(ids)
 
 				media := make([]*models.Medium, 0)
 
-				err := config.DB.Model(&models.Medium{}).Where(keys).Find(&media).Error
+				err := config.DB.Model(&models.Medium{}).Where("id IN ? ", ids).Find(&media).Error
 
 				if err != nil {
 					logger.Error(err)
 					return nil, nil
 				}
 
-				mediaMap := map[uint]*models.Medium{}
+				mediaMap := map[string]*models.Medium{}
 
 				for _, medium := range media {
-					mediaMap[medium.ID] = medium
+					mediaMap[medium.ID.String()] = medium
 				}
 
 				result := make([]*models.Medium, 0)
 
-				for _, key := range keys {
-					m, found := mediaMap[key]
+				for _, id := range ids {
+					m, found := mediaMap[id]
 					if found {
 						result = append(result, m)
 					} else {
@@ -155,27 +143,26 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			maxBatch: 100,
 			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Format, []error) {
-				keys := util.Converter(ids)
 
 				formats := make([]*models.Format, 0)
 
-				err := config.DB.Model(&models.Format{}).Where(keys).Find(&formats).Error
+				err := config.DB.Model(&models.Format{}).Where("id IN ? ", ids).Find(&formats).Error
 
 				if err != nil {
 					logger.Error(err)
 					return nil, nil
 				}
 
-				formatsMap := map[uint]*models.Format{}
+				formatsMap := map[string]*models.Format{}
 
 				for _, format := range formats {
-					formatsMap[format.ID] = format
+					formatsMap[format.ID.String()] = format
 				}
 
 				result := make([]*models.Format, 0)
 
-				for _, key := range keys {
-					m, found := formatsMap[key]
+				for _, id := range ids {
+					m, found := formatsMap[id]
 					if found {
 						result = append(result, m)
 					} else {
@@ -191,27 +178,26 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			maxBatch: 100,
 			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Claim, []error) {
-				keys := util.Converter(ids)
 
 				claims := make([]*models.Claim, 0)
 
-				err := config.DB.Model(&models.Claim{}).Where(keys).Find(&claims).Error
+				err := config.DB.Model(&models.Claim{}).Where("id IN ? ", ids).Find(&claims).Error
 
 				if err != nil {
 					logger.Error(err)
 					return nil, nil
 				}
 
-				claimsMap := map[uint]*models.Claim{}
+				claimsMap := map[string]*models.Claim{}
 
 				for _, claim := range claims {
-					claimsMap[claim.ID] = claim
+					claimsMap[claim.ID.String()] = claim
 				}
 
 				result := make([]*models.Claim, 0)
 
-				for _, key := range keys {
-					m, found := claimsMap[key]
+				for _, id := range ids {
+					m, found := claimsMap[id]
 					if found {
 						result = append(result, m)
 					} else {
@@ -227,27 +213,26 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			maxBatch: 100,
 			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Category, []error) {
-				keys := util.Converter(ids)
 
 				categories := make([]*models.Category, 0)
 
-				err := config.DB.Model(&models.Category{}).Where(keys).Find(&categories).Error
+				err := config.DB.Model(&models.Category{}).Where("id IN ? ", ids).Find(&categories).Error
 
 				if err != nil {
 					logger.Error(err)
 					return nil, nil
 				}
 
-				categoriesMap := map[uint]*models.Category{}
+				categoriesMap := map[string]*models.Category{}
 
 				for _, category := range categories {
-					categoriesMap[category.ID] = category
+					categoriesMap[category.ID.String()] = category
 				}
 
 				result := make([]*models.Category, 0)
 
-				for _, key := range keys {
-					m, found := categoriesMap[key]
+				for _, id := range ids {
+					m, found := categoriesMap[id]
 					if found {
 						result = append(result, m)
 					} else {
@@ -263,27 +248,26 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			maxBatch: 100,
 			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Tag, []error) {
-				keys := util.Converter(ids)
 
 				tags := make([]*models.Tag, 0)
 
-				err := config.DB.Model(&models.Tag{}).Where(keys).Find(&tags).Error
+				err := config.DB.Model(&models.Tag{}).Where("id IN ? ", ids).Find(&tags).Error
 
 				if err != nil {
 					logger.Error(err)
 					return nil, nil
 				}
 
-				tagsMap := map[uint]*models.Tag{}
+				tagsMap := map[string]*models.Tag{}
 
 				for _, tag := range tags {
-					tagsMap[tag.ID] = tag
+					tagsMap[tag.ID.String()] = tag
 				}
 
 				result := make([]*models.Tag, 0)
 
-				for _, key := range keys {
-					m, found := tagsMap[key]
+				for _, id := range ids {
+					m, found := tagsMap[id]
 					if found {
 						result = append(result, m)
 					} else {
@@ -299,54 +283,28 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			maxBatch: 100,
 			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.User, []error) {
-				rctx := r.Context()
 
-				sID, err := validator.GetSpace(rctx)
+				users, err := util.GetSpaceMembers(ids)
 
 				if err != nil {
+					logger.Error(err)
 					return nil, nil
 				}
 
-				spaceToken, err := validator.GetSpaceToken(rctx)
-				if err != nil {
-					return nil, []error{errors.New("space token not there")}
-				}
-
-				url := fmt.Sprint(viper.GetString("kavach_url"), "/users/space/", sID)
-
-				resp, err := requestx.Request("GET", url, nil, map[string]string{
-					"Content-Type":  "application/json",
-					"X-Space-Token": spaceToken,
-				})
-				if err != nil {
-					return nil, []error{errors.New("space token not there")}
-				}
-
-				keys := util.Converter(ids)
-
 				result := make([]*models.User, 0)
 
-				userMap := make(map[uint]models.User)
-
-				defer resp.Body.Close()
-				spaceUsers := models.UsersPaging{}
-				users := []models.User{}
-				err = json.NewDecoder(resp.Body).Decode(&spaceUsers)
-				if err != nil {
-					return result, nil
-				}
-
-				for _, spaceUser := range spaceUsers.Nodes {
-					users = append(users, *spaceUser)
-				}
-
-				for _, u := range users {
-					userMap[u.ID] = u
-				}
-
-				for _, key := range keys {
-					if user, found := userMap[key]; found {
-						result = append(result, &user)
+				for _, id := range ids {
+					for _, user := range users {
+						if user.ID == id {
+							u := models.User{
+								ID:          user.ID,
+								Email:       user.Human.Email.Email,
+								FirstName:   user.Human.Profile.FirstName,
+								LastName:    user.Human.Profile.LastName,
+								DisplayName: user.Human.Profile.DisplayName,
+							}
+							result = append(result, &u)
+						}
 					}
 				}
 
@@ -367,7 +325,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		ctx := context.WithValue(r.Context(), loadersKey, v)
 
-		log.Println(" DataloaderMiddleware exit")
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

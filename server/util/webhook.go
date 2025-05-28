@@ -3,12 +3,10 @@ package util
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/spf13/viper"
 
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 )
 
 type CheckEvent struct {
@@ -16,14 +14,14 @@ type CheckEvent struct {
 }
 
 func CheckWebhookEvent(event string, spaceID string, r *http.Request) bool {
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		return false
 	}
 	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + spaceID + "/check"
 	req, err := http.NewRequest("GET", hukzURL, nil)
-	req.Header.Set("X-User", strconv.Itoa(uID))
+	req.Header.Set("X-User", authCtx.UserID)
 	q := req.URL.Query()
 	q.Add("event", event)
 	req.URL.RawQuery = q.Encode()

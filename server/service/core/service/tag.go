@@ -10,11 +10,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/arrays"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -38,17 +39,16 @@ type Tag struct {
 	Meta             postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `json:"header_code"`
 	FooterCode       string         `json:"footer_code"`
-	MediumID         uint           `json:"medium_id"`
+	MediumID         uuid.UUID      `json:"medium_id"`
 }
 
-var userContext config.ContextKey = "tag_user"
-
 type ITagService interface {
-	GetById(sID, id int) (model.Tag, error)
-	List(sID uint, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
-	Create(ctx context.Context, sID, uID int, tag *Tag) (model.Tag, []errorx.Message)
-	Update(sID, uID, id int, tag *Tag) (model.Tag, []errorx.Message)
-	Delete(sID, id int) []errorx.Message
+	GetById(sID, id uuid.UUID) (model.Tag, error)
+	List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
+	PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder string, ids []uuid.UUID, isFeatured bool) (paging, []errorx.Message)
+	Create(ctx context.Context, sID uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message)
+	Update(sID, id uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message)
+	Delete(sID, id uuid.UUID) []errorx.Message
 }
 
 type TagService struct {
@@ -61,19 +61,19 @@ func GetTagService() ITagService {
 	}
 }
 
-func (ts TagService) GetById(sID, id int) (model.Tag, error) {
+func (ts TagService) GetById(sID, id uuid.UUID) (model.Tag, error) {
 	result := &model.Tag{}
 
-	result.ID = uint(id)
+	result.ID = id
 
 	err := ts.model.Where(&model.Tag{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).First(&result).Error
 
 	return *result, err
 }
 
-func (ts TagService) List(sID uint, offset, limit int, searchQuery, sort string) (paging, []errorx.Message) {
+func (ts TagService) List(sID uuid.UUID, offset, limit int, searchQuery, sort string) (paging, []errorx.Message) {
 	result := paging{}
 	result.Nodes = make([]model.Tag, 0)
 
@@ -82,7 +82,7 @@ func (ts TagService) List(sID uint, offset, limit int, searchQuery, sort string)
 	}
 
 	tx := ts.model.Where(&model.Tag{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Order("created_at " + sort)
 
 	if searchQuery != "" {
@@ -91,13 +91,13 @@ func (ts TagService) List(sID uint, offset, limit int, searchQuery, sort string)
 			filters := fmt.Sprint("space_id=", sID)
 			var hits []interface{}
 
-			hits, err := meilisearchx.SearchWithQuery("dega", searchQuery, filters, "tag")
+			hits, err := meilisearch.SearchWithQuery("tag", searchQuery, filters)
 			if err != nil {
 				loggerx.Error(err)
 				return paging{}, errorx.Parser(errorx.NetworkError())
 			}
 
-			filteredTagIDs := meilisearchx.GetIDArray(hits)
+			filteredTagIDs := meilisearch.GetIDArray(hits)
 			if len(filteredTagIDs) == 0 {
 				return result, nil
 			} else {
@@ -135,7 +135,45 @@ func (ts TagService) List(sID uint, offset, limit int, searchQuery, sort string)
 	}
 }
 
-func (ts TagService) Create(ctx context.Context, sID, uID int, tag *Tag) (model.Tag, []errorx.Message) {
+func (ts TagService) PublicList(sID uuid.UUID, offset, limit int, searchQuery, sortBy, sortOrder string, ids []uuid.UUID, isFeatured bool) (paging, []errorx.Message) {
+	result := paging{}
+	result.Nodes = make([]model.Tag, 0)
+
+	columns := []string{"created_at", "updated_at", "name", "slug"}
+	pageSortBy := "created_at"
+	pageSortOrder := "desc"
+
+	if sortOrder != "" && sortOrder == "asc" {
+		pageSortOrder = "asc"
+	}
+
+	if sortBy != "" && arrays.ColumnValidator(sortBy, columns) {
+		pageSortBy = sortBy
+	}
+
+	order := pageSortBy + " " + pageSortOrder
+
+	tx := config.DB.Model(&model.Tag{})
+
+	if len(ids) > 0 {
+		tx = tx.Model(&model.Tag{}).Where(ids)
+	} else {
+		tx = tx.Model(&model.Tag{})
+	}
+
+	if searchQuery != "" {
+		tx = tx.Model(&model.Tag{}).Where("name ILIKE ?", "%"+searchQuery+"%")
+	}
+
+	tx.Where(&model.Tag{
+		SpaceID: sID,
+	}).Preload("Medium").Count(&result.Total).Order(order).Offset(offset).Limit(limit).Find(&result.Nodes)
+
+	return result, nil
+
+}
+
+func (ts TagService) Create(ctx context.Context, sID uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message) {
 	validationError := validationx.Check(tag)
 	if validationError != nil {
 		loggerx.Error(errors.New("validation error"))
@@ -148,14 +186,14 @@ func (ts TagService) Create(ctx context.Context, sID, uID int, tag *Tag) (model.
 	tableName := stmt.Schema.Table
 
 	var tagSlug string
-	if tag.Slug != "" && slugx.Check(tag.Slug) {
+	if tag.Slug != "" && util.CheckSlug(tag.Slug) {
 		tagSlug = tag.Slug
 	} else {
-		tagSlug = slugx.Make(tag.Name)
+		tagSlug = util.MakeSlug(tag.Name)
 	}
 
 	// Check if tag with same name exist
-	if util.CheckName(uint(sID), tag.Name, tableName) {
+	if util.CheckName(sID, tag.Name, tableName) {
 		loggerx.Error(errors.New(`tag with same name exist`))
 		return model.Tag{}, errorx.Parser(errorx.SameNameExist())
 	}
@@ -179,7 +217,7 @@ func (ts TagService) Create(ctx context.Context, sID, uID int, tag *Tag) (model.
 	}
 
 	mediumID := &tag.MediumID
-	if tag.MediumID == 0 {
+	if tag.MediumID == uuid.Nil {
 		mediumID = nil
 	}
 
@@ -189,11 +227,11 @@ func (ts TagService) Create(ctx context.Context, sID, uID int, tag *Tag) (model.
 			UpdatedAt: tag.UpdatedAt,
 		},
 		Name:             tag.Name,
-		Slug:             slugx.Approve(&config.DB, tagSlug, sID, tableName),
+		Slug:             util.ApproveSlug(tagSlug, sID, tableName),
 		BackgroundColour: tag.BackgroundColour,
 		Description:      jsonDescription,
 		DescriptionHTML:  descriptionHTML,
-		SpaceID:          uint(sID),
+		SpaceID:          sID,
 		MediumID:         mediumID,
 		IsFeatured:       tag.IsFeatured,
 		MetaFields:       tag.MetaFields,
@@ -202,7 +240,7 @@ func (ts TagService) Create(ctx context.Context, sID, uID int, tag *Tag) (model.
 		FooterCode:       tag.FooterCode,
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, config.UserContext, uID)).Begin()
 	err = tx.Model(&model.Tag{}).Create(&result).Error
 	if err != nil {
 		tx.Rollback()
@@ -217,7 +255,7 @@ func (ts TagService) Create(ctx context.Context, sID, uID int, tag *Tag) (model.
 	return *result, nil
 }
 
-func (ts TagService) Update(sID, uID, id int, tag *Tag) (model.Tag, []errorx.Message) {
+func (ts TagService) Update(sID, id uuid.UUID, uID string, tag *Tag) (model.Tag, []errorx.Message) {
 	validationError := validationx.Check(tag)
 	if validationError != nil {
 		loggerx.Error(errors.New("validation error"))
@@ -232,16 +270,16 @@ func (ts TagService) Update(sID, uID, id int, tag *Tag) (model.Tag, []errorx.Mes
 	tableName := stmt.Schema.Table
 
 	result := &model.Tag{}
-	result.ID = uint(id)
+	result.ID = id
 
-	if tag.Slug != "" && slugx.Check(tag.Slug) {
-		tagSlug = slugx.Approve(&config.DB, tag.Slug, sID, tableName)
+	if tag.Slug != "" && util.CheckSlug(tag.Slug) {
+		tagSlug = util.ApproveSlug(tag.Slug, sID, tableName)
 	} else {
-		tagSlug = slugx.Approve(&config.DB, slugx.Make(tag.Name), sID, tableName)
+		tagSlug = util.ApproveSlug(util.MakeSlug(tag.Name), sID, tableName)
 	}
 
 	// Check if tag with same name exist
-	if tag.Name != result.Name && util.CheckName(uint(sID), tag.Name, tableName) {
+	if tag.Name != result.Name && util.CheckName(sID, tag.Name, tableName) {
 		loggerx.Error(errors.New(`tag with same name exist`))
 		return model.Tag{}, errorx.Parser(errorx.SameNameExist())
 	}
@@ -269,7 +307,7 @@ func (ts TagService) Update(sID, uID, id int, tag *Tag) (model.Tag, []errorx.Mes
 	updateMap := map[string]interface{}{
 		"created_at":        tag.CreatedAt,
 		"updated_at":        tag.UpdatedAt,
-		"updated_by_id":     uint(uID),
+		"updated_by_id":     uID,
 		"name":              tag.Name,
 		"slug":              tagSlug,
 		"description":       jsonDescription,
@@ -283,7 +321,7 @@ func (ts TagService) Update(sID, uID, id int, tag *Tag) (model.Tag, []errorx.Mes
 		"background_colour": tag.BackgroundColour,
 	}
 	result.MediumID = &tag.MediumID
-	if tag.MediumID == 0 {
+	if tag.MediumID == uuid.Nil {
 		updateMap["medium_id"] = nil
 	}
 
@@ -307,10 +345,10 @@ func (ts TagService) Update(sID, uID, id int, tag *Tag) (model.Tag, []errorx.Mes
 	return *result, nil
 }
 
-func (ts TagService) Delete(sID, id int) []errorx.Message {
+func (ts TagService) Delete(sID, id uuid.UUID) []errorx.Message {
 	// check if tag is associated with posts
 	tag := new(model.Tag)
-	tag.ID = uint(id)
+	tag.ID = id
 	totAssociated := config.DB.Model(tag).Association("Posts").Count()
 
 	if totAssociated != 0 {

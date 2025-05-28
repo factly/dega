@@ -19,42 +19,44 @@ func SetupVars() {
 		log.Println("config file not found...")
 	}
 
-	if !Sqlite() {
-		if !viper.IsSet("database_host") {
-			log.Fatal("please provide database_host config param")
-		}
-
-		if !viper.IsSet("database_user") {
-			log.Fatal("please provide database_user config param")
-		}
-
-		if !viper.IsSet("database_name") {
-			log.Fatal("please provide database_name config param")
-		}
-
-		if !viper.IsSet("database_password") {
-			log.Fatal("please provide database_password config param")
-		}
-
-		if !viper.IsSet("database_port") {
-			log.Fatal("please provide database_port config param")
-		}
-
-		if !viper.IsSet("database_ssl_mode") {
-			log.Fatal("please provide database_ssl_mode config param")
-		}
-	} else {
-		if !viper.IsSet("sqlite_db_path") {
-			log.Fatal("please provide sqlite_db_path config param")
-		}
+	if !viper.IsSet("database_host") {
+		log.Fatal("please provide database_host config param")
 	}
 
-	if !viper.IsSet("kavach_url") {
-		log.Fatal("please provide kavach_url config param")
+	if !viper.IsSet("database_user") {
+		log.Fatal("please provide database_user config param")
 	}
 
-	if !viper.IsSet("keto_read_api_url") {
-		log.Fatal("please provide keto_read_api_url config param")
+	if !viper.IsSet("database_name") {
+		log.Fatal("please provide database_name config param")
+	}
+
+	if !viper.IsSet("database_password") {
+		log.Fatal("please provide database_password config param")
+	}
+
+	if !viper.IsSet("database_port") {
+		log.Fatal("please provide database_port config param")
+	}
+
+	if !viper.IsSet("database_ssl_mode") {
+		log.Fatal("please provide database_ssl_mode config param")
+	}
+
+	if !viper.IsSet("zitadel_domain") {
+		log.Fatal("please provide zitadel_domain config param")
+	}
+
+	if !viper.IsSet("zitadel_protocol") {
+		log.Fatal("please provide zitadel_protocol config param")
+	}
+
+	if !viper.IsSet("zitadel_personal_access_token") {
+		log.Fatal("please provide zitadel_personal_access_token config param")
+	}
+
+	if !viper.IsSet("zitadel_project_id") {
+		log.Fatal("please provide zitadel_project_id config param")
 	}
 
 	if viper.IsSet("google_fact_check_search_enabled") && viper.GetBool("google_fact_check_search_enabled") {
@@ -67,15 +69,6 @@ func SetupVars() {
 		log.Fatal("please provide create_super_organisation (bool) config param")
 	}
 
-	if !viper.IsSet("organisation_permission_enabled") {
-		log.Fatal("please provide organisation permission enabled bool config param")
-	}
-	if viper.GetBool("create_super_organisation") {
-		if !viper.IsSet("kratos_public_url") {
-			log.Fatal("please provide kratos_public_url config param")
-		}
-	}
-
 	if SearchEnabled() {
 		if !viper.IsSet("meili_url") {
 			log.Fatal("please provide meili_url config param")
@@ -86,6 +79,30 @@ func SetupVars() {
 		}
 	}
 
+	if CacheEnabled() {
+		if !viper.IsSet("redis_address") {
+			log.Fatal("please provide redis_address config param")
+		}
+
+		if !viper.IsSet("redis_password") {
+			log.Fatal("please provide redis_password config param")
+		}
+
+		if !viper.IsSet("redis_db") {
+			log.Fatal("please provide redis_db config param")
+		}
+
+		if !viper.IsSet("redis_cache_duration") {
+			log.Fatal("please provide redis_cache_duration config param")
+		}
+	}
+
+	if HukzEnabled() {
+		if !viper.IsSet("hukz_url") {
+			log.Fatal("please provide hukz_url config param")
+		}
+	}
+
 }
 
 func SearchEnabled() bool {
@@ -93,5 +110,13 @@ func SearchEnabled() bool {
 }
 
 func Sqlite() bool {
-	return viper.IsSet("use_sqlite") && viper.GetBool("use_sqlite")
+	return viper.IsSet("use_sqlite") && viper.GetBool("use_sqlite") && false
+}
+
+func CacheEnabled() bool {
+	return viper.IsSet("enable_cache") && viper.GetBool("enable_cache")
+}
+
+func HukzEnabled() bool {
+	return viper.IsSet("enable_hukz") && viper.GetBool("enable_hukz")
 }

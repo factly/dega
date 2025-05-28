@@ -10,14 +10,11 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/google/uuid"
 )
 
 func (r *claimantResolver) ID(ctx context.Context, obj *models.Claimant) (string, error) {
 	return fmt.Sprint(obj.ID), nil
-}
-
-func (r *claimantResolver) SpaceID(ctx context.Context, obj *models.Claimant) (int, error) {
-	return int(obj.SpaceID), nil
 }
 
 func (r *claimantResolver) Description(ctx context.Context, obj *models.Claimant) (interface{}, error) {
@@ -33,7 +30,7 @@ func (r *claimantResolver) MetaFields(ctx context.Context, obj *models.Claimant)
 }
 
 func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*models.Medium, error) {
-	if obj.MediumID == 0 {
+	if obj.MediumID == uuid.Nil {
 		return nil, nil
 	}
 
@@ -52,7 +49,7 @@ func (r *claimantResolver) FooterCode(ctx context.Context, obj *models.Claimant)
 	return &obj.FooterCode, nil
 }
 
-func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
+func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -80,7 +77,7 @@ func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, 
 
 	var total int64
 	tx.Where(&models.Claimant{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Preload("Medium").Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)

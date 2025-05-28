@@ -7,7 +7,6 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/spf13/viper"
@@ -25,13 +24,6 @@ func TestSpaceMy(t *testing.T) {
 	config.DB.Exec("DELETE FROM space_permissions")
 
 	e := httpexpect.New(t, testServer.URL)
-
-	insertSpaceSetting := model.SpaceSettings{
-		SpaceID:   1,
-		SiteTitle: "Dega",
-		TagLine:   "Dega is a free and open source content management system for news organizations.",
-	}
-	config.DB.Model(&model.SpaceSettings{}).Create(&insertSpaceSetting)
 
 	// get empty list of spaces
 	t.Run("get get my space", func(t *testing.T) {

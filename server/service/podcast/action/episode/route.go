@@ -3,7 +3,6 @@ package episode
 import (
 	"time"
 
-	"github.com/factly/dega-server/config"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
@@ -34,7 +33,7 @@ type episodeData struct {
 	Authors []coreModel.Author `json:"authors"`
 }
 
-var episodeUser config.ContextKey = "episode_user"
+var meiliIndex = "episode"
 
 // Router - Group of episode router
 func Router() chi.Router {
@@ -42,13 +41,13 @@ func Router() chi.Router {
 
 	entity := "episodes"
 
-	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
-	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
+	r.With(util.CheckEntityAccess(entity, "get")).Get("/", list)
+	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
 
 	r.Route("/{episode_id}", func(r chi.Router) {
-		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
-		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
-		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
+		r.With(util.CheckEntityAccess(entity, "get")).Get("/", details)
+		r.With(util.CheckEntityAccess(entity, "update")).Put("/", update)
+		r.With(util.CheckEntityAccess(entity, "delete")).Delete("/", delete)
 	})
 
 	return r

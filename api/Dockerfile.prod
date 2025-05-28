@@ -1,4 +1,4 @@
-FROM alpine:3.9 
+FROM golang:1.20-alpine
 RUN apk add ca-certificates
 
 RUN apk add gcc musl-dev

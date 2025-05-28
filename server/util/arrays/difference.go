@@ -1,7 +1,7 @@
 package arrays
 
-func Difference(prev []uint, new []uint) ([]uint, []uint) {
-	del := make([]uint, 0)
+func Difference(prev []string, new []string) ([]string, []string) {
+	del := make([]string, 0)
 
 	if len(new) == 0 {
 		return new, prev
@@ -30,8 +30,8 @@ func Difference(prev []uint, new []uint) ([]uint, []uint) {
 
 }
 
-func subtraction(arr1 []uint, arr2 []uint) []uint {
-	sub := make([]uint, 0)
+func subtraction(arr1 []string, arr2 []string) []string {
+	sub := make([]string, 0)
 	for _, i := range arr1 {
 		found := false
 		for _, j := range arr2 {

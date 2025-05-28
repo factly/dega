@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"net/http"
 
-	meilisearchx "github.com/factly/x/meilisearchx"
 	meilisearch "github.com/meilisearch/meilisearch-go"
 
+	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -29,7 +29,7 @@ import (
 // @Success 200
 // @Router /core/search [post]
 func list(w http.ResponseWriter, r *http.Request) {
-	sID, err := middlewarex.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -52,11 +52,15 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	filters := []string{}
-	filters = append(filters, fmt.Sprint("space_id=", sID))
+	filters = append(filters, fmt.Sprint("space_id=", authCtx.SpaceID))
 
-	result, err := meilisearchx.Client.Index("dega").Search(searchQuery.Query, &meilisearch.SearchRequest{
-		Filter: filters,
-		Limit:  searchQuery.Limit,
+	result, err := config.MeilisearchClient.MultiSearch(&meilisearch.MultiSearchRequest{
+		Queries: []meilisearch.SearchRequest{
+			{
+				Filter: filters,
+				Query:  searchQuery.Query,
+			},
+		},
 	})
 
 	if err != nil {
@@ -65,5 +69,5 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	renderx.JSON(w, http.StatusOK, result.Hits)
+	renderx.JSON(w, http.StatusOK, result.Results[0].Hits)
 }

@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/config"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -27,7 +28,7 @@ type Event struct {
 
 // WebhookLog model
 type WebhookLog struct {
-	ID                 uint           `gorm:"primary_key" json:"id"`
+	ID                 uuid.UUID      `gorm:"primary_key" json:"id"`
 	CreatedAt          time.Time      `json:"created_at"`
 	CreatedByID        uint           `gorm:"column:created_by_id" json:"created_by_id"`
 	Event              string         `gorm:"column:event" json:"event"`

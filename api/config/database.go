@@ -11,6 +11,7 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 )
 
 // DB - gorm DB
@@ -42,6 +43,10 @@ func SetupDB() {
 			LogLevel:      logger.Info,
 			Colorful:      true,
 		}),
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix:   "de_",
+			SingularTable: true,
+		},
 	})
 
 	if err != nil {

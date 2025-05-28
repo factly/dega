@@ -1,0 +1,32 @@
+package util
+
+import (
+	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util/zitadel"
+	"github.com/spf13/viper"
+)
+
+func GetAuthors(token, orgID string, ids, userNames []string) (map[string]model.Author, error) {
+	if token == "" {
+		token = viper.GetString("ZITADEL_PERSONAL_ACCESS_TOKEN")
+	}
+	res, err := zitadel.GetOrganisationUsers(token, orgID, ids, userNames)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// Adding author
+	authors := make(map[string]model.Author)
+	for _, zitadelUser := range res.Result {
+		author := model.Author{
+			ID:          zitadelUser.ID,
+			DisplayName: zitadelUser.Human.Profile.DisplayName,
+			FirstName:   zitadelUser.Human.Profile.FirstName,
+			LastName:    zitadelUser.Human.Profile.LastName,
+		}
+		authors[zitadelUser.ID] = author
+	}
+
+	return authors, nil
+}

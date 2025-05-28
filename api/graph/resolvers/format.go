@@ -9,14 +9,11 @@ import (
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
+	"github.com/google/uuid"
 )
 
 func (r *formatResolver) ID(ctx context.Context, obj *models.Format) (string, error) {
 	return fmt.Sprint(obj.ID), nil
-}
-
-func (r *formatResolver) SpaceID(ctx context.Context, obj *models.Format) (int, error) {
-	return int(obj.SpaceID), nil
 }
 
 func (r *formatResolver) MetaFields(ctx context.Context, obj *models.Format) (interface{}, error) {
@@ -36,14 +33,14 @@ func (r *formatResolver) FooterCode(ctx context.Context, obj *models.Format) (*s
 }
 
 func (r *formatResolver) Medium(ctx context.Context, obj *models.Format) (*models.Medium, error) {
-	if obj.MediumID == 0 {
+	if obj.MediumID == uuid.Nil {
 		return nil, nil
 	}
 
 	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
-func (r *queryResolver) Formats(ctx context.Context, spaces []int, slugs []string) (*models.FormatsPaging, error) {
+func (r *queryResolver) Formats(ctx context.Context) (*models.FormatsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -53,12 +50,8 @@ func (r *queryResolver) Formats(ctx context.Context, spaces []int, slugs []strin
 
 	var total int64
 	tx := config.DB.Model(&models.Format{}).Where(&models.Format{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	})
-
-	if len(slugs) > 0 {
-		tx.Where("slug IN (?)", slugs)
-	}
 
 	tx.Count(&total).Order("id desc").Find(&result.Nodes)
 

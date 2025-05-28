@@ -2,9 +2,6 @@ package test
 
 import (
 	"time"
-
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
 )
 
 // Dummy response body for the mock server requesting organisation data
@@ -377,30 +374,8 @@ var KavachPolicy = []map[string]interface{}{{
 			"actions":  []string{"get", "create", "update"},
 		},
 	},
-	"roles": []model.SpaceRole{{
-		Base:        config.Base{ID: 1},
-		Name:        "test",
-		Description: "test",
-		Slug:        "test",
-		SpaceID:     1,
-		Users: []model.User{{
-			FirstName: "test",
-			LastName:  "test",
-		}},
-	}},
-	"space_id": 1},
-}
 
-var SpaceRole = model.SpaceRole{
-	Base:        config.Base{ID: 1},
-	Name:        "test",
-	Description: "test",
-	Slug:        "test",
-	SpaceID:     1,
-	Users: []model.User{{
-		FirstName: "test",
-		LastName:  "test",
-	}},
+	"space_id": 1},
 }
 
 var KavachCreateSpace = map[string]interface{}{

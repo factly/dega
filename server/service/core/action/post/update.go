@@ -6,24 +6,20 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/schemax"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -44,33 +40,21 @@ import (
 func update(w http.ResponseWriter, r *http.Request) {
 
 	postID := chi.URLParam(r, "post_id")
-	id, err := strconv.Atoi(postID)
+	id, err := uuid.Parse(postID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
-	sID, err := middlewarex.GetSpace(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := middlewarex.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	oID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
+	orgRole := authCtx.OrgRole
 
 	post := &post{}
 	postAuthors := []model.PostAuthor{}
@@ -93,26 +77,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &postData{}
-	result.ID = uint(id)
+	result.ID = id
 	result.Tags = make([]model.Tag, 0)
 	result.Categories = make([]model.Category, 0)
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factCheckModel.Claim, 0)
 
 	// fetch all authors
-	authors, err := author.All(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		Base: config.Base{
-			ID: uint(id),
+			ID: id,
 		},
-		SpaceID: uint(sID),
+		SpaceID: authCtx.SpaceID,
 	}).Where("is_page = ?", false).First(&result.Post).Error
 	if err != nil {
 		loggerx.Error(err)
@@ -130,10 +108,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Slug == post.Slug {
 		postSlug = result.Slug
-	} else if post.Slug != "" && slugx.Check(post.Slug) {
-		postSlug = slugx.Approve(&config.DB, post.Slug, sID, tableName)
+	} else if post.Slug != "" && util.CheckSlug(post.Slug) {
+		postSlug = util.ApproveSlug(post.Slug, authCtx.SpaceID, tableName)
 	} else {
-		postSlug = slugx.Approve(&config.DB, slugx.Make(post.Title), sID, tableName)
+		postSlug = util.ApproveSlug(util.MakeSlug(post.Title), authCtx.SpaceID, tableName)
 	}
 
 	var descriptionHTML string
@@ -154,38 +132,92 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 
-	newTags := make([]model.Tag, 0)
+	// Handle Tags
+	if err = tx.Exec("DELETE FROM de_post_tags WHERE post_id = ?", result.Post.ID).Error; err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
 	if len(post.TagIDs) > 0 {
-		config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&newTags)
-		if err = tx.Model(&result.Post).Association("Tags").Replace(&newTags); err != nil {
+		// Fetch tags to validate they exist
+		newTags := make([]model.Tag, 0)
+		if err = tx.Model(&model.Tag{}).Where("id IN ? AND space_id = ?",
+			post.TagIDs, result.Post.SpaceID).
+			Find(&newTags).Error; err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-	} else {
-		_ = config.DB.Model(&result.Post).Association("Tags").Clear()
+
+		// Check if we found all requested tags
+		if len(newTags) != len(post.TagIDs) {
+			tx.Rollback()
+			loggerx.Error(errors.New("some tags were not found"))
+			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+			return
+		}
+
+		// Insert associations directly into join table
+		for _, cat := range newTags {
+			if err = tx.Exec("INSERT INTO de_post_tags (post_id, tag_id) VALUES (?, ?)",
+				result.Post.ID, cat.ID).Error; err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
 	}
 
-	newCategories := make([]model.Category, 0)
+	if err = tx.Exec("DELETE FROM de_post_categories WHERE post_id = ?", result.Post.ID).Error; err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
 	if len(post.CategoryIDs) > 0 {
-		config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&newCategories)
-		if err = tx.Model(&result.Post).Association("Categories").Replace(&newCategories); err != nil {
+		// Fetch categories to validate they exist
+		newCategories := make([]model.Category, 0)
+		if err = tx.Model(&model.Category{}).Where("id IN ? AND space_id = ?",
+			post.CategoryIDs, result.Post.SpaceID).
+			Find(&newCategories).Error; err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-	} else {
-		_ = config.DB.Model(&result.Post).Association("Categories").Clear()
+
+		// Check if we found all requested categories
+		if len(newCategories) != len(post.CategoryIDs) {
+			tx.Rollback()
+			loggerx.Error(errors.New("some categories were not found"))
+			errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+			return
+		}
+
+		// Insert associations directly into join table
+		for _, cat := range newCategories {
+			if err = tx.Exec("INSERT INTO de_post_categories (post_id, category_id) VALUES (?, ?)",
+				result.Post.ID, cat.ID).Error; err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
 	}
+	relatedURLsJSON, _ := json.Marshal(post.RelatedURLs)
 
 	updateMap := map[string]interface{}{
 		"created_at":         post.CreatedAt,
 		"updated_at":         post.UpdatedAt,
-		"updated_by_id":      uint(uID),
+		"updated_by_id":      authCtx.UserID,
 		"title":              post.Title,
 		"slug":               postSlug,
 		"subtitle":           post.Subtitle,
@@ -204,6 +236,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"description_amp":    post.DescriptionAMP,
 		"migrated_html":      post.MigratedHTML,
 		"language":           post.Language,
+		"custom_format":      post.CustomFormat,
+		"related_urls":       postgres.Jsonb{RawMessage: relatedURLsJSON},
 	}
 
 	if post.MigrationID != nil {
@@ -211,7 +245,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result.Post.FeaturedMediumID = &post.FeaturedMediumID
-	if post.FeaturedMediumID == 0 {
+	if post.FeaturedMediumID == uuid.Nil {
 		updateMap["featured_medium_id"] = nil
 	}
 
@@ -225,18 +259,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	oldStatus := result.Post.Status
 	// Check if post status is changed back to draft or ready from published
-	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready") {
-		status, err := getPublishPermissions(oID, sID, uID)
-		if err != nil {
+	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready" || post.Status == "future") {
+		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "publish", orgRole)
+		if !isAllowed {
 			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-			return
-		}
-
-		if status != http.StatusOK {
-			tx.Rollback()
-			w.WriteHeader(http.StatusUnauthorized)
+			errorx.Render(w, errorx.Parser(e))
 			return
 		}
 
@@ -250,28 +277,16 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		status, err := getPublishPermissions(oID, sID, uID)
-		if err != nil {
+		isAllowed, e := util.CheckSpaceEntityPermission(authCtx.SpaceID, authCtx.UserID, "posts", "publish", orgRole)
+		if !isAllowed {
 			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-			return
-		}
-		if status == http.StatusOK {
-			updateMap["status"] = "publish"
-			if post.PublishedDate == nil {
-				currTime := time.Now()
-				updateMap["published_date"] = &currTime
-			} else {
-				updateMap["published_date"] = post.PublishedDate
-			}
-		} else {
-			tx.Rollback()
-			w.WriteHeader(http.StatusUnauthorized)
+			errorx.Render(w, errorx.Parser(e))
 			return
 		}
 	} else if post.Status == "ready" {
 		updateMap["status"] = "ready"
+	} else if post.Status == "future" {
+		updateMap["status"] = "future"
 	} else if oldStatus == "ready" && post.Status == "draft" {
 		updateMap["status"] = "draft"
 	}
@@ -285,13 +300,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var toCreateIDs []uint
-	var toDeleteIDs []uint
+	var toCreateIDs []string
+	var toDeleteIDs []string
 
 	if result.Post.Format.Slug == "fact-check" {
 		// fetch existing post claims
 		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
-			PostID: uint(id),
+			PostID: id,
 		}).Find(&postClaims)
 
 		if len(postClaims) > 0 {
@@ -307,9 +322,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		toCreatePostClaims := make([]factCheckModel.PostClaim, 0)
 		for i, id := range post.ClaimIDs {
 			postClaim := factCheckModel.PostClaim{}
-			postClaim.ClaimID = uint(id)
+			postClaim.ClaimID = id
 			postClaim.PostID = result.ID
-			postClaim.Position = uint(i + 1)
+			postClaim.Position = i + 1
 			toCreatePostClaims = append(toCreatePostClaims, postClaim)
 		}
 
@@ -326,10 +341,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		// fetch updated post claims
 		updatedPostClaims := []factCheckModel.PostClaim{}
 		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
-			PostID: uint(id),
+			PostID: id,
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&updatedPostClaims)
 
-		result.ClaimOrder = make([]uint, len(updatedPostClaims))
+		result.ClaimOrder = make([]uuid.UUID, len(updatedPostClaims))
 		// appending previous post claims to result
 		for _, postClaim := range updatedPostClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
@@ -340,12 +355,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// fetch existing post authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
+		PostID: id,
 	}).Find(&postAuthors)
 
-	prevAuthorIDs := make([]uint, 0)
-	mapperPostAuthor := map[uint]model.PostAuthor{}
-	postAuthorIDs := make([]uint, 0)
+	prevAuthorIDs := make([]string, 0)
+	mapperPostAuthor := map[string]model.PostAuthor{}
+	postAuthorIDs := make([]string, 0)
 
 	for _, postAuthor := range postAuthors {
 		mapperPostAuthor[postAuthor.AuthorID] = postAuthor
@@ -356,7 +371,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// map post author ids
 	for _, id := range toDeleteIDs {
-		postAuthorIDs = append(postAuthorIDs, mapperPostAuthor[id].ID)
+		postAuthorIDs = append(postAuthorIDs, mapperPostAuthor[id].ID.String())
 	}
 
 	// delete post authors
@@ -372,9 +387,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// creating new post authors
 	for _, id := range toCreateIDs {
-		if id != 0 {
+		if id != "" {
 			postAuthor := &model.PostAuthor{}
-			postAuthor.AuthorID = uint(id)
+			postAuthor.AuthorID = id
 			postAuthor.PostID = result.ID
 
 			err = tx.Model(&model.PostAuthor{}).Create(&postAuthor).Error
@@ -391,8 +406,16 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// fetch existing post authors
 	updatedPostAuthors := []model.PostAuthor{}
 	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
+		PostID: id,
 	}).Find(&updatedPostAuthors)
+
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, toCreateIDs, nil)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	// appending previous post authors to result
 	for _, postAuthor := range updatedPostAuthors {
@@ -403,214 +426,49 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(oID), uint(sID))
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	space := model.Space{}
 
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
-		SpaceID: uint(sID),
+		SpaceID: authCtx.SpaceID,
 	}).Order("numeric_value asc").Find(&ratings)
 
-	schemaxPost := schemax.Post{
-		Base:            schemax.Base(result.Post.Base),
-		Title:           result.Title,
-		Subtitle:        result.Subtitle,
-		Slug:            result.Slug,
-		Status:          result.Status,
-		IsPage:          result.IsPage,
-		Excerpt:         result.Excerpt,
-		Description:     result.Description,
-		DescriptionHTML: result.DescriptionHTML,
-		IsFeatured:      result.IsFeatured,
-		IsSticky:        result.IsSticky,
-		IsHighlighted:   result.IsHighlighted,
-		FormatID:        result.FormatID,
-		PublishedDate:   result.PublishedDate,
-		SpaceID:         result.SpaceID,
-		Schemas:         result.Schemas,
-		Meta:            result.Meta,
-		HeaderCode:      result.HeaderCode,
-		FooterCode:      result.FooterCode,
-		MetaFields:      result.MetaFields,
+	postData := PostData{
+		Post: Post{
+			Title:         result.Post.Title,
+			Slug:          result.Post.Slug,
+			PublishedDate: result.Post.PublishedDate,
+			CreatedAt:     result.Post.CreatedAt,
+		},
 	}
 
-	if result.FeaturedMediumID != nil {
-		schemaxPost.FeaturedMediumID = result.FeaturedMediumID
-		schemaxPost.Medium = &schemax.Medium{
-			Base:        schemax.Base(result.Medium.Base),
-			Name:        result.Medium.Name,
-			Slug:        result.Medium.Slug,
-			Type:        result.Medium.Type,
-			Title:       result.Medium.Title,
-			Description: result.Medium.Description,
-			Caption:     result.Medium.Caption,
-			AltText:     result.Medium.AltText,
-			FileSize:    result.Medium.FileSize,
-			URL:         result.Medium.URL,
-			Dimensions:  result.Medium.Dimensions,
-			MetaFields:  result.Medium.MetaFields,
-			SpaceID:     result.Medium.SpaceID,
-		}
-	}
-
-	schemaxAuthors := make([]schemax.PostAuthor, 0)
+	schemaAuthors := make([]PostAuthor, 0)
 	for _, author := range result.Authors {
-		schemaxAuthor := schemax.PostAuthor{
-			Base:            schemax.Base(author.Base),
-			Email:           author.Email,
-			KID:             author.KID,
-			FirstName:       author.FirstName,
-			LastName:        author.LastName,
-			Slug:            author.Slug,
-			DisplayName:     author.DisplayName,
-			BirthDate:       author.BirthDate,
-			Gender:          author.Gender,
-			SocialMediaURLs: author.SocialMediaURLs,
+		schemaAuthor := PostAuthor{
+			ID:          author.ID,
+			DisplayName: author.DisplayName,
 		}
 
-		if author.FeaturedMediumID != nil {
-			schemaxAuthor.FeaturedMediumID = author.FeaturedMediumID
-			schemaxAuthor.Medium = &schemax.Medium{
-				Base:        schemax.Base(author.Medium.Base),
-				Name:        author.Medium.Name,
-				Slug:        author.Medium.Slug,
-				Type:        author.Medium.Type,
-				Title:       author.Medium.Title,
-				Description: author.Medium.Description,
-				Caption:     author.Medium.Caption,
-				AltText:     author.Medium.AltText,
-				FileSize:    author.Medium.FileSize,
-				URL:         author.Medium.URL,
-				Dimensions:  author.Medium.Dimensions,
-				MetaFields:  author.Medium.MetaFields,
-				SpaceID:     author.Medium.SpaceID,
-			}
-		}
-		schemaxAuthors = append(schemaxAuthors, schemaxAuthor)
+		schemaAuthors = append(schemaAuthors, schemaAuthor)
 	}
 
-	schemaxClaims := make([]schemax.Claim, 0)
+	postData.Authors = schemaAuthors
+
+	schemaClaims := make([]Claim, 0)
 	for _, claim := range result.Claims {
-		schemaxClaim := schemax.Claim{
-			Base:            schemax.Base(claim.Base),
-			Claim:           claim.Claim,
-			Slug:            claim.Slug,
-			ClaimDate:       claim.ClaimDate,
-			CheckedDate:     claim.CheckedDate,
-			ClaimSources:    claim.ClaimSources,
-			Description:     claim.Description,
-			DescriptionHTML: claim.DescriptionHTML,
-			ClaimantID:      claim.ClaimantID,
-			Claimant: schemax.Claimant{
-				Base:            schemax.Base(claim.Claimant.Base),
-				Name:            claim.Claimant.Name,
-				Slug:            claim.Claimant.Slug,
-				Description:     claim.Claimant.Description,
-				DescriptionHTML: claim.Claimant.DescriptionHTML,
-				IsFeatured:      claim.Claimant.IsFeatured,
-				TagLine:         claim.Claimant.TagLine,
-				MetaFields:      claim.Claimant.MetaFields,
-				SpaceID:         claim.Claimant.SpaceID,
-				Meta:            claim.Claimant.Meta,
-				HeaderCode:      claim.Claimant.HeaderCode,
-				FooterCode:      claim.Claimant.FooterCode,
-			},
-			RatingID:      claim.RatingID,
-			Fact:          claim.Fact,
-			ReviewSources: claim.ReviewSources,
-			MetaFields:    claim.MetaFields,
-			SpaceID:       claim.SpaceID,
-			VideoID:       claim.VideoID,
-			EndTime:       claim.EndTime,
-			StartTime:     claim.StartTime,
-			Meta:          claim.Meta,
-			HeaderCode:    claim.HeaderCode,
-			FooterCode:    claim.FooterCode,
+		schemaClaim := Claim{
+			Claim:       claim.Claim,
+			Slug:        claim.Slug,
+			CheckedDate: claim.CheckedDate,
+			Claimant:    claim.Claimant,
+			Fact:        claim.Fact,
+			Rating:      claim.Rating,
 		}
 
-		if claim.MediumID != nil {
-			schemaxClaim.MediumID = claim.MediumID
-		}
-		if claim.Claimant.MediumID != nil {
-			schemaxClaim.Claimant.MediumID = claim.Claimant.MediumID
-		}
-
-		schemaxClaims = append(schemaxClaims, schemaxClaim)
+		schemaClaims = append(schemaClaims, schemaClaim)
 	}
 
-	schemaxRatings := make([]schemax.Rating, 0)
-	for _, rating := range ratings {
-		schemaxRating := schemax.Rating{
-			Base:             schemax.Base(rating.Base),
-			Name:             rating.Name,
-			Slug:             rating.Slug,
-			BackgroundColour: rating.BackgroundColour,
-			TextColour:       rating.TextColour,
-			Description:      rating.Description,
-			DescriptionHTML:  rating.DescriptionHTML,
-			NumericValue:     rating.NumericValue,
-			MetaFields:       rating.MetaFields,
-			SpaceID:          rating.SpaceID,
-			Meta:             rating.Meta,
-			HeaderCode:       rating.HeaderCode,
-			FooterCode:       rating.FooterCode,
-		}
-		if rating.MediumID != nil {
-			schemaxRating.MediumID = rating.MediumID
-		}
-		schemaxRatings = append(schemaxRatings, schemaxRating)
-	}
-
-	schemaxSpace := schemax.Space{
-		Base: schemax.Base{
-			ID:          spaceObjectforDega.ID,
-			CreatedAt:   spaceObjectforDega.CreatedAt,
-			UpdatedAt:   spaceObjectforDega.UpdatedAt,
-			DeletedAt:   spaceObjectforDega.DeletedAt,
-			CreatedByID: spaceObjectforDega.CreatedByID,
-			UpdatedByID: spaceObjectforDega.UpdatedByID,
-		},
-		Name:        spaceObjectforDega.Name,
-		Slug:        spaceObjectforDega.Slug,
-		Description: spaceObjectforDega.Description,
-		MetaFields:  spaceObjectforDega.MetaFields,
-		SpaceSettings: &schemax.SpaceSettings{
-			SiteTitle:         spaceObjectforDega.SiteTitle,
-			SiteAddress:       spaceObjectforDega.SiteAddress,
-			VerificationCodes: spaceObjectforDega.VerificationCodes,
-			SocialMediaURLs:   spaceObjectforDega.SocialMediaURLs,
-			ContactInfo:       spaceObjectforDega.ContactInfo,
-			Analytics:         spaceObjectforDega.Analytics,
-			HeaderCode:        spaceObjectforDega.HeaderCode,
-			FooterCode:        spaceObjectforDega.FooterCode,
-		},
-	}
-
-	if spaceObjectforDega.LogoID != nil {
-		schemaxSpace.SpaceSettings.LogoID = spaceObjectforDega.LogoID
-	}
-
-	if spaceObjectforDega.LogoMobileID != nil {
-		schemaxSpace.SpaceSettings.LogoMobileID = spaceObjectforDega.LogoMobileID
-	}
-
-	if spaceObjectforDega.FavIconID != nil {
-		schemaxSpace.SpaceSettings.FavIconID = spaceObjectforDega.FavIconID
-	}
-
-	if spaceObjectforDega.MobileIconID != nil {
-		schemaxSpace.SpaceSettings.MobileIconID = spaceObjectforDega.MobileIconID
-	}
-
-	schemas := schemax.GetSchemas(schemax.PostData{
-		Post:    schemaxPost,
-		Authors: schemaxAuthors,
-		Claims:  schemaxClaims,
-	}, schemaxSpace, schemaxRatings)
+	schemas := GetSchemas(postData, space)
 
 	byteArr, err := json.Marshal(schemas)
 	if err != nil {
@@ -632,7 +490,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
-		"kind":           "post",
 		"title":          result.Title,
 		"subtitle":       result.Subtitle,
 		"slug":           result.Slug,
@@ -657,12 +514,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearch.UpdateDocument(meiliIndex, meiliObj)
 	}
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("post.updated", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("post.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("post.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -671,7 +528,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if result.Post.Status == "publish" {
-			if util.CheckWebhookEvent("post.published", strconv.Itoa(sID), r) {
+			if util.CheckWebhookEvent("post.published", authCtx.SpaceID.String(), r) {
 				if err = util.NC.Publish("post.published", result); err != nil {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -680,7 +537,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		if oldStatus == "publish" && (result.Post.Status == "draft" || result.Post.Status == "ready") {
-			if util.CheckWebhookEvent("post.unpublished", strconv.Itoa(sID), r) {
+			if util.CheckWebhookEvent("post.unpublished", authCtx.SpaceID.String(), r) {
 				if err = util.NC.Publish("post.unpublished", result); err != nil {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -689,7 +546,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		if (oldStatus == "publish" || oldStatus == "draft") && result.Post.Status == "ready" {
-			if util.CheckWebhookEvent("post.ready", strconv.Itoa(sID), r) {
+			if util.CheckWebhookEvent("post.ready", authCtx.SpaceID.String(), r) {
 				if err = util.NC.Publish("post.ready", result); err != nil {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -700,14 +557,4 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
-}
-
-func getPublishPermissions(oID, sID, uID int) (int, error) {
-
-	resStatus, err := util.IsAllowed("posts", "publish", uint(oID), uint(sID), uint(uID))
-	if err != nil {
-		return 0, err
-	}
-
-	return resStatus, nil
 }

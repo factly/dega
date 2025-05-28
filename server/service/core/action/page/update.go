@@ -6,22 +6,18 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/arrays"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -41,21 +37,14 @@ import (
 // @Router /core/pages/{page_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 	pageID := chi.URLParam(r, "page_id")
-	id, err := strconv.Atoi(pageID)
+	id, err := uuid.Parse(pageID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -79,7 +68,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &pageData{}
-	result.ID = uint(id)
+	result.ID = id
 	result.Tags = make([]model.Tag, 0)
 	result.Categories = make([]model.Category, 0)
 	result.Authors = make([]model.Author, 0)
@@ -87,9 +76,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		Base: config.Base{
-			ID: uint(id),
+			ID: id,
 		},
-		SpaceID: uint(sID),
+		SpaceID: authCtx.SpaceID,
 		IsPage:  true,
 	}).First(&result.Post).Error
 
@@ -100,7 +89,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all authors
-	authors, err := author.All(r.Context())
+	authors, err := util.GetAuthors(r.Header.Get("Authorization"), authCtx.OrganisationID, page.AuthorIDs, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -117,10 +106,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Slug == page.Slug {
 		pageSlug = result.Slug
-	} else if page.Slug != "" && slugx.Check(page.Slug) {
-		pageSlug = slugx.Approve(&config.DB, page.Slug, sID, tableName)
+	} else if page.Slug != "" && util.CheckSlug(page.Slug) {
+		pageSlug = util.ApproveSlug(page.Slug, authCtx.SpaceID, tableName)
 	} else {
-		pageSlug = slugx.Approve(&config.DB, slugx.Make(page.Title), sID, tableName)
+		pageSlug = util.ApproveSlug(util.MakeSlug(page.Title), authCtx.SpaceID, tableName)
 	}
 
 	// Store HTML description
@@ -142,7 +131,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
 
 	newTags := make([]model.Tag, 0)
 	if len(page.TagIDs) > 0 {
@@ -173,7 +162,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	updateMap := map[string]interface{}{
 		"created_at":         page.CreatedAt,
 		"updated_at":         page.UpdatedAt,
-		"updated_by_id":      uint(uID),
+		"updated_by_id":      authCtx.UserID,
 		"title":              page.Title,
 		"slug":               pageSlug,
 		"subtitle":           page.Subtitle,
@@ -199,7 +188,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result.Post.FeaturedMediumID = &page.FeaturedMediumID
-	if page.FeaturedMediumID == 0 {
+	if page.FeaturedMediumID == uuid.Nil {
 		updateMap["featured_medium_id"] = nil
 	}
 
@@ -223,24 +212,24 @@ func update(w http.ResponseWriter, r *http.Request) {
 	pageAuthors := []model.PostAuthor{}
 	// fetch existing post authors
 	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
+		PostID: id,
 	}).Find(&pageAuthors)
 
-	prevAuthorIDs := make([]uint, 0)
-	mapperPostAuthor := map[uint]model.PostAuthor{}
+	// prevAuthorIDs := make([]uint, 0)
+	// mapperPostAuthor := map[uint]model.PostAuthor{}
 	postAuthorIDs := make([]uint, 0)
 
-	for _, postAuthor := range pageAuthors {
-		mapperPostAuthor[postAuthor.AuthorID] = postAuthor
-		prevAuthorIDs = append(prevAuthorIDs, postAuthor.AuthorID)
-	}
+	// for _, postAuthor := range pageAuthors {
+	// 	mapperPostAuthor[postAuthor.AuthorID] = postAuthor
+	// 	prevAuthorIDs = append(prevAuthorIDs, postAuthor.AuthorID)
+	// }
 
-	toCreateIDs, toDeleteIDs := arrays.Difference(prevAuthorIDs, page.AuthorIDs)
+	// toCreateIDs, toDeleteIDs := arrays.Difference(prevAuthorIDs, page.AuthorIDs)
 
 	// map post author ids
-	for _, id := range toDeleteIDs {
-		postAuthorIDs = append(postAuthorIDs, mapperPostAuthor[id].ID)
-	}
+	// for _, id := range toDeleteIDs {
+	// 	postAuthorIDs = append(postAuthorIDs, mapperPostAuthor[id].ID)
+	// }
 
 	// delete post authors
 	if len(postAuthorIDs) > 0 {
@@ -254,27 +243,27 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// creating new post authors
-	for _, id := range toCreateIDs {
-		if id != 0 {
-			postAuthor := &model.PostAuthor{}
-			postAuthor.AuthorID = uint(id)
-			postAuthor.PostID = result.ID
+	// for _, id := range toCreateIDs {
+	// 	if id != 0 {
+	// 		postAuthor := &model.PostAuthor{}
+	// 		postAuthor.AuthorID = uint(id)
+	// 		postAuthor.PostID = result.ID
 
-			err = tx.Model(&model.PostAuthor{}).Create(&postAuthor).Error
+	// 		err = tx.Model(&model.PostAuthor{}).Create(&postAuthor).Error
 
-			if err != nil {
-				tx.Rollback()
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.DBError()))
-				return
-			}
-		}
-	}
+	// 		if err != nil {
+	// 			tx.Rollback()
+	// 			loggerx.Error(err)
+	// 			errorx.Render(w, errorx.Parser(errorx.DBError()))
+	// 			return
+	// 		}
+	// 	}
+	// }
 
 	// fetch existing post authors
 	updatedPostAuthors := []model.PostAuthor{}
 	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
+		PostID: id,
 	}).Find(&updatedPostAuthors)
 
 	// appending previous post authors to result
@@ -293,7 +282,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
-		"kind":           "page",
 		"title":          result.Title,
 		"subtitle":       result.Subtitle,
 		"slug":           result.Slug,
@@ -317,12 +305,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearch.UpdateDocument(meiliIndex, meiliObj)
 	}
 	tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("page.updated", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("page.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("page.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

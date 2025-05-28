@@ -13,6 +13,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/google/uuid"
 )
 
 func (r *tagResolver) ID(ctx context.Context, obj *models.Tag) (string, error) {
@@ -21,10 +22,6 @@ func (r *tagResolver) ID(ctx context.Context, obj *models.Tag) (string, error) {
 
 func (r *tagResolver) IsFeatured(ctx context.Context, obj *models.Tag) (*bool, error) {
 	return &obj.IsFeatured, nil
-}
-
-func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error) {
-	return int(obj.SpaceID), nil
 }
 
 func (r *tagResolver) DescriptionHTML(ctx context.Context, obj *models.Tag) (*string, error) {
@@ -52,7 +49,7 @@ func (r *tagResolver) FooterCode(ctx context.Context, obj *models.Tag) (*string,
 }
 
 func (r *tagResolver) Medium(ctx context.Context, obj *models.Tag) (*models.Medium, error) {
-	if obj.MediumID == 0 {
+	if obj.MediumID == uuid.Nil {
 		return nil, nil
 	}
 
@@ -88,7 +85,7 @@ func (r *tagResolver) Posts(ctx context.Context, obj *models.Tag) (*models.Posts
 	return response, nil
 }
 
-func (r *queryResolver) Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error) {
+func (r *queryResolver) Tag(ctx context.Context, id *string, slug *string) (*models.Tag, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -98,11 +95,20 @@ func (r *queryResolver) Tag(ctx context.Context, id *int, slug *string) (*models
 		return nil, errors.New("please provide either id or slug")
 	}
 
+	tID := uuid.UUID{}
+
+	if id != nil {
+		tID, err = uuid.Parse(*id)
+		if err != nil {
+			return nil, errors.New("please provide valid id")
+		}
+	}
+
 	result := &models.Tag{}
 
 	if id != nil {
 		err = config.DB.Model(&models.Tag{}).Where(&models.Tag{
-			ID:      uint(*id),
+			ID:      tID,
 			SpaceID: sID,
 		}).First(&result).Error
 	} else {
@@ -120,7 +126,7 @@ func (r *queryResolver) Tag(ctx context.Context, id *int, slug *string) (*models
 	return result, nil
 }
 
-func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error) {
+func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -154,7 +160,7 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 
 	var total int64
 	tx.Where(&models.Tag{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)

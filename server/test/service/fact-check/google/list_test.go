@@ -5,9 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
@@ -21,18 +19,7 @@ func TestGoogleList(t *testing.T) {
 	defer testServer.Close()
 	test.GoogleFactCheckGock()
 	//delete all entries from the db and insert some data
-	insertData := model.SpacePermission{
-		SpaceID:   1,
-		FactCheck: true,
-		Media:     100,
-		Posts:     100,
-		Podcast:   true,
-		Episodes:  100,
-		Videos:    100,
-	}
-	if err := config.DB.Model(&model.SpacePermission{}).Create(&insertData).Error; err != nil {
-		t.Error(err)
-	}
+
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 

@@ -1,23 +1,19 @@
 package policy
 
 import (
-	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	httpx "github.com/factly/dega-server/util/http"
+	"github.com/factly/dega-server/util/zitadel"
+
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/spf13/viper"
 )
 
 // create - Create policy
@@ -33,38 +29,23 @@ import (
 // @Success 201 {object} model.Policy
 // @Router /core/policies [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	spaceID, err := middlewarex.GetSpace(r.Context())
 
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	userID, err := middlewarex.GetUser(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
+	orgRole := authCtx.OrgRole
+	// check whether user is admin or not
+	if orgRole != "admin" {
+		loggerx.Error(errors.New("user is not admin"))
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	organisationID, err := util.GetOrganisation(r.Context())
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	applicationID, err := util.GetApplicationID(uint(userID), "dega")
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	policyReq := kavachPolicy{}
+	policyReq := policyReq{}
 
 	err = json.NewDecoder(r.Body).Decode(&policyReq)
 	if err != nil {
@@ -73,78 +54,93 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	buf := new(bytes.Buffer)
-	err = json.NewEncoder(buf).Encode(policyReq)
+	policy := model.Policy{
+		Name:        policyReq.Name,
+		Description: policyReq.Description,
+		SpaceID:     authCtx.SpaceID,
+	}
+
+	res, err := zitadel.GetOrganisationUsers(r.Header.Get("Authorization"), authCtx.OrganisationID, policyReq.Users, nil)
+
 	if err != nil {
 		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	if int(res.Total) != len(policyReq.Users) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
-	requrl := viper.GetString("kavach_url") + "/organisations/" + fmt.Sprintf("%d", organisationID) + "/applications/" + fmt.Sprintf("%d", applicationID) + "/spaces/" + fmt.Sprintf("%d", spaceID) + "/policy"
-	req, err := http.NewRequest(http.MethodPost, requrl, buf)
+	tx := config.DB.WithContext(context.WithValue(r.Context(), config.UserContext, authCtx.UserID)).Begin()
+	err = tx.Model(&model.Policy{}).Create(&policy).Error
+
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
-	req.Header.Set("X-User", strconv.Itoa(userID))
-	req.Header.Set("Content-Type", "application/json")
+	policyUsers := make([]model.PolicyUser, 0)
 
-	client := httpx.CustomHttpClient()
-	resp, err := client.Do(req)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		loggerx.Error(errors.New("internal server error on kavach server"))
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	result := &model.KavachPolicy{}
-	err = json.NewDecoder(resp.Body).Decode(result)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-	if config.SearchEnabled() {
-		err = insertIntoMeili(*result)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+	for _, userID := range policyReq.Users {
+		policyUser := model.PolicyUser{
+			PolicyID: policy.ID,
+			UserID:   userID,
 		}
+		policyUsers = append(policyUsers, policyUser)
 	}
 
-	if util.CheckNats() {
-		if util.CheckWebhookEvent("policy.created", strconv.Itoa(spaceID), r) {
-			if err = util.NC.Publish("policy.created", result); err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-				return
+	err = tx.Model(&model.PolicyUser{}).Create(&policyUsers).Error
+
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	permissions := make([]model.Permission, 0)
+
+	for _, permission := range policyReq.Permissions {
+		for _, action := range permission.Actions {
+			policyPermission := model.Permission{
+				PolicyID: policy.ID,
+				Action:   action,
+				Resource: permission.Resource,
 			}
+			permissions = append(permissions, policyPermission)
 		}
+	}
 
+	err = tx.Model(&model.Permission{}).Create(&permissions).Error
+
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	tx.Commit()
+
+	result := &policyRes{
+		ID:          policy.ID,
+		Name:        policy.Name,
+		Description: policy.Description,
+		Permissions: policyReq.Permissions,
+		Users:       []policyUser{},
+	}
+
+	for _, user := range res.Result {
+		policyUser := policyUser{
+			UserID:      user.ID,
+			DisplayName: user.Human.Profile.DisplayName,
+		}
+		result.Users = append(result.Users, policyUser)
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
-}
-
-func insertIntoMeili(result model.KavachPolicy) error {
-	// Insert into meili index
-	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "policy",
-		"name":        result.Name,
-		"description": result.Description,
-	}
-
-	return meilisearchx.AddDocument("dega", meiliObj)
 }

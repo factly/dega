@@ -1,0 +1,198 @@
+import axios from "axios";
+import {
+  ADD_WEBHOOK,
+  ADD_WEBHOOKS,
+  ADD_WEBHOOKS_REQUEST,
+  SET_WEBHOOKS_LOADING,
+  RESET_WEBHOOKS,
+  WEBHOOKS_API,
+} from "../constants/webhooks";
+import { addErrorNotification, addSuccessNotification } from "./notifications";
+import { addEvents } from "./events";
+import getError from "../utils/getError";
+
+// Define interfaces
+interface Event {
+  id: string;
+  [key: string]: any;
+}
+
+interface Webhook {
+  id: string;
+  events: Event[] | string[];
+  [key: string]: any;
+}
+
+interface WebhookAction {
+  type: string;
+  payload: any;
+}
+
+interface WebhookRequestData {
+  data: string[];
+  query: any;
+  total: number;
+}
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+const API_PATH = WEBHOOKS_API;
+
+export const getWebhooks = (query: any) => {
+  return (dispatch: (action: any) => void) => {
+    dispatch(loadingWebhooks());
+    return axios
+      .get(`${API_BASE_URL}${API_PATH}`, {
+        params: query,
+      })
+      .then((response) => {
+        dispatch(
+          addEvents(
+            response.data.nodes
+              .filter(
+                (webhook: Webhook) =>
+                  Array.isArray(webhook.events) && webhook.events.length > 0
+              )
+              .map((webhook: Webhook) => {
+                return webhook.events;
+              })
+              .flat(1)
+          )
+        );
+        dispatch(
+          addWebhookList(
+            response.data.nodes.map((webhook: Webhook) => {
+              return {
+                ...webhook,
+                events: Array.isArray(webhook.events)
+                  ? (webhook.events as Event[]).map((event: Event) => event.id)
+                  : webhook.events,
+              };
+            })
+          )
+        );
+        dispatch(
+          addWebhookRequest({
+            data: response.data.nodes.map((item: Webhook) => item.id),
+            query: query,
+            total: response.data.total,
+          })
+        );
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(getError(error)));
+      })
+      .finally(() => dispatch(stopWebhooksLoading()));
+  };
+};
+
+export const getWebhook = (id: string) => {
+  return (dispatch: (action: any) => void) => {
+    dispatch(loadingWebhooks());
+    return axios
+      .get(`${API_BASE_URL}${API_PATH}/${id}`)
+      .then((response) => {
+        const webhook: Webhook = response.data;
+        dispatch(addEvents(webhook.events as Event[]));
+        dispatch(
+          getWebhookByID({
+            ...webhook,
+            events: Array.isArray(webhook.events)
+              ? (webhook.events as Event[]).map((event: Event) => event.id)
+              : webhook.events,
+          })
+        );
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(getError(error)));
+      })
+      .finally(() => dispatch(stopWebhooksLoading()));
+  };
+};
+
+export const addWebhook = (data: Omit<Webhook, "id">) => {
+  return (dispatch: (action: any) => void) => {
+    dispatch(loadingWebhooks());
+    return axios
+      .post(`${API_BASE_URL}${API_PATH}`, data)
+      .then((response) => {
+        const webhook: Webhook = response.data;
+        dispatch(addEvents(webhook.events as Event[]));
+        dispatch(resetWebhooks());
+        dispatch(addSuccessNotification("Webhook added"));
+        return webhook;
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(getError(error)));
+      });
+  };
+};
+
+export const updateWebhook = (data: Webhook) => {
+  return (dispatch: (action: any) => void) => {
+    dispatch(loadingWebhooks());
+    return axios
+      .put(`${API_BASE_URL}${API_PATH}/${data.id}`, data)
+      .then((response) => {
+        const webhook: Webhook = response.data;
+        dispatch(addEvents(webhook.events as Event[]));
+        dispatch(
+          getWebhookByID({
+            ...webhook,
+            events: Array.isArray(webhook.events)
+              ? (webhook.events as Event[]).map((event: Event) => event.id)
+              : webhook.events,
+          })
+        );
+        dispatch(addSuccessNotification("Webhook updated"));
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(getError(error)));
+      })
+      .finally(() => dispatch(stopWebhooksLoading()));
+  };
+};
+
+export const deleteWebhook = (id: string) => {
+  return (dispatch: (action: any) => void) => {
+    dispatch(loadingWebhooks());
+    return axios
+      .delete(`${API_BASE_URL}${API_PATH}/${id}`)
+      .then(() => {
+        dispatch(resetWebhooks());
+        dispatch(addSuccessNotification("Webhook deleted"));
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(getError(error)));
+      });
+  };
+};
+
+export const loadingWebhooks = (): WebhookAction => ({
+  type: SET_WEBHOOKS_LOADING,
+  payload: true,
+});
+
+export const stopWebhooksLoading = (): WebhookAction => ({
+  type: SET_WEBHOOKS_LOADING,
+  payload: false,
+});
+
+export const getWebhookByID = (data: Webhook): WebhookAction => ({
+  type: ADD_WEBHOOK,
+  payload: data,
+});
+
+export const addWebhookList = (data: Webhook[]): WebhookAction => ({
+  type: ADD_WEBHOOKS,
+  payload: data,
+});
+
+export const addWebhookRequest = (data: WebhookRequestData): WebhookAction => ({
+  type: ADD_WEBHOOKS_REQUEST,
+  payload: data,
+});
+
+export const resetWebhooks = (): WebhookAction => ({
+  type: RESET_WEBHOOKS,
+  payload: [],
+});

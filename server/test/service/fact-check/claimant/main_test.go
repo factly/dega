@@ -16,7 +16,7 @@ func TestMain(m *testing.M) {
 	defer gock.Disable()
 	test.MockServer()
 	test.SetupSqlite("./claimant.db")
-	config.DB.AutoMigrate(&model.Claimant{}, &coreModel.SpacePermission{}, &coreModel.Medium{})
+	config.DB.AutoMigrate(&model.Claimant{}, &coreModel.Medium{})
 	defer gock.DisableNetworking()
 	exitValue := m.Run()
 	if err := os.Remove("./claimant.db"); err != nil {

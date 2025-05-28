@@ -3,17 +3,16 @@ package medium
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meilisearch"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/google/uuid"
 )
 
 // update - Update medium by id
@@ -31,14 +30,7 @@ import (
 // @Router /core/media/{medium_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	uID, err := middlewarex.GetUser(r.Context())
+	authCtx, err := util.GetAuthCtx(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -46,7 +38,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	mediumID := chi.URLParam(r, "medium_id")
-	id, err := strconv.Atoi(mediumID)
+	id, err := uuid.Parse(mediumID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -64,21 +56,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	mediumService := service.GetMediumService()
-	_, err = mediumService.GetById(sID, id)
+	_, err = mediumService.GetById(authCtx.SpaceID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	result, serviceErr := mediumService.Update(sID, uID, id, medium)
+	result, serviceErr := mediumService.Update(authCtx.SpaceID, id, authCtx.UserID, medium)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
 	}
 	meiliObj := map[string]interface{}{
 		"id":          result.ID,
-		"kind":        "medium",
 		"name":        result.Name,
 		"slug":        result.Slug,
 		"title":       result.Title,
@@ -88,11 +79,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		_ = meilisearch.UpdateDocument(meiliIndex, meiliObj)
 	}
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("media.updated", strconv.Itoa(sID), r) {
+		if util.CheckWebhookEvent("media.updated", authCtx.SpaceID.String(), r) {
 			if err = util.NC.Publish("media.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

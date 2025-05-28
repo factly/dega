@@ -3,7 +3,6 @@ package claimant
 import (
 	"time"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -25,7 +24,7 @@ type claimant struct {
 	FooterCode  string         `json:"footer_code"`
 }
 
-var userContext config.ContextKey = "claimant_user"
+var meiliIndex = "claimant"
 
 // Router - Group of claimant router
 func Router() chi.Router {
@@ -33,13 +32,13 @@ func Router() chi.Router {
 
 	entity := "claimants"
 
-	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
-	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
+	r.With(util.CheckEntityAccess(entity, "get")).Get("/", List)
+	r.With(util.CheckEntityAccess(entity, "create")).Post("/", create)
 
 	r.Route("/{claimant_id}", func(r chi.Router) {
-		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
-		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
-		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
+		r.With(util.CheckEntityAccess(entity, "get")).Get("/", details)
+		r.With(util.CheckEntityAccess(entity, "update")).Put("/", update)
+		r.With(util.CheckEntityAccess(entity, "delete")).Delete("/", delete)
 	})
 
 	return r

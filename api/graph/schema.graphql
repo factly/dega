@@ -1,367 +1,347 @@
 type Space {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	name: String!
-	slug: String!
-	site_title: String
-	tag_line: String
-	description: String
-	site_address: String
-	logo: Medium
-	logo_mobile: Medium
-	fav_icon: Medium
-	mobile_icon: Medium
-	verification_codes: Any
-	social_media_urls: Any
-	contact_info: Any
-	header_code: String
-	footer_code: String
-	meta_fields: Any
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String!
+  site_title: String
+  tag_line: String
+  description: String
+  site_address: String
+  logo: Medium
+  logo_mobile: Medium
+  fav_icon: Medium
+  mobile_icon: Medium
+  verification_codes: Any
+  social_media_urls: Any
+  contact_info: Any
+  header_code: String
+  footer_code: String
+  meta_fields: Any
 }
 
 type Category {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	name: String!
-	slug: String!
-	description: Any
-	is_featured: Boolean
-	posts: PostsPaging
-	background_colour: Any
-	description_html: String
-	meta_fields: Any
-	parent_id: Int
-	medium: Medium
-	space_id: Int!
-	meta: Any
-	header_code: String
-	footer_code: String
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String!
+  description: Any
+  is_featured: Boolean
+  posts: PostsPaging
+  background_colour: Any
+  description_html: String
+  meta_fields: Any
+  medium: Medium
+  meta: Any
+  header_code: String
+  footer_code: String
 }
 
 type Tag {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	name: String!
-	slug: String!
-	description: String
-	description_html: String
-	is_featured: Boolean
-	posts: PostsPaging
-	meta_fields: Any
-	background_colour: Any
-	meta: Any
-	header_code: String
-	footer_code: String
-	medium: Medium
-	space_id: Int!
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String!
+  description: String
+  description_html: String
+  is_featured: Boolean
+  posts: PostsPaging
+  meta_fields: Any
+  background_colour: Any
+  meta: Any
+  header_code: String
+  footer_code: String
+  medium: Medium
 }
 
 type Format {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	name: String!
-	slug: String!
-	description: String
-	meta_fields: Any
-	meta: Any
-	header_code: String
-	footer_code: String
-	space_id: Int!
-	medium: Medium
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String!
+  description: String
+  meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
+  medium: Medium
 }
 
 type Medium {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	name: String!
-	slug: String
-	type: String!
-	title: String!
-	description: String
-	caption: String
-	file_size: Int!
-	alt_text: String!
-	url: Any!
-	dimensions: String!
-	meta_fields: Any
-	space_id: Int!
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String
+  type: String!
+  title: String!
+  description: String
+  caption: String
+  file_size: Int!
+  alt_text: String!
+  url: Any!
+  dimensions: String!
+  meta_fields: Any
 }
 
 type Post {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	title: String!
-	subtitle: String
-	slug: String!
-	status: String!
-	excerpt: String
-	description: Any
-	description_html: String
-	is_featured: Boolean
-	is_sticky: Boolean
-	is_highlighted: Boolean
-	is_page: Boolean
-	published_date: Time
-	format: Format!
-	medium: Medium
-	categories: [Category!]!
-	tags: [Tag!]!
-	users: [User!]!
-	claims: [Claim!]!
-	schemas: Any
-	meta: Any
-	space_id: Int!
-	header_code: String
-	footer_code: String
-	meta_fields: Any
-	claim_order: [Int]
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  title: String!
+  subtitle: String
+  slug: String!
+  status: String!
+  excerpt: String
+  description: Any
+  description_html: String
+  is_featured: Boolean
+  is_sticky: Boolean
+  is_highlighted: Boolean
+  is_page: Boolean
+  published_date: Time
+  format: Format!
+  medium: Medium
+  categories: [Category!]!
+  tags: [Tag!]!
+  users: [User!]!
+  claims: [Claim!]!
+  schemas: Any
+  meta: Any
+  header_code: String
+  footer_code: String
+  custom_format: String
+  language: String
+  meta_fields: Any
+  claim_order: [String]
 }
 
 type User {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	first_name: String!
-	last_name: String
-	slug: String
-	email: String!
-	birth_date: String
-	gender: String
-	description: String
-	display_name: String
-	social_media_urls: Any
-	medium: Medium
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  first_name: String!
+  last_name: String
+  slug: String
+  email: String!
+  birth_date: String
+  gender: String
+  description: String
+  display_name: String
+  social_media_urls: Any
+  medium: Medium
 }
 
 type Rating {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	name: String!
-	slug: String!
-	description: Any
-	background_colour: Any
-	text_colour: Any
-	description_html: String
-	numeric_value: Int!
-	medium: Medium
-	meta_fields: Any
-	meta: Any
-	header_code: String
-	footer_code: String
-	space_id: Int!
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String!
+  description: Any
+  background_colour: Any
+  text_colour: Any
+  description_html: String
+  numeric_value: Int!
+  medium: Medium
+  meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
 }
 
 type Claimant {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	name: String!
-	slug: String!
-	description: Any
-	description_html: String
-	tag_line: String
-	medium: Medium
-	meta_fields: Any
-	meta: Any
-	header_code: String
-	footer_code: String
-	space_id: Int!
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String!
+  description: Any
+  description_html: String
+  tag_line: String
+  medium: Medium
+  meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
 }
 
 type Claim {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	claim: String!
-	slug: String!
-	claim_date: Time
-	checked_date: Time
-	claim_sources: Any
-	description: Any
-	description_html: String
-	fact: String
-	review_sources: Any
-	rating: Rating!
-	claimant: Claimant!
-	meta_fields: Any
-	meta: Any
-	header_code: String
-	footer_code: String
-	end_time: Int
-	start_time: Int
-	space_id: Int!
-	medium: Medium
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  claim: String!
+  slug: String!
+  claim_date: Time
+  checked_date: Time
+  claim_sources: Any
+  description: Any
+  description_html: String
+  fact: String
+  review_sources: Any
+  rating: Rating!
+  claimant: Claimant!
+  meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
+  end_time: Int
+  start_time: Int
+  medium: Medium
 }
 
 type Menu {
-	id: ID!
-	created_at: Time
-	updated_at: Time
-	name: String!
-	slug: String!
-	menu: Any
-	meta_fields: Any
-	space_id: Int!
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String!
+  menu: Any
+  meta_fields: Any
 }
 
 type CategoriesPaging {
-	nodes: [Category!]!
-	total: Int!
+  nodes: [Category!]!
+  total: Int!
 }
 
 type TagsPaging {
-	nodes: [Tag!]!
-	total: Int!
+  nodes: [Tag!]!
+  total: Int!
 }
 
 type PostsPaging {
-	nodes: [Post!]!
-	total: Int!
+  nodes: [Post!]!
+  total: Int!
 }
 
 type UsersPaging {
-	nodes: [User!]!
-	total: Int!
+  nodes: [User!]!
+  total: Int!
 }
 
 type ClaimsPaging {
-	nodes: [Claim!]!
-	total: Int!
+  nodes: [Claim!]!
+  total: Int!
 }
 
 type ClaimantsPaging {
-	nodes: [Claimant!]!
-	total: Int!
+  nodes: [Claimant!]!
+  total: Int!
 }
 
 type RatingsPaging {
-	nodes: [Rating!]!
-	total: Int!
+  nodes: [Rating!]!
+  total: Int!
 }
 
 type FormatsPaging {
-	nodes: [Format!]!
-	total: Int!
+  nodes: [Format!]!
+  total: Int!
 }
 
 type MenusPaging {
-	nodes: [Menu!]!
-	total: Int!
+  nodes: [Menu!]!
+  total: Int!
 }
 
 type Sitemap {
-	slug: String!
-	id: ID!
-	created_at: Time
-	published_date: Time
-	updated_at: Time
+  slug: String!
+  id: ID!
+  created_at: Time
+  published_date: Time
+  updated_at: Time
 }
 
 type Sitemaps {
-	categories: [Sitemap]
-	tags: [Sitemap]
-	users: [Sitemap]
-	formats: [Sitemap]
-	posts: [Sitemap]
-	claims: [Sitemap]
-	claimants: [Sitemap]
-	ratings: [Sitemap]
+  categories: [Sitemap]
+  tags: [Sitemap]
+  users: [Sitemap]
+  formats: [Sitemap]
+  posts: [Sitemap]
+  claims: [Sitemap]
+  claimants: [Sitemap]
+  ratings: [Sitemap]
 }
 
 type SearchResult {
-	posts: [Post]
-	categories: [Category]
-	tags: [Tag]
-	claims: [Claim]
-	claimants: [Claimant]
-	ratings: [Rating]
-	media: [Medium]
+  posts: [Post]
+  categories: [Category]
+  tags: [Tag]
+  claims: [Claim]
+  claimants: [Claimant]
+  ratings: [Rating]
+  media: [Medium]
 }
 
 input PostFilter {
-	slugs: [String!]
-	ids: [Int!]
+  slugs: [String!]
+  ids: [String!]
 }
 
 type Query {
-	space: Space
-	menu: MenusPaging
-	featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
-	featuredTags(featuredCount: Int!, postLimit: Int!): TagsPaging
-	categories(
-		ids: [Int!]
-		spaces: [Int!]
-		page: Int
-		limit: Int
-		sortBy: String
-		sortOrder: String
-	): CategoriesPaging
-	category(id: Int, slug: String): Category
-	tags(
-		ids: [Int!]
-		spaces: [Int!]
-		page: Int
-		limit: Int
-		sortBy: String
-		sortOrder: String
-	): TagsPaging
-	tag(id: Int, slug: String): Tag
-	formats(spaces: [Int!], slugs: [String!]): FormatsPaging
-	posts(
-		spaces: [Int!]
-		formats: PostFilter
-		categories: PostFilter
-		tags: PostFilter
-		users: PostFilter
-		status: String
-		page: Int
-		limit: Int
-		sortBy: String
-		sortOrder: String
-	): PostsPaging
-	post(id: Int, slug: String, include_pages: Boolean): Post
-	page(id: Int, slug: String): Post
-	pages(
-		spaces: [Int!]
-		page: Int
-		limit: Int
-		sortBy: String
-		sortOrder: String
-	): PostsPaging
-	users(page: Int, limit: Int): UsersPaging
-	user(id: Int, slug: String): User
-	ratings(
-		spaces: [Int!]
-		page: Int
-		limit: Int
-		sortBy: String
-		sortOrder: String
-	): RatingsPaging
-	claimants(
-		spaces: [Int!]
-		page: Int
-		limit: Int
-		sortBy: String
-		sortOrder: String
-	): ClaimantsPaging
-	claims(
-		spaces: [Int!]
-		ratings: [Int!]
-		claimants: [Int!]
-		page: Int
-		limit: Int
-		sortBy: String
-		sortOrder: String
-	): ClaimsPaging
-	sitemap: Sitemaps
-	search(q: String!): SearchResult
+  space: Space
+  menu: MenusPaging
+  featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
+  featuredTags(featuredCount: Int!, postLimit: Int!): TagsPaging
+  categories(
+    ids: [String!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): CategoriesPaging
+  category(id: String, slug: String): Category
+  tags(
+    ids: [String!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): TagsPaging
+  tag(id: String, slug: String): Tag
+  formats: FormatsPaging
+  posts(
+    formats: PostFilter
+    categories: PostFilter
+    tags: PostFilter
+    users: PostFilter
+    status: String
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): PostsPaging
+  post(id: String, slug: String, include_pages: Boolean): Post
+  page(id: String, slug: String): Post
+  pages(page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  users(page: Int, limit: Int): UsersPaging
+  user(id: String): User
+  ratings(
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): RatingsPaging
+  claimants(
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): ClaimantsPaging
+  claims(
+    ids: [String!]
+    ratings: [String!]
+    claimants: [String!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): ClaimsPaging
+  sitemap: Sitemaps
 }
 
 scalar Time

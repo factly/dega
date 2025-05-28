@@ -8,9 +8,10 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/google/uuid"
 )
 
-func (r *queryResolver) Page(ctx context.Context, id *int, slug *string) (*models.Post, error) {
+func (r *queryResolver) Page(ctx context.Context, id *string, slug *string) (*models.Post, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -20,11 +21,19 @@ func (r *queryResolver) Page(ctx context.Context, id *int, slug *string) (*model
 		return nil, errors.New("please provide either id or slug")
 	}
 
+	pID := uuid.UUID{}
+	if id != nil {
+		pID, err = uuid.Parse(*id)
+		if err != nil {
+			return nil, errors.New("please provide valid id")
+		}
+	}
+
 	result := &models.Post{}
 
 	if id != nil {
 		err = config.DB.Model(&models.Post{}).Where(&models.Post{
-			ID:      uint(*id),
+			ID:      pID,
 			SpaceID: sID,
 		}).Where("is_page = ?", true).First(&result).Error
 	} else {
@@ -41,7 +50,7 @@ func (r *queryResolver) Page(ctx context.Context, id *int, slug *string) (*model
 	return result, nil
 }
 
-func (r *queryResolver) Pages(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+func (r *queryResolver) Pages(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -67,7 +76,7 @@ func (r *queryResolver) Pages(ctx context.Context, spaces []int, page *int, limi
 
 	var total int64
 	config.DB.Model(&models.Post{}).Where("is_page = ?", true).Where(&models.Post{
-		SpaceID: uint(sID),
+		SpaceID: sID,
 	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
