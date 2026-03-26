@@ -14,7 +14,7 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
     - name: Login Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u deshetti --password-stdin
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u gangaprasad2166 --password-stdin
     - name: Build and push dega studio
       uses: docker/build-push-action@v6
       with:
