@@ -1,0 +1,25 @@
+name: Retag Studio Image
+on:
+  workflow_dispatch:
+    inputs:
+      source_image:
+        description: 'Source image to pull (e.g. factly/metafacts-server:0.2.8)'
+        required: true
+        default: 'factly/metafacts-server:0.2.8'
+      target_tag:
+        description: 'Target tag for factly/dega-studio'
+        required: true
+        default: '0.23.0-stag.30'
+
+jobs:
+  retag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u gangaprasad2166 --password-stdin
+      - name: Pull, retag and push
+        run: |
+          docker pull ${{ github.event.inputs.source_image }}
+          docker tag ${{ github.event.inputs.source_image }} factly/dega-studio:${{ github.event.inputs.target_tag }}
+          docker push factly/dega-studio:${{ github.event.inputs.target_tag }}
+          echo "Successfully pushed factly/dega-studio:${{ github.event.inputs.target_tag }}"
