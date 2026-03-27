@@ -86,6 +86,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
+	spaceSettings := model.SpaceSettings{}
 	if spaceSettingCount >= 1 {
 		updateMap := map[string]interface{}{
 			"site_address":       space.SiteAddress,
@@ -117,7 +118,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		err = tx.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
 			SpaceID: uint(spaceID),
-		}).Updates(&updateMap).Error
+		}).Updates(&updateMap).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&spaceSettings).Error
+
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -154,13 +156,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 			settings.LogoMobileID = space.LogoMobileID
 		}
 
-		err = tx.Model(&model.SpaceSettings{}).Create(&settings).Error
+		err = tx.Model(&model.SpaceSettings{}).Create(&settings).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Error
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
+		spaceSettings = settings
 	}
 
 	requestBody := map[string]interface{}{
@@ -227,11 +230,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	spaceObjectforDega.ApplicationID = spaceObjectfromKavach.ApplicationID
 	spaceObjectforDega.OrganisationID = int(spaceObjectfromKavach.OrganisationID)
 	spaceObjectforDega.MetaFields = spaceObjectfromKavach.MetaFields
-	spaceSettings := model.SpaceSettings{}
-	config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
-		SpaceID: spaceObjectforDega.ID,
-	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&spaceSettings)
-
 	spaceObjectforDega.SiteTitle = spaceSettings.SiteTitle
 	spaceObjectforDega.TagLine = spaceSettings.TagLine
 	spaceObjectforDega.SiteAddress = spaceSettings.SiteAddress
