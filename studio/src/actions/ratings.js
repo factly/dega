@@ -23,6 +23,8 @@ export const addDefaultRatings = (query) => {
           addRatingsList(
             response.data.nodes.map((rating) => {
               rating.description = { json: rating.description, html: rating.description_html };
+              // !delete rating.description_html;
+              delete rating.description_html;
               return { ...rating, medium: rating.medium?.id };
             }),
           ),
@@ -60,6 +62,8 @@ export const getRatings = (query) => {
           addRatingsList(
             response.data.nodes.map((rating) => {
               rating.description = { json: rating.description, html: rating.description_html };
+              // !delete rating.description_html;
+              delete rating.description_html;
               return { ...rating, medium: rating.medium?.id };
             }),
           ),
@@ -91,6 +95,8 @@ export const getRating = (id) => {
           json: response.data.description,
           html: response.data.description_html,
         };
+        // !delete response.data.description_html;
+        delete response.data.description_html;
         dispatch(addRating(GET_RATING, { ...response.data, medium: response.data.medium?.id }));
       })
       .catch((error) => {
@@ -125,7 +131,15 @@ export const updateRating = (data) => {
       .then((response) => {
         const rating = response.data;
         if (rating.medium) dispatch(addMedia([rating.medium]));
-        rating.description = { json: rating.description, html: rating.description_html };
+        if ( (!response.data.description)
+          || (response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
+        }
         dispatch(addRating(UPDATE_RATING, { ...rating, medium: rating.medium?.id }));
         dispatch(addSuccessNotification('Rating updated'));
       })
@@ -157,6 +171,9 @@ export const addRatings = (ratings) => {
     dispatch(
       addRatingsList(
         ratings.map((rating) => {
+          rating.description = { json: rating.description, html: rating.description_html };
+          // !delete rating.description_html;
+          delete rating.description_html;
           return { ...rating, medium: rating.medium?.id };
         }),
       ),

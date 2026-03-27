@@ -80,6 +80,8 @@ describe('Podcast actions', () => {
         title: 'Podcast',
         episodes: [{ id: 1 }],
         categories: [{ id: 1, medium: { id: 1 } }],
+        description: { "hello": "world" },
+        description_html: "<p>hello world</p>"
       },
     ];
     const resp = { data: { nodes: podcasts, total: 1 } };
@@ -96,11 +98,16 @@ describe('Podcast actions', () => {
       },
       {
         type: ADD_CATEGORIES,
-        payload: [{ id: 1, medium: 1 }],
+        payload: [{
+          id: 1, medium: 1, description: {
+            json: undefined,
+            html: undefined,
+          }
+        }],
       },
       {
         type: types.ADD_PODCASTS,
-        payload: [{ id: 1, title: 'Podcast', episodes: [{ id: 1 }], categories: [1] }],
+        payload: [{ id: 1, title: 'Podcast', episodes: [{ id: 1 }], categories: [1], description: { json: { "hello": "world" }, html: "<p>hello world</p>" } }],
       },
       {
         type: types.ADD_PODCASTS_REQUEST,
@@ -121,6 +128,7 @@ describe('Podcast actions', () => {
       .dispatch(actions.getPodcasts(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledTimes(1);
+
   });
   it('should create actions to fetch podcasts failure', () => {
     const query = { page: 1, limit: 5 };
@@ -161,7 +169,9 @@ describe('Podcast actions', () => {
       id,
       title: 'Podcast',
       episodes: [{ id: 1 }],
-      categories: [{ id: 1, medium: { id: 1 } }],
+      categories: [{ id: 1, medium: { id: 1 }, description: { "hello": "world" }, description_html: "<p>hello world</p>" }],
+      description: { "hello": "world" },
+      description_html: "<p>hello world</p>"
     };
     const resp = { data: podcast };
     axios.get.mockResolvedValue(resp);
@@ -177,7 +187,7 @@ describe('Podcast actions', () => {
       },
       {
         type: ADD_CATEGORIES,
-        payload: [{ id: 1, medium: 1 }],
+        payload: [{ id: 1, medium: 1, description: { json: { "hello": "world" }, html: "<p>hello world</p>" } }],
       },
       {
         type: types.ADD_PODCAST,
@@ -186,6 +196,7 @@ describe('Podcast actions', () => {
           title: 'Podcast',
           episodes: [{ id: 1 }],
           categories: [1],
+          description: { json: { "hello": "world" }, html: "<p>hello world</p>" }
         },
       },
       {
@@ -293,7 +304,8 @@ describe('Podcast actions', () => {
       id: 1,
       title: 'Podcast',
       episodes: [{ id: 1 }],
-      categories: [{ id: 1, medium: { id: 1 } }],
+      categories: [{ id: 1, medium: { id: 1 }, description: { "hello": "world" }, description_html: "<p>hello world</p>" }],
+      description: { json: { "hello": "world" }, html: "<p>hello world</p>" }
     };
     const resp = { data: podcast };
     axios.put.mockResolvedValue(resp);
@@ -309,11 +321,14 @@ describe('Podcast actions', () => {
       },
       {
         type: ADD_CATEGORIES,
-        payload: [{ id: 1, medium: 1 }],
+        payload: [{ id: 1, medium: 1, description: { json: { "hello": "world" }, html: "<p>hello world</p>" } }],
       },
       {
         type: types.ADD_PODCAST,
-        payload: { id: 1, title: 'Podcast', episodes: [{ id: 1 }], categories: [1] },
+        payload: {
+          id: 1, title: 'Podcast', episodes: [{ id: 1 }], categories: [1],
+          description: { json: { "hello": "world" }, html: "<p>hello world</p>" }
+        },
       },
       {
         type: ADD_NOTIFICATION,
@@ -336,6 +351,110 @@ describe('Podcast actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.PODCASTS_API + '/1', podcast);
   });
+  it('should create actions to update podcast success with description not modified', () => {
+    const podcast = {
+      id: 1,
+      title: 'Podcast',
+      episodes: [{ id: 1 }],
+      categories: [{ id: 1, medium: { id: 1 }, description: { "hello": "world" }, description_html: "<p>hello world</p>" }],
+      description: { "hello": "world" }, description_html: "<p>hello world</p>"
+    };
+    const resp = { data: podcast };
+    axios.put.mockResolvedValue(resp); ``
+
+    const expectedActions = [
+      {
+        type: types.SET_PODCASTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 1 }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [{ id: 1, medium: 1, description: { json: { "hello": "world" }, html: "<p>hello world</p>" } }],
+      },
+      {
+        type: types.ADD_PODCAST,
+        payload: {
+          id: 1, title: 'Podcast', episodes: [{ id: 1 }], categories: [1],
+          description: { json: { "hello": "world" }, html: "<p>hello world</p>" }
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Podcast updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_PODCASTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updatePodcast(podcast))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.PODCASTS_API + '/1', podcast);
+  });
+  it('should create actions to update podcast success without description', () => {
+    const podcast = {
+      id: 1,
+      title: 'Podcast',
+      episodes: [{ id: 1 }],
+      categories: [{ id: 1, medium: { id: 1 }, description: { "hello": "world" }, description_html: "<p>hello world</p>" }],
+    };
+    const resp = { data: podcast };
+    axios.put.mockResolvedValue(resp); ``
+
+    const expectedActions = [
+      {
+        type: types.SET_PODCASTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 1 }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [{ id: 1, medium: 1, description: { json: { "hello": "world" }, html: "<p>hello world</p>" } }],
+      },
+      {
+        type: types.ADD_PODCAST,
+        payload: {
+          id: 1, title: 'Podcast', episodes: [{ id: 1 }], categories: [1],
+          description: { json: undefined, html: undefined }
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Podcast updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_PODCASTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updatePodcast(podcast))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.PODCASTS_API + '/1', podcast);
+  });
+
   it('should create actions to update podcast failure', () => {
     const podcast = { id: 1, title: 'Podcast' };
     const errorMessage = 'Failed to update podcast';

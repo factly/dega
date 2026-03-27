@@ -55,6 +55,8 @@ export const getClaims = (query) => {
           addClaimsList(
             response.data.nodes.map((claim) => {
               claim.description = { json: claim.description, html: claim.description_html };
+              // !here description_html is not removed and has the same issue explained in "./claimants.js"
+              delete claim.description_html
               return { ...claim, claimant: claim.claimant.id, rating: claim.rating.id };
             }),
           ),
@@ -83,6 +85,8 @@ export const getClaim = (id) => {
       .then((response) => {
         let claim = response.data;
         claim.description = { json: claim.description, html: claim.description_html };
+        // ! here also we need to delete description_html
+        delete claim.description_html
         dispatch(addClaimants([claim.claimant]));
         dispatch(addRatings([claim.rating]));
 
@@ -127,7 +131,13 @@ export const updateClaim = (data) => {
       .put(CLAIMS_API + '/' + data.id, data)
       .then((response) => {
         let claim = response.data;
-        claim.description = { json: claim.description, html: claim.description_html };
+
+        if ((typeof claim.description !== 'object' && claim.hasOwnProperty('description_html'))
+          || (!claim.description.hasOwnProperty('json') && !claim.description.hasOwnProperty('html'))) {
+          claim.description = { json: claim.description, html: claim.description_html };
+          delete claim.description_html
+        }
+
         dispatch(addClaimants([claim.claimant]));
         dispatch(addRatings([claim.rating]));
 

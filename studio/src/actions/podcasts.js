@@ -124,7 +124,7 @@ export const updatePodcast = (data) => {
         dispatch(
           getPodcastByID({
             ...podcast,
-            categories: podcast.categories.map((category) => category.id),
+            categories: podcast.categories && podcast.categories.map((category) => category.id),
           }),
         );
         dispatch(addSuccessNotification('Podcast updated'));

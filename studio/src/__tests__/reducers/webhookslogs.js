@@ -1,5 +1,5 @@
-import reducer from '../../reducers/webhooksReducer';
-import * as types from '../../constants/webhooks';
+import webhooklogsReducer from '../../reducers/webhooklogsReducer';
+import * as types from '../../constants/webhooklogs';
 
 const initialState = {
   req: [],
@@ -7,64 +7,51 @@ const initialState = {
   loading: true,
 };
 
-describe('webhooks reducer', () => {
+describe('webhooklogsReducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual(initialState);
+    expect(webhooklogsReducer(undefined, {})).toEqual(initialState);
   });
-  it('should return the state for default case', () => {
-    expect(
-      reducer({
-        req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-        details: { 1: { id: 1, name: 'entity' } },
-        loading: false,
-      }),
-    ).toEqual({
-      req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-      details: { 1: { id: 1, name: 'entity' } },
-      loading: false,
-    });
-  });
+
   it('should handle RESET_WEBHOOKS', () => {
     expect(
-      reducer(
+      webhooklogsReducer(
         {
           req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
           details: [{ id: 1, name: 'webhook' }],
           loading: false,
         },
         {
-          type: types.RESET_WEBHOOKS,
+          type: types.RESET_WEBHOOKLOGS,
           payload: {},
         },
       ),
     ).toEqual(initialState);
   });
-  it('should handle SET_WEBHOOKS_LOADING', () => {
-    expect(
-      reducer(initialState, {
-        type: types.SET_WEBHOOKS_LOADING,
-        payload: true,
-      }),
-    ).toEqual({
-      req: [],
-      details: {},
-      loading: true,
-    });
-    expect(
-      reducer(initialState, {
-        type: types.SET_WEBHOOKS_LOADING,
-        payload: false,
-      }),
-    ).toEqual({
+
+  it('should handle SET_WEBHOOKLOGS_LOADING', () => {
+    expect(webhooklogsReducer(initialState, {
+      type: types.SET_WEBHOOKLOGS_LOADING,
+      payload: false,
+    })).toEqual({
       req: [],
       details: {},
       loading: false,
     });
+
+    expect(webhooklogsReducer(initialState, {
+      type: types.SET_WEBHOOKLOGS_LOADING,
+      payload: true,
+    })).toEqual({
+      req: [],
+      details: {},
+      loading: true,
+    })
   });
-  it('should handle ADD_WEBHOOKS_REQUEST', () => {
+
+  it('should handle ADD_WEBHOOKLOGS_REQUEST', () => {
     expect(
-      reducer(initialState, {
-        type: types.ADD_WEBHOOKS_REQUEST,
+      webhooklogsReducer(initialState, {
+        type: types.ADD_WEBHOOKLOGS_REQUEST,
         payload: {
           data: [1, 2, 3],
           query: { page: 1, limit: 5 },
@@ -77,16 +64,17 @@ describe('webhooks reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_WEBHOOKS_REQUEST when req already exists', () => {
+
+  it('should handle ADD_WEBHOOKLOGS_REQUEST when req already exists', () => {
     expect(
-      reducer(
+      webhooklogsReducer(
         {
           req: [{ data: [1, 2], query: { page: 1, limit: 5 }, total: 2 }],
           details: {},
           loading: true,
         },
         {
-          type: types.ADD_WEBHOOKS_REQUEST,
+          type: types.ADD_WEBHOOKLOGS_REQUEST,
           payload: {
             data: [1, 2, 3],
             query: { page: 1, limit: 5 },
@@ -100,11 +88,11 @@ describe('webhooks reducer', () => {
       loading: true,
     });
   });
-  
-  it('should handle ADD_WEBHOOKS', () => {
+
+  it('should handle ADD_WEBHOOKLOGS', () => {
     expect(
-      reducer(initialState, {
-        type: types.ADD_WEBHOOKS,
+      webhooklogsReducer(initialState, {
+        type: types.ADD_WEBHOOKLOGS,
         payload: [
           { id: 1, name: 'Webhook 1' },
           { id: 2, name: 'Webhook 2' },
@@ -116,10 +104,11 @@ describe('webhooks reducer', () => {
       loading: true,
     });
   });
-  it('should handle empty payload ADD_WEBHOOKS', () => {
+
+  it('should handle empty payload ADD_WEBHOOKLOGS', () => {
     expect(
-      reducer(initialState, {
-        type: types.ADD_WEBHOOKS,
+      webhooklogsReducer(initialState, {
+        type: types.ADD_WEBHOOKLOGS,
         payload: [],
       }),
     ).toEqual({
@@ -128,11 +117,12 @@ describe('webhooks reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_WEBHOOK', () => {
+
+  it('should handle ADD_WEBHOOKLOGS', () => {
     expect(
-      reducer(initialState, {
-        type: types.ADD_WEBHOOK,
-        payload: { id: 1, name: 'new webhook' },
+      webhooklogsReducer(initialState, {
+        type: types.ADD_WEBHOOKLOGS,
+        payload: [{ id: 1, name: 'new webhook' }],
       }),
     ).toEqual({
       req: [],
@@ -140,17 +130,18 @@ describe('webhooks reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_WEBHOOK when details is non-empty', () => {
+
+  it('should handle ADD_WEBHOOKLOGS when details is non-empty', () => {
     expect(
-      reducer(
+      webhooklogsReducer(
         {
           req: [],
           details: { 1: { id: 1, name: 'existing webhook' } },
           loading: false,
         },
         {
-          type: types.ADD_WEBHOOK,
-          payload: { id: 2, name: 'new webhook' },
+          type: types.ADD_WEBHOOKLOGS,
+          payload: [{ id: 2, name: 'new webhook' }],
         },
       ),
     ).toEqual({
@@ -162,9 +153,10 @@ describe('webhooks reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_WEBHOOK when already exists', () => {
+
+  it('should handle ADD_WEBHOOKLOGS when already exists', () => {
     expect(
-      reducer(
+      webhooklogsReducer(
         {
           req: [],
           details: {
@@ -174,8 +166,8 @@ describe('webhooks reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_WEBHOOK,
-          payload: { id: 2, name: 'updated webhook' },
+          type: types.ADD_WEBHOOKLOGS,
+            payload: [{ id: 2, name: 'updated webhook' }],
         },
       ),
     ).toEqual({
@@ -187,4 +179,5 @@ describe('webhooks reducer', () => {
       loading: false,
     });
   });
+
 });
