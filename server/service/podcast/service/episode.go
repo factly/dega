@@ -187,7 +187,7 @@ func (es *episodeService) Delete(sID int, id int) []errorx.Message {
 	}).Delete(&model.EpisodeAuthor{})
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "episode")
+		_ = meilisearchx.DeleteDocument("dega", result.ID)
 	}
 
 	tx.Commit()
@@ -251,7 +251,7 @@ func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit 
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
 			var hits []interface{}
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "episode")
+			hits, err = meilisearchx.SearchWithQuery(util.IndexEpisodes.String(), searchQuery, filters)
 			if err != nil {
 				loggerx.Error(err)
 				return episodePaging{}, errorx.Parser(errorx.NetworkError())

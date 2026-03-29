@@ -24,7 +24,9 @@ var reindexCommand = &cobra.Command{
 
 		config.SetupDB()
 
-		err := meilisearchx.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids","author_ids", "claimant_id", "rating_id"})
+		indexes := []string{"posts"}
+		err := meilisearchx.SetupMeiliSearch(indexes, []string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"}, []string{}, []string{}, []string{})
+
 		if err != nil {
 			loggerx.Error(err)
 		}

@@ -93,7 +93,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 	if config.SearchEnabled() {
-		err = meilisearchx.DeleteDocument("dega", uint(sID), "space")
+		err = meilisearchx.DeleteDocument(util.IndexSpaces.String(), uint(sID))
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
