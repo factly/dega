@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Avatar, Space, Input } from 'antd';
+import { List, Avatar, Space, Input ,Pagination} from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedia } from '../../actions/media';
@@ -10,7 +10,7 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }) {
 
   const [filters, setFilters] = React.useState({
     page: 1,
-    limit: 8,
+    limit: 10, // Set default page size
   });
 
   const { media, total } = useSelector((state) => {
@@ -35,6 +35,7 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }) {
   const fetchMedia = () => {
     dispatch(getMedia(filters, profile));
   };
+  const lastPage = Math.ceil(total / filters.limit);
 
   return (
     <Space direction={'vertical'}>
@@ -46,14 +47,6 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }) {
         grid={{
           gutter: 16,
           md: 4,
-        }}
-        pagination={{
-          current: filters.page,
-          total: total,
-          pageSize: filters.limit,
-          onChange: (pageNumber, pageSize) => {
-            setFilters({ page: pageNumber, limit: pageSize });
-          },
         }}
         dataSource={media}
         renderItem={(item) => (
@@ -89,6 +82,42 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }) {
           </List.Item>
         )}
       />
+      <Space style={{ display: 'flex', justifyContent: 'left', alignItems: 'center', width: '100%' }}>
+        <Pagination
+          current={filters.page}
+          total={total}
+          pageSize={filters.limit}
+          showSizeChanger
+          pageSizeOptions={['2', '5', '10', '20', '50', '100']}
+          onShowSizeChange={(current, size) => {
+            setFilters((prevFilters) => ({ ...prevFilters, limit: size, page: 1 })); // Reset to first page when page size changes
+          }}
+          onChange={(pageNumber) => {
+            setFilters((prevFilters) => ({ ...prevFilters, page: pageNumber }));
+          }}
+          itemRender={(page, type, originalElement) => {
+            if (type === 'page') {
+              if (page === filters.page) {
+                return <span style={{ margin: '0 8px' }}>{page}</span>;
+              }
+              if (page === 1 || page === lastPage) {
+                return <a style={{ margin: '0 8px' }}>{page}</a>;
+              }
+              if (page === filters.page + 1) {
+                return <span style={{ margin: '0 8px' }}>...</span>;
+              }
+              return null;
+            }
+            if (type === 'prev') {
+              return <a style={{ margin: '0 8px' }}> &lt;</a>;
+            }
+            if (type === 'next') {
+              return <a style={{ margin: '0 8px' }}>&gt;</a>;
+            }
+            return null;
+          }}
+        />
+      </Space>
     </Space>
   );
 }
